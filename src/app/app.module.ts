@@ -1,20 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './home/home.component';
+import { HomeDescriptionComponent } from './home-description/home-description.component';
+import { TileMenuComponent } from './tile-menu/tile-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent
+    SearchComponent,
+    HomeComponent,
+    HomeDescriptionComponent,
+    TileMenuComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

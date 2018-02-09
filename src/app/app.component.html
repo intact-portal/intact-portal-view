@@ -1,18 +1,23 @@
-<div id="content">
+
   <div data-sticky-container>
-    <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top"
-            data-btm-anchor="content:bottom">
-      <div class="masthead-inner row">
+    <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
+      <div class="masthead-inner row expanded">
         <!-- local-title -->
         <div class="columns medium-12" id="local-title">
-          <h1><a href="../../" title="Back to [service-name] homepage"><img src="https://www.ebi.ac.uk/intact/images/IntAct_logo.png"></a></h1>
+          <h1><a href="../../" title="Back to Intact homepage">
+            <img src="https://www.ebi.ac.uk/intact/images/IntAct_logo.png">
+          </a></h1>
         </div>
         <!-- /local-title -->
+
         <!-- local-nav -->
         <nav>
           <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
-            <li><a href="../../">Overview</a></li>
+            <li><a href="../../">Home</a></li>
             <li><a data-open="modal-download">Download</a></li>
+            <li><a data-open="modal-download">Release notes</a></li>
+            <li><a data-open="modal-download">FAQ</a></li>
+            <li><a data-open="modal-download">About</a></li>
             <li><a href="#">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
           </ul>
         </nav>
@@ -20,38 +25,45 @@
       </div>
     </header>
   </div>
-  <!-- Suggested layout containers -->
-  <section id="main-content-area" class="row" role="main">
-    <!-- Your menu structure should make a breadcrumb redundant, but if a breadcrump is needed uncomment the below -->
-    <!--<nav aria-label="You are here:" role="navigation">-->
-    <!--<ul class="breadcrumbs">-->
-    <!--<li><a href="../../">EBI Framework</a></li>-->
-    <!--<li><a href="../">Sample pages</a></li>-->
-    <!--<li>-->
-    <!--<span class="show-for-sr">Current: </span> Blank boilerplate-->
-    <!--</li>-->
-    <!--</ul>-->
-    <!--</nav>-->
 
-    <div class="columns">
-      <h2>
-        IntAct Molecular Interaction Database
-      </h2>
-      <p>
-        IntAct provides a freely available, open source database system and analysis tools for molecular interaction data. All
-        interactions are derived from literature curation or direct user submissions and are freely available. The IntAct Team
-        also produce the Complex Portal.
-      </p>
-    </div>
+  <!-- Suggested layout containers -->
+  <section id="main-content-area" class="row margin-top-large margin-bottom-large" role="main">
+
+    <section>
+      <router-outlet></router-outlet>
+      <!-- Routed views go here -->
+    </section>
+    <!---->
+
 
   </section>
-  <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
-  <!--
-  <footer id="local-footer" class="local-footer" role="local-footer">
-    <div class="row">
-      <span class="reference">How to reference this page: ...</span>
+
+
+  <!-- Local footer -->
+
+  <footer id="local-footer" class="local-footer row expanded" role="local-footer">
+    <div class="columns medium-12">
+      <p class="label secondary-color padding-left-large columns small-10">Our contributors </p>
+      <p class="label secondary-color padding-left-large columns small-2">{{version}}-{{environmentName}}</p>
+      <table>
+        <tbody>
+        <tr>
+          <td><a href="//www.ceitec.eu" target="_blank"><img src="assets/images/contributors/Ceitec.png"></a></td>
+          <td><a href="//www.evidenceontology.org/" target="_blank"><img src="assets/images/contributors/eco.png"></a>
+          </td>
+          <td><a href="//www.ucl.ac.uk/functional-gene-annotation/cardiovascular" target="_blank"><img
+            src="assets/images/contributors/imex_acg_s.png"></a></td>
+          <td><a href="//matrixdb.univ-lyon1.fr" target="_blank"><img
+            src="assets/images/contributors/matrixdb.png"></a></td>
+          <td><a href="//mint.bio.uniroma2.it" target="_blank"><img src="assets/images/contributors/Mint.png"></a>
+          <td><a href="//www.ebi.ac.uk/pdbe/" target="_blank"><img src="assets/images/contributors/PDBe.png"></a>
+          <td><a href="//www.yeastgenome.org" target="_blank"><img src="assets/images/contributors/SGD.png"></a></td>
+          <td><a href="//www.sib.swiss" target="_blank"><img src="assets/images/contributors/sib.png"></a></td>
+          <td><a href="//www.uniprot.org" target="_blank"><img src="assets/images/contributors/uniprot.png"></a></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </footer>
-  -->
-  <!-- End optional local footer -->
-</div>
+
+  <!-- End local footer -->

@@ -72,8 +72,7 @@
 
   <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
   <!-- also inform ES so we can host your colour palette file -->
-  <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/theme-embl-petrol.css"
-        type="text/css" media="all"/>
+  <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/theme-embl-petrol.css" type="text/css" media="all"/>
   <!-- end CSS-->
 </head>
 
@@ -87,8 +86,10 @@
   </ul>
 </div>
 
+<!-- EBI GLOBAL MASTHEAD SECTION -->
+<!--<script type="application/xhtml+xml" src="/assets/html/global-masthead.html"></script>-->
 <header id="masthead-black-bar" class="clearfix masthead-black-bar">
-  <nav class="row">
+  <nav class="row expanded">
     <ul id="global-nav" class="menu">
       <!-- set active class as appropriate -->
       <li class="home-mobile"><a href="//www.ebi.ac.uk"></a></li>
@@ -110,20 +111,27 @@
     </ul>
   </nav>
 </header>
+
+
 <div id="content">
-  <app-root>Loading...</app-root>
+  <iv-root>Loading...</iv-root>
 </div>
 <!-- End suggested layout containers / #content -->
 
 <footer>
+  <!--<script src="assets/html/global-footer.html"></script>-->
   <div id="global-footer" class="global-footer">
     <nav id="global-nav-expanded" class="global-nav-expanded row">
       <!-- Footer will be automatically inserted by footer.js -->
     </nav>
+
     <section id="ebi-footer-meta" class="ebi-footer-meta row">
       <!-- Footer meta will be automatically inserted by footer.js -->
+      <p class="address">EMBL-EBI, Wellcome Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p>
+      <p>Copyright © EMBL-EBI 2016 | EBI is an outstation of the <a href="http://www.embl.org/">European Molecular Biology Laboratory</a> | <a href="https://ebiwd.github.io/about/terms-of-use">Terms of use</a></p>
     </section>
   </div>
+
 </footer>
 
 <!-- JavaScript -->

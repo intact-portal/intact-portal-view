@@ -5,6 +5,8 @@ import {TileMenuComponent} from './tile-menu/tile-menu.component';
 import {SearchComponent} from '../search/search.component';
 import {HomeDashboardComponent} from './home-dashboard/home-dashboard.component';
 import {HomeDashboardRoutingModule} from './home-dashboard-routing.module';
+import { NewsletterComponent } from './newsletter/newsletter.component';
+import { TwitterDisplayComponent } from './twitter-display/twitter-display.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import {HomeDashboardRoutingModule} from './home-dashboard-routing.module';
     HomeDashboardComponent,
     HomeDescriptionComponent,
     SearchComponent,
-    TileMenuComponent
+    TileMenuComponent,
+    NewsletterComponent,
+    TwitterDisplayComponent
   ]
 })
 export class HomeDashboardModule {

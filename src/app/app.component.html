@@ -1,7 +1,7 @@
 
   <div data-sticky-container>
     <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
-      <div class="masthead-inner row"> <!-- expanded -->
+      <div class="masthead-inner row expanded"> <!-- expanded -->
         <!-- local-title -->
         <div class="columns medium-12" id="local-title">
           <h1><a href="../../" title="Back to Intact homepage">
@@ -27,7 +27,7 @@
   </div>
 
   <!-- Suggested layout containers -->
-  <section id="main-content-area" class="row margin-top-large margin-bottom-xlarge" role="main">
+  <section id="main-content-area" class="row margin-top-large margin-bottom-xlarge expanded" role="main">
 
     <section>
       <router-outlet></router-outlet>
@@ -41,10 +41,10 @@
 
   <!-- Local footer -->
 
-  <div class="row margin-top-xlarge">
+  <div class="row margin-top-xlarge expanded">
 
-  <footer id="local-footer" class="local-footer row expanded" role="local-footer"> <!-- expanded -->
-    <div class="columns medium-12">
+  <footer id="local-footer" class="local-footer row expanded contributors-container" role="local-footer"> <!-- expanded -->
+    <div class="columns medium-offset-1 medium-10">
       <p class="label secondary-color padding-left-large columns small-10">Our contributors </p>
       <p class="label secondary-color padding-left-large columns small-2">{{version}}-{{environmentName}}</p>
       <table>

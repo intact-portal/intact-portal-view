@@ -7,6 +7,8 @@ import {HomeDashboardComponent} from './home-dashboard/home-dashboard.component'
 import {HomeDashboardRoutingModule} from './home-dashboard-routing.module';
 import { NewsletterComponent } from './newsletter/newsletter.component';
 import { TwitterDisplayComponent } from './twitter-display/twitter-display.component';
+import { FeaturedDatasetComponent } from './featured-dataset/featured-dataset.component';
+import { NewsComponent } from './news/news.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { TwitterDisplayComponent } from './twitter-display/twitter-display.compo
     SearchComponent,
     TileMenuComponent,
     NewsletterComponent,
-    TwitterDisplayComponent
+    TwitterDisplayComponent,
+    FeaturedDatasetComponent,
+    NewsComponent
   ]
 })
 export class HomeDashboardModule {

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewsletterComponent } from './newsletter.component';
+import { NewsletterComponent } from './newsletter-subscription.component';
 
 describe('NewsletterComponent', () => {
   let component: NewsletterComponent;

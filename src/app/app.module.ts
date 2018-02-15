@@ -5,10 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeDashboardModule } from './home-dashboard/home-dashboard.module';
+import { ContributorsComponent } from './home-dashboard/contributors/contributors.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ContributorsComponent
   ],
   imports: [
     BrowserModule,

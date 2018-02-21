@@ -4,3 +4,10 @@
 .contributors-container {
   background-color: #EEE;
 }
+
+/* RIGHT SECTION NEWS PANEL STYLE */
+
+.news-panel {
+  background-color: white;
+  border-radius: 6px;
+}

@@ -1,4 +1,19 @@
-<div id="dataset">
+<div id="dataset" class="margin-top-large margin-bottom-large">
   <h3><i class="icon icon-generic" data-icon="D"></i> Featured Dataset</h3>
 
+  <div class="news-panel padding-top-medium padding-left-medium padding-right-medium padding-bottom-small">
+
+    <p class="text-justify"> {{title}}</p>
+    <div id="pdfButtons">
+      <span>{{pubmedAuthor}}</span>
+      <a class="button small" (click)="goIntactPubId()" >Intact</a>
+      <a class="button small" (click)="goPSIMI25FTP()" >PSI-MI XML 2.5</a>
+      <a class="button small" (click)="goPSIMITABFTP()">PSI-MI TAB 2.7</a>
+    </div>
+
+    <div class="row archive">
+      <p><i class="icon icon-generic" data-icon=";"></i> <a (click)="goDOTMArchiveFTP()">Dataset archive</a></p>
+    </div>
+
+  </div>
 </div>

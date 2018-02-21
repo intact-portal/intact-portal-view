@@ -1,0 +1,12 @@
+{
+  "/proxy": {
+    "target": "https://www.ebi.ac.uk/~intact/site/dotm/dotm-1.1.xml",
+    "secure": true,
+    "pathRewrite": {
+      "^/proxy": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
+
+  }
+}

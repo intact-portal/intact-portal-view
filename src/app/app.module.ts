@@ -19,9 +19,9 @@ import { FeatureDatasetService } from './home-dashboard/featured-dataset/service
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule,
     HttpClientModule,
-    HomeDashboardModule
+    HomeDashboardModule,
+    AppRoutingModule
   ],
   providers: [FeatureDatasetService],
   bootstrap: [AppComponent]

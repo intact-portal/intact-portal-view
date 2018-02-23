@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Parser} from 'xml2js';
-import {FeatureDataset} from './model/feature-dataset';
-import {FeatureDatasetService} from './service/feature-dataset.service';
-import {environment} from '../../../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Parser } from 'xml2js';
+import { FeatureDatasetService } from './service/feature-dataset.service';
+import { environment } from '../../../environments/environment';
+import { Dataset } from './model/dataset.model';
 
 declare const require: any;
 
@@ -18,15 +19,13 @@ const intactFTPMiTab_URL = environment.intact_psimitab_url;
 })
 export class FeaturedDatasetComponent implements OnInit {
 
-  private _featureDataset: FeatureDataset;
-
   private _title: string;
   private _pubmedId: any;
   private _pubmedAuthor: any;
   private _pubmedYear: any;
 
-  constructor(private featureDatasetService: FeatureDatasetService) {
-    // this._featureDataset = featureDataset;
+  constructor(private featureDatasetService: FeatureDatasetService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -53,36 +52,21 @@ export class FeaturedDatasetComponent implements OnInit {
 
   goIntactPubId() {
     const url = `${baseURL}/intact/query/pubid:${this.pubmedId}`;
-
-    console.log('Redirect to results :' + url);
-    // window.location.href = intactPubmedId;
     window.open(url, '_blank');
     // this.router.navigate(['/intact/query'], this.pubmedId)
-    // wwwdev.ebi.ac.uk/intact/query/pubid:29298432?conversationContext=1
   }
 
   goPSIMI25FTP() {
     window.open(intactFTP_URL + `/${this.pubmedYear}/${this.pubmedId}.zip`);
-    // ftp://ftp.ebi.ac.uk/pub/databases/intact/current/psi25/pmid/2017/29298432.zip
   }
 
   goPSIMITABFTP() {
     window.open(intactFTPMiTab_URL + `/${this.pubmedYear}/${this.pubmedId}.txt`);
-    // ftp://ftp.ebi.ac.uk/pub/databases/intact/current/psimitab/pmid/2017/29298432.txt
   }
 
   goDOTMArchiveFTP() {
-    const url = `${baseURL}/intact/query/pubid:${this.pubmedId}`;
-    // this.router.navigate
+    this.router.navigate(['/dotm/archive']);
 
-  }
-
-  get featureDataset(): FeatureDataset {
-    return this._featureDataset;
-  }
-
-  set featureDataset(value: FeatureDataset) {
-    this._featureDataset = value;
   }
 
   get title(): string {

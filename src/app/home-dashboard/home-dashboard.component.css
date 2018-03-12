@@ -1,10 +1,13 @@
 .callout-twitter {
   background-color: #1bc0ea73; /*#1bc0ea8c;*/
+  border-radius: 8px;
 }
 .callout-latest-news {
   background-color: #8d3ab336;
+  border-radius: 8px;
 }
 .callout-featured-dataset {
   background-color: #5ca23561;
+  border-radius: 8px;
 }
 

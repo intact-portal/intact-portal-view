@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Parser } from 'xml2js';
 import { FeatureDatasetService } from './service/feature-dataset.service';
 import { environment } from '../../../environments/environment';
-import { Dataset } from './model/dataset.model';
 
 declare const require: any;
 

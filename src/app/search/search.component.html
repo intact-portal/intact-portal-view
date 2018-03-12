@@ -8,76 +8,62 @@
 
     <div class="tabs-content" data-tabs-content="search-tabs">
 
+      <!--TAB MAIN SEARCH SECTION-->
       <div class="tabs-panel is-active" id="panel1c" style="background-color:#e6e6e6;">
 
-        <form id="main-search" name="content-search" action="[search-action]" method="get">
+        <form id="mainSearch" name="content-search" action="[search-action]" method="get">
           <div class="row margin-top-large">
-            <div class="columns small-12">
-              <textarea placeholder="Placeholder text..." rows="8"></textarea>
+            <div id="searchBox" class="columns small-11">
+              <textarea class="typeahead" type="text" placeholder="example"></textarea>
             </div>
-          </div>
-          <div class="row column small margin-top-xsmall">
-            Examples:
-             <span>
-               <ul>
-                 <li>Gene, Protein, RNA or Chemical name:  BRCA2,  Staurosporine</li>
-                 <li>UniProtKB or ChEBI AC: Q06609,  CHEBI:15996</li>
-                 <li>UniProtKB ID: LCK_HUMAN</li>
-                 <li>RNACentral ID: URS00004C95F4_559292</li>
-                 <li>PMID: 25416956</li>
-                 <li>IMEx ID: IM-23318</li>
-
-               </ul>
-             </span>
+              <input id="home-search-button" class="button margin-top-small" type="submit" value="Search"/>
           </div>
 
-          <div class="row margin-top-large">
-            <div class="small-12 columns">
-              <input id="home-search-button" class="button" type="submit" value="Search"/>
-              <input id="home-search-clear-button" class="secondary hollow button" type="button" value="Clear"/>
-            </div>
-          </div>
+          <!--<div class="row column small margin-top-xsmall">-->
+            <!--Examples:-->
+             <!--<span>-->
+               <!--<ul>-->
+                 <!--<li>Gene, Protein, RNA or Chemical name:  BRCA2,  Staurosporine</li>-->
+                 <!--<li>UniProtKB or ChEBI AC: Q06609,  CHEBI:15996</li>-->
+                 <!--<li>UniProtKB ID: LCK_HUMAN</li>-->
+                 <!--<li>RNACentral ID: URS00004C95F4_559292</li>-->
+                 <!--<li>PMID: 25416956</li>-->
+                 <!--<li>IMEx ID: IM-23318</li>-->
+
+               <!--</ul>-->
+             <!--</span>-->
+          <!--</div>-->
+
+          <!--<div class="row margin-top-large">-->
+            <!--<div class="small-12 columns">-->
+              <!--&lt;!&ndash;<input id="home-search-button" class="button" type="submit" value="Search"/>&ndash;&gt;-->
+              <!--<input id="home-search-clear-button" class="secondary hollow button" type="button" value="Clear"/>-->
+            <!--</div>-->
+          <!--</div>-->
         </form>
       </div>
 
+      <!--TAB ADVANCED SECTION-->
       <div class="tabs-panel" id="panel2c" style="background-color:#e6e6e6;">
-        <p>Advanced section here</p>
-
+        <div class="row margin-top-large">
+          <div id="multiple-datasets" class="columns small-12">
+            <textarea class="typeahead" type="text" placeholder="Advanced search...."></textarea>
+          </div>
+        </div>
       </div>
 
+      <!--TAB UPLOAD FILE SECTION-->
       <div class="tabs-panel" id="panel3c" style="background-color:#e6e6e6;">
-        <p>works!</p>
-        <!--<form id="content-search" name="content-search" action="[search-action]" method="get">-->
-          <!--<div class="input-group margin-bottom-none">-->
-            <!--<input type="text" name="first" id="content-searchbox" class="input-group-field">-->
-            <!--&lt;!&ndash;<div class="input-group-button">&ndash;&gt;-->
-            <!--&lt;!&ndash;<input type="submit" name="submit" value="1" class="button icon icon-functional">&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-          <!--</div>-->
-        <!--</form>-->
+
+        <form id="iSearch" name="content-search" action="[search-action]" method="get">
+          <div class="row margin-top-large">
+            <!--<div id="searchBox3" class="columns small-12">-->
+              <!--<textarea id="autocomplete" type="text" placeholder="Search..." rows="5"></textarea>-->
+            <!--</div>-->
+          </div>
+        </form>
 
       </div>
 
     </div>
-
-    <!--<form id="content-search" name="content-search" action="[search-action]" method="post">-->
-    <!--<h4>Search this project</h4>-->
-    <!--<fieldset>-->
-    <!--<div class="input-group margin-bottom-none">-->
-    <!--<input type="text" name="first" id="content-searchbox" class="input-group-field">-->
-    <!--<div class="input-group-button">-->
-    <!--<input type="submit" name="submit" value="1" class="button icon icon-functional">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<small class="">-->
-    <!--&lt;!&ndash; If your search is more complex than just a keyword search, you can link to an Advanced Search &ndash;&gt;-->
-    <!--<span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span>-->
-    <!--|-->
-    <!--&lt;!&ndash; Include some example searchterms - keep them short and few. &ndash;&gt;-->
-    <!--<a href="[search-url-1]">[search-1]</a>-->
-    <!--<a href="[search-url-1]">[search-2]</a>-->
-    <!--<a href="[search-url-1]">[search-3]</a>-->
-    <!--</small>-->
-    <!--</fieldset>-->
-    <!--</form>-->
 </div>

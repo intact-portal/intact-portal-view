@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {SearchService} from './service/search.service';
 
 declare const Bloodhound;
 declare const $: any;
@@ -10,7 +11,7 @@ declare const $: any;
 })
 export class SearchComponent implements OnInit, AfterViewInit {
 
-  constructor() {
+  constructor(private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -19,6 +20,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     $('iv-search').foundation();
     this.searchSuggestions();
+  }
+
+  search(query: string, typeOfButton: string) {
+    this.searchService.search(query);
   }
 
   private searchSuggestions(): void {
@@ -56,7 +61,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
       local: jsonInteractorsData
     });
     interactorsData.initialize();
-
 
     const jsonTermsData = [
       {

@@ -16,7 +16,8 @@
             <div id="searchBox" class="columns small-11">
               <textarea class="typeahead" type="text" placeholder="example"></textarea>
             </div>
-              <input id="home-search-button" class="button margin-top-small" type="submit" value="Search"/>
+              <input id="home-search-button" class="button margin-top-small" type="submit"
+                     (click)="search(query.value, 'button')" value="Search"/>
           </div>
 
           <!--<div class="row column small margin-top-xsmall">-->

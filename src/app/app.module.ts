@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeDashboardModule } from './home-dashboard/home-dashboard.module';
 import { ContributorsComponent } from './home-dashboard/contributors/contributors.component';
 import { FeatureDatasetService } from './home-dashboard/featured-dataset/service/feature-dataset.service';
+import { InteractionsModule } from './interactions/interactions.module';
+import { SearchService } from './search/service/search.service';
 
 
 @NgModule({
@@ -21,9 +23,10 @@ import { FeatureDatasetService } from './home-dashboard/featured-dataset/service
     FormsModule,
     HttpClientModule,
     HomeDashboardModule,
+    InteractionsModule,
     AppRoutingModule
   ],
-  providers: [FeatureDatasetService],
+  providers: [FeatureDatasetService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

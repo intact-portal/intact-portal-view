@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
     this.initFoundation();
     console.log('The component is initialized.');
   }

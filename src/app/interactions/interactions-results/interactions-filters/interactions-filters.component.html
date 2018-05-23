@@ -8,7 +8,9 @@
     <h3>Filters</h3>
   </div>
   <div class="columns medium-6">
-    <a class="button">Reset Filters</a>
+    <div *ngIf="anyFiltersSelected()">
+      <a class="button" (click)="resetAllFilters()"><i class="icon icon-functional" data-icon="d"></i> Reset filters</a>
+    </div>
   </div>
 
 </div>
@@ -19,33 +21,49 @@
       <b>Molecule Type</b>
       <ul class="no-bullet">
         <li *ngFor="let molecule of moleculesMockList">
-
           <input #filter type="checkbox" value="{{molecule}}"
                  (change)="onChangeMoleculesFilter(filter.value)"
                  [checked]="isSelectedMolecule(molecule)"> {{molecule}}
-
         </li>
       </ul>
     </div>
 
     <div>
       <b>Species</b>
+      <ul class="no-bullet">
+        <li *ngFor="let species of speciesMockList">
+          <input #filter type="checkbox" value="{{species}}"
+                 (change)="onChangeSpeciesFilter(filter.value)"
+                 [checked]="isSelectedSpecies(species)"> {{species}}
+        </li>
+      </ul>
     </div>
 
     <div>
       <b>Interaction Type</b>
+      <ul class="no-bullet">
+        <li *ngFor="let interactionType of interactionTypeMockList">
+          <input #filter type="checkbox" value="{{interactionType}}"
+                 (change)="onChangeInteractionTypeFilter(filter.value)"
+                 [checked]="isSelectedInteractionType(interactionType)"> {{interactionType}}
+        </li>
+      </ul>
     </div>
 
     <div>
       <b>Interaction Detection Method</b>
-    </div>
-
-    <div>
-      <b>Publications</b>
+      <ul class="no-bullet">
+        <li *ngFor="let detectionMethod of detectionMethodMockList">
+          <input #filter type="checkbox" value="{{detectionMethod}}"
+                 (change)="onChangeDetectionMethodFilter(filter.value)"
+                 [checked]="isSelectedDetectionMethod(detectionMethod)"> {{detectionMethod}}
+        </li>
+      </ul>
     </div>
 
     <div>
       <b>MiScore</b>
+
     </div>
 
   </div>

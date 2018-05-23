@@ -13,6 +13,9 @@ export class InteractionsResultsComponent implements OnInit {
 
   private _term: string;
   private _moleculesFilter: string[];
+  private _speciesFilter: string[];
+  private _interactionTypeFilter: string[];
+  private _detectionMethodFilter: string[];
 
   constructor(private titleService: Title,
               private route: ActivatedRoute,
@@ -28,8 +31,9 @@ export class InteractionsResultsComponent implements OnInit {
 
         this._term = params.query;
         this._moleculesFilter = params.moleculeType ? params.moleculeType.split('+') : [];
-        console.log(this._term);
-        console.log(this._moleculesFilter);
+        this._speciesFilter = params.species ? params.species.split('+') : [];
+        this._interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this._detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
     });
   }
 
@@ -38,12 +42,44 @@ export class InteractionsResultsComponent implements OnInit {
     this.updateURLParams();
   }
 
+  public onSpeciesFilterChanged(filter: string[]): void {
+    this.speciesFilter = filter;
+    this.updateURLParams();
+  }
+
+  public onInteractionTypeFilterChanged(filter: string[]): void {
+    this.interactionTypeFilter = filter;
+    this.updateURLParams();
+  }
+
+  public onDetectionMethodFilterChanged(filter: string[]): void {
+    this.detectionMethodFilter = filter;
+    this.updateURLParams();
+  }
+
+  public onResetAllFilters(): void {
+    this.moleculesFilter = [];
+    this.speciesFilter = [];
+    this.interactionTypeFilter = [];
+    this.detectionMethodFilter = [];
+    this.updateURLParams();
+  }
+
   private updateURLParams(): void {
     const params: NavigationExtras = {};
     params['query'] = this._term;
 
-    if (this._moleculesFilter !== undefined && this._moleculesFilter.length !== 0) {
+    if (this.moleculesFilter !== undefined && this.moleculesFilter.length !== 0) {
       params['moleculeType'] = this.prepareFiltersForParams(this.moleculesFilter);
+    }
+    if (this.speciesFilter !== undefined && this.speciesFilter.length !== 0) {
+      params['species'] = this.prepareFiltersForParams(this.speciesFilter);
+    }
+    if (this.interactionTypeFilter !== undefined && this.interactionTypeFilter.length !== 0) {
+      params['interactionType'] = this.prepareFiltersForParams(this.interactionTypeFilter);
+    }
+    if (this.detectionMethodFilter !== undefined && this.detectionMethodFilter.length !== 0) {
+      params['detectionMethod'] = this.prepareFiltersForParams(this.detectionMethodFilter);
     }
 
     this.router.navigate([], { queryParams: params });
@@ -55,6 +91,13 @@ export class InteractionsResultsComponent implements OnInit {
 
   /** GETTERS AND SETTERS **/
 
+  get term(): string {
+    return this._term;
+  }
+
+  set term(value: string) {
+    this._term = value;
+  }
   get moleculesFilter(): string[] {
     return this._moleculesFilter;
   }
@@ -63,12 +106,27 @@ export class InteractionsResultsComponent implements OnInit {
     this._moleculesFilter = value;
   }
 
-
-  get term(): string {
-    return this._term;
+  get speciesFilter(): string[] {
+    return this._speciesFilter;
   }
 
-  set term(value: string) {
-    this._term = value;
+  set speciesFilter(value: string[]) {
+    this._speciesFilter = value;
+  }
+
+  get interactionTypeFilter(): string[] {
+    return this._interactionTypeFilter;
+  }
+
+  set interactionTypeFilter(value: string[]) {
+    this._interactionTypeFilter = value;
+  }
+
+  get detectionMethodFilter(): string[] {
+    return this._detectionMethodFilter;
+  }
+
+  set detectionMethodFilter(value: string[]) {
+    this._detectionMethodFilter = value;
   }
 }

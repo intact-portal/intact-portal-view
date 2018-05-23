@@ -1,13 +1,17 @@
 <div class="row expanded">
   <div class="columns medium-12">
-    Search term information
+    <h2 class="padding-left-large">Search for {{term}}</h2>
   </div>
 </div>
 
 <div class="row expanded">
 
   <div class="columns medium-3">
-    <iv-interactions-filters></iv-interactions-filters>
+    <iv-interactions-filters *ngIf="moleculesFilter"
+                             [moleculesFilter]="moleculesFilter"
+                             (onMoleculesFilterChanged)="onMoleculesFilterChanged($event)">
+
+    </iv-interactions-filters>
   </div>
 
   <div class="columns medium-9">

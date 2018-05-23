@@ -1,3 +1,52 @@
-<p>
-  interactions-filters placeholder!
-</p>
+<!--<p>-->
+  <!--interactions-filters placeholder!-->
+<!--</p>-->
+
+<div class="row">
+
+  <div class="columns medium-6">
+    <h3>Filters</h3>
+  </div>
+  <div class="columns medium-6">
+    <a class="button">Reset Filters</a>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="columns medium-12">
+    <div>
+      <b>Molecule Type</b>
+      <ul class="no-bullet">
+        <li *ngFor="let molecule of moleculesMockList">
+
+          <input #filter type="checkbox" value="{{molecule}}"
+                 (change)="onChangeMoleculesFilter(filter.value)"
+                 [checked]="isSelectedMolecule(molecule)"> {{molecule}}
+
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <b>Species</b>
+    </div>
+
+    <div>
+      <b>Interaction Type</b>
+    </div>
+
+    <div>
+      <b>Interaction Detection Method</b>
+    </div>
+
+    <div>
+      <b>Publications</b>
+    </div>
+
+    <div>
+      <b>MiScore</b>
+    </div>
+
+  </div>
+</div>

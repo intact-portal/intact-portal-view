@@ -11,10 +11,10 @@
       <!--TAB MAIN SEARCH SECTION-->
       <div class="tabs-panel is-active" id="panel1c" style="background-color:#e6e6e6;">
 
-        <form id="mainSearch" name="content-search" action="[search-action]" method="get">
+        <!--<form id="mainSearch" name="content-search">-->
           <div class="row margin-top-large">
             <div id="searchBox" class="columns small-11">
-              <textarea class="typeahead" type="text" placeholder="example"></textarea>
+              <textarea #query class="typeahead" type="text" placeholder="example"></textarea>
             </div>
               <input id="home-search-button" class="button margin-top-small" type="submit"
                      (click)="search(query.value, 'button')" value="Search"/>
@@ -41,7 +41,7 @@
               <!--<input id="home-search-clear-button" class="secondary hollow button" type="button" value="Clear"/>-->
             <!--</div>-->
           <!--</div>-->
-        </form>
+        <!--</form>-->
       </div>
 
       <!--TAB ADVANCED SECTION-->

@@ -1,9 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
+declare const $: any;
+
 @Component({
   selector: 'iv-interactions-filters',
   templateUrl: './interactions-filters.component.html',
-  styleUrls: ['./interactions-filters.component.css']
+  styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css']
 })
 export class InteractionsFiltersComponent implements OnInit {
   // TODO: Replace the static mock list for the correct ones once they are available
@@ -28,6 +30,39 @@ export class InteractionsFiltersComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.initSliderRange();
+
+  }
+
+  initSliderRange(): void {
+    const sliderRange =  $( '#slider-range' );
+    const handle1 = $('#custom-handle1');
+    const handle2 = $('#custom-handle2');
+    const range1 = $('#range1');
+    const range2 = $('#range2');
+
+    sliderRange.slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ 75, 300 ],
+      // create: function() {
+      //   handle1.text( $( this ).slider( 'value' ) );
+      // },
+      slide: function( event, ui ) {
+        handle1.text( ui.values[0] );
+        handle2.text( ui.values[1] );
+
+        range1.val( ui.values[0] );
+        range2.val( ui.values[1] );
+
+      }
+
+
+    });
+
+    range1.val(sliderRange.slider( 'values', 0 ));
+    range2.val(sliderRange.slider( 'values', 1 ));
   }
 
   onChangeMoleculesFilter(filter: string) {

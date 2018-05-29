@@ -1,7 +1,3 @@
-<!--<p>-->
-  <!--interactions-filters placeholder!-->
-<!--</p>-->
-
 <div class="row">
 
   <div class="columns medium-6">
@@ -15,7 +11,7 @@
 
 </div>
 
-<div class="row">
+<div class="row margin-bottom-large">
   <div class="columns medium-12">
     <div>
       <b>Molecule Type</b>
@@ -63,7 +59,42 @@
 
     <div>
       <b>MiScore</b>
+      <div class="row">
+        <div class="columns medium-2">
+          <!--<label>Range1:</label>-->
+          <input type="text" id="range1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </div>
 
+        <div id="slider-range" class="margin-top-large margin-bottom-large columns medium-5">
+          <!--<div id="custom-handle1" class="ui-slider-handle"></div>-->
+          <!--<div id="custom-handle2" class="ui-slider-handle"></div>-->
+        </div>
+
+        <div class="columns medium-5">
+          <!--<label>Range2:</label>-->
+          <input type="text" id="range2" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </div>
+      </div>
+    </div>
+
+    <div class="margin-top-medium">
+      <div class="float:left">
+        <label class="switch switch_type1" role="switch">
+          <input type="checkbox" class="switch__toggle" checked>
+          <span class="switch__label"></span>
+        </label>
+        <b class="margin-left-medium">Show negative interactions</b>
+      </div>
+    </div>
+
+    <div class="margin-top-medium">
+      <div class="float:left">
+        <label class="switch switch_type1" role="switch">
+          <input type="checkbox" class="switch__toggle" checked>
+          <span class="switch__label"></span>
+        </label>
+        <b class="margin-left-medium">Show self interactions</b>
+      </div>
     </div>
 
   </div>

@@ -6,7 +6,7 @@
 
 <div class="row expanded">
 
-  <div class="columns medium-3">
+  <div class="columns medium-2">
     <iv-interactions-filters *ngIf="moleculesFilter && speciesFilter && interactionTypeFilter && detectionMethodFilter"
                              [moleculesFilter]="moleculesFilter"
                              [speciesFilter]="speciesFilter"
@@ -21,9 +21,11 @@
     </iv-interactions-filters>
   </div>
 
-  <div class="columns medium-9">
-    <iv-interactions-viewer></iv-interactions-viewer>
-    <iv-interactions-list></iv-interactions-list>
+  <div class="columns medium-10">
+    <div class="inner-div">
+      <iv-interactions-viewer></iv-interactions-viewer>
+      <iv-interactions-list></iv-interactions-list>
+    </div>
   </div>
 
 </div>

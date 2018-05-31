@@ -1,3 +1,18 @@
-<p>
-  interactions-list placeholder!
-</p>
+<div class=" margin-top-large margin-bottom-large">
+
+  <ul class="tabs" data-tabs id="search-results-tabs">
+    <li class="tabs-title is-active"><a href="#interactor" aria-selected="true">Interactors</a></li>
+    <li class="tabs-title"><a href="#interactions">Interactions</a></li>
+  </ul>
+
+  <div class="tabs-content" data-tabs-content="search-results-tabs">
+    <div class="tabs-panel is-active" id="interactor" style="background-color:#f4f4f4;">
+      <iv-interactors-table></iv-interactors-table>
+    </div>
+
+    <div class="tabs-panel" id="interactions" style="background-color:#f4f4f4;">
+      <iv-interactions-table></iv-interactions-table>
+    </div>
+    </div>
+
+</div>

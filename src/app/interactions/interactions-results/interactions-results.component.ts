@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 import 'rxjs/add/operator/filter';
+import { InteractorsSearchResult } from '../shared/model/interactions-results/interactors-search.model';
+import { InteractorsSearchService } from '../shared/service/interactors-search.service';
 
 @Component({
   selector: 'iv-interactions-results',
@@ -17,9 +19,14 @@ export class InteractionsResultsComponent implements OnInit {
   private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
 
+  private _interactorsSearch: InteractorsSearchResult;
+  // private _interactionsSearch: any;
+  // private _termsSearch: any;
+
   constructor(private titleService: Title,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private interactorsSearchService: InteractorsSearchService) { }
 
   ngOnInit() {
     this.titleService.setTitle('Intact - Search Results');
@@ -34,7 +41,16 @@ export class InteractionsResultsComponent implements OnInit {
         this._speciesFilter = params.species ? params.species.split('+') : [];
         this._interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
         this._detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+
+        this.requestInteractorsResults();
     });
+  }
+
+  private requestInteractorsResults() {
+    this.interactorsSearchService.getAllInteractorsAndFacets().subscribe(interactorsSearch => {
+      this.interactorsSearch = interactorsSearch;
+      console.log('I am retrieving interactors ==> ' + interactorsSearch);
+    })
   }
 
   public onMoleculesFilterChanged(filter: string[]): void {
@@ -128,5 +144,13 @@ export class InteractionsResultsComponent implements OnInit {
 
   set detectionMethodFilter(value: string[]) {
     this._detectionMethodFilter = value;
+  }
+
+  get interactorsSearch(): InteractorsSearchResult {
+    return this._interactorsSearch;
+  }
+
+  set interactorsSearch(value: InteractorsSearchResult) {
+    this._interactorsSearch = value;
   }
 }

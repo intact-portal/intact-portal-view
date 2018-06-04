@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {InteractorsSearchResult} from '../../shared/model/interactions-results/interactors-search.model';
 
 declare const $: any;
 
@@ -9,6 +10,8 @@ declare const $: any;
 })
 export class InteractionsListComponent implements OnInit, AfterViewInit {
 
+  private _interactorsSearch: InteractorsSearchResult;
+
   constructor() { }
 
   ngOnInit() {
@@ -18,4 +21,16 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     $('iv-interactions-list').foundation();
   }
 
+
+  /** GETTERS AND SETTERS **/
+
+  get interactorsSearch(): InteractorsSearchResult {
+    return this._interactorsSearch;
+  }
+
+  @Input()
+  set interactorsSearch(value: InteractorsSearchResult) {
+    this._interactorsSearch = value;
+    console.log(this._interactorsSearch);
+  }
 }

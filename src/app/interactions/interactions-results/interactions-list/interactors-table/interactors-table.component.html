@@ -1,48 +1,62 @@
 <!--<div class="row">-->
   <div class="columns medium-12">
 
+    <div *ngIf="interactorsSearch">
+      <div>Interactors search result total: {{interactorsSearch.numberOfElements}}</div>
+    </div>
+
     <table id="interactorsTable" class="tablesaw tablesaw-columntoggle" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
       <thead>
         <tr>
-          <th data-tablesaw-priority="persist">Names</th>
-          <th data-tablesaw-priority="2">Type</th>
-          <th data-tablesaw-priority="3">Interactions</th>
-          <th data-tablesaw-priority="4">Links</th>
-          <th data-tablesaw-priority="5">Species</th>
-          <th data-tablesaw-priority="7">Accession</th>
+          <th data-tablesaw-priority="persist">Accession</th>
+          <th data-tablesaw-priority="2">Names</th>
+          <th data-tablesaw-priority="3">Type</th>
+          <th data-tablesaw-priority="4">Species</th>
+          <th data-tablesaw-priority="5">Interactions</th>
+          <th data-tablesaw-priority="6">Links</th>
           <th data-tablesaw-priority="7">Description</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>pds5b_human</td>
-          <td>protein</td>
-          <td>27</td>
-          <td>Uniprot</td>
-          <td>human</td>
-          <td>EBI-1175604</td>
-          <td>Sister chromatid cohesion protein PDS5 homolog B</td>
+      <tbody *ngIf="interactorsSearch">
+        <tr *ngFor="let interactor of interactorsSearch.content">
+          <td>{{interactor.interactorId}}</td>
+          <td>{{interactor.interactorName}}</td>
+          <td>{{interactor.interactorType}}</td>
+          <td>{{interactor.species}}</td>
+          <td>{{interactor.interactionCount}}</td>
+          <td></td>
+          <td>{{interactor.description}}</td>
         </tr>
 
-        <tr>
-          <td>polh_human</td>
-          <td>protein</td>
-          <td>6</td>
-          <td>Uniprot</td>
-          <td>human</td>
-          <td>EBI-2827270</td>
-          <td>DNA polymerase eta</td>
-        </tr>
+        <!--<tr>-->
+          <!--<td>pds5b_human</td>-->
+          <!--<td>protein</td>-->
+          <!--<td>27</td>-->
+          <!--<td>Uniprot</td>-->
+          <!--<td>human</td>-->
+          <!--<td>EBI-1175604</td>-->
+          <!--<td>Sister chromatid cohesion protein PDS5 homolog B</td>-->
+        <!--</tr>-->
 
-        <tr>
-          <td>polh_human</td>
-          <td>protein</td>
-          <td>6</td>
-          <td>Uniprot</td>
-          <td>human</td>
-          <td>EBI-2827270</td>
-          <td>DNA polymerase eta</td>
-        </tr>
+        <!--<tr>-->
+          <!--<td>polh_human</td>-->
+          <!--<td>protein</td>-->
+          <!--<td>6</td>-->
+          <!--<td>Uniprot</td>-->
+          <!--<td>human</td>-->
+          <!--<td>EBI-2827270</td>-->
+          <!--<td>DNA polymerase eta</td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+          <!--<td>polh_human</td>-->
+          <!--<td>protein</td>-->
+          <!--<td>6</td>-->
+          <!--<td>Uniprot</td>-->
+          <!--<td>human</td>-->
+          <!--<td>EBI-2827270</td>-->
+          <!--<td>DNA polymerase eta</td>-->
+        <!--</tr>-->
       </tbody>
     </table>
   </div>

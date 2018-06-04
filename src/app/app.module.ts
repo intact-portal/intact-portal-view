@@ -11,6 +11,7 @@ import { ContributorsComponent } from './home-dashboard/contributors/contributor
 import { FeatureDatasetService } from './home-dashboard/featured-dataset/service/feature-dataset.service';
 import { InteractionsModule } from './interactions/interactions.module';
 import { SearchService } from './search/service/search.service';
+import { InteractorsSearchService } from './interactions/shared/service/interactors-search.service';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { SearchService } from './search/service/search.service';
     InteractionsModule,
     AppRoutingModule
   ],
-  providers: [FeatureDatasetService, SearchService],
+  providers: [FeatureDatasetService, SearchService, InteractorsSearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

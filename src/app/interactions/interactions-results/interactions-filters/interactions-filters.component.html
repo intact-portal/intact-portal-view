@@ -13,27 +13,47 @@
 
 <div class="row margin-bottom-large">
   <div class="columns medium-12">
-    <div>
-      <b>Molecule Type</b>
-      <ul class="no-bullet">
-        <li *ngFor="let molecule of moleculesMockList">
-          <input #filter type="checkbox" value="{{molecule}}"
-                 (change)="onChangeMoleculesFilter(filter.value)"
-                 [checked]="isSelectedMolecule(molecule)"> {{molecule}}
-        </li>
-      </ul>
+
+    <div *ngIf="filters">
+
+      <div *ngFor="let filter of filters">
+        <b>{{filter.name}}</b>
+        <div *ngFor="let facetType of facets">
+          <ul class="no-bullet">
+            <li *ngFor="let facet of facetType.content">
+              <div *ngIf="filter.name === facet.field.name">
+                <input #field type="checkbox" value="{{facet.value}}"
+                        (change)="onChangeFilters(filter.name, field.value)"
+                        [checked]="isSelectedFilter(filter.name, facet.value)"> {{facet.value}} ({{facet.valueCount}})
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <b>Interactor Species</b>
-      <ul class="no-bullet">
-        <li *ngFor="let species of speciesMockList">
-          <input #filter type="checkbox" value="{{species}}"
-                 (change)="onChangeSpeciesFilter(filter.value)"
-                 [checked]="isSelectedSpecies(species)"> {{species}}
-        </li>
-      </ul>
-    </div>
+    <!--<div>-->
+      <!--<b>Molecule Type</b>-->
+      <!--<ul class="no-bullet">-->
+        <!--<li *ngFor="let molecule of moleculesMockList">-->
+          <!--<input #filter type="checkbox" value="{{molecule}}"-->
+                 <!--(change)="onChangeMoleculesFilter(filter.value)"-->
+                 <!--[checked]="isSelectedMolecule(molecule)"> {{molecule}}-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
+
+    <!--<div>-->
+      <!--<b>Interactor Species</b>-->
+      <!--<ul class="no-bullet">-->
+        <!--<li *ngFor="let species of speciesMockList">-->
+          <!--<input #filter type="checkbox" value="{{species}}"-->
+                 <!--(change)="onChangeSpeciesFilter(filter.value)"-->
+                 <!--[checked]="isSelectedSpecies(species)"> {{species}}-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
 
     <div>
       <b>Interaction Type</b>

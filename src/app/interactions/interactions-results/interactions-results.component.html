@@ -7,11 +7,14 @@
 <div class="row expanded">
 
   <div class="columns medium-2">
-    <iv-interactions-filters *ngIf="moleculesFilter && speciesFilter && interactionTypeFilter && detectionMethodFilter"
+    <iv-interactions-filters *ngIf="interactorsSearch && moleculesFilter && speciesFilter && interactionTypeFilter && detectionMethodFilter"
+                             [facets]="interactorsSearch.facetResultPages"
+                             [filters]="interactorsSearch.facetFields"
                              [moleculesFilter]="moleculesFilter"
                              [speciesFilter]="speciesFilter"
                              [interactionTypeFilter]="interactionTypeFilter"
                              [detectionMethodFilter]="detectionMethodFilter"
+                             (onFiltersChanged)="onFiltersChanged($event)"
                              (onResetAllFilters)="onResetAllFilters($event)"
                              (onMoleculesFilterChanged)="onMoleculesFilterChanged($event)"
                              (onSpeciesFilterChanged)="onSpeciesFilterChanged($event)"

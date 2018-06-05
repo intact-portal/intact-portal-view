@@ -1,4 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {InteractorFacets} from '../../shared/model/interactions-results/interactor-facets.model';
+import {InteractorFilters} from '../../shared/model/interactions-results/interactor-filters.model';
+import {Filter} from '../../shared/model/interactions-results/filter.model';
 
 declare const $: any;
 
@@ -8,6 +11,7 @@ declare const $: any;
   styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css']
 })
 export class InteractionsFiltersComponent implements OnInit {
+
   // TODO: Replace the static mock list for the correct ones once they are available
   moleculesMockList: string[] = ['Bioentity', 'RNA', 'DNA', 'Protein', 'Gene', 'Complex'];
   speciesMockList: string[] = ['Homo sapiens', 'Mus musculus', 'Arabidopsis thaliana', 'Escherichia coli', 'Rattus norvegicus',
@@ -15,6 +19,10 @@ export class InteractionsFiltersComponent implements OnInit {
   interactionTypeMockList: string[] = ['Physical association', 'Direct interaction', 'Phosphorylation reaction', 'Genetic interaction'];
   detectionMethodMockList: string[] = ['Anti tag coimmunoprecipitation', 'Anti bait coimmunoprecipitation', 'Genetic interference',
     'Two hybrid'];
+
+  private _facets: InteractorFacets[];
+  private _filters: Filter[]; // string[];
+  private _allFilters: InteractorFilters[];
 
   private _moleculesFilter: string[] = [];
   private _speciesFilter: string[] = [];
@@ -27,11 +35,23 @@ export class InteractionsFiltersComponent implements OnInit {
   @Output() onDetectionMethodFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onResetAllFilters: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Output() onFiltersChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+
   constructor() { }
 
   ngOnInit() {
     this.initSliderRange();
+    this.updateFilters();
+  }
 
+  updateFilters(): void {
+    const interactorfilters: InteractorFilters[] = [];
+
+    for (const item of this.filters) {
+      console.log(item.name);
+    }
+
+    // this.allFilters
   }
 
   initSliderRange(): void {
@@ -85,6 +105,11 @@ export class InteractionsFiltersComponent implements OnInit {
     this.onSpeciesFilterChanged.emit(this.speciesFilter);
   }
 
+  onChangeFilters(filter: string, value: string) {
+
+
+  }
+
   onChangeInteractionTypeFilter(filter: string) {
     if (!this.interactionTypeFilter.includes(filter)) {
       this.interactionTypeFilter.push(filter);
@@ -113,6 +138,10 @@ export class InteractionsFiltersComponent implements OnInit {
     return this.speciesFilter !== undefined ? this.speciesFilter.indexOf(species) >= 0 : false;
   }
 
+  isSelectedFilter(filter: string, facet: string) {
+    return false;
+  }
+
   isSelectedInteractionType(interactionType: string) {
     return this.interactionTypeFilter !== undefined ? this.interactionTypeFilter.indexOf(interactionType) >= 0 : false;
   }
@@ -131,6 +160,33 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   /** GETTERS AND SETTERS **/
+
+  get facets(): InteractorFacets[] {
+    return this._facets;
+  }
+
+  @Input()
+  set facets(value: InteractorFacets[]) {
+    this._facets = value;
+  }
+
+
+  get filters(): Filter[] {
+    return this._filters;
+  }
+
+  @Input()
+  set filters(value: Filter[]) {
+    this._filters = value;
+  }
+
+  get allFilters(): InteractorFilters[] {
+    return this._allFilters;
+  }
+
+  set allFilters(value: InteractorFilters[]) {
+    this._allFilters = value;
+  }
 
   get moleculesFilter(): string[] {
     return this._moleculesFilter;

@@ -37,20 +37,15 @@ export class InteractorsSearchService {
                                   speciesFilter: string[] = [],
                                   interactorTypeFilter: string[] = [],
                                   currentPageIndex = 1, pageSize = 20): Observable<InteractorsSearchResult> {
-    let filters = '';
-    if (speciesFilter.length !== 0) {
-      filters += 'species_name_str:(' + '"' + speciesFilter.join('"AND"') + '"' + '),';
-    }
-    if (interactorTypeFilter.length !== 0) {
-      filters += 'interactor_type_str:(' + '"' + speciesFilter.join('"AND"') + '"' + '),';
-    }
 
     const params = new HttpParams()
-      .set('first', currentPageIndex.toString())
-      .set('number', pageSize.toString())
-      .set('filters', filters);
+      .set('query', query)
+      .set('page', currentPageIndex.toString())
+      .set('pageSize', pageSize.toString())
+      .set('interactorTypeFilter', interactorTypeFilter.toString())
+      .set('speciesFilter', speciesFilter.toString());
 
-    return this.http.get('/interactorService/getAllTaxIdFacets' + query, {params: params})
+    return this.http.get('/interactorService/findInteractorWithFacet', {params: params})
       .catch(this.handleError);
   }
 

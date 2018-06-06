@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
 import 'rxjs/add/operator/filter';
-import { InteractorsSearchResult } from '../shared/model/interactions-results/interactors-search.model';
-import { InteractorsSearchService } from '../shared/service/interactors-search.service';
+import {InteractorsSearchResult} from '../shared/model/interactions-results/interactors-search.model';
+import {InteractorsSearchService} from '../shared/service/interactors-search.service';
 
 @Component({
   selector: 'iv-interactions-results',
@@ -47,7 +47,13 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   private requestInteractorsResults() {
-    this.interactorsSearchService.getAllInteractorsAndFacets().subscribe(interactorsSearch => {
+    this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
+      this.term,
+      this.speciesFilter,
+      this.interactionTypeFilter,
+      0,
+      20
+    ).subscribe(interactorsSearch => {
       this.interactorsSearch = interactorsSearch;
       console.log('I am retrieving interactors ==> ' + interactorsSearch);
     })

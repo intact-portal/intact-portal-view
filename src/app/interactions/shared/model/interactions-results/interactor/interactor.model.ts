@@ -7,14 +7,14 @@ export class Interactor {
   private _interactionCount: number;
 
   constructor(interactorName: string,
-              interactorId: string,
               description: string,
+              interactorId: string,
               interactorType: string,
               species: string,
-              interactionCount: number){
+              interactionCount: number) {
     this._interactorName = interactorName;
-    this._interactorAc = interactorId;
     this._description = description;
+    this._interactorAc = interactorId;
     this._interactorType = interactorType;
     this._speciesName = species;
     this._interactionCount = interactionCount;

@@ -1,21 +1,20 @@
 import {Interactor} from './interactor.model';
 import {InteractorFacets} from './interactor-facets.model';
-import {Filter} from './filter.model';
+import {Filter} from '../filter.model';
 
 export class InteractorsSearchResult {
   private _content: Interactor[];
   private _numberOfElements: number;
-
-  private _facetResultPages: InteractorFacets[];
+  private _facetResultPage: InteractorFacets;
   private _filtersType: Filter[];
 
   constructor(content: Interactor[],
               numberOfElements: number,
-              facetResultPages: InteractorFacets[],
+              facetResultPages: InteractorFacets,
               filtersType: Filter[]) {
     this._content = content;
     this._numberOfElements = numberOfElements;
-    this._facetResultPages = facetResultPages;
+    this._facetResultPage = facetResultPages;
     this._filtersType = filtersType;
   }
 
@@ -37,12 +36,12 @@ export class InteractorsSearchResult {
     this._numberOfElements = value;
   }
 
-  get facetResultPages(): InteractorFacets[] {
-    return this._facetResultPages;
+  get facetResultPage(): InteractorFacets {
+    return this._facetResultPage;
   }
 
-  set facetResultPages(value: InteractorFacets[]) {
-    this._facetResultPages = value;
+  set facetResultPage(value: InteractorFacets) {
+    this._facetResultPage = value;
   }
 
   get facetFields(): Filter[] {

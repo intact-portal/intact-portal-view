@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { InteractorsSearchResult } from '../model/interactions-results/interactors-search.model';
+import { InteractorsSearchResult } from '../model/interactions-results/interactor/interactors-search.model';
 import { environment } from '../../../../environments/environment';
 
 // const interactorBaseURL = environment.interactor_base_url;
@@ -34,8 +34,8 @@ export class InteractorsSearchService {
   }
 
   getAllInteractorsAndFacetsQuery(query: string,
-                                  speciesFilter: string[] = [],
-                                  interactorTypeFilter: string[] = [],
+                                  speciesFilter: string[],
+                                  interactorTypeFilter: string[],
                                   currentPageIndex = 1, pageSize = 20): Observable<InteractorsSearchResult> {
 
     const params = new HttpParams()

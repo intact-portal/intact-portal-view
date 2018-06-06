@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import { InteractorsSearchResult } from '../../../shared/model/interactions-results/interactors-search.model';
+import { InteractorsSearchResult } from '../../../shared/model/interactions-results/interactor/interactors-search.model';
 
 @Component({
   selector: 'iv-interactors-table',

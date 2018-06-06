@@ -3,8 +3,8 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
 import 'rxjs/add/operator/filter';
-import {InteractorsSearchResult} from '../shared/model/interactions-results/interactors-search.model';
-import {InteractorsSearchService} from '../shared/service/interactors-search.service';
+import { InteractorsSearchResult } from '../shared/model/interactions-results/interactor/interactors-search.model';
+import { InteractorsSearchService } from '../shared/service/interactors-search.service';
 
 @Component({
   selector: 'iv-interactions-results',
@@ -14,8 +14,9 @@ import {InteractorsSearchService} from '../shared/service/interactors-search.ser
 export class InteractionsResultsComponent implements OnInit {
 
   private _term: string;
-  private _moleculesFilter: string[];
-  private _speciesFilter: string[];
+  private _speciesNameFilter: string[];
+  private _interactorTypeFilter: string[];
+
   private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
 
@@ -36,11 +37,11 @@ export class InteractionsResultsComponent implements OnInit {
       .subscribe(params => {
         console.log(params);
 
-        this._term = params.query;
-        this._moleculesFilter = params.moleculeType ? params.moleculeType.split('+') : [];
-        this._speciesFilter = params.species ? params.species.split('+') : [];
-        this._interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
-        this._detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+        this.term = params.query;
+        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
+        this.speciesNameFilter = params.species ? params.species.split('+') : [];
+        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
 
         this.requestInteractorsResults();
     });
@@ -49,23 +50,26 @@ export class InteractionsResultsComponent implements OnInit {
   private requestInteractorsResults() {
     this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
       this.term,
-      this.speciesFilter,
-      this.interactionTypeFilter,
+      this.speciesNameFilter,
+      this.interactorTypeFilter,
       0,
       20
     ).subscribe(interactorsSearch => {
       this.interactorsSearch = interactorsSearch;
       console.log('I am retrieving interactors ==> ' + interactorsSearch);
+      console.log('Interactor type filters ==> ' + this.interactorTypeFilter);
+      console.log('Species name filters ==> ' + this.speciesNameFilter);
+
     })
   }
 
-  public onMoleculesFilterChanged(filter: string[]): void {
-    this.moleculesFilter = filter;
+  public onSpeciesNameFilterChanged(filter: string[]): void {
+    this.speciesNameFilter = filter;
     this.updateURLParams();
   }
 
-  public onSpeciesFilterChanged(filter: string[]): void {
-    this.speciesFilter = filter;
+  public onInteractorTypeFilterChanged(filter: string[]): void {
+    this.interactorTypeFilter = filter;
     this.updateURLParams();
   }
 
@@ -80,8 +84,8 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   public onResetAllFilters(): void {
-    this.moleculesFilter = [];
-    this.speciesFilter = [];
+    this.interactionTypeFilter = [];
+    this.speciesNameFilter = [];
     this.interactionTypeFilter = [];
     this.detectionMethodFilter = [];
     this.updateURLParams();
@@ -91,11 +95,11 @@ export class InteractionsResultsComponent implements OnInit {
     const params: NavigationExtras = {};
     params['query'] = this._term;
 
-    if (this.moleculesFilter !== undefined && this.moleculesFilter.length !== 0) {
-      params['moleculeType'] = this.prepareFiltersForParams(this.moleculesFilter);
+    if (this.interactorTypeFilter !== undefined && this.interactorTypeFilter.length !== 0) {
+      params['interactorType'] = this.prepareFiltersForParams(this.interactorTypeFilter);
     }
-    if (this.speciesFilter !== undefined && this.speciesFilter.length !== 0) {
-      params['species'] = this.prepareFiltersForParams(this.speciesFilter);
+    if (this.speciesNameFilter !== undefined && this.speciesNameFilter.length !== 0) {
+      params['species'] = this.prepareFiltersForParams(this.speciesNameFilter);
     }
     if (this.interactionTypeFilter !== undefined && this.interactionTypeFilter.length !== 0) {
       params['interactionType'] = this.prepareFiltersForParams(this.interactionTypeFilter);
@@ -120,20 +124,21 @@ export class InteractionsResultsComponent implements OnInit {
   set term(value: string) {
     this._term = value;
   }
-  get moleculesFilter(): string[] {
-    return this._moleculesFilter;
+
+  get speciesNameFilter(): string[] {
+    return this._speciesNameFilter;
   }
 
-  set moleculesFilter(value: string[]) {
-    this._moleculesFilter = value;
+  set speciesNameFilter(value: string[]) {
+    this._speciesNameFilter = value;
   }
 
-  get speciesFilter(): string[] {
-    return this._speciesFilter;
+  get interactorTypeFilter(): string[] {
+    return this._interactorTypeFilter;
   }
 
-  set speciesFilter(value: string[]) {
-    this._speciesFilter = value;
+  set interactorTypeFilter(value: string[]) {
+    this._interactorTypeFilter = value;
   }
 
   get interactionTypeFilter(): string[] {

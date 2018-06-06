@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {InteractorsSearchResult} from '../../shared/model/interactions-results/interactors-search.model';
+import {InteractorsSearchResult} from '../../shared/model/interactions-results/interactor/interactors-search.model';
 
 declare const $: any;
 
@@ -31,6 +31,5 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   @Input()
   set interactorsSearch(value: InteractorsSearchResult) {
     this._interactorsSearch = value;
-    console.log(this._interactorsSearch);
   }
 }

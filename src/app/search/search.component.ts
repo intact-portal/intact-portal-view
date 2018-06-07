@@ -58,7 +58,13 @@ export class SearchComponent implements OnInit, AfterViewInit {
     const interactorsData = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorId'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      local: jsonInteractorsData
+      remote: {
+        url: '/interactorService/findInteractor/%QUERY',
+        wildcard: '%QUERY',
+        transform: function (data) {
+          return data.content;
+        }
+      }
     });
     interactorsData.initialize();
 
@@ -147,7 +153,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
                       '<div class="columns small-2">' + item.termName + '</div>' +
                       '<div class="columns small-3"> <i>"' + item.description + '"</i> </div>' +
                       '<div class="columns small-3"><span class="labelWrapper">' + item.label + '</span></div>' +
-                      '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions +
+                      '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount +
                           ' interactions' + '</span></div>' +
               '</div>'
           }
@@ -157,13 +163,46 @@ export class SearchComponent implements OnInit, AfterViewInit {
         name: 'interactors',
         source: interactorsData,
         display: function (item) {
-          return item.interactorId + ' ' + item.interactorName + ' ' + item.interactorType +
-            ' ' + item.description + ' ' + item.species + ' ' + item.interactions + ' interactions'
+          // let interactor_id = '';
+          // items.forEach(function (item) {
+          //    interactor_id = item.interactorId;
+          // });
+          // return interactor_id;
+          return item.interactorId
+            // + ' ' + item.interactorName + ' ' + item.interactorType +
+            // ' ' + item.description + ' ' + item.species + ' ' + item.interactionCount + ' interactions'
         },
         templates: {
           header: '<h4 class="category-name">Interactors</h4>',
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: function (item) {
+            // let str = '';
+            //   items.forEach( function (item) {
+            //     str += '<div class="row">' +
+            //       ' <div class="columns small-1">' + item.interactorId + '</div>' +
+            //       ' <div class="columns small-1">' + item.interactorName + '</div>' +
+            //       ' <div class="columns small-3"><i>"' + item.description + '"</i> </div>' +
+            //       ' <div class="columns small-3"> ' + item.species + '</div>' +
+            //       ' <div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</div>' +
+            //       ' <div class="columns small-2"><span class="interactionsWrapper">' + item.interactions + ' interactions' + '</span></div>' +
+            //       ' </div>'
+            //   });
+            // return str;
+          // },
+
+
+              // items.forEach(function (item) {
+              // return items.forEach((item, index) => {
+              //   return ('<div class="row">' +
+              //     '<div class="columns small-1">' + item.interactorId + '</div>' +
+              //     '<div class="columns small-1">' + item.interactorName + '</div>' +
+              //     '<div class="columns small-3"><i>"' + item.description + '"</i> </div>' +
+              //     '<div class="columns small-3">' + item.species + '</div>' +
+              //     '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</div>' +
+              //     '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions + ' interactions' + '</span></div>' +
+              //     '</div>')
+              //   });
+
 
             return '<div class="row">' +
               '<div class="columns small-1">' + item.interactorId + '</div>' +
@@ -171,7 +210,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '<div class="columns small-3"><i>"' + item.description + '"</i> </div>' +
               '<div class="columns small-3">' + item.species + '</div>' +
               '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions + ' interactions' + '</span></div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>' +
               '</div>'
 
           },
@@ -192,14 +231,14 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '<div class="columns small-2">' + item.author + '</div>' +
               '<div class="columns small-4">' + item.publicationId + '</div>' +
               '<div class="columns small-3"></div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions + ' interactions' + '</span></div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>' +
               '</div>' :
 
               '<div class="row">' +
               '<div class="columns small-2">' + item.author + '</div>' +
               '<div class="columns small-4">' + item.publicationId + '</div>' +
               '<div class="columns small-3">' + item.interactionsIds + '</div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions + ' interactions' + '</span></div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>' +
               '</div>'
 
           },

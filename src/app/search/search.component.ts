@@ -172,14 +172,13 @@ export class SearchComponent implements OnInit, AfterViewInit {
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: function (item) {
             return '<div class="row">' +
-              '<div class="columns small-1">' + item.interactorId + '</div>' +
-              '<div class="columns small-1">' + item.interactorName + '</div>' +
-              '<div class="columns small-3"><i>"' + item.description + '"</i> </div>' +
-              '<div class="columns small-3">' + item.species + '</div>' +
+              '<div class="columns small-2">' + item.interactorId + '</div>' +
+              '<div class="columns small-2"><i>"' + item.description + '"</i> </div>' +
+              '<div class="columns small-2">' + item.interactorName + '</div>' +
+              '<div class="columns small-2">' + item.species + '</div>' +
               '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</div>' +
               '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>' +
               '</div>'
-
           },
 
         }

@@ -8,6 +8,7 @@
     <table id="interactorsTable" class="tablesaw tablesaw-columntoggle" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
       <thead>
         <tr>
+          <th></th>
           <th data-tablesaw-priority="persist">Names</th>
           <th data-tablesaw-priority="2">Description</th>
           <th data-tablesaw-priority="3">Accession</th>
@@ -18,6 +19,10 @@
       </thead>
       <tbody *ngIf="interactorsSearch">
         <tr *ngFor="let interactor of interactorsSearch.content">
+          <td id="tablesaw-checkbox">
+            <input type="checkbox"
+                   (change)="onSelected(interactor.interactorId)"
+                   [checked]="isSelectedInteractor(interactor.interactorId)"/> </td>
           <td>{{interactor.interactorName}}</td>
           <td>{{interactor.description}}</td>
           <td>{{interactor.interactorId}}</td>

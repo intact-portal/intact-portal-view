@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'iv-interactions-viewer',
@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InteractionsViewerComponent implements OnInit {
 
+  private _interactorsSelected: string[];
+
+  @Input()  name: string;
+
   constructor() { }
 
   ngOnInit() {
+    console.log('Arriving interactors list ----> ' + this.interactorsSelected);
+    console.log(this.name);
   }
 
+
+  get interactorsSelected(): string[] {
+    return this._interactorsSelected;
+  }
+
+  @Input()
+  set interactorsSelected(value: string[]) {
+    this._interactorsSelected = value;
+  }
 }

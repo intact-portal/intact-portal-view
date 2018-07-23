@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
@@ -11,7 +11,7 @@ import { InteractorsSearchService } from '../shared/service/interactors-search.s
   templateUrl: './interactions-results.component.html',
   styleUrls: ['./interactions-results.component.css']
 })
-export class InteractionsResultsComponent implements OnInit {
+export class InteractionsResultsComponent implements OnInit, AfterViewInit {
 
   private _term: string;
   private _speciesNameFilter: string[];
@@ -21,6 +21,11 @@ export class InteractionsResultsComponent implements OnInit {
   private _detectionMethodFilter: string[];
 
   private _interactorsSearch: InteractorsSearchResult;
+
+  // Interactors selected checkboxes list from the results-list
+  private _interactorsSelected: string[] = [];
+  checkedList: string[] = [];
+
   // private _interactionsSearch: any;
   // private _termsSearch: any;
 
@@ -35,7 +40,7 @@ export class InteractionsResultsComponent implements OnInit {
     this.route.queryParams
       .filter(params => params.query)
       .subscribe(params => {
-        console.log(params);
+        // console.log(params);
 
         this.term = params.query;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
@@ -46,6 +51,11 @@ export class InteractionsResultsComponent implements OnInit {
         this.requestInteractorsResults();
     });
   }
+  //
+  // ngAfterViewInit() {
+  //   console.log('Interactors selected' + this.interactorsSelected);
+  //   this.onInteractorsSelectedChanged(this.interactorsSelected);
+  // }
 
   private requestInteractorsResults() {
     this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
@@ -56,9 +66,9 @@ export class InteractionsResultsComponent implements OnInit {
       20
     ).subscribe(interactorsSearch => {
       this.interactorsSearch = interactorsSearch;
-      console.log('I am retrieving interactors ==> ' + interactorsSearch);
-      console.log('Interactor type filters ==> ' + this.interactorTypeFilter);
-      console.log('Species name filters ==> ' + this.speciesNameFilter);
+      // console.log('I am retrieving interactors ==> ' + interactorsSearch);
+      // console.log('Interactor type filters ==> ' + this.interactorTypeFilter);
+      // console.log('Species name filters ==> ' + this.speciesNameFilter);
 
     })
   }
@@ -89,6 +99,12 @@ export class InteractionsResultsComponent implements OnInit {
     this.interactionTypeFilter = [];
     this.detectionMethodFilter = [];
     this.updateURLParams();
+  }
+
+  public onInteractorsSelectedChanged(interactors: string[]): void {
+      this.interactorsSelected = interactors;
+      console.info('Interactors selected so ffffarrr: ' + this.interactorsSelected);
+      this.checkedList = this.interactorsSelected;
   }
 
   private updateURLParams(): void {
@@ -163,5 +179,16 @@ export class InteractionsResultsComponent implements OnInit {
 
   set interactorsSearch(value: InteractorsSearchResult) {
     this._interactorsSearch = value;
+  }
+
+  // From interactors results list checkboxes
+
+  get interactorsSelected(): string[] {
+    return this._interactorsSelected;
+  }
+
+  @Input()
+  set interactorsSelected(value: string[]) {
+    this._interactorsSelected = value;
   }
 }

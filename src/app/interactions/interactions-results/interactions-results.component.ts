@@ -11,7 +11,7 @@ import { InteractorsSearchService } from '../shared/service/interactors-search.s
   templateUrl: './interactions-results.component.html',
   styleUrls: ['./interactions-results.component.css']
 })
-export class InteractionsResultsComponent implements OnInit, AfterViewInit {
+export class InteractionsResultsComponent implements OnInit {
 
   private _term: string;
   private _speciesNameFilter: string[];
@@ -24,7 +24,6 @@ export class InteractionsResultsComponent implements OnInit, AfterViewInit {
 
   // Interactors selected checkboxes list from the results-list
   private _interactorsSelected: string[] = [];
-  checkedList: string[] = [];
 
   // private _interactionsSearch: any;
   // private _termsSearch: any;
@@ -40,8 +39,6 @@ export class InteractionsResultsComponent implements OnInit, AfterViewInit {
     this.route.queryParams
       .filter(params => params.query)
       .subscribe(params => {
-        // console.log(params);
-
         this.term = params.query;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.speciesNameFilter = params.species ? params.species.split('+') : [];
@@ -51,11 +48,6 @@ export class InteractionsResultsComponent implements OnInit, AfterViewInit {
         this.requestInteractorsResults();
     });
   }
-  //
-  // ngAfterViewInit() {
-  //   console.log('Interactors selected' + this.interactorsSelected);
-  //   this.onInteractorsSelectedChanged(this.interactorsSelected);
-  // }
 
   private requestInteractorsResults() {
     this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
@@ -66,12 +58,10 @@ export class InteractionsResultsComponent implements OnInit, AfterViewInit {
       20
     ).subscribe(interactorsSearch => {
       this.interactorsSearch = interactorsSearch;
-      // console.log('I am retrieving interactors ==> ' + interactorsSearch);
-      // console.log('Interactor type filters ==> ' + this.interactorTypeFilter);
-      // console.log('Species name filters ==> ' + this.speciesNameFilter);
-
     })
   }
+
+  /** EVENT EMITTERS **/
 
   public onSpeciesNameFilterChanged(filter: string[]): void {
     this.speciesNameFilter = filter;
@@ -103,9 +93,10 @@ export class InteractionsResultsComponent implements OnInit, AfterViewInit {
 
   public onInteractorsSelectedChanged(interactors: string[]): void {
       this.interactorsSelected = interactors;
-      console.info('Interactors selected so ffffarrr: ' + this.interactorsSelected);
-      this.checkedList = this.interactorsSelected;
   }
+
+  /** END OF EVENT EMITTERS **/
+
 
   private updateURLParams(): void {
     const params: NavigationExtras = {};

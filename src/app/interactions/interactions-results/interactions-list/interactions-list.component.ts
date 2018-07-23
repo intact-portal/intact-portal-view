@@ -10,7 +10,7 @@ declare const $: any;
 })
 export class InteractionsListComponent implements OnInit, AfterViewInit {
 
-  private _interactorsSearch: InteractorsSearchResult;
+  @Input() interactorsSearch: InteractorsSearchResult;
   private _interactorsSelected: string[];
 
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -24,23 +24,14 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     $('iv-interactions-list').foundation();
   }
 
+  /** EVENT EMITTERS **/
+
   public onInteractorsSelectedChanged(interactors: string[]): void {
     this.interactorsSelected = interactors;
-    console.info('Interactors selected so farrr: ' + interactors);
-    this.interactorsChanged.emit(this.interactorsSelected);
+    this.interactorsChanged.emit(interactors);
   }
 
   /** GETTERS AND SETTERS **/
-
-  get interactorsSearch(): InteractorsSearchResult {
-    return this._interactorsSearch;
-  }
-
-  @Input()
-  set interactorsSearch(value: InteractorsSearchResult) {
-    this._interactorsSearch = value;
-  }
-
 
   get interactorsSelected(): string[] {
     return this._interactorsSelected;

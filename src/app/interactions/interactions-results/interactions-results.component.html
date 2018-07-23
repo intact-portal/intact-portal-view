@@ -26,10 +26,7 @@
   <div class="columns medium-10">
     <div class="inner-div">
 
-      <h2>List checked is  {{checkedList}}</h2>
-
-      <iv-interactions-viewer [name]="checkedList"
-                              [interactorsSelected]="interactorsSelected"></iv-interactions-viewer>
+      <iv-interactions-viewer [interactorsSelected]="interactorsSelected"></iv-interactions-viewer>
       <iv-interactions-list [interactorsSearch]="interactorsSearch"
                             [interactorsSelected]="interactorsSelected"
                             (interactorsChanged) = "onInteractorsSelectedChanged($event)"></iv-interactions-list>

@@ -9,15 +9,14 @@ import { InteractorsSearchResult } from '../../../shared/model/interactions-resu
 export class InteractorsTableComponent implements OnInit {
 
   private _interactorsSearch: InteractorsSearchResult;
-
   private _interactorsSelected: string[];
 
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-    console.log('Interactors passed ' + this.interactorsSearch)
   }
 
   onSelected(interactor: string) {

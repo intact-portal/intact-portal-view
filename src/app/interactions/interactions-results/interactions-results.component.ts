@@ -23,7 +23,7 @@ export class InteractionsResultsComponent implements OnInit {
   private _interactorsSearch: InteractorsSearchResult;
 
   // Interactors selected checkboxes list from the results-list
-  private _interactorsSelected: string[] = [];
+  private _interactorsSelected: string[];
 
   // private _interactionsSearch: any;
   // private _termsSearch: any;
@@ -44,6 +44,7 @@ export class InteractionsResultsComponent implements OnInit {
         this.speciesNameFilter = params.species ? params.species.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
         this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+        this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
 
         this.requestInteractorsResults();
     });
@@ -65,21 +66,25 @@ export class InteractionsResultsComponent implements OnInit {
 
   public onSpeciesNameFilterChanged(filter: string[]): void {
     this.speciesNameFilter = filter;
+    this.interactorsSelected = [];
     this.updateURLParams();
   }
 
   public onInteractorTypeFilterChanged(filter: string[]): void {
     this.interactorTypeFilter = filter;
+    this.interactorsSelected = [];
     this.updateURLParams();
   }
 
   public onInteractionTypeFilterChanged(filter: string[]): void {
     this.interactionTypeFilter = filter;
+    this.interactorsSelected = [];
     this.updateURLParams();
   }
 
   public onDetectionMethodFilterChanged(filter: string[]): void {
     this.detectionMethodFilter = filter;
+    this.interactorsSelected = [];
     this.updateURLParams();
   }
 
@@ -88,11 +93,13 @@ export class InteractionsResultsComponent implements OnInit {
     this.speciesNameFilter = [];
     this.interactionTypeFilter = [];
     this.detectionMethodFilter = [];
+    this.interactorsSelected = [];
     this.updateURLParams();
   }
 
   public onInteractorsSelectedChanged(interactors: string[]): void {
       this.interactorsSelected = interactors;
+      this.updateURLParams();
   }
 
   /** END OF EVENT EMITTERS **/
@@ -113,6 +120,9 @@ export class InteractionsResultsComponent implements OnInit {
     }
     if (this.detectionMethodFilter !== undefined && this.detectionMethodFilter.length !== 0) {
       params['detectionMethod'] = this.prepareFiltersForParams(this.detectionMethodFilter);
+    }
+    if (this.interactorsSelected !== undefined && this.interactorsSelected.length !== 0) {
+      params['interactorsSelected'] = this.prepareFiltersForParams(this.interactorsSelected);
     }
 
     this.router.navigate([], { queryParams: params });

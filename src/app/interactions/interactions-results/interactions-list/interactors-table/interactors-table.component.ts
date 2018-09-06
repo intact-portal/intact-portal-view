@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { InteractorsSearchResult } from '../../../shared/model/interactions-results/interactor/interactors-search.model';
 
 @Component({
@@ -9,14 +9,36 @@ import { InteractorsSearchResult } from '../../../shared/model/interactions-resu
 export class InteractorsTableComponent implements OnInit {
 
   private _interactorsSearch: InteractorsSearchResult;
+  private _interactorsSelected: string[];
 
-  constructor() { }
+  @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  ngOnInit() {
-    console.log('Interactors passed ' + this.interactorsSearch)
+  constructor() {
   }
 
-  /** GETTERS AND SETTERS **/
+  ngOnInit() {
+  }
+
+  onSelected(interactor: string) {
+    if (!this.interactorsSelected.includes(interactor)) {
+      this.interactorsSelected.push(interactor);
+    } else {
+      this.interactorsSelected.splice(this.interactorsSelected.indexOf(interactor), 1);
+    }
+
+    console.info(this._interactorsSelected);
+
+    this.interactorsChanged.emit(this.interactorsSelected);
+
+  }
+
+  isSelectedInteractor(interactor: string) {
+    return this.interactorsSelected !== undefined ? this.interactorsSelected.indexOf(interactor) >= 0 : false;
+  }
+
+  /************************* /
+  /** GETTERS AND SETTERS ** /
+  /*************************/
 
   get interactorsSearch(): InteractorsSearchResult {
     return this._interactorsSearch;
@@ -27,4 +49,16 @@ export class InteractorsTableComponent implements OnInit {
     this._interactorsSearch = value;
     console.log(this._interactorsSearch);
   }
+
+  /*** INTERACTORS SELECTED **/
+
+  get interactorsSelected(): string[] {
+    return this._interactorsSelected;
+  }
+
+  @Input()
+  set interactorsSelected(value: string[]) {
+    this._interactorsSelected = value;
+  }
+
 }

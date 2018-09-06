@@ -25,8 +25,12 @@
 
   <div class="columns medium-10">
     <div class="inner-div">
-      <iv-interactions-viewer></iv-interactions-viewer>
-      <iv-interactions-list [interactorsSearch]="interactorsSearch"></iv-interactions-list>
+
+      <iv-interactions-viewer [interactorsSelected]="interactorsSelected"></iv-interactions-viewer>
+      <iv-interactions-list *ngIf="interactorsSelected"
+                            [interactorsSearch]="interactorsSearch"
+                            [interactorsSelected]="interactorsSelected"
+                            (interactorsChanged) = "onInteractorsSelectedChanged($event)"></iv-interactions-list>
     </div>
   </div>
 

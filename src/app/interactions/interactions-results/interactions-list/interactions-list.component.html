@@ -8,7 +8,9 @@
 
   <div class="tabs-content" data-tabs-content="search-results-tabs">
     <div class="tabs-panel is-active" id="interactor" style="background-color:#f4f4f4;">
-      <iv-interactors-table [interactorsSearch]="interactorsSearch"></iv-interactors-table>
+      <iv-interactors-table [interactorsSearch]="interactorsSearch"
+                            [interactorsSelected] = "interactorsSelected"
+                            (interactorsChanged) = "onInteractorsSelectedChanged($event)"></iv-interactors-table>
     </div>
 
     <div class="tabs-panel" id="interactions" style="background-color:#f4f4f4;">

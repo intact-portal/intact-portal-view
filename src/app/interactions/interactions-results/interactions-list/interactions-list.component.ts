@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractorsSearchResult} from '../../shared/model/interactions-results/interactor/interactors-search.model';
 
 declare const $: any;
@@ -10,7 +10,10 @@ declare const $: any;
 })
 export class InteractionsListComponent implements OnInit, AfterViewInit {
 
-  private _interactorsSearch: InteractorsSearchResult;
+  @Input() interactorsSearch: InteractorsSearchResult;
+  private _interactorsSelected: string[];
+
+  @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   constructor() { }
 
@@ -21,15 +24,21 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     $('iv-interactions-list').foundation();
   }
 
+  /** EVENT EMITTERS **/
+
+  public onInteractorsSelectedChanged(interactors: string[]): void {
+    this.interactorsSelected = interactors;
+    this.interactorsChanged.emit(interactors);
+  }
 
   /** GETTERS AND SETTERS **/
 
-  get interactorsSearch(): InteractorsSearchResult {
-    return this._interactorsSearch;
+  get interactorsSelected(): string[] {
+    return this._interactorsSelected;
   }
 
   @Input()
-  set interactorsSearch(value: InteractorsSearchResult) {
-    this._interactorsSearch = value;
+  set interactorsSelected(value: string[]) {
+    this._interactorsSelected = value;
   }
 }

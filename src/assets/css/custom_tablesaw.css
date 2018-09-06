@@ -329,6 +329,12 @@ a.tablesaw-btn {
   text-align: left;
 }
 
+/* ADDED BY US to highlight the row when being clicked */
+.tablesaw tbody tr.active td  {
+  background-color: #123d5f !important;
+  color: white;
+}
+
 /* Table rows have a gray bottom stroke by default */
 
 .tablesaw-row-border tr {

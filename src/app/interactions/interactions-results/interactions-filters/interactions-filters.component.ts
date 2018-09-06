@@ -12,9 +12,6 @@ declare const $: any;
 export class InteractionsFiltersComponent implements OnInit {
 
   // TODO: Replace the static mock list for the correct ones once they are available
-  moleculesMockList: string[] = ['Bioentity', 'RNA', 'DNA', 'Protein', 'Gene', 'Complex'];
-  speciesMockList: string[] = ['Homo sapiens', 'Mus musculus', 'Arabidopsis thaliana', 'Escherichia coli', 'Rattus norvegicus',
-    'Drosophila melanogaster', 'Bos taurus', 'Yeast'];
   interactionTypeMockList: string[] = ['Physical association', 'Direct interaction', 'Phosphorylation reaction', 'Genetic interaction'];
   detectionMethodMockList: string[] = ['Anti tag coimmunoprecipitation', 'Anti bait coimmunoprecipitation', 'Genetic interference',
     'Two hybrid'];
@@ -94,33 +91,6 @@ export class InteractionsFiltersComponent implements OnInit {
     this.onInteractorTypeFilterChanged.emit(this.interactorTypeFilter);
   }
 
-  onChangeFilters(filterName: string, value: string) {
-    if (filterName === 'species_name_str') {
-      this.onChangeSpeciesNameFilter(value);
-    }
-    if (filterName === 'interactor_type_str') {
-      this.onChangeInteractorTypeFilter(value)
-    }
-  }
-
-  isSelectedFilter(filterName: string, value: string) {
-    if (filterName === 'species_name_str') {
-      this.isSelectedSpeciesName(value);
-    }
-    if (filterName === 'interactor_type_str') {
-      this.isSelectedInteractorType(value);
-    }
-  }
-
-  isSelectedSpeciesName(species: string) {
-    return this.speciesNameFilter !== undefined ? this.speciesNameFilter.indexOf(species) >= 0 : false;
-  }
-
-  isSelectedInteractorType(interactorType: string) {
-    return this.interactorTypeFilter !== undefined ? this.interactorTypeFilter.indexOf(interactorType) >= 0 : false;
-  }
-
-
   onChangeInteractionTypeFilter(filter: string) {
     if (!this.interactionTypeFilter.includes(filter)) {
       this.interactionTypeFilter.push(filter);
@@ -141,7 +111,13 @@ export class InteractionsFiltersComponent implements OnInit {
     this.onDetectionMethodFilterChanged.emit(this.detectionMethodFilter);
   }
 
+  isSelectedSpeciesName(species: string) {
+    return this.speciesNameFilter !== undefined ? this.speciesNameFilter.indexOf(species) >= 0 : false;
+  }
 
+  isSelectedInteractorType(interactorType: string) {
+    return this.interactorTypeFilter !== undefined ? this.interactorTypeFilter.indexOf(interactorType) >= 0 : false;
+  }
 
   isSelectedInteractionType(interactionType: string) {
     return this.interactionTypeFilter !== undefined ? this.interactionTypeFilter.indexOf(interactionType) >= 0 : false;
@@ -223,5 +199,4 @@ export class InteractionsFiltersComponent implements OnInit {
     this._detectionMethodFilter = value;
   }
 
-  /***** COMMON FILTERS *******/
 }

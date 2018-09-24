@@ -28,33 +28,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   private searchSuggestions(): void {
 
-    const jsonInteractorsData = [
-      {
-        'interactorId': 'P06730',
-        'interactorName': 'EIF4E',
-        'interactorType': 'protein',
-        'description': 'Eukaryotic translation initiation factor 4E',
-        'species': 'Homo sapiens (Human)',
-        'interactions': '6'
-      },
-      {
-        'interactorId': 'Q13541',
-        'interactorName': '4EBP1',
-        'interactorType': 'protein',
-        'description': 'Eukaryotic translation initiation factor 4E-binding protein 1',
-        'species': 'Homo sapiens (Human)',
-        'interactions': '1'
-      },
-      {
-        'interactorId': 'P63165',
-        'interactorName': 'SUMO1',
-        'interactorType': 'protein',
-        'description': 'Small ubiquitin-related modifier 1',
-        'species': 'Homo sapiens (Human)',
-        'interactions': '5'
-      }
-    ];
-
     const interactorsData = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorId'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,

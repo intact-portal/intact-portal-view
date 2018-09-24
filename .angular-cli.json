@@ -29,7 +29,8 @@
         "../node_modules/ebi-framework/js/script.js",
         "../node_modules/typeahead.js/dist/typeahead.bundle.js",
         "../node_modules/typeahead.js/dist/bloodhound.js",
-        "../node_modules/typeahead.js/dist/typeahead.jquery.js"
+        "../node_modules/typeahead.js/dist/typeahead.jquery.js",
+        "../node_modules/tablesaw/dist/tablesaw.jquery.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

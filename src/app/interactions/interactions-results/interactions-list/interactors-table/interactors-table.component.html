@@ -6,16 +6,16 @@
     </div>
 
     <div class="tablesaw-overflow">
-    <table id="interactorsTable" class="tablesaw tablesaw-columntoggle" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
+    <table id="interactorsTable" class="tablesaw" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
       <thead>
         <tr>
           <th></th>
-          <th data-tablesaw-priority="persist">Names</th>
-          <th data-tablesaw-priority="2">Description</th>
-          <th data-tablesaw-priority="3">Accession</th>
-          <th data-tablesaw-priority="4">Type</th>
-          <th data-tablesaw-priority="5">Species</th>
-          <th data-tablesaw-priority="6">Interactions</th>
+          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Names</th>
+          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Description</th>
+          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Accession</th>
+          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Type</th>
+          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Species</th>
+          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">Interactions</th>
         </tr>
       </thead>
       <tbody *ngIf="interactorsSearch">

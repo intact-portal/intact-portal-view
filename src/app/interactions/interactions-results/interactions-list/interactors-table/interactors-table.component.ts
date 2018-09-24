@@ -1,12 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { InteractorsSearchResult } from '../../../shared/model/interactions-results/interactor/interactors-search.model';
+
+import Tablesaw from 'tablesaw/dist/tablesaw.jquery.js';
+declare const $: any;
 
 @Component({
   selector: 'iv-interactors-table',
   templateUrl: './interactors-table.component.html',
   styleUrls: ['./interactors-table.component.css']
 })
-export class InteractorsTableComponent implements OnInit {
+export class InteractorsTableComponent implements OnInit, AfterViewInit {
 
   private _interactorsSearch: InteractorsSearchResult;
   private _interactorsSelected: string[];
@@ -17,6 +20,15 @@ export class InteractorsTableComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      $(document).trigger('enhance.tablesaw');
+
+      console.log('HELLOWW I am beign called the last one');
+      console.log('--------------------------------------------');
+    }, 20);
   }
 
   onSelected(interactor: string) {

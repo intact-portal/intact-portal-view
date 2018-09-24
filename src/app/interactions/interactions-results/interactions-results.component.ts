@@ -1,10 +1,12 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
 import 'rxjs/add/operator/filter';
 import { InteractorsSearchResult } from '../shared/model/interactions-results/interactor/interactors-search.model';
 import { InteractorsSearchService } from '../shared/service/interactors-search.service';
+
+declare const $: any;
 
 @Component({
   selector: 'iv-interactions-results',

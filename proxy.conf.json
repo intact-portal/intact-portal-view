@@ -7,7 +7,6 @@
     },
     "changeOrigin": true,
     "logLevel": "debug"
-
   },
   "/interactorService": {
     "target": "http://localhost:8080",
@@ -17,6 +16,14 @@
     },
     "changeOrigin": true,
     "logLevel": "debug"
-
+  },
+  "/interactionService": {
+    "target": "http://localhost:8090",
+    "secure": false,
+    "pathRewrite": {
+      "^/interactionService" : ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

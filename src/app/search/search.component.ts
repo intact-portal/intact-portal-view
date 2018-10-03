@@ -41,6 +41,35 @@ export class SearchComponent implements OnInit, AfterViewInit {
     });
     interactorsData.initialize();
 
+    // const jsonInteractionsData = [
+    //   {
+    //     'author': 'pu et al. (2010)',
+    //     'publicationIds': ['20224576', 'IM-15679', 'MINT-7718689', '10.1038/embor.2010.18'],
+    //     'interactions': '6',
+    //     'interactionsIds': []
+    //   },
+    //   {
+    //     'author': 'pu et al. (2010)',
+    //     'publicationId': ['20224576', 'IM-15679', 'MINT-7718689', '10.1038/embor.2010.18'],
+    //     'interactions': '1',
+    //     'interactionsIds': ['EBI-7852615', 'IM-15679-1', 'MINT-7718752']
+    //   }
+    // ];
+
+    const interactionsData = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('authors'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      // local: jsonInteractionsData
+      remote: {
+        url: '/interactionService/interactions/findInteractions/%QUERY',
+        wildcard: '%QUERY',
+        transform: function (data) {
+          return data.content;
+        }
+      }
+    });
+    interactionsData.initialize();
+
     const jsonTermsData = [
       {
         'dbOntology': 'PSI-MI',
@@ -83,27 +112,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     });
     termsData.initialize();
 
-    const jsonInteractionsData = [
-      {
-        'author': 'pu et al. (2010)',
-        'publicationId': ['20224576', 'IM-15679', 'MINT-7718689', '10.1038/embor.2010.18'],
-        'interactions': '6',
-        'interactionsIds': []
-      },
-      {
-        'author': 'pu et al. (2010)',
-        'publicationId': ['20224576', 'IM-15679', 'MINT-7718689', '10.1038/embor.2010.18'],
-        'interactions': '1',
-        'interactionsIds': ['EBI-7852615', 'IM-15679-1', 'MINT-7718752']
-      }
-      ];
 
-    const interactionsData = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('author'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      local: jsonInteractionsData
-    });
-    termsData.initialize();
 
     $('#searchBox .typeahead').typeahead({
         hint: true,
@@ -137,8 +146,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
         source: interactorsData,
         display: function (item) {
          return item.interactorId
-            // + ' ' + item.interactorName + ' ' + item.interactorType +
-            // ' ' + item.description + ' ' + item.species + ' ' + item.interactionCount + ' interactions'
         },
         templates: {
           header: '<h4 class="category-name">Interactors</h4>',
@@ -149,37 +156,39 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '<div class="columns small-2"><i>"' + item.description + '"</i> </div>' +
               '<div class="columns small-2">' + item.interactorName + '</div>' +
               '<div class="columns small-2">' + item.species + '</div>' +
-              '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>' +
+              '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</span></div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' +
+              '</span></div>' +
               '</div>'
           },
 
         }
-      }, {
+      },
+      {
         name: 'interactions',
         source: interactionsData,
         display: function (item) {
-          return item.author;
+          return item.interactionIdentifiers;
         },
         templates: {
           header: '<h4 class="category-name">Interactions</h4>',
           notFound: '<div class="noResultsSuggestions"> No results found for Interactions</div>',
           suggestion: function (item) {
-
-            return (item.interactionsIds.length === 0) ? '<div class="row">' +
-              '<div class="columns small-2">' + item.author + '</div>' +
-              '<div class="columns small-4">' + item.publicationId + '</div>' +
-              '<div class="columns small-3"></div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions + ' interactions' + '</span></div>' +
+            // TODO: FIX THIS WHEN THE WS RETURN interactionCount
+            return (item.interactionCount === null) ? '<div class="row">' +
+              '<div class="columns small-3">' + item.authors + '</div>' +
+              '<div class="columns small-3">' + item.publicationIdentifiers + '</div>' +
+              '<div class="columns small-2">' + item.interactionIdentifiers + '</div>' +
+              '<div class="columns small-2"><span class="labelWrapper">' + item.interactionType + '</span></div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + ' 1 interaction' + '</span></div>' +
               '</div>' :
 
               '<div class="row">' +
-              '<div class="columns small-2">' + item.author + '</div>' +
-              '<div class="columns small-4">' + item.publicationId + '</div>' +
-              '<div class="columns small-3">' + item.interactionsIds + '</div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions + ' interactions' + '</span></div>' +
+              '<div class="columns small-4">' + item.authors + '</div>' +
+              '<div class="columns small-2">' + item.publicationIdentifiers + '</div>' +
+              '<div class="columns small-3">' + item.interactionIdentifiers + '</div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>' +
               '</div>'
-
           },
 
           footer: '<div class="suggestions-footer">' +

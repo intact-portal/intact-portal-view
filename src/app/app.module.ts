@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { FeatureDatasetService } from './home-dashboard/featured-dataset/service
 import { InteractionsModule } from './interactions/interactions.module';
 import { SearchService } from './search/service/search.service';
 import { InteractorsSearchService } from './interactions/shared/service/interactors-search.service';
+import { InteractionsSearchService } from './interactions/shared/service/interactions-search.service';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { InteractorsSearchService } from './interactions/shared/service/interact
     InteractionsModule,
     AppRoutingModule
   ],
-  providers: [FeatureDatasetService, SearchService, InteractorsSearchService],
+  providers: [FeatureDatasetService, SearchService, InteractorsSearchService, InteractionsSearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

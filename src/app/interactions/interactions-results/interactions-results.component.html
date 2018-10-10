@@ -7,13 +7,18 @@
 <div class="row expanded">
 
   <div class="columns medium-2">
-    <iv-interactions-filters *ngIf="interactorsSearch && interactorTypeFilter && speciesNameFilter && interactionTypeFilter && detectionMethodFilter"
+    <iv-interactions-filters *ngIf="interactorsSearch && interactorTypeFilter && speciesNameFilter && interactionTypeFilter
+      && detectionMethodFilter && interactionSpeciesFilter && organismFilter && negativeFilter && miScoreFilter"
                              [facets]="interactorsSearch.facetResultPage"
                              [filters]="interactorsSearch.facetFields"
                              [interactorTypeFilter]="interactorTypeFilter"
                              [speciesNameFilter]="speciesNameFilter"
                              [interactionTypeFilter]="interactionTypeFilter"
                              [detectionMethodFilter]="detectionMethodFilter"
+                             [interactionSpeciesFilter]="interactionSpeciesFilter"
+                             [organismFilter]="organismFilter"
+                             [negativeFilter]="negativeFilter"
+                             [miScoreFilter]="miScoreFilter"
                              (onSpeciesNameFilterChanged)="onSpeciesNameFilterChanged($event)"
                              (onInteractorTypeFilterChanged)="onInteractorTypeFilterChanged($event)"
                              (onResetAllFilters)="onResetAllFilters($event)"

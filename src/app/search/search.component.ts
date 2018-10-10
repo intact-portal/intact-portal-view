@@ -187,8 +187,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '<div class="columns small-4">' + item.authors + '</div>' +
               '<div class="columns small-2">' + item.publicationIdentifiers + '</div>' +
               '<div class="columns small-3">' + item.interactionIdentifiers + '</div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>' +
-              '</div>'
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>'
+              + '</div>'
           },
 
           footer: '<div class="suggestions-footer">' +

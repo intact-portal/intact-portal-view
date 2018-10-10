@@ -25,18 +25,4 @@ export class InteractorFacets {
     this._interactor_type_str = value;
   }
 
-// private _content: Facet[];
-  //
-  // constructor(content: Facet[]) {
-  //   this._content = content;
-  // }
-  //
-  // get content(): Facet[] {
-  //   return this._content;
-  // }
-  //
-  // set content(value: Facet[]) {
-  //   this._content = value;
-  // }
-
 }

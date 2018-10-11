@@ -1,6 +1,6 @@
 import {Facet} from '../facet.model';
 
-export class InteractionFacets{
+export class InteractionFacets {
 
   private _interaction_detection_method_str: Facet[];
   private _interaction_type_str: Facet[];

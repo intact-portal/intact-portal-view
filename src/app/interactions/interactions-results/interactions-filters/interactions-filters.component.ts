@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractorFacets} from '../../shared/model/interactions-results/interactor/interactor-facets.model';
 import {Filter} from '../../shared/model/interactions-results/filter.model';
+import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 
 declare const $: any;
 
@@ -11,28 +12,39 @@ declare const $: any;
 })
 export class InteractionsFiltersComponent implements OnInit {
 
-  // TODO: Replace the static mock list for the correct ones once they are available
-  interactionTypeMockList: string[] = ['Physical association', 'Direct interaction', 'Phosphorylation reaction', 'Genetic interaction'];
-  detectionMethodMockList: string[] = ['Anti tag coimmunoprecipitation', 'Anti bait coimmunoprecipitation', 'Genetic interference',
-    'Two hybrid'];
+  // interactionTypeMockList: string[] = ['Physical association', 'Direct interaction', 'Phosphorylation reaction', 'Genetic interaction'];
+  // detectionMethodMockList: string[] = ['Anti tag coimmunoprecipitation', 'Anti bait coimmunoprecipitation', 'Genetic interference',
+  //   'Two hybrid'];
 
-  private _facets: InteractorFacets;
-  private _filters: Filter[]; // string[];
+  private _interactorFacets: InteractorFacets;
+  // private _filters: Filter[];
+  private _interactionFacets: InteractionFacets;
 
+  /** INTERACTORS FILTERS **/
   private _speciesNameFilter: string[];
   private _interactorTypeFilter: string[];
 
-  private _interactionTypeFilter: string[] = [];
-  private _detectionMethodFilter: string[] = [];
+  /** INTERACTIONS FILTERS **/
+  private _interactionTypeFilter: string[];
+  private _detectionMethodFilter: string[];
+  private _interactionSpeciesFilter: string[];
+  private _organismFilter: string[];
+  private _negativeFilter: string[];
+  private _miScoreFilter: string[];
 
-  @Output() onMoleculesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onSpeciesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onInteractionTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onDetectionMethodFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onResetAllFilters: EventEmitter<boolean> = new EventEmitter<boolean>();
+  private isNegativeInteraction: boolean;
 
   @Output() onSpeciesNameFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractorTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+
+  @Output() onInteractionTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onDetectionMethodFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onInteractionSpeciesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onInteractionOrganismFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onInteractionNegativeFilterChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onInteractionmiScoreFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+
+  @Output() onResetAllFilters: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -111,6 +123,22 @@ export class InteractionsFiltersComponent implements OnInit {
     this.onDetectionMethodFilterChanged.emit(this.detectionMethodFilter);
   }
 
+  onChangeInteractionSpeciesFilter(filter: string) {
+    if (!this.interactionSpeciesFilter.includes(filter)) {
+      this.interactionSpeciesFilter.push(filter);
+    } else {
+      this.interactionSpeciesFilter.splice(this.interactionSpeciesFilter.indexOf(filter), 1);
+    }
+
+    this.onInteractionSpeciesFilterChanged.emit(this.interactionSpeciesFilter);
+  }
+
+  onChangeInteractionNegativeFilter(value: boolean) {
+    this.isNegativeInteraction = value;
+
+    this.onInteractionNegativeFilterChanged.emit(this.isNegativeInteraction);
+  }
+
   isSelectedSpeciesName(species: string) {
     return this.speciesNameFilter !== undefined ? this.speciesNameFilter.indexOf(species) >= 0 : false;
   }
@@ -127,6 +155,10 @@ export class InteractionsFiltersComponent implements OnInit {
     return this.detectionMethodFilter !== undefined ? this.detectionMethodFilter.indexOf(detectionMethod) >= 0 : false;
   }
 
+  isSelectedInteractionSpecies(interactionSpecies: string) {
+    return this.interactionSpeciesFilter !== undefined ? this.interactionSpeciesFilter.indexOf(interactionSpecies) >= 0 : false;
+  }
+
   anyFiltersSelected() {
     return (this.speciesNameFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
       || this.detectionMethodFilter.length !== 0);
@@ -140,24 +172,33 @@ export class InteractionsFiltersComponent implements OnInit {
   /** GETTERS AND SETTERS ** /
   /*************************/
 
-  get facets(): InteractorFacets {
-    return this._facets;
+  get interactorFacets(): InteractorFacets {
+    return this._interactorFacets;
   }
 
   @Input()
-  set facets(value: InteractorFacets) {
-    this._facets = value;
+  set interactorFacets(value: InteractorFacets) {
+    this._interactorFacets = value;
   }
 
 
-  get filters(): Filter[] {
-    return this._filters;
+  get interactionFacets(): InteractionFacets {
+    return this._interactionFacets;
   }
 
   @Input()
-  set filters(value: Filter[]) {
-    this._filters = value;
+  set interactionFacets(value: InteractionFacets) {
+    this._interactionFacets = value;
   }
+
+  // get filters(): Filter[] {
+  //   return this._filters;
+  // }
+  //
+  // @Input()
+  // set filters(value: Filter[]) {
+  //   this._filters = value;
+  // }
 
   /***** INTERACTORS FILTERS ******/
 
@@ -199,4 +240,39 @@ export class InteractionsFiltersComponent implements OnInit {
     this._detectionMethodFilter = value;
   }
 
+  get interactionSpeciesFilter(): string[] {
+    return this._interactionSpeciesFilter;
+  }
+
+  @Input()
+  set interactionSpeciesFilter(value: string[]) {
+    this._interactionSpeciesFilter = value;
+  }
+
+  get organismFilter(): string[] {
+    return this._organismFilter;
+  }
+
+  @Input()
+  set organismFilter(value: string[]) {
+    this._organismFilter = value;
+  }
+
+  get negativeFilter(): string[] {
+    return this._negativeFilter;
+  }
+
+  @Input()
+  set negativeFilter(value: string[]) {
+    this._negativeFilter = value;
+  }
+
+  get miScoreFilter(): string[] {
+    return this._miScoreFilter;
+  }
+
+  @Input()
+  set miScoreFilter(value: string[]) {
+    this._miScoreFilter = value;
+  }
 }

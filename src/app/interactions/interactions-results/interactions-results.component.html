@@ -7,10 +7,10 @@
 <div class="row expanded">
 
   <div class="columns medium-2">
-    <iv-interactions-filters *ngIf="interactorsSearch && interactorTypeFilter && speciesNameFilter && interactionTypeFilter
+    <iv-interactions-filters *ngIf="interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter && interactionTypeFilter
       && detectionMethodFilter && interactionSpeciesFilter && organismFilter && negativeFilter && miScoreFilter"
-                             [facets]="interactorsSearch.facetResultPage"
-                             [filters]="interactorsSearch.facetFields"
+                             [interactorFacets]="interactorsSearch.facetResultPage"
+                             [interactionFacets]="interactionsSearch.facetResultPage"
                              [interactorTypeFilter]="interactorTypeFilter"
                              [speciesNameFilter]="speciesNameFilter"
                              [interactionTypeFilter]="interactionTypeFilter"
@@ -23,7 +23,11 @@
                              (onInteractorTypeFilterChanged)="onInteractorTypeFilterChanged($event)"
                              (onResetAllFilters)="onResetAllFilters($event)"
                              (onInteractionTypeFilterChanged)="onInteractionTypeFilterChanged($event)"
-                             (onDetectionMethodFilterChanged)="onDetectionMethodFilterChanged($event)">
+                             (onDetectionMethodFilterChanged)="onDetectionMethodFilterChanged($event)"
+                             (onInteractionSpeciesFilterChanged)="onInteractionSpeciesFilterChanged($event)"
+                             (onInteractionOrganismFilterChanged)="onInteractionOrganismFilterChanged($event)"
+                             (onInteractionNegativeFilterChanged)="onInteractionNegativeFilterChanged($event)"
+                             (onInteractionmiScoreFilterChanged)="onInteractionmiScoreFilterChanged($event)">
 
     </iv-interactions-filters>
   </div>

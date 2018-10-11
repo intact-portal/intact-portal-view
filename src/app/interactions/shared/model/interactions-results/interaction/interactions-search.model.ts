@@ -6,14 +6,14 @@ export class InteractionsSearchResult {
   private _content: Interaction[];
   private _numberOfElements: number;
   private _facetResultPage: InteractionFacets;
-  private _filtersType: Filter[];
+  private _facetFields: Filter[];
 
 
   constructor(content: Interaction[], numberOfElements: number, facetResultPage: InteractionFacets, filtersType: Filter[]) {
     this._content = content;
     this._numberOfElements = numberOfElements;
     this._facetResultPage = facetResultPage;
-    this._filtersType = filtersType;
+    this._facetFields = filtersType;
   }
 
   /** GETTERS AND SETTERS **/
@@ -42,11 +42,11 @@ export class InteractionsSearchResult {
     this._facetResultPage = value;
   }
 
-  get filtersType(): Filter[] {
-    return this._filtersType;
+  get facetFields(): Filter[] {
+    return this._facetFields;
   }
 
-  set filtersType(value: Filter[]) {
-    this._filtersType = value;
+  set facetFields(value: Filter[]) {
+    this._facetFields = value;
   }
 }

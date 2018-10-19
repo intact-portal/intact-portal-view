@@ -25,9 +25,11 @@ export class InteractionsResultsComponent implements OnInit {
   private _detectionMethodFilter: string[];
   private _interactionSpeciesFilter: string[];
   private _organismFilter: string[];
-  private _negativeFilter: string[];
-  private _miScoreFilter: string[];
+  private _negativeFilter: boolean;
+  private _miScoreMin: any;
+  private _miScoreMax: any;
 
+  // private _miScoreFilter: string[];
 
   private _interactorsSearch: InteractorsSearchResult;
   private _interactionsSearch: InteractionsSearchResult;
@@ -57,9 +59,9 @@ export class InteractionsResultsComponent implements OnInit {
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
         this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
         this.organismFilter = params.organism ? params.organism.split('+') : [];
-        this.negativeFilter = params.negativeInteraction ? params.negativeInteraction.split('+') : [];
-        this.miScoreFilter = params.miscore ? params.miscore.split('+') : [];
-
+        this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
+        this.miScoreMax = params.miScoreMax ? params.miScoreMax : '';
+        this.miScoreMin = params.miScoreMin ? params.miScoreMin : '';
         this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
 
         this.requestInteractorsResults();
@@ -86,10 +88,14 @@ export class InteractionsResultsComponent implements OnInit {
       this.interactionTypeFilter,
       this.detectionMethodFilter,
       this.organismFilter,
+      this.miScoreMin,
+      this.miScoreMax,
       this.negativeFilter,
-      this.miScoreFilter
+    0,
+      20
     ).subscribe(interactionsSearch => {
       this.interactionsSearch = interactionsSearch;
+      console.log('Interactions ' + interactionsSearch);
     })
   }
 
@@ -131,14 +137,26 @@ export class InteractionsResultsComponent implements OnInit {
     this.updateURLParams();
   }
 
-  public onInteractionNegativeFilterChanged(filter: string[]): void {
+  public onInteractionNegativeFilterChanged(filter: boolean): void {
     this.negativeFilter = filter;
     this.interactorsSelected = [];
     this.updateURLParams();
   }
 
-  public onInteractionmiScoreFilterChanged(filter: string[]): void {
-    this.miScoreFilter = filter;
+  // public onInteractionmiScoreFilterChanged(filter: string[]): void {
+  //   // this.miScoreFilter = filter;
+  //   this.interactorsSelected = [];
+  //   this.updateURLParams();
+  // }
+
+  public onInteractionMiScoreMinFilterChanged(filter: any): void {
+    this.miScoreMin = filter;
+    this.interactorsSelected = [];
+    this.updateURLParams();
+  }
+
+  public onInteractionMiScoreMaxFilterChanged(filter: any): void {
+    this.miScoreMax = filter;
     this.interactorsSelected = [];
     this.updateURLParams();
   }
@@ -150,8 +168,9 @@ export class InteractionsResultsComponent implements OnInit {
     this.detectionMethodFilter = [];
     this.interactionSpeciesFilter = [];
     this.organismFilter = [];
-    this.negativeFilter = [];
-    this.miScoreFilter = [];
+    this.negativeFilter = false;
+    // this.miScoreMin = 0;
+    // this.miScoreMax = 1;
     this.interactorsSelected = [];
     this.updateURLParams();
   }
@@ -194,11 +213,14 @@ export class InteractionsResultsComponent implements OnInit {
     if (this.organismFilter !== undefined && this.organismFilter.length !== 0) {
       params['organism'] = this.prepareFiltersForParams(this.organismFilter);
     }
-    if (this.negativeFilter !== undefined && this.negativeFilter.length !== 0) {
-      params['negativeInteraction'] = this.prepareFiltersForParams(this.negativeFilter);
+    if (this.negativeFilter !== undefined && this.negativeFilter !== false) {
+      params['negativeInteraction'] = this.negativeFilter;
     }
-    if (this.miScoreFilter !== undefined && this.miScoreFilter.length !== 0) {
-      params['miscore'] = this.prepareFiltersForParams(this.miScoreFilter);
+    if (this.miScoreMin !== undefined && this.miScoreMin !== '') {
+      params['miScoreMin'] = this.miScoreMin;
+    }
+    if (this.miScoreMax !== undefined && this.miScoreMax !== '') {
+      params['miScoreMax'] = this.miScoreMax;
     }
 
     this.router.navigate([], { queryParams: params });
@@ -266,21 +288,37 @@ export class InteractionsResultsComponent implements OnInit {
     this._organismFilter = value;
   }
 
-  get negativeFilter(): string[] {
+  get negativeFilter(): boolean {
     return this._negativeFilter;
   }
 
-  set negativeFilter(value: string[]) {
+  set negativeFilter(value: boolean) {
     this._negativeFilter = value;
   }
 
-  get miScoreFilter(): string[] {
-    return this._miScoreFilter;
+  get miScoreMin(): any {
+    return this._miScoreMin;
   }
 
-  set miScoreFilter(value: string[]) {
-    this._miScoreFilter = value;
+  set miScoreMin(value: any) {
+    this._miScoreMin = value;
   }
+
+  get miScoreMax(): any {
+    return this._miScoreMax;
+  }
+
+  set miScoreMax(value: any) {
+    this._miScoreMax = value;
+  }
+
+  // get miScoreFilter(): string[] {
+  //     return this._miScoreFilter;
+  //   }
+  //
+  // set miScoreFilter(value: string[]) {
+  //   this._miScoreFilter = value;
+  // }
 
   get interactorsSearch(): InteractorsSearchResult {
     return this._interactorsSearch;

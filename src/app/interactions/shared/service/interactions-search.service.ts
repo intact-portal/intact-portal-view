@@ -24,21 +24,23 @@ export class InteractionsSearchService {
                                    interactionTypeFilter: string[],
                                    detectionMethodFilter: string[],
                                    organismFilter: string[],
-                                   negativeFilter: string[],
-                                   miScoreFilter: string[],
+                                   miScoreMin: any,
+                                   miScoreMax: any,
+                                   negativeFilter: any,
                                    currentPageIndex = 1, pageSize = 20): Observable<InteractionsSearchResult> {
 
     query = query.trim();
 
     const params = new HttpParams()
-      .set('page', currentPageIndex.toString())
-      .set('pageSize', pageSize.toString())
       .set('interactionTypeFilter', interactionTypeFilter.toString())
-      .set('interactionSpeciesFilter', interactionSpeciesFilter.toString())
-      .set('detectionMethhodFilter', detectionMethodFilter.toString())
-      .set('organismFilter', organismFilter.toString())
-      .set('miScoreFilter', miScoreFilter.toString())
-      .set('negativeFilter', negativeFilter.toString());
+      .set('species', interactionSpeciesFilter.toString())
+      .set('detectionMethodFilter', detectionMethodFilter.toString())
+      .set('hostOrganismFilter', organismFilter.toString())
+      .set('minMiscore', miScoreMin.toString())
+      .set('maxMiscore', miScoreMax.toString())
+      .set('isNegativeFilter', negativeFilter.toString())
+      .set('page', currentPageIndex.toString())
+      .set('pageSize', pageSize.toString());
 
     const options = query ? {params: params} : {};
 

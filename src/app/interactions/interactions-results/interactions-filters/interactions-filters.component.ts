@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractorFacets} from '../../shared/model/interactions-results/interactor/interactor-facets.model';
 import {Filter} from '../../shared/model/interactions-results/filter.model';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
@@ -12,12 +12,7 @@ declare const $: any;
 })
 export class InteractionsFiltersComponent implements OnInit {
 
-  // interactionTypeMockList: string[] = ['Physical association', 'Direct interaction', 'Phosphorylation reaction', 'Genetic interaction'];
-  // detectionMethodMockList: string[] = ['Anti tag coimmunoprecipitation', 'Anti bait coimmunoprecipitation', 'Genetic interference',
-  //   'Two hybrid'];
-
   private _interactorFacets: InteractorFacets;
-  // private _filters: Filter[];
   private _interactionFacets: InteractionFacets;
 
   /** INTERACTORS FILTERS **/
@@ -29,10 +24,13 @@ export class InteractionsFiltersComponent implements OnInit {
   private _detectionMethodFilter: string[];
   private _interactionSpeciesFilter: string[];
   private _organismFilter: string[];
-  private _negativeFilter: string[];
-  private _miScoreFilter: string[];
+  private _negativeFilter: any;
+  private _miScoreMinFilter: any;
+  private _miScoreMaxFilter: any;
+  // private _miScoreFilter: string[];
 
-  private isNegativeInteraction: boolean;
+  /** This variable is used to check if the param is in the URL and update the state of the checkbox */
+  private _isNegativeInteraction: boolean;
 
   @Output() onSpeciesNameFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractorTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -42,41 +40,37 @@ export class InteractionsFiltersComponent implements OnInit {
   @Output() onInteractionSpeciesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractionOrganismFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractionNegativeFilterChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() onInteractionmiScoreFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  // @Output() onInteractionmiScoreFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
+  @Output() onInteractionMiScoreMinFilterChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onInteractionMiScoreMaxFilterChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onResetAllFilters: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
     this.initSliderRange();
+    this.isNegativeInteraction = this.negativeFilter;
+    this.isNegativeInteraction = (this.negativeFilter === 'false') ? false : true;
+
   }
 
   initSliderRange(): void {
     const sliderRange =  $( '#slider-range' );
-    const handle1 = $('#custom-handle1');
-    const handle2 = $('#custom-handle2');
     const range1 = $('#range1');
     const range2 = $('#range2');
 
     sliderRange.slider({
       range: true,
       min: 0,
-      max: 500,
-      values: [ 75, 300 ],
-      // create: function() {
-      //   handle1.text( $( this ).slider( 'value' ) );
-      // },
+      max: 1,
+      step: 0.01,
+      values: [ this.interactionFacets.intact_miscore[0].value, this.interactionFacets.intact_miscore.slice(-1)[0].value],
       slide: function( event, ui ) {
-        handle1.text( ui.values[0] );
-        handle2.text( ui.values[1] );
-
         range1.val( ui.values[0] );
         range2.val( ui.values[1] );
 
       }
-
-
     });
 
     range1.val(sliderRange.slider( 'values', 0 ));
@@ -136,8 +130,21 @@ export class InteractionsFiltersComponent implements OnInit {
   onChangeInteractionNegativeFilter(value: boolean) {
     this.isNegativeInteraction = value;
 
-    this.onInteractionNegativeFilterChanged.emit(this.isNegativeInteraction);
+    if (this.negativeFilter !== value) {
+      this.negativeFilter = value;
+    }
+
+    this.onInteractionNegativeFilterChanged.emit(this.negativeFilter);
   }
+
+
+  // onChangeMiScoreMinFilter(value: any) {
+  //   this.onInteractionMiScoreMinFilterChanged.emit(value);
+  // }
+  //
+  // onChangeMiScoreMaxFilter(value: any) {
+  //   this.onInteractionMiScoreMaxFilterChanged.emit(value);
+  // }
 
   isSelectedSpeciesName(species: string) {
     return this.speciesNameFilter !== undefined ? this.speciesNameFilter.indexOf(species) >= 0 : false;
@@ -159,12 +166,18 @@ export class InteractionsFiltersComponent implements OnInit {
     return this.interactionSpeciesFilter !== undefined ? this.interactionSpeciesFilter.indexOf(interactionSpecies) >= 0 : false;
   }
 
+  isSelectedInteractionNegative() {
+    return this.isNegativeInteraction;
+  }
+
   anyFiltersSelected() {
     return (this.speciesNameFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
-      || this.detectionMethodFilter.length !== 0);
+      || this.detectionMethodFilter.length !== 0 || this.interactionSpeciesFilter.length !== 0 || this.isNegativeInteraction === true);
   }
 
   resetAllFilters() {
+    this.isNegativeInteraction = false;
+    this.negativeFilter = false;
     this.onResetAllFilters.emit(true);
   }
 
@@ -190,15 +203,6 @@ export class InteractionsFiltersComponent implements OnInit {
   set interactionFacets(value: InteractionFacets) {
     this._interactionFacets = value;
   }
-
-  // get filters(): Filter[] {
-  //   return this._filters;
-  // }
-  //
-  // @Input()
-  // set filters(value: Filter[]) {
-  //   this._filters = value;
-  // }
 
   /***** INTERACTORS FILTERS ******/
 
@@ -258,21 +262,38 @@ export class InteractionsFiltersComponent implements OnInit {
     this._organismFilter = value;
   }
 
-  get negativeFilter(): string[] {
+  get negativeFilter(): any {
     return this._negativeFilter;
   }
 
   @Input()
-  set negativeFilter(value: string[]) {
+  set negativeFilter(value: any) {
     this._negativeFilter = value;
   }
 
-  get miScoreFilter(): string[] {
-    return this._miScoreFilter;
+  get miScoreMinFilter(): any {
+    return this._miScoreMinFilter;
+  }
+
+  get isNegativeInteraction(): boolean {
+    return this._isNegativeInteraction;
+  }
+
+  set isNegativeInteraction(value: boolean) {
+    this._isNegativeInteraction = value;
   }
 
   @Input()
-  set miScoreFilter(value: string[]) {
-    this._miScoreFilter = value;
+  set miScoreMinFilter(value: any) {
+    this._miScoreMinFilter = value;
+  }
+
+  get miScoreMaxFilter(): any {
+    return this._miScoreMaxFilter;
+  }
+
+  @Input()
+  set miScoreMaxFilter(value: any) {
+    this._miScoreMaxFilter = value;
   }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InteractorsSearchResult } from '../../../shared/model/interactions-results/interactor/interactors-search.model';
 
 import Tablesaw from 'tablesaw/dist/tablesaw.jquery.js';
@@ -23,12 +23,17 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      $(document).trigger('enhance.tablesaw');
+    // setTimeout(() => {
+      // $(document).trigger('enhance.tablesaw');
+      //
+      // console.log('HELLOWW I am being called the last one');
+      // console.log('--------------------------------------------');
 
-      console.log('HELLOWW I am beign called the last one');
-      console.log('--------------------------------------------');
-    }, 20);
+      // $('.tablesaw').each(function(index) {
+      //   $(this).data('tablesaw').destroy();
+      //   $(this).data('tablesaw').refresh();
+      // });
+    // }, 20);
   }
 
   onSelected(interactor: string) {

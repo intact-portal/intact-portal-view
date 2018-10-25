@@ -7,8 +7,9 @@
 <div class="row expanded">
 
   <div class="columns medium-2">
-    <iv-interactions-filters *ngIf="interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter && interactionTypeFilter
-      && detectionMethodFilter && interactionSpeciesFilter && organismFilter && (negativeFilter !== undefined)"
+    <iv-interactions-filters *ngIf="interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter
+      && interactionTypeFilter && detectionMethodFilter && interactionSpeciesFilter && organismFilter
+      && (negativeFilter !== undefined)"
                              [interactorFacets]="interactorsSearch.facetResultPage"
                              [interactionFacets]="interactionsSearch.facetResultPage"
                              [interactorTypeFilter]="interactorTypeFilter"
@@ -40,6 +41,7 @@
       <iv-interactions-viewer [interactorsSelected]="interactorsSelected"></iv-interactions-viewer>
       <iv-interactions-list *ngIf="interactorsSelected"
                             [interactorsSearch]="interactorsSearch"
+                            [interactionsSearch]="interactionsSearch"
                             [interactorsSelected]="interactorsSelected"
                             (interactorsChanged) = "onInteractorsSelectedChanged($event)"></iv-interactions-list>
     </div>

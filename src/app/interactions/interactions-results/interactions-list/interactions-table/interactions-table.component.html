@@ -1,90 +1,51 @@
-<!--<div class="row">-->
   <div class="columns medium-12">
+
+    <div *ngIf="interactionsSearch">
+      <div>Interactions search result total: {{interactionsSearch.totalElements}}</div>
+    </div>
+
   <div class="tablesaw-overflow">
     <table id="interactionsTable" class="tablesaw tablesaw-columntoggle" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
       <thead>
         <tr>
           <th data-tablesaw-priority="persist">Molecule A</th>
-          <th data-tablesaw-priority="2">Molecule B</th>
-          <th data-tablesaw-priority="3">Links A</th>
-          <th data-tablesaw-priority="4">Links B</th>
-          <th data-tablesaw-priority="5">Species A</th>
-          <th data-tablesaw-priority="6">Species B</th>
-          <th data-tablesaw-priority="7">Interaction Detection Method</th>
-          <th data-tablesaw-priority="8">Publication Identifier</th>
-          <th data-tablesaw-priority="9">Interaction Type</th>
-          <th data-tablesaw-priority="10">Interaction AC</th>
-          <th data-tablesaw-priority="11">Database</th>
-          <th data-tablesaw-priority="12">Confidence Value</th>
-          <th data-tablesaw-priority="13">Expansion Method</th>
-          <th data-tablesaw-priority="14">Experimental Role A</th>
-          <th data-tablesaw-priority="15">Experimental Role B</th>
-          <th data-tablesaw-priority="16">Interactor Type A</th>
-          <th data-tablesaw-priority="17">Interactor Type B</th>
+          <th data-tablesaw-priority="1">Molecule B</th>
+          <th data-tablesaw-priority="1" >Species A</th>
+          <th data-tablesaw-priority="1" >Species B</th>
+          <th data-tablesaw-priority="1" >Interaction Detection Method</th>
+          <th data-tablesaw-priority="2" >Publication Identifier</th>
+          <th data-tablesaw-priority="3" >Interaction Type</th>
+          <th data-tablesaw-priority="3" >Interaction AC</th>
+          <th data-tablesaw-priority="3">Database</th>
+          <th data-tablesaw-priority="4" >Confidence Value</th>
+          <th data-tablesaw-priority="4" >Expansion Method</th>
+          <th data-tablesaw-priority="5" >Experimental Role A</th>
+          <th data-tablesaw-priority="5" >Experimental Role B</th>
+          <th data-tablesaw-priority="6" >Interactor Type A</th>
+          <th data-tablesaw-priority="6" >Interactor Type B</th>
         </tr>
       </thead>
 
-      <tbody>
-        <tr>
-          <td>TP53</td>
-          <td>P04637 EBI-366083</td>
-          <td>MDM2</td>
-          <td>Q00987 EBI-389668</td>
-          <td>Homo sapiens</td>
-          <td>Homo sapiens</td>
-          <td>enzyme linked immunosorbent assay</td>
-          <td>imex : IM-21984 23776060</td>
-          <td>physical association</td>
-          <td>EBI-6958174  MINT-8176347</td>
-          <td>IntAct</td>
-          <td>intact-miscore : 0.99</td>
-          <td>N/A</td>
-          <td>bait</td>
-          <td>prey</td>
-          <td>protein</td>
-          <td>protein</td>
-        </tr>
-
-        <tr>
-          <td>TP53</td>
-          <td>P04637 EBI-366083</td>
-          <td>MDM2</td>
-          <td>Q00987 EBI-389668</td>
-          <td>Homo sapiens</td>
-          <td>Homo sapiens</td>
-          <td>enzyme linked immunosorbent assay</td>
-          <td>imex : IM-21984 23776060</td>
-          <td>physical association</td>
-          <td>EBI-9074450  imex : IM-21984-2</td>
-          <td>IntAct</td>
-          <td>intact-miscore : 0.99</td>
-          <td>N/A</td>
-          <td>bait</td>
-          <td>prey</td>
-          <td>protein</td>
-          <td>protein</td>
-        </tr>
-
-        <tr>
-          <td>BRCA2</td>
-          <td>Q8R4X4 EBI-1639762</td>
-          <td>fancd2 protein_crigr</td>
-          <td>EBI-1639774</td>
-          <td>Cricetulus griseus (Chinese hamster)</td>
-          <td>Cricetulus griseus (Chinese hamster)</td>
-          <td>anti bait coimmunoprecipitation</td>
-          <td>18212739  imex : IM-14933</td>
-          <td>association</td>
-          <td>EBI-1639769 imex : IM-14933-16</td>
-          <td>IntAct</td>
-          <td>intact-miscore : 0.55</td>
-          <td>spoke expansion</td>
-          <td>prey</td>
-          <td>bait</td>
-          <td>protein</td>
-          <td>protein</td>
+      <tbody *ngIf="interactionsSearch">
+        <tr *ngFor="let interaction of interactionsSearch.content">
+          <td>{{interaction.moleculeA}}</td>
+          <td>{{interaction.moleculeB}}</td>
+          <td>{{interaction.speciesA}}</td>
+          <td>{{interaction.speciesB}}</td>
+          <td>{{interaction.interactionDetectionMethod}}</td>
+          <td>{{interaction.publicationIdentifiers}}</td>
+          <td>{{interaction.interactionType}}</td>
+          <td>{{interaction.interactionAc}}</td>
+          <td>{{interaction.sourceDatabase}}</td>
+          <td>{{interaction.confidenceValues}}</td>
+          <td>{{interaction.expansionMethod}}</td>
+          <td>{{interaction.experimentalRoleA}}</td>
+          <td>{{interaction.experimentalRoleB}}</td>
+          <td>{{interaction.typeA}}</td>
+          <td>{{interaction.typeB}}</td>
         </tr>
       </tbody>
+
     </table>
   </div>
   </div>
@@ -103,4 +64,3 @@
     </ul>
   </div>
 
-<!--</div>-->

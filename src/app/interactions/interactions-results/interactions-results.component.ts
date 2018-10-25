@@ -95,7 +95,6 @@ export class InteractionsResultsComponent implements OnInit {
       20
     ).subscribe(interactionsSearch => {
       this.interactionsSearch = interactionsSearch;
-      console.log('Interactions ' + interactionsSearch);
     })
   }
 
@@ -105,6 +104,8 @@ export class InteractionsResultsComponent implements OnInit {
     this.speciesNameFilter = filter;
     this.interactorsSelected = [];
     this.updateURLParams();
+    $(document).trigger('enhance.tablesaw');
+    console.log('ENHANCING TABLE **************');
   }
 
   public onInteractorTypeFilterChanged(filter: string[]): void {

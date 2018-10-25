@@ -5,13 +5,19 @@ import {Filter} from '../filter.model';
 export class InteractionsSearchResult {
   private _content: Interaction[];
   private _numberOfElements: number;
+  private _totalElements: number;
   private _facetResultPage: InteractionFacets;
   private _facetFields: Filter[];
 
 
-  constructor(content: Interaction[], numberOfElements: number, facetResultPage: InteractionFacets, filtersType: Filter[]) {
+  constructor(content: Interaction[],
+              numberOfElements: number,
+              totalElements: number,
+              facetResultPage: InteractionFacets,
+              filtersType: Filter[]) {
     this._content = content;
     this._numberOfElements = numberOfElements;
+    this._totalElements = totalElements;
     this._facetResultPage = facetResultPage;
     this._facetFields = filtersType;
   }
@@ -32,6 +38,14 @@ export class InteractionsSearchResult {
 
   set numberOfElements(value: number) {
     this._numberOfElements = value;
+  }
+
+  get totalElements(): number {
+    return this._totalElements;
+  }
+
+  set totalElements(value: number) {
+    this._totalElements = value;
   }
 
   get facetResultPage(): InteractionFacets {

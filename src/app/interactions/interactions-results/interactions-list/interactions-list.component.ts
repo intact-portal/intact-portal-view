@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractorsSearchResult} from '../../shared/model/interactions-results/interactor/interactors-search.model';
+import {InteractionsSearchResult} from '../../shared/model/interactions-results/interaction/interactions-search.model';
 
 declare const $: any;
 
@@ -11,6 +12,7 @@ declare const $: any;
 export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   @Input() interactorsSearch: InteractorsSearchResult;
+  @Input() interactionsSearch: InteractionsSearchResult;
   private _interactorsSelected: string[];
 
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();

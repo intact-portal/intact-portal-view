@@ -7,6 +7,7 @@ import { InteractionsListComponent } from './interactions-results/interactions-l
 import { InteractionsViewerComponent } from './interactions-results/interactions-viewer/interactions-viewer.component';
 import { InteractorsTableComponent } from './interactions-results/interactions-list/interactors-table/interactors-table.component';
 import { InteractionsTableComponent } from './interactions-results/interactions-list/interactions-table/interactions-table.component';
+import { InteractionsPagerComponent } from './interactions-results/interactions-list/interactions-pager/interactions-pager.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { InteractionsTableComponent } from './interactions-results/interactions-
     InteractionsViewerComponent,
     InteractionsResultsComponent,
     InteractorsTableComponent,
-    InteractionsTableComponent
+    InteractionsTableComponent,
+    InteractionsPagerComponent
   ]
 })
 export class InteractionsModule { }

@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionsSearchResult} from '../../../shared/model/interactions-results/interaction/interactions-search.model';
+import {InteractionsSearchService} from '../../../shared/service/interactions-search.service';
 
 declare const $: any;
 
@@ -12,7 +13,10 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
 
   private _interactionsSearch: InteractionsSearchResult;
 
-  constructor() { }
+  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
+
+  constructor( public interactionsSearchService: InteractionsSearchService) {
+  }
 
   ngOnInit() {
   }
@@ -45,4 +49,9 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
     console.log(this._interactionsSearch);
 
   }
+
+  public onPageChanged(pageIndex: number): void {
+    this.pageChanged.emit(pageIndex);
+  }
+
 }

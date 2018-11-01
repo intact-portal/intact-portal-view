@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
@@ -28,6 +28,8 @@ export class InteractionsResultsComponent implements OnInit {
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
+
+  private _currentPageIndex: number;
 
   // private _miScoreFilter: string[];
 
@@ -63,6 +65,7 @@ export class InteractionsResultsComponent implements OnInit {
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : '';
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : '';
         this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
+        this.currentPageIndex = params.page ? Number(params.page) : 1;
 
         this.requestInteractorsResults();
         this.requestInteractionsResults();
@@ -91,10 +94,12 @@ export class InteractionsResultsComponent implements OnInit {
       this.miScoreMin,
       this.miScoreMax,
       this.negativeFilter,
-    0,
-      20
+      this.currentPageIndex
     ).subscribe(interactionsSearch => {
       this.interactionsSearch = interactionsSearch;
+      if (this.interactionsSearch.totalElements !== 0 ) {
+        this.interactionsSearchService.totalElements = this.interactionsSearch.totalElements;
+      }
     })
   }
 
@@ -181,6 +186,12 @@ export class InteractionsResultsComponent implements OnInit {
       this.updateURLParams();
   }
 
+  public onPageChanged(pageIndex: number): void {
+    this.currentPageIndex = pageIndex;
+    this.interactionsSearchService.page = pageIndex;
+    this.updateURLParams();
+  }
+
   public refreshResultsTable(): void {
     console.log('--------------------------------------------');
     console.log('I AM CALLED TO REFRESH THE TABLE');
@@ -194,7 +205,8 @@ export class InteractionsResultsComponent implements OnInit {
 
   private updateURLParams(): void {
     const params: NavigationExtras = {};
-    params['query'] = this._term;
+    params['query'] = this.term;
+    params['page'] = this.currentPageIndex;
 
     if (this.interactorTypeFilter !== undefined && this.interactorTypeFilter.length !== 0) {
       params['interactorType'] = this.prepareFiltersForParams(this.interactorTypeFilter);
@@ -230,6 +242,7 @@ export class InteractionsResultsComponent implements OnInit {
   private prepareFiltersForParams(filter: string[]): string {
     return filter.toString().replace(/,/g, '+');
   }
+
 
   /** GETTERS AND SETTERS **/
 
@@ -313,7 +326,15 @@ export class InteractionsResultsComponent implements OnInit {
     this._miScoreMax = value;
   }
 
-  // get miScoreFilter(): string[] {
+  get currentPageIndex(): number {
+    return this._currentPageIndex;
+  }
+
+  set currentPageIndex(value: number) {
+    this._currentPageIndex = value;
+  }
+
+// get miScoreFilter(): string[] {
   //     return this._miScoreFilter;
   //   }
   //

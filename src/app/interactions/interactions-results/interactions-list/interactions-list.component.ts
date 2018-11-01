@@ -16,6 +16,7 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   private _interactorsSelected: string[];
 
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
@@ -33,6 +34,9 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     this.interactorsChanged.emit(interactors);
   }
 
+  public onPageChanged(pageIndex: number): void {
+    this.pageChanged.emit(pageIndex);
+  }
   /** GETTERS AND SETTERS **/
 
   get interactorsSelected(): string[] {

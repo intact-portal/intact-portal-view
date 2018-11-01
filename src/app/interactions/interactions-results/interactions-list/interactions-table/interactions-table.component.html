@@ -1,8 +1,8 @@
-  <div class="columns medium-12">
+<div class="columns medium-12">
 
-    <div *ngIf="interactionsSearch">
-      <div>Interactions search result total: {{interactionsSearch.totalElements}}</div>
-    </div>
+  <div *ngIf="interactionsSearch">
+    <div>Interactions search result total: {{interactionsSearch.totalElements}}</div>
+  </div>
 
   <div class="tablesaw-overflow">
     <table id="interactionsTable" class="tablesaw tablesaw-columntoggle" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
@@ -48,19 +48,10 @@
 
     </table>
   </div>
-  </div>
+</div>
 
+<iv-interactions-pager [page]="interactionsSearchService.page"
+                       [totalPages]="interactionsSearchService.totalPages"
+                       (changePage)="onPageChanged($event)"> pager </iv-interactions-pager>
 
-  <div class="">
-    <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-      <li class="pagination-previous disabled">Previous</li>
-      <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-      <li><a href="#" aria-label="Page 2">2</a></li>
-      <li><a href="#" aria-label="Page 3">3</a></li>
-      <li class="ellipsis"></li>
-      <li><a href="#" aria-label="Page 12">12</a></li>
-      <li><a href="#" aria-label="Page 13">13</a></li>
-      <li class="pagination-next"><a href="#" aria-label="Next page">Next</a></li>
-    </ul>
-  </div>
 

@@ -43,7 +43,8 @@
                             [interactorsSearch]="interactorsSearch"
                             [interactionsSearch]="interactionsSearch"
                             [interactorsSelected]="interactorsSelected"
-                            (interactorsChanged) = "onInteractorsSelectedChanged($event)"></iv-interactions-list>
+                            (interactorsChanged)="onInteractorsSelectedChanged($event)"
+                            (pageChanged)="onPageChanged($event)"></iv-interactions-list>
     </div>
   </div>
 

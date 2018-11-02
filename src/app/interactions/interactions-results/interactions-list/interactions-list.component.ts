@@ -18,6 +18,9 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
+  private _isTabAActive: boolean = false;
+  private _isTabBActive: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -25,6 +28,11 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('iv-interactions-list').foundation();
+
+    if ($('#interactions').hasClass('is-active') === true) {
+      this.isTabAActive = true;
+      this.isTabBActive = false;
+    }
   }
 
   /** EVENT EMITTERS **/
@@ -37,6 +45,29 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   public onPageChanged(pageIndex: number): void {
     this.pageChanged.emit(pageIndex);
   }
+
+  public resetPage(): void {
+    this.pageChanged.emit(1);
+  }
+
+  public interactorsTabSelected(): void {
+    if (!this.isTabBActive) {
+      this.isTabBActive = true;
+      this.isTabAActive = false;
+
+      this.resetPage();
+    }
+  }
+
+  public interactionsTabSelected(): void {
+    if (!this.isTabAActive) {
+      this.isTabAActive = true;
+      this.isTabBActive = false;
+
+      this.resetPage();
+    }
+  }
+
   /** GETTERS AND SETTERS **/
 
   get interactorsSelected(): string[] {
@@ -46,5 +77,21 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   @Input()
   set interactorsSelected(value: string[]) {
     this._interactorsSelected = value;
+  }
+
+  get isTabAActive(): boolean {
+    return this._isTabAActive;
+  }
+
+  set isTabAActive(value: boolean) {
+    this._isTabAActive = value;
+  }
+
+  get isTabBActive(): boolean {
+    return this._isTabBActive;
+  }
+
+  set isTabBActive(value: boolean) {
+    this._isTabBActive = value;
   }
 }

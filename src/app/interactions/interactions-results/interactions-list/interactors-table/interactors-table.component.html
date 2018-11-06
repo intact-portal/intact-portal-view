@@ -1,54 +1,41 @@
-<!--<div class="row">-->
-  <div class="columns medium-12">
+<div class="columns medium-12">
 
-    <div *ngIf="interactorsSearch">
-      <div>Interactors search result total: {{interactorsSearch.numberOfElements}}</div>
-    </div>
-
-    <div class="tablesaw-overflow">
-    <table id="interactorsTable" class="tablesaw" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Names</th>
-          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Description</th>
-          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Accession</th>
-          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Type</th>
-          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Species</th>
-          <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">Interactions</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="interactorsSearch">
-        <tr *ngFor="let interactor of interactorsSearch.content;" [class.active]="isSelectedInteractor(interactor.interactorId)">
-          <td id="tablesaw-checkbox">
-            <input type="checkbox"
-                   (change)="onSelected(interactor.interactorId)"
-                   [checked]="isSelectedInteractor(interactor.interactorId)"/>
-          </td>
-          <td>{{interactor.interactorName}}</td>
-          <td>{{interactor.description}}</td>
-          <td>{{interactor.interactorId}}</td>
-          <td>{{interactor.interactorType}}</td>
-          <td>{{interactor.species}}</td>
-          <td>{{interactor.interactionCount}}</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
+  <div *ngIf="interactorsSearch">
+    <div>Interactors search result total: {{interactorsSearch.numberOfElements}}</div>
   </div>
 
-
-  <div class="">
-    <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-      <li class="pagination-previous disabled">Previous</li>
-      <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-      <li><a href="#" aria-label="Page 2">2</a></li>
-      <li><a href="#" aria-label="Page 3">3</a></li>
-      <li class="ellipsis"></li>
-      <li><a href="#" aria-label="Page 12">12</a></li>
-      <li><a href="#" aria-label="Page 13">13</a></li>
-      <li class="pagination-next"><a href="#" aria-label="Next page">Next</a></li>
-    </ul>
+  <div class="tablesaw-overflow">
+  <table id="interactorsTable" class="tablesaw" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Names</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Description</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Accession</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Type</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Species</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">Interactions</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="interactorsSearch">
+      <tr *ngFor="let interactor of interactorsSearch.content;" [class.active]="isSelectedInteractor(interactor.interactorId)">
+        <td id="tablesaw-checkbox">
+          <input type="checkbox"
+                 (change)="onSelected(interactor.interactorId)"
+                 [checked]="isSelectedInteractor(interactor.interactorId)"/>
+        </td>
+        <td>{{interactor.interactorName}}</td>
+        <td>{{interactor.description}}</td>
+        <td>{{interactor.interactorId}}</td>
+        <td>{{interactor.interactorType}}</td>
+        <td>{{interactor.species}}</td>
+        <td>{{interactor.interactionCount}}</td>
+      </tr>
+    </tbody>
+  </table>
   </div>
+</div>
 
-<!--</div>-->
+<iv-interactions-pager [page]="interactorsSearchService.page"
+                       [totalPages]="interactorsSearchService.totalPages"
+                       (changePage)="onPageChanged($event)"> pager </iv-interactions-pager>

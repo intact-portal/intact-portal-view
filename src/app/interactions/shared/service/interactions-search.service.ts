@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {InteractionsSearchResult} from '../model/interactions-results/interaction/interactions-search.model';
-import {current} from 'codelyzer/util/syntaxKind';
 
 @Injectable()
 export class InteractionsSearchService {
@@ -14,17 +13,6 @@ export class InteractionsSearchService {
 
   constructor(private http: HttpClient) { }
 
-  // getAllInteractions(query: string): Observable<InteractionsSearchResult> {
-  //   // const params = new HttpParams()
-  //   //   .set('query', query);
-  //   query = query.trim();
-  //   // const options =  query ?
-  //   //   {params: new HttpParams().append('query', query)} : {};
-  //
-  //   return this.http.get('/interactionService/interactions/findInteractions/' + query)
-  //     .catch(this.handleError);
-  // }
-
   getAllInteractionsAndFacetsQuery(query: string,
                                    interactionSpeciesFilter: string[],
                                    interactionTypeFilter: string[],
@@ -33,9 +21,10 @@ export class InteractionsSearchService {
                                    miScoreMin: any,
                                    miScoreMax: any,
                                    negativeFilter: any,
-                                   currentPageIndex = 0, pageSize = 20): Observable<InteractionsSearchResult> {
+                                   currentPageIndex = 1, pageSize = 20): Observable<InteractionsSearchResult> {
 
     query = query.trim();
+    this.page = currentPageIndex;
 
     currentPageIndex = currentPageIndex - 1;
 

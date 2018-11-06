@@ -77,10 +77,12 @@ export class InteractionsResultsComponent implements OnInit {
       this.term,
       this.speciesNameFilter,
       this.interactorTypeFilter,
-      0,
-      20
+      this.currentPageIndex
     ).subscribe(interactorsSearch => {
       this.interactorsSearch = interactorsSearch;
+      if (this.interactorsSearch.totalElements !== 0) {
+        this.interactorsSearchService.totalElements = this.interactorsSearch.totalElements;
+      }
     })
   }
 
@@ -189,6 +191,7 @@ export class InteractionsResultsComponent implements OnInit {
   public onPageChanged(pageIndex: number): void {
     this.currentPageIndex = pageIndex;
     this.interactionsSearchService.page = pageIndex;
+    this.interactorsSearchService.page = pageIndex;
     this.updateURLParams();
   }
 

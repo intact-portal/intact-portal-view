@@ -14,7 +14,8 @@
     <div class="tabs-panel" id="interactor" style="background-color:#f4f4f4;">
       <iv-interactors-table [interactorsSearch]="interactorsSearch"
                             [interactorsSelected] = "interactorsSelected"
-                            (interactorsChanged) = "onInteractorsSelectedChanged($event)"></iv-interactors-table>
+                            (interactorsChanged) = "onInteractorsSelectedChanged($event)"
+                            (pageChanged)="onPageChanged($event)"></iv-interactors-table>
     </div>
 
   </div>

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InteractorsSearchResult } from '../../../shared/model/interactions-results/interactor/interactors-search.model';
+import {InteractorsSearchService} from '../../../shared/service/interactors-search.service';
 
-import Tablesaw from 'tablesaw/dist/tablesaw.jquery.js';
 declare const $: any;
 
 @Component({
@@ -15,8 +15,9 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
   private _interactorsSelected: string[];
 
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() {
+  constructor( public interactorsSearchService: InteractorsSearchService ) {
   }
 
   ngOnInit() {
@@ -78,4 +79,7 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
     this._interactorsSelected = value;
   }
 
+  public onPageChanged(pageIndex: number): void {
+    this.pageChanged.emit(pageIndex);
+  }
 }

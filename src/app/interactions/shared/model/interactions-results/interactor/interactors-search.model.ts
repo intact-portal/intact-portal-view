@@ -5,16 +5,19 @@ import {Filter} from '../filter.model';
 export class InteractorsSearchResult {
   private _content: Interactor[];
   private _numberOfElements: number;
+  private _totalElements: number;
   private _facetResultPage: InteractorFacets;
   private _filtersType: Filter[];
 
   constructor(content: Interactor[],
               numberOfElements: number,
-              facetResultPages: InteractorFacets,
+              totalElements: number,
+              facetResultPage: InteractorFacets,
               filtersType: Filter[]) {
     this._content = content;
     this._numberOfElements = numberOfElements;
-    this._facetResultPage = facetResultPages;
+    this._totalElements = totalElements;
+    this._facetResultPage = facetResultPage;
     this._filtersType = filtersType;
   }
 
@@ -50,5 +53,13 @@ export class InteractorsSearchResult {
 
   set facetFields(value: Filter[]) {
     this._filtersType = value;
+  }
+
+  get totalElements(): number {
+    return this._totalElements;
+  }
+
+  set totalElements(value: number) {
+    this._totalElements = value;
   }
 }

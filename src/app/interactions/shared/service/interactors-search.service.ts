@@ -10,6 +10,10 @@ import { environment } from '../../../../environments/environment';
 @Injectable()
 export class InteractorsSearchService {
 
+  private _totalElements = 0;
+  private _page: number = 1;
+  private _pageSize: number = 20;
+
   constructor(private http: HttpClient) { }
 
   /**
@@ -22,10 +26,6 @@ export class InteractorsSearchService {
 
     return this.http.get('/interactorService' + '/getAll')
       .catch(this.handleError);
-
-    // return this.http.get(baseURL + '/search/' + query, {params: params})
-    //   .catch(this.handleError);
-    // return null;
   }
 
   getAllInteractorsAndFacets(): Observable<InteractorsSearchResult> {
@@ -37,6 +37,10 @@ export class InteractorsSearchService {
                                   speciesFilter: string[],
                                   interactorTypeFilter: string[],
                                   currentPageIndex = 1, pageSize = 20): Observable<InteractorsSearchResult> {
+    query = query.trim();
+    this.page = currentPageIndex;
+
+    currentPageIndex = currentPageIndex - 1;
 
     const params = new HttpParams()
       .set('query', query)
@@ -49,17 +53,40 @@ export class InteractorsSearchService {
       .catch(this.handleError);
   }
 
-  /**
-   * Find an interactor based on indexed term
-   * @param query
-   * @param format
-   * @returns {Observable<InteractorsSearchResult>}
-   */
-  // findInteractors(query: string, format = 'json'): Observable<InteractorsSearchResult> {
-  //   return this.http.get(interactorBaseURL + '/search/' + query)
-  //     .catch(this.handleError);
-  // }
+  get totalPages() {
+    try {
+      return Math.ceil(this._totalElements / this._pageSize);
+    } catch (e) {
+      console.error(e);
+      return 0;
+    }
+  }
 
+  get page(): number {
+    return this._page;
+  }
+
+  set page(value: number) {
+    if (value !== this.page) {
+      this._page = value;
+    }
+  }
+
+  get totalElements(): number {
+    return this._totalElements;
+  }
+
+  set totalElements(value: number) {
+    this._totalElements = value;
+  }
+
+  get pageSize(): number {
+    return this._pageSize;
+  }
+
+  set pageSize(value: number) {
+    this._pageSize = value;
+  }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
     if (err.error instanceof Error) {

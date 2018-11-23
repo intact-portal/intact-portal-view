@@ -1,0 +1,63 @@
+.masthead{
+  background-color: #648880;
+}
+
+/**************************************************************/
+/********* ADVANCED QUERY BUILDER RE-STYLE ********************/
+/**************************************************************/
+
+
+[_nghost-c11] .q-switch-label[_ngcontent-c11], [_nghost-c11] .q-button[_ngcontent-c11] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+[_nghost-c11] .q-button[_ngcontent-c11] {
+  margin-left: 8px;
+  padding: 0 8px;
+  background-color: #f6f4f6 !important;
+  border: none !important;
+}
+
+[_nghost-c11] .q-button[_ngcontent-c11]:focus {
+  outline: 0;
+  box-shadow: inset 0 0 0px 0.2rem rgba(0,123,255,.25);
+}
+
+[_nghost-c11] .q-remove-button[_ngcontent-c11] {
+  color: #B3415D;
+  width: 31px;
+  background-color: transparent !important;
+}
+
+[_nghost-c11] .q-tree[_ngcontent-c11] {
+  margin-left: 3.25rem !important;
+}
+
+[_nghost-c11] .q-connector[_ngcontent-c11]::before, [_nghost-c11] .q-connector[_ngcontent-c11]::after {
+  content: '';
+  left: -12px;
+  border: solid #CCC;
+  width: 9px;
+  height: calc(50% + 6px);
+  position: absolute;
+}
+
+[_nghost-c11] .q-connector[_ngcontent-c11]::before {
+  top: -5px;
+  border-width: 0 0 2px 2px;
+}
+
+[_nghost-c11] .q-control-size[_ngcontent-c11] {
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 10px;
+  margin-top: 8px;
+  margin-bottom: -3px;
+}
+
+/**************************************************************/
+/************** END ADVANCED QUERY BUILDER ********************/
+/**************************************************************/
+

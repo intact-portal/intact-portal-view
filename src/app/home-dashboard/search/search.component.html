@@ -1,0 +1,45 @@
+<div class="row">
+
+    <ul class="tabs" data-tabs id="search-tabs">
+      <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Search</a></li>
+      <li class="tabs-title"><a href="#panel2">Advanced</a></li>
+      <li class="tabs-title"><a href="#panel3">Upload</a></li>
+    </ul>
+
+    <div class="tabs-content" data-tabs-content="search-tabs">
+
+      <!--TAB MAIN SEARCH SECTION-->
+      <div class="tabs-panel is-active" id="panel1">
+          <div class="row margin-top-large">
+            <div id="searchBox" class="columns small-11">
+              <textarea #query class="typeahead" type="text" placeholder="example"></textarea>
+            </div>
+            <input id="home-search-button" class="button margin-top-small" type="submit"
+                   (click)="search(query.value, 'button')" value="Search"/>
+          </div>
+      </div>
+
+      <!--TAB ADVANCED SECTION-->
+      <div class="tabs-panel" id="panel2">
+        <div class="row margin-top-large">
+          <div class="columns medium-12 callout-advanced">
+            <iv-advanced-search></iv-advanced-search>
+          </div>
+        </div>
+      </div>
+
+      <!--TAB UPLOAD FILE SECTION-->
+      <div class="tabs-panel" id="panel3" style="background-color:#e6e6e6;">
+
+        <!--<form id="iSearch" name="content-search" action="[search-action]" method="get">
+          <div class="row margin-top-large">
+            &lt;!&ndash;<div id="searchBox3" class="columns small-12">&ndash;&gt;
+              &lt;!&ndash;<textarea id="autocomplete" type="text" placeholder="Search..." rows="5"></textarea>&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
+          </div>
+        </form>-->
+
+      </div>
+
+    </div>
+</div>

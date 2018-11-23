@@ -1,15 +1,23 @@
+.tabs-panel[_ngcontent-c4] {
+  background: #cec2d4 !important;
+}
+
+#search-tabs{
+  border: 1px solid #cec2d4;
+}
+
 .tabs-title > a {
   font-size: 0.9rem;
   color: #3e3e3e;
 }
 .tabs-title > a:hover {
-  background: #7d96a75c; /*#57b2b787*/
+  background: #672e7b85;/*#7d96a75c; /*#57b2b787*/
   color: #0a0a0a;
 }
 .tabs-title > a:focus,
 .tabs-title > a[aria-selected='true'] {
-  color: #0a0a0a;
-  background: #e6e6e6;
+  color: #3e3e3e;
+  background: rgba(90, 46, 110, 0.29);
 }
 
 #home-search-button {
@@ -21,3 +29,8 @@
   background-color: #1da1f2;
 }
 
+.callout-advanced {
+  background-color: #f6f4f6;
+  border-radius: 5px;
+  border: 1px solid #CCC;
+}

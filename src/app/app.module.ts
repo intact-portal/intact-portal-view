@@ -10,7 +10,7 @@ import { HomeDashboardModule } from './home-dashboard/home-dashboard.module';
 import { ContributorsComponent } from './home-dashboard/contributors/contributors.component';
 import { FeatureDatasetService } from './home-dashboard/featured-dataset/service/feature-dataset.service';
 import { InteractionsModule } from './interactions/interactions.module';
-import { SearchService } from './search/service/search.service';
+import { SearchService } from './home-dashboard/search/service/search.service';
 import { InteractorsSearchService } from './interactions/shared/service/interactors-search.service';
 import { InteractionsSearchService } from './interactions/shared/service/interactions-search.service';
 

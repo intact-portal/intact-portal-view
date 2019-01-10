@@ -29,6 +29,7 @@ export class InteractionsSearchService {
     currentPageIndex = currentPageIndex - 1;
 
     const params = new HttpParams()
+      .set('query', query)
       .set('interactionTypeFilter', interactionTypeFilter.toString())
       .set('species', interactionSpeciesFilter.toString())
       .set('detectionMethodFilter', detectionMethodFilter.toString())
@@ -41,7 +42,7 @@ export class InteractionsSearchService {
 
     const options = query ? {params: params} : {};
 
-    return this.http.get('/interactionService/interactions/findInteractionWithFacet/' + query, options)
+    return this.http.get('/interactionService/interaction/findInteractionWithFacet', options)
       .catch(this.handleError);
   }
 

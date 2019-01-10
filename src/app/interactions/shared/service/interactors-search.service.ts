@@ -49,7 +49,9 @@ export class InteractorsSearchService {
       .set('interactorTypeFilter', interactorTypeFilter.toString())
       .set('speciesFilter', speciesFilter.toString());
 
-    return this.http.get('/interactorService/findInteractorWithFacet', {params: params})
+    const options = query ? {params: params} : {};
+
+    return this.http.get('/interactorService/interactor/findInteractorWithFacet', options)
       .catch(this.handleError);
   }
 

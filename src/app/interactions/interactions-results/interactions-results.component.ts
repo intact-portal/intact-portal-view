@@ -62,8 +62,8 @@ export class InteractionsResultsComponent implements OnInit {
         this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
         this.organismFilter = params.organism ? params.organism.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
-        this.miScoreMax = params.miScoreMax ? params.miScoreMax : '';
-        this.miScoreMin = params.miScoreMin ? params.miScoreMin : '';
+        this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
+        this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
         this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
         this.currentPageIndex = params.page ? Number(params.page) : 1;
 
@@ -73,6 +73,7 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   private requestInteractorsResults() {
+    // TODO: ADD interactionType, detectionMethod, negativeFilter, miScore, hostOrganism
     this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
       this.term,
       this.speciesNameFilter,
@@ -151,12 +152,6 @@ export class InteractionsResultsComponent implements OnInit {
     this.updateURLParams();
   }
 
-  // public onInteractionmiScoreFilterChanged(filter: string[]): void {
-  //   // this.miScoreFilter = filter;
-  //   this.interactorsSelected = [];
-  //   this.updateURLParams();
-  // }
-
   public onInteractionMiScoreMinFilterChanged(filter: any): void {
     this.miScoreMin = filter;
     this.interactorsSelected = [];
@@ -177,8 +172,8 @@ export class InteractionsResultsComponent implements OnInit {
     this.interactionSpeciesFilter = [];
     this.organismFilter = [];
     this.negativeFilter = false;
-    // this.miScoreMin = 0;
-    // this.miScoreMax = 1;
+    this.miScoreMin = 0;
+    this.miScoreMax = 1;
     this.interactorsSelected = [];
     this.updateURLParams();
   }

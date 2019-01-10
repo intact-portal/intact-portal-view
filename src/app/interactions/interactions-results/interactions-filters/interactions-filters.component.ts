@@ -40,7 +40,7 @@ export class InteractionsFiltersComponent implements OnInit {
   @Output() onInteractionSpeciesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractionOrganismFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractionNegativeFilterChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-  // @Output() onInteractionmiScoreFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onInteractionmiScoreFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   @Output() onInteractionMiScoreMinFilterChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onInteractionMiScoreMaxFilterChanged: EventEmitter<any> = new EventEmitter<any>();
@@ -60,17 +60,25 @@ export class InteractionsFiltersComponent implements OnInit {
     const range1 = $('#range1');
     const range2 = $('#range2');
 
+    const val1 = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore[0].value : 0;
+    const val2 = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
+
     sliderRange.slider({
       range: true,
       min: 0,
       max: 1,
       step: 0.01,
-      values: [ this.interactionFacets.intact_miscore[0].value, this.interactionFacets.intact_miscore.slice(-1)[0].value],
+      values: [ val1, val2],
       slide: function( event, ui ) {
         range1.val( ui.values[0] );
         range2.val( ui.values[1] );
+        this.miScoreMinFilter = range1.val();
+        this.miScoreMaxFilter = range2.val();
 
-      }
+        this.onInteractionMiScoreMinFilterChanged.emit(this.miScoreMinFilter);
+        this.onInteractionMiScoreMaxFilterChanged.emit(this.miScoreMaxFilter);
+
+      }.bind(this)
     });
 
     range1.val(sliderRange.slider( 'values', 0 ));
@@ -136,15 +144,6 @@ export class InteractionsFiltersComponent implements OnInit {
 
     this.onInteractionNegativeFilterChanged.emit(this.negativeFilter);
   }
-
-
-  // onChangeMiScoreMinFilter(value: any) {
-  //   this.onInteractionMiScoreMinFilterChanged.emit(value);
-  // }
-  //
-  // onChangeMiScoreMaxFilter(value: any) {
-  //   this.onInteractionMiScoreMaxFilterChanged.emit(value);
-  // }
 
   isSelectedSpeciesName(species: string) {
     return this.speciesNameFilter !== undefined ? this.speciesNameFilter.indexOf(species) >= 0 : false;

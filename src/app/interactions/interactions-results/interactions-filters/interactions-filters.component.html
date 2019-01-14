@@ -15,7 +15,7 @@
 
     <div class="margin-top-large">
       <b>Interactor Species</b>
-      <div class="margin-top-medium" style="height: 200px; overflow-y: auto">
+      <div class="margin-top-medium" [ngStyle]="speciesFilterStyle()">
         <ul class="no-bullet">
           <li *ngFor="let species of interactorFacets.species_name_str">
             <input #filter type="checkbox" value="{{species.value}}"
@@ -28,7 +28,7 @@
 
     <div class="margin-top-large">
       <b>Interactor Type</b>
-      <div class="margin-top-medium" style="height: 200px; overflow-y: auto">
+      <div class="margin-top-medium" [ngStyle]="interactorFilterStyle()">
         <ul class="no-bullet">
           <li *ngFor="let molecule of interactorFacets.interactor_type_str">
             <input #filter type="checkbox" value="{{molecule.value}}"
@@ -41,7 +41,7 @@
 
     <div class="margin-top-large">
       <b>Interaction Type</b>
-      <div class="margin-top-medium" style="height: 200px; overflow-y: auto">
+      <div class="margin-top-medium" [ngStyle]="interactionFilterStyle()">
         <ul class="no-bullet">
           <li *ngFor="let interactionType of interactionFacets.interaction_type_str">
             <input #filter type="checkbox" value="{{interactionType.value}}"
@@ -54,7 +54,7 @@
 
     <div class="margin-top-large">
       <b>Interaction Detection Method</b>
-      <div class="margin-top-medium" style="height: 300px; overflow-y: auto">
+      <div class="margin-top-medium" [ngStyle]="detMethodFilterStyle()">
         <ul class="no-bullet">
           <li *ngFor="let detectionMethod of interactionFacets.interaction_detection_method_str">
             <input #filter type="checkbox" value="{{detectionMethod.value}}"
@@ -66,13 +66,13 @@
     </div>
 
     <div class="margin-top-large">
-      <b>Interaction Species</b>
-      <div class="margin-top-medium" style="height: 300px; overflow-y: auto">
+      <b>Interaction Host Organism</b>
+      <div class="margin-top-medium" [ngStyle]="hostOrganismfilterStyle()">
         <ul class="no-bullet">
-          <li *ngFor="let speciesA_B of interactionFacets.speciesA_B_str">
-            <input #filter type="checkbox" value="{{speciesA_B.value}}"
-                   (change)="onChangeInteractionSpeciesFilter(filter.value)"
-                   [checked]="isSelectedInteractionSpecies(speciesA_B.value)"> {{speciesA_B.value}} ({{speciesA_B.valueCount}})
+          <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
+            <input #filter type="checkbox" value="{{hostOrganism.value}}"
+                   (change)="onChangeHostOrganismFilter(filter.value)"
+                   [checked]="isSelectedHostOrganism(hostOrganism.value)"> {{hostOrganism.value}} ({{hostOrganism.valueCount}})
           </li>
         </ul>
       </div>
@@ -86,10 +86,7 @@
           <input type="text" id="range1" readonly style="border:0; color:#f6931f; font-weight:bold; padding: 2px">
         </div>
 
-        <div id="slider-range" class="margin-top-large margin-bottom-large columns medium-5">
-          <!--<div id="custom-handle1" class="ui-slider-handle"></div>-->
-          <!--<div id="custom-handle2" class="ui-slider-handle"></div>-->
-        </div>
+        <div id="slider-range" class="margin-top-large margin-bottom-large columns medium-5"></div>
 
         <div class="columns medium-4">
           <input type="text" id="range2" readonly style="border:0; color:#f6931f; font-weight:bold;">

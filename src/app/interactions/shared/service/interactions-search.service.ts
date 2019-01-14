@@ -14,10 +14,9 @@ export class InteractionsSearchService {
   constructor(private http: HttpClient) { }
 
   getAllInteractionsAndFacetsQuery(query: string,
-                                   interactionSpeciesFilter: string[],
+                                   hostOrganismFilter: string[],
                                    interactionTypeFilter: string[],
                                    detectionMethodFilter: string[],
-                                   organismFilter: string[],
                                    miScoreMin: any,
                                    miScoreMax: any,
                                    negativeFilter: any,
@@ -31,9 +30,8 @@ export class InteractionsSearchService {
     const params = new HttpParams()
       .set('query', query)
       .set('interactionTypeFilter', interactionTypeFilter.toString())
-      .set('species', interactionSpeciesFilter.toString())
+      .set('hostOrganismFilter', hostOrganismFilter.toString())
       .set('detectionMethodFilter', detectionMethodFilter.toString())
-      .set('hostOrganismFilter', organismFilter.toString())
       .set('minMiscore', miScoreMin.toString())
       .set('maxMiscore', miScoreMax.toString())
       .set('isNegativeFilter', negativeFilter.toString())

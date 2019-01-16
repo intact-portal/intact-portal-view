@@ -36,6 +36,12 @@ export class InteractorsSearchService {
   getAllInteractorsAndFacetsQuery(query: string,
                                   speciesFilter: string[],
                                   interactorTypeFilter: string[],
+                                  detectionMethodFilter: string[],
+                                  interactionTypeFilter: string[],
+                                  hostOrganismFilter: string[],
+                                  negativeFilter: any,
+                                  miScoreMin: any,
+                                  miScoreMax: any,
                                   currentPageIndex = 1, pageSize = 20): Observable<InteractorsSearchResult> {
     query = query.trim();
     this.page = currentPageIndex;
@@ -47,7 +53,13 @@ export class InteractorsSearchService {
       .set('page', currentPageIndex.toString())
       .set('pageSize', pageSize.toString())
       .set('interactorTypeFilter', interactorTypeFilter.toString())
-      .set('speciesFilter', speciesFilter.toString());
+      .set('speciesFilter', speciesFilter.toString())
+      .set('detectionMethodFilter', detectionMethodFilter.toString())
+      .set('interactionTypeFilter', interactionTypeFilter.toString())
+      .set('hostOrganismFilter', hostOrganismFilter.toString())
+      .set('isNegativeFilter', negativeFilter.toString())
+      .set('minMiscore', miScoreMin.toString())
+      .set('maxMiscore', miScoreMax.toString());
 
     const options = query ? {params: params} : {};
 

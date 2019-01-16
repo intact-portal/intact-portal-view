@@ -72,6 +72,12 @@ export class InteractionsResultsComponent implements OnInit {
       this.term,
       this.speciesNameFilter,
       this.interactorTypeFilter,
+      this.detectionMethodFilter,
+      this.interactionTypeFilter,
+      this.hostOrganismFilter,
+      this.negativeFilter,
+      this.miScoreMin,
+      this.miScoreMax,
       this.currentPageIndex
     ).subscribe(interactorsSearch => {
       this.interactorsSearch = interactorsSearch;

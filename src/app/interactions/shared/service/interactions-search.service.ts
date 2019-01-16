@@ -32,8 +32,8 @@ export class InteractionsSearchService {
       .set('interactionTypeFilter', interactionTypeFilter.toString())
       .set('hostOrganismFilter', hostOrganismFilter.toString())
       .set('detectionMethodFilter', detectionMethodFilter.toString())
-      .set('minMiscore', miScoreMin.toString())
-      .set('maxMiscore', miScoreMax.toString())
+      .set('minMiScore', miScoreMin.toString())
+      .set('maxMiScore', miScoreMax.toString())
       .set('isNegativeFilter', negativeFilter.toString())
       .set('page', currentPageIndex.toString())
       .set('pageSize', pageSize.toString());

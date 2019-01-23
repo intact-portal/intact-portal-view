@@ -67,7 +67,6 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   private requestInteractorsResults() {
-    // TODO: ADD interactionType, detectionMethod, negativeFilter, miScore, hostOrganism
     this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
       this.term,
       this.speciesNameFilter,

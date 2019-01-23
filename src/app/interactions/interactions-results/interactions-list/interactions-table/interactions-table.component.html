@@ -8,6 +8,7 @@
     <table id="interactionsTable" class="tablesaw tablesaw-columntoggle" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>
       <thead>
         <tr>
+          <th></th>
           <th data-tablesaw-priority="persist">Molecule A</th>
           <th data-tablesaw-priority="1">Molecule B</th>
           <th data-tablesaw-priority="1" >Species A</th>
@@ -28,6 +29,7 @@
 
       <tbody *ngIf="interactionsSearch">
         <tr *ngFor="let interaction of interactionsSearch.content">
+          <td><a href=""><i class="icon icon-common icon-search-document"></i></a></td>
           <td>{{interaction.moleculeA}}</td>
           <td>{{interaction.moleculeB}}</td>
           <td>{{interaction.speciesA}}</td>

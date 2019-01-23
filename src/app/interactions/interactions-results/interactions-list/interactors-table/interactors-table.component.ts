@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InteractorsSearchResult } from '../../../shared/model/interactions-results/interactor/interactors-search.model';
 import {InteractorsSearchService} from '../../../shared/service/interactors-search.service';
+import {InteractionsSearchResult} from '../../../shared/model/interactions-results/interaction/interactions-search.model';
 
 declare const $: any;
 
@@ -12,7 +13,10 @@ declare const $: any;
 export class InteractorsTableComponent implements OnInit, AfterViewInit {
 
   private _interactorsSearch: InteractorsSearchResult;
+  private _interactionsSearch: InteractionsSearchResult;
   private _interactorsSelected: string[];
+
+  private _interactionCount: number;
 
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
@@ -24,17 +28,7 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // setTimeout(() => {
-      // $(document).trigger('enhance.tablesaw');
-      //
-      // console.log('HELLOWW I am being called the last one');
-      // console.log('--------------------------------------------');
 
-      // $('.tablesaw').each(function(index) {
-      //   $(this).data('tablesaw').destroy();
-      //   $(this).data('tablesaw').refresh();
-      // });
-    // }, 20);
   }
 
   onSelected(interactor: string) {
@@ -54,6 +48,10 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
     return this.interactorsSelected !== undefined ? this.interactorsSelected.indexOf(interactor) >= 0 : false;
   }
 
+  getInteractionCountPerInteractor(interactor: string) {
+
+  }
+
   /************************* /
   /** GETTERS AND SETTERS ** /
   /*************************/
@@ -66,6 +64,15 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
   set interactorsSearch(value: InteractorsSearchResult) {
     this._interactorsSearch = value;
     console.log(this._interactorsSearch);
+  }
+
+  get interactionsSearch(): InteractionsSearchResult {
+    return this._interactionsSearch;
+  }
+
+  @Input()
+  set interactionsSearch(value: InteractionsSearchResult) {
+    this._interactionsSearch = value;
   }
 
   /*** INTERACTORS SELECTED **/
@@ -81,5 +88,13 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
 
   public onPageChanged(pageIndex: number): void {
     this.pageChanged.emit(pageIndex);
+  }
+
+  get interactionCount(): number {
+    return this._interactionCount;
+  }
+
+  set interactionCount(value: number) {
+    this._interactionCount = value;
   }
 }

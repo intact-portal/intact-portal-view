@@ -15,6 +15,7 @@
         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Type</th>
         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Species</th>
         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">Interactions</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">Interactions in Total</th>
       </tr>
     </thead>
     <tbody *ngIf="interactorsSearch">
@@ -29,6 +30,7 @@
         <td>{{interactor.interactorId}}</td>
         <td>{{interactor.interactorType}}</td>
         <td>{{interactor.species}}</td>
+        <td>{{interactor.interactionSearchCount}}</td>
         <td>{{interactor.interactionCount}}</td>
       </tr>
     </tbody>

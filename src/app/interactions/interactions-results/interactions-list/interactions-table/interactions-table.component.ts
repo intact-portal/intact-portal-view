@@ -1,6 +1,8 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionsSearchResult} from '../../../shared/model/interactions-results/interaction/interactions-search.model';
 import {InteractionsSearchService} from '../../../shared/service/interactions-search.service';
+import {Interaction} from '../../../shared/model/interactions-results/interaction/interaction.model';
+import {Router} from '@angular/router';
 
 declare const $: any;
 
@@ -9,30 +11,21 @@ declare const $: any;
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-export class InteractionsTableComponent implements OnInit, AfterViewInit {
+export class InteractionsTableComponent implements OnInit {
 
   private _interactionsSearch: InteractionsSearchResult;
 
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor( public interactionsSearchService: InteractionsSearchService) {
+  constructor( public interactionsSearchService: InteractionsSearchService,
+               private router: Router) {
   }
 
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    // setTimeout(() => {
-    //   // $(document).trigger('enhance.tablesaw');
-    //
-    //   console.log('HELLOWW I am being called the last one - FROM INTERACTIONS');
-    //   console.log('--------------------------------------------');
-    //
-    //   $('.tablesaw').each(function(index) {
-    //     $(this).data('tablesaw').destroy();
-    //     $(this).data('tablesaw').refresh();
-    //   });
-    // }, 20);
+  openDetailsPage(interaction: Interaction) {
+    this.router.navigate(['/details/interaction', interaction.interactionAc]);
   }
 
   /************************* /

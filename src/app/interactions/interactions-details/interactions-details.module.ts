@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {InteractionsDetailsComponent} from './interactions-details.component';
-import {DetailsComponent} from './details/details.component';
-import {DetailsInfoComponent} from './details/details-info/details-info.component';
-import {ExternalXrefsComponent} from './details/details-info/external-xrefs/external-xrefs.component';
-import {CurationAnnotationsComponent} from './details/details-info/curation-annotations/curation-annotations.component';
+import {DetailsDashboardComponent} from './details-dahboard/details-dashboard.component';
+import {DetailsInfoComponent} from './details-dahboard/details-info/details-info.component';
+import {ExternalXrefsComponent} from './details-dahboard/details-info/external-xrefs/external-xrefs.component';
+import {CurationAnnotationsComponent} from './details-dahboard/details-info/curation-annotations/curation-annotations.component';
 import {DetailsViewerComponent} from './details-viewer/details-viewer.component';
-import {ExperimentalConditionsComponent} from './details/details-info/experimental-conditions/experimental-conditions.component';
-import {ParametersComponent} from './details/details-info/parameters/parameters.component';
-import {ConfidencesComponent} from './details/details-info/confidences/confidences.component';
+import {ExperimentalConditionsComponent} from './details-dahboard/details-info/experimental-conditions/experimental-conditions.component';
+import {ParametersComponent} from './details-dahboard/details-info/parameters/parameters.component';
+import {ConfidencesComponent} from './details-dahboard/details-info/confidences/confidences.component';
 import {InteractionsDetailsRoutingModule} from './interactions-details-routing.module';
 
 @NgModule({
@@ -19,7 +19,7 @@ import {InteractionsDetailsRoutingModule} from './interactions-details-routing.m
   declarations: [
     InteractionsDetailsComponent,
     DetailsViewerComponent,
-    DetailsComponent,
+    DetailsDashboardComponent,
     DetailsInfoComponent,
     ExternalXrefsComponent,
     ParametersComponent,

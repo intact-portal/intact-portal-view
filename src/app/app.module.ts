@@ -13,7 +13,7 @@ import { InteractionsResultsModule } from './interactions/interactions-results/i
 import { SearchService } from './home-dashboard/search/service/search.service';
 import { InteractorsSearchService } from './interactions/shared/service/interactors-search.service';
 import { InteractionsSearchService } from './interactions/shared/service/interactions-search.service';
-import { InteractionsDetailsModule } from './interactions/interactions-details/interactions-details.module';
+import { InteractionDetailsModule } from './interactions/interaction-details/interaction-details.module';
 
 
 @NgModule({
@@ -27,7 +27,7 @@ import { InteractionsDetailsModule } from './interactions/interactions-details/i
     HttpClientModule,
     HomeDashboardModule,
     InteractionsResultsModule,
-    InteractionsDetailsModule,
+    InteractionDetailsModule,
     AppRoutingModule
   ],
   providers: [FeatureDatasetService, SearchService, InteractorsSearchService, InteractionsSearchService],

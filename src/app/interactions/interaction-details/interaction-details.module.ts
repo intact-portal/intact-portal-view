@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {InteractionsDetailsComponent} from './interactions-details.component';
+import {InteractionDetailsComponent} from './interaction-details.component';
 import {DetailsDashboardComponent} from './details-dahboard/details-dashboard.component';
 import {DetailsInfoComponent} from './details-dahboard/details-info/details-info.component';
 import {ExternalXrefsComponent} from './details-dahboard/details-info/external-xrefs/external-xrefs.component';
@@ -9,15 +9,15 @@ import {DetailsViewerComponent} from './details-viewer/details-viewer.component'
 import {ExperimentalConditionsComponent} from './details-dahboard/details-info/experimental-conditions/experimental-conditions.component';
 import {ParametersComponent} from './details-dahboard/details-info/parameters/parameters.component';
 import {ConfidencesComponent} from './details-dahboard/details-info/confidences/confidences.component';
-import {InteractionsDetailsRoutingModule} from './interactions-details-routing.module';
+import {InteractionDetailsRoutingModule} from './interaction-details-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    InteractionsDetailsRoutingModule
+    InteractionDetailsRoutingModule
   ],
   declarations: [
-    InteractionsDetailsComponent,
+    InteractionDetailsComponent,
     DetailsViewerComponent,
     DetailsDashboardComponent,
     DetailsInfoComponent,
@@ -28,4 +28,4 @@ import {InteractionsDetailsRoutingModule} from './interactions-details-routing.m
     ConfidencesComponent
   ]
 })
-export class InteractionsDetailsModule { }
+export class InteractionDetailsModule { }

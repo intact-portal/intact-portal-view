@@ -29,7 +29,7 @@
 
       <tbody *ngIf="interactionsSearch">
         <tr *ngFor="let interaction of interactionsSearch.content">
-          <td><a (click)="openDetailsPage(interaction)"><i class="icon icon-common icon-search-document"></i></a></td>
+          <td><a [routerLink]="['/details/interaction', interaction.interactionAc]"><i class="icon icon-common icon-search-document"></i></a></td>
           <td>{{interaction.moleculeA}}</td>
           <td>{{interaction.moleculeB}}</td>
           <td>{{interaction.speciesA}}</td>

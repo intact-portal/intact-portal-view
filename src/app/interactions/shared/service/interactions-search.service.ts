@@ -44,10 +44,6 @@ export class InteractionsSearchService {
       .catch(this.handleError);
   }
 
-  // get startIndex() {
-  //   return this.page * this._pageSize;
-  // }
-
   get totalPages() {
     try {
       return Math.ceil(this._totalElements / this._pageSize);

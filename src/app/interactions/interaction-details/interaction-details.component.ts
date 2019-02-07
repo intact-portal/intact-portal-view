@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { InteractionDetails } from '../shared/model/interaction-details/interaction-details.model';
+import {InteractionsDetailsService} from '../shared/service/interactions-details.service';
 
 @Component({
   selector: 'iv-interactions-details',
@@ -15,7 +16,8 @@ export class InteractionDetailsComponent implements OnInit {
 
   constructor(private titleService: Title,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private interactionsDetailsService: InteractionsDetailsService) { }
 
   ngOnInit() {
     this.route.params
@@ -30,6 +32,10 @@ export class InteractionDetailsComponent implements OnInit {
 
   private requestInteractionDetails() {
     // TODO
+    // this.interactionsDetailsService.getDetailsByInteractionAc(this.interactionAc)
+    //   .subscribe(interactionDetails => {
+    //     this.interactionDetails = interactionDetails;
+    // })
   }
 
   get interactionAc(): string {
@@ -38,5 +44,13 @@ export class InteractionDetailsComponent implements OnInit {
 
   set interactionAc(value: string) {
     this._interactionAc = value;
+  }
+
+  get interactionDetails(): InteractionDetails {
+    return this._interactionDetails;
+  }
+
+  set interactionDetails(value: InteractionDetails) {
+    this._interactionDetails = value;
   }
 }

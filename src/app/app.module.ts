@@ -14,6 +14,7 @@ import { SearchService } from './home-dashboard/search/service/search.service';
 import { InteractorsSearchService } from './interactions/shared/service/interactors-search.service';
 import { InteractionsSearchService } from './interactions/shared/service/interactions-search.service';
 import { InteractionDetailsModule } from './interactions/interaction-details/interaction-details.module';
+import {InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { InteractionDetailsModule } from './interactions/interaction-details/int
     InteractionDetailsModule,
     AppRoutingModule
   ],
-  providers: [FeatureDatasetService, SearchService, InteractorsSearchService, InteractionsSearchService],
+  providers: [FeatureDatasetService, SearchService, InteractorsSearchService, InteractionsSearchService, InteractionsDetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

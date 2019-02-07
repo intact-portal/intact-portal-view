@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {InteractionDetails} from '../../../shared/model/interaction-details/interaction-details.model';
 
 @Component({
   selector: 'iv-details-info',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./details-info.component.css']
 })
 export class DetailsInfoComponent implements OnInit {
+
+  @Input() interactionDetails: InteractionDetails;
 
   constructor() { }
 

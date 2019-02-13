@@ -1,27 +1,23 @@
 import {Xreferences} from './xreferences.model';
-import {ExperimentalConditions} from './experimental-conditions.model';
-import {Annotations} from './annotations.model';
 import {TypeValueModel} from './type-value.model';
 
 export class InteractionDetails {
   private _interactionAc: string;
   private _interactionType: string;
   private _shortLabel: string;
-  private _externalXrefs: Xreferences[];
-  private _curationAnnotations: Annotations[];
-  private _experimentConditions: ExperimentalConditions[];
+  private _xrefs: Xreferences[];
+  private _annotations: TypeValueModel[];
+  // private _experimentConditions: ExperimentalConditions[];
   private _parameters: TypeValueModel[];
   private _confidences: TypeValueModel[];
 
-  constructor(interactionAc: string, interactionType: string, shortLabel: string, externalXrefs: Xreferences[],
-              curationAnnotations: Annotations[], experimentConditions: ExperimentalConditions[],
-              parameters: TypeValueModel[], confidences: TypeValueModel[]) {
+  constructor(interactionAc: string, interactionType: string, shortLabel: string, xrefs: Xreferences[],
+              annotations: TypeValueModel[], parameters: TypeValueModel[], confidences: TypeValueModel[]) {
     this._interactionAc = interactionAc;
     this._interactionType = interactionType;
     this._shortLabel = shortLabel;
-    this._externalXrefs = externalXrefs;
-    this._curationAnnotations = curationAnnotations;
-    this._experimentConditions = experimentConditions;
+    this._xrefs = xrefs;
+    this._annotations = annotations;
     this._parameters = parameters;
     this._confidences = confidences;
   }
@@ -50,28 +46,20 @@ export class InteractionDetails {
     this._shortLabel = value;
   }
 
-  get externalXrefs(): Xreferences[] {
-    return this._externalXrefs;
+  get xrefs(): Xreferences[] {
+    return this._xrefs;
   }
 
-  set externalXrefs(value: Xreferences[]) {
-    this._externalXrefs = value;
+  set xrefs(value: Xreferences[]) {
+    this._xrefs = value;
   }
 
-  get curationAnnotations(): Annotations[] {
-    return this._curationAnnotations;
+  get annotations(): TypeValueModel[] {
+    return this._annotations;
   }
 
-  set curationAnnotations(value: Annotations[]) {
-    this._curationAnnotations = value;
-  }
-
-  get experimentConditions(): ExperimentalConditions[] {
-    return this._experimentConditions;
-  }
-
-  set experimentConditions(value: ExperimentalConditions[]) {
-    this._experimentConditions = value;
+  set annotations(value: TypeValueModel[]) {
+    this._annotations = value;
   }
 
   get parameters(): TypeValueModel[] {

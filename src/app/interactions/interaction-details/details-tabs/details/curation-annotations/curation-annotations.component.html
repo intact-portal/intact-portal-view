@@ -6,9 +6,9 @@
       <th>Description</th>
     </thead>
     <tbody>
-      <tr>
-        <td>aaa</td>
-        <td>aaaa</td>
+      <tr *ngFor="let annotation of annotations">
+        <td>{{annotation.type}}</td>
+        <td>{{annotation.value}}</td>
       </tr>
     </tbody>
   </table>

@@ -8,7 +8,7 @@ import {TypeValueModel} from '../../../../shared/model/interaction-details/type-
 })
 export class CurationAnnotationsComponent implements OnInit {
 
-  @Input() annotations: TypeValueModel;
+  @Input() annotations: TypeValueModel[];
 
   constructor() { }
 

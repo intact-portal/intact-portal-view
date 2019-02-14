@@ -6,9 +6,9 @@
       <th>Identifier</th>
     </thead>
     <tbody>
-      <tr >
-        <td>aaa</td>
-        <td>aaaa</td>
+      <tr *ngFor="let xref of xrefs">
+        <td>{{xref.database}}</td>
+        <td>{{xref.identifier}}</td>
       </tr>
     </tbody>
   </table>

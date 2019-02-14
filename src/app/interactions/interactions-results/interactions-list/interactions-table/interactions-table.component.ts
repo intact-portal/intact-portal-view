@@ -25,7 +25,7 @@ export class InteractionsTableComponent implements OnInit {
   }
 
   // openDetailsPage(interaction: Interaction) {
-  //   this.router.navigate(['/details/interaction', interaction.interactionAc]);
+  //   this.router.navigate(['/details/interaction', interaction.ac]);
   // }
 
   /************************* /

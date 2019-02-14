@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {Experiment} from '../model/interaction-details/experiment.model';
@@ -10,7 +10,6 @@ export class InteractionsDetailsService {
   constructor(private http: HttpClient) { }
 
   getInteractionDetails(interactionAc: string): Observable<InteractionDetails> {
-
     return this.http.get(`/detailsService/interaction/details/${interactionAc}`)
       .catch(this.handleError);
   }

@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {InteractionDetails} from '../../../shared/model/interaction-details/interaction-details.model';
 
+declare const $: any;
+
 @Component({
   selector: 'iv-interaction-details',
   templateUrl: './interaction-details.component.html',
@@ -15,4 +17,13 @@ export class InteractionDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
+  // toggleDetailsButton(): void {
+  //   if ($('#detailsPanel').is(':visible')) {
+  //     $('#detailsPanel').hide();
+  //     $('i#toggleDetails').removeClass('icon-minus').addClass('icon-plus');
+  //   } else {
+  //     $('#detailsPanel').show();
+  //     $('i#toggleDetails').removeClass('icon-plus').addClass('icon-minus');
+  //   }
+  // }
 }

@@ -15,8 +15,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   private _interactionDetails: InteractionDetails;
 
-  constructor(
-              private interactionsDetailsService: InteractionsDetailsService) { }
+  constructor(private interactionsDetailsService: InteractionsDetailsService) { }
 
   ngOnInit() {
     this.requestInteractionDetails();
@@ -31,6 +30,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
     this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
       .subscribe(interactionDetails => {
         this.interactionDetails = interactionDetails;
+        console.log(this.interactionDetails);
     })
   }
 

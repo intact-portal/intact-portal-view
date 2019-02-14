@@ -11,11 +11,13 @@
   </div>
 
   <div class="columns medium-12">
-    <iv-details-viewer [interactionAc]="interactionAc"></iv-details-viewer>
+    <iv-details-viewer *ngIf="interactionAc"
+                       [interactionAc]="interactionAc"></iv-details-viewer>
   </div>
 
   <div class="columns medium-12">
-    <iv-details-tabs [interactionAc]="interactionAc"></iv-details-tabs>
+    <iv-details-tabs *ngIf="interactionAc"
+                     [interactionAc]="interactionAc"></iv-details-tabs>
   </div>
 
 </div>

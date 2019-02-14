@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -20,8 +20,8 @@ export class DetailsDashboardComponent implements OnInit {
         this.interactionAc = params['id'];
         this.titleService.setTitle('Interaction - ' + this.interactionAc);
       })
-
   }
+
   get interactionAc(): string {
     return this._interactionAc;
   }

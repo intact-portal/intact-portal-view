@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Xreferences} from '../../../../shared/model/interaction-details/xreferences.model';
+import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
 
 @Component({
   selector: 'iv-external-xrefs',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./external-xrefs.component.css']
 })
 export class ExternalXrefsComponent implements OnInit {
+
+  @Input() xrefs: Xreferences;
 
   constructor() { }
 

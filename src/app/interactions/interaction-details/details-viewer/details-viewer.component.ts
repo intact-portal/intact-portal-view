@@ -15,6 +15,8 @@ let xlv: any;
 })
 export class DetailsViewerComponent implements AfterViewInit {
 
+  @Input() interactionAc: string;
+
   private _interactionsJSON: any;
 
   constructor(private httpService: HttpClient) { }

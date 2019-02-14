@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InteractionDetailsComponent } from './interaction-details.component';
+import { DetailsDashboardComponent } from './details-dashboard.component';
 
 const routes: Routes = [
-  {path: 'details/interaction/:id', component: InteractionDetailsComponent}
+  {path: 'details/interaction/:id', component: DetailsDashboardComponent}
 ];
 
 @NgModule({

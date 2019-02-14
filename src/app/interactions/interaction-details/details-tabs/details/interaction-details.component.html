@@ -37,10 +37,12 @@
           <!--<iv-experimental-conditions></iv-experimental-conditions>-->
         <!--</div>-->
         <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="columns medium-6">
-          <iv-parameters *ngIf="interactionDetails.parameters"></iv-parameters>
+          <iv-parameters *ngIf="interactionDetails.parameters"
+                         [parameters]="interactionDetails.parameters"></iv-parameters>
         </div>
         <div *ngIf="interactionDetails.confidences.length!=0" id="confidences" class="columns medium-6">
-          <iv-confidences *ngIf="interactionDetails.confidences"></iv-confidences>
+          <iv-confidences *ngIf="interactionDetails.confidences"
+                          [confidences]="interactionDetails.confidences"></iv-confidences>
         </div>
       </div>
 

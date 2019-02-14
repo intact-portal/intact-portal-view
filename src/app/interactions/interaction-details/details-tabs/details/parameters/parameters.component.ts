@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
 
 @Component({
   selector: 'iv-parameters',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./parameters.component.css']
 })
 export class ParametersComponent implements OnInit {
+
+  @Input() parameters: TypeValueModel[];
 
   constructor() { }
 

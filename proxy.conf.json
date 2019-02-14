@@ -25,5 +25,14 @@
     },
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/detailsService": {
+    "target": "http://localhost:8100/graph",
+    "secure": false,
+    "pathRewrite": {
+      "^/detailsService" : ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

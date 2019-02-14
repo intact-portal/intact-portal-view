@@ -1,7 +1,3 @@
-<p>
-  DETAILS SECTION
-</p>
-
 <div class=" margin-top-large margin-bottom-large">
 
   <ul class="tabs" data-tabs id="details-tabs">
@@ -12,7 +8,8 @@
 
   <div class="tabs-content" data-tabs-content="details-tabs">
     <div class="tabs-panel is-active" id="interactionDetails" style="background-color:#f4f4f4;">
-      <iv-interaction-details [interactionDetails]="interactionDetails"></iv-interaction-details>
+      <iv-interaction-details *ngIf="interactionDetails"
+                              [interactionDetails]="interactionDetails"></iv-interaction-details>
     </div>
 
     <div class="tabs-panel" id="interactors" style="background-color:#f4f4f4;">

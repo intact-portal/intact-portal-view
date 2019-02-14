@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {InteractionDetails} from '../../../shared/model/interaction-details/interaction-details.model';
 
 @Component({
-  selector: 'iv-details-info',
-  templateUrl: './details-info.component.html',
-  styleUrls: ['./details-info.component.css']
+  selector: 'iv-interaction-details',
+  templateUrl: './interaction-details.component.html',
+  styleUrls: ['./interaction-details.component.css']
 })
-export class DetailsInfoComponent implements OnInit {
+export class InteractionDetailsComponent implements OnInit {
 
   @Input() interactionDetails: InteractionDetails;
 

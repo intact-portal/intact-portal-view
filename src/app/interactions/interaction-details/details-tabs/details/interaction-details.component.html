@@ -19,10 +19,9 @@
         </div>
       </div>
 
-      <!--<iv-experiment></iv-experiment>-->
 
       <div class="columns medium-12 margin-top-large">
-        <div id="extXrefs" class="columns medium-6"  *ngIf="interactionDetails.xrefs.length!=0">
+      <div id="extXrefs" class="columns medium-6"  *ngIf="interactionDetails.xrefs.length!=0">
           <iv-external-xrefs *ngIf="interactionDetails.xrefs"
                              [xrefs]="interactionDetails.xrefs"></iv-external-xrefs>
         </div>
@@ -48,4 +47,7 @@
 
     </div>
   </div>
+
+  <iv-experiment></iv-experiment>
+
 </div>

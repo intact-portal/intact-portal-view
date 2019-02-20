@@ -1,0 +1,36 @@
+
+<div class="columns medium-12 margin-top-small margin-bottom-large callout-experiment padding-top-medium padding-left-xlarge padding-right-xlarge padding-bottom-large">
+
+  <h5 class="padding-top-large"><i id="toggleExperiment" class="icon icon-common icon-minus padding-right-small"
+                                   (click)="toggleExperimentButton()"
+                                   (mouseover)="hover=true" (mouseleave)="hover=false"
+                                   [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i> Experimental Conditions</h5>
+
+  <div id="experimentPanel" class="columns margin-top-small margin-bottom-large">
+
+    <div class="columns medium-12 margin-top-large">
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        ExperimentAc:
+      </div>
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        Host Organism:
+      </div>
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        Interaction Detection Method:
+      </div>
+    </div>
+
+    <div class="columns medium-12 margin-top-large">
+      <div id="extXrefs" class="columns medium-6">
+        <iv-external-xrefs></iv-external-xrefs>
+      </div>
+      <div id="curationAnnotations" class="columns medium-6">
+        <iv-curation-annotations></iv-curation-annotations>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+

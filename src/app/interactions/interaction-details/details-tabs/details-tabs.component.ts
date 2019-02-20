@@ -26,7 +26,6 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   }
 
   private requestInteractionDetails() {
-    // TODO to test the results are correct
     this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
       .subscribe(interactionDetails => {
         this.interactionDetails = interactionDetails;

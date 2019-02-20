@@ -1,18 +1,24 @@
 import {Xreferences} from './xreferences.model';
 import {TypeValueModel} from './type-value.model';
+import {Experiment} from './experiment.model';
+import {Publication} from './publication.model';
+import {Annotation} from './annotation.model';
 
 export class InteractionDetails {
   private _interactionAc: string;
   private _interactionType: string;
   private _shortLabel: string;
   private _xrefs: Xreferences[];
-  private _annotations: TypeValueModel[];
+  private _annotations: Annotation[];
   // private _experimentConditions: ExperimentalConditions[];
   private _parameters: TypeValueModel[];
   private _confidences: TypeValueModel[];
 
-  constructor(interactionAc: string, interactionType: string, shortLabel: string, xrefs: Xreferences[],
-              annotations: TypeValueModel[], parameters: TypeValueModel[], confidences: TypeValueModel[]) {
+  private _experiment: Experiment;
+  private _publication: Publication;
+
+  constructor(interactionAc: string, interactionType: string, shortLabel: string, xrefs: Xreferences[], annotations: Annotation[],
+              parameters: TypeValueModel[], confidences: TypeValueModel[], experiment: Experiment, publication: Publication) {
     this._interactionAc = interactionAc;
     this._interactionType = interactionType;
     this._shortLabel = shortLabel;
@@ -20,6 +26,8 @@ export class InteractionDetails {
     this._annotations = annotations;
     this._parameters = parameters;
     this._confidences = confidences;
+    this._experiment = experiment;
+    this._publication = publication;
   }
 
   get interactionAc(): string {
@@ -54,11 +62,11 @@ export class InteractionDetails {
     this._xrefs = value;
   }
 
-  get annotations(): TypeValueModel[] {
+  get annotations(): Annotation[] {
     return this._annotations;
   }
 
-  set annotations(value: TypeValueModel[]) {
+  set annotations(value: Annotation[]) {
     this._annotations = value;
   }
 
@@ -76,5 +84,21 @@ export class InteractionDetails {
 
   set confidences(value: TypeValueModel[]) {
     this._confidences = value;
+  }
+
+  get experiment(): Experiment {
+    return this._experiment;
+  }
+
+  set experiment(value: Experiment) {
+    this._experiment = value;
+  }
+
+  get publication(): Publication {
+    return this._publication;
+  }
+
+  set publication(value: Publication) {
+    this._publication = value;
   }
 }

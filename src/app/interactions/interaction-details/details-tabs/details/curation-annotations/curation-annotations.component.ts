@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
+import {Annotation} from '../../../../shared/model/interaction-details/annotation.model';
 
 @Component({
   selector: 'iv-curation-annotations',
@@ -8,7 +8,7 @@ import {TypeValueModel} from '../../../../shared/model/interaction-details/type-
 })
 export class CurationAnnotationsComponent implements OnInit {
 
-  @Input() annotations: TypeValueModel[];
+  @Input() annotations: Annotation[];
 
   constructor() { }
 

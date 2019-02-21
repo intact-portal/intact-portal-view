@@ -22,7 +22,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    $('iv-details').foundation();
+    $('iv-details-tabs').foundation();
   }
 
   private requestInteractionDetails() {

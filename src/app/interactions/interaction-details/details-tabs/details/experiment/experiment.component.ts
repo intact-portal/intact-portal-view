@@ -10,7 +10,7 @@ declare const $: any;
 })
 export class ExperimentComponent implements OnInit {
 
-  @Input() interactionExperiment: Experiment;
+  @Input() experiment: Experiment;
 
   constructor() { }
 

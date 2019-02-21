@@ -10,24 +10,24 @@
 
     <div class="columns medium-12 margin-top-large">
       <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        ExperimentAc: {{interactionExperiment.experimentAc}}
+        ExperimentAc: {{experiment.experimentAc}}
       </div>
       <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Host Organism: {{interactionExperiment.hostOrganism}}
+        Host Organism: {{experiment.hostOrganism}}
       </div>
       <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Interaction Detection Method: {{interactionExperiment.interactionDetMethod}}
+        Interaction Detection Method: {{experiment.interactionDetMethod}}
       </div>
     </div>
 
     <div class="columns medium-12 margin-top-large">
-      <div id="extXrefs" class="columns medium-6" *ngIf="interactionExperiment.experimentXrefs.length !== 0">
-        <iv-external-xrefs *ngIf="interactionExperiment.experimentXrefs"
-                           [xrefs]="interactionExperiment.experimentXrefs"></iv-external-xrefs>
+      <div id="extXrefs" class="columns medium-6" *ngIf="experiment.experimentXrefs.length !== 0">
+        <iv-external-xrefs *ngIf="experiment.experimentXrefs"
+                           [xrefs]="experiment.experimentXrefs"></iv-external-xrefs>
       </div>
-      <div id="curationAnnotations" class="columns medium-6" *ngIf="interactionExperiment.experimentAnnotations.length !== 0">
-        <iv-curation-annotations *ngIf="interactionExperiment.experimentAnnotations"
-                                 [annotations]="interactionExperiment.experimentAnnotations"></iv-curation-annotations>
+      <div id="curationAnnotations" class="columns medium-6" *ngIf="experiment.experimentAnnotations.length !== 0">
+        <iv-curation-annotations *ngIf="experiment.experimentAnnotations"
+                                 [annotations]="experiment.experimentAnnotations"></iv-curation-annotations>
       </div>
     </div>
 

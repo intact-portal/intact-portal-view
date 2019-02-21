@@ -1,0 +1,40 @@
+<div class="columns medium-12 margin-top-small margin-bottom-large callout-publication padding-top-medium padding-left-xlarge padding-right-xlarge padding-bottom-large">
+
+  <h5 class="padding-top-large"><i id="togglePublication" class="icon icon-common icon-minus padding-right-small"
+                                   (click)="togglePublicationButton()"
+                                   (mouseover)="hover=true" (mouseleave)="hover=false"
+                                   [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i> Publication</h5>
+
+  <div id="publicationPanel" class="columns margin-top-small margin-bottom-large">
+
+    <div class="columns medium-12 margin-top-large">
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        PubmedId: {{publication.pubmedId}}
+      </div>
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        Title: {{publication.title}}
+      </div>
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        Journal: {{publication.journal}}
+      </div>
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        Authors: {{publication.authors}}
+      </div>
+      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
+        Publication date: {{publication.publicationDate}}
+      </div>
+    </div>
+
+    <div class="columns medium-12 margin-top-large">
+      <div id="extXrefs" class="columns medium-6" *ngIf="publication.publicationXrefs.length !== 0">
+        <iv-external-xrefs *ngIf="publication.publicationXrefs"
+                           [xrefs]="publication.publicationXrefs"></iv-external-xrefs>
+      </div>
+      <div id="curationAnnotations" class="columns medium-6" *ngIf="publication.publicationAnnotations.length !== 0">
+        <iv-curation-annotations *ngIf="publication.publicationAnnotations"
+                                 [annotations]="publication.publicationAnnotations"></iv-curation-annotations>
+      </div>
+    </div>
+
+  </div>
+</div>

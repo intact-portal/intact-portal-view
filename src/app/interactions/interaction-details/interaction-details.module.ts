@@ -11,6 +11,7 @@ import {ParametersComponent} from './details-tabs/details/parameters/parameters.
 import {ConfidencesComponent} from './details-tabs/details/confidences/confidences.component';
 import {InteractionDetailsRoutingModule} from './interaction-details-routing.module';
 import { ExperimentComponent } from './details-tabs/details/experiment/experiment.component';
+import { PublicationComponent } from './details-tabs/details/publication/publication.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ExperimentComponent } from './details-tabs/details/experiment/experimen
     ExperimentalConditionsComponent,
     CurationAnnotationsComponent,
     ConfidencesComponent,
-    ExperimentComponent
+    ExperimentComponent,
+    PublicationComponent
   ]
 })
 export class InteractionDetailsModule { }

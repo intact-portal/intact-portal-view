@@ -7,8 +7,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let annotation of annotations">
-        <td>{{annotation.topic}}</td>
-        <td>{{annotation.description}}<span *ngIf="annotation.miIdentifier !== null"> ({{annotation.miIdentifier}})</span></td>
+        <td>{{annotation.topic.shortName}}<span *ngIf="annotation.topic.miIdentifier !== null"> ({{annotation.topic.miIdentifier}})</span></td>
+        <td>{{annotation.description}}</td>
       </tr>
     </tbody>
   </table>

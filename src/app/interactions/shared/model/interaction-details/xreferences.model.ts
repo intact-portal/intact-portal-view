@@ -1,19 +1,19 @@
-export class Xreferences {
-  private _database: string;
-  private _identifier: string;
-  private _miIdentifier: string;
+import {CvTerm} from './cv-term.model';
 
-  constructor(database: string, identifier: string, miIdentifier: string) {
+export class Xreferences {
+  private _database: CvTerm;
+  private _identifier: string;
+
+  constructor(database: CvTerm, identifier: string) {
     this._database = database;
     this._identifier = identifier;
-    this._miIdentifier = miIdentifier;
   }
 
-  get database(): string {
+  get database(): CvTerm {
     return this._database;
   }
 
-  set database(value: string) {
+  set database(value: CvTerm) {
     this._database = value;
   }
 
@@ -23,13 +23,5 @@ export class Xreferences {
 
   set identifier(value: string) {
     this._identifier = value;
-  }
-
-  get miIdentifier(): string {
-    return this._miIdentifier;
-  }
-
-  set miIdentifier(value: string) {
-    this._miIdentifier = value;
   }
 }

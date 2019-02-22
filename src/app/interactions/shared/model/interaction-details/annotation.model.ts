@@ -1,19 +1,19 @@
-export class Annotation {
-  private _topic: string;
-  private _description: string;
-  private _miIdentifier: string;
+import {CvTerm} from './cv-term.model';
 
-  constructor(topic: string, description: string, miIdentifier: string) {
+export class Annotation {
+  private _topic: CvTerm;
+  private _description: string;
+
+  constructor(topic: CvTerm, description: string) {
     this._topic = topic;
     this._description = description;
-    this._miIdentifier = miIdentifier;
   }
 
-  get topic(): string {
+  get topic(): CvTerm {
     return this._topic;
   }
 
-  set topic(value: string) {
+  set topic(value: CvTerm) {
     this._topic = value;
   }
 
@@ -23,13 +23,5 @@ export class Annotation {
 
   set description(value: string) {
     this._description = value;
-  }
-
-  get miIdentifier(): string {
-    return this._miIdentifier;
-  }
-
-  set miIdentifier(value: string) {
-    this._miIdentifier = value;
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
-import {Experiment} from '../model/interaction-details/experiment.model';
+import {ParticipantDetails} from '../model/interaction-details/participant-details.model';
 
 @Injectable()
 export class InteractionsDetailsService {
@@ -14,8 +14,8 @@ export class InteractionsDetailsService {
       .catch(this.handleError);
   }
 
-  getExperimentPublicationDetails(interactionAc: string): Observable<Experiment> {
-    return this.http.get(`/detailsService/interaction/experiment/${interactionAc}`)
+  getParticipantsDetails(interactionAc: string): Observable<ParticipantDetails> {
+    return this.http.get(`/detailsService/participants/details/${interactionAc}`)
       .catch(this.handleError);
   }
 

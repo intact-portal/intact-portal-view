@@ -2,7 +2,7 @@
 
   <ul class="tabs" data-tabs id="details-tabs">
     <li class="tabs-title is-active"><a href="#interactionDetails" aria-selected="true" >Interaction Details</a></li>
-    <li class="tabs-title"><a href="#interactors" >Participants</a></li>
+    <li class="tabs-title"><a href="#participants" >Participants</a></li>
     <li class="tabs-title"><a href="#features" >Features</a></li>
   </ul>
 
@@ -12,8 +12,10 @@
                               [interactionDetails]="interactionDetails"></iv-interaction-details>
     </div>
 
-    <div class="tabs-panel" id="interactors" style="background-color:#f4f4f4;">
-      <p> Participants section </p>
+    <div class="tabs-panel" id="participants" style="background-color:#f4f4f4;">
+      <iv-participant-details *ngIf="participantDetails"
+                              [participantDetails]="participantDetails"></iv-participant-details>
+
     </div>
 
     <div class="tabs-panel" id="features" style="background-color:#f4f4f4;">

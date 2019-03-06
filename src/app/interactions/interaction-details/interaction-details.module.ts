@@ -12,6 +12,7 @@ import {ConfidencesComponent} from './details-tabs/details/confidences/confidenc
 import {InteractionDetailsRoutingModule} from './interaction-details-routing.module';
 import { ExperimentComponent } from './details-tabs/details/experiment/experiment.component';
 import { PublicationComponent } from './details-tabs/details/publication/publication.component';
+import { ParticipantDetailsComponent } from './details-tabs/details/participant-details/participant-details.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { PublicationComponent } from './details-tabs/details/publication/publica
     CurationAnnotationsComponent,
     ConfidencesComponent,
     ExperimentComponent,
-    PublicationComponent
+    PublicationComponent,
+    ParticipantDetailsComponent
   ]
 })
 export class InteractionDetailsModule { }

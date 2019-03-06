@@ -1,6 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ParticipantDetails} from '../../../../shared/model/interaction-details/participant-details.model';
 
+import 'datatables.net';
+import 'datatables.net-zf';
+
+declare const $: any;
+
 @Component({
   selector: 'iv-participant-details',
   templateUrl: './participant-details.component.html',

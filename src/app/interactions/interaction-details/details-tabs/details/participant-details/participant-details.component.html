@@ -25,6 +25,54 @@
       </thead>
 
       <tbody>
+        <tr *ngFor="let participant of participantDetails.content">
+          <td>{{participant.participantAc}}</td>
+          <td>{{participant.type.shortName}}</td>
+          <td>{{participant.participantId.identifier}}</td>
+          <td>
+            <div *ngIf="participant.aliases != null">
+              <div *ngFor="let alias of participant.aliases">
+                <span>{{alias.name}}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{participant.description}}</td>
+          <td>{{participant.species.scientificName}}</td>
+          <td>
+            <span *ngIf="participant.expressionSystem !=null">{{participant.expressionSystem.scientificName}}</span>
+          </td>
+          <td>
+            <div *ngIf="participant.detectionMethod != null">
+              <div *ngFor="let dm of participant.detectionMethod">
+                <span>{{dm.shortName}}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{participant.experimentalRole.shortName}}</td>
+          <td>{{participant.biologicalRole.shortName}}</td>
+          <td></td>
+          <td>
+            <div *ngIf="participant.experimentalPreparations != null">
+              <div *ngFor="let ep of participant.experimentalPreparations">
+                <span>{{ep.shortName}}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="participant.parameters != null">
+              <div *ngFor="let parameter of participant.parameters">
+                <span>{{parameter.type}} ({{parameter.value}}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="participant.confidences != null">
+              <div *ngFor="let confidence of participant.confidences">
+                <span>{{confidence.type}} ({{confidence.value}}</span>
+              </div>
+            </div>
+          </td>
+        </tr>
 
       </tbody>
     </table>

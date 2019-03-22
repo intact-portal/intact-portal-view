@@ -14,6 +14,8 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   @Input() interactionAc: string;
 
+  private _currentPageIndex: number;
+
   private _interactionDetails: InteractionDetails;
   private _participantDetails: ParticipantDetails;
 
@@ -37,7 +39,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   }
 
   private requestParticipantDetails() {
-    this.interactionsDetailsService.getParticipantsDetails(this.interactionAc)
+    this.interactionsDetailsService.getParticipantsDetails(this.interactionAc, this.currentPageIndex = 1)
       .subscribe(participantDetails => {
         this.participantDetails = participantDetails;
         console.log(this.participantDetails);
@@ -58,5 +60,13 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   set participantDetails(value: ParticipantDetails) {
     this._participantDetails = value;
+  }
+
+  get currentPageIndex(): number {
+    return this._currentPageIndex;
+  }
+
+  set currentPageIndex(value: number) {
+    this._currentPageIndex = value;
   }
 }

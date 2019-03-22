@@ -22,7 +22,7 @@ export class ParticipantDetailsComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initDataTable();
-    // this.showHideColumns();
+    this.showHideColumns();
   }
 
   private initDataTable(): void {
@@ -64,18 +64,18 @@ export class ParticipantDetailsComponent implements AfterViewInit {
       ],
     });
   }
-  //
-  // private showHideColumns(): void {
-  //   const table = this.dataTable;
-  //   $('a.toggle-vis').on('click', function(e) {
-  //
-  //     // Get the column API object
-  //     const column = table.column($(this).attr('data-column'));
-  //
-  //     // Toggle the visibility
-  //     column.visible(!column.visible());
-  //   });
-  // }
+
+  private showHideColumns(): void {
+    const table = this.dataTable;
+    $('input[type="checkbox"].list-view').on('click', function(e) {
+
+      // Get the column API object
+      const column = table.column($(this).attr('data-column'));
+
+      // Toggle the visibility
+      column.visible(!column.visible());
+    });
+  }
 
   get participantDetails(): ParticipantDetails {
     return this._participantDetails;

@@ -4,24 +4,44 @@ import {ParticipantDetails} from '../../../../shared/model/interaction-details/p
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-zf';
-import {InteractionsDetailsService} from '../../../../shared/service/interactions-details.service';
 
 @Component({
   selector: 'iv-participant-details',
   templateUrl: './participant-details.component.html',
   styleUrls: ['./participant-details.component.css']
 })
-export class ParticipantDetailsComponent implements AfterViewInit {
+export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
 
   private _participantDetails: ParticipantDetails;
   @Input() interactionAc: string;
 
   dataTable: any;
 
-  constructor(private interactionsDetailsService: InteractionsDetailsService) { }
+  private columnsSelected: string[];
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.initDataTable();
+
+    if (localStorage.getItem('participant_columns') != null) {
+      this.columnsSelected = JSON.parse(localStorage.getItem('participant_columns'));
+    } else {
+      this.columnsSelected = [];
+    }
+
+    this.dataTable.columns().every(function (index) {
+
+      if (localStorage.getItem('participant_columns') != null) {
+        if (localStorage.getItem('participant_columns').indexOf($(this.header()).text()) >= 0) {
+          this.visible(!this.visible());
+        }
+      }
+
+    });
+  }
 
   ngAfterViewInit(): void {
-    this.initDataTable();
     this.showHideColumns();
   }
 
@@ -75,6 +95,20 @@ export class ParticipantDetailsComponent implements AfterViewInit {
       // Toggle the visibility
       column.visible(!column.visible());
     });
+  }
+
+  isColumnSelected(column: string) {
+    return this.columnsSelected !== undefined ? this.columnsSelected.indexOf(column) < 0 : false;
+  }
+
+  onChangeColumnSelected(column: string) {
+    if (!this.columnsSelected.includes(column)) {
+      this.columnsSelected.push(column);
+    } else {
+      this.columnsSelected.splice(this.columnsSelected.indexOf(column), 1);
+    }
+
+    localStorage.setItem('participant_columns', JSON.stringify(this.columnsSelected));
   }
 
   get participantDetails(): ParticipantDetails {

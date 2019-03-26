@@ -4,32 +4,47 @@
   </div>
 
   <div class="row columns medium-12">
-    <!--<div class="columns medium-6">-->
-      <!--Toggle column: <a class="toggle-vis" data-column="0">Ac</a> - -->
-      <!--<a class="toggle-vis" data-column="1">Type</a> - -->
-      <!--<a class="toggle-vis" data-column="2">Identifier</a> - -->
-      <!--<a class="toggle-vis" data-column="3">Aliases</a> - -->
-      <!--<a class="toggle-vis" data-column="4">Description</a> - -->
-      <!--<a class="toggle-vis" data-column="5">Species</a>-->
-    <!--</div>-->
-
     <div class="columns medium-6 medium-push-9">
       <h4>View in the list </h4>
-
-      <input class="list-view" type="checkbox" name="list" data-column="0" value="Ac" checked> Ac <br>
-      <input class="list-view" type="checkbox" name="list" data-column="1" value="Type" checked> Type <br>
-      <input class="list-view" type="checkbox" name="list" data-column="2" value="Identifier" checked> Identifier <br>
-      <input class="list-view" type="checkbox" name="list" data-column="3" value="Aliases" checked> Aliases <br>
-      <input class="list-view" type="checkbox" name="list" data-column="4" value="Description" checked> Description <br>
-      <input class="list-view" type="checkbox" name="list" data-column="5" value="Species" checked> Species <br>
-      <input class="list-view" type="checkbox" name="list" data-column="6" value="Expression System" checked> Expression System <br>
-      <input class="list-view" type="checkbox" name="list" data-column="7" value="Detection Method" checked> Detection Method <br>
-      <input class="list-view" type="checkbox" name="list" data-column="8" value="Experimental Role" checked> Experimental Role <br>
-      <input class="list-view" type="checkbox" name="list" data-column="9" value="Biological Role" checked> Biological Role <br>
-      <input class="list-view" type="checkbox" name="list" data-column="10" value="Experimental Preparations" checked> Experimental Preparations <br>
-      <input class="list-view" type="checkbox" name="list" data-column="11" value="Parameters" checked> Parameters <br>
-      <input class="list-view" type="checkbox" name="list" data-column="12" value="Confidences" checked> Confidences
-
+      <label><input #col0 class="list-view" type="checkbox" name="list" data-column="0" value="Ac"
+                    (change)="onChangeColumnSelected(col0.value)"
+                    [checked]="isColumnSelected(col0.value)">Ac</label>
+      <label><input #col1 class="list-view" type="checkbox" name="list" data-column="1" value="Type"
+                    (change)="onChangeColumnSelected(col1.value)"
+                    [checked]="isColumnSelected(col1.value)"> Type </label>
+      <label><input #col2 class="list-view" type="checkbox" name="list" data-column="2" value="Identifier"
+                    (change)="onChangeColumnSelected(col2.value)"
+                    [checked]="isColumnSelected(col2.value)"> Identifier </label>
+      <label><input #col3 class="list-view" type="checkbox" name="list" data-column="3" value="Aliases"
+                    (change)="onChangeColumnSelected(col3.value)"
+                    [checked]="isColumnSelected(col3.value)"> Aliases </label>
+      <label><input #col4 class="list-view" type="checkbox" name="list" data-column="4" value="Description"
+                    (change)="onChangeColumnSelected(col4.value)"
+                    [checked]="isColumnSelected(col4.value)"> Description </label>
+      <label><input #col5 class="list-view" type="checkbox" name="list" data-column="5" value="Species"
+                    (change)="onChangeColumnSelected(col5.value)"
+                    [checked]="isColumnSelected(col5.value)"> Species </label>
+      <label><input #col6 class="list-view" type="checkbox" name="list" data-column="6" value="Expression System"
+                    (change)="onChangeColumnSelected(col6.value)"
+                    [checked]="isColumnSelected(col6.value)"> Expression System </label>
+      <label><input #col7 class="list-view" type="checkbox" name="list" data-column="7" value="Detection Method"
+                    (change)="onChangeColumnSelected(col7.value)"
+                    [checked]="isColumnSelected(col7.value)"> Detection Method </label>
+      <label><input #col8 class="list-view" type="checkbox" name="list" data-column="8" value="Experimental Role"
+                    (change)="onChangeColumnSelected(col8.value)"
+                    [checked]="isColumnSelected(col8.value)"> Experimental Role </label>
+      <label><input #col9 class="list-view" type="checkbox" name="list" data-column="9" value="Biological Role"
+                    (change)="onChangeColumnSelected(col9.value)"
+                    [checked]="isColumnSelected(col9.value)"> Biological Role </label>
+      <label><input #col10 class="list-view" type="checkbox" name="list" data-column="10" value="Experimental Preparations"
+                    (change)="onChangeColumnSelected(col10.value)"
+                    [checked]="isColumnSelected(col10.value)"> Experimental Preparations </label>
+      <label><input #col11 class="list-view" type="checkbox" name="list" data-column="11" value="Parameters"
+                    (change)="onChangeColumnSelected(col11.value)"
+                    [checked]="isColumnSelected(col11.value)"> Parameters </label>
+      <label><input #col12 class="list-view" type="checkbox" name="list" data-column="12" value="Confidences"
+                    (change)="onChangeColumnSelected(col12.value)"
+                    [checked]="isColumnSelected(col12.value)"> Confidences </label>
     </div>
   </div>
 
@@ -54,54 +69,6 @@
       </thead>
 
       <tbody>
-      <!--<tr *ngFor="let participant of participantDetails.content">-->
-      <!--<td>{{participant.participantAc}}</td>-->
-      <!--<td>{{participant.type.shortName}}</td>-->
-      <!--<td>{{participant.participantId.identifier}}</td>-->
-      <!--<td>-->
-      <!--<div *ngIf="participant.aliases != null">-->
-      <!--<div *ngFor="let alias of participant.aliases">-->
-      <!--<span>{{alias.name}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</td>-->
-      <!--<td>{{participant.description}}</td>-->
-      <!--<td>{{participant.species.scientificName}}</td>-->
-      <!--<td>-->
-      <!--<span *ngIf="participant.expressionSystem !=null">{{participant.expressionSystem.scientificName}}</span>-->
-      <!--</td>-->
-      <!--<td>-->
-      <!--<div *ngIf="participant.detectionMethod != null">-->
-      <!--<div *ngFor="let dm of participant.detectionMethod">-->
-      <!--<span>{{dm.shortName}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</td>-->
-      <!--<td>{{participant.experimentalRole.shortName}}</td>-->
-      <!--<td>{{participant.biologicalRole.shortName}}</td>-->
-      <!--<td>-->
-      <!--<div *ngIf="participant.experimentalPreparations != null">-->
-      <!--<div *ngFor="let ep of participant.experimentalPreparations">-->
-      <!--<span>{{ep.shortName}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</td>-->
-      <!--<td>-->
-      <!--<div *ngIf="participant.parameters != null">-->
-      <!--<div *ngFor="let parameter of participant.parameters">-->
-      <!--<span>{{parameter.type}} ({{parameter.value}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</td>-->
-      <!--<td>-->
-      <!--<div *ngIf="participant.confidences != null">-->
-      <!--<div *ngFor="let confidence of participant.confidences">-->
-      <!--<span>{{confidence.type}} ({{confidence.value}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</td>-->
-      <!--</tr>-->
-
       </tbody>
 
     </table>

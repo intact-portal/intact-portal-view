@@ -111,14 +111,6 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
     localStorage.setItem('participant_columns', JSON.stringify(this.columnsSelected));
   }
 
-  private toggleColumnView() {
-    $('#columnView').toggle();
-
-    // document.getElementById('columnView').style.display = 'block';
-    // document.getElementById('columnView').style.visibility = 'show';
-
-  }
-
   get participantDetails(): ParticipantDetails {
     return this._participantDetails;
   }

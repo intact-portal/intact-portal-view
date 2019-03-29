@@ -7,7 +7,10 @@
       </div>
     </div>
     <div class="columns medium-10" style="text-align: right">
-      <span> Column Toggle: </span> <button class="columnToggle" type="button" (click)="toggleColumnView()"><i class="icon icon-common icon-caret-down iconColumn"></i></button>
+      <span> Column Toggle: </span> <button class="columnToggle" type="button" (click)="toggleColumnView()"
+          (mouseover)="columnToggleHover=true" (mouseleave)="columnToggleHover=false">
+        <i id="iconColumn" class="icon icon-common icon-caret-down iconColumn"></i></button>
+
       <div id="columnView" class="row column_toggle_btnwrap column_toggle_popup">
         <label><input #col0 class="list-view" type="checkbox" name="list" data-column="0" value="Ac"
                       (change)="onChangeColumnSelected(col0.value)"

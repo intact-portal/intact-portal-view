@@ -17,12 +17,15 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
 
   dataTable: any;
 
+  private columnToggleHover = false;
+
   private columnsSelected: string[];
 
   constructor() { }
 
   ngOnInit(): void {
     this.initDataTable();
+    $('#columnView').addClass('hiddenToggle');
 
     if (localStorage.getItem('participant_columns') != null) {
       this.columnsSelected = JSON.parse(localStorage.getItem('participant_columns'));
@@ -43,6 +46,20 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.showHideColumns();
+
+    $(document).click(function(e) {
+
+      if ($(e.target).closest('.columnToggle').length === 0) {
+
+        if ( $('#columnView').is(':visible')) {
+          $('#columnView').toggle();
+          $('i#iconColumn').removeClass('icon-caret-up').addClass('icon-caret-down');
+          console.log('just clicked outside your .container div');
+
+        }
+      }
+    });
+
   }
 
   private initDataTable(): void {
@@ -114,8 +131,10 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
   private toggleColumnView() {
     $('#columnView').toggle();
 
-    // document.getElementById('columnView').style.display = 'block';
-    // document.getElementById('columnView').style.visibility = 'show';
+    $('#columnView').is(':visible') ?
+      $('i#iconColumn').removeClass('icon-caret-down').addClass('icon-caret-up') :
+      $('i#iconColumn').removeClass('icon-caret-up').addClass('icon-caret-down');
+
 
   }
   get participantDetails(): ParticipantDetails {

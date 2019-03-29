@@ -1,60 +1,54 @@
 <div class="row expanded">
+  <div *ngIf="participantDetails">
+    <div>Total of participants: {{participantDetails.totalElements}}</div>
+  </div>
 
-  <div class="columns medium-12">
-    <div class="columns medium-2">
-      <div *ngIf="participantDetails">
-        <div>Total of participants: {{participantDetails.totalElements}}</div>
-      </div>
-    </div>
-    <div class="columns medium-10" style="text-align: right">
-      <span> Column Toggle: </span> <button class="columnToggle" type="button" (click)="toggleColumnView()"><i class="icon icon-common icon-caret-down iconColumn"></i></button>
-      <div id="columnView" class="row column_toggle_btnwrap column_toggle_popup">
-        <label><input #col0 class="list-view" type="checkbox" name="list" data-column="0" value="Ac"
-                      (change)="onChangeColumnSelected(col0.value)"
-                      [checked]="isColumnSelected(col0.value)">Ac</label>
-        <label><input #col1 class="list-view" type="checkbox" name="list" data-column="1" value="Type"
-                      (change)="onChangeColumnSelected(col1.value)"
-                      [checked]="isColumnSelected(col1.value)"> Type </label>
-        <label><input #col2 class="list-view" type="checkbox" name="list" data-column="2" value="Identifier"
-                      (change)="onChangeColumnSelected(col2.value)"
-                      [checked]="isColumnSelected(col2.value)"> Identifier </label>
-        <label><input #col3 class="list-view" type="checkbox" name="list" data-column="3" value="Aliases"
-                      (change)="onChangeColumnSelected(col3.value)"
-                      [checked]="isColumnSelected(col3.value)"> Aliases </label>
-        <label><input #col4 class="list-view" type="checkbox" name="list" data-column="4" value="Description"
-                      (change)="onChangeColumnSelected(col4.value)"
-                      [checked]="isColumnSelected(col4.value)"> Description </label>
-        <label><input #col5 class="list-view" type="checkbox" name="list" data-column="5" value="Species"
-                      (change)="onChangeColumnSelected(col5.value)"
-                      [checked]="isColumnSelected(col5.value)"> Species </label>
-        <label><input #col6 class="list-view" type="checkbox" name="list" data-column="6" value="Expression System"
-                      (change)="onChangeColumnSelected(col6.value)"
-                      [checked]="isColumnSelected(col6.value)"> Expression System </label>
-        <label><input #col7 class="list-view" type="checkbox" name="list" data-column="7" value="Detection Method"
-                      (change)="onChangeColumnSelected(col7.value)"
-                      [checked]="isColumnSelected(col7.value)"> Detection Method </label>
-        <label><input #col8 class="list-view" type="checkbox" name="list" data-column="8" value="Experimental Role"
-                      (change)="onChangeColumnSelected(col8.value)"
-                      [checked]="isColumnSelected(col8.value)"> Experimental Role </label>
-        <label><input #col9 class="list-view" type="checkbox" name="list" data-column="9" value="Biological Role"
-                      (change)="onChangeColumnSelected(col9.value)"
-                      [checked]="isColumnSelected(col9.value)"> Biological Role </label>
-        <label><input #col10 class="list-view" type="checkbox" name="list" data-column="10" value="Experimental Preparations"
-                      (change)="onChangeColumnSelected(col10.value)"
-                      [checked]="isColumnSelected(col10.value)"> Experimental Preparations </label>
-        <label><input #col11 class="list-view" type="checkbox" name="list" data-column="11" value="Parameters"
-                      (change)="onChangeColumnSelected(col11.value)"
-                      [checked]="isColumnSelected(col11.value)"> Parameters </label>
-        <label><input #col12 class="list-view" type="checkbox" name="list" data-column="12" value="Confidences"
-                      (change)="onChangeColumnSelected(col12.value)"
-                      [checked]="isColumnSelected(col12.value)"> Confidences </label>
-      </div>
+  <div class="row columns medium-12">
+    <div class="columns medium-6 medium-push-9">
+      <h4>View in the list </h4>
+      <label><input #col0 class="list-view" type="checkbox" name="list" data-column="0" value="Ac"
+                    (change)="onChangeColumnSelected(col0.value)"
+                    [checked]="isColumnSelected(col0.value)">Ac</label>
+      <label><input #col1 class="list-view" type="checkbox" name="list" data-column="1" value="Type"
+                    (change)="onChangeColumnSelected(col1.value)"
+                    [checked]="isColumnSelected(col1.value)"> Type </label>
+      <label><input #col2 class="list-view" type="checkbox" name="list" data-column="2" value="Identifier"
+                    (change)="onChangeColumnSelected(col2.value)"
+                    [checked]="isColumnSelected(col2.value)"> Identifier </label>
+      <label><input #col3 class="list-view" type="checkbox" name="list" data-column="3" value="Aliases"
+                    (change)="onChangeColumnSelected(col3.value)"
+                    [checked]="isColumnSelected(col3.value)"> Aliases </label>
+      <label><input #col4 class="list-view" type="checkbox" name="list" data-column="4" value="Description"
+                    (change)="onChangeColumnSelected(col4.value)"
+                    [checked]="isColumnSelected(col4.value)"> Description </label>
+      <label><input #col5 class="list-view" type="checkbox" name="list" data-column="5" value="Species"
+                    (change)="onChangeColumnSelected(col5.value)"
+                    [checked]="isColumnSelected(col5.value)"> Species </label>
+      <label><input #col6 class="list-view" type="checkbox" name="list" data-column="6" value="Expression System"
+                    (change)="onChangeColumnSelected(col6.value)"
+                    [checked]="isColumnSelected(col6.value)"> Expression System </label>
+      <label><input #col7 class="list-view" type="checkbox" name="list" data-column="7" value="Detection Method"
+                    (change)="onChangeColumnSelected(col7.value)"
+                    [checked]="isColumnSelected(col7.value)"> Detection Method </label>
+      <label><input #col8 class="list-view" type="checkbox" name="list" data-column="8" value="Experimental Role"
+                    (change)="onChangeColumnSelected(col8.value)"
+                    [checked]="isColumnSelected(col8.value)"> Experimental Role </label>
+      <label><input #col9 class="list-view" type="checkbox" name="list" data-column="9" value="Biological Role"
+                    (change)="onChangeColumnSelected(col9.value)"
+                    [checked]="isColumnSelected(col9.value)"> Biological Role </label>
+      <label><input #col10 class="list-view" type="checkbox" name="list" data-column="10" value="Experimental Preparations"
+                    (change)="onChangeColumnSelected(col10.value)"
+                    [checked]="isColumnSelected(col10.value)"> Experimental Preparations </label>
+      <label><input #col11 class="list-view" type="checkbox" name="list" data-column="11" value="Parameters"
+                    (change)="onChangeColumnSelected(col11.value)"
+                    [checked]="isColumnSelected(col11.value)"> Parameters </label>
+      <label><input #col12 class="list-view" type="checkbox" name="list" data-column="12" value="Confidences"
+                    (change)="onChangeColumnSelected(col12.value)"
+                    [checked]="isColumnSelected(col12.value)"> Confidences </label>
     </div>
   </div>
 
-
-
-  <div class="columns medium-12 margin-top-large">
+  <div class="columns margin-top-large">
     <table id="participantTable">
       <thead>
       <tr>

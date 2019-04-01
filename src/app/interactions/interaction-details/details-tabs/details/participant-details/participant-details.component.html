@@ -1,12 +1,12 @@
 <div class="row expanded">
 
   <div class="columns medium-12">
-    <div class="columns medium-2">
-      <div *ngIf="participantDetails">
-        <div>Total of participants: {{participantDetails.totalElements}}</div>
-      </div>
-    </div>
-    <div class="columns medium-10" style="text-align: right">
+<!--    <div class="columns medium-2">-->
+<!--      <div *ngIf="participantDetails">-->
+<!--        <div>Total of participants: {{participantDetails.totalElements}}</div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="columns medium-12" style="text-align: right">
       <span> Column Toggle: </span> <button class="columnToggle" type="button" (click)="toggleColumnView()"
           (mouseover)="columnToggleHover=true" (mouseleave)="columnToggleHover=false">
         <i id="iconColumn" class="icon icon-common icon-caret-down iconColumn"></i></button>
@@ -57,8 +57,8 @@
 
 
 
-  <div class="columns medium-12 margin-top-large">
-    <table id="participantTable">
+<!--  <div class="columns medium-12 margin-top-large">-->
+    <table id="participantTable" class="display">
       <thead>
       <tr>
         <th>Ac</th>
@@ -81,6 +81,6 @@
       </tbody>
 
     </table>
-  </div>
+<!--  </div>-->
 
 </div>

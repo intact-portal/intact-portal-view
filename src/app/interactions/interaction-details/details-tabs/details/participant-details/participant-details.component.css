@@ -38,3 +38,17 @@
 .hiddenToggle {
   display: none;
 }
+
+select {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 0;
+}
+
+/*.dataTables_length {*/
+/*  float: none !important;*/
+/*}*/
+
+/*div.dataTables_length > label > select{*/
+/*  width: 5% !important;*/
+/*}*/

@@ -86,6 +86,12 @@ table#participantTable {
   padding-bottom: 1em;
 }
 
+table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
+  background-color: #f9f9f9;
+}
+
+
+
 /**************************************************************/
 /********* END PARTICIPANT DATATABLES RE-STYLE ********************/
 /**************************************************************/

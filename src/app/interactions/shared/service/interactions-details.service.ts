@@ -36,6 +36,14 @@ export class InteractionsDetailsService {
       .catch(this.handleError);
   }
 
+  // TODO: getFeaturesDetails
+  // getFeaturesDetails(interactionAc: string,
+  //                    currentPageIndex = 1,
+  //                    pageSize = 20): Observable<FeatureDetails> {
+  //
+  //
+  // }
+
   private handleError(err: HttpErrorResponse | any): Observable<any> {
     if (err.error instanceof Error) {
       return Observable.throw(err);

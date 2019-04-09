@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {DetailsDashboardComponent} from './details-dashboard.component';
 import {DetailsTabsComponent} from './details-tabs/details-tabs.component';
 import {InteractionDetailsComponent} from './details-tabs/details/interaction-details.component';
@@ -10,9 +10,10 @@ import {ExperimentalConditionsComponent} from './details-tabs/details/experiment
 import {ParametersComponent} from './details-tabs/details/parameters/parameters.component';
 import {ConfidencesComponent} from './details-tabs/details/confidences/confidences.component';
 import {InteractionDetailsRoutingModule} from './interaction-details-routing.module';
-import { ExperimentComponent } from './details-tabs/details/experiment/experiment.component';
-import { PublicationComponent } from './details-tabs/details/publication/publication.component';
-import { ParticipantDetailsComponent } from './details-tabs/details/participant-details/participant-details.component';
+import {ExperimentComponent} from './details-tabs/details/experiment/experiment.component';
+import {PublicationComponent} from './details-tabs/details/publication/publication.component';
+import {ParticipantDetailsComponent} from './details-tabs/details/participant-details/participant-details.component';
+import { FeaturesDetailsComponent } from './details-tabs/details/features-details/features-details.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { ParticipantDetailsComponent } from './details-tabs/details/participant-
     ConfidencesComponent,
     ExperimentComponent,
     PublicationComponent,
-    ParticipantDetailsComponent
+    ParticipantDetailsComponent,
+    FeaturesDetailsComponent
   ]
 })
 export class InteractionDetailsModule { }

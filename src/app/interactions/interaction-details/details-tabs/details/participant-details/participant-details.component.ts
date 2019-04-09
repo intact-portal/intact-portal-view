@@ -3,7 +3,6 @@ import {ParticipantDetails} from '../../../../shared/model/interaction-details/p
 
 import * as $ from 'jquery';
 import 'datatables.net';
-// import 'datatables.net-zf';
 
 @Component({
   selector: 'iv-participant-details',
@@ -16,8 +15,6 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
   @Input() interactionAc: string;
 
   dataTable: any;
-
-  private columnToggleHover = false;
 
   private columnsSelected: string[];
 

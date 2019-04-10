@@ -16,6 +16,8 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
 
   dataTable: any;
 
+  private columnToggleHover = false;
+
   private columnsSelected: string[];
 
   constructor() { }

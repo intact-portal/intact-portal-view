@@ -76,6 +76,10 @@ table#participantTable {
   width: 100% !important;
 }
 
+table#participantTable tbody tr {
+  font-size: 14px;
+}
+
 .dataTables_wrapper .dataTables_paginate {
   float: none;
   text-align: center;
@@ -97,9 +101,35 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
 /**************************************************************/
 
 /**************************************************************/
-/********* DATATABLES ROW STYLES ********************/
+/********* FEATURE DATATABLES ROW STYLES ********************/
 /**************************************************************/
 
+table#featureTable {
+  width: 100% !important;
+  table-layout: fixed;
+}
+
+table#featureTable td {
+  width: auto !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  vertical-align: top;
+  /*padding: 10px 18px;*/
+}
+
+table#featureTable tbody tr {
+  font-size: 15px;
+}
+
+table#featureTable thead tr th {
+  text-align: left;
+  width: auto !important;
+  white-space: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 8px 10px;
+  /*white-space: nowrap;*/
+}
 
 .annotationTopicWrapper {
   background-color: #569fec52;
@@ -108,11 +138,22 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   font-weight: bold;
   border-radius: 5px;
   padding: 3px 4px;
-
+  white-space: nowrap;
 }
 
-.annotationDescriptionWrapper {
+.descriptionWrapper {
   font-size: 14px;
+  display: inline-block;
+}
+
+.xrefQualifierWrapper {
+  background-color:#dacee0;
+  color: #482c56f7;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
 }
 
 

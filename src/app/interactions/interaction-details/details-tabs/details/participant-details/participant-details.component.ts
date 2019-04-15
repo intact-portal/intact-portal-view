@@ -91,7 +91,7 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
         {data: 'description', title: 'Description'},
         {data: 'species.scientificName', title: 'Species'},
         {data: 'expressionSystem', title: 'Expression System'},
-        {data: 'detectionMethod', title: 'Detection Method', render: '[, ].shortName'},
+        {data: 'detectionMethod', title: 'Detection Methods', render: '[, ].shortName'},
         {data: 'experimentalRole.shortName', title: 'Experimental Role'},
         {data: 'biologicalRole.shortName', title: 'Biological Role'},
         {data: 'experimentalPreparations', title: 'Experimental Preparations', render: '[, ].shortName'},

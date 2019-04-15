@@ -45,18 +45,28 @@ export class FeaturesDetailsComponent implements OnInit {
       columns: [
         {data: 'featureAc', title: 'Ac'},
         {data: 'name', title: 'Name'},
-        {data: 'regionType.shortName', title: 'Type'},
-        {data: 'regionType.shortName', title: 'Role'},
-        {data: 'range', title: 'Range Positions'},
-        {data: 'range', title: 'Linked Features'},
-        {data: 'interactorName', title: 'Participant Name'},
-        {data: 'interactor.identifier', title: 'Participant Identifier'},
+        {data: 'type.shortName', title: 'Type'},
+        {data: 'role', title: 'Role', defaultContent: ''},
+        {data: 'ranges', title: 'Range Positions', render: '[, ]'},
+        {data: 'linkedFeatures', title: 'Linked Features', render: '[, ].shortName'},
+        {data: 'participantName', title: 'Participant Name'},
+        {data: 'participant.identifier', title: 'Participant Identifier'},
         {data: 'participantAc', title: 'Participant Ac'},
-        {data: 'participantAc', title: 'Detection Methods'},
-        {data: 'participantAc', title: 'Parameters'},
-        {data: 'participantAc', title: 'Identifiers'},
-        {data: 'participantAc', title: 'Cross References'},
-        {data: 'participantAc', title: 'Annotations'}
+        {data: 'detectionMethods', title: 'Detection Methods', render: '[, ].shortName'},
+        {data: 'parameters', title: 'Parameters'},
+        {data: 'identifiers', title: 'Identifiers'},
+        {data: 'xrefs', title: 'Cross References'},
+        {data: 'annotations', title: 'Annotations',
+          render: function ( data, type, row, meta ) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                 return '<div>' +
+                          '<span class="annotationTopicWrapper margin-right-medium">' + d.topic.shortName + ' (' + d.topic.miIdentifier + ') ' +
+                          '</span>' + '<span class="annotationDescriptionWrapper">' + d.description + '</span> ' +
+                        '</div>';
+              }).join('');
+            }
+          }}
       ],
     });
   }

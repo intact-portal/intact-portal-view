@@ -95,3 +95,28 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
 /**************************************************************/
 /********* END PARTICIPANT DATATABLES RE-STYLE ********************/
 /**************************************************************/
+
+/**************************************************************/
+/********* DATATABLES ROW STYLES ********************/
+/**************************************************************/
+
+
+.annotationTopicWrapper {
+  background-color: #569fec52;
+  color: #14385f;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+
+}
+
+.annotationDescriptionWrapper {
+  font-size: 14px;
+}
+
+
+
+/**************************************************************/
+/********* END DATATABLES ROW STYLES ********************/
+/**************************************************************/

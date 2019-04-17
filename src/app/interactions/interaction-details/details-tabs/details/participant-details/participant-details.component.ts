@@ -49,8 +49,7 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
     $(document).click(function(e) {
 
       if ($(e.target).closest('.columnToggle').length === 0) {
-
-        if ( $('#columnView').is(':visible')) {
+        if ( $('#columnView').is(':visible') && e.target.className !== 'list-view') {
           $('#columnView').toggle();
           $('i#iconColumn').removeClass('icon-caret-up').addClass('icon-caret-down');
           console.log('just clicked outside your .container div');

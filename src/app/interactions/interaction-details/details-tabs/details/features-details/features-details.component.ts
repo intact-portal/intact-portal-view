@@ -47,35 +47,75 @@ export class FeaturesDetailsComponent implements OnInit {
         {data: 'name', title: 'Name'},
         {data: 'type.shortName', title: 'Type'},
         {data: 'role', title: 'Role', defaultContent: ''},
-        {data: 'ranges', title: 'Range Positions', render: '[, ]'},
-        {data: 'linkedFeatures', title: 'Linked Features', render: '[, ].shortName'},
-        {data: 'participantName', title: 'Participant Name'},
-        {data: 'participant.identifier', title: 'Participant Identifier'},
-        {data: 'participantAc', title: 'Participant Ac'},
-        {data: 'detectionMethods', title: 'Detection Methods', render: '[, ].shortName'},
-        {data: 'parameters', title: 'Parameters'},
-        {data: 'identifiers', title: 'Identifiers'},
-        {data: 'xrefs', title: 'Cross References',
+        {data: 'ranges', title: 'Range Positions', defaultContent: '', render: '[, ]'},
+        {data: 'linkedFeatures', title: 'Linked Features', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                          '<span class="featureDetailsCell">' + d.shortName + '</span>' +
+                       '</div>';
+              }).join('');
+            }
+          }},
+        {data: 'participantName', title: 'Participant Name', defaultContent: ''},
+        {data: 'participant.identifier', title: 'Participant Identifier', defaultContent: ''},
+        {data: 'participantAc', title: 'Participant Ac', defaultContent: ''},
+        {data: 'detectionMethods', title: 'Detection Methods', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                         '<span class="featureDetailsCell">' + d.shortName + '</span>' +
+                       '</div>';
+              }).join('');
+            }
+          }
+        },
+        {data: 'parameters', title: 'Parameters', defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div class="margin-bottom-medium">' +
-                        '<span class="xrefQualifierWrapper margin-right-medium">' +
-                        '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
-                        '<span class="descriptionWrapper">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                    // d.qualifier != null ?
+                  '<span class="featureDetailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +
+                  '</div>';
+              }).join('');
+            }
+          }},
+        {data: 'identifiers', title: 'Identifiers', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div class="margin-bottom-medium">' +
+                      '<span class="featureDetailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
                       '</div>';
               }).join('');
             }
           }},
-        {data: 'annotations', title: 'Annotations',
+        {data: 'xrefs', title: 'Cross References', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return d.qualifier != null ?
+                    '<div class="margin-bottom-medium">' +
+                          '<span class="featureDetailsXrefCell margin-right-medium">' +
+                          '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
+                          '<span class="featureDetailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                    '</div>'  :
+                    '<div class="margin-bottom-medium">' +
+                      '<span class="featureDetailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                    '</div>';
+              }).join('');
+            }
+          }},
+        {data: 'annotations', title: 'Annotations', defaultContent: '',
           render: function ( data, type, row, meta ) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                  return '<div class="margin-bottom-medium">' +
-                          '<span class="annotationTopicWrapper margin-right-medium">' +
+                          '<span class="featureDetailsAnnotationCell margin-right-medium">' +
                           ' <i class="icon icon-common icon-tag"></i>  ' + d.topic.shortName + '</span>' +
-                        '<span class="descriptionWrapper">' + d.description + '</span> ' +
+                        '<span class="featureDetailsCell">' + d.description + '</span> ' +
                         '</div>';
               }).join('');
             }

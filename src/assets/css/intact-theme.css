@@ -131,7 +131,12 @@ table#featureTable thead tr th {
   /*white-space: nowrap;*/
 }
 
-.annotationTopicWrapper {
+.featureDetailsCell {
+  font-size: 14px;
+  display: inline-block;
+}
+
+.featureDetailsAnnotationCell {
   background-color: #569fec52;
   color: #14385f;
   font-size: small;
@@ -141,12 +146,7 @@ table#featureTable thead tr th {
   white-space: nowrap;
 }
 
-.descriptionWrapper {
-  font-size: 14px;
-  display: inline-block;
-}
-
-.xrefQualifierWrapper {
+.featureDetailsXrefCell {
   background-color:#dacee0;
   color: #482c56f7;
   font-size: small;

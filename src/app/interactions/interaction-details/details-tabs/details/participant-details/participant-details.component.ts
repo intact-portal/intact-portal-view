@@ -95,8 +95,9 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
         {data: 'biologicalRole.shortName', title: 'Biological Role'},
         {data: 'experimentalPreparations', title: 'Experimental Preparations', render: '[, ].shortName'},
         {data: 'parameters', title: 'Parameters'},
-        {data: 'confidences', title: 'Confidences'}
-
+        {data: 'confidences', title: 'Confidences'},
+        {data: 'xrefs', title: 'Cross References'},
+        {data: 'annotations', title: 'Annotations'}
       ],
     });
   }

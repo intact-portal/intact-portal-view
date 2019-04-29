@@ -12,6 +12,8 @@ export class InteractionDetailsComponent implements OnInit {
 
   @Input() interactionDetails: InteractionDetails;
 
+  private hover = false;
+
   constructor() { }
 
   ngOnInit() {

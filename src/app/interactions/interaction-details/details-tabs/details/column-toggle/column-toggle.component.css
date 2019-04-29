@@ -38,10 +38,3 @@
 .hiddenToggle {
   display: none;
 }
-
-select {
-  box-sizing: border-box;
-  width: 100%;
-  border-radius: 0;
-}
-

@@ -1,0 +1,25 @@
+<div class="columns medium-12">
+
+  <div class="columns medium-12" style="text-align: right">
+
+    <span> Column Toggle: </span>
+    <button class="columnToggle" type="button" (click)="toggleColumnView()"
+                                          (mouseover)="columnToggleHover=true" (mouseleave)="columnToggleHover=false">
+      <i id="iconColumn" class="icon icon-common icon-caret-down iconColumn"></i>
+    </button>
+
+    <div id="{{columnView}}" class="row column_toggle_btnwrap column_toggle_popup">
+
+      <ul class="no-bullet">
+        <li *ngFor="let column of columnNames; let i = index">
+          <label>
+            <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i" value="{{column}}"
+                        (change)="onChangeColumnSelected(col.value)"
+                        [checked]="isColumnSelected(col.value)">{{column}}
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

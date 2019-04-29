@@ -13,6 +13,10 @@ export class FeaturesDetailsComponent implements OnInit {
   @Input() interactionAc: string;
 
   dataTable: any;
+  columnView = 'features_columnView';
+
+  private _columnNames: string[] = ['Ac', 'Name', 'Type', 'Role', 'Range Positions', 'Linked Features', 'Participant Name',
+    'Participant Identifier', 'Participant Ac', 'Detection Methods', 'Parameters', 'Identifiers', 'Cross References', 'Annotations'];
 
   constructor() { }
 
@@ -122,5 +126,9 @@ export class FeaturesDetailsComponent implements OnInit {
           }}
       ],
     });
+  }
+
+  get columnNames(): string[] {
+    return this._columnNames;
   }
 }

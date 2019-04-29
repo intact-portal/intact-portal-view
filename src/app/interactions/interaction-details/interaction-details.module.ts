@@ -14,6 +14,7 @@ import {ExperimentComponent} from './details-tabs/details/experiment/experiment.
 import {PublicationComponent} from './details-tabs/details/publication/publication.component';
 import {ParticipantDetailsComponent} from './details-tabs/details/participant-details/participant-details.component';
 import { FeaturesDetailsComponent } from './details-tabs/details/features-details/features-details.component';
+import { ColumnToggleComponent } from './details-tabs/details/column-toggle/column-toggle.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { FeaturesDetailsComponent } from './details-tabs/details/features-detail
     ExperimentComponent,
     PublicationComponent,
     ParticipantDetailsComponent,
-    FeaturesDetailsComponent
+    FeaturesDetailsComponent,
+    ColumnToggleComponent
   ]
 })
 export class InteractionDetailsModule { }

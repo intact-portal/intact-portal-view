@@ -62,22 +62,15 @@
 /**************************************************************/
 
 
+
 /**************************************************************/
-/********* PARTICIPANT DATATABLES RE-STYLE ********************/
+/*************** DATATABLES RE-STYLE ********************/
 /**************************************************************/
 
 div.dataTables_length > label > select {
   box-sizing: border-box;
   width: 41% !important;
   border-radius: 0;
-}
-
-table#participantTable {
-  width: 100% !important;
-}
-
-table#participantTable tbody tr {
-  font-size: 14px;
 }
 
 .dataTables_wrapper .dataTables_paginate {
@@ -94,15 +87,61 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9;
 }
 
+/*************** PARTICIPANT DATATABLES ROW STYLE ********************/
 
+table#participantTable {
+  width: 100% !important;
+  table-layout: fixed;
+}
 
-/**************************************************************/
-/********* END PARTICIPANT DATATABLES RE-STYLE ********************/
-/**************************************************************/
+table#participantTable tbody tr {
+  font-size: 15px;
+}
 
-/**************************************************************/
-/********* FEATURE DATATABLES ROW STYLES ********************/
-/**************************************************************/
+table#participantTable td {
+  width: auto !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  vertical-align: top;
+  /*padding: 10px 18px;*/
+}
+
+table#participantTable thead tr th {
+  text-align: left;
+  width: auto !important;
+  white-space: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 8px 10px;
+  /*white-space: nowrap;*/
+}
+
+.participantDetailsCell {
+  font-size: 14px;
+  display: inline-block;
+}
+
+.participantDetailsAnnotationCell {
+  background-color: #569fec52;
+  color: #14385f;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+
+.participantDetailsXrefCell {
+  background-color:#dacee0;
+  color: #482c56f7;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+
+/********* FEATURE DATATABLES ROW STYLE ********************/
 
 table#featureTable {
   width: 100% !important;
@@ -155,7 +194,6 @@ table#featureTable thead tr th {
   padding: 3px 4px;
   white-space: nowrap;
 }
-
 
 
 /**************************************************************/

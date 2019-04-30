@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
   selector: 'iv-column-toggle',
   templateUrl: './column-toggle.component.html',
-  styleUrls: ['./column-toggle.component.css']
+  styleUrls: ['./column-toggle.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ColumnToggleComponent implements OnInit, AfterViewInit {
 
@@ -15,25 +16,25 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
   private columnToggleHover = false;
   private columnsSelected: string[];
 
-  constructor() {}
+  constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnInit() {
-    console.log('Columns to toggle passed - ' + this.columnNames);
+    const columnView = this.columnView + '_columns';
 
-    if (localStorage.getItem(this.columnView + '_columns') != null) {
+    // Initialize columns that are already selected to view
+    if (localStorage.getItem(columnView) != null) {
       this.columnsSelected = JSON.parse(localStorage.getItem(this.columnView + '_columns'));
     } else {
       this.columnsSelected = [];
     }
 
+    // Hide the columns from the table that are already selected to hide
     this.dataTable.columns().every(function (index) {
-
-      if (localStorage.getItem(this.columnView + '_columns') != null) {
-        if (localStorage.getItem(this.columnView + '_columns').indexOf($(this.header()).text()) >= 0) {
+      if (localStorage.getItem(columnView) != null) {
+        if (localStorage.getItem(columnView).indexOf($(this.header()).text()) >= 0) {
           this.visible(!this.visible());
         }
       }
-
     });
   }
 
@@ -43,15 +44,15 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     table.addClass('hiddenToggle');
     this.showHideColumns();
 
-    $(document).click(function(e) {
+    this.cdRef.detectChanges();
 
+    // Hide toggle list pop up when select somewhere outside the container
+    $(document).click(function(e) {
       if ($(e.target).closest('.columnToggle').length === 0) {
         if (table.is(':visible') && e.target.className !== 'list-view') {
           table.toggle();
 
           $('i#iconColumn').removeClass('icon-caret-up').addClass('icon-caret-down');
-          console.log('just clicked outside your .container div');
-
         }
       }
     });
@@ -75,8 +76,6 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     } else {
       this.columnsSelected.splice(this.columnsSelected.indexOf(column), 1);
     }
-
-    console.log('COLUMNS SELECTED ' + this.columnsSelected);
 
     localStorage.setItem(this.columnView + '_columns', JSON.stringify(this.columnsSelected));
   }

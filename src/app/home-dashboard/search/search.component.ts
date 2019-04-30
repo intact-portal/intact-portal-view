@@ -25,7 +25,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   search(query: string, typeOfButton: string) {
     this.searchService.search(query);
 
-    localStorage.removeItem('participant_columns');
+    localStorage.removeItem('participants_columnView_columns');
+    localStorage.removeItem('features_columnView_columns');
   }
 
   private searchSuggestions(): void {

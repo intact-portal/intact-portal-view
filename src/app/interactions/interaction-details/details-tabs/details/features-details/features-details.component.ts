@@ -57,7 +57,7 @@ export class FeaturesDetailsComponent implements OnInit {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div>' +
-                          '<span class="featureDetailsCell">' + d.shortName + '</span>' +
+                          '<span class="detailsCell">' + d.shortName + '</span>' +
                        '</div>';
               }).join('');
             }
@@ -70,7 +70,7 @@ export class FeaturesDetailsComponent implements OnInit {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div>' +
-                         '<span class="featureDetailsCell">' + d.shortName + '</span>' +
+                         '<span class="detailsCell">' + d.shortName + '</span>' +
                        '</div>';
               }).join('');
             }
@@ -81,7 +81,7 @@ export class FeaturesDetailsComponent implements OnInit {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div class="margin-bottom-medium">' +
-                  '<span class="featureDetailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +
+                  '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +
                   '</div>';
               }).join('');
             }
@@ -91,7 +91,7 @@ export class FeaturesDetailsComponent implements OnInit {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div class="margin-bottom-medium">' +
-                      '<span class="featureDetailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                      '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
                       '</div>';
               }).join('');
             }
@@ -102,12 +102,12 @@ export class FeaturesDetailsComponent implements OnInit {
               return $.map(data, function (d, i) {
                 return d.qualifier != null ?
                     '<div class="margin-bottom-medium">' +
-                          '<span class="featureDetailsXrefCell margin-right-medium">' +
+                          '<span class="detailsXrefCell margin-right-medium">' +
                           '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
-                          '<span class="featureDetailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                          '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
                     '</div>'  :
                     '<div class="margin-bottom-medium">' +
-                      '<span class="featureDetailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                      '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
                     '</div>';
               }).join('');
             }
@@ -117,9 +117,9 @@ export class FeaturesDetailsComponent implements OnInit {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                  return '<div class="margin-bottom-medium">' +
-                          '<span class="featureDetailsAnnotationCell margin-right-medium">' +
+                          '<span class="detailsAnnotationCell margin-right-medium">' +
                           ' <i class="icon icon-common icon-tag"></i>  ' + d.topic.shortName + '</span>' +
-                        '<span class="featureDetailsCell">' + d.description + '</span> ' +
+                        '<span class="detailsCell">' + d.description + '</span> ' +
                         '</div>';
               }).join('');
             }

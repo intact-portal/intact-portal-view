@@ -116,30 +116,30 @@ table#participantTable thead tr th {
   /*white-space: nowrap;*/
 }
 
-.participantDetailsCell {
-  font-size: 14px;
-  display: inline-block;
-}
+/*.participantDetailsCell {*/
+/*  font-size: 14px;*/
+/*  display: inline-block;*/
+/*}*/
 
-.participantDetailsAnnotationCell {
-  background-color: #569fec52;
-  color: #14385f;
-  font-size: small;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 3px 4px;
-  white-space: nowrap;
-}
+/*.participantDetailsAnnotationCell {*/
+/*  background-color: #569fec52;*/
+/*  color: #14385f;*/
+/*  font-size: small;*/
+/*  font-weight: bold;*/
+/*  border-radius: 5px;*/
+/*  padding: 3px 4px;*/
+/*  white-space: nowrap;*/
+/*}*/
 
-.participantDetailsXrefCell {
-  background-color:#dacee0;
-  color: #482c56f7;
-  font-size: small;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 3px 4px;
-  white-space: nowrap;
-}
+/*.participantDetailsXrefCell {*/
+/*  background-color:#dacee0;*/
+/*  color: #482c56f7;*/
+/*  font-size: small;*/
+/*  font-weight: bold;*/
+/*  border-radius: 5px;*/
+/*  padding: 3px 4px;*/
+/*  white-space: nowrap;*/
+/*}*/
 
 /********* FEATURE DATATABLES ROW STYLE ********************/
 
@@ -170,12 +170,14 @@ table#featureTable thead tr th {
   /*white-space: nowrap;*/
 }
 
-.featureDetailsCell {
+/********* DATATABLES ROWs COMMON STYLE ********************/
+
+.detailsCell {
   font-size: 14px;
   display: inline-block;
 }
 
-.featureDetailsAnnotationCell {
+.detailsAnnotationCell {
   background-color: #569fec52;
   color: #14385f;
   font-size: small;
@@ -185,9 +187,19 @@ table#featureTable thead tr th {
   white-space: nowrap;
 }
 
-.featureDetailsXrefCell {
+.detailsXrefCell {
   background-color:#dacee0;
   color: #482c56f7;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+
+.detailsConfidencesCell {
+  background-color: #8d4cbd3d;
+  color: #42186d;
   font-size: small;
   font-weight: bold;
   border-radius: 5px;

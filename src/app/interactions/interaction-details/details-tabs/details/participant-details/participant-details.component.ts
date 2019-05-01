@@ -51,20 +51,95 @@ export class ParticipantDetailsComponent implements OnInit {
       },
       columns: [
         {data: 'participantAc', title: 'Ac'},
-        {data: 'type.shortName', title: 'Type'},
-        {data: 'participantId.identifier', title: 'Identifier'},
-        {data: 'aliases', title: 'Aliases', render: '[, ].name'},
-        {data: 'description', title: 'Description'},
-        {data: 'species.scientificName', title: 'Species'},
-        {data: 'expressionSystem', title: 'Expression System'},
-        {data: 'detectionMethod', title: 'Detection Methods', render: '[, ].shortName'},
-        {data: 'experimentalRole.shortName', title: 'Experimental Role'},
-        {data: 'biologicalRole.shortName', title: 'Biological Role'},
-        {data: 'experimentalPreparations', title: 'Experimental Preparations', render: '[, ].shortName'},
-        {data: 'parameters', title: 'Parameters'},
-        {data: 'confidences', title: 'Confidences'},
-        {data: 'xrefs', title: 'Cross References'},
-        {data: 'annotations', title: 'Annotations'}
+        {data: 'type.shortName', title: 'Type', defaultContent: ''},
+        {data: 'participantId.identifier', title: 'Identifier', defaultContent: ''},
+        {data: 'aliases', title: 'Aliases', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                  '<span class="detailsCell">' + d.name + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        },
+        {data: 'description', title: 'Description', defaultContent: ''},
+        {data: 'species.scientificName', title: 'Species', defaultContent: ''},
+        {data: 'expressionSystem', title: 'Expression System', defaultContent: ''},
+        {data: 'detectionMethod', title: 'Detection Methods', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                  '<span class="detailsCell">' + d.shortName + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }},
+        {data: 'experimentalRole.shortName', title: 'Experimental Role', defaultContent: ''},
+        {data: 'biologicalRole.shortName', title: 'Biological Role', defaultContent: ''},
+        {data: 'experimentalPreparations', title: 'Experimental Preparations', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                  '<span class="detailsCell">' + d.shortName + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }},
+        {data: 'parameters', title: 'Parameters', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div class="margin-bottom-medium">' +
+                  '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +
+                  '</div>';
+              }).join('');
+            }
+          }},
+        {data: 'confidences', title: 'Confidences', defaultContent: '',
+          render: function ( data, type, row, meta ) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div class="margin-bottom-medium">' +
+                  '<span class="detailsCell"> ' + d.type.shortName + ':' + d.value + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        },
+        {data: 'xrefs', title: 'Cross References', defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return d.qualifier != null ?
+                  '<div class="margin-bottom-medium">' +
+                  '<span class="detailsXrefCell margin-right-medium">' +
+                  '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
+                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                  '</div>'  :
+                  '<div class="margin-bottom-medium">' +
+                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        },
+        {data: 'annotations', title: 'Annotations', defaultContent: '',
+          render: function ( data, type, row, meta ) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div class="margin-bottom-medium">' +
+                  '<span class="detailsAnnotationCell margin-right-medium">' +
+                  ' <i class="icon icon-common icon-tag"></i>  ' + d.topic.shortName + '</span>' +
+                  '<span class="detailsCell">' + d.description + '</span> ' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        }
       ],
     });
   }

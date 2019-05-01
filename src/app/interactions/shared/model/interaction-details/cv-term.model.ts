@@ -1,10 +1,10 @@
 export class CvTerm {
   private _shortName: string;
-  private _miIdentifier: string;
+  private _identifier: string;
 
   constructor(shortName: string, miIdentifier: string) {
     this._shortName = shortName;
-    this._miIdentifier = miIdentifier;
+    this._identifier = miIdentifier;
   }
 
   get shortName(): string {
@@ -15,11 +15,11 @@ export class CvTerm {
     this._shortName = value;
   }
 
-  get miIdentifier(): string {
-    return this._miIdentifier;
+  get identifier(): string {
+    return this._identifier;
   }
 
-  set miIdentifier(value: string) {
-    this._miIdentifier = value;
+  set identifier(value: string) {
+    this._identifier = value;
   }
 }

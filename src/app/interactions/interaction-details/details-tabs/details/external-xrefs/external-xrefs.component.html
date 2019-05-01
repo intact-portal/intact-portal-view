@@ -7,7 +7,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let xref of xrefs">
-        <td>{{xref.database.shortName}}<span *ngIf="xref.database.miIdentifier !== null"> ({{xref.database.miIdentifier}})</span></td>
+        <td>{{xref.database.shortName}}<span *ngIf="xref.database.identifier !== null"> ({{xref.database.identifier}})</span></td>
         <td>{{xref.identifier}}</td>
       </tr>
     </tbody>

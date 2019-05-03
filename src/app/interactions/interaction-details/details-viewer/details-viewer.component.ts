@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, Input, ViewEncapsulation} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 
 declare const require: any;
 declare const $: any;
@@ -17,37 +18,38 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   @Input() interactionAc: string;
 
-  private _interactionsJSON: any;
+  private _interactionData: any;
 
-  constructor(private httpService: HttpClient) { }
+  constructor(private interactionsDetailsService: InteractionsDetailsService) { }
 
   ngAfterViewInit() {
-    this.httpService.get('../../../assets/demo_interactions.json').subscribe(
-      data => {
-        this.interactionsJSON = data;
+    this.requestInteractionViewerDetails();
+  }
 
-        if (this.interactionsJSON !== undefined) {
-          console.log('InteractionsJson dummy is ' + this.interactionsJSON);
+  private requestInteractionViewerDetails() {
+    this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
+      .subscribe(data => {
+        this.interactionData = data;
+        console.log('InteractionsData ---> ' + this.interactionData);
 
+        if (this.interactionData !== undefined) {
           $('iv-interactions-viewer').foundation();
           xlv = new xiNET('graphViewerContainer');
-          xlv.readMIJSON(this.interactionsJSON, true);
+          xlv.readMIJSON(this.interactionData, true);
           xlv.autoLayout();
         }
       },
-      (err: HttpErrorResponse) => {
-        console.log (err.message);
-      }
-    );
-
+        (err: HttpErrorResponse) => {
+          console.log (err.message);
+        })
   }
 
-  get interactionsJSON(): any {
-    return this._interactionsJSON;
+  get interactionData(): any {
+    return this._interactionData;
   }
 
-  set interactionsJSON(value: any) {
-    this._interactionsJSON = value;
+  set interactionData(value: any) {
+    this._interactionData = value;
   }
 
 }

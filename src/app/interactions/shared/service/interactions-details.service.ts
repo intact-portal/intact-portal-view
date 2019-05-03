@@ -18,6 +18,11 @@ export class InteractionsDetailsService {
       .catch(this.handleError);
   }
 
+  getInteractionViewer(interactionAc: string): Observable<any> {
+    return this.http.get(`/detailsService/interaction/export/${interactionAc}`)
+      .catch(this.handleError);
+  }
+
   getParticipantsDetails(interactionAc: string,
                          currentPageIndex = 1,
                          pageSize = 20): Observable<ParticipantDetails> {
@@ -35,14 +40,6 @@ export class InteractionsDetailsService {
     return this.http.get(`/detailsService/participants/details/${interactionAc}`, options)
       .catch(this.handleError);
   }
-
-  // TODO: getFeaturesDetails
-  // getFeaturesDetails(interactionAc: string,
-  //                    currentPageIndex = 1,
-  //                    pageSize = 20): Observable<FeatureDetails> {
-  //
-  //
-  // }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
     if (err.error instanceof Error) {

@@ -86,13 +86,14 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
 
   private showHideColumns(): void {
     const table = this.dataTable;
-    $('input[type="checkbox"].list-view').on('click', function(e) {
 
-      // Get the column API object
-      const column = table.column($(this).attr('data-column'));
+    $('#' + this.columnView + ' input[type="checkbox"].list-view').on('click', function(e) {
 
-      // Toggle the visibility
-      column.visible(!column.visible());
+        // Get the column API object
+        const column = table.column($(this).attr('data-column'));
+
+        // Toggle the visibility
+        column.visible(!column.visible());
     });
   }
 }

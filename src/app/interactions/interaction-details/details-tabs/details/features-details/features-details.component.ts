@@ -47,6 +47,13 @@ export class FeaturesDetailsComponent implements OnInit {
         }
       },
       columns: [
+        {data: 'participant.identifier', defaultContent: '', title: 'Selection',
+          render: function (data, type, full, meta) {
+            if (type === 'display') {
+              return '<input type="checkbox" value="' + data + '" />';
+            }
+          }
+        },
         {data: 'featureAc', title: 'Ac'},
         {data: 'name', title: 'Name'},
         {data: 'type.shortName', title: 'Type'},
@@ -125,6 +132,19 @@ export class FeaturesDetailsComponent implements OnInit {
             }
           }}
       ],
+      // columnDefs: [ {
+      //   targets: 0,
+      //   searchable: false,
+      //   orderable: false,
+      //   render: function (data, type, full, meta) {
+      //     return '<input type="checkbox" value="' + $('<div/>').text(data).html() + '">';
+      //   }
+      // } ],
+      // select: {
+      //   style:    'os',
+      //   selector: 'td:first-child'
+      // },
+
     });
   }
 

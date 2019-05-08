@@ -208,6 +208,13 @@ table#featureTable thead tr th {
 }
 
 
+.rowSelected {
+  /*font-weight: bold;*/
+  background-color: #305b7d66 !important;
+  /*text-shadow: 1px 1px 0px #EEE;*/
+  color: black;
+}
+
 /**************************************************************/
 /********* END DATATABLES ROW STYLES ********************/
 /**************************************************************/

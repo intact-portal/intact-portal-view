@@ -137,36 +137,45 @@ export class FeaturesDetailsComponent implements OnInit {
             }
           }}
       ],
-      // columnDefs: [ {
-      //   targets: 0,
-      //   searchable: false,
-      //   orderable: false,
-      //   render: function (data, type, full, meta) {
-      //     return '<input type="checkbox" value="' + $('<div/>').text(data).html() + '">';
-      //   }
-      // } ],
-      // select: {
-      //   style:    'os',
-      //   selector: 'td:first-child'
-      // },
-
+      select: {
+        style: 'os',
+        className: 'rowSelected',
+        selector: 'td:last-child'
+      }
     });
 
     $('#featureTable').on('change', 'input[type=\'checkbox\']', (e) => {
 
       const featureSel = e.currentTarget.id;
-      console.info(featureSel);
-      this.onSelected(featureSel);
+
+      if (this.featureSelected !== featureSel) {
+        $( '#' + this.featureSelected + ':checkbox').prop('checked', false);
+
+        // TODO: To find another way to do the highlighting
+        $(table.dataTableSettings).each(function () {
+          $(this.aoData).each( function () {
+            $(this.nTr).removeClass('rowSelected');
+          })
+        });
+
+        this.featureSelected = featureSel;
+        $(e.target.parentNode.parentNode).addClass('rowSelected');
+
+      } else {
+        // None is selected, remove class
+        $(table.dataTableSettings).each(function () {
+          $(this.aoData).each( function () {
+            $(this.nTr).removeClass('rowSelected');
+          })
+        });
+      }
+      // TODO: emit featureSel as event to the details-viewer
 
     });
   }
 
   onSelected(feature: string) {
-    if (this.featureSelected !== feature) {
-      $( '#' + this.featureSelected + ':checkbox').prop('checked', false);
-      this.featureSelected = feature;
 
-    }
   }
 
   get columnNames(): string[] {

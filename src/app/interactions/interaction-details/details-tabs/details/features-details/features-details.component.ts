@@ -18,6 +18,8 @@ export class FeaturesDetailsComponent implements OnInit {
   private _columnNames: string[] = ['Ac', 'Name', 'Type', 'Role', 'Range Positions', 'Linked Features', 'Participant Name',
     'Participant Identifier', 'Participant Ac', 'Detection Methods', 'Parameters', 'Identifiers', 'Cross References', 'Annotations'];
 
+  private _featureSelected: string;
+
   constructor() { }
 
   ngOnInit() {
@@ -47,12 +49,15 @@ export class FeaturesDetailsComponent implements OnInit {
         }
       },
       columns: [
-        {data: 'participant.identifier', defaultContent: '', title: 'Selection',
+        {data: 'participantName', defaultContent: '', title: 'Selection',
           render: function (data, type, full, meta) {
             if (type === 'display') {
-              return '<input type="checkbox" value="' + data + '" />';
+              return '<input type="checkbox" id="' + full.featureAc + '" name="check" value="' + data + '"/>';
             }
-          }
+            return data;
+          },
+          className: 'text-center',
+          width: '5%'
         },
         {data: 'featureAc', title: 'Ac'},
         {data: 'name', title: 'Name'},
@@ -146,9 +151,33 @@ export class FeaturesDetailsComponent implements OnInit {
       // },
 
     });
+
+    $('#featureTable').on('change', 'input[type=\'checkbox\']', (e) => {
+
+      const featureSel = e.currentTarget.id;
+      console.info(featureSel);
+      this.onSelected(featureSel);
+
+    });
+  }
+
+  onSelected(feature: string) {
+    if (this.featureSelected !== feature) {
+      $( '#' + this.featureSelected + ':checkbox').prop('checked', false);
+      this.featureSelected = feature;
+
+    }
   }
 
   get columnNames(): string[] {
     return this._columnNames;
+  }
+
+  get featureSelected(): string {
+    return this._featureSelected;
+  }
+
+  set featureSelected(value: string) {
+    this._featureSelected = value;
   }
 }

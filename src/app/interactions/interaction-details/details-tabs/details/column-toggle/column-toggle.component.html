@@ -13,7 +13,7 @@
       <ul class="no-bullet">
         <li *ngFor="let column of columnNames; let i = index">
           <label>
-            <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i" value="{{column}}"
+            <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i + 1" value="{{column}}"
                         (change)="onChangeColumnSelected(col.value)"
                         [checked]="isColumnSelected(col.value)">{{column}}
           </label>

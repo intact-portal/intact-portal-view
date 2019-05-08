@@ -22,23 +22,23 @@ export class InteractionsViewerComponent implements AfterViewInit {
   constructor(private httpService: HttpClient) { }
 
   ngAfterViewInit() {
-    this.httpService.get('../../../assets/demo_interactions.json').subscribe(
-      data => {
-        this.interactionsJSON = data;
-
-        if (this.interactionsJSON !== undefined) {
-          console.log('InteractionsJson dummy is ' + this.interactionsJSON);
-
-          $('iv-interactions-viewer').foundation();
-          xlv = new xiNET('graphViewerContainer');
-          xlv.readMIJSON(this.interactionsJSON, true);
-          xlv.autoLayout();
-        }
-      },
-      (err: HttpErrorResponse) => {
-        console.log (err.message);
-      }
-    );
+    // this.httpService.get('../../../assets/demo_interactions.json').subscribe(
+    //   data => {
+    //     this.interactionsJSON = data;
+    //
+    //     if (this.interactionsJSON !== undefined) {
+    //       console.log('InteractionsJson dummy is ' + this.interactionsJSON);
+    //
+    //       $('iv-interactions-viewer').foundation();
+    //       xlv = new xiNET('graphViewerContainer');
+    //       xlv.readMIJSON(this.interactionsJSON, true);
+    //       xlv.autoLayout();
+    //     }
+    //   },
+    //   (err: HttpErrorResponse) => {
+    //     console.log (err.message);
+    //   }
+    // );
 
   }
 

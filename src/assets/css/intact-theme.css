@@ -95,7 +95,7 @@ table#participantTable {
 }
 
 table#participantTable tbody tr {
-  font-size: 15px;
+  font-size: 14px;
 }
 
 table#participantTable td {
@@ -116,58 +116,81 @@ table#participantTable thead tr th {
   /*white-space: nowrap;*/
 }
 
-/*.participantDetailsCell {*/
-/*  font-size: 14px;*/
-/*  display: inline-block;*/
-/*}*/
-
-/*.participantDetailsAnnotationCell {*/
-/*  background-color: #569fec52;*/
-/*  color: #14385f;*/
-/*  font-size: small;*/
-/*  font-weight: bold;*/
-/*  border-radius: 5px;*/
-/*  padding: 3px 4px;*/
-/*  white-space: nowrap;*/
-/*}*/
-
-/*.participantDetailsXrefCell {*/
-/*  background-color:#dacee0;*/
-/*  color: #482c56f7;*/
-/*  font-size: small;*/
-/*  font-weight: bold;*/
-/*  border-radius: 5px;*/
-/*  padding: 3px 4px;*/
-/*  white-space: nowrap;*/
-/*}*/
-
 /********* FEATURE DATATABLES ROW STYLE ********************/
 
-table#featureTable {
+table#featureTable.tableDisplay {
   width: 100% !important;
   table-layout: fixed;
 }
 
-table#featureTable td {
-  width: auto !important;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  vertical-align: top;
-  /*padding: 10px 18px;*/
-}
-
-table#featureTable tbody tr {
-  font-size: 15px;
-}
-
-table#featureTable thead tr th {
+table#featureTable.tableDisplay th,
+table#featureTable.tableDisplay td {
   text-align: left;
-  width: auto !important;
-  white-space: normal;
-  text-overflow: ellipsis;
-  overflow: hidden;
   padding: 8px 10px;
+}
+
+table#featureTable.tableDisplay th {
+  overflow: auto;
+  word-break: break-word;
+}
+
+table#featureTable.tableDisplay td {
+  /*overflow: hidden;*/
+  vertical-align: top;
+  text-overflow: ellipsis;
+  word-break: break-word;
   /*white-space: nowrap;*/
+}
+
+table#featureTable.tableDisplay tr {
+  font-size: 14px;
+}
+
+/* Column widths are based on these cells */
+.row-Selection {
+  width: 4% !important;
+}
+.row-Ac {
+  width: 6% !important;
+}
+.row-Name {
+  width: 10% !important;
+}
+.row-Type {
+  width: 5% !important;
+}
+.row-Role {
+  width: 5% !important;
+}
+.row-Range {
+  width: 6% !important;
+}
+.row-LinkedFeatures {
+  width: 6% !important;
+}
+.row-PartName {
+  width: 6% !important;
+}
+.row-PartId {
+  width: 6% !important;
+}
+.row-PartAc {
+  width: 6% !important;
+}
+.row-DetMethod {
+  width: 8% !important;
+}
+.row-Parameters {
+  width: 6% !important;
+}
+.row-Identifiers {
+  width: 6% !important;
+}
+.row-Xrefs {
+  width: 10% !important;
+}
+.row-Annotations {
+  width: 10% !important;
 }
 
 /********* DATATABLES ROWs COMMON STYLE ********************/

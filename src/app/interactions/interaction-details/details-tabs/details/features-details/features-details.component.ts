@@ -49,15 +49,14 @@ export class FeaturesDetailsComponent implements OnInit {
         }
       },
       columns: [
-        {data: 'participantName', defaultContent: '', title: 'Selection',
+        {data: 'participantName', defaultContent: ' ', title: 'Select',
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<input type="checkbox" id="' + full.featureAc + '" name="check" value="' + data + '"/>';
             }
             return data;
           },
-          className: 'text-center',
-          width: '5%'
+          className: 'text-center'
         },
         {data: 'featureAc', title: 'Ac'},
         {data: 'name', title: 'Name'},
@@ -140,7 +139,7 @@ export class FeaturesDetailsComponent implements OnInit {
       select: {
         style: 'os',
         className: 'rowSelected',
-        selector: 'td:last-child'
+        selector: 'td:first-child'
       }
     });
 
@@ -163,6 +162,7 @@ export class FeaturesDetailsComponent implements OnInit {
 
       } else {
         // None is selected, remove class
+        this.featureSelected = undefined;
         $(table.dataTableSettings).each(function () {
           $(this.aoData).each( function () {
             $(this.nTr).removeClass('rowSelected');

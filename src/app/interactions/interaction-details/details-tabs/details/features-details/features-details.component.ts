@@ -55,8 +55,7 @@ export class FeaturesDetailsComponent implements OnInit {
               return '<input type="checkbox" id="' + full.featureAc + '" name="check" value="' + data + '"/>';
             }
             return data;
-          },
-          className: 'text-center'
+          }
         },
         {data: 'featureAc', title: 'Ac'},
         {data: 'name', title: 'Name'},

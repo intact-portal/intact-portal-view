@@ -146,6 +146,10 @@ table#featureTable.tableDisplay tr {
   font-size: 14px;
 }
 
+table#featureTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
 /* Column widths are based on these cells */
 .row-Selection {
   width: 4% !important;

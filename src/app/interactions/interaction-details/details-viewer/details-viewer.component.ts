@@ -17,6 +17,7 @@ let xlv: any;
 export class DetailsViewerComponent implements AfterViewInit {
 
   @Input() interactionAc: string;
+  @Input() featureAc: string;
 
   private _interactionData: any;
 
@@ -30,7 +31,6 @@ export class DetailsViewerComponent implements AfterViewInit {
     this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
       .subscribe(data => {
         this.interactionData = data;
-        console.log('InteractionsData ---> ' + this.interactionData);
 
         if (this.interactionData !== undefined) {
           $('iv-interactions-viewer').foundation();

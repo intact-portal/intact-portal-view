@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionDetails} from '../../../shared/model/interaction-details/interaction-details.model';
 
 declare const $: any;
@@ -11,6 +11,8 @@ declare const $: any;
 export class InteractionDetailsComponent implements OnInit {
 
   @Input() interactionDetails: InteractionDetails;
+
+  @Output() featureToEmit: EventEmitter<string> = new EventEmitter<string>();
 
   private hover = false;
 

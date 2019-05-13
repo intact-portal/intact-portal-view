@@ -12,12 +12,14 @@
 
   <div class="columns medium-12">
     <iv-details-viewer *ngIf="interactionAc"
-                       [interactionAc]="interactionAc"></iv-details-viewer>
+                       [interactionAc]="interactionAc"
+                       [featureAc]="featureSelected"></iv-details-viewer>
   </div>
 
   <div class="columns medium-12">
     <iv-details-tabs *ngIf="interactionAc"
-                     [interactionAc]="interactionAc"></iv-details-tabs>
+                     [interactionAc]="interactionAc"
+                     (featureChanged)="onFeatureSelectedChanged($event)"></iv-details-tabs>
   </div>
 
 </div>

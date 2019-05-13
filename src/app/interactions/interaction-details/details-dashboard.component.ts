@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -10,6 +10,8 @@ import { Title } from '@angular/platform-browser';
 export class DetailsDashboardComponent implements OnInit {
 
   private _interactionAc: string;
+  // @Input() featureSelected: string;
+  private _featureSelected: string;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) { }
@@ -28,5 +30,17 @@ export class DetailsDashboardComponent implements OnInit {
 
   set interactionAc(value: string) {
     this._interactionAc = value;
+  }
+
+  get featureSelected(): string {
+    return this._featureSelected;
+  }
+
+  set featureSelected(value: string) {
+    this._featureSelected = value;
+  }
+
+  public onFeatureSelectedChanged(featureAc: string): void {
+    this.featureSelected = featureAc;
   }
 }

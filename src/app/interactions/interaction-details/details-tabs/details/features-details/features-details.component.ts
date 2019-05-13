@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -11,6 +11,9 @@ import 'datatables.net';
 export class FeaturesDetailsComponent implements OnInit {
 
   @Input() interactionAc: string;
+  // @Input() featureAc: string;
+
+  @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
 
   dataTable: any;
   columnView = 'features_columnView';
@@ -159,6 +162,8 @@ export class FeaturesDetailsComponent implements OnInit {
         this.featureSelected = featureSel;
         $(e.target.parentNode.parentNode).addClass('rowSelected');
 
+        this.featureChanged.emit(this.featureSelected);
+
       } else {
         // None is selected, remove class
         this.featureSelected = undefined;
@@ -167,14 +172,10 @@ export class FeaturesDetailsComponent implements OnInit {
             $(this.nTr).removeClass('rowSelected');
           })
         });
+
+        this.featureChanged.emit(this.featureSelected);
       }
-      // TODO: emit featureSel as event to the details-viewer
-
     });
-  }
-
-  onSelected(feature: string) {
-
   }
 
   get columnNames(): string[] {

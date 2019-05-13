@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionDetails} from '../../shared/model/interaction-details/interaction-details.model';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ParticipantDetails} from '../../shared/model/interaction-details/participant-details.model';
@@ -13,6 +13,7 @@ declare const $: any;
 export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   @Input() interactionAc: string;
+  @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
 
   private _currentPageIndex: number;
 
@@ -68,5 +69,11 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   set currentPageIndex(value: number) {
     this._currentPageIndex = value;
+  }
+
+  /** EVENT EMITTERS **/
+
+  public onFeatureSelectedChanged(featureAc: string): void {
+    this.featureChanged.emit(featureAc);
   }
 }

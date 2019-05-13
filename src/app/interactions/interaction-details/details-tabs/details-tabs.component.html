@@ -20,7 +20,8 @@
     </div>
 
     <div class="tabs-panel" id="features" style="background-color:#f4f4f4;">
-      <iv-features-details [interactionAc]="interactionAc"></iv-features-details>
+      <iv-features-details [interactionAc]="interactionAc"
+                           (featureChanged)="onFeatureSelectedChanged($event)"></iv-features-details>
     </div>
 
   </div>

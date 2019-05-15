@@ -3,7 +3,7 @@ div#graphViewerContainer{
   /*!*position:absolute;*!*/
   /*!*bottom:0px;*!*/
   /*!*top:0px;*!*/
-  height: 700px;
+  height: 500px;
   background: #fbfbfb;
   position: relative;
   /*width: 150%;*/
@@ -37,3 +37,34 @@ div#graphViewerContainer{
   width: 100%;
   display: block;
 }
+
+div#viewerLegend {
+  /*background-color: #e6e6e6;*/
+  height: 500px;
+}
+
+.callout-legend {
+  background-color: #5a2e6e3d !important;
+  border-radius: 8px;
+}
+
+#legendPanel {
+  background-color: #f4f4f4e6 !important;
+  border-radius: 6px;
+}
+
+.legendButtons {
+  background-color: rgb(1, 133, 180);
+  border-radius: 5px;
+}
+
+#legendExpansion .button:hover, .button:focus {
+  background-color: #1da1f2;
+  color: #fefefe;
+}
+
+#annotationsSelect {
+  width: auto;
+  border-radius: 5px;
+}
+

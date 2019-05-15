@@ -20,6 +20,13 @@ export class DetailsViewerComponent implements AfterViewInit {
   @Input() featureAc: string;
 
   private _interactionData: any;
+  private SMALL_MOL = require('../../../../assets/images/detailsViewer/svgForKey/smallMol.svg');
+  private GENE = require('../../../../assets/images/detailsViewer/svgForKey/gene.svg');
+  private DNA = require('../../../../assets/images/detailsViewer/svgForKey/DNA.svg');
+  private RNA = require('../../../../assets/images/detailsViewer/svgForKey/RNA.svg');
+  private PROTEIN_BLOB = require('../../../../assets/images/detailsViewer/svgForKey/proteinBlob.svg');
+  private PROTEIN_BAR = require('../../../../assets/images/detailsViewer/svgForKey/proteinBar.svg');
+
 
   constructor(private interactionsDetailsService: InteractionsDetailsService) { }
 
@@ -42,6 +49,28 @@ export class DetailsViewerComponent implements AfterViewInit {
         (err: HttpErrorResponse) => {
           console.log (err.message);
         })
+  }
+
+  expandAll(): void {
+    xlv.expandAll();
+  }
+
+  collapseAll(): void {
+    xlv.collapseAll();
+  }
+
+  changeAnnotations(event): void {
+    // const annotationSelected = $(document).getElementById('annotationsSelect').value;
+    const annotationSelected = event.target.value;
+    console.log('Annotation selected ' + annotationSelected);
+    xlv.setAnnotations(annotationSelected);
+
+    // xlv.setAnnotations("MI features");	//show features from MI data
+    // xlv.setAnnotations("UniprotKB");	//show annotations from uniprot
+    // xlv.setAnnotations("SuperFamily");	//from SuperFamily
+    // xlv.setAnnotations("None");			//no annotations
+    // xlv.setAnnotations("Interactor");	//colour bars and circles according to interactor (may help indicate stoichiometry)
+    //
   }
 
   get interactionData(): any {

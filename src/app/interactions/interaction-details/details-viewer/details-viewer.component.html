@@ -1,7 +1,77 @@
 <div>Selected: {{featureAc}}</div>
 
 <div>
-  <div>
-    <div id="graphViewerContainer"></div>
+  <div id="detailsViewer" class="row expanded">
+    <div id="graphViewerContainer" class="columns medium-10"></div>
+
+    <div id="viewerLegend" class="columns medium-2 callout-legend">
+      <h5 class="padding-top-large margin-left-small">Legend</h5>
+
+      <div id="legendPanel" class="columns margin-top-medium margin-bottom-large">
+
+        <div class="margin-top-large margin-bottom-medium">
+          <div class="row">
+            <div class="columns medium-3">
+              <img [src]="SMALL_MOL" alt="Bioactive Entity">
+            </div>
+
+            <div class="columns medium-9"><span>Bioactive Entity</span></div>
+          </div>
+
+          <div class="row margin-top-medium">
+            <div class="columns medium-3">
+              <img [src]="GENE" alt="Gene">
+            </div>
+            <div class="columns medium-9"><span>Gene</span></div>
+          </div>
+
+          <div class="row margin-top-medium">
+            <div class="columns medium-3">
+              <img [src]="DNA" alt="DNA">
+            </div>
+            <div class="columns medium-9"><span>DNA</span></div>
+          </div>
+
+          <div class="row margin-top-medium">
+            <div class="columns medium-3">
+              <img [src]="RNA" alt="RNA">
+            </div>
+            <div class="columns medium-9"><span>RNA</span></div>
+          </div>
+
+
+          <div class="row margin-top-medium">
+            <div class="columns medium-3">
+              <div><img [src]="PROTEIN_BLOB" alt="Protein"></div>
+              <div><img [src]="PROTEIN_BAR" alt="Protein"></div>
+            </div>
+            <div class="columns medium-9">
+              Protein - click to toggle between circle and bar
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="legendExpansion"> <span>Proteins:</span>
+        <button class="button legendButtons" (click)="expandAll();">Expand</button>
+        <button class="button legendButtons" (click)="collapseAll();">Collapse</button>
+      </div>
+
+      <div id="colours"></div>
+      <div id="annotations">
+        Annotations:
+        <select id="annotationsSelect" (change)="changeAnnotations($event)">
+          <option selected='selected' value="MI features">MI features</option>
+          <option value="UniprotKB">UniprotKB</option>
+          <option value="SuperFamily">SuperFamily</option>
+          <option value="None">None</option>
+          <option value="Interactor">Interactor</option>
+        </select>
+
+      </div>
+    </div>
+
+
   </div>
 </div>

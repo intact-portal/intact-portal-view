@@ -77,3 +77,20 @@ div#colours {
 div#colorWrapper {
   overflow-y: visible;
 }
+
+table#colourViewer {
+  width: 100%;
+  font-size: 0.9em;
+  left: auto;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+table#colourViewer tbody tr {
+  background-color: white;
+  line-height: 1;
+  font-size: 15px;
+}

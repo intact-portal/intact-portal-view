@@ -57,9 +57,7 @@
         <button class="button legendButtons" (click)="expandAll();">Expand</button>
         <button class="button legendButtons" (click)="collapseAll();">Collapse</button>
       </div>
-
-      <div id="colours"></div>
-      <div id="annotations">
+      <div id="annotations" class="margin-bottom-small">
         Annotations:
         <select id="annotationsSelect" (change)="changeAnnotations($event)">
           <option selected='selected' value="MI features">MI features</option>
@@ -70,6 +68,9 @@
         </select>
 
       </div>
+
+      <div id="colours"></div>
+
     </div>
 
 

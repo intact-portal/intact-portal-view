@@ -1,6 +1,9 @@
-import {AfterViewInit, Component, Input, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
+
+import '../../../../assets/js/rgbcolor.js';
+declare const RGBColor: any;
 
 declare const require: any;
 declare const $: any;
@@ -27,6 +30,7 @@ export class DetailsViewerComponent implements AfterViewInit {
   private PROTEIN_BLOB = require('../../../../assets/images/detailsViewer/svgForKey/proteinBlob.svg');
   private PROTEIN_BAR = require('../../../../assets/images/detailsViewer/svgForKey/proteinBar.svg');
 
+  private _annotationSelected: string;
 
   constructor(private interactionsDetailsService: InteractionsDetailsService) { }
 
@@ -44,11 +48,14 @@ export class DetailsViewerComponent implements AfterViewInit {
           xlv = new xiNET('graphViewerContainer');
           xlv.readMIJSON(this.interactionData, true);
           xlv.autoLayout();
+
+          // Initialise the legend colours for the features by default MI features
+          this.legendColours();
         }
       },
-        (err: HttpErrorResponse) => {
-          console.log (err.message);
-        })
+      (err: HttpErrorResponse) => {
+        console.log (err.message);
+      });
   }
 
   expandAll(): void {
@@ -60,17 +67,47 @@ export class DetailsViewerComponent implements AfterViewInit {
   }
 
   changeAnnotations(event): void {
-    // const annotationSelected = $(document).getElementById('annotationsSelect').value;
-    const annotationSelected = event.target.value;
-    console.log('Annotation selected ' + annotationSelected);
-    xlv.setAnnotations(annotationSelected);
+    this.annotationSelected = event.target.value;
+    xlv.setAnnotations(this.annotationSelected);
+    this.legendColours();
+  }
 
-    // xlv.setAnnotations("MI features");	//show features from MI data
-    // xlv.setAnnotations("UniprotKB");	//show annotations from uniprot
-    // xlv.setAnnotations("SuperFamily");	//from SuperFamily
-    // xlv.setAnnotations("None");			//no annotations
-    // xlv.setAnnotations("Interactor");	//colour bars and circles according to interactor (may help indicate stoichiometry)
-    //
+  private legendColours(): void {
+
+    xlv.legendCallbacks.push(function (colourAssignment) {
+
+      const coloursKeyDiv = document.getElementById('colours');
+
+      if (colourAssignment) {
+        let table = '<table background:#EEEEEE;><tr style=\'height:8px;\'></tr><tr><td style=\'width:100px;margin:10px;'
+          + 'background:#70BDBD;opacity:0.3;border:none;\'>'
+          + '</td><td >' + this.interactionAc  +  '</td></tr>';
+        const domain = colourAssignment.domain();
+        // ~ //console.log("Domain:"+domain);
+        const range = colourAssignment.range();
+        // ~ //console.log("Range:"+range);
+        table += '<tr style=\'height:10px;\'></tr>';
+
+        for (let i = 0; i < domain.length; i++) {
+          // make transparent version of colour
+          const temp = new RGBColor(range[i % 20]);
+          const trans = 'rgba(' + temp.r + ',' + temp.g + ',' + temp.b + ', 0.6)';
+          table += '<tr><td style=\'width:75px;margin:10px;background:'
+            + trans + ';border:1px solid '
+            + range[i % 20] + ';\'></td><td>'
+            + domain[i] + '</td></tr>';
+          // ~ //console.log(i + " "+ domain[i] + " " + range[i]);
+        }
+
+        table = table + '</table>';
+        coloursKeyDiv.innerHTML = table;
+      }
+    }.bind(this));
+
+    // By default the annotation selected is MI Features when the page is loaded the first time
+    if (this.annotationSelected === undefined) {
+      xlv.setAnnotations('MI features');
+    }
   }
 
   get interactionData(): any {
@@ -81,4 +118,11 @@ export class DetailsViewerComponent implements AfterViewInit {
     this._interactionData = value;
   }
 
+  get annotationSelected(): string {
+    return this._annotationSelected;
+  }
+
+  set annotationSelected(value: string) {
+    this._annotationSelected = value;
+  }
 }

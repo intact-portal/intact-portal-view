@@ -3,7 +3,7 @@ div#graphViewerContainer{
   /*!*position:absolute;*!*/
   /*!*bottom:0px;*!*/
   /*!*top:0px;*!*/
-  height: 500px;
+  height: 700px;
   background: #fbfbfb;
   position: relative;
   /*width: 150%;*/
@@ -40,7 +40,7 @@ div#graphViewerContainer{
 
 div#viewerLegend {
   /*background-color: #e6e6e6;*/
-  height: 500px;
+  height: 700px;
 }
 
 .callout-legend {
@@ -68,3 +68,12 @@ div#viewerLegend {
   border-radius: 5px;
 }
 
+div#colours {
+  height:250px;
+  min-height: auto;
+  margin-bottom: 20px;
+}
+
+div#colorWrapper {
+  overflow-y: visible;
+}

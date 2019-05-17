@@ -55,7 +55,7 @@ export class FeaturesDetailsComponent implements OnInit {
         {data: 'participantName', defaultContent: ' ', title: 'Select',
           render: function (data, type, full, meta) {
             if (type === 'display') {
-              return '<input type="checkbox" id="' + full.participant.identifier + '" name="check" value="' + data + '"/>';
+              return '<input type="checkbox" id="' + full.featureAc + '" name="check" value="' + data + '"/>';
             }
             return data;
           }

@@ -10,8 +10,8 @@ import { Title } from '@angular/platform-browser';
 export class DetailsDashboardComponent implements OnInit {
 
   private _interactionAc: string;
-  // @Input() featureSelected: string;
-  private _featureSelected: string;
+  @Input() featureSelected: string;
+  @Input() participantSelected: string;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) { }
@@ -32,15 +32,10 @@ export class DetailsDashboardComponent implements OnInit {
     this._interactionAc = value;
   }
 
-  get featureSelected(): string {
-    return this._featureSelected;
-  }
-
-  set featureSelected(value: string) {
-    this._featureSelected = value;
-  }
-
   public onFeatureSelectedChanged(featureAc: string): void {
     this.featureSelected = featureAc;
+  }
+  public onParticipantSelectedChanged(participantId: string): void {
+    this.participantSelected = participantId;
   }
 }

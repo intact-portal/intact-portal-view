@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ParticipantDetails} from '../../../../shared/model/interaction-details/participant-details.model';
 
 import * as $ from 'jquery';
@@ -17,9 +17,13 @@ export class ParticipantDetailsComponent implements OnInit {
   dataTable: any;
   columnView = 'participants_columnView';
 
+  @Output() participantChanged: EventEmitter<string> = new EventEmitter<string>();
+
   private _columnNames: string[] = ['Ac', 'Type', 'Identifier', 'Aliases', 'Description', 'Species', 'Expression System',
                                    'Detection Methods', 'Experimental Role', 'Biological Role', 'Experimental Preparations',
                                    'Parameters', 'Confidences', 'Cross References', 'Annotations'];
+
+  private _participantSelected: string;
 
   constructor() { }
 
@@ -50,6 +54,14 @@ export class ParticipantDetailsComponent implements OnInit {
         }
       },
       columns: [
+        {data: 'participantName', defaultContent: ' ', title: 'Select',
+          render: function (data, type, full, meta) {
+            if (type === 'display') {
+              return '<input type="checkbox" id="' + full.participantId.identifier + '" name="check" value="' + data + '"/>';
+            }
+            return data;
+          }
+        },
         {data: 'participantAc', title: 'Ac'},
         {data: 'type.shortName', title: 'Type', defaultContent: ''},
         {data: 'participantId.identifier', title: 'Identifier', defaultContent: ''},
@@ -142,6 +154,38 @@ export class ParticipantDetailsComponent implements OnInit {
         }
       ],
     });
+
+    $('#participantTable').on('change', 'input[type=\'checkbox\']', (e) => {
+
+      const participantSel = e.currentTarget.id;
+
+      if (this.participantSelected !== participantSel) {
+        $( '#' + this.participantSelected + ':checkbox').prop('checked', false);
+
+        // TODO: To find another way to do the highlighting
+        $(table.dataTableSettings).each(function () {
+          $(this.aoData).each( function () {
+            $(this.nTr).removeClass('rowSelected');
+          })
+        });
+
+        this.participantSelected = participantSel;
+        $(e.target.parentNode.parentNode).addClass('rowSelected');
+
+        this.participantChanged.emit(this.participantSelected);
+
+      } else {
+        // None is selected, remove class
+        this.participantSelected = undefined;
+        $(table.dataTableSettings).each(function () {
+          $(this.aoData).each( function () {
+            $(this.nTr).removeClass('rowSelected');
+          })
+        });
+
+        this.participantChanged.emit(this.participantSelected);
+      }
+    });
   }
 
 
@@ -156,5 +200,13 @@ export class ParticipantDetailsComponent implements OnInit {
   @Input()
   set participantDetails(value: ParticipantDetails) {
     this._participantDetails = value;
+  }
+
+  get participantSelected(): string {
+    return this._participantSelected;
+  }
+
+  set participantSelected(value: string) {
+    this._participantSelected = value;
   }
 }

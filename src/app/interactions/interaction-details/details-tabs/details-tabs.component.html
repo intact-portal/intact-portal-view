@@ -15,7 +15,8 @@
     <div class="tabs-panel" id="participants" style="background-color:#f4f4f4;">
       <iv-participant-details *ngIf="participantDetails"
                               [participantDetails]="participantDetails"
-                              [interactionAc]="interactionAc"></iv-participant-details>
+                              [interactionAc]="interactionAc"
+                              (participantChanged)="onParticipantSelectedChanged($event)"></iv-participant-details>
 
     </div>
 

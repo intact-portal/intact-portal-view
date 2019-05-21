@@ -89,31 +89,85 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
 
 /*************** PARTICIPANT DATATABLES ROW STYLE ********************/
 
-table#participantTable {
+table#participantTable.tableDisplay {
   width: 100% !important;
   table-layout: fixed;
 }
 
-table#participantTable tbody tr {
+table#participantTable.tableDisplay tr {
   font-size: 14px;
 }
 
-table#participantTable td {
-  width: auto !important;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  vertical-align: top;
-  /*padding: 10px 18px;*/
+table#participantTable.tableDisplay th,
+table#participantTable.tableDisplay td {
+  text-align: left;
+  padding: 8px 10px;
 }
 
-table#participantTable thead tr th {
-  text-align: left;
-  width: auto !important;
-  white-space: normal;
+table#participantTable.tableDisplay th {
+  overflow: auto;
+  word-break: break-word;
+}
+
+table#participantTable.tableDisplay td {
+  /*overflow: hidden;*/
+  vertical-align: top;
   text-overflow: ellipsis;
-  overflow: hidden;
-  padding: 8px 10px;
+  word-break: break-word;
   /*white-space: nowrap;*/
+}
+
+table#participantTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
+.participantTable-Selection {
+  width: 4% !important;
+}
+.participantTable-Ac {
+  width: 7% !important;
+}
+.participantTable-Type {
+  width: 4% !important;
+}
+.participantTable-Identifier {
+  width: 5% !important;
+}
+.participantTable-Alias {
+  width: 5% !important;
+}
+.participantTable-Description {
+  width: 10% !important;
+}
+.participantTable-Species {
+  width: 5% !important;
+}
+.participantTable-ExpSystem {
+  width: 8% !important;
+}
+.participantTable-DetMethod {
+  width: 10% !important;
+}
+.participantTable-ExpRole {
+  width: 8% !important;
+}
+.participantTable-BioRole {
+  width: 6% !important;
+}
+.participantTable-ExpPreparations {
+  width: 6% !important;
+}
+.participantTable-Parameters {
+  width: 6% !important;
+}
+.participantTable-Confidences {
+  width: 6% !important;
+}
+.participantTable-Xrefs {
+  width: 5% !important;
+}
+.participantTable-Annotations {
+  width: 5% !important;
 }
 
 /********* FEATURE DATATABLES ROW STYLE ********************/
@@ -151,49 +205,49 @@ table#featureTable.tableDisplay td:nth-child(1) {
 }
 
 /* Column widths are based on these cells */
-.row-Selection {
+.featureTable-Selection {
   width: 4% !important;
 }
-.row-Ac {
+.featureTable-Ac {
   width: 6% !important;
 }
-.row-Name {
+.featureTable-Name {
   width: 10% !important;
 }
-.row-Type {
+.featureTable-Type {
   width: 5% !important;
 }
-.row-Role {
+.featureTable-Role {
   width: 5% !important;
 }
-.row-Range {
+.featureTable-Range {
   width: 6% !important;
 }
-.row-LinkedFeatures {
+.featureTable-LinkedFeatures {
   width: 6% !important;
 }
-.row-PartName {
+.featureTable-PartName {
   width: 6% !important;
 }
-.row-PartId {
+.featureTable-PartId {
   width: 6% !important;
 }
-.row-PartAc {
+.featureTable-PartAc {
   width: 6% !important;
 }
-.row-DetMethod {
+.featureTable-DetMethod {
   width: 8% !important;
 }
-.row-Parameters {
+.featureTable-Parameters {
   width: 6% !important;
 }
-.row-Identifiers {
+.featureTable-Identifiers {
   width: 6% !important;
 }
-.row-Xrefs {
+.featureTable-Xrefs {
   width: 10% !important;
 }
-.row-Annotations {
+.featureTable-Annotations {
   width: 10% !important;
 }
 

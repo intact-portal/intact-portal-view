@@ -21,6 +21,7 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   @Input() interactionAc: string;
   @Input() featureAc: string;
+  @Input() participantId: string;
 
   private _interactionData: any;
   private SMALL_MOL = require('../../../../assets/images/detailsViewer/svgForKey/smallMol.svg');

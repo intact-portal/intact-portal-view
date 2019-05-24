@@ -11,7 +11,7 @@ export class DetailsDashboardComponent implements OnInit {
 
   private _interactionAc: string;
   @Input() featureSelected: string;
-  @Input() participantSelected: string;
+  @Input() participantsSelected: string[];
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) { }
@@ -35,7 +35,8 @@ export class DetailsDashboardComponent implements OnInit {
   public onFeatureSelectedChanged(featureAc: string): void {
     this.featureSelected = featureAc;
   }
-  public onParticipantSelectedChanged(participantId: string): void {
-    this.participantSelected = participantId;
+
+  public onParticipantSelectedChanged(participantsSelected: string[]): void {
+    this.participantsSelected = participantsSelected;
   }
 }

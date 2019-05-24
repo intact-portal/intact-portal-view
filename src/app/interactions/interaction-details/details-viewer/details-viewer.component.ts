@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 
@@ -17,17 +17,18 @@ let xlv: any;
   styleUrls: ['./details-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class DetailsViewerComponent implements AfterViewInit {
+export class DetailsViewerComponent implements AfterViewInit, OnChanges {
 
   @Input() interactionAc: string;
   @Input() featureAc: string;
-  @Input() participantId: string;
+  @Input() participantsId: string[];
 
   private _interactionData: any;
   private SMALL_MOL = require('../../../../assets/images/detailsViewer/svgForKey/smallMol.svg');
   private GENE = require('../../../../assets/images/detailsViewer/svgForKey/gene.svg');
   private DNA = require('../../../../assets/images/detailsViewer/svgForKey/DNA.svg');
   private RNA = require('../../../../assets/images/detailsViewer/svgForKey/RNA.svg');
+  private COMPLEX = require('../../../../assets/images/detailsViewer/svgForKey/RNA.svg');
   private PROTEIN_BLOB = require('../../../../assets/images/detailsViewer/svgForKey/proteinBlob.svg');
   private PROTEIN_BAR = require('../../../../assets/images/detailsViewer/svgForKey/proteinBar.svg');
 
@@ -37,6 +38,16 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.requestInteractionViewerDetails();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    const chng = changes['participantsId'];
+    const cur = JSON.stringify(chng.currentValue);
+
+    if (cur !== undefined) {
+      xlv.expandAndCollapseSelection(cur);
+    }
   }
 
   private requestInteractionViewerDetails() {

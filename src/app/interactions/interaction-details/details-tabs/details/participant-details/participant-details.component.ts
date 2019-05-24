@@ -17,13 +17,13 @@ export class ParticipantDetailsComponent implements OnInit {
   dataTable: any;
   columnView = 'participants_columnView';
 
-  @Output() participantChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output() participantChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   private _columnNames: string[] = ['Ac', 'Type', 'Identifier', 'Aliases', 'Description', 'Species', 'Expression System',
                                    'Detection Methods', 'Experimental Role', 'Biological Role', 'Experimental Preparations',
                                    'Parameters', 'Confidences', 'Cross References', 'Annotations'];
 
-  private _participantSelected: string;
+  private _participantsSelected = [];
 
   constructor() { }
 
@@ -159,32 +159,26 @@ export class ParticipantDetailsComponent implements OnInit {
 
       const participantSel = e.currentTarget.id;
 
-      if (this.participantSelected !== participantSel) {
-        $( '#' + this.participantSelected + ':checkbox').prop('checked', false);
+      if (this.participantsSelected !== undefined) {
 
-        // TODO: To find another way to do the highlighting
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each( function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
-
-        this.participantSelected = participantSel;
         $(e.target.parentNode.parentNode).addClass('rowSelected');
 
-        this.participantChanged.emit(this.participantSelected);
+        if (!this.participantsSelected.includes(participantSel)) {
+          this.participantsSelected.push(participantSel);
+          this.participantsSelected = this.participantsSelected.slice();
+        } else {
+          this.participantsSelected.splice(this.participantsSelected.indexOf(participantSel), 1);
+          this.participantsSelected = this.participantsSelected.slice();
 
-      } else {
-        // None is selected, remove class
-        this.participantSelected = undefined;
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each( function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
+          $( '#' + participantSel + ':checkbox').prop('checked', false);
+          $(e.target.parentNode.parentNode).removeClass('rowSelected');
+        }
 
-        this.participantChanged.emit(this.participantSelected);
+        console.info(this.participantsSelected);
+
+        this.participantChanged.emit(this.participantsSelected);
       }
+
     });
   }
 
@@ -202,11 +196,11 @@ export class ParticipantDetailsComponent implements OnInit {
     this._participantDetails = value;
   }
 
-  get participantSelected(): string {
-    return this._participantSelected;
+  get participantsSelected(): string[] {
+    return this._participantsSelected;
   }
 
-  set participantSelected(value: string) {
-    this._participantSelected = value;
+  set participantsSelected(value: string[]) {
+    this._participantsSelected = value;
   }
 }

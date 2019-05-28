@@ -14,5 +14,7 @@ export const environment = {
   intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30/pmid',
   intact_psimitab_url : INTACT_FTP_BASE_URL + '/current/psimitab/pmid',
   intact_dotm_url: EBI_BASE_URL + '/~intact/site/dotm/dotm-1.1.xml',
-  complex_portal_url: EBI_BASE_URL + '/complexportal'
+  complex_portal_url: EBI_BASE_URL + '/complexportal',
+  interactor_service_url: 'http://ves-hx-47:8081/intact/ws/interactor',
+  interaction_service_url: 'http://ves-hx-47:8082/intact/ws/interaction'
 };

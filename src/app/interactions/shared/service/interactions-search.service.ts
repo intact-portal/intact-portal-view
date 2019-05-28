@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {InteractionsSearchResult} from '../model/interactions-results/interaction/interactions-search.model';
+import {environment} from '../../../../environments/environment';
 
 @Injectable()
 export class InteractionsSearchService {
@@ -40,7 +41,7 @@ export class InteractionsSearchService {
 
     const options = query ? {params: params} : {};
 
-    return this.http.get('/interactionService/interaction/findInteractionWithFacet', options)
+    return this.http.get('/interactionService/findInteractionWithFacet', options)
       .catch(this.handleError);
   }
 

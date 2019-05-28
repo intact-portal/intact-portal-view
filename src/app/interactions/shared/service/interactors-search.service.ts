@@ -63,7 +63,7 @@ export class InteractorsSearchService {
 
     const options = query ? {params: params} : {};
 
-    return this.http.get('/interactorService/interactor/findInteractorWithFacet', options)
+    return this.http.get('/interactorService/findInteractorWithFacet', options)
       .catch(this.handleError);
   }
 

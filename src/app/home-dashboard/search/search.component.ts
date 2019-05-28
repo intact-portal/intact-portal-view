@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorId'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: '/interactorService/interactor/findInteractor/%QUERY',
+        url: '/interactorService/findInteractor/%QUERY',
         wildcard: '%QUERY',
         transform: function (data) {
           return data.content;
@@ -44,27 +44,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
     });
     interactorsData.initialize();
 
-    // const jsonInteractionsData = [
-    //   {
-    //     'author': 'pu et al. (2010)',
-    //     'publicationIds': ['20224576', 'IM-15679', 'MINT-7718689', '10.1038/embor.2010.18'],
-    //     'interactions': '6',
-    //     'interactionsIds': []
-    //   },
-    //   {
-    //     'author': 'pu et al. (2010)',
-    //     'publicationId': ['20224576', 'IM-15679', 'MINT-7718689', '10.1038/embor.2010.18'],
-    //     'interactions': '1',
-    //     'interactionsIds': ['EBI-7852615', 'IM-15679-1', 'MINT-7718752']
-    //   }
-    // ];
-
     const interactionsData = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('authors'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       // local: jsonInteractionsData
       remote: {
-        url: '/interactionService/interaction/findInteractions/%QUERY',
+        url: '/interactionService/findInteractions/%QUERY',
         wildcard: '%QUERY',
         transform: function (data) {
           return data.content;

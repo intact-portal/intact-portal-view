@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorId'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: '/interactorService/findInteractor/%QUERY',
+        url: '/interactorService/interactor/findInteractor/%QUERY',
         wildcard: '%QUERY',
         transform: function (data) {
           return data.content;
@@ -49,7 +49,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       // local: jsonInteractionsData
       remote: {
-        url: '/interactionService/findInteractions/%QUERY',
+        url: '/interactionService/interaction/findInteractions/%QUERY',
         wildcard: '%QUERY',
         transform: function (data) {
           return data.content;

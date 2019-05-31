@@ -9,7 +9,7 @@
     "logLevel": "debug"
   },
   "/interactorService": {
-    "target": "http://ves-hx-47:8081/intact/ws/interactor",
+    "target": "http://localhost:8081/intact/ws",
     "secure": false,
     "pathRewrite": {
       "^/interactorService" : ""
@@ -18,7 +18,7 @@
     "logLevel": "debug"
   },
   "/interactionService": {
-    "target": "http://ves-hx-47:8082/intact/ws/interaction",
+    "target": "http://localhost:8082/intact/ws",
     "secure": false,
     "pathRewrite": {
       "^/interactionService" : ""

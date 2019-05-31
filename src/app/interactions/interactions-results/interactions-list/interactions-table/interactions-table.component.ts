@@ -90,22 +90,49 @@ export class InteractionsTableComponent implements OnInit {
         }.bind(this)
       },
       columns: [
-        {data: 'participantName', defaultContent: ' ', title: 'Select'},
+        {data: 'interactionAc', defaultContent: ' ', title: 'Select',
+          render: function (data, type, full, meta) {
+            if (type === 'display') {
+              return '<input type="checkbox" id="' + full.interactionAc + '" name="check" value="' + data + '"/>';
+            }
+            return data;
+          }
+        },
         {data: 'moleculeA', defaultContent: ' ', title: 'Molecule A'},
         {data: 'moleculeB', defaultContent: ' ', title: 'Molecule B'},
         {data: 'speciesA', defaultContent: ' ', title: 'Species A'},
         {data: 'speciesB', defaultContent: ' ', title: 'Species B'},
-        {data: 'interactionDetectionMethod', defaultContent: ' ', title: 'Interaction Detection Method'},
-        {data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifier'},
+        {data: 'interactionDetectionMethod', defaultContent: ' ', title: 'Detection Method'},
+        {data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifiers',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                  '<span class="detailsCell">' + d + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        },
         {data: 'interactionType', defaultContent: ' ', title: 'Interaction Type'},
         {data: 'interactionAc', defaultContent: ' ', title: 'Interaction Ac'},
         {data: 'sourceDatabase', defaultContent: ' ', title: 'Database'},
-        {data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value'},
+        {data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                  '<span class="detailsCell">' + d + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        },
         {data: 'expansionMethod', defaultContent: ' ', title: 'Expansion Method'},
         {data: 'experimentalRoleA', defaultContent: ' ', title: 'Experimental Role A'},
         {data: 'experimentalRoleB', defaultContent: ' ', title: 'Experimental Role B'},
-        {data: 'interactorAAc', defaultContent: ' ', title: 'Interactor Type A'},
-        {data: 'interactorBAc', defaultContent: ' ', title: 'Interactor Type B'}
+        {data: 'typeA', defaultContent: ' ', title: 'Interactor Type A'},
+        {data: 'typeB', defaultContent: ' ', title: 'Interactor Type B'}
       ]
     });
 

@@ -110,8 +110,6 @@ export class InteractionsResultsComponent implements OnInit {
     this.speciesNameFilter = filter;
     this.interactorsSelected = [];
     this.updateURLParams();
-    // $(document).trigger('enhance.tablesaw');
-    // console.log('ENHANCING TABLE **************');
   }
 
   public onInteractorTypeFilterChanged(filter: string[]): void {
@@ -181,16 +179,7 @@ export class InteractionsResultsComponent implements OnInit {
     this.updateURLParams();
   }
 
-  public refreshResultsTable(): void {
-    console.log('--------------------------------------------');
-    console.log('I AM CALLED TO REFRESH THE TABLE');
-    console.log('--------------------------------------------');
-
-    $(document).trigger('enhance.tablesaw');
-  }
-
   /** END OF EVENT EMITTERS **/
-
 
   private updateURLParams(): void {
     const params: NavigationExtras = {};

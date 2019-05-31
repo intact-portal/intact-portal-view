@@ -41,7 +41,7 @@ export class InteractionsSearchService {
 
     const options = query ? {params: params} : {};
 
-    return this.http.get('/interactionService/findInteractionWithFacet', options)
+    return this.http.get('/interactionService/interaction/findInteractionWithFacet', options)
       .catch(this.handleError);
   }
 

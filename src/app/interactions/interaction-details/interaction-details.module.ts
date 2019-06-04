@@ -21,6 +21,9 @@ import { ColumnToggleComponent } from './details-tabs/details/column-toggle/colu
     CommonModule,
     InteractionDetailsRoutingModule
   ],
+  exports: [
+    ColumnToggleComponent
+  ],
   declarations: [
     DetailsDashboardComponent,
     DetailsViewerComponent,

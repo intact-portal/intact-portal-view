@@ -251,6 +251,40 @@ table#featureTable.tableDisplay td:nth-child(1) {
   width: 10% !important;
 }
 
+/*************** SEARCH RESULT DATATABLES ROW STYLE ********************/
+
+table#interactionsTable.tableDisplay {
+  width: 100% !important;
+  table-layout: fixed;
+}
+
+table#interactionsTable.tableDisplay tr {
+  font-size: 14px;
+}
+
+table#interactionsTable.tableDisplay th,
+table#interactionsTable.tableDisplay td {
+  text-align: left;
+  padding: 8px 10px;
+}
+
+table#interactionsTable.tableDisplay th {
+  overflow: auto;
+  word-break: break-word;
+}
+
+table#interactionsTable.tableDisplay td {
+  /*overflow: hidden;*/
+  vertical-align: top;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  /*white-space: nowrap;*/
+}
+
+table#interactionsTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
 /********* DATATABLES ROWs COMMON STYLE ********************/
 
 .detailsCell {

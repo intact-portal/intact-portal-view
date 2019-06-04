@@ -1,18 +1,16 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionsSearchResult} from '../../../shared/model/interactions-results/interaction/interactions-search.model';
-import {InteractionsSearchService} from '../../../shared/service/interactions-search.service';
 import {ActivatedRoute} from '@angular/router';
-// declare const $: any;
+
 import * as $ from 'jquery';
 import 'datatables.net';
-import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'iv-interactions-table',
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-export class InteractionsTableComponent implements OnInit, AfterViewInit {
+export class InteractionsTableComponent implements OnInit {
 
   private _interactionsSearch: InteractionsSearchResult;
 
@@ -29,12 +27,16 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
   private _miScoreMax: any;
 
   dataTable: any;
+  columnView = 'interactions_columnView';
+
+  private _columnNames: string[] = ['Molecule A', 'Molecule B', 'Species A', 'Species B', 'Detection Method', 'Publication Id',
+                                    'Interaction Type', 'Interaction Ac', 'Database', 'Confidence Value', 'Expansion Method',
+                                    'Experimental Role A', 'Experimental Role B', 'Interactor Type A', 'Interactor Type B'];
 
   constructor( private route: ActivatedRoute ) {
   }
 
   ngOnInit() {
-    console.log('Interaction type filter here', this.interactionTypeFilter);
 
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
@@ -48,8 +50,6 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
 
-        console.log('Params here: ', params);
-
         if (this.dataTable !== undefined) {
           const table: any = $('#interactionsTable');
           this.dataTable = table.DataTable().ajax.reload();
@@ -58,10 +58,6 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
       });
 
     this.initDataTable();
-  }
-
-  ngAfterViewInit(): void {
-    console.log('After view is called ', this.interactionTypeFilter);
   }
 
   private initDataTable(): void {
@@ -242,5 +238,13 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
 
   set miScoreMax(value: any) {
     this._miScoreMax = value;
+  }
+
+  get columnNames(): string[] {
+    return this._columnNames;
+  }
+
+  set columnNames(value: string[]) {
+    this._columnNames = value;
   }
 }

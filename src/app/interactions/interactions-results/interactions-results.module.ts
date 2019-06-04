@@ -8,11 +8,13 @@ import { InteractionsViewerComponent } from './interactions-viewer/interactions-
 import { InteractorsTableComponent } from './interactions-list/interactors-table/interactors-table.component';
 import { InteractionsTableComponent } from './interactions-list/interactions-table/interactions-table.component';
 import { InteractionsPagerComponent } from './interactions-list/interactions-pager/interactions-pager.component';
+import {InteractionDetailsModule} from '../interaction-details/interaction-details.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    InteractionsRoutingModule
+    InteractionsRoutingModule,
+    InteractionDetailsModule
   ],
   declarations: [
     InteractionsFiltersComponent,

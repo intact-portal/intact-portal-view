@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionsSearchResult} from '../../../shared/model/interactions-results/interaction/interactions-search.model';
 import {InteractionsSearchService} from '../../../shared/service/interactions-search.service';
 import {ActivatedRoute} from '@angular/router';
@@ -12,7 +12,7 @@ import {HttpParams} from '@angular/common/http';
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-export class InteractionsTableComponent implements OnInit {
+export class InteractionsTableComponent implements OnInit, AfterViewInit {
 
   private _interactionsSearch: InteractionsSearchResult;
 
@@ -30,8 +30,7 @@ export class InteractionsTableComponent implements OnInit {
 
   dataTable: any;
 
-  constructor( public interactionsSearchService: InteractionsSearchService,
-               private route: ActivatedRoute) {
+  constructor( private route: ActivatedRoute ) {
   }
 
   ngOnInit() {
@@ -52,7 +51,7 @@ export class InteractionsTableComponent implements OnInit {
         console.log('Params here: ', params);
 
         if (this.dataTable !== undefined) {
-          const table: any = $('#interactionsTable2');
+          const table: any = $('#interactionsTable');
           this.dataTable = table.DataTable().ajax.reload();
         }
 
@@ -61,8 +60,12 @@ export class InteractionsTableComponent implements OnInit {
     this.initDataTable();
   }
 
+  ngAfterViewInit(): void {
+    console.log('After view is called ', this.interactionTypeFilter);
+  }
+
   private initDataTable(): void {
-    const table: any = $('#interactionsTable2');
+    const table: any = $('#interactionsTable');
     this.dataTable = table.DataTable({
       bSort: false,
       searching: false,
@@ -93,7 +96,14 @@ export class InteractionsTableComponent implements OnInit {
         {data: 'interactionAc', defaultContent: ' ', title: 'Select',
           render: function (data, type, full, meta) {
             if (type === 'display') {
-              return '<input type="checkbox" id="' + full.interactionAc + '" name="check" value="' + data + '"/>';
+              return '<div>' +
+                '<input type="checkbox" id="' + full.interactionAc + '" name="check" value="' + data + '"/>' +
+                ' <span class="margin-left-medium">' +
+                '   <a href="/details/interaction/' + full.interactionAc + '">' +
+                '     <i class="icon icon-common icon-search-document"></i>' +
+                '   </a>' +
+                ' </span>' +
+                '</div>';
             }
             return data;
           }
@@ -122,7 +132,7 @@ export class InteractionsTableComponent implements OnInit {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div>' +
-                  '<span class="detailsCell">' + d + '</span>' +
+                  '<span class="detailsConfidencesCell">' + d + '</span>' +
                   '</div>';
               }).join('');
             }

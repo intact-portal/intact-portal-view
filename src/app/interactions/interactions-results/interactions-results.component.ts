@@ -33,7 +33,8 @@ export class InteractionsResultsComponent implements OnInit {
   private _interactionsSearch: InteractionsSearchResult;
 
   // Interactors selected checkboxes list from the results-list
-  private _interactorsSelected: string[];
+  @Input() interactorsSelected: string[];
+  @Input() interactionSelected: string;
 
   // private _termsSearch: any;
 
@@ -167,9 +168,15 @@ export class InteractionsResultsComponent implements OnInit {
     this.updateURLParams();
   }
 
+  /** EVENT EMITTERS **/
+
   public onInteractorsSelectedChanged(interactors: string[]): void {
       this.interactorsSelected = interactors;
       this.updateURLParams();
+  }
+  public onInteractionsSelectedChanged(interaction: string): void {
+    this.interactionSelected = interaction;
+    this.updateURLParams();
   }
 
   public onPageChanged(pageIndex: number): void {
@@ -317,14 +324,4 @@ export class InteractionsResultsComponent implements OnInit {
     this._interactionsSearch = value;
   }
 
-// From interactors results list checkboxes
-
-  get interactorsSelected(): string[] {
-    return this._interactorsSelected;
-  }
-
-  @Input()
-  set interactorsSelected(value: string[]) {
-    this._interactorsSelected = value;
-  }
 }

@@ -16,6 +16,7 @@ let xlv: any;
 export class InteractionsViewerComponent implements AfterViewInit {
 
   @Input() interactorsSelected: string[];
+  @Input() interactionSelected: string;
 
   private _interactionsJSON: any;
 

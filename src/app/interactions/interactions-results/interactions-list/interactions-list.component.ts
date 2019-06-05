@@ -13,9 +13,9 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   @Input() interactorsSearch: InteractorsSearchResult;
   @Input() interactionsSearch: InteractionsSearchResult;
-  private _interactorsSelected: string[];
 
   @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
   private _isTabAActive: boolean = false;
@@ -38,8 +38,11 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   /** EVENT EMITTERS **/
 
   public onInteractorsSelectedChanged(interactors: string[]): void {
-    this.interactorsSelected = interactors;
     this.interactorsChanged.emit(interactors);
+  }
+
+  public onInteractionsSelectedChanged(interaction: string): void {
+    this.interactionChanged.emit(interaction);
   }
 
   public onPageChanged(pageIndex: number): void {
@@ -69,15 +72,6 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   }
 
   /** GETTERS AND SETTERS **/
-
-  get interactorsSelected(): string[] {
-    return this._interactorsSelected;
-  }
-
-  @Input()
-  set interactorsSelected(value: string[]) {
-    this._interactorsSelected = value;
-  }
 
   get isTabAActive(): boolean {
     return this._isTabAActive;

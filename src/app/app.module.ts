@@ -15,12 +15,16 @@ import { InteractorsSearchService } from './interactions/shared/service/interact
 import { InteractionsSearchService } from './interactions/shared/service/interactions-search.service';
 import { InteractionDetailsModule } from './interactions/interaction-details/interaction-details.module';
 import {InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
+import { AboutComponent } from './about/about.component';
+import { DownloadComponent } from './download/download.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContributorsComponent
+    ContributorsComponent,
+    AboutComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,

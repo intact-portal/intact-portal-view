@@ -14,7 +14,7 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
 
   private _interactorsSearch: InteractorsSearchResult;
   private _interactionsSearch: InteractionsSearchResult;
-  private _interactorsSelected: string[];
+  private _interactorsSelected: string[]=[];
 
   private _interactionCount: number;
 
@@ -81,7 +81,6 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
     return this._interactorsSelected;
   }
 
-  @Input()
   set interactorsSelected(value: string[]) {
     this._interactorsSelected = value;
   }

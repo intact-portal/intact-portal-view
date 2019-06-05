@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionsSearchResult} from '../../../shared/model/interactions-results/interaction/interactions-search.model';
 import {ActivatedRoute} from '@angular/router';
 
@@ -14,6 +14,7 @@ export class InteractionsTableComponent implements OnInit {
 
   private _interactionsSearch: InteractionsSearchResult;
 
+  @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
   private _term: string;
@@ -32,6 +33,7 @@ export class InteractionsTableComponent implements OnInit {
   private _columnNames: string[] = ['Molecule A', 'Molecule B', 'Species A', 'Species B', 'Detection Method', 'Publication Id',
                                     'Interaction Type', 'Interaction Ac', 'Database', 'Confidence Value', 'Expansion Method',
                                     'Experimental Role A', 'Experimental Role B', 'Interactor Type A', 'Interactor Type B'];
+  private _interactionSelected: string;
 
   constructor( private route: ActivatedRoute ) {
   }
@@ -142,6 +144,38 @@ export class InteractionsTableComponent implements OnInit {
       ]
     });
 
+    $('#interactionsTable').on('change', 'input[type=\'checkbox\']', (e) => {
+
+      const interactionSel = e.currentTarget.id;
+
+      if (this.interactionSelected !== interactionSel) {
+        $( '#' + this.interactionSelected + ':checkbox').prop('checked', false);
+
+        // TODO: To find another way to do the highlighting
+        $(table.dataTableSettings).each(function () {
+          $(this.aoData).each( function () {
+            $(this.nTr).removeClass('rowSelected');
+          })
+        });
+
+        this.interactionSelected = interactionSel;
+        $(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
+
+        this.interactionChanged.emit(this.interactionSelected);
+
+      } else {
+        // None is selected, remove class
+        this.interactionSelected = undefined;
+        $(table.dataTableSettings).each(function () {
+          $(this.aoData).each( function () {
+            $(this.nTr).removeClass('rowSelected');
+          })
+        });
+
+        this.interactionChanged.emit(this.interactionSelected);
+      }
+    });
+
 
   }
     // openDetailsPage(interaction: Interaction) {
@@ -246,5 +280,13 @@ export class InteractionsTableComponent implements OnInit {
 
   set columnNames(value: string[]) {
     this._columnNames = value;
+  }
+
+  get interactionSelected(): string {
+    return this._interactionSelected;
+  }
+
+  set interactionSelected(value: string) {
+    this._interactionSelected = value;
   }
 }

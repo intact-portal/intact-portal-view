@@ -14,7 +14,8 @@ import { SearchService } from './home-dashboard/search/service/search.service';
 import { InteractorsSearchService } from './interactions/shared/service/interactors-search.service';
 import { InteractionsSearchService } from './interactions/shared/service/interactions-search.service';
 import { InteractionDetailsModule } from './interactions/interaction-details/interaction-details.module';
-import {InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
+import { InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
+import { NetworkSearchService } from './interactions/shared/service/network-search.service';
 import { AboutComponent } from './about/about.component';
 import { DownloadComponent } from './download/download.component';
 
@@ -35,7 +36,7 @@ import { DownloadComponent } from './download/download.component';
     InteractionDetailsModule,
     AppRoutingModule
   ],
-  providers: [FeatureDatasetService, SearchService, InteractorsSearchService, InteractionsSearchService, InteractionsDetailsService],
+  providers: [FeatureDatasetService, SearchService, InteractorsSearchService, InteractionsSearchService, InteractionsDetailsService, NetworkSearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

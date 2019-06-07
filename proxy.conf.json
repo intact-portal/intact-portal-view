@@ -27,10 +27,19 @@
     "logLevel": "debug"
   },
   "/detailsService": {
-    "target": "http://localhost:8100/graph",
+    "target": "http://ves-hx-47:8083/intact/ws",
     "secure": false,
     "pathRewrite": {
       "^/detailsService" : ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/networkService": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/networkService" : ""
     },
     "changeOrigin": true,
     "logLevel": "debug"

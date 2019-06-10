@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, Input, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SimpleChanges} from "../../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks";
+import {OnChanges} from "../../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks";
 
 declare const require: any;
 declare const $: any;
@@ -14,7 +16,7 @@ let ig: any;
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class InteractionsViewerComponent implements AfterViewInit {
+export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
 
   private _term: string;
   private _speciesNameFilter: string[];
@@ -49,7 +51,7 @@ export class InteractionsViewerComponent implements AfterViewInit {
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
         this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
-        // this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
+        //this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
 
         this.requestIntactNetworkDetails();
       });
@@ -73,6 +75,16 @@ export class InteractionsViewerComponent implements AfterViewInit {
     // );
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+
+    const chng = changes['interactionSelected'];
+    const cur = JSON.stringify(chng.currentValue);
+
+    if (cur !== undefined) {
+      IntactGraph.filterAndHighlight(cur, "interactions") ;
+    }
+  }
+
   private requestIntactNetworkDetails() {
     this.networkSearchService.getInteractionNetwork(
       this.term,
@@ -85,8 +97,9 @@ export class InteractionsViewerComponent implements AfterViewInit {
     ).subscribe(data => {
       this.interactionsJSON = data;
       console.log('Data loaded');
-      ig = new IntactGraph();
-      ig.loadJsonAndProcess(this.interactionsJSON, true);
+      //ig = new IntactGraph();
+      IntactGraph.loadJsonAndProcess(this.interactionsJSON, true);
+
 
     })
   }

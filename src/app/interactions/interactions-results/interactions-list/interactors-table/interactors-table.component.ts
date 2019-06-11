@@ -27,6 +27,10 @@ export class InteractorsTableComponent implements OnInit {
 
   dataTable: any;
 
+  columnView = 'interactors_columnView';
+
+  columnNames: string[] = ['Names', 'Description', 'Accession', 'Type', 'Species', 'Interactions', 'Interactions in total'];
+
   constructor(private route: ActivatedRoute) {
   }
 

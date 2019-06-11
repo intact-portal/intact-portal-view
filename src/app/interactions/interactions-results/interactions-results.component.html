@@ -35,14 +35,11 @@
   <div class="columns medium-10">
     <div class="inner-div">
 
-      <iv-interactions-viewer [interactorsSelected]="interactorsSelected"
+      <iv-interactions-viewer [interactorSelected]="interactorSelected"
                               [interactionSelected]="interactionSelected"></iv-interactions-viewer>
 
-      <iv-interactions-list *ngIf="interactorsSelected"
-                            [interactorsSearch]="interactorsSearch"
-                            [interactionsSearch]="interactionsSearch"
-                            (interactionChanged)="onInteractionsSelectedChanged($event)"
-                            (interactorsChanged)="onInteractorsSelectedChanged($event)"
+      <iv-interactions-list (interactionChanged)="onInteractionsSelectedChanged($event)"
+                            (interactorChanged)="onInteractorSelectedChanged($event)"
                             (pageChanged)="onPageChanged($event)"></iv-interactions-list>
     </div>
   </div>

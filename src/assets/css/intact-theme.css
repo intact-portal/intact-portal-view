@@ -253,6 +253,8 @@ table#featureTable.tableDisplay td:nth-child(1) {
 
 /*************** SEARCH RESULT DATATABLES ROW STYLE ********************/
 
+/********* Interactions table style ********************/
+
 table#interactionsTable.tableDisplay {
   width: 100% !important;
   table-layout: fixed;
@@ -283,6 +285,40 @@ table#interactionsTable.tableDisplay td {
 
 table#interactionsTable.tableDisplay td:nth-child(1) {
   text-align: center !important;
+}
+
+/********* Interactors table style ********************/
+
+table#interactorsTable.tableDisplay {
+  width: 100% !important;
+  table-layout: fixed;
+}
+
+table#interactorsTable.tableDisplay tr {
+  font-size: 14px;
+}
+
+table#interactorsTable.tableDisplay th,
+table#interactorsTable.tableDisplay td {
+  text-align: left;
+  padding: 8px 10px;
+}
+
+table#interactorsTable.tableDisplay th {
+  overflow: auto;
+  word-break: break-word;
+}
+
+table#interactorsTable.tableDisplay td {
+  /*overflow: hidden;*/
+  vertical-align: top;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  /*white-space: nowrap;*/
+}
+
+table#interactorsTable.tableDisplay td:nth-child(1) {
+  text-align: left !important;
 }
 
 /********* DATATABLES ROWs COMMON STYLE ********************/

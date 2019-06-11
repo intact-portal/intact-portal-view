@@ -1,6 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {InteractorsSearchResult} from '../../shared/model/interactions-results/interactor/interactors-search.model';
-import {InteractionsSearchResult} from '../../shared/model/interactions-results/interaction/interactions-search.model';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 declare const $: any;
 
@@ -11,10 +9,7 @@ declare const $: any;
 })
 export class InteractionsListComponent implements OnInit, AfterViewInit {
 
-  @Input() interactorsSearch: InteractorsSearchResult;
-  @Input() interactionsSearch: InteractionsSearchResult;
-
-  @Output() interactorsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
@@ -37,8 +32,8 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   /** EVENT EMITTERS **/
 
-  public onInteractorsSelectedChanged(interactors: string[]): void {
-    this.interactorsChanged.emit(interactors);
+  public onInteractorSelectedChanged(interactor: string): void {
+    this.interactorChanged.emit(interactor);
   }
 
   public onInteractionsSelectedChanged(interaction: string): void {

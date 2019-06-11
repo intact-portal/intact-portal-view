@@ -1,5 +1,4 @@
-<div class="">
-
+<div>
   <iv-column-toggle [columnNames]="columnNames"
                     [dataTable]="dataTable"
                     [columnView]="columnView"></iv-column-toggle>
@@ -30,55 +29,3 @@
 
   </table>
 </div>
-
-<!--  <div *ngIf="interactionsSearch">-->
-<!--    <div>Interactions search result total: {{interactionsSearch.totalElements}}</div>-->
-<!--  </div>-->
-
-<!--  <div class="tablesaw-overflow">-->
-<!--    <table id="interactionsTable2" class="tablesaw tablesaw-columntoggle" data-tablesaw-mode="columntoggle" data-tablesaw-minimap>-->
-<!--      <thead>-->
-<!--        <tr>-->
-<!--          <th></th>-->
-<!--          <th data-tablesaw-priority="persist">Molecule A</th>-->
-<!--          <th data-tablesaw-priority="1">Molecule B</th>-->
-<!--          <th data-tablesaw-priority="1" >Species A</th>-->
-<!--          <th data-tablesaw-priority="1" >Species B</th>-->
-<!--          <th data-tablesaw-priority="1" >Interaction Detection Method</th>-->
-<!--          <th data-tablesaw-priority="2" >Publication Identifier</th>-->
-<!--          <th data-tablesaw-priority="3" >Interaction Type</th>-->
-<!--          <th data-tablesaw-priority="3" >Interaction AC</th>-->
-<!--          <th data-tablesaw-priority="3">Database</th>-->
-<!--          <th data-tablesaw-priority="4" >Confidence Value</th>-->
-<!--          <th data-tablesaw-priority="4" >Expansion Method</th>-->
-<!--          <th data-tablesaw-priority="5" >Experimental Role A</th>-->
-<!--          <th data-tablesaw-priority="5" >Experimental Role B</th>-->
-<!--          <th data-tablesaw-priority="6" >Interactor Type A</th>-->
-<!--          <th data-tablesaw-priority="6" >Interactor Type B</th>-->
-<!--        </tr>-->
-<!--      </thead>-->
-
-<!--      <tbody *ngIf="interactionsSearch">-->
-<!--        <tr *ngFor="let interaction of interactionsSearch.content">-->
-<!--          <td><a [routerLink]="['/details/interaction', interaction.interactionAc]"><i class="icon icon-common icon-search-document"></i></a></td>-->
-<!--          <td>{{interaction.moleculeA}}</td>-->
-<!--          <td>{{interaction.moleculeB}}</td>-->
-<!--          <td>{{interaction.speciesA}}</td>-->
-<!--          <td>{{interaction.speciesB}}</td>-->
-<!--          <td>{{interaction.interactionDetectionMethod}}</td>-->
-<!--          <td>{{interaction.publicationIdentifiers}}</td>-->
-<!--          <td>{{interaction.interactionType}}</td>-->
-<!--          <td>{{interaction.interactionAc}}</td>-->
-<!--          <td>{{interaction.sourceDatabase}}</td>-->
-<!--          <td>{{interaction.confidenceValues}}</td>-->
-<!--          <td>{{interaction.expansionMethod}}</td>-->
-<!--          <td>{{interaction.experimentalRoleA}}</td>-->
-<!--          <td>{{interaction.experimentalRoleB}}</td>-->
-<!--          <td>{{interaction.typeA}}</td>-->
-<!--          <td>{{interaction.typeB}}</td>-->
-<!--        </tr>-->
-<!--      </tbody>-->
-
-<!--<iv-interactions-pager [page]="interactionsSearchService.page"-->
-<!--                       [totalPages]="interactionsSearchService.totalPages"-->
-<!--                       (changePage)="onPageChanged($event)"> pager </iv-interactions-pager>-->

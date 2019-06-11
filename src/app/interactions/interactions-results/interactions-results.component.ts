@@ -8,8 +8,6 @@ import { InteractorsSearchService } from '../shared/service/interactors-search.s
 import {InteractionsSearchResult} from '../shared/model/interactions-results/interaction/interactions-search.model';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 
-declare const $: any;
-
 @Component({
   selector: 'iv-interactions-results',
   templateUrl: './interactions-results.component.html',
@@ -33,7 +31,7 @@ export class InteractionsResultsComponent implements OnInit {
   private _interactionsSearch: InteractionsSearchResult;
 
   // Interactors selected checkboxes list from the results-list
-  @Input() interactorsSelected: string[];
+  @Input() interactorSelected: string;
   @Input() interactionSelected: string;
 
   // private _termsSearch: any;
@@ -59,7 +57,8 @@ export class InteractionsResultsComponent implements OnInit {
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
-        this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
+        this.interactorSelected = params.interactorSelected ? params.interactorSelected.split('+') : undefined;
+        this.interactionSelected = params.interactionSelected ? params.interactionSelected.split('+') : undefined;
         this.currentPageIndex = params.page ? Number(params.page) : 1;
 
         this.requestInteractorsResults();
@@ -109,49 +108,57 @@ export class InteractionsResultsComponent implements OnInit {
 
   public onSpeciesNameFilterChanged(filter: string[]): void {
     this.speciesNameFilter = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
   public onInteractorTypeFilterChanged(filter: string[]): void {
     this.interactorTypeFilter = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
   public onInteractionTypeFilterChanged(filter: string[]): void {
     this.interactionTypeFilter = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
   public onDetectionMethodFilterChanged(filter: string[]): void {
     this.detectionMethodFilter = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
   public onHostOrganismFilterChanged(filter: string[]): void {
     this.hostOrganismFilter = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
   public onInteractionNegativeFilterChanged(filter: boolean): void {
     this.negativeFilter = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
   public onInteractionMiScoreMinFilterChanged(filter: any): void {
     this.miScoreMin = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
   public onInteractionMiScoreMaxFilterChanged(filter: any): void {
     this.miScoreMax = filter;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
@@ -164,14 +171,13 @@ export class InteractionsResultsComponent implements OnInit {
     this.negativeFilter = false;
     this.miScoreMin = 0;
     this.miScoreMax = 1;
-    this.interactorsSelected = [];
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
-  /** EVENT EMITTERS **/
-
-  public onInteractorsSelectedChanged(interactors: string[]): void {
-      this.interactorsSelected = interactors;
+  public onInteractorSelectedChanged(interactor: string): void {
+      this.interactorSelected = interactor;
       this.updateURLParams();
   }
   public onInteractionsSelectedChanged(interaction: string): void {

@@ -1,13 +1,10 @@
-import {AfterViewInit, Component, Input, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewEncapsulation, SimpleChanges, OnChanges} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SimpleChanges} from "../../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks";
-import {OnChanges} from "../../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks";
 
 declare const require: any;
 declare const $: any;
 const IntactGraph = require('expose-loader?IntactGraph!intact_network');
-let ig: any;
 
 
 @Component({
@@ -38,6 +35,8 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
               private networkSearchService: NetworkSearchService) { }
 
   ngAfterViewInit() {
+    $('iv-interactions-viewer').foundation();
+
     this.route.queryParams
       .filter(params => params.query)
       .subscribe(params => {
@@ -51,7 +50,7 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
         this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
-        //this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
+        // this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
 
         this.requestIntactNetworkDetails();
       });
@@ -81,8 +80,15 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
     const cur = JSON.stringify(chng.currentValue);
 
     if (cur !== undefined) {
-      IntactGraph.filterAndHighlight(cur, "interactions") ;
+      IntactGraph.filterAndHighlight(cur, 'interactions') ;
     }
+    else {
+      IntactGraph.filterAndHighlight([], 'interactions') ;
+    }
+  }
+
+  findInteractor() {
+    IntactGraph.findInteractor()
   }
 
   private requestIntactNetworkDetails() {
@@ -97,9 +103,7 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
     ).subscribe(data => {
       this.interactionsJSON = data;
       console.log('Data loaded');
-      //ig = new IntactGraph();
       IntactGraph.loadJsonAndProcess(this.interactionsJSON, true);
-
 
     })
   }

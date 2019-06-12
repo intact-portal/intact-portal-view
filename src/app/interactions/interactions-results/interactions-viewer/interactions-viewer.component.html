@@ -6,15 +6,13 @@
 </div>
 <div>
   <div>
+    <div id='suggestions_div'>
+      <label for='nodeL'>Interactor Name</label>
+      <input type='text' id='nodeL'>
+      <a class="button" (click)='findInteractor()'><i class="icon icon-common icon-search" ></i> Find Interactor</a>
+    </div>
     <div id="graphViewerContainer">
-      <div id="for-canvas-graph">
-        <div id='suggestions_div'>
-          <input type='text' id='nodeL' class='autocomplete'>
-          <label for='nodeL'>Interactor Name</label>
-        </div>
-
-        <button type='button' onclick='IntactGraph.findInteractor()'>Find Interactor</button>
-      </div>
+      <div id="for-canvas-graph"></div>
     </div>
   </div>
 </div>

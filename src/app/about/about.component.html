@@ -1,3 +1,55 @@
-<p>
-  about works!
-</p>
+<div class="margin-top-large margin-bottom-large row">
+
+  <ul class="tabs" data-tabs id="about-tabs">
+    <li class="tabs-title is-active"><a href="#overview" aria-selected="true">Overview</a></li>
+    <li class="tabs-title"><a href="#collaborators">Collaborators</a></li>
+    <li class="tabs-title"><a href="#funding">Funding</a></li>
+    <li class="tabs-title"><a href="#statistics">Statistics</a></li>
+    <li class="tabs-title"><a href="#publications">Publications</a></li>
+    <li class="tabs-title"><a href="#license_privacy">License and Privacy</a></li>
+    <li class="tabs-title"><a href="#conceptual_design">Logo and Design Portfolio</a></li>
+    <li class="tabs-title"><a href="#sab">SAB</a></li>
+    <li class="tabs-title"><a href="#cite_us">Cite Us</a></li>
+  </ul>
+
+  <div class="tabs-content" data-tabs-content="about-tabs">
+    <div class="tabs-panel is-active" id="overview">
+      <markdown [src]=overview></markdown>
+    </div>
+
+    <div class="tabs-panel" id="collaborators">
+      <markdown [src]=collaborators></markdown>
+    </div>
+
+    <div class="tabs-panel" id="funding">
+      <markdown [src]=funding></markdown>
+    </div>
+
+    <div class="tabs-panel" id="statistics">
+      <h1>Statistics</h1>
+      <p>Work in progress</p>
+    </div>
+
+    <div class="tabs-panel" id="publications">
+      <markdown [src]=publications></markdown>
+    </div>
+
+    <div class="tabs-panel" id="license_privacy">
+      <markdown [src]=license_privacy></markdown>
+    </div>
+
+    <div class="tabs-panel" id="conceptual_design">
+      <markdown [src]=conceptual_design></markdown>
+    </div>
+
+    <div class="tabs-panel" id="sab">
+      <markdown [src]=sab></markdown>
+    </div>
+
+    <div class="tabs-panel" id="cite_us">
+      <markdown [src]=cite_us></markdown>
+    </div>
+
+  </div>
+
+</div>

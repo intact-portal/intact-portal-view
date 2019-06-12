@@ -6,6 +6,7 @@
 // Environment for production
 const EBI_BASE_URL = 'https://www.ebi.ac.uk';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
+const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
 
 export const environment = {
   production: false,
@@ -16,5 +17,6 @@ export const environment = {
   intact_dotm_url: EBI_BASE_URL + '/~intact/site/dotm/dotm-1.1.xml',
   complex_portal_url: EBI_BASE_URL + '/complexportal',
   interactor_service_url: 'http://ves-hx-47:8081/intact/ws/interactor',
-  interaction_service_url: 'http://ves-hx-47:8082/intact/ws/interaction'
+  interaction_service_url: 'http://ves-hx-47:8082/intact/ws/interaction',
+  intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };

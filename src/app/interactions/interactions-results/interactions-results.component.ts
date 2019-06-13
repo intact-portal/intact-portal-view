@@ -187,8 +187,8 @@ export class InteractionsResultsComponent implements OnInit {
 
   public onPageChanged(pageIndex: number): void {
     this.currentPageIndex = pageIndex;
-    this.interactionsSearchService.page = pageIndex;
-    this.interactorsSearchService.page = pageIndex;
+    // this.interactionsSearchService.page = pageIndex;
+    // this.interactorsSearchService.page = pageIndex;
     this.updateURLParams();
   }
 

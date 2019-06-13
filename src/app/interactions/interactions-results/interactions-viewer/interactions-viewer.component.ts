@@ -25,7 +25,7 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
   private _miScoreMin: any;
   private _miScoreMax: any;
 
-  @Input() interactorsSelected: string[];
+  @Input() interactorSelected: string;
   @Input() interactionSelected: string;
 
   private _interactionsJSON: any;
@@ -108,6 +108,8 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
     })
   }
 
+ ngOnInit(): void {
+ }
   get term(): string {
     return this._term;
   }

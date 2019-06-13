@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {InteractionsSearchResult} from '../../../shared/model/interactions-results/interaction/interactions-search.model';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -11,8 +10,6 @@ import 'datatables.net';
   styleUrls: ['./interactions-table.component.css']
 })
 export class InteractionsTableComponent implements OnInit {
-
-  private _interactionsSearch: InteractionsSearchResult;
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
@@ -26,16 +23,17 @@ export class InteractionsTableComponent implements OnInit {
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
+  private _interactionSelected: string;
 
   dataTable: any;
+
   columnView = 'interactions_columnView';
 
   private _columnNames: string[] = ['Molecule A', 'Molecule B', 'Species A', 'Species B', 'Detection Method', 'Publication Id',
-                                    'Interaction Type', 'Interaction Ac', 'Database', 'Confidence Value', 'Expansion Method',
-                                    'Experimental Role A', 'Experimental Role B', 'Interactor Type A', 'Interactor Type B'];
-  private _interactionSelected: string;
+    'Interaction Type', 'Interaction Ac', 'Database', 'Confidence Value', 'Expansion Method',
+    'Experimental Role A', 'Experimental Role B', 'Interactor Type A', 'Interactor Type B'];
 
-  constructor( private route: ActivatedRoute ) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -68,7 +66,7 @@ export class InteractionsTableComponent implements OnInit {
       bSort: false,
       searching: false,
       paging: true,
-      lengthMenu: [ 10, 25, 50, 75, 100 ],
+      lengthMenu: [10, 25, 50, 75, 100],
       pageLength: 10,
       pagingType: 'full_numbers',
       processing: true,
@@ -77,7 +75,7 @@ export class InteractionsTableComponent implements OnInit {
       ajax: {
         url: '/interactionService/interaction/datatables/' + this.term,
         type: 'POST',
-        data: function ( d ) {
+        data: function (d) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
           d.interactorType = this.interactorTypeFilter;
@@ -91,7 +89,8 @@ export class InteractionsTableComponent implements OnInit {
         }.bind(this)
       },
       columns: [
-        {data: 'interactionAc', defaultContent: ' ', title: 'Select',
+        {
+          data: 'interactionAc', defaultContent: ' ', title: 'Select',
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<div>' +
@@ -111,7 +110,8 @@ export class InteractionsTableComponent implements OnInit {
         {data: 'speciesA', defaultContent: ' ', title: 'Species A'},
         {data: 'speciesB', defaultContent: ' ', title: 'Species B'},
         {data: 'interactionDetectionMethod', defaultContent: ' ', title: 'Detection Method'},
-        {data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifiers',
+        {
+          data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifiers',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -125,7 +125,8 @@ export class InteractionsTableComponent implements OnInit {
         {data: 'interactionType', defaultContent: ' ', title: 'Interaction Type'},
         {data: 'interactionAc', defaultContent: ' ', title: 'Interaction Ac'},
         {data: 'sourceDatabase', defaultContent: ' ', title: 'Database'},
-        {data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value',
+        {
+          data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -149,11 +150,11 @@ export class InteractionsTableComponent implements OnInit {
       const interactionSel = e.currentTarget.id;
 
       if (this.interactionSelected !== interactionSel) {
-        $( '#' + this.interactionSelected + ':checkbox').prop('checked', false);
+        $('#' + this.interactionSelected + ':checkbox').prop('checked', false);
 
         // TODO: To find another way to do the highlighting
         $(table.dataTableSettings).each(function () {
-          $(this.aoData).each( function () {
+          $(this.aoData).each(function () {
             $(this.nTr).removeClass('rowSelected');
           })
         });
@@ -167,7 +168,7 @@ export class InteractionsTableComponent implements OnInit {
         // None is selected, remove class
         this.interactionSelected = undefined;
         $(table.dataTableSettings).each(function () {
-          $(this.aoData).each( function () {
+          $(this.aoData).each(function () {
             $(this.nTr).removeClass('rowSelected');
           })
         });
@@ -178,24 +179,14 @@ export class InteractionsTableComponent implements OnInit {
 
 
   }
-    // openDetailsPage(interaction: Interaction) {
+
+  // openDetailsPage(interaction: Interaction) {
   //   this.router.navigate(['/details/interaction', interaction.ac]);
   // }
 
   /************************* /
    /** GETTERS AND SETTERS ** /
    /*************************/
-
-  get interactionsSearch(): InteractionsSearchResult {
-    return this._interactionsSearch;
-  }
-
-  @Input()
-  set interactionsSearch(value: InteractionsSearchResult) {
-    this._interactionsSearch = value;
-    console.log(this._interactionsSearch);
-
-  }
 
   public onPageChanged(pageIndex: number): void {
     this.pageChanged.emit(pageIndex);

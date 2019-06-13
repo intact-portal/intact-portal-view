@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -23,6 +23,7 @@ export class InteractorsTableComponent implements OnInit {
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
+  private _currentPageIndex: any;
   private _interactorSelected: string;
 
   dataTable: any;
@@ -46,6 +47,7 @@ export class InteractorsTableComponent implements OnInit {
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
+        this.currentPageIndex = params.page ? Number(params.page) : 1;
 
         if (this.dataTable !== undefined) {
           const table: any = $('#interactorsTable');
@@ -82,6 +84,7 @@ export class InteractorsTableComponent implements OnInit {
           d.negativeInteraction = this.negativeFilter;
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
+          // d.page = this.currentPageIndex - 1;
         }.bind(this)
       },
       columns: [
@@ -105,6 +108,19 @@ export class InteractorsTableComponent implements OnInit {
         {data: 'interactionCount', defaultContent: ' ', title: 'Interactions in total'}
       ]
     });
+    //
+    //
+    // $('#interactorsTable').on( 'page.dt', function () {
+    //
+    //   const info = this.dataTable.page.info();
+    //   const currentPage = info.page;
+    //   console.log('Current page --- ' , info.page + 1);
+    //   // this.dataTable.page(currentPage).draw('page');
+    //
+    //   // this.onPageChanged(info.page + 1);
+    // }.bind(this));
+    //
+
 
     $('#interactorsTable').on('change', 'input[type=\'checkbox\']', (e) => {
 
@@ -137,6 +153,7 @@ export class InteractorsTableComponent implements OnInit {
         this.interactorChanged.emit(this.interactorSelected);
       }
     });
+
   }
 
 
@@ -219,6 +236,14 @@ export class InteractorsTableComponent implements OnInit {
 
   set miScoreMax(value: any) {
     this._miScoreMax = value;
+  }
+
+  get currentPageIndex(): any {
+    return this._currentPageIndex;
+  }
+
+  set currentPageIndex(value: any) {
+    this._currentPageIndex = value;
   }
 
   get interactorSelected(): string {

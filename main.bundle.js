@@ -6988,7 +6988,7 @@ var FeatureDatasetService = /** @class */ (function () {
                 .append('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method')
         };
         var url = "" + intactDotmURL;
-        return this.http.get('/proxy', { responseType: 'text' })
+        return this.http.get("" + intactDotmURL, { responseType: 'text' })
             .catch(this.handleError);
     };
     FeatureDatasetService.prototype.handleError = function (err) {
@@ -9716,7 +9716,7 @@ module.exports = ".tabs-panel {\n  background: #e6e6e6 !important;\n}\n\n.tabs-t
 /***/ "./src/app/interactions/interactions-results/interactions-list/interactions-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\" margin-top-large margin-bottom-large\">\n\n  <ul class=\"tabs\" data-tabs id=\"search-results-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"#interactions\" aria-selected=\"true\" (click)=\"interactionsTabSelected()\">Interactions</a></li>\n    <li class=\"tabs-title\"><a href=\"#interactor\" (click)=\"interactorsTabSelected()\">Interactors</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"search-results-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"interactions\"  style=\"background-color:#f4f4f4;\">\n      <iv-interactions-table [interactionsSearch]=\"interactionsSearch\"\n                             (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                             (pageChanged)=\"onPageChanged($event)\"></iv-interactions-table>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"interactor\" style=\"background-color:#f4f4f4;\">\n      <iv-interactors-table [interactorsSearch]=\"interactorsSearch\"\n                            [interactionsSearch]=\"interactionsSearch\"\n                            (interactorsChanged) = \"onInteractorsSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactors-table>\n    </div>\n\n  </div>\n\n</div>\n"
+module.exports = "<div class=\" margin-top-large margin-bottom-large\">\n\n  <ul class=\"tabs\" data-tabs id=\"search-results-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"#interactions\" aria-selected=\"true\" (click)=\"interactionsTabSelected()\">Interactions</a></li>\n    <li class=\"tabs-title\"><a href=\"#interactor\" (click)=\"interactorsTabSelected()\">Interactors</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"search-results-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"interactions\"  style=\"background-color:#f4f4f4;\">\n      <iv-interactions-table (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                             (pageChanged)=\"onPageChanged($event)\"></iv-interactions-table>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"interactor\" style=\"background-color:#f4f4f4;\">\n      <iv-interactors-table (interactorChanged) = \"onInteractorSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactors-table>\n    </div>\n\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -9726,8 +9726,6 @@ module.exports = "<div class=\" margin-top-large margin-bottom-large\">\n\n  <ul
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InteractionsListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interactor_interactors_search_model__ = __webpack_require__("./src/app/interactions/shared/model/interactions-results/interactor/interactors-search.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_model_interactions_results_interaction_interactions_search_model__ = __webpack_require__("./src/app/interactions/shared/model/interactions-results/interaction/interactions-search.model.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9738,11 +9736,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-
 var InteractionsListComponent = /** @class */ (function () {
     function InteractionsListComponent() {
-        this.interactorsChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
+        this.interactorChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.interactionChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.pageChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this._isTabAActive = false;
@@ -9758,8 +9754,8 @@ var InteractionsListComponent = /** @class */ (function () {
         }
     };
     /** EVENT EMITTERS **/
-    InteractionsListComponent.prototype.onInteractorsSelectedChanged = function (interactors) {
-        this.interactorsChanged.emit(interactors);
+    InteractionsListComponent.prototype.onInteractorSelectedChanged = function (interactor) {
+        this.interactorChanged.emit(interactor);
     };
     InteractionsListComponent.prototype.onInteractionsSelectedChanged = function (interaction) {
         this.interactionChanged.emit(interaction);
@@ -9806,17 +9802,9 @@ var InteractionsListComponent = /** @class */ (function () {
         configurable: true
     });
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interactor_interactors_search_model__["a" /* InteractorsSearchResult */])
-    ], InteractionsListComponent.prototype, "interactorsSearch", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__shared_model_interactions_results_interaction_interactions_search_model__["a" /* InteractionsSearchResult */])
-    ], InteractionsListComponent.prototype, "interactionsSearch", void 0);
-    __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
-    ], InteractionsListComponent.prototype, "interactorsChanged", void 0);
+    ], InteractionsListComponent.prototype, "interactorChanged", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
@@ -9922,7 +9910,7 @@ module.exports = ".columnToggle {\n  font-size: 1em;\n  background-color: #e6e6e
 /***/ "./src/app/interactions/interactions-results/interactions-list/interactions-table/interactions-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"\">\n\n  <iv-column-toggle [columnNames]=\"columnNames\"\n                    [dataTable]=\"dataTable\"\n                    [columnView]=\"columnView\"></iv-column-toggle>\n\n  <table id=\"interactionsTable\" class=\"display tableDisplay\">\n    <thead>\n    <tr>\n      <th></th>\n      <th>Molecule A</th>\n      <th>Molecule B</th>\n      <th>Species A</th>\n      <th>Species B</th>\n      <th>Interaction Detection Method</th>\n      <th>Publication Identifier</th>\n      <th>Interaction Type</th>\n      <th>Interaction AC</th>\n      <th>Database</th>\n      <th>Confidence Value</th>\n      <th>Expansion Method</th>\n      <th>Experimental Role A</th>\n      <th>Experimental Role B</th>\n      <th>Interactor Type A</th>\n      <th>Interactor Type B</th>\n    </tr>\n    </thead>\n\n    <tbody></tbody>\n\n  </table>\n</div>\n\n<!--  <div *ngIf=\"interactionsSearch\">-->\n<!--    <div>Interactions search result total: {{interactionsSearch.totalElements}}</div>-->\n<!--  </div>-->\n\n<!--  <div class=\"tablesaw-overflow\">-->\n<!--    <table id=\"interactionsTable2\" class=\"tablesaw tablesaw-columntoggle\" data-tablesaw-mode=\"columntoggle\" data-tablesaw-minimap>-->\n<!--      <thead>-->\n<!--        <tr>-->\n<!--          <th></th>-->\n<!--          <th data-tablesaw-priority=\"persist\">Molecule A</th>-->\n<!--          <th data-tablesaw-priority=\"1\">Molecule B</th>-->\n<!--          <th data-tablesaw-priority=\"1\" >Species A</th>-->\n<!--          <th data-tablesaw-priority=\"1\" >Species B</th>-->\n<!--          <th data-tablesaw-priority=\"1\" >Interaction Detection Method</th>-->\n<!--          <th data-tablesaw-priority=\"2\" >Publication Identifier</th>-->\n<!--          <th data-tablesaw-priority=\"3\" >Interaction Type</th>-->\n<!--          <th data-tablesaw-priority=\"3\" >Interaction AC</th>-->\n<!--          <th data-tablesaw-priority=\"3\">Database</th>-->\n<!--          <th data-tablesaw-priority=\"4\" >Confidence Value</th>-->\n<!--          <th data-tablesaw-priority=\"4\" >Expansion Method</th>-->\n<!--          <th data-tablesaw-priority=\"5\" >Experimental Role A</th>-->\n<!--          <th data-tablesaw-priority=\"5\" >Experimental Role B</th>-->\n<!--          <th data-tablesaw-priority=\"6\" >Interactor Type A</th>-->\n<!--          <th data-tablesaw-priority=\"6\" >Interactor Type B</th>-->\n<!--        </tr>-->\n<!--      </thead>-->\n\n<!--      <tbody *ngIf=\"interactionsSearch\">-->\n<!--        <tr *ngFor=\"let interaction of interactionsSearch.content\">-->\n<!--          <td><a [routerLink]=\"['/details/interaction', interaction.interactionAc]\"><i class=\"icon icon-common icon-search-document\"></i></a></td>-->\n<!--          <td>{{interaction.moleculeA}}</td>-->\n<!--          <td>{{interaction.moleculeB}}</td>-->\n<!--          <td>{{interaction.speciesA}}</td>-->\n<!--          <td>{{interaction.speciesB}}</td>-->\n<!--          <td>{{interaction.interactionDetectionMethod}}</td>-->\n<!--          <td>{{interaction.publicationIdentifiers}}</td>-->\n<!--          <td>{{interaction.interactionType}}</td>-->\n<!--          <td>{{interaction.interactionAc}}</td>-->\n<!--          <td>{{interaction.sourceDatabase}}</td>-->\n<!--          <td>{{interaction.confidenceValues}}</td>-->\n<!--          <td>{{interaction.expansionMethod}}</td>-->\n<!--          <td>{{interaction.experimentalRoleA}}</td>-->\n<!--          <td>{{interaction.experimentalRoleB}}</td>-->\n<!--          <td>{{interaction.typeA}}</td>-->\n<!--          <td>{{interaction.typeB}}</td>-->\n<!--        </tr>-->\n<!--      </tbody>-->\n\n<!--<iv-interactions-pager [page]=\"interactionsSearchService.page\"-->\n<!--                       [totalPages]=\"interactionsSearchService.totalPages\"-->\n<!--                       (changePage)=\"onPageChanged($event)\"> pager </iv-interactions-pager>-->\n"
+module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n                    [dataTable]=\"dataTable\"\n                    [columnView]=\"columnView\"></iv-column-toggle>\n\n  <table id=\"interactionsTable\" class=\"display tableDisplay\">\n    <thead>\n    <tr>\n      <th></th>\n      <th>Molecule A</th>\n      <th>Molecule B</th>\n      <th>Species A</th>\n      <th>Species B</th>\n      <th>Interaction Detection Method</th>\n      <th>Publication Identifier</th>\n      <th>Interaction Type</th>\n      <th>Interaction AC</th>\n      <th>Database</th>\n      <th>Confidence Value</th>\n      <th>Expansion Method</th>\n      <th>Experimental Role A</th>\n      <th>Experimental Role B</th>\n      <th>Interactor Type A</th>\n      <th>Interactor Type B</th>\n    </tr>\n    </thead>\n\n    <tbody></tbody>\n\n  </table>\n</div>\n"
 
 /***/ }),
 
@@ -9932,12 +9920,11 @@ module.exports = "<div class=\"\">\n\n  <iv-column-toggle [columnNames]=\"column
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InteractionsTableComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interaction_interactions_search_model__ = __webpack_require__("./src/app/interactions/shared/model/interactions-results/interaction/interactions-search.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery__ = __webpack_require__("./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net__ = __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_datatables_net__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__("./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net__ = __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9947,7 +9934,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -9976,7 +9962,7 @@ var InteractionsTableComponent = /** @class */ (function () {
             _this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
             if (_this.dataTable !== undefined) {
-                var table = __WEBPACK_IMPORTED_MODULE_3_jquery__('#interactionsTable');
+                var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
                 _this.dataTable = table.DataTable().ajax.reload();
             }
         });
@@ -9984,7 +9970,7 @@ var InteractionsTableComponent = /** @class */ (function () {
     };
     InteractionsTableComponent.prototype.initDataTable = function () {
         var _this = this;
-        var table = __WEBPACK_IMPORTED_MODULE_3_jquery__('#interactionsTable');
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
         this.dataTable = table.DataTable({
             bSort: false,
             searching: false,
@@ -10012,7 +9998,8 @@ var InteractionsTableComponent = /** @class */ (function () {
                 }.bind(this)
             },
             columns: [
-                { data: 'interactionAc', defaultContent: ' ', title: 'Select',
+                {
+                    data: 'interactionAc', defaultContent: ' ', title: 'Select',
                     render: function (data, type, full, meta) {
                         if (type === 'display') {
                             return '<div>' +
@@ -10032,10 +10019,11 @@ var InteractionsTableComponent = /** @class */ (function () {
                 { data: 'speciesA', defaultContent: ' ', title: 'Species A' },
                 { data: 'speciesB', defaultContent: ' ', title: 'Species B' },
                 { data: 'interactionDetectionMethod', defaultContent: ' ', title: 'Detection Method' },
-                { data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifiers',
+                {
+                    data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifiers',
                     render: function (data, type, row, meta) {
                         if (type === 'display') {
-                            return __WEBPACK_IMPORTED_MODULE_3_jquery__["map"](data, function (d, i) {
+                            return __WEBPACK_IMPORTED_MODULE_2_jquery__["map"](data, function (d, i) {
                                 return '<div>' +
                                     '<span class="detailsCell">' + d + '</span>' +
                                     '</div>';
@@ -10046,10 +10034,11 @@ var InteractionsTableComponent = /** @class */ (function () {
                 { data: 'interactionType', defaultContent: ' ', title: 'Interaction Type' },
                 { data: 'interactionAc', defaultContent: ' ', title: 'Interaction Ac' },
                 { data: 'sourceDatabase', defaultContent: ' ', title: 'Database' },
-                { data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value',
+                {
+                    data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value',
                     render: function (data, type, row, meta) {
                         if (type === 'display') {
-                            return __WEBPACK_IMPORTED_MODULE_3_jquery__["map"](data, function (d, i) {
+                            return __WEBPACK_IMPORTED_MODULE_2_jquery__["map"](data, function (d, i) {
                                 return '<div>' +
                                     '<span class="detailsConfidencesCell">' + d + '</span>' +
                                     '</div>';
@@ -10064,49 +10053,38 @@ var InteractionsTableComponent = /** @class */ (function () {
                 { data: 'typeB', defaultContent: ' ', title: 'Interactor Type B' }
             ]
         });
-        __WEBPACK_IMPORTED_MODULE_3_jquery__('#interactionsTable').on('change', 'input[type=\'checkbox\']', function (e) {
+        __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable').on('change', 'input[type=\'checkbox\']', function (e) {
             var interactionSel = e.currentTarget.id;
             if (_this.interactionSelected !== interactionSel) {
-                __WEBPACK_IMPORTED_MODULE_3_jquery__('#' + _this.interactionSelected + ':checkbox').prop('checked', false);
+                __WEBPACK_IMPORTED_MODULE_2_jquery__('#' + _this.interactionSelected + ':checkbox').prop('checked', false);
                 // TODO: To find another way to do the highlighting
-                __WEBPACK_IMPORTED_MODULE_3_jquery__(table.dataTableSettings).each(function () {
-                    __WEBPACK_IMPORTED_MODULE_3_jquery__(this.aoData).each(function () {
-                        __WEBPACK_IMPORTED_MODULE_3_jquery__(this.nTr).removeClass('rowSelected');
+                __WEBPACK_IMPORTED_MODULE_2_jquery__(table.dataTableSettings).each(function () {
+                    __WEBPACK_IMPORTED_MODULE_2_jquery__(this.aoData).each(function () {
+                        __WEBPACK_IMPORTED_MODULE_2_jquery__(this.nTr).removeClass('rowSelected');
                     });
                 });
                 _this.interactionSelected = interactionSel;
-                __WEBPACK_IMPORTED_MODULE_3_jquery__(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
+                __WEBPACK_IMPORTED_MODULE_2_jquery__(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
                 _this.interactionChanged.emit(_this.interactionSelected);
             }
             else {
                 // None is selected, remove class
                 _this.interactionSelected = undefined;
-                __WEBPACK_IMPORTED_MODULE_3_jquery__(table.dataTableSettings).each(function () {
-                    __WEBPACK_IMPORTED_MODULE_3_jquery__(this.aoData).each(function () {
-                        __WEBPACK_IMPORTED_MODULE_3_jquery__(this.nTr).removeClass('rowSelected');
+                __WEBPACK_IMPORTED_MODULE_2_jquery__(table.dataTableSettings).each(function () {
+                    __WEBPACK_IMPORTED_MODULE_2_jquery__(this.aoData).each(function () {
+                        __WEBPACK_IMPORTED_MODULE_2_jquery__(this.nTr).removeClass('rowSelected');
                     });
                 });
                 _this.interactionChanged.emit(_this.interactionSelected);
             }
         });
     };
-    Object.defineProperty(InteractionsTableComponent.prototype, "interactionsSearch", {
-        // openDetailsPage(interaction: Interaction) {
-        //   this.router.navigate(['/details/interaction', interaction.ac]);
-        // }
-        /************************* /
-         /** GETTERS AND SETTERS ** /
-         /*************************/
-        get: function () {
-            return this._interactionsSearch;
-        },
-        set: function (value) {
-            this._interactionsSearch = value;
-            console.log(this._interactionsSearch);
-        },
-        enumerable: true,
-        configurable: true
-    });
+    // openDetailsPage(interaction: Interaction) {
+    //   this.router.navigate(['/details/interaction', interaction.ac]);
+    // }
+    /************************* /
+     /** GETTERS AND SETTERS ** /
+     /*************************/
     InteractionsTableComponent.prototype.onPageChanged = function (pageIndex) {
         this.pageChanged.emit(pageIndex);
     };
@@ -10228,18 +10206,13 @@ var InteractionsTableComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
     ], InteractionsTableComponent.prototype, "pageChanged", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interaction_interactions_search_model__["a" /* InteractionsSearchResult */]),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interaction_interactions_search_model__["a" /* InteractionsSearchResult */]])
-    ], InteractionsTableComponent.prototype, "interactionsSearch", null);
     InteractionsTableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'iv-interactions-table',
             template: __webpack_require__("./src/app/interactions/interactions-results/interactions-list/interactions-table/interactions-table.component.html"),
             styles: [__webpack_require__("./src/app/interactions/interactions-results/interactions-list/interactions-table/interactions-table.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
     ], InteractionsTableComponent);
     return InteractionsTableComponent;
 }());
@@ -10258,7 +10231,7 @@ module.exports = "#tablesaw-checkbox {\n  text-align:center;\n}\n\n[type='checkb
 /***/ "./src/app/interactions/interactions-results/interactions-list/interactors-table/interactors-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"columns medium-12\">\n\n  <div *ngIf=\"interactorsSearch\">\n    <div>Interactors search result total: {{interactorsSearch.numberOfElements}}</div>\n  </div>\n\n  <div class=\"tablesaw-overflow\">\n  <table id=\"interactorsTable\" class=\"tablesaw\" data-tablesaw-mode=\"columntoggle\" data-tablesaw-minimap>\n    <thead>\n      <tr>\n        <th></th>\n        <th scope=\"col\" data-tablesaw-sortable-col data-tablesaw-priority=\"persist\">Names</th>\n        <th scope=\"col\" data-tablesaw-sortable-col data-tablesaw-priority=\"1\">Description</th>\n        <th scope=\"col\" data-tablesaw-sortable-col data-tablesaw-priority=\"1\">Accession</th>\n        <th scope=\"col\" data-tablesaw-sortable-col data-tablesaw-priority=\"2\">Type</th>\n        <th scope=\"col\" data-tablesaw-sortable-col data-tablesaw-priority=\"2\">Species</th>\n        <th scope=\"col\" data-tablesaw-sortable-col data-tablesaw-priority=\"3\">Interactions</th>\n        <th scope=\"col\" data-tablesaw-sortable-col data-tablesaw-priority=\"3\">Interactions in Total</th>\n      </tr>\n    </thead>\n    <tbody *ngIf=\"interactorsSearch\">\n      <tr *ngFor=\"let interactor of interactorsSearch.content;\" [class.active]=\"isSelectedInteractor(interactor.interactorId)\">\n        <td id=\"tablesaw-checkbox\">\n          <input type=\"checkbox\"\n                 (change)=\"onSelected(interactor.interactorId)\"\n                 [checked]=\"isSelectedInteractor(interactor.interactorId)\"/>\n        </td>\n        <td>{{interactor.interactorName}}</td>\n        <td>{{interactor.description}}</td>\n        <td>{{interactor.interactorId}}</td>\n        <td>{{interactor.interactorType}}</td>\n        <td>{{interactor.species}}</td>\n        <td>{{interactor.interactionSearchCount}}</td>\n        <td>{{interactor.interactionCount}}</td>\n      </tr>\n    </tbody>\n  </table>\n  </div>\n</div>\n\n<iv-interactions-pager [page]=\"interactorsSearchService.page\"\n                       [totalPages]=\"interactorsSearchService.totalPages\"\n                       (changePage)=\"onPageChanged($event)\"> pager </iv-interactions-pager>\n"
+module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n                    [dataTable]=\"dataTable\"\n                    [columnView]=\"columnView\"></iv-column-toggle>\n  <table id=\"interactorsTable\" class=\"display tableDisplay\">\n    <thead>\n    <tr>\n      <th></th>\n      <th>Names</th>\n      <th>Description</th>\n      <th>Accession</th>\n      <th>Type</th>\n      <th>Species</th>\n      <th>Interactions</th>\n      <th>Interactions in total</th>\n    </tr>\n    </thead>\n\n    <tbody></tbody>\n  </table>\n\n</div>\n\n"
 
 /***/ }),
 
@@ -10268,9 +10241,11 @@ module.exports = "<div class=\"columns medium-12\">\n\n  <div *ngIf=\"interactor
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InteractorsTableComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interactor_interactors_search_model__ = __webpack_require__("./src/app/interactions/shared/model/interactions-results/interactor/interactors-search.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_service_interactors_search_service__ = __webpack_require__("./src/app/interactions/shared/service/interactors-search.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_model_interactions_results_interaction_interactions_search_model__ = __webpack_require__("./src/app/interactions/shared/model/interactions-results/interaction/interactions-search.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__("./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net__ = __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10285,75 +10260,235 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var InteractorsTableComponent = /** @class */ (function () {
-    function InteractorsTableComponent(interactorsSearchService) {
-        this.interactorsSearchService = interactorsSearchService;
-        this._interactorsSelected = [];
-        this.interactorsChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
+    function InteractorsTableComponent(route) {
+        this.route = route;
+        this.interactorChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.pageChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
+        this.columnView = 'interactors_columnView';
+        this.columnNames = ['Names', 'Description', 'Accession', 'Type', 'Species', 'Interactions', 'Interactions in total'];
     }
     InteractorsTableComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.queryParams.filter(function (params) { return params.query; })
+            .subscribe(function (params) {
+            _this.term = params.query;
+            _this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
+            _this.speciesNameFilter = params.species ? params.species.split('+') : [];
+            _this.hostOrganismFilter = params.hostOrganism ? params.hostOrganism.split('+') : [];
+            _this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+            _this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+            _this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
+            _this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
+            _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
+            _this.currentPageIndex = params.page ? Number(params.page) : 1;
+            if (_this.dataTable !== undefined) {
+                var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
+                _this.dataTable = table.DataTable().ajax.reload();
+            }
+        });
+        this.initDataTable();
     };
-    InteractorsTableComponent.prototype.ngAfterViewInit = function () {
+    InteractorsTableComponent.prototype.initDataTable = function () {
+        var _this = this;
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
+        this.dataTable = table.DataTable({
+            bSort: false,
+            searching: false,
+            paging: true,
+            lengthMenu: [10, 25, 50, 75, 100],
+            pageLength: 10,
+            pagingType: 'full_numbers',
+            processing: true,
+            serverSide: true,
+            dom: '<"top"li>rt<"bottom"p><"clear">',
+            ajax: {
+                url: '/interactorService/interactor/datatables/' + this.term,
+                type: 'POST',
+                data: function (d) {
+                    d.page = d.start / d.length;
+                    d.pageSize = d.length;
+                    d.interactorType = this.interactorTypeFilter;
+                    d.species = this.speciesNameFilter;
+                    d.interactionType = this.interactionTypeFilter;
+                    d.detectionMethod = this.detectionMethodFilter;
+                    d.hostOrganism = this.hostOrganismFilter;
+                    d.negativeInteraction = this.negativeFilter;
+                    d.miScoreMin = this.miScoreMin;
+                    d.miScoreMax = this.miScoreMax;
+                    // d.page = this.currentPageIndex - 1;
+                }.bind(this)
+            },
+            columns: [
+                {
+                    data: 'interactorId', defaultContent: ' ', title: 'Select',
+                    render: function (data, type, full, meta) {
+                        if (type === 'display') {
+                            return '<div class="margin-left-large">' +
+                                '<input type="checkbox" id="' + full.interactorId + '" name="check" value="' + data + '"/>' +
+                                '</div>';
+                        }
+                        return data;
+                    }
+                },
+                { data: 'interactorName', defaultContent: ' ', title: 'Names' },
+                { data: 'description', defaultContent: ' ', title: 'Description' },
+                { data: 'interactorId', defaultContent: ' ', title: 'Accession' },
+                { data: 'interactorType', defaultContent: ' ', title: 'Type' },
+                { data: 'species', defaultContent: ' ', title: 'Species' },
+                { data: 'interactionSearchCount', defaultContent: ' ', title: 'Interactions' },
+                { data: 'interactionCount', defaultContent: ' ', title: 'Interactions in total' }
+            ]
+        });
+        //
+        //
+        // $('#interactorsTable').on( 'page.dt', function () {
+        //
+        //   const info = this.dataTable.page.info();
+        //   const currentPage = info.page;
+        //   console.log('Current page --- ' , info.page + 1);
+        //   // this.dataTable.page(currentPage).draw('page');
+        //
+        //   // this.onPageChanged(info.page + 1);
+        // }.bind(this));
+        //
+        __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable').on('change', 'input[type=\'checkbox\']', function (e) {
+            var interactorSel = e.currentTarget.id;
+            if (_this.interactorSelected !== interactorSel) {
+                __WEBPACK_IMPORTED_MODULE_2_jquery__('#' + _this.interactorSelected + ':checkbox').prop('checked', false);
+                // TODO: To find another way to do the highlighting
+                __WEBPACK_IMPORTED_MODULE_2_jquery__(table.dataTableSettings).each(function () {
+                    __WEBPACK_IMPORTED_MODULE_2_jquery__(this.aoData).each(function () {
+                        __WEBPACK_IMPORTED_MODULE_2_jquery__(this.nTr).removeClass('rowSelected');
+                    });
+                });
+                _this.interactorSelected = interactorSel;
+                __WEBPACK_IMPORTED_MODULE_2_jquery__(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
+                _this.interactorChanged.emit(_this.interactorSelected);
+            }
+            else {
+                // None is selected, remove class
+                _this.interactorSelected = undefined;
+                __WEBPACK_IMPORTED_MODULE_2_jquery__(table.dataTableSettings).each(function () {
+                    __WEBPACK_IMPORTED_MODULE_2_jquery__(this.aoData).each(function () {
+                        __WEBPACK_IMPORTED_MODULE_2_jquery__(this.nTr).removeClass('rowSelected');
+                    });
+                });
+                _this.interactorChanged.emit(_this.interactorSelected);
+            }
+        });
     };
-    InteractorsTableComponent.prototype.onSelected = function (interactor) {
-        if (!this.interactorsSelected.includes(interactor)) {
-            this.interactorsSelected.push(interactor);
-        }
-        else {
-            this.interactorsSelected.splice(this.interactorsSelected.indexOf(interactor), 1);
-        }
-        console.info(this._interactorsSelected);
-        this.interactorsChanged.emit(this.interactorsSelected);
-    };
-    InteractorsTableComponent.prototype.isSelectedInteractor = function (interactor) {
-        return this.interactorsSelected !== undefined ? this.interactorsSelected.indexOf(interactor) >= 0 : false;
-    };
-    InteractorsTableComponent.prototype.getInteractionCountPerInteractor = function (interactor) {
-    };
-    Object.defineProperty(InteractorsTableComponent.prototype, "interactorsSearch", {
-        /************************* /
-        /** GETTERS AND SETTERS ** /
-        /*************************/
-        get: function () {
-            return this._interactorsSearch;
-        },
-        set: function (value) {
-            this._interactorsSearch = value;
-            console.log(this._interactorsSearch);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractorsTableComponent.prototype, "interactionsSearch", {
-        get: function () {
-            return this._interactionsSearch;
-        },
-        set: function (value) {
-            this._interactionsSearch = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractorsTableComponent.prototype, "interactorsSelected", {
-        /*** INTERACTORS SELECTED **/
-        get: function () {
-            return this._interactorsSelected;
-        },
-        set: function (value) {
-            this._interactorsSelected = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     InteractorsTableComponent.prototype.onPageChanged = function (pageIndex) {
         this.pageChanged.emit(pageIndex);
     };
-    Object.defineProperty(InteractorsTableComponent.prototype, "interactionCount", {
+    Object.defineProperty(InteractorsTableComponent.prototype, "term", {
+        /************************* /
+         /** GETTERS AND SETTERS ** /
+         /*************************/
         get: function () {
-            return this._interactionCount;
+            return this._term;
         },
         set: function (value) {
-            this._interactionCount = value;
+            this._term = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "speciesNameFilter", {
+        get: function () {
+            return this._speciesNameFilter;
+        },
+        set: function (value) {
+            this._speciesNameFilter = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "interactorTypeFilter", {
+        get: function () {
+            return this._interactorTypeFilter;
+        },
+        set: function (value) {
+            this._interactorTypeFilter = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "interactionTypeFilter", {
+        get: function () {
+            return this._interactionTypeFilter;
+        },
+        set: function (value) {
+            this._interactionTypeFilter = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "detectionMethodFilter", {
+        get: function () {
+            return this._detectionMethodFilter;
+        },
+        set: function (value) {
+            this._detectionMethodFilter = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "hostOrganismFilter", {
+        get: function () {
+            return this._hostOrganismFilter;
+        },
+        set: function (value) {
+            this._hostOrganismFilter = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "negativeFilter", {
+        get: function () {
+            return this._negativeFilter;
+        },
+        set: function (value) {
+            this._negativeFilter = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "miScoreMin", {
+        get: function () {
+            return this._miScoreMin;
+        },
+        set: function (value) {
+            this._miScoreMin = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "miScoreMax", {
+        get: function () {
+            return this._miScoreMax;
+        },
+        set: function (value) {
+            this._miScoreMax = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "currentPageIndex", {
+        get: function () {
+            return this._currentPageIndex;
+        },
+        set: function (value) {
+            this._currentPageIndex = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InteractorsTableComponent.prototype, "interactorSelected", {
+        get: function () {
+            return this._interactorSelected;
+        },
+        set: function (value) {
+            this._interactorSelected = value;
         },
         enumerable: true,
         configurable: true
@@ -10361,28 +10496,18 @@ var InteractorsTableComponent = /** @class */ (function () {
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
-    ], InteractorsTableComponent.prototype, "interactorsChanged", void 0);
+    ], InteractorsTableComponent.prototype, "interactorChanged", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
     ], InteractorsTableComponent.prototype, "pageChanged", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interactor_interactors_search_model__["a" /* InteractorsSearchResult */]),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__shared_model_interactions_results_interactor_interactors_search_model__["a" /* InteractorsSearchResult */]])
-    ], InteractorsTableComponent.prototype, "interactorsSearch", null);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3__shared_model_interactions_results_interaction_interactions_search_model__["a" /* InteractionsSearchResult */]),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__shared_model_interactions_results_interaction_interactions_search_model__["a" /* InteractionsSearchResult */]])
-    ], InteractorsTableComponent.prototype, "interactionsSearch", null);
     InteractorsTableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'iv-interactors-table',
             template: __webpack_require__("./src/app/interactions/interactions-results/interactions-list/interactors-table/interactors-table.component.html"),
             styles: [__webpack_require__("./src/app/interactions/interactions-results/interactions-list/interactors-table/interactors-table.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__shared_service_interactors_search_service__["a" /* InteractorsSearchService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
     ], InteractorsTableComponent);
     return InteractorsTableComponent;
 }());
@@ -10401,7 +10526,7 @@ module.exports = ".inner-div {\n  border-left: 1.5px solid rgb(230, 230, 230);\n
 /***/ "./src/app/interactions/interactions-results/interactions-results.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row expanded\">\n  <div class=\"columns medium-12\">\n    <h2 class=\"padding-left-large\">Search for {{term}}</h2>\n  </div>\n</div>\n\n<div class=\"row expanded\">\n\n  <div class=\"columns medium-2\">\n    <iv-interactions-filters *ngIf=\"interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter\n      && interactionTypeFilter && detectionMethodFilter && hostOrganismFilter && (negativeFilter !== undefined)\"\n                             [interactorFacets]=\"interactorsSearch.facetResultPage\"\n                             [interactionFacets]=\"interactionsSearch.facetResultPage\"\n                             [interactorTypeFilter]=\"interactorTypeFilter\"\n                             [speciesNameFilter]=\"speciesNameFilter\"\n                             [interactionTypeFilter]=\"interactionTypeFilter\"\n                             [detectionMethodFilter]=\"detectionMethodFilter\"\n                             [hostOrganismFilter]=\"hostOrganismFilter\"\n                             [negativeFilter]=\"negativeFilter\"\n                             [miScoreMinFilter]=\"miScoreMin\"\n                             [miScoreMaxFilter]=\"miScoreMax\"\n                             (onSpeciesNameFilterChanged)=\"onSpeciesNameFilterChanged($event)\"\n                             (onInteractorTypeFilterChanged)=\"onInteractorTypeFilterChanged($event)\"\n                             (onResetAllFilters)=\"onResetAllFilters()\"\n                             (onInteractionTypeFilterChanged)=\"onInteractionTypeFilterChanged($event)\"\n                             (onDetectionMethodFilterChanged)=\"onDetectionMethodFilterChanged($event)\"\n                             (onHostOrganismFilterChanged)=\"onHostOrganismFilterChanged($event)\"\n                             (onInteractionNegativeFilterChanged)=\"onInteractionNegativeFilterChanged($event)\"\n                             (onInteractionMiScoreMinFilterChanged)=\"onInteractionMiScoreMinFilterChanged($event)\"\n                             (onInteractionMiScoreMaxFilterChanged)=\"onInteractionMiScoreMaxFilterChanged($event)\">\n\n    </iv-interactions-filters>\n  </div>\n\n  <div class=\"columns medium-10\">\n    <div class=\"inner-div\">\n\n      <iv-interactions-viewer [interactorsSelected]=\"interactorsSelected\"\n                              [interactionSelected]=\"interactionSelected\"></iv-interactions-viewer>\n\n      <iv-interactions-list *ngIf=\"interactorsSelected\"\n                            [interactorsSearch]=\"interactorsSearch\"\n                            [interactionsSearch]=\"interactionsSearch\"\n                            (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                            (interactorsChanged)=\"onInteractorsSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactions-list>\n    </div>\n  </div>\n\n</div>\n\n"
+module.exports = "<div class=\"row expanded\">\n  <div class=\"columns medium-12\">\n    <h2 class=\"padding-left-large\">Search for {{term}}</h2>\n  </div>\n</div>\n\n<div class=\"row expanded\">\n\n  <div class=\"columns medium-2\">\n    <iv-interactions-filters *ngIf=\"interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter\n      && interactionTypeFilter && detectionMethodFilter && hostOrganismFilter && (negativeFilter !== undefined)\"\n                             [interactorFacets]=\"interactorsSearch.facetResultPage\"\n                             [interactionFacets]=\"interactionsSearch.facetResultPage\"\n                             [interactorTypeFilter]=\"interactorTypeFilter\"\n                             [speciesNameFilter]=\"speciesNameFilter\"\n                             [interactionTypeFilter]=\"interactionTypeFilter\"\n                             [detectionMethodFilter]=\"detectionMethodFilter\"\n                             [hostOrganismFilter]=\"hostOrganismFilter\"\n                             [negativeFilter]=\"negativeFilter\"\n                             [miScoreMinFilter]=\"miScoreMin\"\n                             [miScoreMaxFilter]=\"miScoreMax\"\n                             (onSpeciesNameFilterChanged)=\"onSpeciesNameFilterChanged($event)\"\n                             (onInteractorTypeFilterChanged)=\"onInteractorTypeFilterChanged($event)\"\n                             (onResetAllFilters)=\"onResetAllFilters()\"\n                             (onInteractionTypeFilterChanged)=\"onInteractionTypeFilterChanged($event)\"\n                             (onDetectionMethodFilterChanged)=\"onDetectionMethodFilterChanged($event)\"\n                             (onHostOrganismFilterChanged)=\"onHostOrganismFilterChanged($event)\"\n                             (onInteractionNegativeFilterChanged)=\"onInteractionNegativeFilterChanged($event)\"\n                             (onInteractionMiScoreMinFilterChanged)=\"onInteractionMiScoreMinFilterChanged($event)\"\n                             (onInteractionMiScoreMaxFilterChanged)=\"onInteractionMiScoreMaxFilterChanged($event)\">\n\n    </iv-interactions-filters>\n  </div>\n\n  <div class=\"columns medium-10\">\n    <div class=\"inner-div\">\n\n      <iv-interactions-viewer [interactorSelected]=\"interactorSelected\"\n                              [interactionSelected]=\"interactionSelected\"></iv-interactions-viewer>\n\n      <iv-interactions-list (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                            (interactorChanged)=\"onInteractorSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactions-list>\n    </div>\n  </div>\n\n</div>\n\n"
 
 /***/ }),
 
@@ -10455,7 +10580,8 @@ var InteractionsResultsComponent = /** @class */ (function () {
             _this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
             _this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
-            _this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
+            _this.interactorSelected = params.interactorSelected ? params.interactorSelected.split('+') : undefined;
+            _this.interactionSelected = params.interactionSelected ? params.interactionSelected.split('+') : undefined;
             _this.currentPageIndex = params.page ? Number(params.page) : 1;
             _this.requestInteractorsResults();
             _this.requestInteractionsResults();
@@ -10482,42 +10608,50 @@ var InteractionsResultsComponent = /** @class */ (function () {
     /** EVENT EMITTERS **/
     InteractionsResultsComponent.prototype.onSpeciesNameFilterChanged = function (filter) {
         this.speciesNameFilter = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onInteractorTypeFilterChanged = function (filter) {
         this.interactorTypeFilter = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onInteractionTypeFilterChanged = function (filter) {
         this.interactionTypeFilter = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onDetectionMethodFilterChanged = function (filter) {
         this.detectionMethodFilter = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onHostOrganismFilterChanged = function (filter) {
         this.hostOrganismFilter = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onInteractionNegativeFilterChanged = function (filter) {
         this.negativeFilter = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onInteractionMiScoreMinFilterChanged = function (filter) {
         this.miScoreMin = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onInteractionMiScoreMaxFilterChanged = function (filter) {
         this.miScoreMax = filter;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onResetAllFilters = function () {
@@ -10529,12 +10663,12 @@ var InteractionsResultsComponent = /** @class */ (function () {
         this.negativeFilter = false;
         this.miScoreMin = 0;
         this.miScoreMax = 1;
-        this.interactorsSelected = [];
+        this.interactorSelected = undefined;
+        this.interactionSelected = undefined;
         this.updateURLParams();
     };
-    /** EVENT EMITTERS **/
-    InteractionsResultsComponent.prototype.onInteractorsSelectedChanged = function (interactors) {
-        this.interactorsSelected = interactors;
+    InteractionsResultsComponent.prototype.onInteractorSelectedChanged = function (interactor) {
+        this.interactorSelected = interactor;
         this.updateURLParams();
     };
     InteractionsResultsComponent.prototype.onInteractionsSelectedChanged = function (interaction) {
@@ -10543,8 +10677,8 @@ var InteractionsResultsComponent = /** @class */ (function () {
     };
     InteractionsResultsComponent.prototype.onPageChanged = function (pageIndex) {
         this.currentPageIndex = pageIndex;
-        this.interactionsSearchService.page = pageIndex;
-        this.interactorsSearchService.page = pageIndex;
+        // this.interactionsSearchService.page = pageIndex;
+        // this.interactorsSearchService.page = pageIndex;
         this.updateURLParams();
     };
     /** END OF EVENT EMITTERS **/
@@ -10704,8 +10838,8 @@ var InteractionsResultsComponent = /** @class */ (function () {
     });
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", Array)
-    ], InteractionsResultsComponent.prototype, "interactorsSelected", void 0);
+        __metadata("design:type", String)
+    ], InteractionsResultsComponent.prototype, "interactorSelected", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
         __metadata("design:type", String)
@@ -10837,7 +10971,7 @@ module.exports = "div#graphViewerContainer{\n  /*clear: both;*/\n  /*!*position:
 /***/ "./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div *ngFor='let interactor of interactorsSelected'>\n    <div>{{interactor}}</div>\n  </div>\n  <div>Interaction selected: {{interactionSelected}}</div>\n</div>\n<div>\n  <div>\n    <div id='suggestions_div'>\n      <label for='nodeL'>Interactor Name</label>\n      <input type='text' id='nodeL'>\n      <a class=\"button\" (click)='findInteractor()'><i class=\"icon icon-common icon-search\" ></i> Find Interactor</a>\n    </div>\n    <div id=\"graphViewerContainer\">\n      <div id=\"for-canvas-graph\"></div>\n    </div>\n  </div>\n</div>\n\n<!--<div id=\"graphViewer\" style=\"text-align: center\">-->\n<!--&lt;!&ndash;  <div class=\"columns medium-10\">&ndash;&gt;-->\n<!--    <img src=\"assets/images/results/graph_view.png\" width=\"900\" height=\"500\">-->\n<!--&lt;!&ndash;  </div>&ndash;&gt;-->\n<!--</div>-->\n"
+module.exports = "<div>\n  <div>Interactor selected: {{interactorSelected}}</div>\n  <div>Interaction selected: {{interactionSelected}}</div>\n</div>\n\n<div>\n  <div>\n    <div id='suggestions_div'>\n      <label for='nodeL'>Interactor Name</label>\n      <input type='text' id='nodeL'>\n      <a class=\"button\" (click)='findInteractor()'><i class=\"icon icon-common icon-search\" ></i> Find Interactor</a>\n    </div>\n    <div id=\"graphViewerContainer\">\n      <div id=\"for-canvas-graph\"></div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -10883,8 +11017,6 @@ var InteractionsViewerComponent = /** @class */ (function () {
             _this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
             _this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
-            _this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
-            // this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
             _this.requestIntactNetworkDetails();
         });
         // this.httpService.get('../../../assets/demo_interactions.json').subscribe(
@@ -11028,8 +11160,8 @@ var InteractionsViewerComponent = /** @class */ (function () {
     });
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", Array)
-    ], InteractionsViewerComponent.prototype, "interactorsSelected", void 0);
+        __metadata("design:type", String)
+    ], InteractionsViewerComponent.prototype, "interactorSelected", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
         __metadata("design:type", String)
@@ -11038,8 +11170,7 @@ var InteractionsViewerComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'iv-interactions-viewer',
             template: __webpack_require__("./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.html"),
-            styles: [__webpack_require__("./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.css")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewEncapsulation */].None
+            styles: [__webpack_require__("./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.css")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */],
@@ -11567,77 +11698,6 @@ var InteractionFacets = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/interactions/shared/model/interactions-results/interaction/interactions-search.model.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InteractionsSearchResult; });
-var InteractionsSearchResult = /** @class */ (function () {
-    function InteractionsSearchResult(content, numberOfElements, totalElements, facetResultPage, filtersType) {
-        this._content = content;
-        this._numberOfElements = numberOfElements;
-        this._totalElements = totalElements;
-        this._facetResultPage = facetResultPage;
-        this._facetFields = filtersType;
-    }
-    Object.defineProperty(InteractionsSearchResult.prototype, "content", {
-        /** GETTERS AND SETTERS **/
-        get: function () {
-            return this._content;
-        },
-        set: function (value) {
-            this._content = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractionsSearchResult.prototype, "numberOfElements", {
-        get: function () {
-            return this._numberOfElements;
-        },
-        set: function (value) {
-            this._numberOfElements = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractionsSearchResult.prototype, "totalElements", {
-        get: function () {
-            return this._totalElements;
-        },
-        set: function (value) {
-            this._totalElements = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractionsSearchResult.prototype, "facetResultPage", {
-        get: function () {
-            return this._facetResultPage;
-        },
-        set: function (value) {
-            this._facetResultPage = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractionsSearchResult.prototype, "facetFields", {
-        get: function () {
-            return this._facetFields;
-        },
-        set: function (value) {
-            this._facetFields = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return InteractionsSearchResult;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/interactions/shared/model/interactions-results/interactor/interactor-facets.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -11669,77 +11729,6 @@ var InteractorFacets = /** @class */ (function () {
         configurable: true
     });
     return InteractorFacets;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/interactions/shared/model/interactions-results/interactor/interactors-search.model.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InteractorsSearchResult; });
-var InteractorsSearchResult = /** @class */ (function () {
-    function InteractorsSearchResult(content, numberOfElements, totalElements, facetResultPage, filtersType) {
-        this._content = content;
-        this._numberOfElements = numberOfElements;
-        this._totalElements = totalElements;
-        this._facetResultPage = facetResultPage;
-        this._filtersType = filtersType;
-    }
-    Object.defineProperty(InteractorsSearchResult.prototype, "content", {
-        /** GETTERS AND SETTERS **/
-        get: function () {
-            return this._content;
-        },
-        set: function (value) {
-            this._content = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractorsSearchResult.prototype, "numberOfElements", {
-        get: function () {
-            return this._numberOfElements;
-        },
-        set: function (value) {
-            this._numberOfElements = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractorsSearchResult.prototype, "facetResultPage", {
-        get: function () {
-            return this._facetResultPage;
-        },
-        set: function (value) {
-            this._facetResultPage = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractorsSearchResult.prototype, "facetFields", {
-        get: function () {
-            return this._filtersType;
-        },
-        set: function (value) {
-            this._filtersType = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InteractorsSearchResult.prototype, "totalElements", {
-        get: function () {
-            return this._totalElements;
-        },
-        set: function (value) {
-            this._totalElements = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return InteractorsSearchResult;
 }());
 
 

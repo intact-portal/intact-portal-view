@@ -1,0 +1,393 @@
+/*.masthead{*/
+/*  background-color: #648880;*/
+/*}*/
+
+/*
+  Colour palette: IntAct-Portal
+*/
+
+a {
+  color: #222;
+}
+
+dl dt a,
+a.label,
+.label,
+a:hover,
+a:focus,
+a:active {
+  color: rgb(107,72,107);
+}
+
+h1 { color: #312146; }
+h2 { color: rgb(107,72,107); }
+h3 { color: #444444; }
+
+a.special { background-color: #A699B7; }
+
+.menu .active > a,
+.tag,
+.tabs-title > a:hover,
+.button,
+.button.primary {
+  background-color: rgb(107,72,107);
+}
+a.tag:hover { color: #fff; }
+
+.tabs-title > a:hover,
+.button.hover,
+.button.primary:hover,
+.button.primary:focus { background: rgba(107,72,107,.9); }
+.tabs-title > a:focus,
+.tabs-title > a[aria-selected='true'] {
+  color: #fff;
+  background: rgb(107,72,107); }
+.tabs-title > a {
+  color: #312146;
+}
+.masthead { background-color: rgb(107,72,107); }
+
+/* end */
+
+/*IntAct tiles styling*/
+a.intact-background, .intact-background, .intact-background.button, .intact-background.button:hover, .intact-background.tag {
+  background: rgb(107,72,107);
+}
+
+/**************************************************************/
+/********* ADVANCED QUERY BUILDER RE-STYLE ********************/
+/**************************************************************/
+
+
+[_nghost-c11] .q-switch-label[_ngcontent-c11], [_nghost-c11] .q-button[_ngcontent-c11] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+[_nghost-c11] .q-button[_ngcontent-c11] {
+  margin-left: 8px;
+  padding: 0 8px;
+  background-color: #f6f4f6 !important;
+  border: none !important;
+}
+
+[_nghost-c11] .q-button[_ngcontent-c11]:focus {
+  outline: 0;
+  box-shadow: inset 0 0 0px 0.2rem rgba(0,123,255,.25);
+}
+
+[_nghost-c11] .q-remove-button[_ngcontent-c11] {
+  color: #B3415D;
+  width: 31px;
+  background-color: transparent !important;
+}
+
+[_nghost-c11] .q-tree[_ngcontent-c11] {
+  margin-left: 3.25rem !important;
+}
+
+[_nghost-c11] .q-connector[_ngcontent-c11]::before, [_nghost-c11] .q-connector[_ngcontent-c11]::after {
+  content: '';
+  left: -12px;
+  border: solid #CCC;
+  width: 9px;
+  height: calc(50% + 6px);
+  position: absolute;
+}
+
+[_nghost-c11] .q-connector[_ngcontent-c11]::before {
+  top: -5px;
+  border-width: 0 0 2px 2px;
+}
+
+[_nghost-c11] .q-control-size[_ngcontent-c11] {
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 10px;
+  margin-top: 8px;
+  margin-bottom: -3px;
+}
+
+/**************************************************************/
+/************** END ADVANCED QUERY BUILDER ********************/
+/**************************************************************/
+
+
+
+/**************************************************************/
+/*************** DATATABLES RE-STYLE ********************/
+/**************************************************************/
+
+div.dataTables_length > label > select {
+  box-sizing: border-box;
+  width: 41% !important;
+  border-radius: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  float: none;
+  text-align: center;
+  padding-top: 1em;
+}
+
+.dataTables_wrapper .dataTables_info {
+  padding-bottom: 1em;
+}
+
+table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
+  background-color: #f9f9f9;
+}
+
+/*************** PARTICIPANT DATATABLES ROW STYLE ********************/
+
+table#participantTable.tableDisplay {
+  width: 100% !important;
+  table-layout: fixed;
+}
+
+table#participantTable.tableDisplay tr {
+  font-size: 14px;
+}
+
+table#participantTable.tableDisplay th,
+table#participantTable.tableDisplay td {
+  text-align: left;
+  padding: 8px 10px;
+}
+
+table#participantTable.tableDisplay th {
+  overflow: auto;
+  word-break: break-word;
+}
+
+table#participantTable.tableDisplay td {
+  /*overflow: hidden;*/
+  vertical-align: top;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  /*white-space: nowrap;*/
+}
+
+table#participantTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
+.participantTable-Selection {
+  width: 4% !important;
+}
+.participantTable-Ac {
+  width: 7% !important;
+}
+.participantTable-Type {
+  width: 4% !important;
+}
+.participantTable-Identifier {
+  width: 5% !important;
+}
+.participantTable-Alias {
+  width: 5% !important;
+}
+.participantTable-Description {
+  width: 10% !important;
+}
+.participantTable-Species {
+  width: 5% !important;
+}
+.participantTable-ExpSystem {
+  width: 8% !important;
+}
+.participantTable-DetMethod {
+  width: 10% !important;
+}
+.participantTable-ExpRole {
+  width: 8% !important;
+}
+.participantTable-BioRole {
+  width: 6% !important;
+}
+.participantTable-ExpPreparations {
+  width: 6% !important;
+}
+.participantTable-Parameters {
+  width: 6% !important;
+}
+.participantTable-Confidences {
+  width: 6% !important;
+}
+.participantTable-Xrefs {
+  width: 5% !important;
+}
+.participantTable-Annotations {
+  width: 5% !important;
+}
+
+/********* FEATURE DATATABLES ROW STYLE ********************/
+
+table#featureTable.tableDisplay {
+  width: 100% !important;
+  table-layout: fixed;
+}
+
+table#featureTable.tableDisplay th,
+table#featureTable.tableDisplay td {
+  text-align: left;
+  padding: 8px 10px;
+}
+
+table#featureTable.tableDisplay th {
+  overflow: auto;
+  word-break: break-word;
+}
+
+table#featureTable.tableDisplay td {
+  /*overflow: hidden;*/
+  vertical-align: top;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  /*white-space: nowrap;*/
+}
+
+table#featureTable.tableDisplay tr {
+  font-size: 14px;
+}
+
+table#featureTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
+/* Column widths are based on these cells */
+.featureTable-Selection {
+  width: 4% !important;
+}
+.featureTable-Ac {
+  width: 6% !important;
+}
+.featureTable-Name {
+  width: 10% !important;
+}
+.featureTable-Type {
+  width: 5% !important;
+}
+.featureTable-Role {
+  width: 5% !important;
+}
+.featureTable-Range {
+  width: 6% !important;
+}
+.featureTable-LinkedFeatures {
+  width: 6% !important;
+}
+.featureTable-PartName {
+  width: 6% !important;
+}
+.featureTable-PartId {
+  width: 6% !important;
+}
+.featureTable-PartAc {
+  width: 6% !important;
+}
+.featureTable-DetMethod {
+  width: 8% !important;
+}
+.featureTable-Parameters {
+  width: 6% !important;
+}
+.featureTable-Identifiers {
+  width: 6% !important;
+}
+.featureTable-Xrefs {
+  width: 10% !important;
+}
+.featureTable-Annotations {
+  width: 10% !important;
+}
+
+/*************** SEARCH RESULT DATATABLES ROW STYLE ********************/
+
+table#interactionsTable.tableDisplay {
+  width: 100% !important;
+  table-layout: fixed;
+}
+
+table#interactionsTable.tableDisplay tr {
+  font-size: 14px;
+}
+
+table#interactionsTable.tableDisplay th,
+table#interactionsTable.tableDisplay td {
+  text-align: left;
+  padding: 8px 10px;
+}
+
+table#interactionsTable.tableDisplay th {
+  overflow: auto;
+  word-break: break-word;
+}
+
+table#interactionsTable.tableDisplay td {
+  /*overflow: hidden;*/
+  vertical-align: top;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  /*white-space: nowrap;*/
+}
+
+table#interactionsTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
+/********* DATATABLES ROWs COMMON STYLE ********************/
+
+.detailsCell {
+  font-size: 14px;
+  display: inline-block;
+}
+
+.detailsAnnotationCell {
+  background-color: #569fec52;
+  color: #14385f;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+
+.detailsXrefCell {
+  background-color:#dacee0;
+  color: #482c56f7;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+
+.detailsConfidencesCell {
+  background-color: #8d4cbd3d;
+  color: #42186d;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+
+
+.rowSelected {
+  /*font-weight: bold;*/
+  background-color: #305b7d66 !important;
+  /*text-shadow: 1px 1px 0px #EEE;*/
+  color: black;
+}
+.rowUnSelected {
+  /*font-weight: bold;*/
+  background-color: #305b7d66 !important;
+  /*text-shadow: 1px 1px 0px #EEE;*/
+  color: black;
+}
+
+/**************************************************************/
+/********* END DATATABLES ROW STYLES ********************/
+/**************************************************************/

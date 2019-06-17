@@ -8354,6 +8354,7 @@ module.exports = "<div class=\"row expanded\">\n\n  <iv-column-toggle [columnNam
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net__ = __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_datatables_net__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8366,6 +8367,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].intact_portal_ws;
 var FeaturesDetailsComponent = /** @class */ (function () {
     function FeaturesDetailsComponent() {
         // @Input() featureAc: string;
@@ -8391,7 +8394,7 @@ var FeaturesDetailsComponent = /** @class */ (function () {
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
             ajax: {
-                url: '/detailsService/graph/features/datatables/' + this.interactionAc,
+                url: baseURL + "/graph/features/datatables/" + this.interactionAc,
                 type: 'POST',
                 //   error: function(xhr, error, code) { console.log(error); },
                 //   success: function(result) {console.log(JSON.stringify(result))},
@@ -8710,6 +8713,7 @@ module.exports = "<div class=\"row expanded\">\n\n  <iv-column-toggle [columnNam
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net__ = __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8723,6 +8727,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].intact_portal_ws;
 var ParticipantDetailsComponent = /** @class */ (function () {
     function ParticipantDetailsComponent() {
         this.columnView = 'participants_columnView';
@@ -8749,7 +8755,7 @@ var ParticipantDetailsComponent = /** @class */ (function () {
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
             ajax: {
-                url: '/detailsService/graph/participants/datatables/' + this.interactionAc,
+                url: baseURL + "/graph/participants/datatables/" + this.interactionAc,
                 type: 'POST',
                 //   error: function(xhr, error, code) { console.log(error); },
                 //   success: function(result) {console.log(JSON.stringify(result))},
@@ -11749,6 +11755,7 @@ var InteractorsSearchResult = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11761,6 +11768,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].intact_portal_ws;
 var InteractionsDetailsService = /** @class */ (function () {
     function InteractionsDetailsService(http) {
         this.http = http;
@@ -11769,11 +11778,11 @@ var InteractionsDetailsService = /** @class */ (function () {
         this._pageSize = 20;
     }
     InteractionsDetailsService.prototype.getInteractionDetails = function (interactionAc) {
-        return this.http.get("/detailsService/graph/interaction/details/" + interactionAc)
+        return this.http.get(baseURL + "/graph/interaction/details/" + interactionAc)
             .catch(this.handleError);
     };
     InteractionsDetailsService.prototype.getInteractionViewer = function (interactionAc) {
-        return this.http.get("/detailsService/graph/interaction/export/" + interactionAc)
+        return this.http.get(baseURL + "/graph/interaction/export/" + interactionAc)
             .catch(this.handleError);
     };
     InteractionsDetailsService.prototype.getParticipantsDetails = function (interactionAc, currentPageIndex, pageSize) {
@@ -11785,7 +11794,7 @@ var InteractionsDetailsService = /** @class */ (function () {
             .set('page', currentPageIndex.toString())
             .set('pageSize', pageSize.toString());
         var options = interactionAc ? { params: params } : {};
-        return this.http.get("/detailsService/graph/participants/details/" + interactionAc, options)
+        return this.http.get(baseURL + "/graph/participants/details/" + interactionAc, options)
             .catch(this.handleError);
     };
     InteractionsDetailsService.prototype.handleError = function (err) {
@@ -11845,6 +11854,7 @@ var InteractionsDetailsService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11857,6 +11867,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].intact_portal_ws;
 var InteractionsSearchService = /** @class */ (function () {
     function InteractionsSearchService(http) {
         this.http = http;
@@ -11882,7 +11894,7 @@ var InteractionsSearchService = /** @class */ (function () {
             .set('page', currentPageIndex.toString())
             .set('pageSize', pageSize.toString());
         var options = query ? { params: params } : {};
-        return this.http.get('/interactionService/interaction/findInteractionWithFacet', options)
+        return this.http.get(baseURL + "/interaction/findInteractionWithFacet", options)
             .catch(this.handleError);
     };
     Object.defineProperty(InteractionsSearchService.prototype, "totalPages", {
@@ -11957,6 +11969,7 @@ var InteractionsSearchService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11969,7 +11982,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// const interactorBaseURL = environment.interactor_base_url;
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].intact_portal_ws;
 var InteractorsSearchService = /** @class */ (function () {
     function InteractorsSearchService(http) {
         this.http = http;
@@ -11984,11 +11998,11 @@ var InteractorsSearchService = /** @class */ (function () {
      * @returns {Observable<InteractorsSearchResult>}
      */
     InteractorsSearchService.prototype.getAllInteractors = function () {
-        return this.http.get('/interactorService' + '/getAll')
+        return this.http.get(baseURL + "/interactor/getAll")
             .catch(this.handleError);
     };
     InteractorsSearchService.prototype.getAllInteractorsAndFacets = function () {
-        return this.http.get('/interactorService/getAllTaxIdFacets')
+        return this.http.get(baseURL + "/interactor/getAllTaxIdFacets")
             .catch(this.handleError);
     };
     InteractorsSearchService.prototype.getAllInteractorsAndFacetsQuery = function (query, speciesFilter, interactorTypeFilter, detectionMethodFilter, interactionTypeFilter, hostOrganismFilter, negativeFilter, miScoreMin, miScoreMax, currentPageIndex, pageSize) {
@@ -12010,7 +12024,7 @@ var InteractorsSearchService = /** @class */ (function () {
             .set('minMiscore', miScoreMin.toString())
             .set('maxMiscore', miScoreMax.toString());
         var options = query ? { params: params } : {};
-        return this.http.get('/interactorService/interactor/findInteractorWithFacet', options)
+        return this.http.get(baseURL + "/interactor/findInteractorWithFacet", options)
             .catch(this.handleError);
     };
     Object.defineProperty(InteractorsSearchService.prototype, "totalPages", {
@@ -12085,6 +12099,7 @@ var InteractorsSearchService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12097,6 +12112,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].intact_portal_ws;
 var NetworkSearchService = /** @class */ (function () {
     function NetworkSearchService(http) {
         this.http = http;
@@ -12112,7 +12129,7 @@ var NetworkSearchService = /** @class */ (function () {
             .set('maxMiScore', miScoreMax.toString())
             .set('isNegativeFilter', negativeFilter.toString());
         var options = query ? { params: params } : {};
-        return this.http.get("/networkService/graph/getGraphJson", options)
+        return this.http.get(baseURL + "/graph/getGraphJson", options)
             .catch(this.handleError);
     };
     NetworkSearchService.prototype.handleError = function (err) {
@@ -12483,20 +12500,24 @@ function RGBColor(color_string) {
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 // Environment for production
-var EBI_BASE_URL = 'https://www.ebi.ac.uk';
+var EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+var LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 var INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
 var INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
 var environment = {
     production: false,
     evn: 'dev',
+    // analytics_id: 'UA-XXXXXX-XX',
     ebi_base_url: EBI_BASE_URL,
+    license_url: LICENSE_URL,
     intact_psi25_url: INTACT_FTP_BASE_URL + '/current/psi25/pmid',
     intact_psi30_url: INTACT_FTP_BASE_URL + '/current/psi30/pmid',
     intact_psimitab_url: INTACT_FTP_BASE_URL + '/current/psimitab/pmid',
     intact_dotm_url: EBI_BASE_URL + '/~intact/site/dotm/dotm-1.1.xml',
     intact_portal_url: EBI_BASE_URL + '/intact',
-    interactor_service_url: 'http://wwwdev.ebi.ac.uk/intact/ws/interactor',
-    interaction_service_url: 'http://wwwdev.ebi.ac.uk/intact/ws/interaction',
+    intact_portal_support_url: EBI_BASE_URL + 'support/intact',
+    intact_training_url: EBI_BASE_URL + 'intact/resources/training',
+    intact_portal_ws: EBI_BASE_URL + '/intact/ws',
     intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };
 

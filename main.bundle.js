@@ -9927,6 +9927,7 @@ module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n    
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net__ = __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9940,6 +9941,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].intact_portal_ws;
 var InteractionsTableComponent = /** @class */ (function () {
     function InteractionsTableComponent(route) {
         this.route = route;
@@ -9984,7 +9987,7 @@ var InteractionsTableComponent = /** @class */ (function () {
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
             ajax: {
-                url: '/interactionService/interaction/datatables/' + this.term,
+                url: baseURL + "/interaction/datatables/" + this.term,
                 type: 'POST',
                 data: function (d) {
                     d.page = d.start / d.length;
@@ -10248,6 +10251,7 @@ module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n    
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net__ = __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_datatables_net___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_datatables_net__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10261,6 +10265,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].intact_portal_ws;
 var InteractorsTableComponent = /** @class */ (function () {
     function InteractorsTableComponent(route) {
         this.route = route;
@@ -10304,7 +10310,7 @@ var InteractorsTableComponent = /** @class */ (function () {
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
             ajax: {
-                url: '/interactorService/interactor/datatables/' + this.term,
+                url: baseURL + "/interactor/datatables/" + this.term,
                 type: 'POST',
                 data: function (d) {
                     d.page = d.start / d.length;

@@ -7354,6 +7354,7 @@ module.exports = "<div class=\"row\">\n\n    <ul class=\"tabs\" data-tabs id=\"s
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7365,6 +7366,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+var baseURL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_ws;
 var SearchComponent = /** @class */ (function () {
     function SearchComponent(searchService) {
         this.searchService = searchService;
@@ -7385,7 +7388,7 @@ var SearchComponent = /** @class */ (function () {
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorId'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '/interactorService/interactor/findInteractor/%QUERY',
+                url: "" + baseURL + '/interactor/findInteractor/%QUERY',
                 wildcard: '%QUERY',
                 transform: function (data) {
                     return data.content;
@@ -7398,7 +7401,7 @@ var SearchComponent = /** @class */ (function () {
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             // local: jsonInteractionsData
             remote: {
-                url: '/interactionService/interaction/findInteractions/%QUERY',
+                url: "" + baseURL + '/interaction/findInteractions/%QUERY',
                 wildcard: '%QUERY',
                 transform: function (data) {
                     return data.content;

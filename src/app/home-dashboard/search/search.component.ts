@@ -47,7 +47,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     const interactionsData = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('authors'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      // local: jsonInteractionsData
       remote: {
         url: '/interactionService/interaction/findInteractions/%QUERY',
         wildcard: '%QUERY',

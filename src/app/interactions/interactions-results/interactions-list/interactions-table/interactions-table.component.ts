@@ -58,6 +58,7 @@ export class InteractionsTableComponent implements OnInit {
       });
 
     this.initDataTable();
+    // $('.dataTable').wrap('<div class="dataTables_scroll" />');
   }
 
   private initDataTable(): void {
@@ -72,6 +73,8 @@ export class InteractionsTableComponent implements OnInit {
       processing: true,
       serverSide: true,
       dom: '<"top"li>rt<"bottom"p><"clear">',
+      // autoWidth: false,
+      scrollX: true,
       ajax: {
         url: '/interactionService/interaction/datatables/' + this.term,
         type: 'POST',

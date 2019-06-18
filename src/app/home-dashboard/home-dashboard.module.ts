@@ -13,6 +13,7 @@ import { DatasetArchiveComponent } from './featured-dataset/dataset-archive/data
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {QueryBuilderModule} from 'angular2-query-builder';
+import {ContributorsComponent} from './contributors/contributors.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import {QueryBuilderModule} from 'angular2-query-builder';
     FeaturedDatasetComponent,
     NewsComponent,
     DatasetArchiveComponent,
-    AdvancedSearchComponent
+    AdvancedSearchComponent,
+    ContributorsComponent
   ]
 })
 export class HomeDashboardModule {

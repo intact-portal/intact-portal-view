@@ -9,7 +9,7 @@ import 'datatables.net';
   templateUrl: './participant-details.component.html',
   styleUrls: ['./participant-details.component.css']
 })
-export class ParticipantDetailsComponent implements OnInit {
+export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
 
   private _participantDetails: ParticipantDetails;
   @Input() interactionAc: string;
@@ -29,6 +29,15 @@ export class ParticipantDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initDataTable();
+    // This fixes the alignment between the th and td when we have activated scrollX:true
+    const table: any = $('#participantTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
+  }
+
+  ngAfterViewInit(): void {
+    // This fixes the alignment between the th and td when we have activated scrollX:true
+    const table: any = $('#participantTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
   private initDataTable(): void {
@@ -43,6 +52,7 @@ export class ParticipantDetailsComponent implements OnInit {
       processing: true,
       serverSide: true,
       dom: '<"top"li>rt<"bottom"p><"clear">',
+      scrollX: true,
       ajax: {
         url: '/detailsService/participants/datatables/' + this.interactionAc,
         type: 'POST',

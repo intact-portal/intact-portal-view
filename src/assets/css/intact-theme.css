@@ -196,183 +196,6 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9;
 }
 
-table.dataTable,
-table.dataTable thead, table.dataTable tbody,
-table.dataTable th,
-table.dataTable td {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-}
-
-/*************** PARTICIPANT DATATABLES ROW STYLE ********************/
-
-table#participantTable.tableDisplay {
-  width: 100% !important;
-  table-layout: fixed;
-}
-
-table#participantTable.tableDisplay tr {
-  font-size: 14px;
-}
-
-table#participantTable.tableDisplay th,
-table#participantTable.tableDisplay td {
-  text-align: left;
-  padding: 8px 10px;
-}
-
-table#participantTable.tableDisplay th {
-  overflow-x: auto;
-  /*word-break: break-word;*/
-}
-
-table#participantTable.tableDisplay td {
-  /*overflow: hidden;*/
-  vertical-align: top;
-  text-overflow: ellipsis;
-  /*word-break: break-word;*/
-  /*white-space: nowrap;*/
-}
-
-table#participantTable.tableDisplay td:nth-child(1) {
-  text-align: center !important;
-}
-
-.participantTable-Selection {
-  width: 4% !important;
-}
-.participantTable-Ac {
-  width: 7% !important;
-}
-.participantTable-Type {
-  width: 4% !important;
-}
-.participantTable-Identifier {
-  width: 5% !important;
-}
-.participantTable-Alias {
-  width: 5% !important;
-}
-.participantTable-Description {
-  width: 10% !important;
-}
-.participantTable-Species {
-  width: 5% !important;
-}
-.participantTable-ExpSystem {
-  width: 8% !important;
-}
-.participantTable-DetMethod {
-  width: 10% !important;
-}
-.participantTable-ExpRole {
-  width: 8% !important;
-}
-.participantTable-BioRole {
-  width: 6% !important;
-}
-.participantTable-ExpPreparations {
-  width: 6% !important;
-}
-.participantTable-Parameters {
-  width: 6% !important;
-}
-.participantTable-Confidences {
-  width: 6% !important;
-}
-.participantTable-Xrefs {
-  width: 5% !important;
-}
-.participantTable-Annotations {
-  width: 5% !important;
-}
-
-/********* FEATURE DATATABLES ROW STYLE ********************/
-
-table#featureTable.tableDisplay {
-  width: 100% !important;
-  table-layout: fixed;
-}
-
-table#featureTable.tableDisplay th,
-table#featureTable.tableDisplay td {
-  text-align: left;
-  padding: 8px 10px;
-}
-
-table#featureTable.tableDisplay th {
-  overflow: auto;
-  word-break: break-word;
-}
-
-table#featureTable.tableDisplay td {
-  /*overflow: hidden;*/
-  vertical-align: top;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  /*white-space: nowrap;*/
-}
-
-table#featureTable.tableDisplay tr {
-  font-size: 14px;
-}
-
-table#featureTable.tableDisplay td:nth-child(1) {
-  text-align: center !important;
-}
-
-/* Column widths are based on these cells */
-.featureTable-Selection {
-  width: 4% !important;
-}
-.featureTable-Ac {
-  width: 6% !important;
-}
-.featureTable-Name {
-  width: 10% !important;
-}
-.featureTable-Type {
-  width: 5% !important;
-}
-.featureTable-Role {
-  width: 5% !important;
-}
-.featureTable-Range {
-  width: 6% !important;
-}
-.featureTable-LinkedFeatures {
-  width: 6% !important;
-}
-.featureTable-PartName {
-  width: 6% !important;
-}
-.featureTable-PartId {
-  width: 6% !important;
-}
-.featureTable-PartAc {
-  width: 6% !important;
-}
-.featureTable-DetMethod {
-  width: 8% !important;
-}
-.featureTable-Parameters {
-  width: 6% !important;
-}
-.featureTable-Identifiers {
-  width: 6% !important;
-}
-.featureTable-Xrefs {
-  width: 10% !important;
-}
-.featureTable-Annotations {
-  width: 10% !important;
-}
-
-/*************** SEARCH RESULT DATATABLES ROW STYLE ********************/
-
-/********* Interactions table style ********************/
-
 .dataTable{
   width: 100% !important;
 }
@@ -382,94 +205,40 @@ table.dataTable tbody td {
   white-space: nowrap;
 }
 
-table#interactionsTable tr, th {
+table.dataTable,
+table.dataTable thead, table.dataTable tbody,
+table.dataTable th,
+table.dataTable td {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+table.dataTable tr, th {
   font-size: 13px;
 }
+
+/*************** PARTICIPANT DATATABLES ROW STYLE ********************/
+
+
+table#participantTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
+/********* Features table style ********************/
+
+table#featureTable.tableDisplay td:nth-child(1) {
+  text-align: center !important;
+}
+
+
+/********* Interactions table style ********************/
 
 table#interactionsTable.tableDisplay td:nth-child(1) {
   text-align: center !important;
 }
 
-
-/* Column widths are based on these cells */
-.interactionsTable-Selection {
-  width: 4% !important;
-}
-.interactionsTable-MoleculeA {
-  width: 6% !important;
-}
-.interactionsTable-MoleculeB {
-  width: 10% !important;
-}
-.interactionsTable-SpeciesA {
-  width: 5% !important;
-}
-.interactionsTable-SpeciesB {
-  width: 5% !important;
-}
-.interactionsTable-DetMethod {
-  width: 6% !important;
-}
-.interactionsTable-PublicationId {
-  width: 6% !important;
-}
-.interactionsTable-InteractionType {
-  width: 6% !important;
-}
-.interactionsTable-InteractionAc {
-  width: 6% !important;
-}
-.interactionsTable-Database {
-  width: 6% !important;
-}
-.interactionsTable-Confidence {
-  width: 8% !important;
-}
-.interactionsTable-ExpMethod {
-  width: 6% !important;
-}
-.interactionsTable-ExpRoleA {
-  width: 6% !important;
-}
-.interactionsTable-ExpRoleB {
-  width: 6% !important;
-}
-.interactionsTable-InteractorTypeA {
-  width: 5% !important;
-}
-.interactionsTable-InteractorTypeB {
-  width: 5% !important;
-}
-
 /********* Interactors table style ********************/
-
-table#interactorsTable.tableDisplay {
-  width: 100% !important;
-  /*table-layout: fixed;*/
-}
-
-table#interactorsTable.tableDisplay tr {
-  font-size: 14px;
-}
-
-table#interactorsTable.tableDisplay th,
-table#interactorsTable.tableDisplay td {
-  text-align: left;
-  padding: 8px 10px;
-}
-
-table#interactorsTable.tableDisplay th {
-  overflow: auto;
-  word-break: break-word;
-}
-
-table#interactorsTable.tableDisplay td {
-  /*overflow: hidden;*/
-  vertical-align: top;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  /*white-space: nowrap;*/
-}
 
 table#interactorsTable.tableDisplay td:nth-child(1) {
   text-align: left !important;

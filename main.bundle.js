@@ -10043,7 +10043,7 @@ var InteractionsTableComponent = /** @class */ (function () {
                             return '<div>' +
                                 '<input type="checkbox" id="' + full.interactionAc + '" name="check" value="' + data + '"/>' +
                                 ' <span class="margin-left-medium">' +
-                                '   <a href="/details/interaction/' + full.interactionAc + '">' +
+                                '   <a routerLink="/details/interaction/' + full.interactionAc + '">' +
                                 '     <i class="icon icon-common icon-search-document"></i>' +
                                 '   </a>' +
                                 ' </span>' +

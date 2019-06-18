@@ -3,29 +3,31 @@
                     [dataTable]="dataTable"
                     [columnView]="columnView"></iv-column-toggle>
 
-  <table id="interactionsTable" class="display tableDisplay">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Molecule A</th>
-      <th>Molecule B</th>
-      <th>Species A</th>
-      <th>Species B</th>
-      <th>Interaction Detection Method</th>
-      <th>Publication Identifier</th>
-      <th>Interaction Type</th>
-      <th>Interaction AC</th>
-      <th>Database</th>
-      <th>Confidence Value</th>
-      <th>Expansion Method</th>
-      <th>Experimental Role A</th>
-      <th>Experimental Role B</th>
-      <th>Interactor Type A</th>
-      <th>Interactor Type B</th>
-    </tr>
-    </thead>
+  <div id="innerTable">
+    <table id="interactionsTable" class="tableDisplay">
+      <thead>
+      <tr>
+        <th class="interactionsTable-Selection"></th>
+        <th class="interactionsTable-MoleculeA">Molecule A</th>
+        <th class="interactionsTable-MoleculeB">Molecule B</th>
+        <th class="interactionsTable-SpeciesA">Species A</th>
+        <th>Species B</th>
+        <th>Interaction Detection Method</th>
+        <th>Publication Identifier</th>
+        <th>Interaction Type</th>
+        <th>Interaction AC</th>
+        <th>Database</th>
+        <th>Confidence Value</th>
+        <th>Expansion Method</th>
+        <th>Experimental Role A</th>
+        <th>Experimental Role B</th>
+        <th>Interactor Type A</th>
+        <th>Interactor Type B</th>
+      </tr>
+      </thead>
 
-    <tbody></tbody>
+      <tbody></tbody>
 
   </table>
+  </div>
 </div>

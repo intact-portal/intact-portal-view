@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, ViewEncapsulation, SimpleChanges, OnChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewEncapsulation, SimpleChanges, OnChanges, OnInit} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -13,7 +13,7 @@ const IntactGraph = require('expose-loader?IntactGraph!intact_network');
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
+export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   private _term: string;
   private _speciesNameFilter: string[];
@@ -34,7 +34,7 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
               private router: Router,
               private networkSearchService: NetworkSearchService) { }
 
-  ngAfterViewInit() {
+  ngOnInit(): void {
     $('iv-interactions-viewer').foundation();
 
     this.route.queryParams
@@ -49,29 +49,11 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
-        this.interactorsSelected = params.interactorsSelected ? params.interactorsSelected.split('+') : [];
+        // this.interactorSelected = params.interactorSelected ? params.interactorSelected.split('+') : [];
         // this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
 
         this.requestIntactNetworkDetails();
       });
-
-    // this.httpService.get('../../../assets/demo_interactions.json').subscribe(
-    //   data => {
-    //     this.interactionsJSON = data;
-    //
-    //     if (this.interactionsJSON !== undefined) {
-    //       console.log('InteractionsJson dummy is ' + this.interactionsJSON);
-    //
-    //       $('iv-interactions-viewer').foundation();
-    //       xlv = new xiNET('graphViewerContainer');
-    //       xlv.readMIJSON(this.interactionsJSON, true);
-    //       xlv.autoLayout();
-    //     }
-    //   },
-    //   (err: HttpErrorResponse) => {
-    //     console.log (err.message);
-    //   }
-    // );
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -81,8 +63,7 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
 
     if (cur !== undefined) {
       IntactGraph.filterAndHighlight(cur, 'interactions') ;
-    }
-    else {
+    } else {
       IntactGraph.filterAndHighlight([], 'interactions') ;
     }
   }
@@ -108,8 +89,6 @@ export class InteractionsViewerComponent implements AfterViewInit, OnChanges {
     })
   }
 
- ngOnInit(): void {
- }
   get term(): string {
     return this._term;
   }

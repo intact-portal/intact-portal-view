@@ -157,15 +157,15 @@ table#participantTable.tableDisplay td {
 }
 
 table#participantTable.tableDisplay th {
-  overflow: auto;
-  word-break: break-word;
+  overflow-x: auto;
+  /*word-break: break-word;*/
 }
 
 table#participantTable.tableDisplay td {
   /*overflow: hidden;*/
   vertical-align: top;
   text-overflow: ellipsis;
-  word-break: break-word;
+  /*word-break: break-word;*/
   /*white-space: nowrap;*/
 }
 
@@ -307,36 +307,87 @@ table#featureTable.tableDisplay td:nth-child(1) {
 
 /********* Interactions table style ********************/
 
-table#interactionsTable.tableDisplay {
-  width: 100% !important;
+.dataTable{
   table-layout: fixed;
+  width: 100% !important;
+  overflow-x: visible;
 }
 
 table#interactionsTable.tableDisplay tr {
   font-size: 14px;
 }
 
-table#interactionsTable.tableDisplay th,
-table#interactionsTable.tableDisplay td {
-  text-align: left;
-  padding: 8px 10px;
-}
+/*table#interactionsTable.tableDisplay th,*/
+/*table#interactionsTable.tableDisplay td {*/
+/*  text-align: left;*/
+/*  padding: 8px 10px;*/
+/*}*/
 
-table#interactionsTable.tableDisplay th {
-  overflow: auto;
-  word-break: break-word;
-}
+/*table#interactionsTable.tableDisplay th {*/
+/*  overflow: auto;*/
+/*  !*word-break: break-word;*!*/
+/*}*/
 
-table#interactionsTable.tableDisplay td {
-  /*overflow: hidden;*/
-  vertical-align: top;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  /*white-space: nowrap;*/
-}
+/*table#interactionsTable.tableDisplay td {*/
+/*  !*overflow: hidden;*!*/
+/*  vertical-align: top;*/
+/*  text-overflow: ellipsis;*/
+/*  !*word-break: break-word;*!*/
+/*  !*white-space: nowrap;*!*/
+/*}*/
 
-table#interactionsTable.tableDisplay td:nth-child(1) {
-  text-align: center !important;
+/*table#interactionsTable.tableDisplay td:nth-child(1) {*/
+/*  text-align: center !important;*/
+/*}*/
+
+/* Column widths are based on these cells */
+.interactionsTable-Selection {
+  width: 4% !important;
+}
+.interactionsTable-MoleculeA {
+  width: 6% !important;
+}
+.interactionsTable-MoleculeB {
+  width: 10% !important;
+}
+.interactionsTable-SpeciesA {
+  width: 5% !important;
+}
+.interactionsTable-SpeciesB {
+  width: 5% !important;
+}
+.interactionsTable-DetMethod {
+  width: 6% !important;
+}
+.interactionsTable-PublicationId {
+  width: 6% !important;
+}
+.interactionsTable-InteractionType {
+  width: 6% !important;
+}
+.interactionsTable-InteractionAc {
+  width: 6% !important;
+}
+.interactionsTable-Database {
+  width: 6% !important;
+}
+.interactionsTable-Confidence {
+  width: 8% !important;
+}
+.interactionsTable-ExpMethod {
+  width: 6% !important;
+}
+.interactionsTable-ExpRoleA {
+  width: 6% !important;
+}
+.interactionsTable-ExpRoleB {
+  width: 6% !important;
+}
+.interactionsTable-InteractorTypeA {
+  width: 5% !important;
+}
+.interactionsTable-InteractorTypeB {
+  width: 5% !important;
 }
 
 /********* Interactors table style ********************/

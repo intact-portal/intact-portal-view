@@ -3,6 +3,9 @@ import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
 import 'datatables.net';
+import {environment} from '../../../../../environments/environment';
+
+const baseURL = environment.intact_portal_ws;
 
 @Component({
   selector: 'iv-interactions-table',
@@ -84,7 +87,7 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: '/interactionService/interaction/datatables/' + this.term,
+        url: `${baseURL}/interaction/datatables/` + this.term,
         type: 'POST',
         data: function (d) {
           d.page = d.start / d.length;
@@ -107,7 +110,7 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
               return '<div>' +
                 '<input type="checkbox" id="' + full.interactionAc + '" name="check" value="' + data + '"/>' +
                 ' <span class="margin-left-medium">' +
-                '   <a href="/details/interaction/' + full.interactionAc + '">' +
+                '   <a href="/intact-view/details/interaction/' + full.interactionAc + '">' +
                 '     <i class="icon icon-common icon-search-document"></i>' +
                 '   </a>' +
                 ' </span>' +

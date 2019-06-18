@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {InteractionsSearchResult} from '../model/interactions-results/interaction/interactions-search.model';
 import {environment} from '../../../../environments/environment';
 
+const baseURL = environment.intact_portal_ws;
+
 @Injectable()
 export class InteractionsSearchService {
 
@@ -41,7 +43,7 @@ export class InteractionsSearchService {
 
     const options = query ? {params: params} : {};
 
-    return this.http.get('/interactionService/interaction/findInteractionWithFacet', options)
+    return this.http.get(`${baseURL}/interaction/findInteractionWithFacet`, options)
       .catch(this.handleError);
   }
 

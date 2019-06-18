@@ -3,6 +3,9 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {ParticipantDetails} from '../model/interaction-details/participant-details.model';
+import {environment} from '../../../../environments/environment';
+
+const baseURL = environment.intact_portal_ws;
 
 @Injectable()
 export class InteractionsDetailsService {
@@ -14,12 +17,12 @@ export class InteractionsDetailsService {
   constructor(private http: HttpClient) { }
 
   getInteractionDetails(interactionAc: string): Observable<InteractionDetails> {
-    return this.http.get(`/detailsService/interaction/details/${interactionAc}`)
+    return this.http.get(`${baseURL}/graph/interaction/details/${interactionAc}`)
       .catch(this.handleError);
   }
 
   getInteractionViewer(interactionAc: string): Observable<any> {
-    return this.http.get(`/detailsService/interaction/export/${interactionAc}`)
+    return this.http.get(`${baseURL}/graph/interaction/export/${interactionAc}`)
       .catch(this.handleError);
   }
 
@@ -37,7 +40,7 @@ export class InteractionsDetailsService {
 
     const options = interactionAc ? {params: params} : {};
 
-    return this.http.get(`/detailsService/participants/details/${interactionAc}`, options)
+    return this.http.get(`${baseURL}/graph/participants/details/${interactionAc}`, options)
       .catch(this.handleError);
   }
 

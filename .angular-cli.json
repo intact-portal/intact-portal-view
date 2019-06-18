@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        ".gitbook/assets",
         "favicon.ico"
       ],
       "index": "index.html",

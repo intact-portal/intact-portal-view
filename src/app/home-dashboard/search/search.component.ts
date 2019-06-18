@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SearchService} from './service/search.service';
+import {environment} from '../../../environments/environment';
 
 declare const Bloodhound;
 declare const $: any;
+const baseURL = environment.intact_portal_ws;
 
 @Component({
   selector: 'iv-search',
@@ -35,7 +37,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorId'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: '/interactorService/interactor/findInteractor/%QUERY',
+        url: `${baseURL}` + '/interactor/findInteractor/%QUERY',
         wildcard: '%QUERY',
         transform: function (data) {
           return data.content;
@@ -48,7 +50,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('authors'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: '/interactionService/interaction/findInteractions/%QUERY',
+        url: `${baseURL}` + '/interaction/findInteractions/%QUERY',
         wildcard: '%QUERY',
         transform: function (data) {
           return data.content;

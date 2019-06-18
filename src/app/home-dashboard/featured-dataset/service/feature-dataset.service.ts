@@ -22,7 +22,7 @@ export class FeatureDatasetService {
     };
 
     const url = `${intactDotmURL}`;
-    return this.http.get('/proxy', {responseType: 'text'})
+    return this.http.get(`${intactDotmURL}`, {responseType: 'text'})
       .catch(this.handleError);
   }
 

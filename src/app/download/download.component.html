@@ -1,3 +1,19 @@
-<p>
-  download works!
-</p>
+<div class="margin-top-large margin-bottom-large row">
+
+  <ul class="tabs" data-tabs id="download-tabs">
+    <li class="tabs-title is-active"><a href="#ftp" aria-selected="true">FTP</a></li>
+    <li class="tabs-title"><a href="#dataset_files">Dataset Files</a></li>
+  </ul>
+
+  <div class="tabs-content" data-tabs-content="download-tabs">
+    <div class="tabs-panel is-active" id="ftp">
+      <markdown [src]=ftp></markdown>
+    </div>
+
+    <div class="tabs-panel" id="dataset_files">
+      <markdown [src]=curated_datasets></markdown>
+      <markdown [src]=species_based_datasets></markdown>
+      <markdown [src]=mutations></markdown>
+    </div>
+  </div>
+</div>

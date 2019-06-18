@@ -6054,7 +6054,7 @@ module.exports = "\n/* CONTRIBUTORS SECTION SYTLE */\n\n.contributors-container 
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n  <div data-sticky-container>\n    <header id=\"masthead\" class=\"masthead\" data-sticky data-sticky-on=\"large\" data-top-anchor=\"content:top\" data-btm-anchor=\"content:bottom\">\n      <div class=\"masthead-inner row expanded\"> <!-- expanded -->\n        <!-- local-title -->\n        <div class=\"columns medium-12\" id=\"local-title\">\n          <a routerLink=\"/home\" title=\"Back to Intact homepage\">\n            <img src=\"assets/images/IntAct_Logo.svg\" class=\"padding-left-xlarge padding-bottom-large\"\n                 width=\"425px\">\n          </a>\n        </div>\n        <!-- /local-title -->\n\n        <!-- local-nav -->\n        <nav>\n          <ul id=\"local-nav\" class=\"dropdown menu float-left\" data-description=\"navigational\">\n            <li><a routerLink=\"/\">Home</a></li>\n            <li><a routerLink=\"/download\">Download</a></li>\n            <li><a data-open=\"modal-download\">Release notes</a></li>\n            <li><a routerLink=\"/faq\">FAQ</a></li>\n            <li><a routerLink=\"/about\">About</a></li>\n<!--            <li><a href=\"#\">Support <i class=\"icon icon-generic\" data-icon=\"x\"></i></a></li>-->\n          </ul>\n        </nav>\n        <!-- /local-nav -->\n      </div>\n    </header>\n  </div>\n\n  <!-- Suggested layout containers -->\n  <section id=\"main-content-area\" class=\"row margin-top-large margin-bottom-medium expanded\" role=\"main\">\n\n    <section>\n      <router-outlet></router-outlet>\n      <!-- Routed views go here -->\n    </section>\n\n  </section>\n\n\n  <!-- Local footer -->\n\n  <div class=\"row margin-top-medium expanded\">\n\n  <footer id=\"local-footer\" class=\"local-footer row expanded contributors-container\" role=\"local-footer\"> <!-- expanded -->\n      <iv-contributors></iv-contributors>\n  </footer>\n\n  </div>\n\n  <!-- End local footer -->\n"
+module.exports = "\n  <div data-sticky-container>\n    <header id=\"masthead\" class=\"masthead\" data-sticky data-sticky-on=\"large\" data-top-anchor=\"content:top\" data-btm-anchor=\"content:bottom\">\n      <div class=\"masthead-inner row expanded\"> <!-- expanded -->\n        <!-- local-title -->\n        <div class=\"columns medium-12\" id=\"local-title\">\n          <a routerLink=\"/\" title=\"Back to Intact homepage\">\n            <img src=\"assets/images/IntAct_Logo.svg\" class=\"padding-left-xlarge padding-bottom-large\"\n                 width=\"300px\">\n          </a>\n        </div>\n        <!-- /local-title -->\n\n        <!-- local-nav -->\n        <nav>\n          <ul id=\"local-nav\" class=\"dropdown menu float-left\" data-description=\"navigational\">\n            <li><a routerLink=\"/\">Home</a></li>\n            <li><a routerLink=\"/download\">Download</a></li>\n<!--            <li><a data-open=\"modal-download\">Release notes</a></li>-->\n            <li><a routerLink=\"/faq\">FAQ</a></li>\n            <li><a routerLink=\"/about\">About</a></li>\n            <li><a href=\"//www.ebi.ac.uk/support/intact\">Support <i class=\"icon icon-generic\" data-icon=\"x\"></i></a></li>\n          </ul>\n        </nav>\n        <!-- /local-nav -->\n      </div>\n    </header>\n  </div>\n\n  <!-- Suggested layout containers -->\n  <section id=\"main-content-area\" class=\"row margin-top-large margin-bottom-medium expanded\" role=\"main\">\n\n    <section>\n      <router-outlet></router-outlet>\n      <!-- Routed views go here -->\n    </section>\n\n  </section>\n\n\n  <!-- Local footer -->\n\n  <div class=\"row margin-top-medium expanded\">\n\n  <footer id=\"local-footer\" class=\"local-footer row expanded contributors-container\" role=\"local-footer\"> <!-- expanded -->\n  </footer>\n\n  </div>\n\n  <!-- End local footer -->\n"
 
 /***/ }),
 
@@ -6114,26 +6114,24 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__("./src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_routing_module__ = __webpack_require__("./src/app/app-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_dashboard_home_dashboard_module__ = __webpack_require__("./src/app/home-dashboard/home-dashboard.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_dashboard_contributors_contributors_component__ = __webpack_require__("./src/app/home-dashboard/contributors/contributors.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__home_dashboard_featured_dataset_service_feature_dataset_service__ = __webpack_require__("./src/app/home-dashboard/featured-dataset/service/feature-dataset.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__interactions_interactions_results_interactions_results_module__ = __webpack_require__("./src/app/interactions/interactions-results/interactions-results.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__home_dashboard_search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__interactions_shared_service_interactors_search_service__ = __webpack_require__("./src/app/interactions/shared/service/interactors-search.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__interactions_shared_service_interactions_search_service__ = __webpack_require__("./src/app/interactions/shared/service/interactions-search.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__interactions_interaction_details_interaction_details_module__ = __webpack_require__("./src/app/interactions/interaction-details/interaction-details.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__interactions_shared_service_interactions_details_service__ = __webpack_require__("./src/app/interactions/shared/service/interactions-details.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__interactions_shared_service_network_search_service__ = __webpack_require__("./src/app/interactions/shared/service/network-search.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__about_about_component__ = __webpack_require__("./src/app/about/about.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__download_download_component__ = __webpack_require__("./src/app/download/download.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__faq_faq_component__ = __webpack_require__("./src/app/faq/faq.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ngx_markdown__ = __webpack_require__("./node_modules/ngx-markdown/fesm5/ngx-markdown.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_dashboard_featured_dataset_service_feature_dataset_service__ = __webpack_require__("./src/app/home-dashboard/featured-dataset/service/feature-dataset.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__interactions_interactions_results_interactions_results_module__ = __webpack_require__("./src/app/interactions/interactions-results/interactions-results.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__home_dashboard_search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__interactions_shared_service_interactors_search_service__ = __webpack_require__("./src/app/interactions/shared/service/interactors-search.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__interactions_shared_service_interactions_search_service__ = __webpack_require__("./src/app/interactions/shared/service/interactions-search.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__interactions_interaction_details_interaction_details_module__ = __webpack_require__("./src/app/interactions/interaction-details/interaction-details.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__interactions_shared_service_interactions_details_service__ = __webpack_require__("./src/app/interactions/shared/service/interactions-details.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__interactions_shared_service_network_search_service__ = __webpack_require__("./src/app/interactions/shared/service/network-search.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__about_about_component__ = __webpack_require__("./src/app/about/about.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__download_download_component__ = __webpack_require__("./src/app/download/download.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__faq_faq_component__ = __webpack_require__("./src/app/faq/faq.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_ngx_markdown__ = __webpack_require__("./node_modules/ngx-markdown/fesm5/ngx-markdown.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -6160,28 +6158,27 @@ var AppModule = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["J" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__home_dashboard_contributors_contributors_component__["a" /* ContributorsComponent */],
-                __WEBPACK_IMPORTED_MODULE_16__about_about_component__["a" /* AboutComponent */],
-                __WEBPACK_IMPORTED_MODULE_17__download_download_component__["a" /* DownloadComponent */],
-                __WEBPACK_IMPORTED_MODULE_18__faq_faq_component__["a" /* FaqComponent */]
+                __WEBPACK_IMPORTED_MODULE_15__about_about_component__["a" /* AboutComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__download_download_component__["a" /* DownloadComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__faq_faq_component__["a" /* FaqComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_6__home_dashboard_home_dashboard_module__["HomeDashboardModule"],
-                __WEBPACK_IMPORTED_MODULE_9__interactions_interactions_results_interactions_results_module__["InteractionsResultsModule"],
-                __WEBPACK_IMPORTED_MODULE_13__interactions_interaction_details_interaction_details_module__["InteractionDetailsModule"],
+                __WEBPACK_IMPORTED_MODULE_8__interactions_interactions_results_interactions_results_module__["InteractionsResultsModule"],
+                __WEBPACK_IMPORTED_MODULE_12__interactions_interaction_details_interaction_details_module__["InteractionDetailsModule"],
                 __WEBPACK_IMPORTED_MODULE_5__app_routing_module__["a" /* AppRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_19_ngx_markdown__["a" /* MarkdownModule */].forRoot()
+                __WEBPACK_IMPORTED_MODULE_18_ngx_markdown__["a" /* MarkdownModule */].forRoot()
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_8__home_dashboard_featured_dataset_service_feature_dataset_service__["a" /* FeatureDatasetService */],
-                __WEBPACK_IMPORTED_MODULE_10__home_dashboard_search_service_search_service__["a" /* SearchService */],
-                __WEBPACK_IMPORTED_MODULE_11__interactions_shared_service_interactors_search_service__["a" /* InteractorsSearchService */],
-                __WEBPACK_IMPORTED_MODULE_12__interactions_shared_service_interactions_search_service__["a" /* InteractionsSearchService */],
-                __WEBPACK_IMPORTED_MODULE_14__interactions_shared_service_interactions_details_service__["a" /* InteractionsDetailsService */],
-                __WEBPACK_IMPORTED_MODULE_15__interactions_shared_service_network_search_service__["a" /* NetworkSearchService */],
+                __WEBPACK_IMPORTED_MODULE_7__home_dashboard_featured_dataset_service_feature_dataset_service__["a" /* FeatureDatasetService */],
+                __WEBPACK_IMPORTED_MODULE_9__home_dashboard_search_service_search_service__["a" /* SearchService */],
+                __WEBPACK_IMPORTED_MODULE_10__interactions_shared_service_interactors_search_service__["a" /* InteractorsSearchService */],
+                __WEBPACK_IMPORTED_MODULE_11__interactions_shared_service_interactions_search_service__["a" /* InteractionsSearchService */],
+                __WEBPACK_IMPORTED_MODULE_13__interactions_shared_service_interactions_details_service__["a" /* InteractionsDetailsService */],
+                __WEBPACK_IMPORTED_MODULE_14__interactions_shared_service_network_search_service__["a" /* NetworkSearchService */],
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
         })
@@ -6203,7 +6200,7 @@ module.exports = ""
 /***/ "./src/app/download/download.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  download works!\n</p>\n"
+module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n\n  <ul class=\"tabs\" data-tabs id=\"download-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"#ftp\" aria-selected=\"true\">FTP</a></li>\n    <li class=\"tabs-title\"><a href=\"#dataset_files\">Dataset Files</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"download-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"ftp\">\n      <markdown [src]=ftp></markdown>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"dataset_files\">\n      <markdown [src]=curated_datasets></markdown>\n      <markdown [src]=species_based_datasets></markdown>\n      <markdown [src]=mutations></markdown>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -6214,6 +6211,7 @@ module.exports = "<p>\n  download works!\n</p>\n"
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DownloadComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6225,12 +6223,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var DownloadComponent = /** @class */ (function () {
     function DownloadComponent(titleService) {
         this.titleService = titleService;
+        this.ftp = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/ftp.md';
+        this.curated_datasets = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/dataset-files/curated-datasets.md';
+        this.species_based_datasets = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/dataset-files/species-based-datasets.md';
+        this.mutations = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/dataset-files/mutations.md';
     }
     DownloadComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle('Download');
+    };
+    DownloadComponent.prototype.ngAfterViewInit = function () {
+        $('iv-download').foundation();
     };
     DownloadComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -6690,7 +6696,7 @@ module.exports = ""
 /***/ "./src/app/home-dashboard/contributors/contributors.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"contributors\" class=\"row expanded padding-left-xlarge margin-top-large\">\n  <h3><p class=\"icon icon-generic\" data-icon=\"}\"> Our Contributors</p></h3>\n</div>\n\n<div class=\"row expanded padding-left-xlarge margin-top-large margin-bottom-xlarge padding-bottom-small\">\n  <div class=\"columns medium-1 medium-offset-1\">\n    <a href=\"//www.ceitec.eu\" target=\"_blank\"><img src=\"assets/images/contributors/Ceitec.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.evidenceontology.org/\" target=\"_blank\"><img src=\"assets/images/contributors/eco.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.ucl.ac.uk/functional-gene-annotation/cardiovascular\" target=\"_blank\"><img src=\"assets/images/contributors/imex_acg_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//matrixdb.univ-lyon1.fr\" target=\"_blank\"><img src=\"assets/images/contributors/matrixdb.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//mint.bio.uniroma2.it\" target=\"_blank\"><img src=\"assets/images/contributors/Mint.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.ebi.ac.uk/pdbe/\" target=\"_blank\"><img src=\"assets/images/contributors/PDBe.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.yeastgenome.org\" target=\"_blank\"><img src=\"assets/images/contributors/SGD.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.sib.swiss\" target=\"_blank\"><img src=\"assets/images/contributors/sib.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.uniprot.org\" target=\"_blank\"><img src=\"assets/images/contributors/uniprot.png\"></a>\n  </div>\n  <div class=\"columns medium-1\"></div>\n</div>\n\n"
+module.exports = "<div id=\"contributors\" class=\"row expanded padding-left-xlarge margin-top-large\">\n  <h3><p class=\"icon icon-generic\" data-icon=\"}\"> Our Contributors</p></h3>\n</div>\n\n<div class=\"row expanded padding-left-xlarge margin-top-large margin-bottom-xlarge padding-bottom-small\">\n  <div class=\"columns medium-1\">\n    <a href=\"//mint.bio.uniroma2.it\" target=\"_blank\"><img src=\"assets/images/contributors/imex_mint_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.uniprot.org\" target=\"_blank\"><img src=\"assets/images/contributors/imex_uniprot_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.sib.swiss\" target=\"_blank\"><img src=\"assets/images/contributors/imex_sib_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//ophid.utoronto.ca/i2d/\" target=\"_blank\"><img src=\"assets/images/contributors/imex_id2_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.innatedb.com\" target=\"_blank\"><img src=\"assets/images/contributors/imex_innatedb_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.molecularconnections.com\" target=\"_blank\"><img src=\"assets/images/contributors/imex_mconnections_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//matrixdb.univ-lyon1.fr\" target=\"_blank\"><img src=\"assets/images/contributors/imex_matrixdb_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.mechanobio.info\" target=\"_blank\"><img src=\"assets/images/contributors/imex_mbinfo_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.agbase.msstate.edu\" target=\"_blank\"><img src=\"assets/images/contributors/imex_agbase_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.ucl.ac.uk/functional-gene-annotation/cardiovascular\" target=\"_blank\"><img src=\"assets/images/contributors/imex_acg_s.png\"></a>\n  </div>\n  <div class=\"columns medium-1\">\n    <a href=\"//www.imexconsortium.org\" target=\"_blank\"><img src=\"assets/images/contributors/IMEx_logo_webmedium.jpg\" ></a>\n  </div>\n\n  <div class=\"columns medium-1\"></div>\n</div>\n\n"
 
 /***/ }),
 
@@ -7058,7 +7064,7 @@ module.exports = ".callout-twitter {\n  background-color: #1bc0ea73; /*#1bc0ea8c
 /***/ "./src/app/home-dashboard/home-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row expanded\">\n\n  <div class=\"columns medium-9\">\n    <div class=\"columns small-12 medium-12 margin-top-large\">\n      <iv-home-description></iv-home-description>\n    </div>\n    <div class=\"columns small-12 medium-12 margin-top-xlarge\">\n      <iv-search></iv-search>\n    </div>\n    <div class=\"columns small-12 medium-12 margin-top-xlarge\">\n      <iv-tile-menu></iv-tile-menu>\n    </div>\n  </div>\n\n  <div class=\"columns medium-3 padding-right-xlarge\">\n    <div class=\"row margin-top-xlarge\">\n      <div class=\"columns medium-12 callout-featured-dataset\">\n        <iv-featured-dataset></iv-featured-dataset>\n      </div>\n    </div>\n    <div class=\"row margin-top-large\">\n      <div class=\"columns medium-12 callout-latest-news\">\n        <iv-news></iv-news>\n      </div>\n    </div>\n    <div class=\"row margin-top-large\">\n      <div class=\"columns medium-12 callout-twitter\">\n        <iv-twitter-display></iv-twitter-display>\n      </div>\n    </div>\n    <div class=\"row margin-top-large\">\n      <div class=\"columns medium-12 callout\">\n        <iv-newsletter-subscription></iv-newsletter-subscription>\n      </div>\n    </div>\n  </div>\n\n</div>\n\n\n\n\n"
+module.exports = "<div class=\"row expanded\">\n\n  <div class=\"columns medium-9\">\n    <div class=\"columns small-12 medium-12 margin-top-large\">\n      <iv-home-description></iv-home-description>\n    </div>\n    <div class=\"columns small-12 medium-12 margin-top-xlarge\">\n      <iv-search></iv-search>\n    </div>\n    <div class=\"columns small-12 medium-12 margin-top-xlarge\">\n      <iv-tile-menu></iv-tile-menu>\n    </div>\n  </div>\n\n  <div class=\"columns medium-3 padding-right-xlarge\">\n    <div class=\"row margin-top-xlarge\">\n      <div class=\"columns medium-12 callout-featured-dataset\">\n        <iv-featured-dataset></iv-featured-dataset>\n      </div>\n    </div>\n    <div class=\"row margin-top-large\">\n      <div class=\"columns medium-12 callout-latest-news\">\n        <iv-news></iv-news>\n      </div>\n    </div>\n    <div class=\"row margin-top-large\">\n      <div class=\"columns medium-12 callout-twitter\">\n        <iv-twitter-display></iv-twitter-display>\n      </div>\n    </div>\n    <div class=\"row margin-top-large\">\n      <div class=\"columns medium-12 callout\">\n        <iv-newsletter-subscription></iv-newsletter-subscription>\n      </div>\n    </div>\n  </div>\n\n</div>\n\n<div class=\"row margin-top-medium expanded\">\n\n  <div class=\"contributors-container\">\n    <iv-contributors></iv-contributors>\n  </div>\n\n</div>\n\n\n\n\n"
 
 /***/ }),
 
@@ -7123,12 +7129,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__advanced_search_advanced_search_component__ = __webpack_require__("./src/app/home-dashboard/advanced-search/advanced-search.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angular2_query_builder__ = __webpack_require__("./node_modules/angular2-query-builder/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__contributors_contributors_component__ = __webpack_require__("./src/app/home-dashboard/contributors/contributors.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -7166,7 +7174,8 @@ var HomeDashboardModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_9__featured_dataset_featured_dataset_component__["a" /* FeaturedDatasetComponent */],
                 __WEBPACK_IMPORTED_MODULE_10__news_news_component__["a" /* NewsComponent */],
                 __WEBPACK_IMPORTED_MODULE_11__featured_dataset_dataset_archive_dataset_archive_component__["a" /* DatasetArchiveComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__advanced_search_advanced_search_component__["a" /* AdvancedSearchComponent */]
+                __WEBPACK_IMPORTED_MODULE_12__advanced_search_advanced_search_component__["a" /* AdvancedSearchComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__contributors_contributors_component__["a" /* ContributorsComponent */]
             ]
         })
     ], HomeDashboardModule);
@@ -7336,14 +7345,14 @@ var NewsletterSubscriptionComponent = /** @class */ (function () {
 /***/ "./src/app/home-dashboard/search/search.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".tabs-panel[_ngcontent-c4] {\n  background: #cec2d4 !important;\n}\n\n#search-tabs{\n  border: 1px solid #cec2d4;\n}\n\n.tabs-title > a {\n  font-size: 0.9rem;\n  color: #3e3e3e;\n}\n\n.tabs-title > a:hover {\n  background: #672e7b85;/*#7d96a75c; /*#57b2b787*/\n  color: #0a0a0a;\n}\n\n.tabs-title > a:focus,\n.tabs-title > a[aria-selected='true'] {\n  color: #3e3e3e;\n  background: rgba(90, 46, 110, 0.29);\n}\n\n#home-search-button {\n  background-color: #0185B3;\n  border-radius: 5px;\n}\n\n#home-search-button.button:focus, #home-search-button.button:hover, #home-search-button.button.hover {\n  background-color: #1da1f2;\n}\n\n.callout-advanced {\n  background-color: #f6f4f6;\n  border-radius: 5px;\n  border: 1px solid #CCC;\n}\n"
+module.exports = ""
 
 /***/ }),
 
 /***/ "./src/app/home-dashboard/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n\n    <ul class=\"tabs\" data-tabs id=\"search-tabs\">\n      <li class=\"tabs-title is-active\"><a href=\"#panel1\" aria-selected=\"true\">Search</a></li>\n      <li class=\"tabs-title\"><a href=\"#panel2\">Advanced</a></li>\n      <li class=\"tabs-title\"><a href=\"#panel3\">Upload</a></li>\n    </ul>\n\n    <div class=\"tabs-content\" data-tabs-content=\"search-tabs\">\n\n      <!--TAB MAIN SEARCH SECTION-->\n      <div class=\"tabs-panel is-active\" id=\"panel1\">\n          <div class=\"row margin-top-large\">\n            <div id=\"searchBox\" class=\"columns small-11\">\n              <textarea #query class=\"typeahead\" type=\"text\" placeholder=\"example\"></textarea>\n            </div>\n            <input id=\"home-search-button\" class=\"button margin-top-small\" type=\"submit\"\n                   (click)=\"search(query.value, 'button')\" value=\"Search\"/>\n          </div>\n      </div>\n\n      <!--TAB ADVANCED SECTION-->\n      <div class=\"tabs-panel\" id=\"panel2\">\n        <div class=\"row margin-top-large\">\n          <div class=\"columns medium-12 callout-advanced\">\n            <iv-advanced-search></iv-advanced-search>\n          </div>\n        </div>\n      </div>\n\n      <!--TAB UPLOAD FILE SECTION-->\n      <div class=\"tabs-panel\" id=\"panel3\" style=\"background-color:#e6e6e6;\">\n\n        <!--<form id=\"iSearch\" name=\"content-search\" action=\"[search-action]\" method=\"get\">\n          <div class=\"row margin-top-large\">\n            &lt;!&ndash;<div id=\"searchBox3\" class=\"columns small-12\">&ndash;&gt;\n              &lt;!&ndash;<textarea id=\"autocomplete\" type=\"text\" placeholder=\"Search...\" rows=\"5\"></textarea>&ndash;&gt;\n            &lt;!&ndash;</div>&ndash;&gt;\n          </div>\n        </form>-->\n\n      </div>\n\n    </div>\n</div>\n"
+module.exports = "<div id=\"search\" class=\"row\">\n\n    <ul class=\"tabs\" data-tabs id=\"search-tabs\">\n      <li class=\"tabs-title is-active\"><a href=\"#panel1\" aria-selected=\"true\">Search</a></li>\n      <li class=\"tabs-title\"><a href=\"#panel2\">Advanced</a></li>\n      <li class=\"tabs-title\"><a href=\"#panel3\">Upload</a></li>\n    </ul>\n\n    <div class=\"tabs-content\" data-tabs-content=\"search-tabs\">\n\n      <!--TAB MAIN SEARCH SECTION-->\n      <div class=\"tabs-panel is-active\" id=\"panel1\">\n          <div class=\"row margin-top-large\">\n            <div id=\"searchBox\" class=\"columns small-11\">\n              <textarea #query class=\"typeahead\" type=\"text\" placeholder=\"example\"></textarea>\n            </div>\n            <input id=\"home-search-button\" class=\"button margin-top-small\" type=\"submit\"\n                   (click)=\"search(query.value, 'button')\" value=\"Search\"/>\n          </div>\n      </div>\n\n      <!--TAB ADVANCED SECTION-->\n      <div class=\"tabs-panel\" id=\"panel2\">\n        <div class=\"row margin-top-large\">\n          <div class=\"columns medium-12 callout-advanced\">\n            <iv-advanced-search></iv-advanced-search>\n          </div>\n        </div>\n      </div>\n\n      <!--TAB UPLOAD FILE SECTION-->\n      <div class=\"tabs-panel\" id=\"panel3\" style=\"background-color:#e6e6e6;\">\n\n        <!--<form id=\"iSearch\" name=\"content-search\" action=\"[search-action]\" method=\"get\">\n          <div class=\"row margin-top-large\">\n            &lt;!&ndash;<div id=\"searchBox3\" class=\"columns small-12\">&ndash;&gt;\n              &lt;!&ndash;<textarea id=\"autocomplete\" type=\"text\" placeholder=\"Search...\" rows=\"5\"></textarea>&ndash;&gt;\n            &lt;!&ndash;</div>&ndash;&gt;\n          </div>\n        </form>-->\n\n      </div>\n\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -7399,7 +7408,6 @@ var SearchComponent = /** @class */ (function () {
         var interactionsData = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('authors'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            // local: jsonInteractionsData
             remote: {
                 url: "" + baseURL + '/interaction/findInteractions/%QUERY',
                 wildcard: '%QUERY',
@@ -7725,7 +7733,7 @@ module.exports = ""
 /***/ "./src/app/interactions/interaction-details/details-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row expanded\">\n  <div class=\"columns medium-12\">\n    <h2 class=\"padding-left-large\">Search for {{interactionAc}}</h2>\n  </div>\n</div>\n\n<div class=\"row expanded\">\n\n  <div class=\"columns medium-12\">\n    <p>Breadcrumbs section here</p>\n  </div>\n\n  <div class=\"columns medium-12\">\n    <iv-details-viewer *ngIf=\"interactionAc\"\n                       [interactionAc]=\"interactionAc\"\n                       [featureAc]=\"featureSelected\"\n                       [participantsId]=\"participantsSelected\"></iv-details-viewer>\n  </div>\n\n  <div class=\"columns medium-12\">\n    <iv-details-tabs *ngIf=\"interactionAc\"\n                     [interactionAc]=\"interactionAc\"\n                     (featureChanged)=\"onFeatureSelectedChanged($event)\"\n                     (participantChanged)=\"onParticipantSelectedChanged($event)\"></iv-details-tabs>\n  </div>\n\n</div>\n"
+module.exports = "<div class=\"row expanded\">\n  <div class=\"columns medium-12\">\n    <h2 class=\"padding-left-large\">Search for {{interactionAc}}</h2>\n  </div>\n</div>\n\n<div class=\"row expanded\">\n\n  <div class=\"columns medium-12\">\n  </div>\n\n  <div class=\"columns medium-12\">\n    <iv-details-viewer *ngIf=\"interactionAc\"\n                       [interactionAc]=\"interactionAc\"\n                       [featureAc]=\"featureSelected\"\n                       [participantsId]=\"participantsSelected\"></iv-details-viewer>\n  </div>\n\n  <div class=\"columns medium-12\">\n    <iv-details-tabs *ngIf=\"interactionAc\"\n                     [interactionAc]=\"interactionAc\"\n                     (featureChanged)=\"onFeatureSelectedChanged($event)\"\n                     (participantChanged)=\"onParticipantSelectedChanged($event)\"></iv-details-tabs>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -8382,6 +8390,11 @@ var FeaturesDetailsComponent = /** @class */ (function () {
     FeaturesDetailsComponent.prototype.ngOnInit = function () {
         this.initDataTable();
     };
+    FeaturesDetailsComponent.prototype.ngAfterViewInit = function () {
+        // This fixes the alignment between the th and td when we have activated scrollX:true
+        var table = __WEBPACK_IMPORTED_MODULE_1_jquery__('#featureTable');
+        this.dataTable = table.DataTable().columns.adjust().draw();
+    };
     FeaturesDetailsComponent.prototype.initDataTable = function () {
         var _this = this;
         var table = __WEBPACK_IMPORTED_MODULE_1_jquery__('#featureTable');
@@ -8395,6 +8408,7 @@ var FeaturesDetailsComponent = /** @class */ (function () {
             processing: true,
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
+            scrollX: true,
             ajax: {
                 url: baseURL + "/graph/features/datatables/" + this.interactionAc,
                 type: 'POST',
@@ -8742,6 +8756,14 @@ var ParticipantDetailsComponent = /** @class */ (function () {
     }
     ParticipantDetailsComponent.prototype.ngOnInit = function () {
         this.initDataTable();
+        // This fixes the alignment between the th and td when we have activated scrollX:true
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#participantTable');
+        this.dataTable = table.DataTable().columns.adjust().draw();
+    };
+    ParticipantDetailsComponent.prototype.ngAfterViewInit = function () {
+        // This fixes the alignment between the th and td when we have activated scrollX:true
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#participantTable');
+        this.dataTable = table.DataTable().columns.adjust().draw();
     };
     ParticipantDetailsComponent.prototype.initDataTable = function () {
         var _this = this;
@@ -8756,6 +8778,7 @@ var ParticipantDetailsComponent = /** @class */ (function () {
             processing: true,
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
+            scrollX: true,
             ajax: {
                 url: baseURL + "/graph/participants/datatables/" + this.interactionAc,
                 type: 'POST',
@@ -9912,7 +9935,7 @@ module.exports = ".columnToggle {\n  font-size: 1em;\n  background-color: #e6e6e
 /***/ "./src/app/interactions/interactions-results/interactions-list/interactions-table/interactions-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n                    [dataTable]=\"dataTable\"\n                    [columnView]=\"columnView\"></iv-column-toggle>\n\n  <table id=\"interactionsTable\" class=\"display tableDisplay\">\n    <thead>\n    <tr>\n      <th></th>\n      <th>Molecule A</th>\n      <th>Molecule B</th>\n      <th>Species A</th>\n      <th>Species B</th>\n      <th>Interaction Detection Method</th>\n      <th>Publication Identifier</th>\n      <th>Interaction Type</th>\n      <th>Interaction AC</th>\n      <th>Database</th>\n      <th>Confidence Value</th>\n      <th>Expansion Method</th>\n      <th>Experimental Role A</th>\n      <th>Experimental Role B</th>\n      <th>Interactor Type A</th>\n      <th>Interactor Type B</th>\n    </tr>\n    </thead>\n\n    <tbody></tbody>\n\n  </table>\n</div>\n"
+module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n                    [dataTable]=\"dataTable\"\n                    [columnView]=\"columnView\"></iv-column-toggle>\n\n  <div id=\"innerTable\">\n    <table id=\"interactionsTable\" class=\"display tableDisplay\">\n      <thead>\n      <tr>\n        <th></th>\n        <th>Molecule A</th>\n        <th>Molecule B</th>\n        <th>Species A</th>\n        <th>Species B</th>\n        <th>Interaction Detection Method</th>\n        <th>Publication Identifier</th>\n        <th>Interaction Type</th>\n        <th>Interaction AC</th>\n        <th>Database</th>\n        <th>Confidence Value</th>\n        <th>Expansion Method</th>\n        <th>Experimental Role A</th>\n        <th>Experimental Role B</th>\n        <th>Interactor Type A</th>\n        <th>Interactor Type B</th>\n      </tr>\n      </thead>\n\n      <tbody></tbody>\n\n  </table>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -9967,11 +9990,20 @@ var InteractionsTableComponent = /** @class */ (function () {
             _this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
             if (_this.dataTable !== undefined) {
-                var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
-                _this.dataTable = table.DataTable().ajax.reload();
+                // tslint:disable-next-line:no-shadowed-variable
+                var table_1 = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
+                _this.dataTable = table_1.DataTable().ajax.reload();
             }
         });
         this.initDataTable();
+        // This fixes the alignment between the th and td when we have activated scrollX:true
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
+        this.dataTable = table.DataTable().columns.adjust().draw();
+    };
+    InteractionsTableComponent.prototype.ngAfterViewInit = function () {
+        // This fixes the alignment between the th and td when we have activated scrollX:true
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
+        this.dataTable = table.DataTable().columns.adjust().draw();
     };
     InteractionsTableComponent.prototype.initDataTable = function () {
         var _this = this;
@@ -9980,12 +10012,13 @@ var InteractionsTableComponent = /** @class */ (function () {
             bSort: false,
             searching: false,
             paging: true,
-            lengthMenu: [10, 25, 50, 75, 100],
-            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            pageLength: 5,
             pagingType: 'full_numbers',
             processing: true,
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
+            scrollX: true,
             ajax: {
                 url: baseURL + "/interaction/datatables/" + this.term,
                 type: 'POST',
@@ -10084,9 +10117,6 @@ var InteractionsTableComponent = /** @class */ (function () {
             }
         });
     };
-    // openDetailsPage(interaction: Interaction) {
-    //   this.router.navigate(['/details/interaction', interaction.ac]);
-    // }
     /************************* /
      /** GETTERS AND SETTERS ** /
      /*************************/
@@ -10229,14 +10259,14 @@ var InteractionsTableComponent = /** @class */ (function () {
 /***/ "./src/app/interactions/interactions-results/interactions-list/interactors-table/interactors-table.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "#tablesaw-checkbox {\n  text-align:center;\n}\n\n[type='checkbox'],\n[type='radio'] {\n  margin: 0.5rem 0 0.5rem;\n}\n"
+module.exports = ""
 
 /***/ }),
 
 /***/ "./src/app/interactions/interactions-results/interactions-list/interactors-table/interactors-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n                    [dataTable]=\"dataTable\"\n                    [columnView]=\"columnView\"></iv-column-toggle>\n  <table id=\"interactorsTable\" class=\"display tableDisplay\">\n    <thead>\n    <tr>\n      <th></th>\n      <th>Names</th>\n      <th>Description</th>\n      <th>Accession</th>\n      <th>Type</th>\n      <th>Species</th>\n      <th>Interactions</th>\n      <th>Interactions in total</th>\n    </tr>\n    </thead>\n\n    <tbody></tbody>\n  </table>\n\n</div>\n\n"
+module.exports = "<div>\n  <iv-column-toggle [columnNames]=\"columnNames\"\n                    [dataTable]=\"dataTable\"\n                    [columnView]=\"columnView\"></iv-column-toggle>\n\n  <table id=\"interactorsTable\" class=\"display tableDisplay\">\n    <thead>\n    <tr>\n      <th></th>\n      <th>Names</th>\n      <th>Description</th>\n      <th>Accession</th>\n      <th>Type</th>\n      <th>Species</th>\n      <th>Interactions</th>\n      <th>Interactions in total</th>\n    </tr>\n    </thead>\n\n    <tbody></tbody>\n  </table>\n\n</div>\n\n"
 
 /***/ }),
 
@@ -10290,11 +10320,19 @@ var InteractorsTableComponent = /** @class */ (function () {
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
             _this.currentPageIndex = params.page ? Number(params.page) : 1;
             if (_this.dataTable !== undefined) {
-                var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
-                _this.dataTable = table.DataTable().ajax.reload();
+                var table_1 = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
+                _this.dataTable = table_1.DataTable().ajax.reload();
             }
         });
         this.initDataTable();
+        // This fixes the alignment between the th and td when we have activated scrollX:true
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
+        this.dataTable = table.DataTable().columns.adjust().draw();
+    };
+    InteractorsTableComponent.prototype.ngAfterViewInit = function () {
+        // This fixes the alignment between the th and td when we have activated scrollX:true
+        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
+        this.dataTable = table.DataTable().columns.adjust().draw();
     };
     InteractorsTableComponent.prototype.initDataTable = function () {
         var _this = this;
@@ -10303,12 +10341,13 @@ var InteractorsTableComponent = /** @class */ (function () {
             bSort: false,
             searching: false,
             paging: true,
-            lengthMenu: [10, 25, 50, 75, 100],
-            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 75, 100],
+            pageLength: 5,
             pagingType: 'full_numbers',
             processing: true,
             serverSide: true,
             dom: '<"top"li>rt<"bottom"p><"clear">',
+            scrollX: true,
             ajax: {
                 url: baseURL + "/interactor/datatables/" + this.term,
                 type: 'POST',
@@ -10534,7 +10573,7 @@ module.exports = ".inner-div {\n  border-left: 1.5px solid rgb(230, 230, 230);\n
 /***/ "./src/app/interactions/interactions-results/interactions-results.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row expanded\">\n  <div class=\"columns medium-12\">\n    <h2 class=\"padding-left-large\">Search for {{term}}</h2>\n  </div>\n</div>\n\n<div class=\"row expanded\">\n\n  <div class=\"columns medium-2\">\n    <iv-interactions-filters *ngIf=\"interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter\n      && interactionTypeFilter && detectionMethodFilter && hostOrganismFilter && (negativeFilter !== undefined)\"\n                             [interactorFacets]=\"interactorsSearch.facetResultPage\"\n                             [interactionFacets]=\"interactionsSearch.facetResultPage\"\n                             [interactorTypeFilter]=\"interactorTypeFilter\"\n                             [speciesNameFilter]=\"speciesNameFilter\"\n                             [interactionTypeFilter]=\"interactionTypeFilter\"\n                             [detectionMethodFilter]=\"detectionMethodFilter\"\n                             [hostOrganismFilter]=\"hostOrganismFilter\"\n                             [negativeFilter]=\"negativeFilter\"\n                             [miScoreMinFilter]=\"miScoreMin\"\n                             [miScoreMaxFilter]=\"miScoreMax\"\n                             (onSpeciesNameFilterChanged)=\"onSpeciesNameFilterChanged($event)\"\n                             (onInteractorTypeFilterChanged)=\"onInteractorTypeFilterChanged($event)\"\n                             (onResetAllFilters)=\"onResetAllFilters()\"\n                             (onInteractionTypeFilterChanged)=\"onInteractionTypeFilterChanged($event)\"\n                             (onDetectionMethodFilterChanged)=\"onDetectionMethodFilterChanged($event)\"\n                             (onHostOrganismFilterChanged)=\"onHostOrganismFilterChanged($event)\"\n                             (onInteractionNegativeFilterChanged)=\"onInteractionNegativeFilterChanged($event)\"\n                             (onInteractionMiScoreMinFilterChanged)=\"onInteractionMiScoreMinFilterChanged($event)\"\n                             (onInteractionMiScoreMaxFilterChanged)=\"onInteractionMiScoreMaxFilterChanged($event)\">\n\n    </iv-interactions-filters>\n  </div>\n\n  <div class=\"columns medium-10\">\n    <div class=\"inner-div\">\n\n      <iv-interactions-viewer [interactorSelected]=\"interactorSelected\"\n                              [interactionSelected]=\"interactionSelected\"></iv-interactions-viewer>\n\n      <iv-interactions-list (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                            (interactorChanged)=\"onInteractorSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactions-list>\n    </div>\n  </div>\n\n</div>\n\n"
+module.exports = "<div class=\"row expanded\">\n  <div class=\"columns medium-12\">\n    <h2 class=\"padding-left-large\">Search for {{term}}</h2>\n  </div>\n</div>\n\n<div class=\"row expanded\">\n\n  <div class=\"columns medium-2\">\n    <iv-interactions-filters *ngIf=\"interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter\n      && interactionTypeFilter && detectionMethodFilter && hostOrganismFilter && (negativeFilter !== undefined)\"\n                             [interactorFacets]=\"interactorsSearch.facetResultPage\"\n                             [interactionFacets]=\"interactionsSearch.facetResultPage\"\n                             [interactorTypeFilter]=\"interactorTypeFilter\"\n                             [speciesNameFilter]=\"speciesNameFilter\"\n                             [interactionTypeFilter]=\"interactionTypeFilter\"\n                             [detectionMethodFilter]=\"detectionMethodFilter\"\n                             [hostOrganismFilter]=\"hostOrganismFilter\"\n                             [negativeFilter]=\"negativeFilter\"\n                             [miScoreMinFilter]=\"miScoreMin\"\n                             [miScoreMaxFilter]=\"miScoreMax\"\n                             (onSpeciesNameFilterChanged)=\"onSpeciesNameFilterChanged($event)\"\n                             (onInteractorTypeFilterChanged)=\"onInteractorTypeFilterChanged($event)\"\n                             (onResetAllFilters)=\"onResetAllFilters()\"\n                             (onInteractionTypeFilterChanged)=\"onInteractionTypeFilterChanged($event)\"\n                             (onDetectionMethodFilterChanged)=\"onDetectionMethodFilterChanged($event)\"\n                             (onHostOrganismFilterChanged)=\"onHostOrganismFilterChanged($event)\"\n                             (onInteractionNegativeFilterChanged)=\"onInteractionNegativeFilterChanged($event)\"\n                             (onInteractionMiScoreMinFilterChanged)=\"onInteractionMiScoreMinFilterChanged($event)\"\n                             (onInteractionMiScoreMaxFilterChanged)=\"onInteractionMiScoreMaxFilterChanged($event)\">\n\n    </iv-interactions-filters>\n  </div>\n\n  <div class=\"columns medium-10\">\n    <div class=\"inner-div\">\n\n      <iv-interactions-list (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                            (interactorChanged)=\"onInteractorSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactions-list>\n\n      <iv-interactions-viewer [interactorSelected]=\"interactorSelected\"\n                              [interactionSelected]=\"interactionSelected\"></iv-interactions-viewer>\n    </div>\n  </div>\n\n</div>\n\n"
 
 /***/ }),
 
@@ -10979,7 +11018,7 @@ module.exports = "div#graphViewerContainer{\n  /*clear: both;*/\n  /*!*position:
 /***/ "./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div>Interactor selected: {{interactorSelected}}</div>\n  <div>Interaction selected: {{interactionSelected}}</div>\n</div>\n\n<div>\n  <div>\n    <div id='suggestions_div'>\n      <label for='nodeL'>Interactor Name</label>\n      <input type='text' id='nodeL'>\n      <a class=\"button\" (click)='findInteractor()'><i class=\"icon icon-common icon-search\" ></i> Find Interactor</a>\n    </div>\n    <div id=\"graphViewerContainer\">\n      <div id=\"for-canvas-graph\"></div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div>\n  <div>\n    <div id='suggestions_div'>\n      <label for='nodeL'>Interactor Name</label>\n      <input type='text' id='nodeL'>\n      <a class=\"button\" (click)='findInteractor()'><i class=\"icon icon-common icon-search\" ></i> Find Interactor</a>\n    </div>\n    <div id=\"graphViewerContainer\">\n      <div id=\"for-canvas-graph\"></div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -11010,7 +11049,7 @@ var InteractionsViewerComponent = /** @class */ (function () {
         this.router = router;
         this.networkSearchService = networkSearchService;
     }
-    InteractionsViewerComponent.prototype.ngAfterViewInit = function () {
+    InteractionsViewerComponent.prototype.ngOnInit = function () {
         var _this = this;
         $('iv-interactions-viewer').foundation();
         this.route.queryParams
@@ -11025,25 +11064,10 @@ var InteractionsViewerComponent = /** @class */ (function () {
             _this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
             _this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
+            // this.interactorSelected = params.interactorSelected ? params.interactorSelected.split('+') : [];
+            // this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
             _this.requestIntactNetworkDetails();
         });
-        // this.httpService.get('../../../assets/demo_interactions.json').subscribe(
-        //   data => {
-        //     this.interactionsJSON = data;
-        //
-        //     if (this.interactionsJSON !== undefined) {
-        //       console.log('InteractionsJson dummy is ' + this.interactionsJSON);
-        //
-        //       $('iv-interactions-viewer').foundation();
-        //       xlv = new xiNET('graphViewerContainer');
-        //       xlv.readMIJSON(this.interactionsJSON, true);
-        //       xlv.autoLayout();
-        //     }
-        //   },
-        //   (err: HttpErrorResponse) => {
-        //     console.log (err.message);
-        //   }
-        // );
     };
     InteractionsViewerComponent.prototype.ngOnChanges = function (changes) {
         var chng = changes['interactionSelected'];
@@ -11178,7 +11202,8 @@ var InteractionsViewerComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'iv-interactions-viewer',
             template: __webpack_require__("./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.html"),
-            styles: [__webpack_require__("./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.css")]
+            styles: [__webpack_require__("./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.css")],
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewEncapsulation */].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */],
@@ -12126,7 +12151,7 @@ var NetworkSearchService = /** @class */ (function () {
             .set('maxMiScore', miScoreMax.toString())
             .set('isNegativeFilter', negativeFilter.toString());
         var options = query ? { params: params } : {};
-        return this.http.get(baseURL + "/graph/getGraphJson", options)
+        return this.http.get(baseURL + "/interaction/graph/getGraphJson", options)
             .catch(this.handleError);
     };
     NetworkSearchService.prototype.handleError = function (err) {

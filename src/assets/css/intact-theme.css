@@ -196,6 +196,15 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9;
 }
 
+table.dataTable,
+table.dataTable thead, table.dataTable tbody,
+table.dataTable th,
+table.dataTable td {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
 /*************** PARTICIPANT DATATABLES ROW STYLE ********************/
 
 table#participantTable.tableDisplay {
@@ -365,55 +374,22 @@ table#featureTable.tableDisplay td:nth-child(1) {
 /********* Interactions table style ********************/
 
 .dataTable{
-  /*table-layout: fixed;*/
   width: 100% !important;
-  /*overflow-x: visible;*/
 }
 
-.dataTables_scrollBody table {
-  margin-left:0px;
+table.dataTable tbody th,
+table.dataTable tbody td {
+  white-space: nowrap;
 }
 
-/*table.dataTable tbody th,*/
-/*table.dataTable tbody td {*/
-/*  !*white-space: nowrap;*!*/
-/*}*/
-
-table#interactionsTable tr {
-  font-size: 14px;
+table#interactionsTable tr, th {
+  font-size: 13px;
 }
-
-/*table#interactionsTable th,*/
-/*table#interactionsTable td {*/
-/*  text-align: left;*/
-/*  padding: 8px 10px;*/
-/*}*/
-
-/*table#interactionsTable.tableDisplay th {*/
-/*  !*overflow: auto;*!*/
-/*  !*word-break: break-word;*!*/
-/*}*/
-
-/*table#interactionsTable.tableDisplay td {*/
-/*  !*overflow: hidden;*!*/
-/*  vertical-align: top;*/
-/*  !*text-overflow: ellipsis;*!*/
-/*  !*word-break: break-word;*!*/
-/*  !*white-space: nowrap;*!*/
-/*}*/
 
 table#interactionsTable.tableDisplay td:nth-child(1) {
   text-align: center !important;
 }
 
-table.dataTable,
-table.dataTable thead, table.dataTable tbody,
-table.dataTable th,
-table.dataTable td {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-}
 
 /* Column widths are based on these cells */
 .interactionsTable-Selection {

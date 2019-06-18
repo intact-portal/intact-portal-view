@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -9,7 +9,7 @@ import 'datatables.net';
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-export class InteractionsTableComponent implements OnInit {
+export class InteractionsTableComponent implements OnInit, AfterViewInit {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
@@ -36,7 +36,7 @@ export class InteractionsTableComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
@@ -58,7 +58,12 @@ export class InteractionsTableComponent implements OnInit {
       });
 
     this.initDataTable();
-    // $('.dataTable').wrap('<div class="dataTables_scroll" />');
+  }
+
+  ngAfterViewInit(): void {
+    // This fixes the alignment between the th and td when we have activated scrollX:true
+    const table: any = $('#interactionsTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
   private initDataTable(): void {
@@ -67,13 +72,12 @@ export class InteractionsTableComponent implements OnInit {
       bSort: false,
       searching: false,
       paging: true,
-      lengthMenu: [10, 25, 50, 75, 100],
-      pageLength: 10,
+      lengthMenu: [5, 10, 25, 50, 75, 100],
+      pageLength: 5,
       pagingType: 'full_numbers',
       processing: true,
       serverSide: true,
       dom: '<"top"li>rt<"bottom"p><"clear">',
-      // autoWidth: false,
       scrollX: true,
       ajax: {
         url: '/interactionService/interaction/datatables/' + this.term,
@@ -182,10 +186,6 @@ export class InteractionsTableComponent implements OnInit {
 
 
   }
-
-  // openDetailsPage(interaction: Interaction) {
-  //   this.router.navigate(['/details/interaction', interaction.ac]);
-  // }
 
   /************************* /
    /** GETTERS AND SETTERS ** /

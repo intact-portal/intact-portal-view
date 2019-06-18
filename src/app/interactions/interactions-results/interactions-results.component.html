@@ -35,12 +35,12 @@
   <div class="columns medium-10">
     <div class="inner-div">
 
-      <iv-interactions-viewer [interactorSelected]="interactorSelected"
-                              [interactionSelected]="interactionSelected"></iv-interactions-viewer>
-
       <iv-interactions-list (interactionChanged)="onInteractionsSelectedChanged($event)"
                             (interactorChanged)="onInteractorSelectedChanged($event)"
                             (pageChanged)="onPageChanged($event)"></iv-interactions-list>
+
+      <iv-interactions-viewer [interactorSelected]="interactorSelected"
+                              [interactionSelected]="interactionSelected"></iv-interactions-viewer>
     </div>
   </div>
 

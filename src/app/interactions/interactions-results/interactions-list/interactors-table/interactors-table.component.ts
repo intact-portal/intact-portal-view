@@ -9,7 +9,7 @@ import 'datatables.net';
   templateUrl: './interactors-table.component.html',
   styleUrls: ['./interactors-table.component.css']
 })
-export class InteractorsTableComponent implements OnInit {
+export class InteractorsTableComponent implements OnInit, AfterViewInit {
 
   @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
@@ -56,6 +56,15 @@ export class InteractorsTableComponent implements OnInit {
       });
 
     this.initDataTable();
+    // This fixes the alignment between the th and td when we have activated scrollX:true
+    const table: any = $('#interactorsTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
+  }
+
+  ngAfterViewInit(): void {
+    // This fixes the alignment between the th and td when we have activated scrollX:true
+    const table: any = $('#interactorsTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
   private initDataTable(): void {
@@ -64,12 +73,13 @@ export class InteractorsTableComponent implements OnInit {
       bSort: false,
       searching: false,
       paging: true,
-      lengthMenu: [10, 25, 50, 75, 100],
-      pageLength: 10,
+      lengthMenu: [5, 10, 25, 50, 75, 100],
+      pageLength: 5,
       pagingType: 'full_numbers',
       processing: true,
       serverSide: true,
       dom: '<"top"li>rt<"bottom"p><"clear">',
+      scrollX: true,
       ajax: {
         url: '/interactorService/interactor/datatables/' + this.term,
         type: 'POST',

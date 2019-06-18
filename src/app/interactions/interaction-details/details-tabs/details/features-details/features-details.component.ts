@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -8,7 +8,7 @@ import 'datatables.net';
   templateUrl: './features-details.component.html',
   styleUrls: ['./features-details.component.css']
 })
-export class FeaturesDetailsComponent implements OnInit {
+export class FeaturesDetailsComponent implements OnInit, AfterViewInit {
 
   @Input() interactionAc: string;
   // @Input() featureAc: string;
@@ -25,8 +25,14 @@ export class FeaturesDetailsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initDataTable();
+  }
+
+  ngAfterViewInit(): void {
+    // This fixes the alignment between the th and td when we have activated scrollX:true
+    const table: any = $('#featureTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
   private initDataTable(): void {
@@ -41,6 +47,7 @@ export class FeaturesDetailsComponent implements OnInit {
       processing: true,
       serverSide: true,
       dom: '<"top"li>rt<"bottom"p><"clear">',
+      scrollX: true,
       ajax: {
         url: '/detailsService/features/datatables/' + this.interactionAc,
         type: 'POST',

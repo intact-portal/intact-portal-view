@@ -51,6 +51,7 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
 
         if (this.dataTable !== undefined) {
+          // tslint:disable-next-line:no-shadowed-variable
           const table: any = $('#interactionsTable');
           this.dataTable = table.DataTable().ajax.reload();
         }
@@ -58,6 +59,9 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
       });
 
     this.initDataTable();
+    // This fixes the alignment between the th and td when we have activated scrollX:true
+    const table: any = $('#interactionsTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
   ngAfterViewInit(): void {

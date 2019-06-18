@@ -3,6 +3,9 @@ import {ParticipantDetails} from '../../../../shared/model/interaction-details/p
 
 import * as $ from 'jquery';
 import 'datatables.net';
+import {environment} from "../../../../../../environments/environment";
+
+const baseURL = environment.intact_portal_ws;
 
 @Component({
   selector: 'iv-participant-details',
@@ -54,7 +57,7 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: '/detailsService/participants/datatables/' + this.interactionAc,
+        url: `${baseURL}/graph/participants/datatables/` + this.interactionAc,
         type: 'POST',
       //   error: function(xhr, error, code) { console.log(error); },
       //   success: function(result) {console.log(JSON.stringify(result))},

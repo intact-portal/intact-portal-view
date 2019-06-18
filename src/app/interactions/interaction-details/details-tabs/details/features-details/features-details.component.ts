@@ -2,6 +2,9 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@an
 
 import * as $ from 'jquery';
 import 'datatables.net';
+import {environment} from '../../../../../../environments/environment';
+
+const baseURL = environment.intact_portal_ws;
 
 @Component({
   selector: 'iv-features-details',
@@ -49,7 +52,7 @@ export class FeaturesDetailsComponent implements OnInit, AfterViewInit {
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: '/detailsService/features/datatables/' + this.interactionAc,
+        url: `${baseURL}/graph/features/datatables/` + this.interactionAc,
         type: 'POST',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},

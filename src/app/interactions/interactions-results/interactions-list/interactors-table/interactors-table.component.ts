@@ -3,6 +3,9 @@ import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
 import 'datatables.net';
+import {environment} from '../../../../../environments/environment';
+
+const baseURL = environment.intact_portal_ws;
 
 @Component({
   selector: 'iv-interactors-table',
@@ -81,7 +84,7 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: '/interactorService/interactor/datatables/' + this.term,
+        url: `${baseURL}/interactor/datatables/` + this.term,
         type: 'POST',
         data: function (d) {
           d.page = d.start / d.length;

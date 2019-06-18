@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { InteractorsSearchResult } from '../model/interactions-results/interactor/interactors-search.model';
 import { environment } from '../../../../environments/environment';
 
-// const interactorBaseURL = environment.interactor_base_url;
+const baseURL = environment.intact_portal_ws;
 
 @Injectable()
 export class InteractorsSearchService {
@@ -24,12 +24,12 @@ export class InteractorsSearchService {
    */
   getAllInteractors(): Observable<InteractorsSearchResult> {
 
-    return this.http.get('/interactorService' + '/getAll')
+    return this.http.get(`${baseURL}/interactor/getAll`)
       .catch(this.handleError);
   }
 
   getAllInteractorsAndFacets(): Observable<InteractorsSearchResult> {
-    return this.http.get('/interactorService/getAllTaxIdFacets')
+    return this.http.get(`${baseURL}/interactor/getAllTaxIdFacets`)
       .catch(this.handleError);
   }
 
@@ -63,7 +63,7 @@ export class InteractorsSearchService {
 
     const options = query ? {params: params} : {};
 
-    return this.http.get('/interactorService/interactor/findInteractorWithFacet', options)
+    return this.http.get(`${baseURL}/interactor/findInteractorWithFacet`, options)
       .catch(this.handleError);
   }
 

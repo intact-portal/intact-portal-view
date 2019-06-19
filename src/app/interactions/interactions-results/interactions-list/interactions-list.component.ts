@@ -25,10 +25,16 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if ($('#interactions').hasClass('is-active') === true) {
-      this.isTabInteractionActive = true;
-      this.isTabInteractorActive = false;
-    }
+
+    $('#search-results-tabs').on('change.zf.tabs', function() {
+      if ($('#interactions').hasClass('is-active') === true) {
+        this.isTabInteractionActive = true;
+        this.isTabInteractorActive = false;
+      } else if ($('#interactor').hasClass('is-active') === true) {
+        this.isTabInteractionActive = false;
+        this.isTabInteractorActive = true;
+      }
+    }.bind(this));
   }
 
   /** EVENT EMITTERS **/

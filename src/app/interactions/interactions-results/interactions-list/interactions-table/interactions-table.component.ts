@@ -64,7 +64,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.interactionTab.currentValue) {
-      console.log('Interaction Tab ACTIVE ');
 
       // This fixes the alignment between the th and td when we have activated scrollX:true
       const table: any = $('#interactionsTable');

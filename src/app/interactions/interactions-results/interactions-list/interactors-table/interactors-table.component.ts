@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -9,10 +9,11 @@ import 'datatables.net';
   templateUrl: './interactors-table.component.html',
   styleUrls: ['./interactors-table.component.css']
 })
-export class InteractorsTableComponent implements OnInit, AfterViewInit {
+export class InteractorsTableComponent implements OnInit, OnChanges {
 
   @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
+  @Input() interactorTab: boolean;
 
   private _term: string;
   private _speciesNameFilter: string[];
@@ -56,15 +57,16 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
       });
 
     this.initDataTable();
-    // This fixes the alignment between the th and td when we have activated scrollX:true
-    const table: any = $('#interactorsTable');
-    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
-  ngAfterViewInit(): void {
-    // This fixes the alignment between the th and td when we have activated scrollX:true
-    const table: any = $('#interactorsTable');
-    this.dataTable = table.DataTable().columns.adjust().draw();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.interactorTab.currentValue) {
+      console.log('Interactor Tab ACTIVE ');
+
+      // This fixes the alignment between the th and td when we have activated scrollX:true
+      const table: any = $('#interactorsTable');
+      this.dataTable = table.DataTable().columns.adjust().draw();
+    }
   }
 
   private initDataTable(): void {
@@ -118,19 +120,6 @@ export class InteractorsTableComponent implements OnInit, AfterViewInit {
         {data: 'interactionCount', defaultContent: ' ', title: 'Interactions in total'}
       ]
     });
-    //
-    //
-    // $('#interactorsTable').on( 'page.dt', function () {
-    //
-    //   const info = this.dataTable.page.info();
-    //   const currentPage = info.page;
-    //   console.log('Current page --- ' , info.page + 1);
-    //   // this.dataTable.page(currentPage).draw('page');
-    //
-    //   // this.onPageChanged(info.page + 1);
-    // }.bind(this));
-    //
-
 
     $('#interactorsTable').on('change', 'input[type=\'checkbox\']', (e) => {
 

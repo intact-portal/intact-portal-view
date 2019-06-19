@@ -13,20 +13,21 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  private _isTabAActive: boolean = false;
-  private _isTabBActive: boolean = false;
+  private _isTabInteractionActive: boolean = false;
+  private _isTabInteractorActive: boolean = false;
+
+  dataTable: any;
 
   constructor() { }
 
   ngOnInit() {
+    $('iv-interactions-list').foundation();
   }
 
   ngAfterViewInit() {
-    $('iv-interactions-list').foundation();
-
     if ($('#interactions').hasClass('is-active') === true) {
-      this.isTabAActive = true;
-      this.isTabBActive = false;
+      this.isTabInteractionActive = true;
+      this.isTabInteractorActive = false;
     }
   }
 
@@ -49,18 +50,18 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   }
 
   public interactorsTabSelected(): void {
-    if (!this.isTabBActive) {
-      this.isTabBActive = true;
-      this.isTabAActive = false;
+    if (!this.isTabInteractorActive) {
+      this.isTabInteractorActive = true;
+      this.isTabInteractionActive = false;
 
       this.resetPage();
     }
   }
 
   public interactionsTabSelected(): void {
-    if (!this.isTabAActive) {
-      this.isTabAActive = true;
-      this.isTabBActive = false;
+    if (!this.isTabInteractionActive) {
+      this.isTabInteractionActive = true;
+      this.isTabInteractorActive = false;
 
       this.resetPage();
     }
@@ -68,19 +69,19 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   /** GETTERS AND SETTERS **/
 
-  get isTabAActive(): boolean {
-    return this._isTabAActive;
+  get isTabInteractionActive(): boolean {
+    return this._isTabInteractionActive;
   }
 
-  set isTabAActive(value: boolean) {
-    this._isTabAActive = value;
+  set isTabInteractionActive(value: boolean) {
+    this._isTabInteractionActive = value;
   }
 
-  get isTabBActive(): boolean {
-    return this._isTabBActive;
+  get isTabInteractorActive(): boolean {
+    return this._isTabInteractorActive;
   }
 
-  set isTabBActive(value: boolean) {
-    this._isTabBActive = value;
+  set isTabInteractorActive(value: boolean) {
+    this._isTabInteractorActive = value;
   }
 }

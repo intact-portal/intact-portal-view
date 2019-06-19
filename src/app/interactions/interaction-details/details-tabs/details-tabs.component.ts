@@ -21,16 +21,31 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   private _interactionDetails: InteractionDetails;
   private _participantDetails: ParticipantDetails;
 
+  private _isTabParticipantActive = false;
+  private _isTabFeatureActive = false;
+
   constructor(private interactionsDetailsService: InteractionsDetailsService) { }
 
   ngOnInit() {
+    $('iv-details-tabs').foundation();
+
     this.requestInteractionDetails();
     this.requestParticipantDetails();
   }
 
   ngAfterViewInit(): void {
-    $('iv-details-tabs').foundation();
+
+    $('#details-tabs').on('change.zf.tabs', function() {
+      if ($('#participants').hasClass('is-active') === true) {
+        this.isTabParticipantActive = true;
+        this.isTabFeatureActive = false;
+      } else if ($('#features').hasClass('is-active') === true) {
+        this.isTabParticipantActive = false;
+        this.isTabFeatureActive = true;
+      }
+    }.bind(this));
   }
+
 
   private requestInteractionDetails() {
     this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
@@ -70,6 +85,22 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   set currentPageIndex(value: number) {
     this._currentPageIndex = value;
+  }
+
+  get isTabParticipantActive(): boolean {
+    return this._isTabParticipantActive;
+  }
+
+  set isTabParticipantActive(value: boolean) {
+    this._isTabParticipantActive = value;
+  }
+
+  get isTabFeatureActive(): boolean {
+    return this._isTabFeatureActive;
+  }
+
+  set isTabFeatureActive(value: boolean) {
+    this._isTabFeatureActive = value;
   }
 
   /** EVENT EMITTERS **/

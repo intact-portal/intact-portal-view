@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ParticipantDetails} from '../../../../shared/model/interaction-details/participant-details.model';
 
 import * as $ from 'jquery';
@@ -9,10 +9,11 @@ import 'datatables.net';
   templateUrl: './participant-details.component.html',
   styleUrls: ['./participant-details.component.css']
 })
-export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
+export class ParticipantDetailsComponent implements OnInit, OnChanges {
 
   private _participantDetails: ParticipantDetails;
   @Input() interactionAc: string;
+  @Input() participantTab: boolean;
 
   dataTable: any;
   columnView = 'participants_columnView';
@@ -29,15 +30,15 @@ export class ParticipantDetailsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.initDataTable();
-    // This fixes the alignment between the th and td when we have activated scrollX:true
-    const table: any = $('#participantTable');
-    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
-  ngAfterViewInit(): void {
-    // This fixes the alignment between the th and td when we have activated scrollX:true
-    const table: any = $('#participantTable');
-    this.dataTable = table.DataTable().columns.adjust().draw();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.participantTab.currentValue) {
+
+      // This fixes the alignment between the th and td when we have activated scrollX:true
+      const table: any = $('#participantTable');
+      this.dataTable = table.DataTable().columns.adjust().draw();
+    }
   }
 
   private initDataTable(): void {

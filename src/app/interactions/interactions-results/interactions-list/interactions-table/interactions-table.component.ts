@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -9,10 +9,11 @@ import 'datatables.net';
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-export class InteractionsTableComponent implements OnInit, AfterViewInit {
+export class InteractionsTableComponent implements OnInit, OnChanges {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
+  @Input() interactionTab: boolean;
 
   private _term: string;
   private _speciesNameFilter: string[];
@@ -59,15 +60,16 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
       });
 
     this.initDataTable();
-    // This fixes the alignment between the th and td when we have activated scrollX:true
-    const table: any = $('#interactionsTable');
-    this.dataTable = table.DataTable().columns.adjust().draw();
   }
 
-  ngAfterViewInit(): void {
-    // This fixes the alignment between the th and td when we have activated scrollX:true
-    const table: any = $('#interactionsTable');
-    this.dataTable = table.DataTable().columns.adjust().draw();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.interactionTab.currentValue) {
+      console.log('Interaction Tab ACTIVE ');
+
+      // This fixes the alignment between the th and td when we have activated scrollX:true
+      const table: any = $('#interactionsTable');
+      this.dataTable = table.DataTable().columns.adjust().draw();
+    }
   }
 
   private initDataTable(): void {
@@ -187,7 +189,6 @@ export class InteractionsTableComponent implements OnInit, AfterViewInit {
         this.interactionChanged.emit(this.interactionSelected);
       }
     });
-
 
   }
 

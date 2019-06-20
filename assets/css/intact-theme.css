@@ -78,15 +78,6 @@ a.intact-background, .intact-background, .intact-background.button, .intact-back
   background: rgba(90, 46, 110, 0.29);
 }
 
-#home-search-button {
-  background-color: #0185B3;
-  border-radius: 5px;
-}
-
-#home-search-button.button:focus, #home-search-button.button:hover, #home-search-button.button.hover {
-  background-color: #1da1f2;
-}
-
 .callout-advanced {
   background-color: #f6f4f6;
   border-radius: 5px;
@@ -96,14 +87,20 @@ a.intact-background, .intact-background, .intact-background.button, .intact-back
 /************** END SEARCH SECTION *******************************/
 
 
-a.button.resetFilters {
-  color: #fff;
+a.button {
+  color: #fff !important;
   background: #6b486b;
 }
 
-.button.resetFilters:focus, .button.resetFilters:hover, .button.resetFilters.hover {
+.button:focus, .button:hover, .button.hover {
   background-color: #6b486bd6;
   opacity: 0.8;
+}
+
+/************** Feature Dataset SECTION *******************************/
+
+.archive a{
+  border-bottom-style: none;
 }
 
 /**************************************************************/

@@ -3,10 +3,14 @@
 
   <div class="news-panel padding-top-medium padding-left-medium padding-right-medium padding-bottom-small">
 
-    <p class="text-justify"> {{title}}</p>
-    <div id="pdfButtons">
+    <div class="text-justify"> {{title}}</div>
+
+    <div class="margin-top-medium">
       <span>{{pubmedAuthor}}</span>
-      <a class="button small" (click)="goIntactPubId()" >Intact</a>
+    </div>
+
+    <div class="margin-top-medium">
+      <a class="button small" (click)="goIntactPubId()">IntAct</a>
       <a class="button small" (click)="goPSIMI25FTP()" >PSI-MI XML 2.5</a>
       <a class="button small" (click)="goPSIMITABFTP()">PSI-MI TAB 2.7</a>
     </div>

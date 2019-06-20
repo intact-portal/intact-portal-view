@@ -54,6 +54,58 @@ a.intact-background, .intact-background, .intact-background.button, .intact-back
   background: rgb(107,72,107);
 }
 
+/************** SEARCH SECTION *******************************/
+
+#search .tabs-panel {
+  background: #cec2d4 !important;
+}
+
+#search-tabs{
+  border: 1px solid #cec2d4;
+}
+
+#search .tabs-title > a {
+  font-size: 0.9rem;
+  color: #3e3e3e;
+}
+#search .tabs-title > a:hover {
+  background: #672e7b85;/*#7d96a75c; /*#57b2b787*/
+  color: #0a0a0a;
+}
+#search .tabs-title > a:focus,
+#search .tabs-title > a[aria-selected='true'] {
+  color: #3e3e3e;
+  background: rgba(90, 46, 110, 0.29);
+}
+
+#home-search-button {
+  background-color: #0185B3;
+  border-radius: 5px;
+}
+
+#home-search-button.button:focus, #home-search-button.button:hover, #home-search-button.button.hover {
+  background-color: #1da1f2;
+}
+
+.callout-advanced {
+  background-color: #f6f4f6;
+  border-radius: 5px;
+  border: 1px solid #CCC;
+}
+
+/************** END SEARCH SECTION *******************************/
+
+
+a.button.resetFilters {
+  color: #fff;
+  background: #6b486b;
+}
+
+.button.resetFilters:focus, .button.resetFilters:hover, .button.resetFilters.hover {
+  background-color: #6b486bd6;
+  opacity: 0.8;
+}
+
 /**************************************************************/
 /********* ADVANCED QUERY BUILDER RE-STYLE ********************/
 /**************************************************************/
@@ -113,45 +165,7 @@ a.intact-background, .intact-background, .intact-background.button, .intact-back
 /************** END ADVANCED QUERY BUILDER ********************/
 /**************************************************************/
 
-/************** SEARCH SECTION *******************************/
-#search .tabs-panel {
-  background: #cec2d4 !important;
-}
 
-#search-tabs{
-  border: 1px solid #cec2d4;
-}
-
-#search .tabs-title > a {
-  font-size: 0.9rem;
-  color: #3e3e3e;
-}
-#search .tabs-title > a:hover {
-  background: #672e7b85;/*#7d96a75c; /*#57b2b787*/
-  color: #0a0a0a;
-}
-#search .tabs-title > a:focus,
-#search .tabs-title > a[aria-selected='true'] {
-  color: #3e3e3e;
-  background: rgba(90, 46, 110, 0.29);
-}
-
-#home-search-button {
-  background-color: #0185B3;
-  border-radius: 5px;
-}
-
-#home-search-button.button:focus, #home-search-button.button:hover, #home-search-button.button.hover {
-  background-color: #1da1f2;
-}
-
-.callout-advanced {
-  background-color: #f6f4f6;
-  border-radius: 5px;
-  border: 1px solid #CCC;
-}
-
-/************** END SEARCH SECTION *******************************/
 
 /************** HOME PAGE SECTION *******************************/
 

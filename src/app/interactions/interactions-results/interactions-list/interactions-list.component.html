@@ -7,12 +7,14 @@
 
   <div class="tabs-content" data-tabs-content="search-results-tabs">
     <div class="tabs-panel is-active" id="interactions"  style="background-color:#f4f4f4;">
-      <iv-interactions-table (interactionChanged)="onInteractionsSelectedChanged($event)"
+      <iv-interactions-table [interactionTab]="isTabInteractionActive"
+                             (interactionChanged)="onInteractionsSelectedChanged($event)"
                              (pageChanged)="onPageChanged($event)"></iv-interactions-table>
     </div>
 
     <div class="tabs-panel" id="interactor" style="background-color:#f4f4f4;">
-      <iv-interactors-table (interactorChanged) = "onInteractorSelectedChanged($event)"
+      <iv-interactors-table [interactorTab]="isTabInteractorActive"
+                            (interactorChanged) = "onInteractorSelectedChanged($event)"
                             (pageChanged)="onPageChanged($event)"></iv-interactors-table>
     </div>
 

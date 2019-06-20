@@ -7820,7 +7820,7 @@ module.exports = ".tabs-panel[_ngcontent-c4] {\n  background: #e6e6e6 !important
 /***/ "./src/app/interactions/interaction-details/details-tabs/details-tabs.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\" margin-top-large margin-bottom-large\">\n\n  <ul class=\"tabs\" data-tabs id=\"details-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"#interactionDetails\" aria-selected=\"true\" >Interaction Details</a></li>\n    <li class=\"tabs-title\"><a href=\"#participants\" >Participants</a></li>\n    <li class=\"tabs-title\"><a href=\"#features\" >Features</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"details-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"interactionDetails\" style=\"background-color:#f4f4f4;\">\n      <iv-interaction-details *ngIf=\"interactionDetails\"\n                              [interactionDetails]=\"interactionDetails\"></iv-interaction-details>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"participants\" style=\"background-color:#f4f4f4;\">\n      <iv-participant-details *ngIf=\"participantDetails\"\n                              [participantDetails]=\"participantDetails\"\n                              [interactionAc]=\"interactionAc\"\n                              (participantChanged)=\"onParticipantSelectedChanged($event)\"></iv-participant-details>\n\n    </div>\n\n    <div class=\"tabs-panel\" id=\"features\" style=\"background-color:#f4f4f4;\">\n      <iv-features-details [interactionAc]=\"interactionAc\"\n                           (featureChanged)=\"onFeatureSelectedChanged($event)\"></iv-features-details>\n    </div>\n\n  </div>\n\n</div>\n"
+module.exports = "<div class=\" margin-top-large margin-bottom-large\">\n\n  <ul class=\"tabs\" data-tabs id=\"details-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"#interactionDetails\" aria-selected=\"true\" >Interaction Details</a></li>\n    <li class=\"tabs-title\"><a href=\"#participants\" >Participants</a></li>\n    <li class=\"tabs-title\"><a href=\"#features\" >Features</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"details-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"interactionDetails\" style=\"background-color:#f4f4f4;\">\n      <iv-interaction-details *ngIf=\"interactionDetails\"\n                              [interactionDetails]=\"interactionDetails\"></iv-interaction-details>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"participants\" style=\"background-color:#f4f4f4;\">\n      <iv-participant-details *ngIf=\"participantDetails\"\n                              [participantTab]=\"isTabParticipantActive\"\n                              [participantDetails]=\"participantDetails\"\n                              [interactionAc]=\"interactionAc\"\n                              (participantChanged)=\"onParticipantSelectedChanged($event)\"></iv-participant-details>\n\n    </div>\n\n    <div class=\"tabs-panel\" id=\"features\" style=\"background-color:#f4f4f4;\">\n      <iv-features-details [interactionAc]=\"interactionAc\"\n                           [featureTab]=\"isTabFeatureActive\"\n                           (featureChanged)=\"onFeatureSelectedChanged($event)\"></iv-features-details>\n    </div>\n\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -7847,13 +7847,25 @@ var DetailsTabsComponent = /** @class */ (function () {
         this.interactionsDetailsService = interactionsDetailsService;
         this.featureChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.participantChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
+        this._isTabParticipantActive = false;
+        this._isTabFeatureActive = false;
     }
     DetailsTabsComponent.prototype.ngOnInit = function () {
+        $('iv-details-tabs').foundation();
         this.requestInteractionDetails();
         this.requestParticipantDetails();
     };
     DetailsTabsComponent.prototype.ngAfterViewInit = function () {
-        $('iv-details-tabs').foundation();
+        $('#details-tabs').on('change.zf.tabs', function () {
+            if ($('#participants').hasClass('is-active') === true) {
+                this.isTabParticipantActive = true;
+                this.isTabFeatureActive = false;
+            }
+            else if ($('#features').hasClass('is-active') === true) {
+                this.isTabParticipantActive = false;
+                this.isTabFeatureActive = true;
+            }
+        }.bind(this));
     };
     DetailsTabsComponent.prototype.requestInteractionDetails = function () {
         var _this = this;
@@ -7897,6 +7909,26 @@ var DetailsTabsComponent = /** @class */ (function () {
         },
         set: function (value) {
             this._currentPageIndex = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DetailsTabsComponent.prototype, "isTabParticipantActive", {
+        get: function () {
+            return this._isTabParticipantActive;
+        },
+        set: function (value) {
+            this._isTabParticipantActive = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DetailsTabsComponent.prototype, "isTabFeatureActive", {
+        get: function () {
+            return this._isTabFeatureActive;
+        },
+        set: function (value) {
+            this._isTabFeatureActive = value;
         },
         enumerable: true,
         configurable: true
@@ -8381,7 +8413,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var baseURL = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].intact_portal_ws;
 var FeaturesDetailsComponent = /** @class */ (function () {
     function FeaturesDetailsComponent() {
-        // @Input() featureAc: string;
         this.featureChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.columnView = 'features_columnView';
         this._columnNames = ['Ac', 'Name', 'Type', 'Role', 'Range Positions', 'Linked Features', 'Participant Name',
@@ -8390,10 +8421,12 @@ var FeaturesDetailsComponent = /** @class */ (function () {
     FeaturesDetailsComponent.prototype.ngOnInit = function () {
         this.initDataTable();
     };
-    FeaturesDetailsComponent.prototype.ngAfterViewInit = function () {
-        // This fixes the alignment between the th and td when we have activated scrollX:true
-        var table = __WEBPACK_IMPORTED_MODULE_1_jquery__('#featureTable');
-        this.dataTable = table.DataTable().columns.adjust().draw();
+    FeaturesDetailsComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.featureTab.currentValue) {
+            // This fixes the alignment between the th and td when we have activated scrollX:true
+            var table = __WEBPACK_IMPORTED_MODULE_1_jquery__('#featureTable');
+            this.dataTable = table.DataTable().columns.adjust().draw();
+        }
     };
     FeaturesDetailsComponent.prototype.initDataTable = function () {
         var _this = this;
@@ -8559,6 +8592,10 @@ var FeaturesDetailsComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
         __metadata("design:type", String)
     ], FeaturesDetailsComponent.prototype, "interactionAc", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+        __metadata("design:type", Boolean)
+    ], FeaturesDetailsComponent.prototype, "featureTab", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
@@ -8756,14 +8793,13 @@ var ParticipantDetailsComponent = /** @class */ (function () {
     }
     ParticipantDetailsComponent.prototype.ngOnInit = function () {
         this.initDataTable();
-        // This fixes the alignment between the th and td when we have activated scrollX:true
-        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#participantTable');
-        this.dataTable = table.DataTable().columns.adjust().draw();
     };
-    ParticipantDetailsComponent.prototype.ngAfterViewInit = function () {
-        // This fixes the alignment between the th and td when we have activated scrollX:true
-        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#participantTable');
-        this.dataTable = table.DataTable().columns.adjust().draw();
+    ParticipantDetailsComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.participantTab.currentValue) {
+            // This fixes the alignment between the th and td when we have activated scrollX:true
+            var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#participantTable');
+            this.dataTable = table.DataTable().columns.adjust().draw();
+        }
     };
     ParticipantDetailsComponent.prototype.initDataTable = function () {
         var _this = this;
@@ -8940,6 +8976,10 @@ var ParticipantDetailsComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
         __metadata("design:type", String)
     ], ParticipantDetailsComponent.prototype, "interactionAc", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+        __metadata("design:type", Boolean)
+    ], ParticipantDetailsComponent.prototype, "participantTab", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
@@ -9331,7 +9371,7 @@ module.exports = "form  {\n  margin: 60px 0 0 0 !important;\n}\n\n.ui-slider .ui
 /***/ "./src/app/interactions/interactions-results/interactions-filters/interactions-filters.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"columns medium-6\">\n    <h3>Filters</h3>\n  </div>\n  <div class=\"columns medium-6\">\n    <div *ngIf=\"anyFiltersSelected()\">\n      <a class=\"button\" (click)=\"resetAllFilters()\"><i class=\"icon icon-functional\" data-icon=\"d\"></i> Reset filters</a>\n    </div>\n  </div>\n\n</div>\n\n<div class=\"row margin-bottom-large\">\n  <div class=\"columns medium-12\">\n\n    <div class=\"margin-top-large\">\n      <b>Interactor Species</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"speciesFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let species of interactorFacets.species_name_str\">\n            <input #filter type=\"checkbox\" value=\"{{species.value}}\"\n                   (change)=\"onChangeSpeciesNameFilter(filter.value)\"\n                   [checked]=\"isSelectedSpeciesName(species.value)\"> {{species.value}} ({{species.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interactor Type</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"interactorFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let molecule of interactorFacets.interactor_type_str\">\n            <input #filter type=\"checkbox\" value=\"{{molecule.value}}\"\n                   (change)=\"onChangeInteractorTypeFilter(filter.value)\"\n                   [checked]=\"isSelectedInteractorType(molecule.value)\"> {{molecule.value}} ({{molecule.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interaction Type</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"interactionFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let interactionType of interactionFacets.interaction_type_str\">\n            <input #filter type=\"checkbox\" value=\"{{interactionType.value}}\"\n                   (change)=\"onChangeInteractionTypeFilter(filter.value)\"\n                   [checked]=\"isSelectedInteractionType(interactionType.value)\"> {{interactionType.value}} ({{interactionType.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interaction Detection Method</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"detMethodFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let detectionMethod of interactionFacets.interaction_detection_method_str\">\n            <input #filter type=\"checkbox\" value=\"{{detectionMethod.value}}\"\n                   (change)=\"onChangeDetectionMethodFilter(filter.value)\"\n                   [checked]=\"isSelectedDetectionMethod(detectionMethod.value)\"> {{detectionMethod.value}} ({{detectionMethod.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interaction Host OrganismModel</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"hostOrganismfilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let hostOrganism of interactionFacets.host_organism_str\">\n            <input #filter type=\"checkbox\" value=\"{{hostOrganism.value}}\"\n                   (change)=\"onChangeHostOrganismFilter(filter.value)\"\n                   [checked]=\"isSelectedHostOrganism(hostOrganism.value)\"> {{hostOrganism.value}} ({{hostOrganism.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>MiScore</b>\n      <div class=\"row\">\n\n        <div class=\"columns medium-3\">\n          <input type=\"text\" id=\"range1\" readonly style=\"border:0; color:#f6931f; font-weight:bold; padding: 2px\">\n        </div>\n\n        <div id=\"slider-range\" class=\"margin-top-large margin-bottom-large columns medium-5\"></div>\n\n        <div class=\"columns medium-4\">\n          <input type=\"text\" id=\"range2\" readonly style=\"border:0; color:#f6931f; font-weight:bold;\">\n        </div>\n      </div>\n    </div>\n\n    <div class=\"margin-top-medium\">\n      <div class=\"float:left\">\n        <div *ngFor=\"let intNegative of interactionFacets.interaction_negative \">\n          <label class=\"switch switch_type1\" role=\"switch\">\n            <input #filterNegative id=\"filterNegative\" type=\"checkbox\" class=\"switch__toggle\"\n                   (change)=\"onChangeInteractionNegativeFilter(filterNegative.checked)\"\n                   [checked]=\"isSelectedInteractionNegative()\">\n            <span class=\"switch__label\"></span>\n          </label>\n          <b class=\"margin-left-medium\">Show negative interactions</b>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"margin-top-medium\">\n      <div class=\"float:left\">\n        <label class=\"switch switch_type1\" role=\"switch\">\n          <input type=\"checkbox\" class=\"switch__toggle\" checked>\n          <span class=\"switch__label\"></span>\n        </label>\n        <b class=\"margin-left-medium\">Show self interactions</b>\n      </div>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"columns medium-6\">\n    <h3>Filters</h3>\n  </div>\n  <div class=\"columns medium-6\">\n    <div *ngIf=\"anyFiltersSelected()\">\n      <a class=\"button resetFilters\" (click)=\"resetAllFilters()\"><i class=\"icon icon-functional\" data-icon=\"d\"></i> Reset filters</a>\n    </div>\n  </div>\n\n</div>\n\n<div class=\"row margin-bottom-large\">\n  <div class=\"columns medium-12\">\n\n    <div class=\"margin-top-large\">\n      <b>Interactor Species</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"speciesFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let species of interactorFacets.species_name_str\">\n            <input #filter type=\"checkbox\" value=\"{{species.value}}\"\n                   (change)=\"onChangeSpeciesNameFilter(filter.value)\"\n                   [checked]=\"isSelectedSpeciesName(species.value)\"> {{species.value}} ({{species.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interactor Type</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"interactorFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let molecule of interactorFacets.interactor_type_str\">\n            <input #filter type=\"checkbox\" value=\"{{molecule.value}}\"\n                   (change)=\"onChangeInteractorTypeFilter(filter.value)\"\n                   [checked]=\"isSelectedInteractorType(molecule.value)\"> {{molecule.value}} ({{molecule.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interaction Type</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"interactionFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let interactionType of interactionFacets.interaction_type_str\">\n            <input #filter type=\"checkbox\" value=\"{{interactionType.value}}\"\n                   (change)=\"onChangeInteractionTypeFilter(filter.value)\"\n                   [checked]=\"isSelectedInteractionType(interactionType.value)\"> {{interactionType.value}} ({{interactionType.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interaction Detection Method</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"detMethodFilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let detectionMethod of interactionFacets.interaction_detection_method_str\">\n            <input #filter type=\"checkbox\" value=\"{{detectionMethod.value}}\"\n                   (change)=\"onChangeDetectionMethodFilter(filter.value)\"\n                   [checked]=\"isSelectedDetectionMethod(detectionMethod.value)\"> {{detectionMethod.value}} ({{detectionMethod.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>Interaction Host OrganismModel</b>\n      <div class=\"margin-top-medium\" [ngStyle]=\"hostOrganismfilterStyle()\">\n        <ul class=\"no-bullet\">\n          <li *ngFor=\"let hostOrganism of interactionFacets.host_organism_str\">\n            <input #filter type=\"checkbox\" value=\"{{hostOrganism.value}}\"\n                   (change)=\"onChangeHostOrganismFilter(filter.value)\"\n                   [checked]=\"isSelectedHostOrganism(hostOrganism.value)\"> {{hostOrganism.value}} ({{hostOrganism.valueCount}})\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"margin-top-large\">\n      <b>MiScore</b>\n      <div class=\"row\">\n\n        <div class=\"columns medium-3\">\n          <input type=\"text\" id=\"range1\" readonly style=\"border:0; color:#f6931f; font-weight:bold; padding: 2px\">\n        </div>\n\n        <div id=\"slider-range\" class=\"margin-top-large margin-bottom-large columns medium-5\"></div>\n\n        <div class=\"columns medium-4\">\n          <input type=\"text\" id=\"range2\" readonly style=\"border:0; color:#f6931f; font-weight:bold;\">\n        </div>\n      </div>\n    </div>\n\n    <div class=\"margin-top-medium\">\n      <div class=\"float:left\">\n        <div *ngFor=\"let intNegative of interactionFacets.interaction_negative \">\n          <label class=\"switch switch_type1\" role=\"switch\">\n            <input #filterNegative id=\"filterNegative\" type=\"checkbox\" class=\"switch__toggle\"\n                   (change)=\"onChangeInteractionNegativeFilter(filterNegative.checked)\"\n                   [checked]=\"isSelectedInteractionNegative()\">\n            <span class=\"switch__label\"></span>\n          </label>\n          <b class=\"margin-left-medium\">Show negative interactions</b>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"margin-top-medium\">\n      <div class=\"float:left\">\n        <label class=\"switch switch_type1\" role=\"switch\">\n          <input type=\"checkbox\" class=\"switch__toggle\" checked>\n          <span class=\"switch__label\"></span>\n        </label>\n        <b class=\"margin-left-medium\">Show self interactions</b>\n      </div>\n    </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -9741,7 +9781,7 @@ module.exports = ".tabs-panel {\n  background: #e6e6e6 !important;\n}\n\n.tabs-t
 /***/ "./src/app/interactions/interactions-results/interactions-list/interactions-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\" margin-top-large margin-bottom-large\">\n\n  <ul class=\"tabs\" data-tabs id=\"search-results-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"#interactions\" aria-selected=\"true\" (click)=\"interactionsTabSelected()\">Interactions</a></li>\n    <li class=\"tabs-title\"><a href=\"#interactor\" (click)=\"interactorsTabSelected()\">Interactors</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"search-results-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"interactions\"  style=\"background-color:#f4f4f4;\">\n      <iv-interactions-table (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                             (pageChanged)=\"onPageChanged($event)\"></iv-interactions-table>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"interactor\" style=\"background-color:#f4f4f4;\">\n      <iv-interactors-table (interactorChanged) = \"onInteractorSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactors-table>\n    </div>\n\n  </div>\n\n</div>\n"
+module.exports = "<div class=\" margin-top-large margin-bottom-large\">\n\n  <ul class=\"tabs\" data-tabs id=\"search-results-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"#interactions\" aria-selected=\"true\" (click)=\"interactionsTabSelected()\">Interactions</a></li>\n    <li class=\"tabs-title\"><a href=\"#interactor\" (click)=\"interactorsTabSelected()\">Interactors</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"search-results-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"interactions\"  style=\"background-color:#f4f4f4;\">\n      <iv-interactions-table [interactionTab]=\"isTabInteractionActive\"\n                             (interactionChanged)=\"onInteractionsSelectedChanged($event)\"\n                             (pageChanged)=\"onPageChanged($event)\"></iv-interactions-table>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"interactor\" style=\"background-color:#f4f4f4;\">\n      <iv-interactors-table [interactorTab]=\"isTabInteractorActive\"\n                            (interactorChanged) = \"onInteractorSelectedChanged($event)\"\n                            (pageChanged)=\"onPageChanged($event)\"></iv-interactors-table>\n    </div>\n\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -9766,17 +9806,23 @@ var InteractionsListComponent = /** @class */ (function () {
         this.interactorChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.interactionChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.pageChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
-        this._isTabAActive = false;
-        this._isTabBActive = false;
+        this._isTabInteractionActive = false;
+        this._isTabInteractorActive = false;
     }
     InteractionsListComponent.prototype.ngOnInit = function () {
+        $('iv-interactions-list').foundation();
     };
     InteractionsListComponent.prototype.ngAfterViewInit = function () {
-        $('iv-interactions-list').foundation();
-        if ($('#interactions').hasClass('is-active') === true) {
-            this.isTabAActive = true;
-            this.isTabBActive = false;
-        }
+        $('#search-results-tabs').on('change.zf.tabs', function () {
+            if ($('#interactions').hasClass('is-active') === true) {
+                this.isTabInteractionActive = true;
+                this.isTabInteractorActive = false;
+            }
+            else if ($('#interactor').hasClass('is-active') === true) {
+                this.isTabInteractionActive = false;
+                this.isTabInteractorActive = true;
+            }
+        }.bind(this));
     };
     /** EVENT EMITTERS **/
     InteractionsListComponent.prototype.onInteractorSelectedChanged = function (interactor) {
@@ -9792,36 +9838,36 @@ var InteractionsListComponent = /** @class */ (function () {
         this.pageChanged.emit(1);
     };
     InteractionsListComponent.prototype.interactorsTabSelected = function () {
-        if (!this.isTabBActive) {
-            this.isTabBActive = true;
-            this.isTabAActive = false;
+        if (!this.isTabInteractorActive) {
+            this.isTabInteractorActive = true;
+            this.isTabInteractionActive = false;
             this.resetPage();
         }
     };
     InteractionsListComponent.prototype.interactionsTabSelected = function () {
-        if (!this.isTabAActive) {
-            this.isTabAActive = true;
-            this.isTabBActive = false;
+        if (!this.isTabInteractionActive) {
+            this.isTabInteractionActive = true;
+            this.isTabInteractorActive = false;
             this.resetPage();
         }
     };
-    Object.defineProperty(InteractionsListComponent.prototype, "isTabAActive", {
+    Object.defineProperty(InteractionsListComponent.prototype, "isTabInteractionActive", {
         /** GETTERS AND SETTERS **/
         get: function () {
-            return this._isTabAActive;
+            return this._isTabInteractionActive;
         },
         set: function (value) {
-            this._isTabAActive = value;
+            this._isTabInteractionActive = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(InteractionsListComponent.prototype, "isTabBActive", {
+    Object.defineProperty(InteractionsListComponent.prototype, "isTabInteractorActive", {
         get: function () {
-            return this._isTabBActive;
+            return this._isTabInteractorActive;
         },
         set: function (value) {
-            this._isTabBActive = value;
+            this._isTabInteractorActive = value;
         },
         enumerable: true,
         configurable: true
@@ -9991,19 +10037,18 @@ var InteractionsTableComponent = /** @class */ (function () {
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
             if (_this.dataTable !== undefined) {
                 // tslint:disable-next-line:no-shadowed-variable
-                var table_1 = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
-                _this.dataTable = table_1.DataTable().ajax.reload();
+                var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
+                _this.dataTable = table.DataTable().ajax.reload();
             }
         });
         this.initDataTable();
-        // This fixes the alignment between the th and td when we have activated scrollX:true
-        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
-        this.dataTable = table.DataTable().columns.adjust().draw();
     };
-    InteractionsTableComponent.prototype.ngAfterViewInit = function () {
-        // This fixes the alignment between the th and td when we have activated scrollX:true
-        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
-        this.dataTable = table.DataTable().columns.adjust().draw();
+    InteractionsTableComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.interactionTab.currentValue) {
+            // This fixes the alignment between the th and td when we have activated scrollX:true
+            var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactionsTable');
+            this.dataTable = table.DataTable().columns.adjust().draw();
+        }
     };
     InteractionsTableComponent.prototype.initDataTable = function () {
         var _this = this;
@@ -10241,6 +10286,10 @@ var InteractionsTableComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
     ], InteractionsTableComponent.prototype, "pageChanged", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+        __metadata("design:type", Boolean)
+    ], InteractionsTableComponent.prototype, "interactionTab", void 0);
     InteractionsTableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'iv-interactions-table',
@@ -10320,19 +10369,18 @@ var InteractorsTableComponent = /** @class */ (function () {
             _this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
             _this.currentPageIndex = params.page ? Number(params.page) : 1;
             if (_this.dataTable !== undefined) {
-                var table_1 = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
-                _this.dataTable = table_1.DataTable().ajax.reload();
+                var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
+                _this.dataTable = table.DataTable().ajax.reload();
             }
         });
         this.initDataTable();
-        // This fixes the alignment between the th and td when we have activated scrollX:true
-        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
-        this.dataTable = table.DataTable().columns.adjust().draw();
     };
-    InteractorsTableComponent.prototype.ngAfterViewInit = function () {
-        // This fixes the alignment between the th and td when we have activated scrollX:true
-        var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
-        this.dataTable = table.DataTable().columns.adjust().draw();
+    InteractorsTableComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.interactorTab.currentValue) {
+            // This fixes the alignment between the th and td when we have activated scrollX:true
+            var table = __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable');
+            this.dataTable = table.DataTable().columns.adjust().draw();
+        }
     };
     InteractorsTableComponent.prototype.initDataTable = function () {
         var _this = this;
@@ -10386,18 +10434,6 @@ var InteractorsTableComponent = /** @class */ (function () {
                 { data: 'interactionCount', defaultContent: ' ', title: 'Interactions in total' }
             ]
         });
-        //
-        //
-        // $('#interactorsTable').on( 'page.dt', function () {
-        //
-        //   const info = this.dataTable.page.info();
-        //   const currentPage = info.page;
-        //   console.log('Current page --- ' , info.page + 1);
-        //   // this.dataTable.page(currentPage).draw('page');
-        //
-        //   // this.onPageChanged(info.page + 1);
-        // }.bind(this));
-        //
         __WEBPACK_IMPORTED_MODULE_2_jquery__('#interactorsTable').on('change', 'input[type=\'checkbox\']', function (e) {
             var interactorSel = e.currentTarget.id;
             if (_this.interactorSelected !== interactorSel) {
@@ -10548,6 +10584,10 @@ var InteractorsTableComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
     ], InteractorsTableComponent.prototype, "pageChanged", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+        __metadata("design:type", Boolean)
+    ], InteractorsTableComponent.prototype, "interactorTab", void 0);
     InteractorsTableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'iv-interactors-table',

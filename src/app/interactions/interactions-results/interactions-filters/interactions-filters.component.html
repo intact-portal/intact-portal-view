@@ -98,12 +98,12 @@
       <div class="float:left">
         <div *ngFor="let intNegative of interactionFacets.interaction_negative ">
           <label class="switch switch_type1" role="switch">
-            <input #filterNegative id="filterNegative" type="checkbox" class="switch__toggle"
+            <input #filterNegative id="filterNegative" type="checkbox" class="switch__toggle" disabled="disabled"
                    (change)="onChangeInteractionNegativeFilter(filterNegative.checked)"
                    [checked]="isSelectedInteractionNegative()">
             <span class="switch__label"></span>
           </label>
-          <b class="margin-left-medium">Show negative interactions</b>
+          <b class="margin-left-medium" style="color: #847f7f;">Show negative interactions</b>
         </div>
       </div>
     </div>
@@ -111,10 +111,10 @@
     <div class="margin-top-medium">
       <div class="float:left">
         <label class="switch switch_type1" role="switch">
-          <input type="checkbox" class="switch__toggle" checked>
+          <input type="checkbox" class="switch__toggle" disabled="disabled">
           <span class="switch__label"></span>
         </label>
-        <b class="margin-left-medium">Show self interactions</b>
+        <b class="margin-left-medium" style="color: #847f7f;">Show self interactions</b>
       </div>
     </div>
 

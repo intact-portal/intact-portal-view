@@ -194,12 +194,14 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   isSelectedInteractionNegative() {
-    return this.isNegativeInteraction;
+    // TODO: this is hardcoded to disable the button until we have more data
+    // return this.isNegativeInteraction;
+    return false;
   }
 
   anyFiltersSelected() {
     return (this.speciesNameFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
-      || this.detectionMethodFilter.length !== 0 || this.hostOrganismFilter.length !== 0 || this.isNegativeInteraction === true);
+      || this.detectionMethodFilter.length !== 0 || this.hostOrganismFilter.length !== 0); // || this.isNegativeInteraction === true);
   }
 
   resetAllFilters() {

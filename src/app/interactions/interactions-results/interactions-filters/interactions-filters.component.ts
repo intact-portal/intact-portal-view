@@ -78,7 +78,7 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   hostOrganismfilterStyle(): any {
-    if (this.interactionFacets.host_organism_str.length > 5) { return {height: '200px', 'overflow-y': 'auto'}; } else {
+    if (this.interactionFacets.host_organism_str.length > 5) { return {height: '250px', 'overflow-y': 'auto'}; } else {
         return {};
       }
   }

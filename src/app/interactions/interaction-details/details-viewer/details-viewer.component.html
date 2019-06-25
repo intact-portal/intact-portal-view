@@ -1,45 +1,45 @@
 <div>
   <div id="detailsViewer" class="row expanded">
-    <div id="graphViewerContainer" class="columns medium-10"></div>
+    <div id="graphViewerContainer" class="columns medium-9"></div>
 
-    <div id="viewerLegend" class="columns medium-2 callout-legend">
-      <h5 class="padding-top-large margin-left-small">Legend</h5>
+    <div id="viewerLegend" class="columns medium-3 callout-legend">
+      <h5 class="padding-top-medium margin-left-small">Legend</h5>
 
       <div id="legendPanel" class="columns margin-top-medium margin-bottom-large">
 
-        <div class="margin-top-large margin-bottom-medium">
+        <div class="padding-top-medium margin-bottom-medium">
           <div class="row">
-            <div class="columns medium-3">
+            <div class="columns medium-3 image-center">
               <img [src]="SMALL_MOL" alt="Bioactive Entity">
             </div>
 
             <div class="columns medium-9"><span>Bioactive Entity</span></div>
           </div>
 
-          <div class="row margin-top-medium">
-            <div class="columns medium-3">
+          <div class="row">
+            <div class="columns medium-3 image-center">
               <img [src]="GENE" alt="Gene">
             </div>
             <div class="columns medium-9"><span>Gene</span></div>
           </div>
 
-          <div class="row margin-top-medium">
-            <div class="columns medium-3">
+          <div class="row">
+            <div class="columns medium-3 image-center">
               <img [src]="DNA" alt="DNA">
             </div>
             <div class="columns medium-9"><span>DNA</span></div>
           </div>
 
-          <div class="row margin-top-medium">
-            <div class="columns medium-3">
+          <div class="row">
+            <div class="columns medium-3 image-center">
               <img [src]="RNA" alt="RNA">
             </div>
             <div class="columns medium-9"><span>RNA</span></div>
           </div>
 
 
-          <div class="row margin-top-medium">
-            <div class="columns medium-3">
+          <div class="row">
+            <div class="columns medium-3 image-center" >
               <div><img [src]="PROTEIN_BLOB" alt="Protein"></div>
               <div><img [src]="PROTEIN_BAR" alt="Protein"></div>
             </div>
@@ -52,8 +52,8 @@
       </div>
 
       <div id="legendExpansion"> <span>Proteins:</span>
-        <button class="button legendButtons" (click)="expandAll();">Expand</button>
-        <button class="button legendButtons" (click)="collapseAll();">Collapse</button>
+        <button class="button" (click)="expandAll();">Expand</button>
+        <button class="button" (click)="collapseAll();">Collapse</button>
       </div>
       <div id="annotations" class="margin-bottom-small">
         Annotations:

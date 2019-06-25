@@ -94,7 +94,6 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
         // TODO: Replace this (ugly code) for more readable code, copy and paste from the complexviewer for the SAB.
         // TODO: Add the html in the template html and process in the ts the values as we use to be for the rest of the app.
         let table = '<table id="colourViewer">' +
-                      '<tr style=\'height:8px;\'></tr>' +
           '            <tr>' +
           '               <td style=\'width:100px;margin:10px;background:#70BDBD;opacity:0.3;border:none;\'></td>' +
           '               <td>' + this.interactionAc  +  '</td>' +
@@ -108,7 +107,8 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
           const trans = 'rgba(' + temp.r + ',' + temp.g + ',' + temp.b + ', 0.6)';
           table += '<tr>' +
             '         <td style=\'width:75px;margin:10px;background:' + trans + ';border:1px solid ' + range[i % 20] + ';\'></td>' +
-            '         <td>' + domain[i] + '</td></tr>';
+            '         <td>' + domain[i] + '</td>' +
+            '</tr>';
         }
 
         table = table + '</table>';

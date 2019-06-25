@@ -17,6 +17,7 @@ export class Interaction {
   private _typeB: string;
   private _interactionCount: number;
   private _authors: string[];
+  private _firstAuthor: string;
   private _interactionIdentifiers: string[];
 
 
@@ -154,6 +155,14 @@ export class Interaction {
 
   set authors(value: string[]) {
     this._authors = value;
+  }
+
+  get firstAuthor(): string {
+    return this._firstAuthor;
+  }
+
+  set firstAuthor(value: string) {
+    this._firstAuthor = value;
   }
 
   get interactionIdentifiers(): string[] {

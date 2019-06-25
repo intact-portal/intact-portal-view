@@ -78,7 +78,7 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   hostOrganismfilterStyle(): any {
-    if (this.interactionFacets.host_organism_str.length > 5) { return {height: '200px', 'overflow-y': 'auto'}; } else {
+    if (this.interactionFacets.host_organism_str.length > 5) { return {height: '250px', 'overflow-y': 'auto'}; } else {
         return {};
       }
   }
@@ -194,12 +194,14 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   isSelectedInteractionNegative() {
-    return this.isNegativeInteraction;
+    // TODO: this is hardcoded to disable the button until we have more data
+    // return this.isNegativeInteraction;
+    return false;
   }
 
   anyFiltersSelected() {
     return (this.speciesNameFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
-      || this.detectionMethodFilter.length !== 0 || this.hostOrganismFilter.length !== 0 || this.isNegativeInteraction === true);
+      || this.detectionMethodFilter.length !== 0 || this.hostOrganismFilter.length !== 0); // || this.isNegativeInteraction === true);
   }
 
   resetAllFilters() {

@@ -1,12 +1,16 @@
 <div>
-  <div>
-    <div id='suggestions_div'>
-      <label for='nodeL'>Interactor Name</label>
-      <input type='text' id='nodeL'>
-      <a class="button" (click)='findInteractor()'><i class="icon icon-common icon-search" ></i> Find Interactor</a>
+  <div class="row expanded">
+    <div class="columns medium-3">
+      <div id='suggestions_div'>
+        <label for='nodeL'>Interactor Name</label>
+        <input type='text' id='nodeL'>
+        <a class="button" (click)='findInteractor()'><i class="icon icon-common icon-search" ></i> Find Interactor</a>
+      </div>
     </div>
-    <div id="graphViewerContainer">
-      <div id="for-canvas-graph"></div>
+    <div class="columns medium-9">
+      <div id="graphViewerContainer">
+        <div id="for-canvas-graph"></div>
+      </div>
     </div>
   </div>
 </div>

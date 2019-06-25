@@ -3,7 +3,7 @@ div#graphViewerContainer{
   /*!*position:absolute;*!*/
   /*!*bottom:0px;*!*/
   /*!*top:0px;*!*/
-  height: 700px;
+  height: 480px;
   background: #fbfbfb;
   position: relative;
   /*width: 150%;*/
@@ -40,7 +40,7 @@ div#graphViewerContainer{
 
 div#viewerLegend {
   /*background-color: #e6e6e6;*/
-  height: 700px;
+  height: 480px;
 }
 
 .callout-legend {
@@ -48,49 +48,42 @@ div#viewerLegend {
   border-radius: 8px;
 }
 
+.image-center{
+  text-align: center;
+}
+
 #legendPanel {
   background-color: #f4f4f4e6 !important;
   border-radius: 6px;
 }
 
-.legendButtons {
-  background-color: rgb(1, 133, 180);
-  border-radius: 5px;
-}
-
-#legendExpansion .button:hover, .button:focus {
-  background-color: #1da1f2;
-  color: #fefefe;
-}
-
 #annotationsSelect {
   width: auto;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
 }
 
 div#colours {
-  height:250px;
+  height:102px;
   min-height: auto;
-  margin-bottom: 20px;
-}
-
-div#colorWrapper {
-  overflow-y: visible;
+  overflow-y: auto;
 }
 
 table#colourViewer {
-  width: 100%;
-  font-size: 0.9em;
-  left: auto;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  border-collapse: collapse;
-  text-align: left;
+/*  height:100px;*/
+/*  width: 100%;*/
+/*  font-size: 0.9em;*/
+/*  left: auto;*/
+/*  position: relative;*/
+/*  margin-left: auto;*/
+/*  margin-right: auto;*/
+/*  border-collapse: collapse; */
+/*  text-align: left;*/
+/*  overflow-y: scroll;*/
+  margin-bottom: 0rem
 }
 
 table#colourViewer tbody tr {
   background-color: white;
-  line-height: 1;
+  line-height: 0.5;
   font-size: 15px;
 }

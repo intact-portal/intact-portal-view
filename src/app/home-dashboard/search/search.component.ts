@@ -165,7 +165,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
           suggestion: function (item) {
             // TODO: FIX THIS WHEN THE WS RETURN interactionCount
             return (item.interactionCount === null) ? '<div class="row">' +
-              '<div class="columns small-3">' + item.authors + '</div>' +
+              '<div class="columns small-3">' + item.firstAuthor + '</div>' +
               '<div class="columns small-3">' + item.publicationIdentifiers + '</div>' +
               '<div class="columns small-2">' + item.interactionIdentifiers + '</div>' +
               '<div class="columns small-2"><span class="labelWrapper">' + item.interactionType + '</span></div>' +
@@ -173,7 +173,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '</div>' :
 
               '<div class="row">' +
-              '<div class="columns small-4">' + item.authors + '</div>' +
+              '<div class="columns small-4">' + item.firstAuthor + '</div>' +
               '<div class="columns small-2">' + item.publicationIdentifiers + '</div>' +
               '<div class="columns small-3">' + item.interactionIdentifiers + '</div>' +
               '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>'

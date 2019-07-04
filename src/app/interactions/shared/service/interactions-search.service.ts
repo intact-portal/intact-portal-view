@@ -7,7 +7,6 @@ import {environment} from '../../../../environments/environment';
 @Injectable()
 export class InteractionsSearchService {
 
-  // public loading = false;
   private _totalElements = 0;
   private _page: number = 1;
   private _pageSize: number = 20;

@@ -16,23 +16,6 @@ export class InteractorsSearchService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Find an interactor based on indexed term
-   * @param query
-   * @param format
-   * @returns {Observable<InteractorsSearchResult>}
-   */
-  getAllInteractors(): Observable<InteractorsSearchResult> {
-
-    return this.http.get('/interactorService' + '/getAll')
-      .catch(this.handleError);
-  }
-
-  getAllInteractorsAndFacets(): Observable<InteractorsSearchResult> {
-    return this.http.get('/interactorService/getAllTaxIdFacets')
-      .catch(this.handleError);
-  }
-
   getAllInteractorsAndFacetsQuery(query: string,
                                   speciesFilter: string[],
                                   interactorTypeFilter: string[],

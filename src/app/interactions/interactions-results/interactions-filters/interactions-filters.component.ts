@@ -47,6 +47,8 @@ export class InteractionsFiltersComponent implements OnInit {
   ngOnInit() {
     this.initSliderRange();
     this.isNegativeInteraction = this.negativeFilter;
+    // TODO: TO review this,
+    //  it is what was causing the bad behaviour with the negative interaction in the url and the filters
     this.isNegativeInteraction = (this.negativeFilter === 'false') ? false : true;
 
   }

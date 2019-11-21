@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {ParticipantDetails} from '../../../../shared/model/interaction-details/participant-details.model';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -14,7 +13,6 @@ const baseURL = environment.intact_portal_ws;
 })
 export class ParticipantDetailsComponent implements OnInit, OnChanges {
 
-  private _participantDetails: ParticipantDetails;
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
 
@@ -199,15 +197,6 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
 
   get columnNames(): string[] {
     return this._columnNames;
-  }
-
-  get participantDetails(): ParticipantDetails {
-    return this._participantDetails;
-  }
-
-  @Input()
-  set participantDetails(value: ParticipantDetails) {
-    this._participantDetails = value;
   }
 
   get participantsSelected(): string[] {

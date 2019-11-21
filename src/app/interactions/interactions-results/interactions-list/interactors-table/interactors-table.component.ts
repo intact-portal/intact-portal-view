@@ -34,7 +34,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
 
   columnView = 'interactors_columnView';
 
-  columnNames: string[] = ['Names', 'Description', 'Accession', 'Type', 'Species', 'Interactions', 'Interactions in total'];
+  columnNames: string[] = ['Names', 'Description', 'Accession', 'Type', 'Species', 'Interactions in search', 'Interactions in IntAct'];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -118,8 +118,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
         {data: 'interactorId', defaultContent: ' ', title: 'Accession'},
         {data: 'interactorType', defaultContent: ' ', title: 'Type'},
         {data: 'species', defaultContent: ' ', title: 'Species'},
-        {data: 'interactionSearchCount', defaultContent: ' ', title: 'Interactions'},
-        {data: 'interactionCount', defaultContent: ' ', title: 'Interactions in total'}
+        {data: 'interactionSearchCount', defaultContent: ' ', title: 'Interactions in search'},
+        {data: 'interactionCount', defaultContent: ' ', title: 'Interactions in IntAct'}
       ]
     });
 

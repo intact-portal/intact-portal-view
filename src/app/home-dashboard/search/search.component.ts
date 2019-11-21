@@ -115,8 +115,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
           return item.dbOntology;
         },
         templates: {
-          header: '<h4 class="category-name" style="margin-top:-3px;">Terms</h4>',
-          notFound: '<div class="noResultsSuggestions"> No results found for Terms</div>',
+          header: '<h4 class="category-name" style="margin-top:-3px;">CV Terms</h4>',
+          notFound: '<div class="noResultsSuggestions"> No results found for CV Terms</div>',
           suggestion: function (item) {
             return '<div class="row">' +
                       '<div class="columns small-1">' + item.dbOntology + '</div>' +

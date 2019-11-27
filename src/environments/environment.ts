@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 // Environment for production
-const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+const EBI_BASE_URL = 'http://localhost:4200';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
@@ -24,5 +24,7 @@ export const environment = {
   intact_portal_support_url: EBI_BASE_URL + 'support/intact',
   intact_training_url: EBI_BASE_URL + 'intact/resources/training',
   intact_portal_ws: EBI_BASE_URL + '/intact/ws',
+  //TODO... below will be changed when have a graph server
+  graph_ws: EBI_BASE_URL + '/graph',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };

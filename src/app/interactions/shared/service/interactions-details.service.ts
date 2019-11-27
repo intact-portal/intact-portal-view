@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
-import {ParticipantDetails} from '../model/interaction-details/participant-details.model';
 import {environment} from '../../../../environments/environment';
 
 const baseURL = environment.intact_portal_ws;
@@ -23,24 +22,6 @@ export class InteractionsDetailsService {
 
   getInteractionViewer(interactionAc: string): Observable<any> {
     return this.http.get(`${baseURL}/graph/interaction/export/${interactionAc}`)
-      .catch(this.handleError);
-  }
-
-  getParticipantsDetails(interactionAc: string,
-                         currentPageIndex = 1,
-                         pageSize = 20): Observable<ParticipantDetails> {
-
-    this.page = currentPageIndex;
-
-    currentPageIndex = currentPageIndex - 1;
-
-    const params = new HttpParams()
-      .set('page', currentPageIndex.toString())
-      .set('pageSize', pageSize.toString());
-
-    const options = interactionAc ? {params: params} : {};
-
-    return this.http.get(`${baseURL}/graph/participants/details/${interactionAc}`, options)
       .catch(this.handleError);
   }
 

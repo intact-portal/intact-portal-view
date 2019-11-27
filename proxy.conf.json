@@ -1,1 +1,30 @@
+{
+  "/proxy": {
+    "target": "https://www.ebi.ac.uk/~intact/site/dotm/dotm-1.1.xml",
+    "secure": true,
+    "pathRewrite": {
+      "^/proxy": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/graph/*": {
+    "target": "http://localhost:9090",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/intact/ws/interaction/*": {
+    "target": "http://localhost:8082",
+    "secure": false,
+     "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/intact/ws/interactor/*": {
+    "target": "http://localhost:8081",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
 
+}

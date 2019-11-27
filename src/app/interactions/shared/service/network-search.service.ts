@@ -13,6 +13,8 @@ export class NetworkSearchService {
 
   getInteractionNetwork(query: string,
                         hostOrganismFilter: string[],
+                        interactorTypeFilter: string[],
+                        speciesFilter: string[],
                         interactionTypeFilter: string[],
                         detectionMethodFilter: string[],
                         miScoreMin: any,
@@ -24,6 +26,8 @@ export class NetworkSearchService {
     const params = new HttpParams()
       .set('query', query)
       .set('interactionTypeFilter', interactionTypeFilter.toString())
+      .set('interactorTypeFilter', interactorTypeFilter.toString())
+      .set('speciesFilter', speciesFilter.toString())
       .set('hostOrganismFilter', hostOrganismFilter.toString())
       .set('detectionMethodFilter', detectionMethodFilter.toString())
       .set('minMiScore', miScoreMin.toString())

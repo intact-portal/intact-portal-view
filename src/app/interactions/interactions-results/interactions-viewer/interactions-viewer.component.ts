@@ -34,11 +34,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private networkSearchService: NetworkSearchService) {
-    this._graph= new IntactGraph.GraphPort('for-canvas-graph','legend','nodeL');
+
   }
 
   ngOnInit(): void {
     $('iv-interactions-viewer').foundation();
+    this._graph= new IntactGraph.GraphPort('for-canvas-graph','legend','nodeL');
 
     this.route.queryParams
       .filter(params => params.query)
@@ -79,6 +80,8 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.networkSearchService.getInteractionNetwork(
       this.term,
       this.hostOrganismFilter,
+      this.interactorTypeFilter,
+      this.speciesNameFilter,
       this.interactionTypeFilter,
       this.detectionMethodFilter,
       this.miScoreMin,

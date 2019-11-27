@@ -3,8 +3,11 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-// Environment for production
+// Environment for development
 const EBI_BASE_URL = 'http://localhost:4200';
+
+// Environment for production
+//const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';

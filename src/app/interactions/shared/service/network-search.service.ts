@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.graph_ws;
 
 
 @Injectable()
@@ -33,7 +33,7 @@ export class NetworkSearchService {
     const options = query ? {params: params} : {};
 
 
-    return this.http.get(`${baseURL}/interaction/graph/getGraphJson`, options)
+    return this.http.get(`${baseURL}/getJson`, options)
       .catch(this.handleError);
   }
 

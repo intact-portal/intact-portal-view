@@ -3,7 +3,7 @@ div#graphViewerContainer{
   /*!*position:absolute;*!*/
   /*!*bottom:0px;*!*/
   /*!*top:0px;*!*/
-height: 300px;
+height: 600px;
 background: #fbfbfb;
 position: relative;
 /*width: 150%;*/
@@ -39,6 +39,32 @@ position: relative;
 }
 #for-canvas-graph {
   height: 100%;
-  width: 100%;
+  width: 65%;
+  top: 0%;
+  left: 0%;
   display: block;
+}
+#legend{
+  width: 30%;
+  height: 100%;
+  position: absolute;
+  top: 0%;
+  left: 70%;
+  font-size: 0.7vw;
+}
+#legend > div > h3{
+  font-size: 0.9375rem;
+  font-weight: bold;
+}
+
+#suggestions_div{
+  width: 30%;
+  height: 10%;
+  position: absolute;
+  top: 0.5%;
+  left: 38%;
+}
+
+#suggestions_div > input{
+  width: 31%;
 }

@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 declare const require: any;
 declare const $: any;
-const IntactGraph = require('expose-loader?IntactGraph!intact_network');
+const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 
 
 @Component({
@@ -24,6 +24,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
+  private _graph: any;
 
   @Input() interactorSelected: string;
   @Input() interactionSelected: string;
@@ -32,7 +33,9 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private networkSearchService: NetworkSearchService) { }
+              private networkSearchService: NetworkSearchService) {
+    this._graph= new IntactGraph.GraphPort('for-canvas-graph','legend','nodeL');
+  }
 
   ngOnInit(): void {
     $('iv-interactions-viewer').foundation();
@@ -58,18 +61,18 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
 
-    const chng = changes['interactionSelected'];
+    /*const chng = changes['interactionSelected'];
     const cur = JSON.stringify(chng.currentValue);
 
     if (cur !== undefined) {
       IntactGraph.filterAndHighlight(cur, 'interactions') ;
     } else {
       IntactGraph.filterAndHighlight([], 'interactions') ;
-    }
+    }*/
   }
 
   findInteractor() {
-    IntactGraph.findInteractor()
+    //IntactGraph.findInteractor()
   }
 
   private requestIntactNetworkDetails() {
@@ -84,8 +87,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     ).subscribe(data => {
       this.interactionsJSON = data;
       console.log('Data loaded');
-      IntactGraph.loadJsonAndProcess(this.interactionsJSON, true);
-
+      this._graph.initializeWithData(this.interactionsJSON, false,false,'fcose');
     })
   }
 
@@ -167,5 +169,13 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   set interactionsJSON(value: any) {
     this._interactionsJSON = value;
+  }
+
+  get graph():any{
+    return this._graph;
+  }
+
+  set graph(value:any){
+    this._graph=value;
   }
 }

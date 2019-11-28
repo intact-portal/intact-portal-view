@@ -94,8 +94,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     })
   }
 
-  onLayoutChange(value){
+  onChangeLayout(value){
     this._graph.applyLayout(value);
+  }
+
+  onChangeExpand(event){
+    this._graph.expandEdges(event.target.checked,false);
   }
 
   get term(): string {

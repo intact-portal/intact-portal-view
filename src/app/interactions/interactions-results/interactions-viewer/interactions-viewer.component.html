@@ -17,10 +17,10 @@
       </div>
       <div>
         <input #expand type="checkbox"
-               (change)="onChangeExpand($event)"
+               (change)="onChangeExpand(expand.checked,disruptedByMutation)"
                > Expand
-        <input #disruptedmutation type="checkbox"
-               (change)="onChangeDisruptedMutation($event)"
+        <input #disruptedByMutation type="checkbox"
+               (change)="onChangeDisruptedByMutation(disruptedByMutation.checked,expand)"
         > Disrupted By Mutation
         </div>
        </div>

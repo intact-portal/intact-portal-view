@@ -9,10 +9,17 @@
       </div>
     </div>-->
     <div class="columns medium-12">
-      <input #cluster type="radio" name="layout" (change)="onLayoutChange(cluster.value)"
+      <div>
+      <input #cluster type="radio" name="layout" (change)="onChangeLayout(cluster.value)"
               value="cise"  >Cluster
-      <input #forcedirected type="radio" name="layout" (change)="onLayoutChange(forcedirected.value)" value="fcose" checked >Force directed
-      <input #circular type="radio" name="layout" (change)="onLayoutChange(circular.value)" value="avsdf" >Circular
+      <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)" value="fcose" checked >Force directed
+      <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf" >Circular
+      </div>
+      <div>
+        <input #expand type="checkbox"
+               (change)="onChangeExpand($event)"
+               > Expand
+        </div>
        </div>
     <div class="columns medium-12">
 

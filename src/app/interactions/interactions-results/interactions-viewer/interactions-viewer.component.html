@@ -9,25 +9,11 @@
       </div>
     </div>-->
     <div class="columns medium-12">
-      <mat-accordion >
-    <mat-expansion-panel>
-      <mat-expansion-panel-header >
-        <mat-panel-title>
-          Graph Tools
-        </mat-panel-title>
-       <!-- <mat-panel-description>
-          Type name and age
-        </mat-panel-description>-->
-      </mat-expansion-panel-header>
-      <!-- <mat-form-field>
-         <input matInput placeholder="Name">
-       </mat-form-field>
-       <mat-form-field>
-         <input matInput placeholder="Age">
-       </mat-form-field>-->
-    </mat-expansion-panel>
-      </mat-accordion>
-      </div>
+      <input #cluster type="radio" name="layout" (change)="onLayoutChange(cluster.value)"
+              value="cise"  >Cluster
+      <input #forcedirected type="radio" name="layout" (change)="onLayoutChange(forcedirected.value)" value="fcose" checked >Force directed
+      <input #circular type="radio" name="layout" (change)="onLayoutChange(circular.value)" value="avsdf" >Circular
+       </div>
     <div class="columns medium-12">
 
 

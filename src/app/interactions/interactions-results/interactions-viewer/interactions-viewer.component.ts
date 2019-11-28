@@ -94,6 +94,10 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     })
   }
 
+  onLayoutChange(value){
+    this._graph.applyLayout(value);
+  }
+
   get term(): string {
     return this._term;
   }

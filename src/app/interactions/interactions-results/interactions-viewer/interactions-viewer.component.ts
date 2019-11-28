@@ -102,6 +102,10 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._graph.expandEdges(event.target.checked,false);
   }
 
+  onChangeDisruptedMutation(event){
+    this._graph.expandEdges(true,event.target.checked);
+  }
+
   get term(): string {
     return this._term;
   }

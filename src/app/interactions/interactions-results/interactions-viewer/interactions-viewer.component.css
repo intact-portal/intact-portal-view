@@ -68,3 +68,23 @@ position: relative;
 #suggestions_div > input{
   width: 31%;
 }
+
+/*Collapsible Panel Css*/
+
+.mat-expansion-panel {
+  display: flex !important;
+  flex-direction: column;
+}
+.mat-expansion-panel-header {
+  order: 2;
+}
+
+.mat-expansion-panel-header {
+  background-color: #9b689b;
+}
+
+/*.mat-expansion-panel-header.mat-expanded {
+  background-color: rgb(107,72,107);
+}*/
+
+/*Collapsible Panel Css*/

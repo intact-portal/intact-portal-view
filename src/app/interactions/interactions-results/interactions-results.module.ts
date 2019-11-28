@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule,MatButtonModule } from '@angular/material';
 import { InteractionsResultsComponent } from './interactions-results.component';
 import { InteractionsRoutingModule } from './interactions-routing.module';
 import { InteractionsFiltersComponent } from './interactions-filters/interactions-filters.component';
@@ -16,7 +16,8 @@ import {InteractionDetailsModule} from '../interaction-details/interaction-detai
     CommonModule,
     InteractionsRoutingModule,
     InteractionDetailsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatButtonModule
   ],
   declarations: [
     InteractionsFiltersComponent,

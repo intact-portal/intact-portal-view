@@ -38,7 +38,7 @@ position: relative;
   display: block;
 }
 #for-canvas-graph {
-  height: 63%;
+  height: 90%;
   width: 65%;
   top: 7%;
   left: 0%;
@@ -71,7 +71,8 @@ position: relative;
 
 #graph-top-panel{
   top: 2%;
-  position: relative;
+  height:5%;
+  position: absolute;
 }
 
 #graph-top-panel > div{

@@ -23,6 +23,11 @@
                (change)="onChangeDisruptedByMutation(disruptedByMutation.checked,expand)"
         > Disrupted By Mutation
         </div>
+      <div>
+         <input #groupby type="checkbox"
+               (change)="onChangeGroupBy(groupby.checked)"
+        > Group By
+      </div>
        </div>
 
     <div class="columns medium-12">
@@ -47,8 +52,11 @@
               <a (click)="onClickDownloadGraph('graphml')">GRAPHML</a>
             </div>
           </div>
+
          </div>
+
         <div id="for-canvas-graph"></div>
+
         <div id='legend' class='my-legend'></div>
       </div>
     </div>

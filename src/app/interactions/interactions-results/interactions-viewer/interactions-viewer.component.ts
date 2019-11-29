@@ -25,6 +25,10 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   private _miScoreMin: any;
   private _miScoreMax: any;
   private _graph: any;
+  private _expanded: boolean;
+  private _disruptedByMutation: boolean;
+  private _compoundGraph: boolean = false;
+  private _layoutName: string = 'fcose';
 
   @Input() interactorSelected: string;
   @Input() interactionSelected: string;
@@ -86,15 +90,17 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       this.detectionMethodFilter,
       this.miScoreMin,
       this.miScoreMax,
-      this.negativeFilter
+      this.negativeFilter,
+      this.compoundGraph
     ).subscribe(data => {
       this.interactionsJSON = data;
       console.log('Data loaded');
-      this._graph.initializeWithData(this.interactionsJSON, false,false,'fcose');
+      this._graph.initializeWithData(this.interactionsJSON, this.expanded,this.disruptedByMutation,this.layoutName);
     })
   }
 
   onChangeLayout(value){
+    this.layoutName=value;
     this._graph.applyLayout(value);
   }
 
@@ -102,11 +108,13 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     if(!expandCheckBoxValue){
       disruptedByMutationCheckBox.checked = false;
     }
+    this.expanded = expandCheckBoxValue;
     this._graph.expandEdges(expandCheckBoxValue,false);
   }
 
   onChangeDisruptedByMutation(disruptedByMutationCheckBoxValue,expandCheckBox){
     expandCheckBox.checked = true;
+    this.disruptedByMutation=disruptedByMutationCheckBoxValue;
     this._graph.expandEdges(true,disruptedByMutationCheckBoxValue);
   }
 
@@ -116,6 +124,11 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   onClickReset(){
     this._graph.reset();
+  }
+
+  onChangeGroupBy(groupByValue:boolean){
+    this.compoundGraph=groupByValue;
+    this.requestIntactNetworkDetails();
   }
 
   get term(): string {
@@ -205,4 +218,36 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   set graph(value:any){
     this._graph=value;
   }
+
+  get expanded():boolean{
+    return this._expanded;
+  }
+
+  set expanded(value:boolean){
+    this._expanded=value;
+  }
+
+  get disruptedByMutation():boolean{
+    return this._disruptedByMutation;
+  }
+
+  set disruptedByMutation(value:boolean){
+    this._disruptedByMutation=value;
+  }
+
+  get compoundGraph():boolean{
+      return this._compoundGraph;
+      }
+
+  set compoundGraph(value:boolean){
+      this._compoundGraph=value;
+      }
+
+  get layoutName():string{
+      return this._layoutName;
+      }
+
+  set layoutName(value:string){
+      this._layoutName=value;
+      }
 }

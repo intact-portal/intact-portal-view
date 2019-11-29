@@ -19,7 +19,8 @@ export class NetworkSearchService {
                         detectionMethodFilter: string[],
                         miScoreMin: any,
                         miScoreMax: any,
-                        negativeFilter: any): Observable<any> {
+                        negativeFilter: any,
+                        compoundGraph :boolean): Observable<any> {
 
     query = query.trim();
 
@@ -32,7 +33,9 @@ export class NetworkSearchService {
       .set('detectionMethodFilter', detectionMethodFilter.toString())
       .set('minMiScore', miScoreMin.toString())
       .set('maxMiScore', miScoreMax.toString())
-      .set('isNegativeFilter', negativeFilter.toString());
+      .set('isNegativeFilter', negativeFilter.toString())
+      .set('isCompound', compoundGraph.toString());
+
 
     const options = query ? {params: params} : {};
 

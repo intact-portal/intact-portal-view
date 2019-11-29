@@ -38,9 +38,9 @@ position: relative;
   display: block;
 }
 #for-canvas-graph {
-  height: 90%;
+  height: 85%;
   width: 65%;
-  top: 7%;
+  top: 12%;
   left: 0%;
   display: block;
 }
@@ -58,20 +58,27 @@ position: relative;
 }
 
 #suggestions_div{
-  width: 30%;
-  height: 10%;
+  width: 85%;
+  height: 52%;
   position: absolute;
   top: 0.5%;
-  left: 38%;
+  left: 26%;
+  display: inline;
 }
 
-#suggestions_div > input{
+#suggestions_div > input {
   width: 31%;
+  display: inline;
+  height:90%;
+}
+
+#suggestions_div > label {
+  display: inline;
 }
 
 #graph-top-panel{
   top: 2%;
-  height:5%;
+  height:10%;
   position: absolute;
 }
 

@@ -70,17 +70,25 @@ position: relative;
 }
 
 #graph-top-panel{
-  top: 5%;
+  top: 2%;
+  position: relative;
+}
+
+#graph-top-panel > div{
+  display: inline;
+}
+#reset{
+  left: 0.5%;
+  position: relative;
 }
 #download-graph{
-  left: 65%;
+  left: 90%;
 }
 
 /*Image Dropdown Css*/
 
 .download-graph {
   position: relative;
-  display: inline-block;
 }
 
 .download-graph-options {

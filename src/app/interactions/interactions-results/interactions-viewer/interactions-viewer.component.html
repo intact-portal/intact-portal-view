@@ -34,8 +34,13 @@
           <input type='text' id='nodeL'>
           <a class="button" (click)='findInteractor()'><i class="icon icon-common icon-search" ></i> Find Interactor</a>
         </div>-->
-        <div id="graph-top-panel">
-          <div id="download-graph" class="download-graph">
+        <div id="graph-top-panel" class="columns medium-8">
+
+          <div id="reset">
+            <i (click)="onClickReset()" class="icon icon-common icon-redo-alt"></i>
+          </div>
+
+          <div id="download-graph" class="download-graph ">
             <i class="icon icon-common icon-download-alt"></i>
             <div class="download-graph-options">
               <a (click)="onClickDownloadGraph('png')">PNG</a>

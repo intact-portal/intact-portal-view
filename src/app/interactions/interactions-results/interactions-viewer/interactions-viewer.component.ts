@@ -98,20 +98,24 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._graph.applyLayout(value);
   }
 
-  onChangeExpand(value,disruptedByMutation){
-    if(!value){
-      disruptedByMutation.checked = false;
+  onChangeExpand(expandCheckBoxValue,disruptedByMutationCheckBox){
+    if(!expandCheckBoxValue){
+      disruptedByMutationCheckBox.checked = false;
     }
-    this._graph.expandEdges(value,false);
+    this._graph.expandEdges(expandCheckBoxValue,false);
   }
 
-  onChangeDisruptedByMutation(value,expandCheckBox){
+  onChangeDisruptedByMutation(disruptedByMutationCheckBoxValue,expandCheckBox){
     expandCheckBox.checked = true;
-    this._graph.expandEdges(true,value);
+    this._graph.expandEdges(true,disruptedByMutationCheckBoxValue);
   }
 
   onClickDownloadGraph(downloadFileType:string){
     this._graph.exportAs(downloadFileType);
+  }
+
+  onClickReset(){
+    this._graph.reset();
   }
 
   get term(): string {

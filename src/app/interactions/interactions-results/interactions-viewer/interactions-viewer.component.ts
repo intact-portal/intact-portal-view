@@ -118,6 +118,11 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._graph.expandEdges(true,disruptedByMutationCheckBoxValue);
   }
 
+  onChangeGroupBy(groupByValue:boolean){
+    this.compoundGraph=groupByValue;
+    this.requestIntactNetworkDetails();
+  }
+
   onClickDownloadGraph(downloadFileType:string){
     this._graph.exportAs(downloadFileType);
   }
@@ -126,9 +131,8 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._graph.reset();
   }
 
-  onChangeGroupBy(groupByValue:boolean){
-    this.compoundGraph=groupByValue;
-    this.requestIntactNetworkDetails();
+  OnClickSearch(interactorName:string){
+    this.graph.search(interactorName);
   }
 
   get term(): string {

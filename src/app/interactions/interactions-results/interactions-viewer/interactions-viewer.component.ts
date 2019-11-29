@@ -102,12 +102,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     if(!value){
       disruptedByMutation.checked = false;
     }
-    this._graph.expandEdges(value,disruptedByMutation.checked);
+    this._graph.expandEdges(value,false);
   }
 
   onChangeDisruptedByMutation(value,expandCheckBox){
     expandCheckBox.checked = true;
-    this._graph.expandEdges(expandCheckBox.checked,value);
+    this._graph.expandEdges(true,value);
   }
 
   get term(): string {

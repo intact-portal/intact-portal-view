@@ -110,6 +110,10 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._graph.expandEdges(true,value);
   }
 
+  onClickDownloadGraph(downloadFileType:string){
+    this._graph.exportAs(downloadFileType);
+  }
+
   get term(): string {
     return this._term;
   }

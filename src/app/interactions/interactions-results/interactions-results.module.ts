@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatExpansionModule,MatButtonModule, MatFormFieldModule, MatInputModule, MatRadioModule } from '@angular/material';
 import { InteractionsResultsComponent } from './interactions-results.component';
 import { InteractionsRoutingModule } from './interactions-routing.module';
 import { InteractionsFiltersComponent } from './interactions-filters/interactions-filters.component';
@@ -15,12 +14,7 @@ import {InteractionDetailsModule} from '../interaction-details/interaction-detai
   imports: [
     CommonModule,
     InteractionsRoutingModule,
-    InteractionDetailsModule,
-    MatExpansionModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatRadioModule
+    InteractionDetailsModule
   ],
   declarations: [
     InteractionsFiltersComponent,

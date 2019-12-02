@@ -43,7 +43,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     $('iv-interactions-viewer').foundation();
-    this._graph= new IntactGraph.GraphPort('for-canvas-graph','legend','nodeL');
+    this.graph= new IntactGraph.GraphPort('for-canvas-graph','legend','nodeL');
 
     this.route.queryParams
       .filter(params => params.query)
@@ -95,13 +95,13 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     ).subscribe(data => {
       this.interactionsJSON = data;
       console.log('Data loaded');
-      this._graph.initializeWithData(this.interactionsJSON, this.expanded,this.disruptedByMutation,this.layoutName);
+      this.graph.initializeWithData(this.interactionsJSON, this.expanded,this.disruptedByMutation,this.layoutName);
     })
   }
 
   onChangeLayout(value){
     this.layoutName=value;
-    this._graph.applyLayout(value);
+    this.graph.applyLayout(value);
   }
 
   onChangeExpand(expandCheckBoxValue,disruptedByMutationCheckBox){
@@ -109,13 +109,13 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       disruptedByMutationCheckBox.checked = false;
     }
     this.expanded = expandCheckBoxValue;
-    this._graph.expandEdges(expandCheckBoxValue,false);
+    this.graph.expandEdges(expandCheckBoxValue,false);
   }
 
   onChangeDisruptedByMutation(disruptedByMutationCheckBoxValue,expandCheckBox){
     expandCheckBox.checked = true;
     this.disruptedByMutation=disruptedByMutationCheckBoxValue;
-    this._graph.expandEdges(true,disruptedByMutationCheckBoxValue);
+    this.graph.expandEdges(true,disruptedByMutationCheckBoxValue);
   }
 
   onChangeGroupBy(groupByValue:boolean){
@@ -124,11 +124,11 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   }
 
   onClickDownloadGraph(downloadFileType:string){
-    this._graph.exportAs(downloadFileType);
+    this.graph.exportAs(downloadFileType);
   }
 
   onClickReset(){
-    this._graph.reset();
+    this.graph.reset();
   }
 
   OnClickSearch(interactorName:string){

@@ -140,7 +140,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
         this.interactorSelected = interactorSel;
         $(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
 
-        this.interactorChanged.emit(this.interactorSelected);
+        var interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
+          bubbles: true,
+          detail: {
+            interactorId:this.interactorSelected
+
+          }
+        });
+        document.dispatchEvent(interactorSelectedEvent);
 
       } else {
         // None is selected, remove class
@@ -151,7 +158,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
           })
         });
 
-        this.interactorChanged.emit(this.interactorSelected);
+        var tableUnselectedEvent = new CustomEvent('tableUnselected', {
+          bubbles: true
+        });
+        document.dispatchEvent(tableUnselectedEvent);
       }
     });
 

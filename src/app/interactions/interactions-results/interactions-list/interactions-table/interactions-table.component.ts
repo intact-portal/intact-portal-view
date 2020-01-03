@@ -15,8 +15,6 @@ const baseURL = environment.intact_portal_ws;
 export class InteractionsTableComponent implements OnInit, OnChanges {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() tableInteractionSelected: EventEmitter<string> = new EventEmitter<string>();
-
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactionTab: boolean;
 

@@ -8,27 +8,7 @@
         <a class="button" (click)='findInteractor()'><i class="icon icon-common icon-search" ></i> Find Interactor</a>
       </div>
     </div>-->
-    <div class="columns medium-12">
-      <div>
-      <input #cluster type="radio" name="layout" (change)="onChangeLayout(cluster.value)"
-              value="cise"  >Cluster
-      <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)" value="fcose" checked >Force directed
-      <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf" >Circular
-      </div>
-      <div>
-        <input #expand type="checkbox"
-               (change)="onChangeExpand(expand.checked,disruptedByMutation)"
-               > Expand
-        <input #disruptedByMutation type="checkbox"
-               (change)="onChangeDisruptedByMutation(disruptedByMutation.checked,expand)"
-        > Disrupted By Mutation
-        </div>
-      <div>
-         <input #groupby type="checkbox"
-               (change)="onChangeGroupBy(groupby.checked)"
-        > Group By
-      </div>
-       </div>
+
 
     <div class="columns medium-12">
 
@@ -56,10 +36,47 @@
             </div>
           </div>
 
-         </div>
+
+
+          <button class="openbtn" (click)="openNav()">☰ Graph Tools</button>
+
+        </div>
 
         <div id="for-canvas-graph"></div>
+        <div id="mySidepanel" class="sidepanel">
+          <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">×</a>
+          <div class="columns medium-12">
+            <fieldset>
+              <legend>Layout</legend>
 
+              <div>
+                <input #cluster type="radio" name="layout" (change)="onChangeLayout(cluster.value)"
+                       value="cise"  >Cluster
+                <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)" value="fcose" checked >Force directed
+                <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf" >Circular
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Edges</legend>
+              <div>
+                <input #expand type="checkbox"
+                       (change)="onChangeExpand(expand.checked,disruptedByMutation)"
+                > Expand
+                <input #disruptedByMutation type="checkbox"
+                       (change)="onChangeDisruptedByMutation(disruptedByMutation.checked,expand)"
+                > Disrupted By Mutation
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Group By</legend>
+              <div>
+                <input #groupby type="checkbox"
+                       (change)="onChangeGroupBy(groupby.checked)"
+                > Species
+              </div>
+            </fieldset>
+          </div>
+        </div>
         <div id='legend' class='my-legend'></div>
       </div>
     </div>

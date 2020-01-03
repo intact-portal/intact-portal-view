@@ -90,7 +90,7 @@ position: relative;
   position: relative;
 }
 #download-graph{
-  left: 90%;
+  left: 82%;
 }
 
 /*Image Dropdown Css*/
@@ -122,3 +122,61 @@ position: relative;
 }
 
 /*Image Dropdown Css*/
+
+/*Graph Tools*/
+
+fieldset {
+  border: 1px solid white;
+  padding: 3%;
+}
+
+.sidepanel  {
+  width: 0;
+  position: absolute;
+  z-index: 1;
+  height: 60%;
+  top: 2%;
+  left: 67%;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  color: white;
+}
+
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  left: 88%;
+  position: absolute;
+}
+
+.openbtn:hover {
+  background-color:#444;
+}
+
+/*Graph Tools*/

@@ -15,6 +15,8 @@ const baseURL = environment.intact_portal_ws;
 export class InteractionsTableComponent implements OnInit, OnChanges {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output() tableInteractionSelected: EventEmitter<string> = new EventEmitter<string>();
+
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactionTab: boolean;
 
@@ -105,11 +107,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
       },
       columns: [
         {
-          data: 'interactionAc', defaultContent: ' ', title: 'Select',
+          data: 'binaryInteractionId', defaultContent: ' ', title: 'Select',
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<div>' +
-                '<input type="checkbox" id="' + full.interactionAc + '" name="check" value="' + data + '"/>' +
+                '<input type="checkbox" id="' + full.binaryInteractionId + '" name="check" value="' + data + '"/>' +
                 ' <span class="margin-left-medium">' +
                 '   <a href="/intact-view/details/interaction/' + full.interactionAc + '">' +
                 '     <i class="icon icon-common icon-search-document"></i>' +
@@ -177,8 +179,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
         this.interactionSelected = interactionSel;
         $(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
 
-        this.interactionChanged.emit(this.interactionSelected);
+        //this.interactionChanged.emit(this.interactionSelected);
+        const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
+          bubbles: true,
+          detail: {
+            interactionId:this.interactionSelected
 
+          }
+        });
+
+        document.dispatchEvent(interactionSelectedEvent);
       } else {
         // None is selected, remove class
         this.interactionSelected = undefined;
@@ -188,7 +198,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
           })
         });
 
-        this.interactionChanged.emit(this.interactionSelected);
+        const tableUnselectEvent = new CustomEvent('tableUnselected', {
+          bubbles: true,
+        });
+        document.dispatchEvent(tableUnselectEvent);
       }
     });
 

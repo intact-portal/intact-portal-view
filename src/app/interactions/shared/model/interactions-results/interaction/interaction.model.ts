@@ -19,6 +19,7 @@ export class Interaction {
   private _authors: string[];
   private _firstAuthor: string;
   private _interactionIdentifiers: string[];
+  private _binaryInteractionId: string;
 
 
   get moleculeA(): string {
@@ -171,5 +172,13 @@ export class Interaction {
 
   set interactionIdentifiers(value: string[]) {
     this._interactionIdentifiers = value;
+  }
+
+  get binaryInteractionId():string{
+    return this._binaryInteractionId;
+  }
+
+  set binaryInteractionId(value:string){
+    this._binaryInteractionId=value;
   }
 }

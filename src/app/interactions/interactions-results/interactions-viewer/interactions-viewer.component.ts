@@ -66,14 +66,10 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
 
-    /*const chng = changes['interactionSelected'];
+    const chng = changes['interactionSelected'];
     const cur = JSON.stringify(chng.currentValue);
 
-    if (cur !== undefined) {
-      IntactGraph.filterAndHighlight(cur, 'interactions') ;
-    } else {
-      IntactGraph.filterAndHighlight([], 'interactions') ;
-    }*/
+    console.log('cur'+cur);
   }
 
   findInteractor() {

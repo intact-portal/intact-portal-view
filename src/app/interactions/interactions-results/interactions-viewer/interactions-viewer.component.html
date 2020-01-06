@@ -38,15 +38,15 @@
 
 
 
-          <button class="openbtn" (click)="openNav()">☰ Graph Tools</button>
+          <button class="graph-tool-btn" (click)="openGraphTools()">☰ Graph Tools</button>
 
         </div>
 
         <div id="for-canvas-graph"></div>
-        <div id="mySidepanel" class="sidepanel">
-          <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">×</a>
+        <div id="graph-tools" class="graph-tools-panel">
+          <a href="javascript:void(0)" class="closebtn" (click)="closeGraphTools()">×</a>
           <div class="columns medium-12">
-            <fieldset>
+            <fieldset class="graph-tools-sections">
               <legend>Layout</legend>
 
               <div>
@@ -56,7 +56,7 @@
                 <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf" >Circular
               </div>
             </fieldset>
-            <fieldset>
+            <fieldset  class="graph-tools-sections">
               <legend>Edges</legend>
               <div>
                 <input #expand type="checkbox"
@@ -67,7 +67,7 @@
                 > Disrupted By Mutation
               </div>
             </fieldset>
-            <fieldset>
+            <fieldset  class="graph-tools-sections">
               <legend>Group By</legend>
               <div>
                 <input #groupby type="checkbox"

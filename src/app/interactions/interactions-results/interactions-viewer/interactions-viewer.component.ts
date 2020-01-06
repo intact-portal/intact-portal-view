@@ -131,12 +131,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.graph.search(interactorName);
   }
 
-   openNav() {
-     document.getElementById("mySidepanel").style.width = "18%";
+  openGraphTools() {
+     document.getElementById("graph-tools").style.width = "24%";
   }
 
-  closeNav() {
-   document.getElementById("mySidepanel").style.width = "0";
+  closeGraphTools() {
+   document.getElementById("graph-tools").style.width = "0";
   }
 
   get term(): string {

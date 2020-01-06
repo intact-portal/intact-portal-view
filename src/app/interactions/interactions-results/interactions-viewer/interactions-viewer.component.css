@@ -125,12 +125,12 @@ position: relative;
 
 /*Graph Tools*/
 
-fieldset {
+.graph-tools-sections {
   border: 1px solid white;
   padding: 3%;
 }
 
-.sidepanel  {
+.graph-tools-panel  {
   width: 0;
   position: absolute;
   z-index: 1;
@@ -144,7 +144,7 @@ fieldset {
   color: white;
 }
 
-.sidepanel a {
+.graph-tools-panel a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
@@ -153,29 +153,29 @@ fieldset {
   transition: 0.3s;
 }
 
-.sidepanel a:hover {
+.graph-tools-panel a:hover {
   color: #f1f1f1;
 }
 
-.sidepanel .closebtn {
+.graph-tools-panel .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
   font-size: 36px;
 }
 
-.openbtn {
-  font-size: 20px;
+.graph-tool-btn {
+  font-size: 87%;
   cursor: pointer;
   background-color: #111;
   color: white;
-  padding: 10px 15px;
+  padding: 1% 1%;
   border: none;
-  left: 88%;
+  left: 87%;
   position: absolute;
 }
 
-.openbtn:hover {
+.graph-tool-btn:hover {
   background-color:#444;
 }
 

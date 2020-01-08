@@ -132,7 +132,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   }
 
   openGraphTools() {
-     document.getElementById("graph-tools").style.width = "24%";
+     document.getElementById("graph-tools").style.width = "25%";
   }
 
   closeGraphTools() {

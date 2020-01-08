@@ -90,7 +90,7 @@ position: relative;
   position: relative;
 }
 #download-graph{
-  left: 82%;
+  left: 75%;
 }
 
 /*Image Dropdown Css*/
@@ -103,9 +103,15 @@ position: relative;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 100px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  left:10%;
+  top: 90%;
+}
+
+.download_btn{
+  background-color: transparent;
+  width:10%
 }
 
 .download-graph-options a {
@@ -113,6 +119,7 @@ position: relative;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  font-size: 60%;
 }
 
 .download-graph-options a:hover {background-color: #f1f1f1}

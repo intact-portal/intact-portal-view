@@ -29,7 +29,11 @@
           </div>
 
           <div id="download-graph" class="download-graph ">
-            <i class="icon icon-common icon-download-alt"></i>
+            <button class="download_btn"
+                   value="Download">
+              <i class="icon icon-common icon-download-alt"></i>
+            </button>
+
             <div class="download-graph-options">
               <a (click)="onClickDownloadGraph('png')">PNG</a>
               <a (click)="onClickDownloadGraph('graphml')">GRAPHML</a>

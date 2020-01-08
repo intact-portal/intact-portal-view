@@ -6,6 +6,8 @@ div#graphViewerContainer{
 height: 600px;
 background: #fbfbfb;
 position: relative;
+border-style: solid;
+border-color:#5a2e6e3d;
 /*width: 150%;*/
 /*margin-left: auto;*/
 /*margin-right: auto;*/
@@ -46,11 +48,16 @@ position: relative;
 }
 #legend{
   width: 30%;
-  height: 100%;
+  height: 96%;
   position: absolute;
   top: 2%;
   left: 70%;
   font-size: 0.7vw;
+  background-color: #5a2e6e3d;
+  border-radius: 8px;
+  padding-left: 2%;
+  padding-top: 2%;
+  width: 29%;
 }
 #legend > div > h3{
   font-size: 0.9375rem;

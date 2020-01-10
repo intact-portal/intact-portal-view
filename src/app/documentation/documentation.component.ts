@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, Router} from '@angular/router';
 
 declare const $: any;
 
@@ -11,9 +10,8 @@ declare const $: any;
 })
 export class DocumentationComponent implements OnInit {
 
-  constructor(
-    private titleService: Title,
-  ) {}
+  constructor(private titleService: Title) {
+  }
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Documentation');

@@ -1,0 +1,4 @@
+/*This avoids the purple coming from the main theme*/
+.industry-background.button:focus {
+  background: #0086b4;
+}

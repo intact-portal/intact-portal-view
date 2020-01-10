@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare const $: any;
+
 @Component({
   selector: 'iv-tile-menu',
   templateUrl: './tile-menu.component.html',
@@ -10,6 +12,7 @@ export class TileMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('iv-tile-menu').foundation();
   }
 
 }

@@ -1,24 +1,79 @@
-form  {
-  margin: 60px 0 0 0 !important;
-}
+/*Slider customization*/
+/* TODO: Do we still need this commented block */
+/*form  {*/
+/*  margin: 60px 0 0 0 !important;*/
+/*}*/
 
-.ui-slider .ui-btn-inner {
-  padding: 4px 0 0 0 !important;
-}
+/*.ui-slider .ui-btn-inner {*/
+/*  padding: 4px 0 0 0 !important;*/
+/*}*/
 
-.ui-slider-popup {
-  position: absolute !important;
-  width: 64px;
-  height: 64px;
-  text-align: center;
-  font-size: 36px;
-  padding-top: 14px;
-  z-index: 100;
-  opacity: 0.8;
-}
+/*.ui-slider-popup {*/
+/*  position: absolute !important;*/
+/*  width: 64px;*/
+/*  height: 64px;*/
+/*  text-align: center;*/
+/*  font-size: 36px;*/
+/*  padding-top: 14px;*/
+/*  z-index: 100;*/
+/*  opacity: 0.8;*/
+/*}*/
 
-input {
+#range2, #range1 {
+  height: 19px;
   background-color: #fefefe;
-  border: none;
+  border-color: #d3d3d3;
+  border-radius: 4px;
   box-shadow: none;
+  text-align: center;
+  font-weight:bold;
+  font-size: 14px;
+  color: rgb(107,72,107);
+  padding: 0;
+}
+
+#slider-range {
+  margin-top: 3px;
+}
+
+/* Facets customization */
+.facet > [type="radio"]  {
+  font-size: 13px;
+}
+
+.facet {
+  white-space: nowrap;
+  padding: 5px;
+}
+.facet > label {
+   font-size: 13px;
+   margin-left: 0px;
+ }
+
+/* TODO adjust the color of the scroll */
+.scrollbar {
+  background-color: #F5F5F5;
+  /*float: left;*/
+  /*height: 200px;*/
+  /*margin-bottom: 25px;*/
+  /*margin-left: 22px;*/
+  /*margin-top: 40px;*/
+  /*width: 65px;*/
+  scrollbar-width: thin;
+  scrollbar-color: #90A4AE #CFD8DC;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #CFD8DC;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #90A4AE;
+  border-radius: 6px;
+  border: 2px solid #CFD8DC;
 }

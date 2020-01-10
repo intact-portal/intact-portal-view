@@ -1,122 +1,109 @@
-<div class="row">
-  <div class="columns medium-6">
-    <h3>Filters</h3>
+<div class="row" >
+  <div class="columns medium-6" style="padding-left: 0rem">
+    <h4>Filters</h4>
   </div>
-  <div class="columns medium-6">
+  <div class="columns medium-6" style="padding-right: 0rem">
     <div *ngIf="anyFiltersSelected()">
-      <a class="button resetFilters" (click)="resetAllFilters()"><i class="icon icon-functional" data-icon="d"></i> Reset filters</a>
+      <a class="button resetFilters" style="float: right" (click)="resetAllFilters()"><i class="icon icon-functional" data-icon="d"></i> Reset filters</a>
     </div>
   </div>
-
 </div>
 
 <div class="row margin-bottom-large">
-  <div class="columns medium-12">
-
-    <div class="margin-top-large">
-      <b>Interactor Species</b>
-      <div class="margin-top-medium" [ngStyle]="speciesFilterStyle()">
-        <ul class="no-bullet">
+  <section>
+    <div>
+      <ul class="vertical menu facets">
+        <h5>Interactor Species</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="speciesFilterStyle()">
           <li *ngFor="let species of interactorFacets.species_name_str">
-            <input #filter type="checkbox" value="{{species.value}}"
-                   (change)="onChangeSpeciesNameFilter(filter.value)"
-                   [checked]="isSelectedSpeciesName(species.value)"> {{species.value}} ({{species.valueCount}})
+            <span class="facet"><input #filter type="radio" value="{{species.value}}"
+                                       (change)="onChangeSpeciesNameFilter(filter.value)"
+                                       [checked]="isSelectedSpeciesName(species.value)"/>
+              <label>{{species.value}} ({{species.valueCount}})</label>
+            </span>
           </li>
-        </ul>
-      </div>
-    </div>
+        </div>
 
-    <div class="margin-top-large">
-      <b>Interactor Type</b>
-      <div class="margin-top-medium" [ngStyle]="interactorFilterStyle()">
-        <ul class="no-bullet">
+        <h5>Interactor Type</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactorFilterStyle()">
           <li *ngFor="let molecule of interactorFacets.interactor_type_str">
-            <input #filter type="checkbox" value="{{molecule.value}}"
-                   (change)="onChangeInteractorTypeFilter(filter.value)"
-                   [checked]="isSelectedInteractorType(molecule.value)"> {{molecule.value}} ({{molecule.valueCount}})
+            <span class="facet"><input #filter type="radio" value="{{molecule.value}}"
+                                       (change)="onChangeInteractorTypeFilter(filter.value)"
+                                       [checked]="isSelectedInteractorType(molecule.value)"/>
+              <label>{{molecule.value}} ({{molecule.valueCount}})</label>
+            </span>
           </li>
-        </ul>
-      </div>
-    </div>
+        </div>
 
-    <div class="margin-top-large">
-      <b>Interaction Type</b>
-      <div class="margin-top-medium" [ngStyle]="interactionFilterStyle()">
-        <ul class="no-bullet">
+        <h5>Interaction Type</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionFilterStyle()">
           <li *ngFor="let interactionType of interactionFacets.interaction_type_str">
-            <input #filter type="checkbox" value="{{interactionType.value}}"
-                   (change)="onChangeInteractionTypeFilter(filter.value)"
-                   [checked]="isSelectedInteractionType(interactionType.value)"> {{interactionType.value}} ({{interactionType.valueCount}})
+            <span class="facet"><input #filter type="radio" value="{{interactionType.value}}"
+                                       (change)="onChangeInteractionTypeFilter(filter.value)"
+                                       [checked]="isSelectedInteractionType(interactionType.value)"/>
+              <label>{{interactionType.value}} ({{interactionType.valueCount}})</label>
+            </span>
           </li>
-        </ul>
-      </div>
-    </div>
+        </div>
 
-    <div class="margin-top-large">
-      <b>Interaction Detection Method</b>
-      <div class="margin-top-medium" [ngStyle]="detMethodFilterStyle()">
-        <ul class="no-bullet">
+        <h5>Interaction Detection Method</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="detMethodFilterStyle()">
           <li *ngFor="let detectionMethod of interactionFacets.interaction_detection_method_str">
-            <input #filter type="checkbox" value="{{detectionMethod.value}}"
-                   (change)="onChangeDetectionMethodFilter(filter.value)"
-                   [checked]="isSelectedDetectionMethod(detectionMethod.value)"> {{detectionMethod.value}} ({{detectionMethod.valueCount}})
+            <span class="facet"><input #filter type="radio" value="{{detectionMethod.value}}"
+                                       (change)="onChangeDetectionMethodFilter(filter.value)"
+                                       [checked]="isSelectedDetectionMethod(detectionMethod.value)"/>
+              <label>{{detectionMethod.value}} ({{detectionMethod.valueCount}})</label>
+            </span>
           </li>
-        </ul>
-      </div>
-    </div>
+        </div>
 
-    <div class="margin-top-large">
-      <b>Interaction Host Organism</b>
-      <div class="margin-top-medium" [ngStyle]="hostOrganismfilterStyle()">
-        <ul class="no-bullet">
+        <h5>Interaction Host Organism</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="hostOrganismFilterStyle()">
           <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
-            <input #filter type="checkbox" value="{{hostOrganism.value}}"
-                   (change)="onChangeHostOrganismFilter(filter.value)"
-                   [checked]="isSelectedHostOrganism(hostOrganism.value)"> {{hostOrganism.value}} ({{hostOrganism.valueCount}})
+            <span class="facet"> <input #filter type="radio" value="{{hostOrganism.value}}"
+                                        (change)="onChangeHostOrganismFilter(filter.value)"
+                                        [checked]="isSelectedHostOrganism(hostOrganism.value)"/>
+              <label>{{hostOrganism.value}} ({{hostOrganism.valueCount}})</label>
+            </span>
           </li>
-        </ul>
-      </div>
-    </div>
+        </div>
+      </ul>
 
-    <div class="margin-top-large">
-      <b>MIscore</b>
-      <div class="row">
-
+      <h5>miScore</h5>
+      <div class="row margin-bottom-large">
         <div class="columns medium-3">
-          <input type="text" id="range1" readonly style="border:0; color:#f6931f; font-weight:bold; padding: 2px">
+          <input type="text" id="range1" disabled>
         </div>
-
-        <div id="slider-range" class="margin-top-large margin-bottom-large columns medium-5"></div>
-
-        <div class="columns medium-4">
-          <input type="text" id="range2" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        <div id="slider-range" class="columns medium-6"></div>
+        <div class="columns medium-3">
+          <input type="text" id="range2" disabled>
         </div>
       </div>
-    </div>
 
-    <div class="margin-top-medium">
-      <div class="float:left">
-        <div *ngFor="let intNegative of interactionFacets.interaction_negative ">
+      <div class="margin-top-medium">
+        <div class="float:left">
+          <div *ngFor="let intNegative of interactionFacets.interaction_negative ">
+            <label class="switch switch_type1" role="switch">
+              <input #filterNegative id="filterNegative" type="checkbox" class="switch__toggle" disabled="disabled"
+                     (change)="onChangeInteractionNegativeFilter(filterNegative.checked)"
+                     [checked]="isSelectedInteractionNegative()">
+              <span class="switch__label"></span>
+            </label>
+            <b class="margin-left-medium" style="color: #847f7f;">Show negative interactions</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="margin-top-medium">
+        <div class="float:left">
           <label class="switch switch_type1" role="switch">
-            <input #filterNegative id="filterNegative" type="checkbox" class="switch__toggle" disabled="disabled"
-                   (change)="onChangeInteractionNegativeFilter(filterNegative.checked)"
-                   [checked]="isSelectedInteractionNegative()">
+            <input type="checkbox" class="switch__toggle" disabled="disabled">
             <span class="switch__label"></span>
           </label>
-          <b class="margin-left-medium" style="color: #847f7f;">Show negative interactions</b>
+          <b class="margin-left-medium" style="color: #847f7f;">Add inter-node connections</b>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="margin-top-medium">
-      <div class="float:left">
-        <label class="switch switch_type1" role="switch">
-          <input type="checkbox" class="switch__toggle" disabled="disabled">
-          <span class="switch__label"></span>
-        </label>
-        <b class="margin-left-medium" style="color: #847f7f;">Add inter-node connections</b>
-      </div>
-    </div>
-
-  </div>
 </div>

@@ -1,35 +1,29 @@
 <div id="search" class="row">
 
     <ul class="tabs" data-tabs id="search-tabs">
-      <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Search</a></li>
-      <li class="tabs-title"><a href="#panel2">Advanced</a></li>
-      <li class="tabs-title"><a href="#panel3">Upload</a></li>
+      <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Quick Search</a></li>
+      <li class="tabs-title"><a href="#panel2">Batch Search</a></li>
+      <li class="tabs-title"><a href="#panel3">Advanced Search</a></li>
     </ul>
 
     <div class="tabs-content" data-tabs-content="search-tabs">
 
       <!--TAB MAIN SEARCH SECTION-->
       <div class="tabs-panel is-active" id="panel1">
-          <div class="row margin-top-large">
-            <div id="searchBox" class="columns small-11">
-              <textarea #query class="typeahead" type="text" placeholder="example"></textarea>
+           <fieldset>
+            <div id="searchBox" class="input-group margin-bottom-none">
+              <input #query class="typeahead input-group-field" type="text" (keydown.enter)="search(query.value, 'enter')"
+                     placeholder="Gene name(s), UniProt AC(s), Pubmed, Protein name(s), Complex Ac"/>
+              <div class="input-group-button">
+                <input id="home-search-button" type="button" name="submit" value="1" (click)="search(query.value, 'button')"
+                       class="button icon icon-functional">
+              </div>
             </div>
-            <input id="home-search-button" class="button margin-top-small" type="submit"
-                   (click)="search(query.value, 'button')" value="Search"/>
-          </div>
+          </fieldset>
       </div>
 
-      <!--TAB ADVANCED SECTION-->
-      <div class="tabs-panel" id="panel2">
-        <div class="row margin-top-large">
-          <div class="columns medium-12 callout-advanced">
-            <iv-advanced-search></iv-advanced-search>
-          </div>
-        </div>
-      </div>
-
-      <!--TAB UPLOAD FILE SECTION-->
-      <div class="tabs-panel" id="panel3" style="background-color:#e6e6e6;">
+      <!--TAB BATCH SEARCH SECTION-->
+      <div class="tabs-panel" id="panel2" style="background-color:#e6e6e6;">
 
         <!--<form id="iSearch" name="content-search" action="[search-action]" method="get">
           <div class="row margin-top-large">
@@ -39,6 +33,15 @@
           </div>
         </form>-->
 
+      </div>
+
+      <!--TAB ADVANCED SECTION-->
+      <div class="tabs-panel" id="panel3">
+        <div class="row margin-top-large">
+          <div class="columns medium-12 callout-advanced">
+            <iv-advanced-search></iv-advanced-search>
+          </div>
+        </div>
       </div>
 
     </div>

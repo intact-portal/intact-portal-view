@@ -11,7 +11,7 @@ export class HomeDashboardComponent implements OnInit {
   constructor(private titleService: Title) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Intact');
+    this.titleService.setTitle('IntAct');
   }
 
 }

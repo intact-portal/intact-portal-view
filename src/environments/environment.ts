@@ -1,13 +1,13 @@
-// The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-// Environment for development
+// Environment for localhost
+//TODO This should disapear, We need to create a localhost env that works with the proxy
 const EBI_BASE_URL = 'http://localhost:4200';
 
-// Environment for production
-//const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+// Environment for development
+const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
@@ -19,8 +19,8 @@ export const environment = {
   // analytics_id: 'UA-XXXXXX-XX',
   ebi_base_url: EBI_BASE_URL,
   license_url: LICENSE_URL,
-  intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25/pmid',
-  intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30/pmid',
+  intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25',
+  intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30',
   intact_psimitab_url : INTACT_FTP_BASE_URL + '/current/psimitab/pmid',
   intact_dotm_url: EBI_BASE_URL + '/~intact/site/dotm/dotm-1.1.xml',
   intact_portal_url: EBI_BASE_URL + '/intact',
@@ -28,6 +28,7 @@ export const environment = {
   intact_training_url: EBI_BASE_URL + 'intact/resources/training',
   intact_portal_ws: EBI_BASE_URL + '/intact/ws',
   //TODO... below will be changed when have a graph server
+  //TODO check consistency too
   graph_ws: EBI_BASE_URL + '/graph',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };

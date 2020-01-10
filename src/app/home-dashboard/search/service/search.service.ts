@@ -11,7 +11,6 @@ export class SearchService {
 
   search(query: string) {
     this._query = query;
-
     this.router.navigate(['search'], {queryParams: {query}});
   }
 

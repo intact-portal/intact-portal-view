@@ -1,12 +1,13 @@
-
   <div data-sticky-container>
-    <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
+    <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
       <div class="masthead-inner row expanded"> <!-- expanded -->
         <!-- local-title -->
         <div class="columns medium-12 large-8">
-          <a routerLink="/" title="Back to Intact homepage">
-            <div class="media-object hide-for-small-only" id="local-title">
-                <img src="assets/images/logo/IntAct_Logo.svg" alt="Intact logo" class="padding-left-large" style="height:6em; width:22em;">
+          <a routerLink="/home" title="Back to Intact homepage">
+            <div class="media-object" id="local-title">
+              <div class="media-object-section" >
+                <img src="assets/images/logo/intact_logo.svg" alt="IntAct logo" class="padding-left-large" style="height:5em; width:21em;">
+              </div>
             </div>
           </a>
         </div>
@@ -14,14 +15,27 @@
 
         <!-- local-nav -->
         <nav>
-          <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
-            <li><a routerLink="/">Home</a></li>
-            <li><a routerLink="/download">Download</a></li>
+          <ul id="local-nav" class="dropdown menu float-left" data-dropdown-menu="true" data-description="navigational">
+            <li routerLinkActive="active"><a routerLink="/home" routerLinkActive="active">Home</a></li>
+            <li routerLinkActive="active"><a routerLink="/download" routerLinkActive="active">Download</a></li>
 <!--            <li><a data-open="modal-download">Release notes</a></li>-->
-            <li><a routerLink="/faq">FAQ</a></li>
-            <li><a routerLink="/about">About</a></li>
-            <li><a href="//www.ebi.ac.uk/support/intact">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
+            <li routerLinkActive="active"><a routerLink="/documentation/help/faq" routerLinkActive="active">FAQ</a></li>
+            <li routerLinkActive="active"><a routerLink="/documentation/about" routerLinkActive="active">About</a></li>
+            <li class="extra-items-menu is-dropdown-submenu-parent opens-right">
+              <a routerLink="/documentation" routerLinkActive="active">Documentation</a>
+              <ul class="menu submenu is-dropdown-submenu first-sub vertical" role="menu">
+                <li><a routerLink="/documentation/help" routerLinkActive="active">Help</a></li>
+                <li><a routerLink="/documentation/docs" routerLinkActive="active">Docs</a></li>
+                <li><a routerLink="/documentation/technical_corner" routerLinkActive="active">Technical corner</a></li>
+              </ul>
+            </li>
+            <li routerLinkActive="active"><a href="//www.ebi.ac.uk/support/intact">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
           </ul>
+          <a routerLink="/home" title="Back to Intact homepage">
+            <div class="float-right">
+              <img src="assets/images/logo/intact_icon_small.png" alt="IntAct icon" style="height:36px">
+            </div>
+          </a>
         </nav>
         <!-- /local-nav -->
       </div>

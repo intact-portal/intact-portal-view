@@ -67,7 +67,6 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     table.is(':visible') ?
       $('i#iconColumn').removeClass('icon-caret-down').addClass('icon-caret-up') :
       $('i#iconColumn').removeClass('icon-caret-up').addClass('icon-caret-down');
-
   }
 
   onChangeColumnSelected(column: string) {

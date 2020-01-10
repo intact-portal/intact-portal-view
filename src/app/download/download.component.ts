@@ -9,7 +9,7 @@ declare const $: any;
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.css']
 })
-export class DownloadComponent implements OnInit, AfterViewInit {
+export class DownloadComponent implements OnInit {
 
   ftp = environment.intact_portal_documentation_url + 'download/ftp.md';
   curated_datasets = environment.intact_portal_documentation_url + 'download/dataset-files/curated-datasets.md';
@@ -19,10 +19,7 @@ export class DownloadComponent implements OnInit, AfterViewInit {
   constructor(private titleService: Title) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Download');
-  }
-
-  ngAfterViewInit(): void {
+    this.titleService.setTitle('IntAct - Download');
     $('iv-download').foundation();
   }
 }

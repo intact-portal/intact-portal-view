@@ -43,7 +43,7 @@ export class InteractionsResultsComponent implements OnInit {
               private interactionsSearchService: InteractionsSearchService) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Intact - Search Results');
+    this.titleService.setTitle('IntAct - Search Results');
 
     this.route.queryParams
       .filter(params => params.query)

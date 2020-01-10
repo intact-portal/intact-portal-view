@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractorFacets} from '../../shared/model/interactions-results/interactor/interactor-facets.model';
-import {Filter} from '../../shared/model/interactions-results/filter.model';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 
 declare const $: any;
@@ -54,35 +53,88 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   speciesFilterStyle(): any {
-    if (this.interactorFacets.species_name_str.length > 5) {
-      return {height: '200px', 'overflow-y': 'auto'};
+    if (this.interactorFacets.species_name_str.length > 10 ) {
+      // TODO: Try to compact the styles in one function if they are the same between the different facets.
+      return {
+        height: '200px',
+        width: '100%',
+        'overflow-y': 'auto',
+      };
     } else {
-      return {};
+      return {
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'hidden',
+      };
     }
   }
 
   interactorFilterStyle(): any {
-    if (this.interactorFacets.interactor_type_str.length > 5) { return {height: '200px', 'overflow-y': 'auto'}; } else {
-        return {};
-      }
-  }
-
-  interactionFilterStyle(): any {
-    if (this.interactionFacets.interaction_type_str.length > 5) {return {height: '200px', 'overflow-y': 'auto'}; } else {
-        return {};
-      }
-  }
-
-  detMethodFilterStyle(): any {
-    if (this.interactionFacets.interaction_detection_method_str.length > 5) {return {height: '200px', 'overflow-y': 'auto'}; } else {
-      return {};
+    if (this.interactorFacets.interactor_type_str.length > 10) {
+      return {
+        height: '200px',
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'auto'
+      };
+    } else {
+      return {
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'hidden',
+      };
     }
   }
 
-  hostOrganismfilterStyle(): any {
-    if (this.interactionFacets.host_organism_str.length > 5) { return {height: '250px', 'overflow-y': 'auto'}; } else {
-        return {};
-      }
+  interactionFilterStyle(): any {
+    if (this.interactionFacets.interaction_type_str.length > 10) {
+      return {
+        height: '200px',
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'auto'
+      };
+    } else {
+      return {
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'hidden',
+      };
+    }
+  }
+
+  detMethodFilterStyle(): any {
+    if (this.interactionFacets.interaction_detection_method_str.length > 10) {
+      return {
+        height: '200px',
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'auto'
+      };
+    } else {
+      return {
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'hidden',
+      };
+    }
+  }
+
+  hostOrganismFilterStyle(): any {
+    if (this.interactionFacets.host_organism_str.length > 10) {
+      return {
+        height: '250px',
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'auto'
+      };
+    } else {
+      return {
+        width: '100%',
+        'overflow-x': 'auto',
+        'overflow-y': 'hidden',
+      };
+    }
   }
 
   initSliderRange(): void {

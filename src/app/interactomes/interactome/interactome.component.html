@@ -1,0 +1,22 @@
+<div class="row" *ngIf="interactome.symbol" style="text-align: center; padding-top: 30px;">
+  <div class="columns medium-12" style="height: 60px">
+    <h5>{{interactome.name}}</h5>
+  </div>
+
+  <div class="columns medium-12" style="text-align: center">
+    <ng-container *ngIf="interactome.symbol !== '?'">
+      <a (click)="search(interactome.name)">
+        <span class="icon icon-species" attr.data-icon="{{interactome.symbol}}"></span>
+        <br>[{{interactome.taxid}}]</a>
+    </ng-container>
+    <ng-container *ngIf="interactome.symbol === '?'">
+      <a (click)="search(interactome.name)">
+        <span class="icon icon-functional" attr.data-icon="{{interactome.symbol}}"></span>
+        <br>[{{interactome.taxid}}]</a>
+    </ng-container>
+  </div>
+  <div class="" style="text-align: center">
+    <a class="tag" (click)="goToInteractomePSI25()">miXML 2.5</a>
+    <a class="tag" (click)="goToInteractomePSI30()">miXML 3.0</a>
+  </div>
+</div>

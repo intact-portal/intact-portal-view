@@ -39,7 +39,7 @@ export class DatasetArchiveComponent implements OnInit {
   }
 
   goPSIMI25FTP(pubmedYear: string, pubmedId: string) {
-    window.open(intactFTP_URL + `/${pubmedYear}/${pubmedId}.zip`);
+    window.open(intactFTP_URL + `/pmid/${pubmedYear}/${pubmedId}.zip`);
   }
 
   goPSIMITABFTP(pubmedYear: string, pubmedId: string) {

@@ -56,7 +56,7 @@ export class FeaturedDatasetComponent implements OnInit {
   }
 
   goPSIMI25FTP() {
-    window.open(intactFTP_URL + `/${this.pubmedYear}/${this.pubmedId}.zip`);
+    window.open(intactFTP_URL + `/pmid/${this.pubmedYear}/${this.pubmedId}.zip`);
   }
 
   goPSIMITABFTP() {
@@ -65,7 +65,6 @@ export class FeaturedDatasetComponent implements OnInit {
 
   goDOTMArchiveFTP() {
     this.router.navigate(['/dotm/archive']);
-
   }
 
   get title(): string {

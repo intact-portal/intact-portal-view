@@ -180,6 +180,30 @@ a.button {
   border-radius: 6px;
 }
 
+
+/* LOCAL NAVIGATION DROPDOWN */
+
+.dropdown.menu > li.is-active > a {
+  background-color: rgba(34, 34, 34, 0.9);
+  color: #f8f8f8;
+}
+
+.masthead nav ul li.active a,
+.masthead nav ul li a:active,
+.masthead ul li.active-trail a,
+.masthead ul li.active a:visited,
+.masthead ul li.active-trail a:visited {
+  font-weight: bold;
+}
+
+.dropdown.menu > li.is-dropdown-submenu-parent a.active {
+  background-color: #f8f8f8;
+  color: #555;
+}
+.dropdown.menu > li.is-dropdown-submenu-parent > a.active::after {
+  border-color: #555 transparent transparent;
+}
+
 /*********** END HOME PAGE SECTION *******************************/
 
 

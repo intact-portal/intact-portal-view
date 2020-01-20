@@ -53,7 +53,7 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   speciesFilterStyle(): any {
-    if (this.interactorFacets.species_name_str.length > 10 ) {
+    if (this.interactorFacets.interactor_species_name_str.length > 10 ) {
       // TODO: Try to compact the styles in one function if they are the same between the different facets.
       return {
         height: '200px',

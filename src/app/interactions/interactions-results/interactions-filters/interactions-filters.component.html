@@ -15,7 +15,7 @@
       <ul class="vertical menu facets">
         <h5>Interactor Species</h5>
         <div class="margin-bottom-large scrollbar" [ngStyle]="speciesFilterStyle()">
-          <li *ngFor="let species of interactorFacets.species_name_str">
+          <li *ngFor="let species of interactorFacets.interactor_species_name_str">
             <span class="facet"><input #filter type="radio" value="{{species.value}}"
                                        (change)="onChangeSpeciesNameFilter(filter.value)"
                                        [checked]="isSelectedSpeciesName(species.value)"/>

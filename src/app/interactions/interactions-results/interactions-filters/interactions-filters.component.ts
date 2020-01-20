@@ -87,7 +87,7 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   interactionFilterStyle(): any {
-    if (this.interactionFacets.interaction_type_str.length > 10) {
+    if (this.interactionFacets.type_str.length > 10) {
       return {
         height: '200px',
         width: '100%',
@@ -104,7 +104,7 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   detMethodFilterStyle(): any {
-    if (this.interactionFacets.interaction_detection_method_str.length > 10) {
+    if (this.interactionFacets.detection_method_str.length > 10) {
       return {
         height: '200px',
         width: '100%',

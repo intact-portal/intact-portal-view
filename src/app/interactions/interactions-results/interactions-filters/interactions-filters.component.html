@@ -37,7 +37,7 @@
 
         <h5>Interaction Type</h5>
         <div class="margin-bottom-large scrollbar" [ngStyle]="interactionFilterStyle()">
-          <li *ngFor="let interactionType of interactionFacets.interaction_type_str">
+          <li *ngFor="let interactionType of interactionFacets.type_str">
             <span class="facet"><input #filter type="radio" value="{{interactionType.value}}"
                                        (change)="onChangeInteractionTypeFilter(filter.value)"
                                        [checked]="isSelectedInteractionType(interactionType.value)"/>
@@ -48,7 +48,7 @@
 
         <h5>Interaction Detection Method</h5>
         <div class="margin-bottom-large scrollbar" [ngStyle]="detMethodFilterStyle()">
-          <li *ngFor="let detectionMethod of interactionFacets.interaction_detection_method_str">
+          <li *ngFor="let detectionMethod of interactionFacets.detection_method_str">
             <span class="facet"><input #filter type="radio" value="{{detectionMethod.value}}"
                                        (change)="onChangeDetectionMethodFilter(filter.value)"
                                        [checked]="isSelectedDetectionMethod(detectionMethod.value)"/>
@@ -82,7 +82,7 @@
 
       <div class="margin-top-medium">
         <div class="float:left">
-          <div *ngFor="let intNegative of interactionFacets.interaction_negative ">
+          <div *ngFor="let intNegative of interactionFacets.negative ">
             <label class="switch switch_type1" role="switch">
               <input #filterNegative id="filterNegative" type="checkbox" class="switch__toggle" disabled="disabled"
                      (change)="onChangeInteractionNegativeFilter(filterNegative.checked)"

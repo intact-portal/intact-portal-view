@@ -144,7 +144,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '<div class="columns small-2">' + item.interactorId + '</div>' +
               '<div class="columns small-2"><i>"' + item.description + '"</i> </div>' +
               '<div class="columns small-2">' + item.interactorName + '</div>' +
-              '<div class="columns small-2">' + item.species + '</div>' +
+              '<div class="columns small-2">' + item.interactorSpecies + '</div>' +
               '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</span></div>' +
               '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' +
               '</span></div>' +
@@ -157,26 +157,26 @@ export class SearchComponent implements OnInit, AfterViewInit {
         name: 'interactions',
         source: interactionsData,
         display: function (item) {
-          return item.interactionIdentifiers;
+          return item.identifiers;
         },
         templates: {
           header: '<h4 class="category-name">Interactions</h4>',
           notFound: '<div class="noResultsSuggestions"> No results found for Interactions</div>',
           suggestion: function (item) {
             // TODO: FIX THIS WHEN THE WS RETURN interactionCount
-            return (item.interactionCount === null) ? '<div class="row">' +
+            return (item.count === null) ? '<div class="row">' +
               '<div class="columns small-3">' + item.firstAuthor + '</div>' +
               '<div class="columns small-3">' + item.publicationIdentifiers + '</div>' +
-              '<div class="columns small-2">' + item.interactionIdentifiers + '</div>' +
-              '<div class="columns small-2"><span class="labelWrapper">' + item.interactionType + '</span></div>' +
+              '<div class="columns small-2">' + item.identifiers + '</div>' +
+              '<div class="columns small-2"><span class="labelWrapper">' + item.type + '</span></div>' +
               '<div class="columns small-2"><span class="interactionsWrapper">' + ' 1 interaction' + '</span></div>' +
               '</div>' :
 
               '<div class="row">' +
               '<div class="columns small-4">' + item.firstAuthor + '</div>' +
               '<div class="columns small-2">' + item.publicationIdentifiers + '</div>' +
-              '<div class="columns small-3">' + item.interactionIdentifiers + '</div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' + '</span></div>'
+              '<div class="columns small-3">' + item.identifiers + '</div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.count + ' interactions' + '</span></div>'
               + '</div>'
           },
 

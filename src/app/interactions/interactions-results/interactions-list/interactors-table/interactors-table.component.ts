@@ -117,7 +117,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
         {data: 'description', defaultContent: ' ', title: 'Description'},
         {data: 'interactorId', defaultContent: ' ', title: 'Accession'},
         {data: 'interactorType', defaultContent: ' ', title: 'Type'},
-        {data: 'species', defaultContent: ' ', title: 'Species'},
+        {data: 'interactorSpecies', defaultContent: ' ', title: 'Species'},
         {data: 'interactionSearchCount', defaultContent: ' ', title: 'Interactions found in current search'},
         {data: 'interactionCount', defaultContent: ' ', title: 'Total interactions in all IntAct'}
       ]

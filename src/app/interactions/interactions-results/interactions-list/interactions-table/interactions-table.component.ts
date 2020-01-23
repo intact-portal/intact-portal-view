@@ -95,7 +95,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
           d.pageSize = d.length;
           d.interactorType = this.interactorTypeFilter;
           d.species = this.speciesNameFilter;
-          d.interactionType = this.interactionTypeFilter;
+          d.type = this.interactionTypeFilter;
           d.detectionMethod = this.detectionMethodFilter;
           d.hostOrganism = this.hostOrganismFilter;
           d.negativeInteraction = this.negativeFilter;
@@ -111,7 +111,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
               return '<div>' +
                 '<input type="checkbox" id="' + full.binaryInteractionId + '" name="check" value="' + data + '"/>' +
                 ' <span class="margin-left-medium">' +
-                '   <a href="/intact-view/details/interaction/' + full.interactionAc + '">' +
+                '   <a href="/intact-view/details/interaction/' + full.ac + '">' +
                 '     <i class="icon icon-common icon-search-document"></i>' +
                 '   </a>' +
                 ' </span>' +
@@ -124,7 +124,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
         {data: 'moleculeB', defaultContent: ' ', title: 'Molecule B'},
         {data: 'speciesA', defaultContent: ' ', title: 'Species A'},
         {data: 'speciesB', defaultContent: ' ', title: 'Species B'},
-        {data: 'interactionDetectionMethod', defaultContent: ' ', title: 'Detection Method'},
+        {data: 'detectionMethod', defaultContent: ' ', title: 'Detection Method'},
         {
           data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifiers',
           render: function (data, type, row, meta) {
@@ -137,8 +137,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
             }
           }
         },
-        {data: 'interactionType', defaultContent: ' ', title: 'Interaction Type'},
-        {data: 'interactionAc', defaultContent: ' ', title: 'Interaction Ac'},
+        {data: 'type', defaultContent: ' ', title: 'Interaction Type'},
+        {data: 'ac', defaultContent: ' ', title: 'Interaction Ac'},
         {data: 'sourceDatabase', defaultContent: ' ', title: 'Database'},
         {
           data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value',

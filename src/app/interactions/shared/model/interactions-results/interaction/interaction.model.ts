@@ -4,10 +4,10 @@ export class Interaction {
   private _moleculeB: string;
   private _speciesA: string;
   private _speciesB: string;
-  private _interactionDetectionMethod: string;
+  private _detectionMethod: string;
   private _publicationIdentifiers: string[];
-  private _interactionType: string;
-  private _interactionAc: string;
+  private _type: string;
+  private _ac: string;
   private _sourceDatabase: string[];
   private _confidenceValues: string[];
   private _expansionMethod: string;
@@ -15,10 +15,10 @@ export class Interaction {
   private _experimentalRoleB: string;
   private _typeA: string;
   private _typeB: string;
-  private _interactionCount: number;
+  private _count: number;
   private _authors: string[];
   private _firstAuthor: string;
-  private _interactionIdentifiers: string[];
+  private _identifiers: string[];
   private _binaryInteractionId: string;
 
 
@@ -54,12 +54,12 @@ export class Interaction {
     this._speciesB = value;
   }
 
-  get interactionDetectionMethod(): string {
-    return this._interactionDetectionMethod;
+  get detectionMethod(): string {
+    return this._detectionMethod;
   }
 
-  set interactionDetectionMethod(value: string) {
-    this._interactionDetectionMethod = value;
+  set detectionMethod(value: string) {
+    this._detectionMethod = value;
   }
 
   get publicationIdentifiers(): string[] {
@@ -70,20 +70,20 @@ export class Interaction {
     this._publicationIdentifiers = value;
   }
 
-  get interactionType(): string {
-    return this._interactionType;
+  get type(): string {
+    return this._type;
   }
 
-  set interactionType(value: string) {
-    this._interactionType = value;
+  set type(value: string) {
+    this._type = value;
   }
 
-  get interactionAc(): string {
-    return this._interactionAc;
+  get ac(): string {
+    return this._ac;
   }
 
-  set interactionAc(value: string) {
-    this._interactionAc = value;
+  set ac(value: string) {
+    this._ac = value;
   }
 
   get sourceDatabase(): string[] {
@@ -142,12 +142,12 @@ export class Interaction {
     this._typeB = value;
   }
 
-  get interactionCount(): number {
-    return this._interactionCount;
+  get count(): number {
+    return this._count;
   }
 
-  set interactionCount(value: number) {
-    this._interactionCount = value;
+  set count(value: number) {
+    this._count = value;
   }
 
   get authors(): string[] {
@@ -166,12 +166,12 @@ export class Interaction {
     this._firstAuthor = value;
   }
 
-  get interactionIdentifiers(): string[] {
-    return this._interactionIdentifiers;
+  get identifiers(): string[] {
+    return this._identifiers;
   }
 
-  set interactionIdentifiers(value: string[]) {
-    this._interactionIdentifiers = value;
+  set identifiers(value: string[]) {
+    this._identifiers = value;
   }
 
   get binaryInteractionId():string{

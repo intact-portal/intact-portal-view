@@ -3,7 +3,7 @@ export class Interactor {
   private _interactorAc: string;
   private _description: string;
   private _interactorType: string;
-  private _speciesName: string;
+  private _interactorSpecies: string;
   private _interactionCount: number;
 
   constructor(interactorName: string,
@@ -16,7 +16,7 @@ export class Interactor {
     this._description = description;
     this._interactorAc = interactorId;
     this._interactorType = interactorType;
-    this._speciesName = species;
+    this._interactorSpecies = species;
     this._interactionCount = interactionCount;
   }
 
@@ -37,8 +37,8 @@ export class Interactor {
     return this._interactorType;
   }
 
-  get speciesName(): string {
-    return this._speciesName;
+  get interactorSpecies(): string {
+    return this._interactorSpecies;
   }
 
   get interactionCount(): number {

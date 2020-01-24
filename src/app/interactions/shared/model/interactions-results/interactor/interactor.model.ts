@@ -8,13 +8,13 @@ export class Interactor {
 
   constructor(interactorName: string,
               description: string,
-              interactorId: string,
+              interactorAc: string,
               interactorType: string,
               species: string,
               interactionCount: number) {
     this._interactorName = interactorName;
     this._description = description;
-    this._interactorAc = interactorId;
+    this._interactorAc = interactorAc;
     this._interactorType = interactorType;
     this._interactorSpecies = species;
     this._interactionCount = interactionCount;

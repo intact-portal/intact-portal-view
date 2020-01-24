@@ -103,11 +103,11 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
       },
       columns: [
         {
-          data: 'interactorId', defaultContent: ' ', title: 'Select',
+          data: 'interactorAc', defaultContent: ' ', title: 'Select',
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<div class="margin-left-large">' +
-                '<input type="checkbox" id="' + full.interactorId + '" name="check" value="' + data + '"/>' +
+                '<input type="checkbox" id="' + full.interactorAc + '" name="check" value="' + data + '"/>' +
                 '</div>';
             }
             return data;
@@ -115,7 +115,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
         },
         {data: 'interactorName', defaultContent: ' ', title: 'Names'},
         {data: 'description', defaultContent: ' ', title: 'Description'},
-        {data: 'interactorId', defaultContent: ' ', title: 'Accession'},
+        {data: 'interactorAc', defaultContent: ' ', title: 'Accession'},
         {data: 'interactorType', defaultContent: ' ', title: 'Type'},
         {data: 'interactorSpecies', defaultContent: ' ', title: 'Species'},
         {data: 'interactionSearchCount', defaultContent: ' ', title: 'Interactions found in current search'},

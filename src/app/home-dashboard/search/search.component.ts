@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   private searchSuggestions(): void {
 
     const interactorsData = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorId'),
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorAc'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
         url: `${baseURL}` + '/interactor/findInteractor/%QUERY',
@@ -134,14 +134,14 @@ export class SearchComponent implements OnInit, AfterViewInit {
         name: 'interactors',
         source: interactorsData,
         display: function (item) {
-         return item.interactorId
+         return item.interactorAc
         },
         templates: {
           header: '<h4 class="category-name">Interactors</h4>',
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: function (item) {
             return '<div class="row">' +
-              '<div class="columns small-2">' + item.interactorId + '</div>' +
+              '<div class="columns small-2">' + item.interactorAc + '</div>' +
               '<div class="columns small-2"><i>"' + item.description + '"</i> </div>' +
               '<div class="columns small-2">' + item.interactorName + '</div>' +
               '<div class="columns small-2">' + item.interactorSpecies + '</div>' +

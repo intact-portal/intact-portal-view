@@ -4,24 +4,24 @@
   </div>
 
   <div class="columns medium-2">
-    <iv-interactions-filters *ngIf="interactorsSearch && interactionsSearch && interactorTypeFilter && speciesNameFilter
-      && interactionTypeFilter && detectionMethodFilter && hostOrganismFilter && (negativeFilter !== undefined)"
+    <iv-interactions-filters *ngIf="interactorsSearch && interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
+      && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined)"
                              [interactorFacets]="interactorsSearch.facetResultPage"
                              [interactionFacets]="interactionsSearch.facetResultPage"
                              [interactorTypeFilter]="interactorTypeFilter"
-                             [speciesNameFilter]="speciesNameFilter"
+                             [interactorSpeciesFilter]="interactorSpeciesFilter"
                              [interactionTypeFilter]="interactionTypeFilter"
-                             [detectionMethodFilter]="detectionMethodFilter"
-                             [hostOrganismFilter]="hostOrganismFilter"
+                             [interactionDetectionMethodFilter]="interactionDetectionMethodFilter"
+                             [interactionHostOrganismFilter]="interactionHostOrganismFilter"
                              [negativeFilter]="negativeFilter"
                              [miScoreMinFilter]="miScoreMin"
                              [miScoreMaxFilter]="miScoreMax"
-                             (onSpeciesNameFilterChanged)="onSpeciesNameFilterChanged($event)"
+                             (onInteractorSpeciesFilterChanged)="onInteractorSpeciesFilterChanged($event)"
                              (onInteractorTypeFilterChanged)="onInteractorTypeFilterChanged($event)"
                              (onResetAllFilters)="onResetAllFilters()"
                              (onInteractionTypeFilterChanged)="onInteractionTypeFilterChanged($event)"
-                             (onDetectionMethodFilterChanged)="onDetectionMethodFilterChanged($event)"
-                             (onHostOrganismFilterChanged)="onHostOrganismFilterChanged($event)"
+                             (onInteractionDetectionMethodFilterChanged)="onInteractionDetectionMethodFilterChanged($event)"
+                             (onInteractionHostOrganismFilterChanged)="onInteractionHostOrganismFilterChanged($event)"
                              (onInteractionNegativeFilterChanged)="onInteractionNegativeFilterChanged($event)"
                              (onInteractionMiScoreMinFilterChanged)="onInteractionMiScoreMinFilterChanged($event)"
                              (onInteractionMiScoreMaxFilterChanged)="onInteractionMiScoreMaxFilterChanged($event)">

@@ -16,7 +16,7 @@ export class InteractionsFiltersComponent implements OnInit {
   private _interactionFacets: InteractionFacets;
 
   /** INTERACTORS FILTERS **/
-  private _speciesNameFilter: string[];
+  private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
 
   /** INTERACTIONS FILTERS **/
@@ -35,12 +35,12 @@ export class InteractionsFiltersComponent implements OnInit {
   /** This variable is used to check if the param is in the URL and update the state of the checkbox */
   private _isNegativeInteraction: boolean;
 
-  @Output() onSpeciesNameFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onInteractorSpeciesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractorTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   @Output() onInteractionTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onDetectionMethodFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onHostOrganismFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onInteractionDetectionMethodFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() onInteractionHostOrganismFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractionNegativeFilterChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output() onInteractionMiScoreMinFilterChanged: EventEmitter<any> = new EventEmitter<any>();
@@ -58,7 +58,7 @@ export class InteractionsFiltersComponent implements OnInit {
 
   }
 
-  speciesFilterStyle(): any {
+  interactorSpeciesFilterStyle(): any {
     if (this.interactorFacets.interactor_species_name_str.length > 10 ) {
       // TODO: Try to compact the styles in one function if they are the same between the different facets.
       return {
@@ -75,7 +75,7 @@ export class InteractionsFiltersComponent implements OnInit {
     }
   }
 
-  interactorFilterStyle(): any {
+  interactorTypeFilterStyle(): any {
     if (this.interactorFacets.interactor_type_str.length > 10) {
       return {
         height: '200px',
@@ -92,7 +92,7 @@ export class InteractionsFiltersComponent implements OnInit {
     }
   }
 
-  interactionFilterStyle(): any {
+  interactionTypeFilterStyle(): any {
     if (this.interactionFacets.type_str.length > 10) {
       return {
         height: '200px',
@@ -109,7 +109,7 @@ export class InteractionsFiltersComponent implements OnInit {
     }
   }
 
-  detMethodFilterStyle(): any {
+  interactionDetectionMethodFilterStyle(): any {
     if (this.interactionFacets.detection_method_str.length > 10) {
       return {
         height: '200px',
@@ -126,7 +126,7 @@ export class InteractionsFiltersComponent implements OnInit {
     }
   }
 
-  hostOrganismFilterStyle(): any {
+  interactionHostOrganismFilterStyle(): any {
     if (this.interactionFacets.host_organism_str.length > 10) {
       return {
         height: '250px',
@@ -159,14 +159,14 @@ export class InteractionsFiltersComponent implements OnInit {
     this.maxValue = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
   }
 
-  onChangeSpeciesNameFilter(filter: string) {
-    if (!this.speciesNameFilter.includes(filter)) {
-      this.speciesNameFilter.push(filter);
+  onChangeInteractorSpeciesFilter(filter: string) {
+    if (!this.interactorSpeciesFilter.includes(filter)) {
+      this.interactorSpeciesFilter.push(filter);
     } else {
-      this.speciesNameFilter.splice(this.speciesNameFilter.indexOf(filter), 1);
+      this.interactorSpeciesFilter.splice(this.interactorSpeciesFilter.indexOf(filter), 1);
     }
 
-    this.onSpeciesNameFilterChanged.emit(this.speciesNameFilter);
+    this.onInteractorSpeciesFilterChanged.emit(this.interactorSpeciesFilter);
   }
 
   onChangeInteractorTypeFilter(filter: string) {
@@ -189,24 +189,24 @@ export class InteractionsFiltersComponent implements OnInit {
     this.onInteractionTypeFilterChanged.emit(this.interactionTypeFilter);
   }
 
-  onChangeDetectionMethodFilter(filter: string) {
-    if (!this.detectionMethodFilter.includes(filter)) {
-      this.detectionMethodFilter.push(filter);
+  onChangeInteractionDetectionMethodFilter(filter: string) {
+    if (!this.interactionDetectionMethodFilter.includes(filter)) {
+      this.interactionDetectionMethodFilter.push(filter);
     } else {
-      this.detectionMethodFilter.splice(this.detectionMethodFilter.indexOf(filter), 1);
+      this.interactionDetectionMethodFilter.splice(this.interactionDetectionMethodFilter.indexOf(filter), 1);
     }
 
-    this.onDetectionMethodFilterChanged.emit(this.detectionMethodFilter);
+    this.onInteractionDetectionMethodFilterChanged.emit(this.interactionDetectionMethodFilter);
   }
 
-  onChangeHostOrganismFilter(filter: string) {
-    if (!this.hostOrganismFilter.includes(filter)) {
-      this.hostOrganismFilter.push(filter);
+  onChangeInteractionHostOrganismFilter(filter: string) {
+    if (!this.interactionHostOrganismFilter.includes(filter)) {
+      this.interactionHostOrganismFilter.push(filter);
     } else {
-      this.hostOrganismFilter.splice(this.hostOrganismFilter.indexOf(filter), 1);
+      this.interactionHostOrganismFilter.splice(this.interactionHostOrganismFilter.indexOf(filter), 1);
     }
 
-    this.onHostOrganismFilterChanged.emit(this.hostOrganismFilter);
+    this.onInteractionHostOrganismFilterChanged.emit(this.interactionHostOrganismFilter);
   }
 
   onUserChangeEnd(changeContext: ChangeContext): void {
@@ -214,11 +214,8 @@ export class InteractionsFiltersComponent implements OnInit {
     this.onInteractionMiScoreMaxFilterChanged.emit(changeContext.highValue);
   }
 
-    this.onInteractionNegativeFilterChanged.emit(this.negativeFilter);
-  }
-
-  isSelectedSpeciesName(species: string) {
-    return this.speciesNameFilter !== undefined ? this.speciesNameFilter.indexOf(species) >= 0 : false;
+  isSelectedInteractorSpecies(interactorSpecies: string) {
+    return this.interactorSpeciesFilter !== undefined ? this.interactorSpeciesFilter.indexOf(interactorSpecies) >= 0 : false;
   }
 
   isSelectedInteractorType(interactorType: string) {
@@ -229,23 +226,17 @@ export class InteractionsFiltersComponent implements OnInit {
     return this.interactionTypeFilter !== undefined ? this.interactionTypeFilter.indexOf(interactionType) >= 0 : false;
   }
 
-  isSelectedDetectionMethod(detectionMethod: string) {
-    return this.detectionMethodFilter !== undefined ? this.detectionMethodFilter.indexOf(detectionMethod) >= 0 : false;
+  isSelectedInteractionDetectionMethod(interactionDetectionMethod: string) {
+    return this.interactionDetectionMethodFilter !== undefined ? this.interactionDetectionMethodFilter.indexOf(interactionDetectionMethod) >= 0 : false;
   }
 
-  isSelectedHostOrganism(hostOrganism: string) {
-    return this.hostOrganismFilter !== undefined ? this.hostOrganismFilter.indexOf(hostOrganism) >= 0 : false;
-  }
-
-  isSelectedInteractionNegative() {
-    // TODO: this is hardcoded to disable the button until we have more data
-    // return this.isNegativeInteraction;
-    return false;
+  isSelectedInteractionHostOrganism(interactionHostOrganism: string) {
+    return this.interactionHostOrganismFilter !== undefined ? this.interactionHostOrganismFilter.indexOf(interactionHostOrganism) >= 0 : false;
   }
 
   anyFiltersSelected() {
-    return (this.speciesNameFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
-      || this.detectionMethodFilter.length !== 0 || this.hostOrganismFilter.length !== 0); // || this.isNegativeInteraction === true);
+    return (this.interactorSpeciesFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
+      || this.interactionDetectionMethodFilter.length !== 0 || this.interactionHostOrganismFilter.length !== 0);
   }
 
   resetAllFilters() {
@@ -279,13 +270,13 @@ export class InteractionsFiltersComponent implements OnInit {
 
   /***** INTERACTORS FILTERS ******/
 
-  get speciesNameFilter(): string[] {
-    return this._speciesNameFilter;
+  get interactorSpeciesFilter(): string[] {
+    return this._interactorSpeciesFilter;
   }
 
   @Input()
-  set speciesNameFilter(value: string[]) {
-    this._speciesNameFilter = value;
+  set interactorSpeciesFilter(value: string[]) {
+    this._interactorSpeciesFilter = value;
   }
 
   get interactorTypeFilter(): string[] {
@@ -308,21 +299,21 @@ export class InteractionsFiltersComponent implements OnInit {
     this._interactionTypeFilter = value;
   }
 
-  get detectionMethodFilter(): string[] {
+  get interactionDetectionMethodFilter(): string[] {
     return this._detectionMethodFilter;
   }
 
   @Input()
-  set detectionMethodFilter(value: string[]) {
+  set interactionDetectionMethodFilter(value: string[]) {
     this._detectionMethodFilter = value;
   }
 
-  get hostOrganismFilter(): string[] {
+  get interactionHostOrganismFilter(): string[] {
     return this._hostOrganismFilter;
   }
 
   @Input()
-  set hostOrganismFilter(value: string[]) {
+  set interactionHostOrganismFilter(value: string[]) {
     this._hostOrganismFilter = value;
   }
 

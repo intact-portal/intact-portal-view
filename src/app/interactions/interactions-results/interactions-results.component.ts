@@ -16,7 +16,7 @@ import {InteractionsSearchService} from '../shared/service/interactions-search.s
 export class InteractionsResultsComponent implements OnInit {
 
   private _term: string;
-  private _speciesNameFilter: string[];
+  private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
   private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
@@ -50,10 +50,10 @@ export class InteractionsResultsComponent implements OnInit {
       .subscribe(params => {
         this.term = params.query;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
-        this.speciesNameFilter = params.species ? params.species.split('+') : [];
-        this.hostOrganismFilter = params.hostOrganism ? params.hostOrganism.split('+') : [];
+        this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
-        this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
@@ -69,11 +69,11 @@ export class InteractionsResultsComponent implements OnInit {
   private requestInteractorsResults() {
     this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
       this.term,
-      this.speciesNameFilter,
+      this.interactorSpeciesFilter,
       this.interactorTypeFilter,
-      this.detectionMethodFilter,
+      this.interactionDetectionMethodFilter,
       this.interactionTypeFilter,
-      this.hostOrganismFilter,
+      this.interactionHostOrganismFilter,
       this.negativeFilter,
       this.miScoreMin,
       this.miScoreMax,
@@ -89,9 +89,9 @@ export class InteractionsResultsComponent implements OnInit {
   private requestInteractionsResults() {
     this.interactionsSearchService.getAllInteractionsAndFacetsQuery(
       this.term,
-      this.hostOrganismFilter,
+      this.interactionHostOrganismFilter,
       this.interactionTypeFilter,
-      this.detectionMethodFilter,
+      this.interactionDetectionMethodFilter,
       this.miScoreMin,
       this.miScoreMax,
       this.negativeFilter,
@@ -106,8 +106,8 @@ export class InteractionsResultsComponent implements OnInit {
 
   /** EVENT EMITTERS **/
 
-  public onSpeciesNameFilterChanged(filter: string[]): void {
-    this.speciesNameFilter = filter;
+  public onInteractorSpeciesFilterChanged(filter: string[]): void {
+    this.interactorSpeciesFilter = filter;
     this.interactorSelected = undefined;
     this.interactionSelected = undefined;
     this.updateURLParams();
@@ -127,15 +127,15 @@ export class InteractionsResultsComponent implements OnInit {
     this.updateURLParams();
   }
 
-  public onDetectionMethodFilterChanged(filter: string[]): void {
-    this.detectionMethodFilter = filter;
+  public onInteractionDetectionMethodFilterChanged(filter: string[]): void {
+    this.interactionDetectionMethodFilter = filter;
     this.interactorSelected = undefined;
     this.interactionSelected = undefined;
     this.updateURLParams();
   }
 
-  public onHostOrganismFilterChanged(filter: string[]): void {
-    this.hostOrganismFilter = filter;
+  public onInteractionHostOrganismFilterChanged(filter: string[]): void {
+    this.interactionHostOrganismFilter = filter;
     this.interactorSelected = undefined;
     this.interactionSelected = undefined;
     this.updateURLParams();
@@ -164,10 +164,10 @@ export class InteractionsResultsComponent implements OnInit {
 
   public onResetAllFilters(): void {
     this.interactorTypeFilter = [];
-    this.speciesNameFilter = [];
+    this.interactorSpeciesFilter = [];
     this.interactionTypeFilter = [];
-    this.detectionMethodFilter = [];
-    this.hostOrganismFilter = [];
+    this.interactionDetectionMethodFilter = [];
+    this.interactionHostOrganismFilter = [];
     this.negativeFilter = false;
     this.miScoreMin = 0;
     this.miScoreMax = 1;
@@ -202,17 +202,17 @@ export class InteractionsResultsComponent implements OnInit {
     if (this.interactorTypeFilter !== undefined && this.interactorTypeFilter.length !== 0) {
       params['interactorType'] = this.prepareFiltersForParams(this.interactorTypeFilter);
     }
-    if (this.speciesNameFilter !== undefined && this.speciesNameFilter.length !== 0) {
-      params['species'] = this.prepareFiltersForParams(this.speciesNameFilter);
+    if (this.interactorSpeciesFilter !== undefined && this.interactorSpeciesFilter.length !== 0) {
+      params['interactorSpecies'] = this.prepareFiltersForParams(this.interactorSpeciesFilter);
     }
     if (this.interactionTypeFilter !== undefined && this.interactionTypeFilter.length !== 0) {
       params['interactionType'] = this.prepareFiltersForParams(this.interactionTypeFilter);
     }
-    if (this.detectionMethodFilter !== undefined && this.detectionMethodFilter.length !== 0) {
-      params['detectionMethod'] = this.prepareFiltersForParams(this.detectionMethodFilter);
+    if (this.interactionDetectionMethodFilter !== undefined && this.interactionDetectionMethodFilter.length !== 0) {
+      params['interactionDetectionMethod'] = this.prepareFiltersForParams(this.interactionDetectionMethodFilter);
     }
-    if (this.hostOrganismFilter !== undefined && this.hostOrganismFilter.length !== 0) {
-      params['hostOrganism'] = this.prepareFiltersForParams(this.hostOrganismFilter);
+    if (this.interactionHostOrganismFilter !== undefined && this.interactionHostOrganismFilter.length !== 0) {
+      params['interactionHostOrganism'] = this.prepareFiltersForParams(this.interactionHostOrganismFilter);
     }
     if (this.negativeFilter !== undefined && this.negativeFilter !== false) {
       params['negativeInteraction'] = this.negativeFilter;
@@ -242,12 +242,12 @@ export class InteractionsResultsComponent implements OnInit {
     this._term = value;
   }
 
-  get speciesNameFilter(): string[] {
-    return this._speciesNameFilter;
+  get interactorSpeciesFilter(): string[] {
+    return this._interactorSpeciesFilter;
   }
 
-  set speciesNameFilter(value: string[]) {
-    this._speciesNameFilter = value;
+  set interactorSpeciesFilter(value: string[]) {
+    this._interactorSpeciesFilter = value;
   }
 
   get interactorTypeFilter(): string[] {
@@ -266,19 +266,19 @@ export class InteractionsResultsComponent implements OnInit {
     this._interactionTypeFilter = value;
   }
 
-  get detectionMethodFilter(): string[] {
+  get interactionDetectionMethodFilter(): string[] {
     return this._detectionMethodFilter;
   }
 
-  set detectionMethodFilter(value: string[]) {
+  set interactionDetectionMethodFilter(value: string[]) {
     this._detectionMethodFilter = value;
   }
 
-  get hostOrganismFilter(): string[] {
+  get interactionHostOrganismFilter(): string[] {
     return this._hostOrganismFilter;
   }
 
-  set hostOrganismFilter(value: string[]) {
+  set interactionHostOrganismFilter(value: string[]) {
     this._hostOrganismFilter = value;
   }
 

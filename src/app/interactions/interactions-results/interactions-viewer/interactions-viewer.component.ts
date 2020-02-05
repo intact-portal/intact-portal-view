@@ -16,7 +16,7 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   private _term: string;
-  private _speciesNameFilter: string[];
+  private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
   private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
@@ -43,17 +43,17 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     $('iv-interactions-viewer').foundation();
-    this.graph= new IntactGraph.GraphPort('for-canvas-graph','legend','nodeL');
+    this.graph = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
 
     this.route.queryParams
       .filter(params => params.query)
       .subscribe(params => {
         this.term = params.query;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
-        this.speciesNameFilter = params.species ? params.species.split('+') : [];
-        this.hostOrganismFilter = params.hostOrganism ? params.hostOrganism.split('+') : [];
+        this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
-        this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
@@ -73,17 +73,17 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   }
 
   findInteractor() {
-    //IntactGraph.findInteractor()
+    // IntactGraph.findInteractor()
   }
 
   private requestIntactNetworkDetails() {
     this.networkSearchService.getInteractionNetwork(
       this.term,
-      this.hostOrganismFilter,
+      this.interactionHostOrganismFilter,
       this.interactorTypeFilter,
-      this.speciesNameFilter,
+      this.interactorSpeciesFilter,
       this.interactionTypeFilter,
-      this.detectionMethodFilter,
+      this.interactionDetectionMethodFilter,
       this.miScoreMin,
       this.miScoreMax,
       this.negativeFilter,
@@ -147,12 +147,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._term = value;
   }
 
-  get speciesNameFilter(): string[] {
-    return this._speciesNameFilter;
+  get interactorSpeciesFilter(): string[] {
+    return this._interactorSpeciesFilter;
   }
 
-  set speciesNameFilter(value: string[]) {
-    this._speciesNameFilter = value;
+  set interactorSpeciesFilter(value: string[]) {
+    this._interactorSpeciesFilter = value;
   }
 
   get interactorTypeFilter(): string[] {
@@ -171,19 +171,19 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._interactionTypeFilter = value;
   }
 
-  get detectionMethodFilter(): string[] {
+  get interactionDetectionMethodFilter(): string[] {
     return this._detectionMethodFilter;
   }
 
-  set detectionMethodFilter(value: string[]) {
+  set interactionDetectionMethodFilter(value: string[]) {
     this._detectionMethodFilter = value;
   }
 
-  get hostOrganismFilter(): string[] {
+  get interactionHostOrganismFilter(): string[] {
     return this._hostOrganismFilter;
   }
 
-  set hostOrganismFilter(value: string[]) {
+  set interactionHostOrganismFilter(value: string[]) {
     this._hostOrganismFilter = value;
   }
 

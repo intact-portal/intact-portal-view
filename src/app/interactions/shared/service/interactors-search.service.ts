@@ -34,11 +34,11 @@ export class InteractorsSearchService {
   }
 
   getAllInteractorsAndFacetsQuery(query: string,
-                                  speciesFilter: string[],
+                                  interactorSpeciesFilter: string[],
                                   interactorTypeFilter: string[],
-                                  detectionMethodFilter: string[],
+                                  interactionDetectionMethodFilter: string[],
                                   interactionTypeFilter: string[],
-                                  hostOrganismFilter: string[],
+                                  interactionHostOrganismFilter: string[],
                                   negativeFilter: any,
                                   miScoreMin: any,
                                   miScoreMax: any,
@@ -53,10 +53,10 @@ export class InteractorsSearchService {
       .set('page', currentPageIndex.toString())
       .set('pageSize', pageSize.toString())
       .set('interactorTypeFilter', interactorTypeFilter.toString())
-      .set('speciesFilter', speciesFilter.toString())
-      .set('detectionMethodFilter', detectionMethodFilter.toString())
+      .set('interactorSpeciesFilter', interactorSpeciesFilter.toString())
+      .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())
       .set('interactionTypeFilter', interactionTypeFilter.toString())
-      .set('hostOrganismFilter', hostOrganismFilter.toString())
+      .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
       .set('isNegativeFilter', negativeFilter.toString())
       .set('minMiscore', miScoreMin.toString())
       .set('maxMiscore', miScoreMax.toString());

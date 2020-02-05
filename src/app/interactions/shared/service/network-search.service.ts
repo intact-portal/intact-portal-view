@@ -12,15 +12,15 @@ export class NetworkSearchService {
   constructor(private http: HttpClient) { }
 
   getInteractionNetwork(query: string,
-                        hostOrganismFilter: string[],
+                        interactionHostOrganismFilter: string[],
                         interactorTypeFilter: string[],
-                        speciesFilter: string[],
+                        interactorSpeciesFilter: string[],
                         interactionTypeFilter: string[],
-                        detectionMethodFilter: string[],
+                        interactionDetectionMethodFilter: string[],
                         miScoreMin: any,
                         miScoreMax: any,
                         negativeFilter: any,
-                        compoundGraph :boolean): Observable<any> {
+                        compoundGraph: boolean): Observable<any> {
 
     query = query.trim();
 
@@ -28,9 +28,9 @@ export class NetworkSearchService {
       .set('query', query)
       .set('interactionTypeFilter', interactionTypeFilter.toString())
       .set('interactorTypeFilter', interactorTypeFilter.toString())
-      .set('speciesFilter', speciesFilter.toString())
-      .set('hostOrganismFilter', hostOrganismFilter.toString())
-      .set('detectionMethodFilter', detectionMethodFilter.toString())
+      .set('interactorSpeciesFilter', interactorSpeciesFilter.toString())
+      .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
+      .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())
       .set('minMiScore', miScoreMin.toString())
       .set('maxMiScore', miScoreMax.toString())
       .set('isNegativeFilter', negativeFilter.toString())

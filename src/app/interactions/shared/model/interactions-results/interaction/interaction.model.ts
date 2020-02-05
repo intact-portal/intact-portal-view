@@ -174,11 +174,11 @@ export class Interaction {
     this._identifiers = value;
   }
 
-  get binaryInteractionId():string{
+  get binaryInteractionId(): string {
     return this._binaryInteractionId;
   }
 
-  set binaryInteractionId(value:string){
-    this._binaryInteractionId=value;
+  set binaryInteractionId(value: string) {
+    this._binaryInteractionId = value;
   }
 }

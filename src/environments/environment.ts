@@ -4,10 +4,10 @@
 
 // Environment for localhost
 // TODO This should disapear, We need to create a localhost env that works with the proxy
- const EBI_BASE_URL = 'http://localhost:4200';
+const EBI_BASE_URL = 'http://localhost:4200';
 
 // Environment for development
-//const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+// const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
@@ -29,6 +29,5 @@ export const environment = {
   intact_portal_ws: EBI_BASE_URL + '/intact/ws',
   // TODO... below will be changed when have a graph server
   // TODO check consistency too
-  graph_ws: EBI_BASE_URL + '/graph',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };

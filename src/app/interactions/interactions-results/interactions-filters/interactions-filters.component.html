@@ -14,18 +14,18 @@
     <div>
       <ul class="vertical menu facets">
         <h5>Interactor Species</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="speciesFilterStyle()">
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactorSpeciesFilterStyle()">
           <li *ngFor="let species of interactorFacets.interactor_species_name_str">
             <span class="facet"><input #filter type="radio" value="{{species.value}}"
-                                       (change)="onChangeSpeciesNameFilter(filter.value)"
-                                       [checked]="isSelectedSpeciesName(species.value)"/>
+                                       (change)="onChangeInteractorSpeciesFilter(filter.value)"
+                                       [checked]="isSelectedInteractorSpecies(species.value)"/>
               <label>{{species.value}} ({{species.valueCount}})</label>
             </span>
           </li>
         </div>
 
         <h5>Interactor Type</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="interactorFilterStyle()">
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactorTypeFilterStyle()">
           <li *ngFor="let molecule of interactorFacets.interactor_type_str">
             <span class="facet"><input #filter type="radio" value="{{molecule.value}}"
                                        (change)="onChangeInteractorTypeFilter(filter.value)"
@@ -36,7 +36,7 @@
         </div>
 
         <h5>Interaction Type</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionFilterStyle()">
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionTypeFilterStyle()">
           <li *ngFor="let interactionType of interactionFacets.type_str">
             <span class="facet"><input #filter type="radio" value="{{interactionType.value}}"
                                        (change)="onChangeInteractionTypeFilter(filter.value)"
@@ -47,22 +47,22 @@
         </div>
 
         <h5>Interaction Detection Method</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="detMethodFilterStyle()">
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionDetectionMethodFilterStyle()">
           <li *ngFor="let detectionMethod of interactionFacets.detection_method_str">
             <span class="facet"><input #filter type="radio" value="{{detectionMethod.value}}"
-                                       (change)="onChangeDetectionMethodFilter(filter.value)"
-                                       [checked]="isSelectedDetectionMethod(detectionMethod.value)"/>
+                                       (change)="onChangeInteractionDetectionMethodFilter(filter.value)"
+                                       [checked]="isSelectedInteractionDetectionMethod(detectionMethod.value)"/>
               <label>{{detectionMethod.value}} ({{detectionMethod.valueCount}})</label>
             </span>
           </li>
         </div>
 
         <h5>Interaction Host Organism</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="hostOrganismFilterStyle()">
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionHostOrganismFilterStyle()">
           <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
             <span class="facet"> <input #filter type="radio" value="{{hostOrganism.value}}"
-                                        (change)="onChangeHostOrganismFilter(filter.value)"
-                                        [checked]="isSelectedHostOrganism(hostOrganism.value)"/>
+                                        (change)="onChangeInteractionHostOrganismFilter(filter.value)"
+                                        [checked]="isSelectedInteractionHostOrganism(hostOrganism.value)"/>
               <label>{{hostOrganism.value}} ({{hostOrganism.valueCount}})</label>
             </span>
           </li>

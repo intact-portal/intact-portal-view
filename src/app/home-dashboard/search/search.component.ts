@@ -142,7 +142,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
           suggestion: function (item) {
             return '<div class="row">' +
               '<div class="columns small-2">' + item.interactorAc + '</div>' +
-              '<div class="columns small-2"><i>"' + item.description + '"</i> </div>' +
+              '<div class="columns small-2"><i>"' + item.interactorDescription + '"</i> </div>' +
               '<div class="columns small-2">' + item.interactorName + '</div>' +
               '<div class="columns small-2">' + item.interactorSpecies + '</div>' +
               '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</span></div>' +

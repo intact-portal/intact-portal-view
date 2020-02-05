@@ -1,7 +1,7 @@
 export class Interactor {
   private _interactorName: string;
   private _interactorAc: string;
-  private _description: string;
+  private _interactorDescription: string;
   private _interactorType: string;
   private _interactorSpecies: string;
   private _interactionCount: number;
@@ -13,7 +13,7 @@ export class Interactor {
               species: string,
               interactionCount: number) {
     this._interactorName = interactorName;
-    this._description = description;
+    this._interactorDescription = description;
     this._interactorAc = interactorAc;
     this._interactorType = interactorType;
     this._interactorSpecies = species;
@@ -30,7 +30,7 @@ export class Interactor {
   }
 
   get interactorDescription(): string {
-    return this._description;
+    return this._interactorDescription;
   }
 
   get interactorType(): string {

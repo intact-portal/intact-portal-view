@@ -19,7 +19,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
   @Input() interactionTab: boolean;
 
   private _term: string;
-  private _speciesNameFilter: string[];
+  private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
   private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
@@ -46,10 +46,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
       .subscribe(params => {
         this.term = params.query;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
-        this.speciesNameFilter = params.species ? params.species.split('+') : [];
-        this.hostOrganismFilter = params.hostOrganism ? params.hostOrganism.split('+') : [];
+        this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
-        this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
@@ -80,8 +80,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
       bSort: false,
       searching: false,
       paging: true,
-      lengthMenu: [5, 10, 25, 50, 75, 100],
-      pageLength: 5,
+      lengthMenu: [25, 50, 75, 100, 150, 200, 500],
+      pageLength: 25,
       pagingType: 'full_numbers',
       processing: true,
       serverSide: true,
@@ -94,10 +94,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
           d.page = d.start / d.length;
           d.pageSize = d.length;
           d.interactorType = this.interactorTypeFilter;
-          d.species = this.speciesNameFilter;
-          d.type = this.interactionTypeFilter;
-          d.detectionMethod = this.detectionMethodFilter;
-          d.hostOrganism = this.hostOrganismFilter;
+          d.interactorSpecies = this.interactorSpeciesFilter;
+          d.interactionType = this.interactionTypeFilter;
+          d.interactionDetectionMethod = this.interactionDetectionMethodFilter;
+          d.interactionHostOrganism = this.interactionHostOrganismFilter;
           d.negativeInteraction = this.negativeFilter;
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
@@ -111,7 +111,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
               return '<div>' +
                 '<input type="checkbox" id="' + full.binaryInteractionId + '" name="check" value="' + data + '"/>' +
                 ' <span class="margin-left-medium">' +
-                '   <a href="/intact-view/details/interaction/' + full.ac + '">' +
+                '   <a href="/intact/portal/details/interaction/' + full.ac + '">' +
                 '     <i class="icon icon-common icon-search-document"></i>' +
                 '   </a>' +
                 ' </span>' +
@@ -222,12 +222,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
     this._term = value;
   }
 
-  get speciesNameFilter(): string[] {
-    return this._speciesNameFilter;
+  get interactorSpeciesFilter(): string[] {
+    return this._interactorSpeciesFilter;
   }
 
-  set speciesNameFilter(value: string[]) {
-    this._speciesNameFilter = value;
+  set interactorSpeciesFilter(value: string[]) {
+    this._interactorSpeciesFilter = value;
   }
 
   get interactorTypeFilter(): string[] {
@@ -246,19 +246,19 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
     this._interactionTypeFilter = value;
   }
 
-  get detectionMethodFilter(): string[] {
+  get interactionDetectionMethodFilter(): string[] {
     return this._detectionMethodFilter;
   }
 
-  set detectionMethodFilter(value: string[]) {
+  set interactionDetectionMethodFilter(value: string[]) {
     this._detectionMethodFilter = value;
   }
 
-  get hostOrganismFilter(): string[] {
+  get interactionHostOrganismFilter(): string[] {
     return this._hostOrganismFilter;
   }
 
-  set hostOrganismFilter(value: string[]) {
+  set interactionHostOrganismFilter(value: string[]) {
     this._hostOrganismFilter = value;
   }
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -19,11 +19,11 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
   @Input() interactorTab: boolean;
 
   private _term: string;
-  private _speciesNameFilter: string[];
+  private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
   private _interactionTypeFilter: string[];
-  private _detectionMethodFilter: string[];
-  private _hostOrganismFilter: string[];
+  private _interactionDetectionMethodFilter: string[];
+  private _interactionHostOrganismFilter: string[];
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
@@ -34,7 +34,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
 
   columnView = 'interactors_columnView';
 
-  columnNames: string[] = ['Names', 'Description', 'Accession', 'Type', 'Species', 'Interactions found in current search', 'Total interactions in all IntAct'];
+  columnNames: string[] =
+    ['Names',
+    'Description',
+    'Accession',
+    'Type',
+    'Species',
+    'Interactions found in current search',
+    'Total interactions in all IntAct'];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -44,13 +51,13 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
       .subscribe(params => {
         this.term = params.query;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
-        this.speciesNameFilter = params.species ? params.species.split('+') : [];
-        this.hostOrganismFilter = params.hostOrganism ? params.hostOrganism.split('+') : [];
+        this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
-        this.detectionMethodFilter = params.detectionMethod ? params.detectionMethod.split('+') : [];
+        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
-        this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
+        this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.currentPageIndex = params.page ? Number(params.page) : 1;
 
         if (this.dataTable !== undefined) {
@@ -77,8 +84,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
       bSort: false,
       searching: false,
       paging: true,
-      lengthMenu: [5, 10, 25, 50, 75, 100],
-      pageLength: 5,
+      lengthMenu: [10, 25, 50, 75, 100, 150],
+      pageLength: 10,
       pagingType: 'full_numbers',
       processing: true,
       serverSide: true,
@@ -91,10 +98,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
           d.page = d.start / d.length;
           d.pageSize = d.length;
           d.interactorType = this.interactorTypeFilter;
-          d.species = this.speciesNameFilter;
+          d.interactorSpecies = this.interactorSpeciesFilter;
           d.interactionType = this.interactionTypeFilter;
-          d.detectionMethod = this.detectionMethodFilter;
-          d.hostOrganism = this.hostOrganismFilter;
+          d.interactionDetectionMethod = this.interactionDetectionMethodFilter;
+          d.interactionHostOrganism = this.interactionHostOrganismFilter;
           d.negativeInteraction = this.negativeFilter;
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
@@ -114,7 +121,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
           }
         },
         {data: 'interactorName', defaultContent: ' ', title: 'Names'},
-        {data: 'description', defaultContent: ' ', title: 'Description'},
+        {data: 'interactorDescription', defaultContent: ' ', title: 'Description'},
         {data: 'interactorAc', defaultContent: ' ', title: 'Accession'},
         {data: 'interactorType', defaultContent: ' ', title: 'Type'},
         {data: 'interactorSpecies', defaultContent: ' ', title: 'Species'},
@@ -185,12 +192,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
     this._term = value;
   }
 
-  get speciesNameFilter(): string[] {
-    return this._speciesNameFilter;
+  get interactorSpeciesFilter(): string[] {
+    return this._interactorSpeciesFilter;
   }
 
-  set speciesNameFilter(value: string[]) {
-    this._speciesNameFilter = value;
+  set interactorSpeciesFilter(value: string[]) {
+    this._interactorSpeciesFilter = value;
   }
 
   get interactorTypeFilter(): string[] {
@@ -209,20 +216,20 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
     this._interactionTypeFilter = value;
   }
 
-  get detectionMethodFilter(): string[] {
-    return this._detectionMethodFilter;
+  get interactionDetectionMethodFilter(): string[] {
+    return this._interactionDetectionMethodFilter;
   }
 
-  set detectionMethodFilter(value: string[]) {
-    this._detectionMethodFilter = value;
+  set interactionDetectionMethodFilter(value: string[]) {
+    this._interactionDetectionMethodFilter = value;
   }
 
-  get hostOrganismFilter(): string[] {
-    return this._hostOrganismFilter;
+  get interactionHostOrganismFilter(): string[] {
+    return this._interactionHostOrganismFilter;
   }
 
-  set hostOrganismFilter(value: string[]) {
-    this._hostOrganismFilter = value;
+  set interactionHostOrganismFilter(value: string[]) {
+    this._interactionHostOrganismFilter = value;
   }
 
   get negativeFilter(): boolean {

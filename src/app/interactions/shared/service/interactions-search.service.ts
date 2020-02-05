@@ -10,15 +10,15 @@ const baseURL = environment.intact_portal_ws;
 export class InteractionsSearchService {
 
   private _totalElements = 0;
-  private _page: number = 1;
-  private _pageSize: number = 20;
+  private _page = 1;
+  private _pageSize = 20;
 
   constructor(private http: HttpClient) { }
 
   getAllInteractionsAndFacetsQuery(query: string,
-                                   hostOrganismFilter: string[],
+                                   interactionHostOrganismFilter: string[],
                                    interactionTypeFilter: string[],
-                                   detectionMethodFilter: string[],
+                                   interactionDetectionMethodFilter: string[],
                                    miScoreMin: any,
                                    miScoreMax: any,
                                    negativeFilter: any,
@@ -32,8 +32,8 @@ export class InteractionsSearchService {
     const params = new HttpParams()
       .set('query', query)
       .set('interactionTypeFilter', interactionTypeFilter.toString())
-      .set('hostOrganismFilter', hostOrganismFilter.toString())
-      .set('detectionMethodFilter', detectionMethodFilter.toString())
+      .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
+      .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())
       .set('minMiScore', miScoreMin.toString())
       .set('maxMiScore', miScoreMax.toString())
       .set('isNegativeFilter', negativeFilter.toString())

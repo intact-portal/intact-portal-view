@@ -3,16 +3,16 @@ import {Annotation} from './annotation.model';
 
 export class Experiment {
   private _experimentAc: string;
-  private _hostOrganism: string;
-  private _interactionDetMethod: string;
+  private _interactionHostOrganism: string;
+  private _interactionDetectionMethod: string;
   private _experimentXrefs: Xreferences[];
   private _experimentAnnotations: Annotation[];
 
-  constructor(experimentAc: string, hostOrganism: string, interactionDetMethod: string, experimentXrefs: Xreferences[],
+  constructor(experimentAc: string, interactionHostOrganism: string, interactionDetectionMethod: string, experimentXrefs: Xreferences[],
               experimentAnnotations: Annotation[]) {
     this._experimentAc = experimentAc;
-    this._hostOrganism = hostOrganism;
-    this._interactionDetMethod = interactionDetMethod;
+    this._interactionHostOrganism = interactionHostOrganism;
+    this._interactionDetectionMethod = interactionDetectionMethod;
     this._experimentXrefs = experimentXrefs;
     this._experimentAnnotations = experimentAnnotations;
   }
@@ -25,20 +25,20 @@ export class Experiment {
     this._experimentAc = value;
   }
 
-  get hostOrganism(): string {
-    return this._hostOrganism;
+  get interactionHostOrganism(): string {
+    return this._interactionHostOrganism;
   }
 
-  set hostOrganism(value: string) {
-    this._hostOrganism = value;
+  set interactionHostOrganism(value: string) {
+    this._interactionHostOrganism = value;
   }
 
-  get interactionDetMethod(): string {
-    return this._interactionDetMethod;
+  get interactionDetectionMethod(): string {
+    return this._interactionDetectionMethod;
   }
 
-  set interactionDetMethod(value: string) {
-    this._interactionDetMethod = value;
+  set interactionDetectionMethod(value: string) {
+    this._interactionDetectionMethod = value;
   }
 
   get experimentXrefs(): Xreferences[] {

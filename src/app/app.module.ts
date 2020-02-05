@@ -19,7 +19,7 @@ import {DownloadComponent} from './download/download.component';
 import {MarkdownModule} from 'ngx-markdown';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {DocumentationModule} from './documentation/documentation.module';
-import { InteractomeComponent } from './interactomes/interactome/interactome.component';
+import {InteractomeComponent} from './interactomes/interactome/interactome.component';
 
 @NgModule({
   declarations: [

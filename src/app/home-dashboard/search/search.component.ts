@@ -108,28 +108,28 @@ export class SearchComponent implements OnInit, AfterViewInit {
         highlight: true,
         minLength: 1
       },
-      {
-        name: 'terms',
-        source: termsData,
-        display: function (item) {
-          return item.dbOntology;
-        },
-        templates: {
-          header: '<h4 class="category-name" style="margin-top:-3px;">CV Terms</h4>',
-          notFound: '<div class="noResultsSuggestions"> No results found for CV Terms</div>',
-          suggestion: function (item) {
-            return '<div class="row">' +
-                      '<div class="columns small-1">' + item.dbOntology + '</div>' +
-                      '<div class="columns small-1">' + item.termId + '</div>' +
-                      '<div class="columns small-2">' + item.termName + '</div>' +
-                      '<div class="columns small-3"> <i>"' + item.description + '"</i> </div>' +
-                      '<div class="columns small-3"><span class="labelWrapper">' + item.label + '</span></div>' +
-                      '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions +
-                          ' interactions' + '</span></div>' +
-              '</div>'
-          }
-        }
-      },
+      // { Uncomment and adapt in the future when we have the term index in place
+      //   name: 'terms',
+      //   source: termsData,
+      //   display: function (item) {
+      //     return item.dbOntology;
+      //   },
+      //   templates: {
+      //     header: '<h4 class="category-name" style="margin-top:-3px;">CV Terms</h4>',
+      //     notFound: '<div class="noResultsSuggestions"> No results found for CV Terms</div>',
+      //     suggestion: function (item) {
+      //       return '<div class="row">' +
+      //                 '<div class="columns small-1">' + item.dbOntology + '</div>' +
+      //                 '<div class="columns small-1">' + item.termId + '</div>' +
+      //                 '<div class="columns small-2">' + item.termName + '</div>' +
+      //                 '<div class="columns small-3"> <i>"' + item.description + '"</i> </div>' +
+      //                 '<div class="columns small-3"><span class="labelWrapper">' + item.label + '</span></div>' +
+      //                 '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactions +
+      //                     ' interactions' + '</span></div>' +
+      //         '</div>'
+      //     }
+      //   }
+      // },
       {
         name: 'interactors',
         source: interactorsData,
@@ -157,7 +157,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
         name: 'interactions',
         source: interactionsData,
         display: function (item) {
-          return item.identifiers;
+          return item.ac;
         },
         templates: {
           header: '<h4 class="category-name">Interactions</h4>',
@@ -167,7 +167,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
             return (item.count === null) ? '<div class="row">' +
               '<div class="columns small-3">' + item.firstAuthor + '</div>' +
               '<div class="columns small-3">' + item.publicationIdentifiers + '</div>' +
-              '<div class="columns small-2">' + item.identifiers + '</div>' +
+              '<div class="columns small-2">' + item.ac + '</div>' +
               '<div class="columns small-2"><span class="labelWrapper">' + item.type + '</span></div>' +
               '<div class="columns small-2"><span class="interactionsWrapper">' + ' 1 interaction' + '</span></div>' +
               '</div>' :
@@ -179,10 +179,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '<div class="columns small-2"><span class="interactionsWrapper">' + item.count + ' interactions' + '</span></div>'
               + '</div>'
           },
-
-          footer: '<div class="suggestions-footer">' +
-                  '  <a><i class="icon icon-functional" data-icon="+"></i></a> Show more results' +
-                  '</div>'
+          // Uncomment and adapt in the future when we can display more results
+          // footer: '<div class="suggestions-footer">' +
+          //         '  <a><i class="icon icon-functional" data-icon="+"></i></a> Show more results' +
+          //         '</div>'
         }
       }
       );

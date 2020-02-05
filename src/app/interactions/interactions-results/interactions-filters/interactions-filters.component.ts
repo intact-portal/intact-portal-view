@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractorFacets} from '../../shared/model/interactions-results/interactor/interactor-facets.model';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
+import {Options, ChangeContext} from 'ng5-slider';
 
 declare const $: any;
 
@@ -25,6 +26,11 @@ export class InteractionsFiltersComponent implements OnInit {
   private _negativeFilter: any;
   private _miScoreMinFilter: any;
   private _miScoreMaxFilter: any;
+
+  /* SLIDER */
+  private _minValue: string | number;
+  private _maxValue: string | number;
+  private _options: Options;
 
   /** This variable is used to check if the param is in the URL and update the state of the checkbox */
   private _isNegativeInteraction: boolean;
@@ -138,33 +144,19 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   initSliderRange(): void {
-    const sliderRange =  $( '#slider-range' );
-    const range1 = $('#range1');
-    const range2 = $('#range2');
-
-    const val1 = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore[0].value : 0;
-    const val2 = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
-
-    sliderRange.slider({
-      range: true,
-      min: 0,
-      max: 1,
+    this.options = {
+      floor: 0,
+      ceil: 1,
       step: 0.01,
-      values: [ val1, val2],
-      slide: function( event, ui ) {
-        range1.val( ui.values[0] );
-        range2.val( ui.values[1] );
-        this.miScoreMinFilter = range1.val();
-        this.miScoreMaxFilter = range2.val();
+      showSelectionBar: true,
+      selectionBarGradient: {
+        from: 'yellow',
+        to: 'purple'
+      }
+    };
 
-        this.onInteractionMiScoreMinFilterChanged.emit(this.miScoreMinFilter);
-        this.onInteractionMiScoreMaxFilterChanged.emit(this.miScoreMaxFilter);
-
-      }.bind(this)
-    });
-
-    range1.val(sliderRange.slider( 'values', 0 ));
-    range2.val(sliderRange.slider( 'values', 1 ));
+    this.minValue = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore[0].value : 0;
+    this.maxValue = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
   }
 
   onChangeSpeciesNameFilter(filter: string) {
@@ -217,12 +209,10 @@ export class InteractionsFiltersComponent implements OnInit {
     this.onHostOrganismFilterChanged.emit(this.hostOrganismFilter);
   }
 
-  onChangeInteractionNegativeFilter(value: boolean) {
-    this.isNegativeInteraction = value;
-
-    if (this.negativeFilter !== value) {
-      this.negativeFilter = value;
-    }
+  onUserChangeEnd(changeContext: ChangeContext): void {
+    this.onInteractionMiScoreMinFilterChanged.emit(changeContext.value);
+    this.onInteractionMiScoreMaxFilterChanged.emit(changeContext.highValue);
+  }
 
     this.onInteractionNegativeFilterChanged.emit(this.negativeFilter);
   }
@@ -369,5 +359,30 @@ export class InteractionsFiltersComponent implements OnInit {
   @Input()
   set miScoreMaxFilter(value: any) {
     this._miScoreMaxFilter = value;
+  }
+
+  get minValue(): string | number {
+    return this._minValue;
+  }
+
+  set minValue(value: string | number) {
+    this._minValue = value;
+  }
+
+  get maxValue(): string | number {
+    return this._maxValue;
+  }
+
+  set maxValue(value: string | number) {
+    this._maxValue = value;
+  }
+
+
+  get options(): Options {
+    return this._options;
+  }
+
+  set options(options: Options) {
+    this._options = options;
   }
 }

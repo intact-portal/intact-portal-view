@@ -71,27 +71,8 @@
 
       <h5>miScore</h5>
       <div class="row margin-bottom-large">
-        <div class="columns medium-3">
-          <input type="text" id="range1" disabled>
-        </div>
-        <div id="slider-range" class="columns medium-6"></div>
-        <div class="columns medium-3">
-          <input type="text" id="range2" disabled>
-        </div>
-      </div>
-
-      <div class="margin-top-medium">
-        <div class="float:left">
-          <div *ngFor="let intNegative of interactionFacets.negative ">
-            <label class="switch switch_type1" role="switch">
-              <input #filterNegative id="filterNegative" type="checkbox" class="switch__toggle" disabled="disabled"
-                     (change)="onChangeInteractionNegativeFilter(filterNegative.checked)"
-                     [checked]="isSelectedInteractionNegative()">
-              <span class="switch__label"></span>
-            </label>
-            <b class="margin-left-medium" style="color: #847f7f;">Show negative interactions</b>
-          </div>
-        </div>
+        <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+                    (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
       </div>
 
       <div class="margin-top-medium">
@@ -105,5 +86,4 @@
       </div>
     </div>
   </section>
-
 </div>

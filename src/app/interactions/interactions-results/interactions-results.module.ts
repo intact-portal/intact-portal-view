@@ -7,7 +7,6 @@ import {InteractionsListComponent} from './interactions-list/interactions-list.c
 import {InteractionsViewerComponent} from './interactions-viewer/interactions-viewer.component';
 import {InteractorsTableComponent} from './interactions-list/interactors-table/interactors-table.component';
 import {InteractionsTableComponent} from './interactions-list/interactions-table/interactions-table.component';
-import {InteractionsPagerComponent} from './interactions-list/interactions-pager/interactions-pager.component';
 import {InteractionDetailsModule} from '../interaction-details/interaction-details.module';
 import {Ng5SliderModule} from 'ng5-slider';
 
@@ -24,8 +23,6 @@ import {Ng5SliderModule} from 'ng5-slider';
     InteractionsViewerComponent,
     InteractionsResultsComponent,
     InteractorsTableComponent,
-    InteractionsTableComponent,
-    InteractionsPagerComponent
-  ]
+    InteractionsTableComponent]
 })
 export class InteractionsResultsModule { }

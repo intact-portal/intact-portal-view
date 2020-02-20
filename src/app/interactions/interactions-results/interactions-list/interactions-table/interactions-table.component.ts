@@ -85,7 +85,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
       pagingType: 'full_numbers',
       processing: true,
       serverSide: true,
-      dom: '<"top"li>rt<"bottom"p><"clear">',
+      dom: '<"top"flip>rt<"bottom"ifp>',
       scrollX: true,
       ajax: {
         url: `${baseURL}/interaction/datatables/` + this.term,

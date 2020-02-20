@@ -1,7 +1,3 @@
-/*.masthead{*/
-/*  background-color: #648880;*/
-/*}*/
-
 /*
   Colour palette: IntAct-Portal
 */
@@ -16,11 +12,11 @@ a.label,
 a:hover,
 a:focus,
 a:active {
-  color: rgb(107,72,107);
+  color: rgb(104,41,124);
 }
 
 h1 { color: #312146; }
-h2 { color: rgb(107,72,107); }
+h2 { color: rgb(104,41,124); }
 h3 { color: #444444; }
 
 a.special { background-color: #A699B7; }
@@ -30,28 +26,30 @@ a.special { background-color: #A699B7; }
 .tabs-title > a:hover,
 .button,
 .button.primary {
-  background-color: rgb(107,72,107);
+  background-color: rgb(104,41,124);
 }
 a.tag:hover { color: #fff; }
 
 .tabs-title > a:hover,
 .button.hover,
 .button.primary:hover,
-.button.primary:focus { background: rgba(107,72,107,.9); }
+.button.primary:focus { background: rgba(104,41,124,.9); }
 .tabs-title > a:focus,
 .tabs-title > a[aria-selected='true'] {
   color: #fff;
-  background: rgb(107,72,107); }
+  background: rgb(104,41,124); }
 .tabs-title > a {
   color: #312146;
 }
-.masthead { background-color: rgb(107,72,107); }
+.masthead {
+  background-image: linear-gradient(#000000, #68297c);
+}
 
 /* end */
 
 /*IntAct tiles styling*/
 a.intact-background, .intact-background, .intact-background.button, .intact-background.button:hover, .intact-background.tag {
-  background: rgb(107,72,107);
+  background: rgb(104,41,124);
 }
 
 /************** SEARCH SECTION *******************************/
@@ -89,11 +87,11 @@ a.intact-background, .intact-background, .intact-background.button, .intact-back
 
 a.button {
   color: #fff !important;
-  background: #6b486b;
+  background: #68297c;
 }
 
 .button:focus, .button:hover, .button.hover {
-  background-color: #6b486bd6;
+  background-color: #68297c;
   opacity: 0.8;
 }
 

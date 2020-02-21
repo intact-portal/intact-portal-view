@@ -26,9 +26,9 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   private _miScoreMax: any;
   private _graph: any;
   private _expanded: boolean;
-  private _disruptedByMutation: boolean;
-  private _compoundGraph: boolean = false;
-  private _layoutName: string = 'fcose';
+  private _affectedByMutation: boolean;
+  private _compoundGraph = false;
+  private _layoutName = 'fcose';
 
   @Input() interactorSelected: string;
   @Input() interactionSelected: string;
@@ -91,7 +91,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     ).subscribe(data => {
       this.interactionsJSON = data;
       console.log('Data loaded');
-      this.graph.initializeWithData(this.interactionsJSON, this.expanded,this.disruptedByMutation,this.layoutName);
+      this.graph.initializeWithData(this.interactionsJSON, this.expanded, this.affectedByMutation, this.layoutName);
     })
   }
 
@@ -100,18 +100,18 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.graph.applyLayout(value);
   }
 
-  onChangeExpand(expandCheckBoxValue,disruptedByMutationCheckBox){
-    if(!expandCheckBoxValue){
-      disruptedByMutationCheckBox.checked = false;
+  onChangeExpand(expandCheckBoxValue, affectedByMutationCheckBox) {
+    if (!expandCheckBoxValue) {
+      affectedByMutationCheckBox.checked = false;
     }
     this.expanded = expandCheckBoxValue;
     this.graph.expandEdges(expandCheckBoxValue,false);
   }
 
-  onChangeDisruptedByMutation(disruptedByMutationCheckBoxValue,expandCheckBox){
+  onChangeAffectedByMutation(affectedByMutationCheckBoxValue, expandCheckBox) {
     expandCheckBox.checked = true;
-    this.disruptedByMutation=disruptedByMutationCheckBoxValue;
-    this.graph.expandEdges(true,disruptedByMutationCheckBoxValue);
+    this.affectedByMutation = affectedByMutationCheckBoxValue;
+    this.graph.expandEdges(true, affectedByMutationCheckBoxValue);
   }
 
   onChangeGroupBy(groupByValue:boolean){
@@ -235,12 +235,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._expanded=value;
   }
 
-  get disruptedByMutation():boolean{
-    return this._disruptedByMutation;
+  get affectedByMutation(): boolean {
+    return this._affectedByMutation;
   }
 
-  set disruptedByMutation(value:boolean){
-    this._disruptedByMutation=value;
+  set affectedByMutation(value: boolean) {
+    this._affectedByMutation = value;
   }
 
   get compoundGraph():boolean{

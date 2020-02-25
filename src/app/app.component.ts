@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+
 declare const $: any;
 
 @Component({
@@ -8,13 +10,21 @@ declare const $: any;
 })
 export class AppComponent implements OnInit {
   version = '0.0.1';
-  environmentName = 'dev';
+  showCompactHeader = false;
+  showFooter = true;
 
-  constructor() { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initFoundation();
     console.log('The component is initialized.');
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showCompactHeader = this.activatedRoute.firstChild.snapshot.data.showCompactHeader !== false;
+        this.showFooter = this.activatedRoute.firstChild.snapshot.data.showFooter !== false;
+      }
+    });
   }
 
   private initFoundation(): void {

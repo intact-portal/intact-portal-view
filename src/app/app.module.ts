@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -20,6 +21,7 @@ import {MarkdownModule} from 'ngx-markdown';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {DocumentationModule} from './documentation/documentation.module';
 import {InteractomeComponent} from './interactomes/interactome/interactome.component';
+import {LayoutModule} from './layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -30,8 +32,10 @@ import {InteractomeComponent} from './interactomes/interactome/interactome.compo
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([]),
     FormsModule,
     HttpClientModule,
+    LayoutModule,
     HomeDashboardModule,
     InteractionsResultsModule,
     InteractionDetailsModule,

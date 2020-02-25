@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InteractionsPagerComponent } from './interactions-pager.component';
+import { LocalFooterComponent } from './local-footer.component';
 
-describe('InteractionsPagerComponent', () => {
-  let component: InteractionsPagerComponent;
-  let fixture: ComponentFixture<InteractionsPagerComponent>;
+describe('LocalFooterComponent', () => {
+  let component: LocalFooterComponent;
+  let fixture: ComponentFixture<LocalFooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InteractionsPagerComponent ]
+      declarations: [ LocalFooterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InteractionsPagerComponent);
+    fixture = TestBed.createComponent(LocalFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

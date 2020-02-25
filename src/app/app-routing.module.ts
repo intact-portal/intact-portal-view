@@ -5,10 +5,24 @@ import {InteractomesComponent} from './interactomes/interactomes.component';
 
 const routes: Routes = [
   {path: 'home', loadChildren: 'app/home-dashboard/home-dashboard.module#HomeDashboardModule'},
-  {path: 'search', loadChildren: 'app/interactions/interactions-results/interactions-results.module#InteractionsResultsModule'},
-  {path: 'details', loadChildren: 'app/interactions/interaction-details/interaction-details.module#InteractionDetailsModule'},
-  {path: 'download', component: DownloadComponent},
-  {path: 'interactomes', component: InteractomesComponent},
+  {
+    path: 'search',
+    loadChildren: 'app/interactions/interactions-results/interactions-results.module#InteractionsResultsModule'
+  },
+  {
+    path: 'details',
+    loadChildren: 'app/interactions/interaction-details/interaction-details.module#InteractionDetailsModule'
+  },
+  {
+    path: 'download',
+    component: DownloadComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'interactomes',
+    component: InteractomesComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
 ];
 
 @NgModule({

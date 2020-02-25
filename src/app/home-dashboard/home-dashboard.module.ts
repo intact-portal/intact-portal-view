@@ -13,29 +13,27 @@ import {DatasetArchiveComponent} from './featured-dataset/dataset-archive/datase
 import {AdvancedSearchComponent} from './advanced-search/advanced-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {QueryBuilderModule} from 'angular2-query-builder';
-import {ContributorsComponent} from './contributors/contributors.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    QueryBuilderModule,
-    HomeDashboardRoutingModule
-  ],
-  declarations: [
-    HomeDashboardComponent,
-    HomeDescriptionComponent,
-    SearchComponent,
-    TileMenuComponent,
-    NewsletterSubscriptionComponent,
-    TwitterDisplayComponent,
-    FeaturedDatasetComponent,
-    NewsComponent,
-    DatasetArchiveComponent,
-    AdvancedSearchComponent,
-    ContributorsComponent
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        QueryBuilderModule,
+        HomeDashboardRoutingModule
+    ],
+    declarations: [
+        HomeDashboardComponent,
+        HomeDescriptionComponent,
+        SearchComponent,
+        TileMenuComponent,
+        NewsletterSubscriptionComponent,
+        TwitterDisplayComponent,
+        FeaturedDatasetComponent,
+        NewsComponent,
+        DatasetArchiveComponent,
+        AdvancedSearchComponent,
+    ]
 })
 export class HomeDashboardModule {
 }

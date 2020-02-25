@@ -8,12 +8,36 @@ import {DataSubmissionComponent} from './data-submission/data-submission.compone
 import {DatasetsComponent} from './datasets/datasets.component';
 
 const documentationRoutes: Routes = [
-  {path: 'documentation', component: DocumentationComponent},
-  {path: 'documentation/about', component: AboutComponent},
-  {path: 'documentation/docs', component: DocsComponent},
-  {path: 'documentation/data_submission', component: DataSubmissionComponent},
-  {path: 'documentation/technical_corner', component: TechnicalCornerComponent},
-  {path: 'documentation/datasets', component: DatasetsComponent},
+  {
+    path: 'documentation',
+    component: DocumentationComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'documentation/about',
+    component: AboutComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'documentation/docs',
+    component: DocsComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'documentation/data_submission',
+    component: DataSubmissionComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'documentation/technical_corner',
+    component: TechnicalCornerComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'documentation/datasets',
+    component: DatasetsComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
 ];
 
 @NgModule({

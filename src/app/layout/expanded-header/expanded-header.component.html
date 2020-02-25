@@ -1,0 +1,40 @@
+<header id="masthead" class="masthead">
+  <div class="masthead-inner row expanded"> <!-- expanded -->
+    <!-- local-title -->
+    <div class="columns medium-12 large-8">
+      <a routerLink="/home" title="Back to Intact homepage">
+        <div class="media-object" id="local-title">
+          <div class="media-object-section" >
+            <img src="assets/images/logo/intact_logo.svg" alt="IntAct logo" class="padding-left-large" style="height:5em; width:21em;">
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- /local-title -->
+
+    <!-- local-nav -->
+    <nav>
+      <ul id="local-nav" class="dropdown menu float-left" data-dropdown-menu="true" data-description="navigational">
+        <li routerLinkActive="active"><a routerLink="/home" routerLinkActive="active">Home</a></li>
+        <li routerLinkActive="active"><a routerLink="/download" routerLinkActive="active">Download</a></li>
+        <li routerLinkActive="active"><a routerLink="/documentation/help/faq" routerLinkActive="active">FAQ</a></li>
+        <li routerLinkActive="active"><a routerLink="/documentation/about" routerLinkActive="active">About</a></li>
+        <li class="extra-items-menu is-dropdown-submenu-parent opens-right">
+          <a routerLinkActive="active" routerLink="/documentation">Documentation</a>
+          <ul class="menu submenu is-dropdown-submenu first-sub vertical" role="menu" >
+            <li class="no-border-submenu" routerLinkActive="active"><a routerLink="/documentation/help">Help</a></li>
+            <li class="no-border-submenu" routerLinkActive="active"><a routerLink="/documentation/docs">Docs</a></li>
+            <li routerLinkActive="active"><a routerLink="/documentation/technical_corner">Technical corner</a></li>
+          </ul>
+        </li>
+        <li routerLinkActive="active"><a href="//www.ebi.ac.uk/support/intact">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
+      </ul>
+      <a routerLink="/home" title="Back to Intact homepage">
+        <div class="float-right">
+          <img src="assets/images/logo/intact_icon_small.png" alt="IntAct icon" style="height:36px">
+        </div>
+      </a>
+    </nav>
+    <!-- /local-nav -->
+  </div>
+</header>

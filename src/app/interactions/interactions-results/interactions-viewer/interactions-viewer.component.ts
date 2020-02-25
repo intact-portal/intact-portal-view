@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, ViewEncapsulation, SimpleChanges, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -69,7 +69,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     const chng = changes['interactionSelected'];
     const cur = JSON.stringify(chng.currentValue);
 
-    console.log('cur'+cur);
+    console.log('cur' + cur);
   }
 
   findInteractor() {
@@ -95,8 +95,8 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     })
   }
 
-  onChangeLayout(value){
-    this.layoutName=value;
+  onChangeLayout(value) {
+    this.layoutName = value;
     this.graph.applyLayout(value);
   }
 
@@ -105,7 +105,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       affectedByMutationCheckBox.checked = false;
     }
     this.expanded = expandCheckBoxValue;
-    this.graph.expandEdges(expandCheckBoxValue,false);
+    this.graph.expandEdges(expandCheckBoxValue, false);
   }
 
   onChangeAffectedByMutation(affectedByMutationCheckBoxValue, expandCheckBox) {
@@ -114,20 +114,20 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.graph.expandEdges(true, affectedByMutationCheckBoxValue);
   }
 
-  onChangeGroupBy(groupByValue:boolean){
-    this.compoundGraph=groupByValue;
+  onChangeGroupBy(groupByValue: boolean) {
+    this.compoundGraph = groupByValue;
     this.requestIntactNetworkDetails();
   }
 
-  onClickDownloadGraph(downloadFileType:string){
+  onClickDownloadGraph(downloadFileType: string) {
     this.graph.exportAs(downloadFileType);
   }
 
-  onClickReset(){
+  onClickReset() {
     this.graph.reset();
   }
 
-  OnClickSearch(interactorName:string){
+  onClickSearch(interactorName: string) {
     this.graph.search(interactorName);
   }
 
@@ -219,20 +219,20 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._interactionsJSON = value;
   }
 
-  get graph():any{
+  get graph(): any {
     return this._graph;
   }
 
-  set graph(value:any){
-    this._graph=value;
+  set graph(value: any) {
+    this._graph = value;
   }
 
-  get expanded():boolean{
+  get expanded(): boolean {
     return this._expanded;
   }
 
-  set expanded(value:boolean){
-    this._expanded=value;
+  set expanded(value: boolean) {
+    this._expanded = value;
   }
 
   get affectedByMutation(): boolean {
@@ -243,19 +243,19 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._affectedByMutation = value;
   }
 
-  get compoundGraph():boolean{
-      return this._compoundGraph;
-      }
+  get compoundGraph(): boolean {
+    return this._compoundGraph;
+  }
 
-  set compoundGraph(value:boolean){
-      this._compoundGraph=value;
-      }
+  set compoundGraph(value: boolean) {
+    this._compoundGraph = value;
+  }
 
-  get layoutName():string{
-      return this._layoutName;
-      }
+  get layoutName(): string {
+    return this._layoutName;
+  }
 
-  set layoutName(value:string){
-      this._layoutName=value;
-      }
+  set layoutName(value: string) {
+    this._layoutName = value;
+  }
 }

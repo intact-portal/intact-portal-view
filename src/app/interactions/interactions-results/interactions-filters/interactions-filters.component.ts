@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractorFacets} from '../../shared/model/interactions-results/interactor/interactor-facets.model';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
-import {Options, ChangeContext} from 'ng5-slider';
+import {ChangeContext, LabelType, Options} from 'ng5-slider';
 
 declare const $: any;
 
@@ -147,11 +147,19 @@ export class InteractionsFiltersComponent implements OnInit {
     this.options = {
       floor: 0,
       ceil: 1,
+      minLimit: 0,
+      maxLimit: 1,
       step: 0.01,
       showSelectionBar: true,
-      selectionBarGradient: {
-        from: 'yellow',
-        to: 'purple'
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            return '<b>Min:</b> ' + value;
+          case LabelType.High:
+            return '<b>Max:</b> ' + value;
+          default:
+            return String(value);
+        }
       }
     };
 

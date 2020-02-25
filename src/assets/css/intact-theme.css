@@ -101,6 +101,36 @@ a.button {
   border-bottom-style: none;
 }
 
+/************** Scrollbar *******************************/
+
+/* TODO adjust the color of the scroll */
+.scrollbar {
+  background-color: #F5F5F5;
+  /*float: left;*/
+  /*height: 200px;*/
+  /*margin-bottom: 25px;*/
+  /*margin-left: 22px;*/
+  /*margin-top: 40px;*/
+  /*width: 65px;*/
+  scrollbar-width: thin;
+  scrollbar-color: #90A4AE #CFD8DC;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #CFD8DC;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #90A4AE;
+  border-radius: 6px;
+  border: 2px solid #CFD8DC;
+}
+
 /**************************************************************/
 /********* ADVANCED QUERY BUILDER RE-STYLE ********************/
 /**************************************************************/

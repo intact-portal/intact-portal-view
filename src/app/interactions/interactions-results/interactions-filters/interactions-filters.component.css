@@ -39,3 +39,24 @@
   border-radius: 6px;
   border: 2px solid #CFD8DC;
 }
+
+/* Filters bar styling */
+#filters-bar {
+  background: white
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
+  background-image: url('../../../../assets/images/results/mi-score-slider-image.svg') !important;
+  background-position: center  !important; /* Center the image */
+  background-repeat: no-repeat  !important; /* Do not repeat the image */
+  z-index: 1;
+  padding: 2px;
+  border-radius: 2px !important;
+  border: 1px solid #D9D9D9 !important;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-selection {
+  z-index: 2 !important;
+  background: #0db9f0 !important;
+  border-radius: 2px !important;
+}

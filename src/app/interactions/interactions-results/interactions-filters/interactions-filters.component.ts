@@ -54,15 +54,15 @@ export class InteractionsFiltersComponent implements OnInit {
     this.isNegativeInteraction = this.negativeFilter;
     // TODO: TO review this,
     //  it is what was causing the bad behaviour with the negative interaction in the url and the filters
-    this.isNegativeInteraction = (this.negativeFilter === 'false') ? false : true;
-
+    this.isNegativeInteraction = (this.negativeFilter !== 'false');
+    $('iv-interactions-filters').foundation();
   }
 
   interactorSpeciesFilterStyle(): any {
-    if (this.interactorFacets.interactor_species_name_str.length > 10 ) {
+    if (this.interactorFacets.interactor_species_name_str.length > 20 ) {
       // TODO: Try to compact the styles in one function if they are the same between the different facets.
       return {
-        height: '200px',
+        height: '400px',
         width: '100%',
         'overflow-y': 'auto',
       };
@@ -76,9 +76,9 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   interactorTypeFilterStyle(): any {
-    if (this.interactorFacets.interactor_type_str.length > 10) {
+    if (this.interactorFacets.interactor_type_str.length > 20) {
       return {
-        height: '200px',
+        height: '400px',
         width: '100%',
         'overflow-x': 'auto',
         'overflow-y': 'auto'
@@ -93,9 +93,9 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   interactionTypeFilterStyle(): any {
-    if (this.interactionFacets.type_str.length > 10) {
+    if (this.interactionFacets.type_str.length > 20) {
       return {
-        height: '200px',
+        height: '400px',
         width: '100%',
         'overflow-x': 'auto',
         'overflow-y': 'auto'
@@ -110,9 +110,9 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   interactionDetectionMethodFilterStyle(): any {
-    if (this.interactionFacets.detection_method_str.length > 10) {
+    if (this.interactionFacets.detection_method_str.length > 20) {
       return {
-        height: '200px',
+        height: '500px',
         width: '100%',
         'overflow-x': 'auto',
         'overflow-y': 'auto'
@@ -127,9 +127,9 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   interactionHostOrganismFilterStyle(): any {
-    if (this.interactionFacets.host_organism_str.length > 10) {
+    if (this.interactionFacets.host_organism_str.length > 20) {
       return {
-        height: '250px',
+        height: '500px',
         width: '100%',
         'overflow-x': 'auto',
         'overflow-y': 'auto'
@@ -242,6 +242,7 @@ export class InteractionsFiltersComponent implements OnInit {
     return this.interactionHostOrganismFilter !== undefined ? this.interactionHostOrganismFilter.indexOf(interactionHostOrganism) >= 0 : false;
   }
 
+  // TODO detect miScore filter
   anyFiltersSelected() {
     return (this.interactorSpeciesFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
       || this.interactionDetectionMethodFilter.length !== 0 || this.interactionHostOrganismFilter.length !== 0);
@@ -375,7 +376,6 @@ export class InteractionsFiltersComponent implements OnInit {
   set maxValue(value: string | number) {
     this._maxValue = value;
   }
-
 
   get options(): Options {
     return this._options;

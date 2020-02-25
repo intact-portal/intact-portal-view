@@ -1,80 +1,115 @@
-<div class="row" >
-  <div class="columns medium-6" style="padding-left: 0rem">
-    <h4>Filters</h4>
-  </div>
-  <div class="columns medium-6" style="padding-right: 0rem">
-    <div *ngIf="anyFiltersSelected()">
-      <a class="button resetFilters" style="float: right" (click)="resetAllFilters()"><i class="icon icon-functional" data-icon="d"></i> Reset filters</a>
-    </div>
-  </div>
-</div>
+<div data-sticky-container>
+  <div id="filters-bar" data-sticky data-sticky-on="large" data-margin-top="0"
+       data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
+    <h4 class="underline">Filters</h4>
 
-<div class="row margin-bottom-large">
-  <section>
-    <div>
+    <button class="button" type="button" data-toggle="interactor-species-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>Interactor Species
+    </button>
+    <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <ul class="vertical menu facets">
         <h5>Interactor Species</h5>
         <div class="margin-bottom-large scrollbar" [ngStyle]="interactorSpeciesFilterStyle()">
           <li *ngFor="let species of interactorFacets.interactor_species_name_str">
-            <span class="facet"><input #filter type="radio" value="{{species.value}}"
-                                       (change)="onChangeInteractorSpeciesFilter(filter.value)"
-                                       [checked]="isSelectedInteractorSpecies(species.value)"/>
-              <label>{{species.value}} ({{species.valueCount}})</label>
-            </span>
-          </li>
-        </div>
-
-        <h5>Interactor Type</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="interactorTypeFilterStyle()">
-          <li *ngFor="let molecule of interactorFacets.interactor_type_str">
-            <span class="facet"><input #filter type="radio" value="{{molecule.value}}"
-                                       (change)="onChangeInteractorTypeFilter(filter.value)"
-                                       [checked]="isSelectedInteractorType(molecule.value)"/>
-              <label>{{molecule.value}} ({{molecule.valueCount}})</label>
-            </span>
-          </li>
-        </div>
-
-        <h5>Interaction Type</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionTypeFilterStyle()">
-          <li *ngFor="let interactionType of interactionFacets.type_str">
-            <span class="facet"><input #filter type="radio" value="{{interactionType.value}}"
-                                       (change)="onChangeInteractionTypeFilter(filter.value)"
-                                       [checked]="isSelectedInteractionType(interactionType.value)"/>
-              <label>{{interactionType.value}} ({{interactionType.valueCount}})</label>
-            </span>
-          </li>
-        </div>
-
-        <h5>Interaction Detection Method</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionDetectionMethodFilterStyle()">
-          <li *ngFor="let detectionMethod of interactionFacets.detection_method_str">
-            <span class="facet"><input #filter type="radio" value="{{detectionMethod.value}}"
-                                       (change)="onChangeInteractionDetectionMethodFilter(filter.value)"
-                                       [checked]="isSelectedInteractionDetectionMethod(detectionMethod.value)"/>
-              <label>{{detectionMethod.value}} ({{detectionMethod.valueCount}})</label>
-            </span>
-          </li>
-        </div>
-
-        <h5>Interaction Host Organism</h5>
-        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionHostOrganismFilterStyle()">
-          <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
-            <span class="facet"> <input #filter type="radio" value="{{hostOrganism.value}}"
-                                        (change)="onChangeInteractionHostOrganismFilter(filter.value)"
-                                        [checked]="isSelectedInteractionHostOrganism(hostOrganism.value)"/>
-              <label>{{hostOrganism.value}} ({{hostOrganism.valueCount}})</label>
-            </span>
+          <span class="facet"><input #filter type="radio" value="{{species.value}}"
+                                     (change)="onChangeInteractorSpeciesFilter(filter.value)"
+                                     [checked]="isSelectedInteractorSpecies(species.value)"/>
+            <label>{{species.value}} ({{species.valueCount}})</label>
+          </span>
           </li>
         </div>
       </ul>
+    </div>
 
-      <h5>miScore</h5>
-      <div class="row margin-bottom-large">
-        <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+    <button class="button" type="button" data-toggle="interactor-type-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>Interactor Type
+    </button>
+    <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+      <ul class="vertical menu facets">
+        <h5>Interactor Type</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactorTypeFilterStyle()">
+          <li *ngFor="let molecule of interactorFacets.interactor_type_str">
+          <span class="facet"><input #filter type="radio" value="{{molecule.value}}"
+                                     (change)="onChangeInteractorTypeFilter(filter.value)"
+                                     [checked]="isSelectedInteractorType(molecule.value)"/>
+            <label>{{molecule.value}} ({{molecule.valueCount}})</label>
+          </span>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <button class="button" type="button" data-toggle="interaction-type-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>Interaction Type
+    </button>
+    <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+      <ul class="vertical menu facets">
+        <h5>Interaction Type</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionTypeFilterStyle()">
+          <li *ngFor="let interactionType of interactionFacets.type_str">
+          <span class="facet"><input #filter type="radio" value="{{interactionType.value}}"
+                                     (change)="onChangeInteractionTypeFilter(filter.value)"
+                                     [checked]="isSelectedInteractionType(interactionType.value)"/>
+            <label>{{interactionType.value}} ({{interactionType.valueCount}})</label>
+          </span>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <button class="button" type="button" data-toggle="interaction-detection-method-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>Interaction Detection Method
+    </button>
+    <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
+         data-hover-pane="true">
+      <ul class="vertical menu facets">
+        <h5>Interaction Detection Method</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionDetectionMethodFilterStyle()">
+          <li *ngFor="let detectionMethod of interactionFacets.detection_method_str">
+          <span class="facet"><input #filter type="radio" value="{{detectionMethod.value}}"
+                                     (change)="onChangeInteractionDetectionMethodFilter(filter.value)"
+                                     [checked]="isSelectedInteractionDetectionMethod(detectionMethod.value)"/>
+            <label>{{detectionMethod.value}} ({{detectionMethod.valueCount}})</label>
+          </span>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <button class="button" type="button" data-toggle="interaction-host-organism-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>Interaction Host Organism
+    </button>
+    <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
+         data-hover-pane="true">
+      <ul class="vertical menu facets">
+        <h5>Interaction Host Organism</h5>
+        <div class="margin-bottom-large scrollbar" [ngStyle]="interactionHostOrganismFilterStyle()">
+          <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
+          <span class="facet"> <input #filter type="radio" value="{{hostOrganism.value}}"
+                                      (change)="onChangeInteractionHostOrganismFilter(filter.value)"
+                                      [checked]="isSelectedInteractionHostOrganism(hostOrganism.value)"/>
+            <label>{{hostOrganism.value}} ({{hostOrganism.valueCount}})</label>
+          </span>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <button class="button" type="button" data-toggle="score-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>Score
+    </button>
+    <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+      <h5>MIscore</h5>
+      <div style="width: 300px" class="custom-slider margin-bottom-large">
+        <ng5-slider class="columns medium-3" [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
                     (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
       </div>
+    </div>
 
+    <button class="button" type="button" data-toggle="others-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>Others
+    </button>
+    <div class="dropdown-pane" id="others-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <div class="margin-top-medium">
         <div class="float:left">
           <label class="switch switch_type1" role="switch">
@@ -85,5 +120,10 @@
         </div>
       </div>
     </div>
-  </section>
+
+    <button *ngIf="anyFiltersSelected()" class="button" type="button" (click)="resetAllFilters()">
+      <i class="icon icon-functional" data-icon="d"></i> Reset filters
+    </button>
+
+  </div>
 </div>

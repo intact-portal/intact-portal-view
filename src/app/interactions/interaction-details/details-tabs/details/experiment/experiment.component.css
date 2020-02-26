@@ -1,11 +1,4 @@
-.callout-experiment {
-  background-color: #2e4d6e4f;
-  border-radius: 8px;
+h4 {
+  border-bottom-style: solid;
+  border-color:#2e4d6e4f;
 }
-
-#experimentPanel {
-  background-color: #f4f4f4e6 !important;
-  border-radius: 6px;
-}
-
-

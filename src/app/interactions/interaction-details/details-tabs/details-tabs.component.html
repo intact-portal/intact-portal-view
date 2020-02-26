@@ -1,25 +1,26 @@
-<div class=" margin-top-large margin-bottom-large">
+<div class="margin-top-large margin-bottom-large">
 
+  <!--  TODO make this bookmarkable like the documentation-->
   <ul class="tabs" data-tabs id="details-tabs">
-    <li class="tabs-title is-active"><a href="#interactionDetails" aria-selected="true" >Interaction Details</a></li>
-    <li class="tabs-title"><a href="#participants" >Participants</a></li>
-    <li class="tabs-title"><a href="#features" >Features</a></li>
+    <li class="tabs-title is-active"><a href="#interactionDetails" aria-selected="true">Interaction Details</a></li>
+    <li class="tabs-title"><a href="#participants">Participants</a></li>
+    <li class="tabs-title"><a href="#features">Features</a></li>
   </ul>
 
   <div class="tabs-content" data-tabs-content="details-tabs">
-    <div class="tabs-panel is-active" id="interactionDetails" style="background-color:#f4f4f4;">
+    <div class="tabs-panel is-active" id="interactionDetails">
       <iv-interaction-details *ngIf="interactionDetails"
                               [interactionDetails]="interactionDetails"></iv-interaction-details>
     </div>
 
-    <div class="tabs-panel" id="participants" style="background-color:#f4f4f4;">
+    <div class="tabs-panel" id="participants">
       <iv-participant-details [participantTab]="isTabParticipantActive"
                               [interactionAc]="interactionAc"
                               (participantChanged)="onParticipantSelectedChanged($event)"></iv-participant-details>
 
     </div>
 
-    <div class="tabs-panel" id="features" style="background-color:#f4f4f4;">
+    <div class="tabs-panel" id="features">
       <iv-features-details [interactionAc]="interactionAc"
                            [featureTab]="isTabFeatureActive"
                            (featureChanged)="onFeatureSelectedChanged($event)"></iv-features-details>

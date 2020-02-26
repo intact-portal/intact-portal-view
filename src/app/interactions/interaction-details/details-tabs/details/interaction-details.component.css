@@ -1,9 +1,4 @@
-.callout-details {
-  background-color: #5a2e6e3d;
-  border-radius: 8px;
-}
-
-#detailsPanel {
-  background-color: #f4f4f4e6 !important;
-  border-radius: 6px;
+h4 {
+  border-bottom-style: solid;
+  border-color:#5a2e6e3d;
 }

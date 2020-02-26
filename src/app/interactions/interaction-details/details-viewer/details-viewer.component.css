@@ -19,21 +19,11 @@ div#viewerLegend {
   height: 480px;
 }
 
-.callout-legend {
-  background-color: #5a2e6e3d !important;
-  border-radius: 8px;
-}
-
-.image-center{
+.image-center {
   text-align: center;
 }
 
-#legendPanel {
-  background-color: #f4f4f4e6 !important;
-  border-radius: 6px;
-}
-
-#annotationsSelect {
+#annotations-select {
   width: auto;
 }
 

@@ -1,34 +1,33 @@
-<div class="columns medium-12 margin-top-small margin-bottom-large callout-experiment padding-top-medium padding-left-xlarge padding-right-xlarge padding-bottom-small">
+<div class="columns medium-4">
 
-  <h5 class="padding-top-small"><i id="toggleExperiment" class="icon icon-common icon-minus padding-right-small"
+  <h4><i id="toggleExperiment" class="icon icon-common icon-minus padding-right-small"
                                    (click)="toggleExperimentButton()"
                                    (mouseover)="hover=true" (mouseleave)="hover=false"
-                                   [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i> Experiment Details</h5>
+                                   [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i> Experiment Details</h4>
 
-  <div id="experimentPanel" class="columns margin-top-small margin-bottom-large">
+  <div id="experimentPanel" class="margin-top-large margin-bottom-large">
 
-    <div class="columns medium-12 margin-top-large">
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        ExperimentAc: {{experiment.experimentAc}}
+      <div class="margin-top-large margin-bottom-large">
+        <h5>Experiment Accession</h5>
+        {{experiment.experimentAc}}
       </div>
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Host OrganismModel: {{experiment.hostOrganism}}
+      <div class="margin-top-large margin-bottom-large">
+        <h5>Host Organism Model</h5>
+        {{experiment.interactionHostOrganism}}
       </div>
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Interaction Detection Method: {{experiment.interactionDetectionMethod}}
+      <div class="margin-top-large margin-bottom-xlarge">
+        <h5>Interaction Detection Method</h5>
+        {{experiment.interactionDetectionMethod}}
       </div>
-    </div>
 
-    <div class="columns medium-12 margin-top-large">
-      <div id="extXrefs" class="columns medium-6" *ngIf="experiment.experimentXrefs.length !== 0">
+      <div id="extXrefs" class="margin-top-large" *ngIf="experiment.experimentXrefs.length !== 0">
         <iv-external-xrefs *ngIf="experiment.experimentXrefs"
                            [xrefs]="experiment.experimentXrefs"></iv-external-xrefs>
       </div>
-      <div id="curationAnnotations" class="columns medium-6" *ngIf="experiment.experimentAnnotations.length !== 0">
+      <div id="curationAnnotations" class="margin-top-large" *ngIf="experiment.experimentAnnotations.length !== 0">
         <iv-curation-annotations *ngIf="experiment.experimentAnnotations"
                                  [annotations]="experiment.experimentAnnotations"></iv-curation-annotations>
       </div>
-    </div>
 
   </div>
 </div>

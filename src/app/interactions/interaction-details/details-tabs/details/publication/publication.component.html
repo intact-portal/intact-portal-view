@@ -1,40 +1,41 @@
-<div class="columns medium-12 margin-top-small margin-bottom-large callout-publication padding-top-medium padding-left-xlarge padding-right-xlarge padding-bottom-small">
+<div class="columns medium-4">
 
-  <h5 class="padding-top-small"><i id="togglePublication" class="icon icon-common icon-minus padding-right-small"
+  <h4><i id="togglePublication" class="icon icon-common icon-minus icon-spacer"
                                    (click)="togglePublicationButton()"
                                    (mouseover)="hover=true" (mouseleave)="hover=false"
-                                   [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i> Publication</h5>
+                                   [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i>Publication</h4>
 
-  <div id="publicationPanel" class="columns margin-top-small margin-bottom-large">
+  <div id="publicationPanel" class="margin-top-large margin-bottom-large">
 
-    <div class="columns medium-12 margin-top-large">
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        PubmedId: {{publication.pubmedId}}
-      </div>
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Title: {{publication.title}}
-      </div>
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Journal: {{publication.journal}}
-      </div>
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Authors: {{publication.authors}}
-      </div>
-      <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-        Publication date: {{publication.publicationDate}}
-      </div>
+    <div class="margin-top-large margin-bottom-large">
+      <h5>PubMed Identifier</h5>
+      {{publication.pubmedId}}
+    </div>
+    <div class="margin-top-large margin-bottom-large">
+      <h5>Title</h5>
+      {{publication.title}}
+    </div>
+    <div class="margin-top-large margin-bottom-large">
+      <h5>Journal</h5>
+      {{publication.journal}}
+    </div>
+    <div class="margin-top-large margin-bottom-large">
+      <h5>Authors</h5>
+      {{publication.authors}}
+    </div>
+    <div class="margin-top-large margin-bottom-xlarge">
+      <h5>Publication date</h5>
+      {{publication.publicationDate}}
     </div>
 
-    <div class="columns medium-12 margin-top-large">
-      <div id="extXrefs" class="columns medium-6" *ngIf="publication.publicationXrefs.length !== 0">
-        <iv-external-xrefs *ngIf="publication.publicationXrefs"
-                           [xrefs]="publication.publicationXrefs"></iv-external-xrefs>
-      </div>
-      <div id="curationAnnotations" class="columns medium-6" *ngIf="publication.publicationAnnotations.length !== 0">
-        <iv-curation-annotations *ngIf="publication.publicationAnnotations"
-                                 [annotations]="publication.publicationAnnotations"></iv-curation-annotations>
-      </div>
+    <div id="extXrefs" class="margin-top-large" *ngIf="publication.publicationXrefs.length !== 0">
+      <iv-external-xrefs *ngIf="publication.publicationXrefs"
+                         [xrefs]="publication.publicationXrefs"></iv-external-xrefs>
     </div>
-
+    <div id="curationAnnotations" class="margin-top-large" *ngIf="publication.publicationAnnotations.length !== 0">
+      <iv-curation-annotations *ngIf="publication.publicationAnnotations"
+                               [annotations]="publication.publicationAnnotations"></iv-curation-annotations>
+    </div>
   </div>
+
 </div>

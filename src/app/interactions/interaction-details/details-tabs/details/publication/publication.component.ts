@@ -12,6 +12,8 @@ export class PublicationComponent implements OnInit {
 
   @Input() publication: Publication;
 
+  private hover = false;
+
   constructor() { }
 
   ngOnInit() {

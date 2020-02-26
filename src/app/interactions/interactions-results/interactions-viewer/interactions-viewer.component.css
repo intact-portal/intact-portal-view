@@ -1,197 +1,51 @@
-div#graphViewerContainer{
-  /*clear: both;*/
-  /*!*position:absolute;*!*/
-  /*!*bottom:0px;*!*/
-  /*!*top:0px;*!*/
-height: 600px;
-background: #fbfbfb;
-position: relative;
-border-style: solid;
-border-color:#5a2e6e3d;
-/*width: 150%;*/
-/*margin-left: auto;*/
-/*margin-right: auto;*/
-/*overflow: hidden;*/
-/*!*margin: 8px;*!*/
-/*!*margin-right:35%;*!*/
-/*!*width: 150px;*!*/
-/*background: #ddd;*/
-/*!*padding: 10px;*!*/
-/*display: table-cell;*/
-/*vertical-align: top;*/
+.underline {
+  border-bottom-style: solid;
+  border-color: #5a2e6e3d;
 }
-/*div#networkControls {*/
-/*clear: both;*/
-/*float: left;*/
-/*margin-left: 5%;*/
-/*}*/
 
-/*svg {*/
-/*overflow: hidden;*/
-/*}*/
-
-/*svg:not(:root) {*/
-/*overflow: visible !important;*/
-/*}*/
-
-#complexViewerSVG {
-  height: 100%;
-  width: 100%;
-  display: block;
-}
 #for-canvas-graph {
-  height: 85%;
-  width: 65%;
-  top: 12%;
-  left: 0%;
-  display: block;
-}
-#legend{
-  width: 30%;
-  height: 96%;
-  position: absolute;
-  top: 2%;
-  left: 70%;
-  font-size: 0.7vw;
-  background-color: #5a2e6e3d;
-  border-radius: 8px;
-  padding-left: 2%;
-  padding-top: 2%;
-  width: 29%;
-}
-#legend > div > h3{
-  font-size: 0.9375rem;
-  font-weight: bold;
+  height: 750px;
+  background: #fbfbfb;
 }
 
-#suggestions_div{
-  width: 85%;
-  height: 52%;
-  position: absolute;
-  top: 0.5%;
-  left: 26%;
-  display: inline;
+/* Legend adjustments */
+#node-color-legend,
+#node-shape-legend,
+#node-border-legend,
+#compound-node-color-legend,
+#edge-color-legend,
+#edge-thickness-legend,
+#edge-shapes-legend {
+  /* margin-bottom-large */
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
-#suggestions_div > input {
-  width: 31%;
-  display: inline;
-  height:90%;
+#node-color-legend img,
+#node-border-legend img,
+#compound-node-color-legend img {
+  height: 1.5rem;
+  padding-right: 0.3rem;
+  margin-bottom: 0.1rem;
+  font-size: 14px;
 }
 
-#suggestions_div > label {
-  display: inline;
+#node-shape-legend img {
+  height: 1.5rem;
+  width: 2rem;
+  padding-right: 0.3rem;
+  margin-bottom: 0.1rem;
+  font-size: 14px;
 }
 
-#graph-top-panel{
-  top: 2%;
-  height:10%;
-  position: absolute;
+#edge-color-legend img {
+  padding-right: 0.3rem;
+  font-size: 14px;
 }
 
-#graph-top-panel > div{
-  display: inline;
+#edge-thickness-legend img,
+#edge-shapes-legend img {
+  width: 3rem;
+  padding-right: 0.3rem;
+  font-size: 14px;
 }
-#reset{
-  left: 0.5%;
-  position: relative;
-}
-#download-graph{
-  left: 75%;
-}
-
-/*Image Dropdown Css*/
-
-.download-graph {
-  position: relative;
-}
-
-.download-graph-options {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  left:10%;
-  top: 90%;
-}
-
-.download_btn{
-  background-color: transparent;
-  width:10%
-}
-
-.download-graph-options a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  font-size: 60%;
-}
-
-.download-graph-options a:hover {background-color: #f1f1f1}
-
-.download-graph:hover .download-graph-options {
-  display: block;
-}
-
-/*Image Dropdown Css*/
-
-/*Graph Tools*/
-
-.graph-tools-sections {
-  border: 1px solid white;
-  padding: 3%;
-}
-
-.graph-tools-panel  {
-  width: 0;
-  position: absolute;
-  z-index: 1;
-  height: 52%;
-  top: 2%;
-  left: 67%;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 36px;
-  color: white;
-}
-
-.graph-tools-panel a {
- /* padding: 8px 8px 8px 32px;*/
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.graph-tools-panel a:hover {
-  color: #f1f1f1;
-}
-
-.graph-tools-panel .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  /*font-size: 36px;*/
-  border: 0;
-}
-
-.graph-tool-btn {
-  font-size: 87%;
-  cursor: pointer;
-  background-color: #111;
-  color: white;
-  padding: 1% 1%;
-  border: none;
-  left: 87%;
-  position: absolute;
-}
-
-.graph-tool-btn:hover {
-  background-color:#444;
-}
-
-/*Graph Tools*/

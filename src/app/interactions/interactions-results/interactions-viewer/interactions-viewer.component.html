@@ -1,88 +1,99 @@
+<div class="row expanded margin-top-large margin-bottom-large" id="network-viewer-container">
+  <div class="columns medium-2">
+    <h4 class="underline margin-bottom-large">
+      <i class="icon icon-common icon-spacer icon-tool"></i>Network Tools
+    </h4>
+    <div class="row">
+      <button id="reset" class="button float-right" type="button" (click)="onClickReset()">
+        <i class="icon icon-common icon-spacer icon-redo-alt"></i>Redraw Network
+      </button>
+    </div>
 
-<div>
-  <div class="row expanded">
-    <!--<div class="columns medium-3">
-      <div id='suggestions_div'>
-        <label for='nodeL'>Interactor Name</label>
-        <input type='text' id='nodeL'>
-        <a class="button" (click)='findInteractor()'><i class="icon icon-common icon-search" ></i> Find Interactor</a>
+    <ul class="vertical menu facets">
+      <h5>Layout</h5>
+      <div class="margin-bottom-large" style="background-color: #F5F5F5">
+        <li>
+          <span>
+          <input #cluster type="radio" name="layout" (change)="onChangeLayout(cluster.value)" value="cise"/>
+              <label>Cluster</label>
+          </span>
+        </li>
+        <li>
+          <span>
+          <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)"
+                 value="fcose" checked/>
+              <label>Force directed</label>
+          </span>
+        </li>
+        <li>
+          <span>
+          <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf"/>
+                <label>Circular</label>
+          </span>
+        </li>
       </div>
-    </div>-->
 
+      <h5>Edges</h5>
+      <div class="margin-bottom-large" style="background-color: #F5F5F5">
+        <li>
+          <span>
+          <input #expand type="checkbox" (change)="onChangeExpand(expand.checked, affectedByMutation)"/>
+            <label>Expand</label>
+          </span>
+        </li>
+        <li>
+          <span>
+          <input #affectedByMutation type="checkbox" (change)="onChangeAffectedByMutation(affectedByMutation.checked, expand)"/>
+            <label>Affected By Mutation</label>
+          </span>
+        </li>
+      </div>
 
-    <div class="columns medium-12">
+      <h5>Group By</h5>
+      <div class="margin-bottom-large" style="background-color: #F5F5F5">
+        <li>
+          <span>
+          <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"/>
+            <label>Species</label>
+          </span>
+        </li>
+      </div>
+    </ul>
 
+    <h4 class="underline margin-bottom-large">
+      <i class="icon icon-common icon-spacer icon-download-alt"></i>Download</h4>
+    <div class="download-graph-options">
+      <button id="download-png" class="button" type="button" (click)="onClickDownloadGraph('png')">
+        PNG
+      </button>
+      <button id="download-graphml" class="button" type="button" (click)="onClickDownloadGraph('graphml')">
+        GraphML
+      </button>
+    </div>
+  </div>
 
-      <div id="graphViewerContainer">
-
-        <div id="graph-top-panel" class="columns medium-8">
-
-          <div id="reset">
-            <i (click)="onClickReset()" class="icon icon-common icon-redo-alt"></i>
-          </div>
-
-          <div id='suggestions_div'>
-            <label for='nodeL'>Interactor Name</label>
-            <input #nodeL type='text' id='nodeL'>
-            <i (click)="OnClickSearch(nodeL.value)" class="icon icon-common icon-search"></i>
-           <!-- <a class="button" (click)='findInteractor()'><i class="icon icon-common icon-search" ></i> Find Interactor</a>-->
-          </div>
-
-          <div id="download-graph" class="download-graph ">
-            <button class="download_btn"
-                   value="Download">
-              <i class="icon icon-common icon-download-alt"></i>
-            </button>
-
-            <div class="download-graph-options">
-              <a (click)="onClickDownloadGraph('png')">PNG</a>
-              <a (click)="onClickDownloadGraph('graphml')">GRAPHML</a>
-            </div>
-          </div>
-
-
-
-          <button class="graph-tool-btn" (click)="openGraphTools()">☰ Graph Tools</button>
-
-        </div>
-
-        <div id="for-canvas-graph"></div>
-        <div id="graph-tools" class="graph-tools-panel">
-          <a href="javascript:void(0)" class="closebtn" (click)="closeGraphTools()">×</a>
-          <div class="columns medium-12">
-            <fieldset class="graph-tools-sections">
-              <legend>Layout</legend>
-
-              <div>
-                <input #cluster type="radio" name="layout" (change)="onChangeLayout(cluster.value)"
-                       value="cise"  >Cluster
-                <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)" value="fcose" checked >Force directed
-                <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf" >Circular
-              </div>
-            </fieldset>
-            <fieldset  class="graph-tools-sections">
-              <legend>Edges</legend>
-              <div>
-                <input #expand type="checkbox"
-                       (change)="onChangeExpand(expand.checked,disruptedByMutation)"
-                > Expand
-                <input #disruptedByMutation type="checkbox"
-                       (change)="onChangeDisruptedByMutation(disruptedByMutation.checked,expand)"
-                > Disrupted By Mutation
-              </div>
-            </fieldset>
-            <fieldset  class="graph-tools-sections">
-              <legend>Group By</legend>
-              <div>
-                <input #groupby type="checkbox"
-                       (change)="onChangeGroupBy(groupby.checked)"
-                > Species
-              </div>
-            </fieldset>
+  <div class="columns medium-8">
+    <h4 class="underline margin-bottom-large">Interaction Network</h4>
+    <div id="graph-top-panel">
+      <div id="suggestions_div">
+        <div class="input-group margin-bottom-none">
+          <input id="nodeL" #nodeL class="input-group-field" type="text" (keydown.enter)="onClickSearch(nodeL.value)"
+                 placeholder="Interactor Name"/>
+          <div class="input-group-button">
+            <input id="network-search-button" type="button" name="submit" value="1" (click)="onClickSearch(nodeL.value)"
+                   class="button icon icon-functional">
           </div>
         </div>
-        <div id='legend' class='my-legend'></div>
       </div>
     </div>
+
+    <div id="for-canvas-graph"></div>
+  </div>
+
+  <div class="columns medium-2">
+    <h4 class="underline margin-bottom-large">Legend</h4>
+    <div id="legend"></div>
+
+    <div id="node-shape-legend" class="row"></div>
   </div>
 </div>

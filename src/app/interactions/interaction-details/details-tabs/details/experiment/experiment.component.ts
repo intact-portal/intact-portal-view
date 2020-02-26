@@ -12,6 +12,8 @@ export class ExperimentComponent implements OnInit {
 
   @Input() experiment: Experiment;
 
+  private hover = false;
+
   constructor() { }
 
   ngOnInit() {

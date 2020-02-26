@@ -1,13 +1,15 @@
 <div class="row">
-  <h4>Parameters ({{parameters.length}})</h4>
+  <h5>Parameters ({{parameters.length}})</h5>
   <table id="parameters">
     <thead>
       <th>Type</th>
+      <th>Unit</th>
       <th>Value</th>
     </thead>
     <tbody>
     <tr *ngFor="let param of parameters">
-      <td>{{param.type}}</td>
+      <td>{{param.type.shortName}}<span *ngIf="param.type.identifier !== null"> ({{param.type.identifier}})</span></td>
+      <td>{{param.unit.shortName}}<span *ngIf="param.unit.identifier !== null"> ({{param.unit.identifier}})</span></td>
       <td>{{param.value}}</td>
     </tr>
     </tbody>

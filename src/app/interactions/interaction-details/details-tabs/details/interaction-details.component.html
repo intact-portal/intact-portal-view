@@ -1,50 +1,44 @@
 <div class="row expanded">
-  <div class="columns medium-12 margin-top-small margin-bottom-large callout-details padding-top-medium padding-left-xlarge padding-right-xlarge padding-bottom-small">
+  <div class="columns medium-4">
 
-    <h5 class="padding-top-small"><i id="toggleDetails" class="icon icon-common icon-minus padding-right-small"
+    <h4><i id="toggleDetails" class="icon icon-common icon-minus icon-spacer"
                                      (click)="toggleDetailsButton()"
                                      (mouseover)="hover=true" (mouseleave)="hover=false"
-                                     [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i> Interaction Details </h5>
-    <div id="detailsPanel" class="columns margin-top-small margin-bottom-large">
+                                     [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i>Interaction Details</h4>
 
-      <div class="columns medium-12 margin-top-large">
-        <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-          InteractionAc: {{interactionDetails.interactionAc}}
-        </div>
-        <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-          Shortlabel: {{interactionDetails.shortLabel}}
-        </div>
-        <div class="columns medium-12 margin-top-medium margin-bottom-medium">
-          Interaction Type: {{interactionDetails.interactionType}}
-        </div>
+    <div id="detailsPanel" class="margin-top-large margin-bottom-large">
+
+      <div class="margin-top-large margin-bottom-large">
+        <h5>Interaction Accession</h5>
+        {{interactionDetails.interactionAc}}
+      </div>
+      <div class="margin-top-large margin-bottom-large">
+        <h5>Shortlabel</h5>
+        {{interactionDetails.shortLabel}}
+      </div>
+      <div class="margin-top-large margin-bottom-xlarge">
+        <h5>Interaction Type</h5>
+        {{interactionDetails.interactionType}}
       </div>
 
 
-      <div class="columns medium-12 margin-top-large">
-        <div id="extXrefs" class="columns medium-6" *ngIf="interactionDetails.xrefs.length!=0">
-          <iv-external-xrefs *ngIf="interactionDetails.xrefs"
-                             [xrefs]="interactionDetails.xrefs"></iv-external-xrefs>
-        </div>
-        <div id="curationAnnotations" class="columns medium-6" *ngIf="interactionDetails.annotations.length!=0">
-          <iv-curation-annotations *ngIf="interactionDetails.annotations"
-                                   [annotations]="interactionDetails.annotations"></iv-curation-annotations>
-        </div>
+      <div id="extXrefs" class="margin-top-large" *ngIf="interactionDetails.xrefs.length!=0">
+        <iv-external-xrefs *ngIf="interactionDetails.xrefs"
+                           [xrefs]="interactionDetails.xrefs"></iv-external-xrefs>
+      </div>
+      <div id="curationAnnotations" class="margin-top-large" *ngIf="interactionDetails.annotations.length!=0">
+        <iv-curation-annotations *ngIf="interactionDetails.annotations"
+                                 [annotations]="interactionDetails.annotations"></iv-curation-annotations>
       </div>
 
-      <div class="columns medium-12 margin-top-large">
-        <!--<div id="experimentalConditions" class="columns medium-6">-->
-          <!--<iv-experimental-conditions></iv-experimental-conditions>-->
-        <!--</div>-->
-        <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="columns medium-6">
-          <iv-parameters *ngIf="interactionDetails.parameters"
-                         [parameters]="interactionDetails.parameters"></iv-parameters>
-        </div>
-        <div *ngIf="interactionDetails.confidences.length!=0" id="confidences" class="columns medium-6">
-          <iv-confidences *ngIf="interactionDetails.confidences"
-                          [confidences]="interactionDetails.confidences"></iv-confidences>
-        </div>
+      <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="margin-top-large">
+        <iv-parameters *ngIf="interactionDetails.parameters"
+                       [parameters]="interactionDetails.parameters"></iv-parameters>
       </div>
-
+      <div *ngIf="interactionDetails.confidences.length!=0" id="confidences" class="margin-top-large">
+        <iv-confidences *ngIf="interactionDetails.confidences"
+                        [confidences]="interactionDetails.confidences"></iv-confidences>
+      </div>
     </div>
   </div>
 

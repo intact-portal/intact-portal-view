@@ -131,14 +131,6 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.graph.search(interactorName);
   }
 
-  openGraphTools() {
-     document.getElementById("graph-tools").style.width = "25%";
-  }
-
-  closeGraphTools() {
-   document.getElementById("graph-tools").style.width = "0";
-  }
-
   get term(): string {
     return this._term;
   }

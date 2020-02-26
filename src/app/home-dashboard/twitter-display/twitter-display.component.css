@@ -1,5 +1,6 @@
-h3 {
-  border-bottom:2px solid black;
+h4 {
+  border-bottom-style: solid;
+  border-color:#1bc0ea73;
 }
 
 .twitter-timeline-min-width {

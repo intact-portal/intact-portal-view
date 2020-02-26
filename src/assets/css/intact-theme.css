@@ -195,20 +195,6 @@ a.button {
 /************** HOME PAGE SECTION *******************************/
 
 
-/* CONTRIBUTORS SECTION SYTLE */
-
-.contributors-container {
-  background-color: #EEE;
-}
-
-/* RIGHT SECTION NEWS PANEL STYLE */
-
-.news-panel {
-  background-color: white;
-  border-radius: 6px;
-}
-
-
 /* LOCAL NAVIGATION DROPDOWN */
 
 .dropdown.menu > li.is-active > a {

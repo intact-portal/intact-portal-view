@@ -1,17 +1,17 @@
-.tabs-panel[_ngcontent-c4] {
-  background: #e6e6e6 !important;
-}
+/*.tabs-panel[_ngcontent-c4] {*/
+/*  background: #e6e6e6 !important;*/
+/*}*/
 
-.tabs-title > a {
-  font-size: 1em;
-  color: #3e3e3e;
-}
-.tabs-title > a:hover {
-  background: #8a8a8a91;
-  color: #0a0a0a;
-}
-.tabs-title > a:focus,
-.tabs-title > a[aria-selected='true'] {
-  color: #0a0a0a;
-  background: #e6e6e6;
-}
+/*.tabs-title > a {*/
+/*  font-size: 1em;*/
+/*  color: #3e3e3e;*/
+/*}*/
+/*.tabs-title > a:hover {*/
+/*  background: #8a8a8a91;*/
+/*  color: #0a0a0a;*/
+/*}*/
+/*.tabs-title > a:focus,*/
+/*.tabs-title > a[aria-selected='true'] {*/
+/*  color: #0a0a0a;*/
+/*  background: #e6e6e6;*/
+/*}*/

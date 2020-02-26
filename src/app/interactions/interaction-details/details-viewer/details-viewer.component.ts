@@ -38,6 +38,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.requestInteractionViewerDetails();
+    $('iv-interactions-viewer').foundation();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -56,8 +57,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
         this.interactionData = data;
 
         if (this.interactionData !== undefined) {
-          $('iv-interactions-viewer').foundation();
-          xlv = new xiNET('graphViewerContainer');
+          xlv = new xiNET('interaction-viewer-container');
           xlv.readMIJSON(this.interactionData, true);
           xlv.autoLayout();
 
@@ -92,10 +92,10 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
 
       if (colourAssignment) {
         // TODO: Replace this (ugly code) for more readable code, copy and paste from the complexviewer for the SAB.
-        // TODO: Add the html in the template html and process in the ts the values as we use to be for the rest of the app.
+        // TODO: Add the html in the template html and process in the ts the values as we use to do for the rest of the app.
         let table = '<table id="colourViewer">' +
           '            <tr>' +
-          '               <td style=\'width:100px;margin:10px;background:#70BDBD;opacity:0.3;border:none;\'></td>' +
+          '               <td style=\'width:100px;margin:10px;background:#b3e2cd; border:1px solid #82ad98;\'></td>' +
           '               <td>' + this.interactionAc  +  '</td>' +
           '            </tr>';
         const domain = colourAssignment.domain();

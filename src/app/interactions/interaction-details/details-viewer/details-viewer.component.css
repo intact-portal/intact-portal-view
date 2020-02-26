@@ -1,36 +1,12 @@
-div#graphViewerContainer{
-  /*clear: both;*/
-  /*!*position:absolute;*!*/
-  /*!*bottom:0px;*!*/
-  /*!*top:0px;*!*/
-  height: 480px;
-  background: #fbfbfb;
-  position: relative;
-  /*width: 150%;*/
-  /*margin-left: auto;*/
-  /*margin-right: auto;*/
-  /*overflow: hidden;*/
-  /*!*margin: 8px;*!*/
-  /*!*margin-right:35%;*!*/
-  /*!*width: 150px;*!*/
-  /*background: #ddd;*/
-  /*!*padding: 10px;*!*/
-  /*display: table-cell;*/
-  /*vertical-align: top;*/
+#details-viewer h4 {
+  border-bottom-style: solid;
+  border-color: #5a2e6e3d;
 }
-/*div#networkControls {*/
-/*clear: both;*/
-/*float: left;*/
-/*margin-left: 5%;*/
-/*}*/
 
-/*svg {*/
-/*overflow: hidden;*/
-/*}*/
-
-/*svg:not(:root) {*/
-/*overflow: visible !important;*/
-/*}*/
+#interaction-viewer-container {
+  height: 600px;
+  background: #fbfbfb;
+}
 
 #complexViewerSVG {
   height: 100%;
@@ -59,26 +35,15 @@ div#viewerLegend {
 
 #annotationsSelect {
   width: auto;
-  /*border-radius: 5px;*/
 }
 
-div#colours {
-  height:102px;
+#colours {
+  height: 102px;
   min-height: auto;
   overflow-y: auto;
 }
 
 table#colourViewer {
-/*  height:100px;*/
-/*  width: 100%;*/
-/*  font-size: 0.9em;*/
-/*  left: auto;*/
-/*  position: relative;*/
-/*  margin-left: auto;*/
-/*  margin-right: auto;*/
-/*  border-collapse: collapse; */
-/*  text-align: left;*/
-/*  overflow-y: scroll;*/
   margin-bottom: 0rem
 }
 
@@ -86,4 +51,98 @@ table#colourViewer tbody tr {
   background-color: white;
   line-height: 0.5;
   font-size: 15px;
+}
+
+/* Styling of right click menu in the viewer */
+.protein {
+  cursor: crosshair;
+}
+
+/*you need this to stop horrible looking flickering of text as you drag*/
+svg {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.xlv_text {
+  /*font-weight: bold;*/
+  text-shadow: -1px -1px 0 white,
+  1px -1px 0 white,
+  -1px 1px 0 white,
+  1px 1px 0 white;
+  /*   -2px -1px 0 white,
+      2px -1px 0 white,
+      -2px 1px 0 white,
+      2px 1px 0 white;*/
+}
+
+
+.custom-menu-margin {
+  padding: 20px;
+  display: none;
+  z-index: 10000;
+  position: absolute;
+}
+
+
+.custom-menu {
+  overflow: hidden;
+  border: 1px solid #CCC;
+  white-space: nowrap;
+  background: #FFF;
+  color: #333;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  pointer-events: all;
+}
+
+.custom-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.custom-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.custom-menu li:hover {
+  background-color: #DEF;
+}
+
+.barScale {
+  display: inline;
+  padding-left: 10px;
+}
+
+.barScale label {
+  display: unset;
+}
+
+.barScale label > [type='checkbox'], label > [type='radio'] {
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  margin-bottom: 0;
+}
+
+.scrollbar {
+  background-color: unset;
+  /*float: left;*/
+  /*height: 200px;*/
+  /*margin-bottom: 25px;*/
+  /*margin-left: 22px;*/
+  /*margin-top: 40px;*/
+  /*width: 65px;*/
+  scrollbar-width: thin;
+  scrollbar-color: #90A4AE #CFD8DC;
 }

@@ -1,18 +1,21 @@
 <div>
-  <div id="detailsViewer" class="row expanded">
-    <div id="graphViewerContainer" class="columns medium-9"></div>
+  <div id="details-viewer" class="row expanded">
+    <div id="interaction-viewer" class="columns medium-9">
+      <h4>Interaction Viewer</h4>
+      <div id="interaction-viewer-container"></div>
+    </div>
 
-    <div id="viewerLegend" class="columns medium-3 callout-legend">
-      <h5 class="padding-top-medium margin-left-small">Legend</h5>
+    <div id="viewer-legend" class="columns medium-3">
+      <h4>Legend</h4>
 
-      <div id="legendPanel" class="columns margin-top-medium margin-bottom-large">
+      <div class="margin-bottom-large">
+        <h5>Node Shape</h5>
 
         <div class="padding-top-medium margin-bottom-medium">
           <div class="row">
             <div class="columns medium-3 image-center">
               <img [src]="SMALL_MOL" alt="Bioactive Entity">
             </div>
-
             <div class="columns medium-9"><span>Bioactive Entity</span></div>
           </div>
 
@@ -39,7 +42,7 @@
 
 
           <div class="row">
-            <div class="columns medium-3 image-center" >
+            <div class="columns medium-3 image-center">
               <div><img [src]="PROTEIN_BLOB" alt="Protein"></div>
               <div><img [src]="PROTEIN_BAR" alt="Protein"></div>
             </div>
@@ -51,13 +54,29 @@
 
       </div>
 
-      <div id="legendExpansion"> <span>Proteins:</span>
-        <button class="button" (click)="expandAll();">Expand</button>
-        <button class="button" (click)="collapseAll();">Collapse</button>
+      <div id="legend-expansion">
+        <ul class="vertical menu facets">
+          <h5>Protein Expansion</h5>
+          <div class="margin-bottom-large" style="background-color: #F5F5F5">
+            <li>
+          <span>
+          <input type="radio" name="expansion" (change)="expandAll()" checked/>
+              <label>Expand</label>
+          </span>
+            </li>
+            <li>
+          <span>
+          <input type="radio" name="expansion" (change)="collapseAll()"/>
+              <label>Collapse</label>
+          </span>
+            </li>
+          </div>
+        </ul>
       </div>
+
       <div id="annotations" class="margin-bottom-small">
-        Annotations:
-        <select id="annotationsSelect" (change)="changeAnnotations($event)">
+        <h5>Annotations</h5>
+        <select id="annotations-select" (change)="changeAnnotations($event)">
           <option selected='selected' value="MI features">MI features</option>
           <option value="UniprotKB">UniprotKB</option>
           <option value="SuperFamily">SuperFamily</option>
@@ -70,7 +89,5 @@
       <div id="colours"></div>
 
     </div>
-
-
   </div>
 </div>

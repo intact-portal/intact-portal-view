@@ -10,8 +10,8 @@
       <ul class="vertical menu facets">
         <h5>Interactor Species</h5>
         <div class="margin-bottom-large scrollbar" [ngStyle]="interactorSpeciesFilterStyle()">
-          <li *ngFor="let species of interactorFacets.interactor_species_name_str">
-          <span class="facet"><input #filter type="radio" value="{{species.value}}"
+          <li *ngFor="let species of interactionFacets.speciesA_B_str">
+          <span class="facet"><input #filter type="checkbox" value="{{species.value}}"
                                      (change)="onChangeInteractorSpeciesFilter(filter.value)"
                                      [checked]="isSelectedInteractorSpecies(species.value)"/>
             <label>{{species.value}} ({{species.valueCount}})</label>
@@ -28,8 +28,8 @@
       <ul class="vertical menu facets">
         <h5>Interactor Type</h5>
         <div class="margin-bottom-large scrollbar" [ngStyle]="interactorTypeFilterStyle()">
-          <li *ngFor="let molecule of interactorFacets.interactor_type_str">
-          <span class="facet"><input #filter type="radio" value="{{molecule.value}}"
+          <li *ngFor="let molecule of interactionFacets.typeA_B_str">
+          <span class="facet"><input #filter type="checkbox" value="{{molecule.value}}"
                                      (change)="onChangeInteractorTypeFilter(filter.value)"
                                      [checked]="isSelectedInteractorType(molecule.value)"/>
             <label>{{molecule.value}} ({{molecule.valueCount}})</label>

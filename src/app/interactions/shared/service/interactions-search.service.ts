@@ -16,6 +16,8 @@ export class InteractionsSearchService {
   constructor(private http: HttpClient) { }
 
   getAllInteractionsAndFacetsQuery(query: string,
+                                   interactorSpeciesFilter: string[],
+                                   interactorTypeFilter: string[],
                                    interactionHostOrganismFilter: string[],
                                    interactionTypeFilter: string[],
                                    interactionDetectionMethodFilter: string[],
@@ -31,6 +33,8 @@ export class InteractionsSearchService {
 
     const params = new HttpParams()
       .set('query', query)
+      .set('interactorTypeFilter', interactorTypeFilter.toString())
+      .set('interactorSpeciesFilter', interactorSpeciesFilter.toString())
       .set('interactionTypeFilter', interactionTypeFilter.toString())
       .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
       .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())

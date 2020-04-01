@@ -11,28 +11,12 @@ const baseURL = environment.intact_portal_ws;
 export class InteractorsSearchService {
 
   private _totalElements = 0;
-  private _page: number = 1;
-  private _pageSize: number = 20;
+  private _page = 1;
+  private _pageSize = 20;
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Find an interactor based on indexed term
-   * @param query
-   * @param format
-   * @returns {Observable<InteractorsSearchResult>}
-   */
-  getAllInteractors(): Observable<InteractorsSearchResult> {
-
-    return this.http.get(`${baseURL}/interactor/getAll`)
-      .catch(this.handleError);
-  }
-
-  getAllInteractorsAndFacets(): Observable<InteractorsSearchResult> {
-    return this.http.get(`${baseURL}/interactor/getAllTaxIdFacets`)
-      .catch(this.handleError);
-  }
-
+  // TODO replace with facets at interactor level
   getAllInteractorsAndFacetsQuery(query: string,
                                   interactorSpeciesFilter: string[],
                                   interactorTypeFilter: string[],

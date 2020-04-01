@@ -13,8 +13,8 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  private _isTabInteractionActive: boolean = false;
-  private _isTabInteractorActive: boolean = false;
+  private _isTabInteractionActive = false;
+  private _isTabInteractorActive = false;
 
   dataTable: any;
 

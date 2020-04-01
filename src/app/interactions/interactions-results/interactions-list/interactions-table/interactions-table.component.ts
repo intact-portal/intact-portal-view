@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -33,9 +33,24 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
 
   columnView = 'interactions_columnView';
 
-  private _columnNames: string[] = ['Molecule A', 'Molecule B', 'Species A', 'Species B', 'Detection Method', 'Publication Id',
-    'Interaction Type', 'Interaction Ac', 'Database', 'Confidence Value', 'Expansion Method',
-    'Experimental Role A', 'Experimental Role B', 'Interactor Type A', 'Interactor Type B'];
+  private _columnNames: string[] = [
+    'Select',
+    'Molecule A',
+    'Molecule B',
+    'Interactor Type A',
+    'Interactor Type B',
+    'Species A',
+    'Species B',
+    'Detection Method',
+    'Publication Ids',
+    'Interaction Type',
+    'Interaction Ac',
+    'Database',
+    'Confidence Value',
+    'Expansion Method',
+    'Experimental Role A',
+    'Experimental Role B',
+  ];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -88,7 +103,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
       dom: '<"top"flip>rt<"bottom"ifp>',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/interaction/datatables/` + this.term,
+        url: `${baseURL}/interaction/list/` + this.term,
         type: 'POST',
         data: function (d) {
           d.page = d.start / d.length;
@@ -105,7 +120,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
       },
       columns: [
         {
-          data: 'binaryInteractionId', defaultContent: ' ', title: 'Select',
+          data: 'binaryInteractionId',
+          defaultContent: ' ',
+          title: this.columnNames[0],
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<div>' +
@@ -120,13 +137,46 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
             return data;
           }
         },
-        {data: 'moleculeA', defaultContent: ' ', title: 'Molecule A'},
-        {data: 'moleculeB', defaultContent: ' ', title: 'Molecule B'},
-        {data: 'speciesA', defaultContent: ' ', title: 'Species A'},
-        {data: 'speciesB', defaultContent: ' ', title: 'Species B'},
-        {data: 'detectionMethod', defaultContent: ' ', title: 'Detection Method'},
         {
-          data: 'publicationIdentifiers', defaultContent: ' ', title: 'Publication Identifiers',
+          data: 'moleculeA',
+          defaultContent: ' ',
+          title: this.columnNames[1]
+        },
+        {
+          data: 'moleculeB',
+          defaultContent: ' ',
+          title: this.columnNames[2]
+        },
+        {
+          data: 'typeA',
+          defaultContent: ' ',
+          title: this.columnNames[3]
+        },
+        {
+          data: 'typeB',
+          defaultContent: ' ',
+          title: this.columnNames[4]
+        },
+        {
+          data: 'speciesA',
+          defaultContent: ' ',
+          title: this.columnNames[5]
+        },
+        {
+          data: 'speciesB',
+          defaultContent: ' ',
+          title: this.columnNames[6]
+        },
+
+        {
+          data: 'detectionMethod',
+          defaultContent: ' ',
+          title: this.columnNames[7]
+        },
+        {
+          data: 'publicationIdentifiers',
+          defaultContent: ' ',
+          title: this.columnNames[8],
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -137,26 +187,88 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
             }
           }
         },
-        {data: 'type', defaultContent: ' ', title: 'Interaction Type'},
-        {data: 'ac', defaultContent: ' ', title: 'Interaction Ac'},
-        {data: 'sourceDatabase', defaultContent: ' ', title: 'Database'},
         {
-          data: 'confidenceValues', defaultContent: ' ', title: 'Confidence Value',
+          data: 'type',
+          defaultContent: ' ',
+          title: this.columnNames[9]
+        },
+        {
+          data: 'ac',
+          defaultContent: ' ',
+          title: this.columnNames[10]
+        },
+        {
+          data: 'sourceDatabase',
+          defaultContent: ' ',
+          title: this.columnNames[11]
+        },
+        {
+          data: 'confidenceValues',
+          defaultContent: ' ',
+          title: this.columnNames[12],
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
+
+                const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
+                  'rgb(255,255,229)',
+                  'rgb(255,247,188)',
+                  'rgb(254,227,145)',
+                  'rgb(254,196,79)',
+                  'rgb(254,153,41)',
+                  'rgb(236,112,20)',
+                  'rgb(204,76,2)',
+                  'rgb(153,52,4)',
+                  'rgb(102,19,5)',
+                  'rgb(54, 19, 3)'
+                ];
+
+                const YELLOW_ORANGE_BROWN_PALETTE_BG: string[] = [
+                  'rgba(255,255,229,0.1)',
+                  'rgba(255,247,188,0.1)',
+                  'rgba(254,227,145,0.1)',
+                  'rgba(254,196,79,0.1)',
+                  'rgba(254,153,41,0.1)',
+                  'rgba(236,112,20,0.1)',
+                  'rgba(204,76,2,0.1)',
+                  'rgba(153,52,4,0.1)',
+                  'rgba(102,19,5,0.1)',
+                  'rgba(54,19,3,0.1)'
+                ];
+
+                const score = d.split(':');
+                const paletteIndex = Math.floor(score[1] * 10);
+
                 return '<div>' +
-                  '<span class="detailsConfidencesCell">' + d + '</span>' +
+                  '<span class="detailsConfidencesCell" ' +
+                  'style="background-color:' + YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex] + ';' +
+                  'color:' + YELLOW_ORANGE_BROWN_PALETTE[paletteIndex] + '">' + d + '</span>' +
                   '</div>';
               }).join('');
             }
           }
         },
-        {data: 'expansionMethod', defaultContent: ' ', title: 'Expansion Method'},
-        {data: 'experimentalRoleA', defaultContent: ' ', title: 'Experimental Role A'},
-        {data: 'experimentalRoleB', defaultContent: ' ', title: 'Experimental Role B'},
-        {data: 'typeA', defaultContent: ' ', title: 'Interactor Type A'},
-        {data: 'typeB', defaultContent: ' ', title: 'Interactor Type B'}
+        {
+          data: 'expansionMethod',
+          defaultContent: ' ',
+          title: this.columnNames[13],
+          render: function (data, type, row, meta) {
+            if (type === 'display' && data != null) {
+              return '<div>' +
+                '<span class="detailsExpansionsCell">' + data + '</span>' +
+                '</div>';
+            }
+          }},
+        {
+          data: 'experimentalRoleA',
+          defaultContent: ' ',
+          title: this.columnNames[14]
+        },
+        {
+          data: 'experimentalRoleB',
+          defaultContent: ' ',
+          title: this.columnNames[15]
+        }
       ]
     });
 
@@ -177,11 +289,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
         this.interactionSelected = interactionSel;
         $(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
 
-        //this.interactionChanged.emit(this.interactionSelected);
+        // this.interactionChanged.emit(this.interactionSelected);
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
           bubbles: true,
           detail: {
-            interactionId:this.interactionSelected
+            interactionId: this.interactionSelected
 
           }
         });

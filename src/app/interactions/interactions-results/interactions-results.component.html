@@ -4,9 +4,8 @@
   </div>
 
   <div class="columns medium-12">
-    <iv-interactions-filters *ngIf="interactorsSearch && interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
+    <iv-interactions-filters *ngIf="interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
       && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined)"
-                             [interactorFacets]="interactorsSearch.facetResultPage"
                              [interactionFacets]="interactionsSearch.facetResultPage"
                              [interactorTypeFilter]="interactorTypeFilter"
                              [interactorSpeciesFilter]="interactorSpeciesFilter"

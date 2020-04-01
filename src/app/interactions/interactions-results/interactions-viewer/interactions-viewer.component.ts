@@ -91,7 +91,8 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     ).subscribe(data => {
       this.interactionsJSON = data;
       console.log('Data loaded');
-      this.graph.initializeWithData(this.interactionsJSON, this.expanded, this.affectedByMutation, this.layoutName);
+      // Makes the network expanded expanded by default
+      this.graph.initializeWithData(this.interactionsJSON, true, this.affectedByMutation, this.layoutName);
     })
   }
 
@@ -219,11 +220,11 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this._graph = value;
   }
 
-  get expanded(): boolean {
+  get expanded(): any {
     return this._expanded;
   }
 
-  set expanded(value: boolean) {
+  set expanded(value: any) {
     this._expanded = value;
   }
 

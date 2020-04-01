@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {InteractorFacets} from '../../shared/model/interactions-results/interactor/interactor-facets.model';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
 
@@ -12,7 +11,6 @@ declare const $: any;
 })
 export class InteractionsFiltersComponent implements OnInit {
 
-  private _interactorFacets: InteractorFacets;
   private _interactionFacets: InteractionFacets;
 
   /** INTERACTORS FILTERS **/
@@ -27,7 +25,7 @@ export class InteractionsFiltersComponent implements OnInit {
   private _miScoreMinFilter: any;
   private _miScoreMaxFilter: any;
 
-  /* SLIDER */
+  /** Slider **/
   private _minValue: string | number;
   private _maxValue: string | number;
   private _options: Options;
@@ -59,7 +57,7 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   interactorSpeciesFilterStyle(): any {
-    if (this.interactorFacets.interactor_species_name_str.length > 20 ) {
+    if (this.interactionFacets.speciesA_B_str.length > 20 ) {
       // TODO: Try to compact the styles in one function if they are the same between the different facets.
       return {
         height: '400px',
@@ -76,7 +74,7 @@ export class InteractionsFiltersComponent implements OnInit {
   }
 
   interactorTypeFilterStyle(): any {
-    if (this.interactorFacets.interactor_type_str.length > 20) {
+    if (this.interactionFacets.typeA_B_str.length > 20) {
       return {
         height: '400px',
         width: '100%',
@@ -257,17 +255,6 @@ export class InteractionsFiltersComponent implements OnInit {
   /************************* /
   /** GETTERS AND SETTERS ** /
   /*************************/
-
-  get interactorFacets(): InteractorFacets {
-    return this._interactorFacets;
-  }
-
-  @Input()
-  set interactorFacets(value: InteractorFacets) {
-    this._interactorFacets = value;
-  }
-
-
   get interactionFacets(): InteractionFacets {
     return this._interactionFacets;
   }

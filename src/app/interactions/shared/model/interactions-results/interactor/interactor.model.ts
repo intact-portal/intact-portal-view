@@ -1,22 +1,25 @@
 export class Interactor {
   private _interactorName: string;
   private _interactorAc: string;
+  private _interactorPreferredIdentifier: string;
   private _interactorDescription: string;
   private _interactorType: string;
   private _interactorSpecies: string;
   private _interactionCount: number;
 
   constructor(interactorName: string,
-              description: string,
+              interactorDescription: string,
               interactorAc: string,
+              interactorAlias: string,
               interactorType: string,
-              species: string,
+              interactorSpecies: string,
               interactionCount: number) {
     this._interactorName = interactorName;
-    this._interactorDescription = description;
+    this._interactorDescription = interactorDescription;
+    this._interactorPreferredIdentifier = interactorAlias;
     this._interactorAc = interactorAc;
     this._interactorType = interactorType;
-    this._interactorSpecies = species;
+    this._interactorSpecies = interactorSpecies;
     this._interactionCount = interactionCount;
   }
 
@@ -31,6 +34,10 @@ export class Interactor {
 
   get interactorDescription(): string {
     return this._interactorDescription;
+  }
+
+  get interactorPreferredIdentifier(): string {
+    return this._interactorPreferredIdentifier;
   }
 
   get interactorType(): string {

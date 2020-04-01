@@ -34,14 +34,19 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
 
   columnView = 'interactors_columnView';
 
-  columnNames: string[] =
-    ['Names',
-    'Description',
+  columnNames: string[] = [
+    'Select',
     'Accession',
+    'Name',
+    'Preferred Id.',
     'Type',
     'Species',
+    'Description',
+    'Alias',
+    'Alternative Ids',
     'Interactions found in current search',
-    'Total interactions in all IntAct'];
+    'Total interactions in all IntAct'
+  ];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -92,7 +97,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
       dom: '<"top"flip>rt<"bottom"ifp>',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/interactor/datatables/` + this.term,
+        url: `${baseURL}/interaction/interactors/list/` + this.term,
         type: 'POST',
         data: function (d) {
           d.page = d.start / d.length;
@@ -110,7 +115,9 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
       },
       columns: [
         {
-          data: 'interactorAc', defaultContent: ' ', title: 'Select',
+          data: 'interactorAc',
+          defaultContent: ' ',
+          title: this.columnNames[0],
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<div class="margin-left-large">' +
@@ -120,13 +127,76 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
             return data;
           }
         },
-        {data: 'interactorName', defaultContent: ' ', title: 'Names'},
-        {data: 'interactorDescription', defaultContent: ' ', title: 'Description'},
-        {data: 'interactorAc', defaultContent: ' ', title: 'Accession'},
-        {data: 'interactorType', defaultContent: ' ', title: 'Type'},
-        {data: 'interactorSpecies', defaultContent: ' ', title: 'Species'},
-        {data: 'interactionSearchCount', defaultContent: ' ', title: 'Interactions found in current search'},
-        {data: 'interactionCount', defaultContent: ' ', title: 'Total interactions in all IntAct'}
+        {
+          data: 'interactorAc',
+          defaultContent: ' ',
+          title: this.columnNames[1]
+        },
+        {
+          data: 'interactorName',
+          defaultContent: ' ',
+          title: this.columnNames[2]
+        },
+        {
+          data: 'interactorPreferredIdentifier',
+          defaultContent: ' ',
+          title: this.columnNames[3]
+        },
+        {
+          data: 'interactorType',
+          defaultContent: ' ',
+          title: this.columnNames[4]
+        },
+        {
+          data: 'interactorSpecies',
+          defaultContent: ' ',
+          title: this.columnNames[5]
+        },
+        {
+          data: 'interactorDescription',
+          defaultContent: ' ',
+          title: this.columnNames[6]
+        },
+        {
+          data: 'interactorAlias',
+          defaultContent: ' ',
+          title: this.columnNames[7],
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data,
+                function (d, i) {
+                  return '<div class="margin-bottom-medium">' +
+                    '<span class="detailsCell">' + d + '</span> ' +
+                    '</div>';
+                }).join('');
+            }
+          }
+        },
+        {
+          data: 'interactorAltIds',
+          defaultContent: ' ',
+          title: this.columnNames[8],
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data,
+                function (d, i) {
+                  return '<div class="margin-bottom-medium">' +
+                    '<span class="detailsCell">' + d + '</span> ' +
+                    '</div>';
+                }).join('');
+            }
+          }
+        },
+        {
+          data: 'interactionSearchCount',
+          defaultContent: ' ',
+          title: this.columnNames[9]
+        },
+        {
+          data: 'interactionCount',
+          defaultContent: ' ',
+          title: this.columnNames[10]
+        }
       ]
     });
 
@@ -147,7 +217,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
         this.interactorSelected = interactorSel;
         $(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
 
-        var interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
+        const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
           bubbles: true,
           detail: {
             interactorId:this.interactorSelected
@@ -165,7 +235,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
           })
         });
 
-        var tableUnselectedEvent = new CustomEvent('tableUnselected', {
+        const tableUnselectedEvent = new CustomEvent('tableUnselected', {
           bubbles: true
         });
         document.dispatchEvent(tableUnselectedEvent);

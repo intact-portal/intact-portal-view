@@ -101,8 +101,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     });
     termsData.initialize();
 
-
-
     $('#searchBox .typeahead').typeahead({
         hint: true,
         highlight: true,
@@ -140,17 +138,25 @@ export class SearchComponent implements OnInit, AfterViewInit {
           header: '<h4 class="category-name">Interactors</h4>',
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: function (item) {
-            return '<div class="row">' +
+            return (item.interactorName === null) ?
+              '<div class="row ">' +
               '<div class="columns small-2">' + item.interactorAc + '</div>' +
+              '<div class="columns small-2">' + item.interactorPreferredIdentifier + '</div>'  +
               '<div class="columns small-2"><i>"' + item.interactorDescription + '"</i> </div>' +
-              '<div class="columns small-2">' + item.interactorName + '</div>' +
               '<div class="columns small-2">' + item.interactorSpecies + '</div>' +
               '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</span></div>' +
               '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' +
               '</span></div>' +
-              '</div>'
+              '</div>' :
+              '<div class="row">' +
+              '<div class="columns small-2">' + item.interactorAc + '</div>' +
+              '<div class="columns small-2">' + item.interactorName + ' (' + item.interactorPreferredIdentifier + ')' + '</div>' +
+              '<div class="columns small-2"><i>"' + item.interactorDescription + '"</i> </div>' +
+              '<div class="columns small-2">' + item.interactorSpecies + '</div>' +
+              '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</span></div>' +
+              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' +
+              '</span></div>'
           },
-
         }
       },
       {
@@ -184,8 +190,17 @@ export class SearchComponent implements OnInit, AfterViewInit {
           //         '  <a><i class="icon icon-functional" data-icon="+"></i></a> Show more results' +
           //         '</div>'
         }
+      }).bind('typeahead:selected', (ev, item) => {
+      // Noe: So far I can't find in the documentation a way to know the dataset of the item selected. This code should improve with that information
+      let id;
+      if (item.interactorAc === undefined) {
+        // We assume is an interaction
+        id = item.ac;
+      } else {
+        id = item.interactorAc;
       }
-      );
+      this.search(id, '');
+    });
   }
 
 }

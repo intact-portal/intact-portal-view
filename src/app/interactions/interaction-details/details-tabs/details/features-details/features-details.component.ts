@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -21,8 +21,23 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
   dataTable: any;
   columnView = 'features_columnView';
 
-  private _columnNames: string[] = ['Ac', 'Name', 'Type', 'Role', 'Range Positions', 'Linked Features', 'Participant Name',
-    'Participant Identifier', 'Participant Ac', 'Detection Methods', 'Parameters', 'Identifiers', 'Cross References', 'Annotations'];
+  private _columnNames: string[] = [
+    'Select',
+    'Ac',
+    'Name',
+    'Type',
+    'Role',
+    'Range Positions',
+    'Linked Features',
+    'Participant Name',
+    'Participant Identifier',
+    'Participant Ac',
+    'Detection Methods',
+    'Parameters',
+    'Identifiers',
+    'Cross References',
+    'Annotations'
+  ];
 
   private _featureSelected: string;
 

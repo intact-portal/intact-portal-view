@@ -21,9 +21,24 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
 
   @Output() participantChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  private _columnNames: string[] = ['Ac', 'Type', 'Identifier', 'Aliases', 'Description', 'Species', 'Expression System',
-                                   'Detection Methods', 'Experimental Role', 'Biological Role', 'Experimental Preparations',
-                                   'Parameters', 'Confidences', 'Cross References', 'Annotations'];
+  private _columnNames: string[] = [
+    'Select',
+    'Ac',
+    'Type',
+    'Identifier',
+    'Aliases',
+    'Description',
+    'Species',
+    'Expression System',
+    'Detection Methods',
+    'Experimental Role',
+    'Biological Role',
+    'Experimental Preparations',
+    'Parameters',
+    'Confidences',
+    'Cross References',
+    'Annotations'
+  ];
 
   private _participantsSelected = [];
 

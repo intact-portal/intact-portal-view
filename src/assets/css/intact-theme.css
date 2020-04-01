@@ -296,7 +296,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 /********* DATATABLES ROWs COMMON STYLE ********************/
 
 .detailsCell {
-  font-size: 14px;
+  font-size: small;
   display: inline-block;
 }
 
@@ -321,8 +321,6 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 }
 
 .detailsConfidencesCell {
-  background-color: #8d4cbd3d;
-  color: #42186d;
   font-size: small;
   font-weight: bold;
   border-radius: 5px;
@@ -330,6 +328,15 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   white-space: nowrap;
 }
 
+.detailsExpansionsCell {
+  background-color: rgba(99, 103, 189, 0.24);
+  color: #19236d;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
 
 .rowSelected {
   /*font-weight: bold;*/

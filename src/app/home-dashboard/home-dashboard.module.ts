@@ -12,6 +12,7 @@ import {NewsComponent} from './news/news.component';
 import {DatasetArchiveComponent} from './featured-dataset/dataset-archive/dataset-archive.component';
 import {AdvancedSearchComponent} from './advanced-search/advanced-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FileUploadModule} from 'ng2-file-upload';
 import {QueryBuilderModule} from 'angular2-query-builder';
 
 @NgModule({
@@ -20,7 +21,8 @@ import {QueryBuilderModule} from 'angular2-query-builder';
         FormsModule,
         ReactiveFormsModule,
         QueryBuilderModule,
-        HomeDashboardRoutingModule
+        HomeDashboardRoutingModule,
+        FileUploadModule
     ],
     declarations: [
         HomeDashboardComponent,

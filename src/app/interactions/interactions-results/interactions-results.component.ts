@@ -3,8 +3,6 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
 import 'rxjs/add/operator/filter';
-import { InteractorsSearchResult } from '../shared/model/interactions-results/interactor/interactors-search.model';
-import { InteractorsSearchService } from '../shared/service/interactors-search.service';
 import {InteractionsSearchResult} from '../shared/model/interactions-results/interaction/interactions-search.model';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 
@@ -27,7 +25,6 @@ export class InteractionsResultsComponent implements OnInit {
 
   private _currentPageIndex: number;
 
-  private _interactorsSearch: InteractorsSearchResult;
   private _interactionsSearch: InteractionsSearchResult;
 
   // Interactors selected checkboxes list from the results-list
@@ -39,7 +36,6 @@ export class InteractionsResultsComponent implements OnInit {
   constructor(private titleService: Title,
               private route: ActivatedRoute,
               private router: Router,
-              private interactorsSearchService: InteractorsSearchService,
               private interactionsSearchService: InteractionsSearchService) { }
 
   ngOnInit() {
@@ -61,34 +57,15 @@ export class InteractionsResultsComponent implements OnInit {
         this.interactionSelected = params.interactionSelected ? params.interactionSelected.split('+') : undefined;
         this.currentPageIndex = params.page ? Number(params.page) : 1;
 
-        this.requestInteractorsResults();
         this.requestInteractionsResults();
     });
-  }
-
-  private requestInteractorsResults() {
-    this.interactorsSearchService.getAllInteractorsAndFacetsQuery(
-      this.term,
-      this.interactorSpeciesFilter,
-      this.interactorTypeFilter,
-      this.interactionDetectionMethodFilter,
-      this.interactionTypeFilter,
-      this.interactionHostOrganismFilter,
-      this.negativeFilter,
-      this.miScoreMin,
-      this.miScoreMax,
-      this.currentPageIndex
-    ).subscribe(interactorsSearch => {
-      this.interactorsSearch = interactorsSearch;
-      if (this.interactorsSearch.totalElements !== 0) {
-        this.interactorsSearchService.totalElements = this.interactorsSearch.totalElements;
-      }
-    })
   }
 
   private requestInteractionsResults() {
     this.interactionsSearchService.getAllInteractionsAndFacetsQuery(
       this.term,
+      this.interactorSpeciesFilter,
+      this.interactorTypeFilter,
       this.interactionHostOrganismFilter,
       this.interactionTypeFilter,
       this.interactionDetectionMethodFilter,
@@ -312,14 +289,6 @@ export class InteractionsResultsComponent implements OnInit {
 
   set currentPageIndex(value: number) {
     this._currentPageIndex = value;
-  }
-
-  get interactorsSearch(): InteractorsSearchResult {
-    return this._interactorsSearch;
-  }
-
-  set interactorsSearch(value: InteractorsSearchResult) {
-    this._interactorsSearch = value;
   }
 
   get interactionsSearch(): InteractionsSearchResult {

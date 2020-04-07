@@ -37,3 +37,10 @@
   background: #0db9f0 !important;
   border-radius: 2px !important;
 }
+
+.sticky.is-anchored {
+  position: relative;
+  right: auto;
+  left: auto;
+  z-index: 5;
+}

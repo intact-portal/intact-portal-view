@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
 
@@ -9,7 +9,7 @@ declare const $: any;
   templateUrl: './interactions-filters.component.html',
   styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css']
 })
-export class InteractionsFiltersComponent implements OnInit {
+export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   private _interactionFacets: InteractionFacets;
 
@@ -53,7 +53,11 @@ export class InteractionsFiltersComponent implements OnInit {
     // TODO: TO review this,
     //  it is what was causing the bad behaviour with the negative interaction in the url and the filters
     this.isNegativeInteraction = (this.negativeFilter !== 'false');
+  }
+
+  ngAfterViewInit(): void {
     $('iv-interactions-filters').foundation();
+    $(window).trigger('load.zf.sticky');
   }
 
   interactorSpeciesFilterStyle(): any {

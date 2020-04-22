@@ -101,7 +101,6 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           bubbles: true,
           detail: {
             interactorId: this.interactorSelected
-
           }
         });
         document.dispatchEvent(interactorSelectedEvent);
@@ -128,6 +127,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         const selector = $('#' + this.interactorSelected + ':checkbox');
         selector.prop('checked', true);
         selector.closest('tr').addClass('rowSelected');
+
+        const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
+          bubbles: true,
+          detail: {
+            interactorId: this.interactorSelected
+          }
+        });
+        document.dispatchEvent(interactorSelectedEvent);
       }
     }.bind(this));
   }

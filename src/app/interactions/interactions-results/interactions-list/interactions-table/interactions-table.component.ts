@@ -103,7 +103,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         $('#' + this.interactionSelected + ':checkbox').prop('checked', true);
         $('#' + this.interactionSelected + ':checkbox').closest('tr').addClass('rowSelected');
 
-        // this.interactionChanged.emit(this.interactionSelected);
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
           bubbles: true,
           detail: {
@@ -111,8 +110,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
           }
         });
-
         document.dispatchEvent(interactionSelectedEvent);
+
       } else {
         // None is selected, remove class
         this.interactionSelected = undefined;
@@ -136,6 +135,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         const selector = $('#' + this.interactionSelected + ':checkbox');
         selector.prop('checked', true);
         selector.closest('tr').addClass('rowSelected');
+
+        const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
+          bubbles: true,
+          detail: {
+            interactionId: this.interactionSelected
+          }
+        });
+
+        document.dispatchEvent(interactionSelectedEvent);
       }
     }.bind(this));
 

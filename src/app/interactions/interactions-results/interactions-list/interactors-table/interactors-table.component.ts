@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -12,7 +12,7 @@ const baseURL = environment.intact_portal_ws;
   templateUrl: './interactors-table.component.html',
   styleUrls: ['./interactors-table.component.css']
 })
-export class InteractorsTableComponent implements OnInit, OnChanges {
+export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
@@ -81,6 +81,55 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
       const table: any = $('#interactorsTable');
       this.dataTable = table.DataTable().columns.adjust().draw();
     }
+  }
+
+  ngAfterViewInit(): void {
+
+    $('#interactorsTable').on('change', 'input[type=\'checkbox\']', (e) => {
+      const table: any = $('#interactorsTable');
+      const interactorSel = e.currentTarget.id;
+
+      if (this.interactorSelected !== interactorSel) {
+        $('#' + this.interactorSelected + ':checkbox').prop('checked', false);
+        $('#' + this.interactorSelected + ':checkbox').closest('tr').removeClass('rowSelected');
+
+        this.interactorSelected = interactorSel;
+        $('#' + this.interactorSelected + ':checkbox').prop('checked', true);
+        $('#' + this.interactorSelected + ':checkbox').closest('tr').addClass('rowSelected');
+
+        const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
+          bubbles: true,
+          detail: {
+            interactorId: this.interactorSelected
+
+          }
+        });
+        document.dispatchEvent(interactorSelectedEvent);
+
+      } else {
+        // None is selected, remove class
+        this.interactorSelected = undefined;
+        $(table.dataTableSettings).each(function () {
+          $(this.aoData).each(function () {
+            $(this.nTr).removeClass('rowSelected');
+          })
+        });
+
+        const tableUnselectedEvent = new CustomEvent('tableUnselected', {
+          bubbles: true
+        });
+        document.dispatchEvent(tableUnselectedEvent);
+      }
+    });
+
+    // When table redrawn keep row selection synchronization between tables
+    $('#interactorsTable').on( 'draw.dt', function () {
+      if (this.interactorSelected !== undefined) {
+        const selector = $('#' + this.interactorSelected + ':checkbox');
+        selector.prop('checked', true);
+        selector.closest('tr').addClass('rowSelected');
+      }
+    }.bind(this));
   }
 
   private initDataTable(): void {
@@ -199,49 +248,6 @@ export class InteractorsTableComponent implements OnInit, OnChanges {
         }
       ]
     });
-
-    $('#interactorsTable').on('change', 'input[type=\'checkbox\']', (e) => {
-
-      const interactorSel = e.currentTarget.id;
-
-      if (this.interactorSelected !== interactorSel) {
-        $('#' + this.interactorSelected + ':checkbox').prop('checked', false);
-
-        // TODO: To find another way to do the highlighting
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each(function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
-
-        this.interactorSelected = interactorSel;
-        $(e.target.parentNode.parentNode.parentElement).addClass('rowSelected');
-
-        const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
-          bubbles: true,
-          detail: {
-            interactorId:this.interactorSelected
-
-          }
-        });
-        document.dispatchEvent(interactorSelectedEvent);
-
-      } else {
-        // None is selected, remove class
-        this.interactorSelected = undefined;
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each(function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
-
-        const tableUnselectedEvent = new CustomEvent('tableUnselected', {
-          bubbles: true
-        });
-        document.dispatchEvent(tableUnselectedEvent);
-      }
-    });
-
   }
 
 

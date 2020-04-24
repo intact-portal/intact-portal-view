@@ -50,6 +50,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'Expansion Method',
     'Experimental Role A',
     'Experimental Role B',
+    'Biological Role A',
+    'Biological Role B',
+    'Aliases A',
+    'Aliases B',
+    'Feature count',
+    'Parameters',
+    'Comments A',
+    'Comments B',
+    'Cautions'
   ];
 
   constructor(private route: ActivatedRoute) {
@@ -329,6 +338,87 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           data: 'experimentalRoleB',
           defaultContent: ' ',
           title: this.columnNames[15]
+        },
+        {
+          data: 'biologicalRoleA',
+          defaultContent: ' ',
+          title: this.columnNames[16]
+        },
+        {
+          data: 'biologicalRoleB',
+          defaultContent: ' ',
+          title: this.columnNames[17]
+        },
+        {
+          data: 'aliasesA',
+          defaultContent: ' ',
+          title: this.columnNames[18],
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                          '<span class="detailsCell">' + d + '</span>' +
+                       '</div>';
+              }).join('');
+            }
+          }
+        },
+        {
+          data: 'aliasesB',
+          defaultContent: ' ',
+          title: this.columnNames[19],
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                  '<span class="detailsCell">' + d + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        },
+        {
+          data: 'featureCount',
+          defaultContent: ' ',
+          title: this.columnNames[20]
+        },
+        {
+          data: 'parameters',
+          defaultContent: ' ',
+          title: this.columnNames[21]
+        },
+        {
+          data: 'annotationsA',
+          defaultContent: ' ',
+          title: this.columnNames[22],
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return  '<div>' +
+                          '<span class="detailsCell">' + d.substring(d.indexOf('(') + 1, d.indexOf(')')) + '</span>' +
+                        '</div>';
+              }).join('');
+            }
+          }
+        },
+        {
+          data: 'annotationsB',
+          defaultContent: ' ',
+          title: this.columnNames[23],
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return  '<div>' +
+                          '<span class="detailsCell">' + d.substring(d.indexOf('(') + 1, d.indexOf(')')) + '</span>' +
+                        '</div>';
+              }).join('');
+            }
+          }
+        },
+        {
+          data: 'cautions',
+          defaultContent: ' ',
+          title: this.columnNames[24]
         }
       ]
     });

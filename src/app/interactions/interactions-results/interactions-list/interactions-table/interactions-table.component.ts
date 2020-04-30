@@ -419,28 +419,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               const loadMoreButton = '<div> <button type="button" id="' + row.ac + '" class="showMore">Show more</button> </div>'
               const loadLessButton = '<div> <button type="button" id="' + row.ac + '" class="showLess" >Show less</button> </div>'
 
-              // if (this.showMoreSelected) {
+              const items = $.map(data, function (d, i) {
+                return '<div class="cell">' +
+                  '<span class="detailsCell">' + d + '</span>' +
+                  '</div>';
+              }).join('');
 
-                const items = $.map(data, function (d, i) {
-                  return '<div class="cell">' +
-                    '<span class="detailsCell">' + d + '</span>' +
-                    '</div>';
-                }).join('');
-
-                const htmlEnd = html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
-
-                return htmlEnd;
-            /*  } else {
-                const items = $.map(data.slice(0, 2), function (d, i) {
-                  return '<div class="cell">' +
-                    '<span class="detailsCell">' + d + '</span>' +
-                    '</div>';
-                }).join('');
-
-                const htmlEnd = html.concat(items).concat('</div>').concat(loadMoreButton);
-
-                return htmlEnd;
-              } */
+              return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
             }
           }.bind(this)
         },
@@ -487,8 +472,28 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           defaultContent: ' ',
           title: this.columnNames[24]
         }
-      ]
+      ],
+      drawCallback: function( settings ) {
+        const api = this.api();
+        api.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+          const d = this.data();
+          const n = this.node();
+
+          if (d.aliasesB != null) {
+            const htmlCollection = n.children[19].children[0].children;
+            for (let i = htmlCollection.length - 1; i >= 2; --i) {
+              htmlCollection[i].remove();
+            }
+
+            $('button#' + d.ac + '.showMore').show();
+            $('button#' + d.ac + '.showLess').hide();
+          }
+        });
+
+        alert( 'DataTables has redrawn the table' );
+      }
     });
+
 
   }
 

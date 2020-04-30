@@ -300,6 +300,11 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   display: inline-block;
 }
 
+.limitWidth {
+  max-width: 100px;
+  word-wrap: break-word;
+}
+
 .detailsAnnotationCell {
   background-color: #569fec52;
   color: #14385f;
@@ -349,6 +354,10 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   background-color: #305b7d66 !important;
   /*text-shadow: 1px 1px 0px #EEE;*/
   color: black;
+}
+
+.myList{
+  background-color: #0db9f0 !important;
 }
 
 /**************************************************************/

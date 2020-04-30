@@ -33,6 +33,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   columnView = 'interactions_columnView';
 
+  private showMoreSelected = false;
+
   private _columnNames: string[] = [
     'Select',
     'Molecule A',
@@ -156,6 +158,40 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       }
     }.bind(this));
 
+
+    $('#interactionsTable tbody').on('click', 'button.showMore', function () {
+      const table: any = $('#interactionsTable');
+      const interactionsT = table.DataTable();
+
+      const rowIndex = $(this).parents('tr');
+      const row = interactionsT.row(rowIndex).node();
+      const rowData = interactionsT.row(rowIndex).data();
+
+      const dataCell = interactionsT.cell(row, 19).data();
+
+      interactionsT.cell(row, 19).data(dataCell);
+
+      $('button#' + rowData.ac + '.showMore').hide();
+      $('button#' + rowData.ac + '.showLess').show();
+    });
+
+    $('#interactionsTable tbody').on('click', 'button.showLess', function () {
+      // tslint:disable-next-line:no-shadowed-variable
+      const table: any = $('#interactionsTable');
+      const interactionsT = table.DataTable();
+
+      const rowIndex = $(this).parents('tr');
+      const row = interactionsT.row(rowIndex).node();
+      const rowData = interactionsT.row(rowIndex).data();
+
+      const htmlCollection = row.children[19].children[0].children;
+      for (let i = htmlCollection.length - 1; i >= 2; --i) {
+        htmlCollection[i].remove();
+      }
+
+      $('button#' + rowData.ac + '.showMore').show();
+      $('button#' + rowData.ac + '.showLess').hide();
+    });
   }
 
 
@@ -353,14 +389,23 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           data: 'aliasesA',
           defaultContent: ' ',
           title: this.columnNames[18],
+          width: '5%',
           render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
+            if (type === 'display' && data != null) {
+
+              const items = $.map(data.slice(0, 2), function (d, i) {
                 return '<div>' +
-                          '<span class="detailsCell">' + d + '</span>' +
-                       '</div>';
+                  '<span class="detailsCell">' + d + '</span>' +
+                  '</div>';
               }).join('');
+
+              const dataSelection = data.slice(2);
+              // const loadMoreButton = '<div> <button type="button" class="showMore" id="loadMore" data-selector="' + dataSelection + '" >Show more</button> </div>'
+
+             // return items.concat(loadMoreButton);
             }
+
+
           }
         },
         {
@@ -368,14 +413,36 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           defaultContent: ' ',
           title: this.columnNames[19],
           render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div>' +
-                  '<span class="detailsCell">' + d + '</span>' +
-                  '</div>';
-              }).join('');
+            if (type === 'display' && data != null) {
+
+              const html = '<div class="myList">';
+              const loadMoreButton = '<div> <button type="button" id="' + row.ac + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> <button type="button" id="' + row.ac + '" class="showLess" >Show less</button> </div>'
+
+              // if (this.showMoreSelected) {
+
+                const items = $.map(data, function (d, i) {
+                  return '<div class="cell">' +
+                    '<span class="detailsCell">' + d + '</span>' +
+                    '</div>';
+                }).join('');
+
+                const htmlEnd = html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+
+                return htmlEnd;
+            /*  } else {
+                const items = $.map(data.slice(0, 2), function (d, i) {
+                  return '<div class="cell">' +
+                    '<span class="detailsCell">' + d + '</span>' +
+                    '</div>';
+                }).join('');
+
+                const htmlEnd = html.concat(items).concat('</div>').concat(loadMoreButton);
+
+                return htmlEnd;
+              } */
             }
-          }
+          }.bind(this)
         },
         {
           data: 'featureCount',
@@ -422,8 +489,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         }
       ]
     });
-
-
 
   }
 

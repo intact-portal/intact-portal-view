@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
@@ -12,6 +12,19 @@ const baseURL = environment.intact_portal_ws;
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
+
+/*enum AliasesType {
+  ISOFORM_SYNONYM = 'isoform synonym',
+  AUTHOR_ASSIGNED = 'author assigned name',
+  LOCUS = 'locus name',
+  ORF = 'orf name',
+  COMPLEX_SYSTEMATIC = 'complex systematic name',
+  COMMERCIAL = 'commercial name',
+  IUPAC = 'iupac name',
+  DRUG_BRAND = 'drug brand name',
+  DRUG_MIXTURE = 'drug mixture brand name'
+}*/
+
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -62,6 +75,20 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'Comments B',
     'Cautions'
   ];
+
+  private _aliasestype: string[] = [
+    'gene name',
+    'gene name synonym',
+    'isoform synonym',
+    'author assigned name',
+    'locus name',
+    'orf name',
+    'complex systematic name',
+    'commercial name',
+    'iupac name',
+    'drug brand name',
+    'drug mixture brand name'
+    ];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -166,13 +193,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       const rowIndex = $(this).parents('tr');
       const row = interactionsT.row(rowIndex).node();
       const rowData = interactionsT.row(rowIndex).data();
+      const col = $('#row' + rowData.binaryInteractionId).data('col');
 
-      const dataCell = interactionsT.cell(row, 19).data();
+      const dataCell = interactionsT.cell(row, col).data();
+      interactionsT.cell(row, col).data(dataCell);
 
-      interactionsT.cell(row, 19).data(dataCell);
-
-      $('button#' + rowData.ac + '.showMore').hide();
-      $('button#' + rowData.ac + '.showLess').show();
+      $('button#row' + rowData.binaryInteractionId + '.showMore').hide();
+      $('button#row' + rowData.binaryInteractionId + '.showLess').show();
     });
 
     $('#interactionsTable tbody').on('click', 'button.showLess', function () {
@@ -183,14 +210,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       const rowIndex = $(this).parents('tr');
       const row = interactionsT.row(rowIndex).node();
       const rowData = interactionsT.row(rowIndex).data();
+      const col = $('#row' + rowData.binaryInteractionId).data('col');
 
-      const htmlCollection = row.children[19].children[0].children;
+      const htmlCollection = row.children[col].children[0].children;
       for (let i = htmlCollection.length - 1; i >= 2; --i) {
         htmlCollection[i].remove();
       }
 
-      $('button#' + rowData.ac + '.showMore').show();
-      $('button#' + rowData.ac + '.showLess').hide();
+      $('button#row' + rowData.binaryInteractionId + '.showMore').show();
+      $('button#row' + rowData.binaryInteractionId + '.showLess').hide();
     });
   }
 
@@ -393,20 +421,38 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
 
-              const items = $.map(data.slice(0, 2), function (d, i) {
-                return '<div>' +
-                  '<span class="detailsCell">' + d + '</span>' +
-                  '</div>';
-              }).join('');
+              const html = '<div class="myList">';
+              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
-              const dataSelection = data.slice(2);
-              // const loadMoreButton = '<div> <button type="button" class="showMore" id="loadMore" data-selector="' + dataSelection + '" >Show more</button> </div>'
+              const items = $.map(data, function (d, i) {
 
-             // return items.concat(loadMoreButton);
+                // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
+                const data_s = d.split('(');
+                const aliasName = data_s[0];
+                const aliasId = data_s[1];
+                const aliasType = data_s[2].slice(0, -2);
+
+                if (this.aliasestype.includes(aliasType)) {
+                  const item = '<div class="cell">' +
+                    '<span class="detailsCell">' + aliasName + '</span> ' +
+                    '<span class="detailsAliasesCell">' + aliasType + '</span>' +
+                    '</div>';
+                  return item;
+                } else {
+                  return  '<div class="cell">' +
+                    '<span class="detailsCell">' + aliasName + '</span>' +
+                    '</div>';
+                }
+              }.bind(this)).join('');
+
+              if (data.length > 2) {
+                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+              } else {
+                return html.concat(items).concat('</div>');
+              }
             }
-
-
-          }
+          }.bind(this)
         },
         {
           data: 'aliasesB',
@@ -416,16 +462,35 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             if (type === 'display' && data != null) {
 
               const html = '<div class="myList">';
-              const loadMoreButton = '<div> <button type="button" id="' + row.ac + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div> <button type="button" id="' + row.ac + '" class="showLess" >Show less</button> </div>'
+              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
-                return '<div class="cell">' +
-                  '<span class="detailsCell">' + d + '</span>' +
-                  '</div>';
-              }).join('');
 
-              return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+                // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
+                const data_s = d.split('(');
+                const aliasName = data_s[0];
+                const aliasId = data_s[1];
+                const aliasType = data_s[2].slice(0, -2);
+
+                if (this.aliasestype.includes(aliasType)) {
+                  const item = '<div class="cell">' +
+                              '<span class="detailsCell">' + aliasName + '</span> ' +
+                              '<span class="detailsAliasesCell">' + aliasType + '</span>' +
+                              '</div>';
+                  return item;
+                } else {
+                  return  '<div class="cell">' +
+                    '<span class="detailsCell">' + aliasName + '</span>' +
+                    '</div>';
+                }
+              }.bind(this)).join('');
+
+              if (data.length > 2) {
+                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+              } else {
+                return html.concat(items).concat('</div>');
+              }
             }
           }.bind(this)
         },
@@ -479,18 +544,28 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           const d = this.data();
           const n = this.node();
 
+          if (d.aliasesA != null) {
+            const htmlCollection = n.children[18].children[0].children;
+            for (let i = htmlCollection.length - 1; i >= 2; --i) {
+              htmlCollection[i].remove();
+            }
+
+            $('button#row' + d.binaryInteractionId + '.showMore').show();
+            $('button#row' + d.binaryInteractionId + '.showLess').hide();
+          }
+
           if (d.aliasesB != null) {
             const htmlCollection = n.children[19].children[0].children;
             for (let i = htmlCollection.length - 1; i >= 2; --i) {
               htmlCollection[i].remove();
             }
 
-            $('button#' + d.ac + '.showMore').show();
-            $('button#' + d.ac + '.showLess').hide();
+            $('button#row' + d.binaryInteractionId + '.showMore').show();
+            $('button#row' + d.binaryInteractionId + '.showLess').hide();
           }
         });
 
-        alert( 'DataTables has redrawn the table' );
+        // alert( 'DataTables has redrawn the table' );
       }
     });
 
@@ -586,6 +661,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this._columnNames = value;
   }
 
+  get aliasestype(): string[] {
+    return this._aliasestype;
+  }
+
+  set aliasestype(value: string[]) {
+    this._aliasestype = value;
+  }
+
   get interactionSelected(): string {
     return this._interactionSelected;
   }
@@ -594,3 +677,4 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this._interactionSelected = value;
   }
 }
+

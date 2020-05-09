@@ -14,12 +14,14 @@ import {InteractionsSearchService} from '../shared/service/interactions-search.s
 export class InteractionsResultsComponent implements OnInit {
 
   private _term: string;
+  private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
-  private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
+  private _interactionTypeFilter: string[];
   private _hostOrganismFilter: string[];
   private _negativeFilter: boolean;
+  private _intraSpeciesFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
 
@@ -45,14 +47,16 @@ export class InteractionsResultsComponent implements OnInit {
       .filter(params => params.query)
       .subscribe(params => {
         this.term = params.query;
+        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
-        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
-        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
         this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
+        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
+        this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
         this.interactorSelected = params.interactorSelected ? params.interactorSelected.split('+') : undefined;
         this.interactionSelected = params.interactionSelected ? params.interactionSelected.split('+') : undefined;
         this.currentPageIndex = params.page ? Number(params.page) : 1;
@@ -64,14 +68,16 @@ export class InteractionsResultsComponent implements OnInit {
   private requestInteractionsResults() {
     this.interactionsSearchService.getAllInteractionsAndFacetsQuery(
       this.term,
+      this.batchSearchFilter,
       this.interactorSpeciesFilter,
       this.interactorTypeFilter,
-      this.interactionHostOrganismFilter,
-      this.interactionTypeFilter,
       this.interactionDetectionMethodFilter,
+      this.interactionTypeFilter,
+      this.interactionHostOrganismFilter,
+      this.negativeFilter,
       this.miScoreMin,
       this.miScoreMax,
-      this.negativeFilter,
+      this.intraSpeciesFilter,
       this.currentPageIndex
     ).subscribe(interactionsSearch => {
       this.interactionsSearch = interactionsSearch;
@@ -139,15 +145,23 @@ export class InteractionsResultsComponent implements OnInit {
     this.updateURLParams();
   }
 
+  public onInteractionIntraSpeciesFilterChanged(filter: boolean): void {
+    this.intraSpeciesFilter = filter;
+    this.interactorSelected = undefined;
+    this.interactionSelected = undefined;
+    this.updateURLParams();
+  }
+
   public onResetAllFilters(): void {
     this.interactorTypeFilter = [];
     this.interactorSpeciesFilter = [];
-    this.interactionTypeFilter = [];
     this.interactionDetectionMethodFilter = [];
+    this.interactionTypeFilter = [];
     this.interactionHostOrganismFilter = [];
     this.negativeFilter = false;
     this.miScoreMin = 0;
     this.miScoreMax = 1;
+    this.intraSpeciesFilter = false;
     this.interactorSelected = undefined;
     this.interactionSelected = undefined;
     this.updateURLParams();
@@ -176,17 +190,20 @@ export class InteractionsResultsComponent implements OnInit {
     params['query'] = this.term;
     params['page'] = this.currentPageIndex;
 
+    if (this.batchSearchFilter !== undefined && this.batchSearchFilter !== false) {
+      params['batchSearch'] = this.batchSearchFilter;
+    }
     if (this.interactorTypeFilter !== undefined && this.interactorTypeFilter.length !== 0) {
       params['interactorType'] = this.prepareFiltersForParams(this.interactorTypeFilter);
     }
     if (this.interactorSpeciesFilter !== undefined && this.interactorSpeciesFilter.length !== 0) {
       params['interactorSpecies'] = this.prepareFiltersForParams(this.interactorSpeciesFilter);
     }
-    if (this.interactionTypeFilter !== undefined && this.interactionTypeFilter.length !== 0) {
-      params['interactionType'] = this.prepareFiltersForParams(this.interactionTypeFilter);
-    }
     if (this.interactionDetectionMethodFilter !== undefined && this.interactionDetectionMethodFilter.length !== 0) {
       params['interactionDetectionMethod'] = this.prepareFiltersForParams(this.interactionDetectionMethodFilter);
+    }
+    if (this.interactionTypeFilter !== undefined && this.interactionTypeFilter.length !== 0) {
+      params['interactionType'] = this.prepareFiltersForParams(this.interactionTypeFilter);
     }
     if (this.interactionHostOrganismFilter !== undefined && this.interactionHostOrganismFilter.length !== 0) {
       params['interactionHostOrganism'] = this.prepareFiltersForParams(this.interactionHostOrganismFilter);
@@ -199,6 +216,9 @@ export class InteractionsResultsComponent implements OnInit {
     }
     if (this.miScoreMax !== undefined && this.miScoreMax !== '') {
       params['miScoreMax'] = this.miScoreMax;
+    }
+    if (this.intraSpeciesFilter !== undefined && this.intraSpeciesFilter !== false) {
+      params['intraSpecies'] = this.intraSpeciesFilter;
     }
 
     this.router.navigate([], { queryParams: params });
@@ -217,6 +237,14 @@ export class InteractionsResultsComponent implements OnInit {
 
   set term(value: string) {
     this._term = value;
+  }
+
+  get batchSearchFilter(): boolean {
+    return this._batchSearchFilter;
+  }
+
+  set batchSearchFilter(value: boolean) {
+    this._batchSearchFilter = value;
   }
 
   get interactorSpeciesFilter(): string[] {
@@ -281,6 +309,14 @@ export class InteractionsResultsComponent implements OnInit {
 
   set miScoreMax(value: any) {
     this._miScoreMax = value;
+  }
+
+  get intraSpeciesFilter(): boolean {
+    return this._intraSpeciesFilter;
+  }
+
+  set intraSpeciesFilter(value: boolean) {
+    this._intraSpeciesFilter = value;
   }
 
   get currentPageIndex(): number {

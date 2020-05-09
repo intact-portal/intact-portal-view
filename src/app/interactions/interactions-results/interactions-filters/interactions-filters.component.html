@@ -18,6 +18,18 @@
           </span>
           </li>
         </div>
+        <div class="margin-top-medium">
+          <div class="float:left">
+            <label class="switch switch_type1" role="switch">
+              <input #filterInterSpecies id="filterInterSpecies" type="checkbox" class="switch__toggle"
+                     (change)="onChangeInteractionIntraSpeciesFilter(filterInterSpecies.checked)"
+                     [disabled]="isSelectedMoreThanOneSpecies()"
+                     [checked]="isSelectedInteractionIntraSpecies()">
+              <span class="switch__label"></span>
+            </label>
+            <b class="margin-left-medium" [ngClass]="{'disabled-color': isSelectedMoreThanOneSpecies()}">Intra species only</b>
+          </div>
+        </div>
       </ul>
     </div>
 
@@ -116,7 +128,7 @@
             <input type="checkbox" class="switch__toggle" disabled="disabled">
             <span class="switch__label"></span>
           </label>
-          <b class="margin-left-medium" style="color: #847f7f;">Add inter-node connections</b>
+          <b class="margin-left-medium disabled-color">Add inter-node connections</b>
         </div>
       </div>
     </div>

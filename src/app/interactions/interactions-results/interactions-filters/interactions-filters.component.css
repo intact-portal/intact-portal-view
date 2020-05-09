@@ -38,9 +38,15 @@
   border-radius: 2px !important;
 }
 
+/* Fix for the sticky header*/
 .sticky.is-anchored {
   position: relative;
   right: auto;
   left: auto;
   z-index: 5;
+}
+
+/* Disable color for text in toogles */
+.disabled-color {
+  color: #847f7f;
 }

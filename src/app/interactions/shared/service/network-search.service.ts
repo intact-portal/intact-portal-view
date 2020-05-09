@@ -12,28 +12,32 @@ export class NetworkSearchService {
   constructor(private http: HttpClient) { }
 
   getInteractionNetwork(query: string,
-                        interactionHostOrganismFilter: string[],
-                        interactorTypeFilter: string[],
+                        batchSearchFilter: boolean,
                         interactorSpeciesFilter: string[],
-                        interactionTypeFilter: string[],
+                        interactorTypeFilter: string[],
                         interactionDetectionMethodFilter: string[],
+                        interactionTypeFilter: string[],
+                        interactionHostOrganismFilter: string[],
+                        negativeFilter: any,
                         miScoreMin: any,
                         miScoreMax: any,
-                        negativeFilter: any,
+                        intraSpeciesFilter: boolean,
                         compoundGraph: boolean): Observable<any> {
 
     query = query.trim();
 
     const params = new HttpParams()
       .set('query', query)
-      .set('interactionTypeFilter', interactionTypeFilter.toString())
-      .set('interactorTypeFilter', interactorTypeFilter.toString())
+      .set('batchSearch', batchSearchFilter.toString())
       .set('interactorSpeciesFilter', interactorSpeciesFilter.toString())
-      .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
+      .set('interactorTypeFilter', interactorTypeFilter.toString())
       .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())
+      .set('interactionTypeFilter', interactionTypeFilter.toString())
+      .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
+      .set('isNegativeFilter', negativeFilter.toString()) // By default should be always false
       .set('minMiScore', miScoreMin.toString())
       .set('maxMiScore', miScoreMax.toString())
-      .set('isNegativeFilter', negativeFilter.toString())
+      .set('interSpecies', intraSpeciesFilter.toString()) // TODO Noe change the name of the param in the web service the meaning is the opposite
       .set('isCompound', compoundGraph.toString());
 
 

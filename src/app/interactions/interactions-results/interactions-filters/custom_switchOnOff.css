@@ -1,9 +1,9 @@
 .switch{
   --uiSwitchSize: var(--switchSize, 64px);
   --uiSwitchBgColor: var(--switchBgColor, #f1f1f1);
-  --uiSwitchBgColorActive: var(--switchBgColorActive, #4ed164);
+  --uiSwitchBgColorActive: var(--switchBgColorActive, rgb(104,41,124));
   --uiSwitchBorderColorActive: var(--switchBorderColorActive, #fff);
-  --uiSwitchBorderColorFocus: var(--switchBgColorFocus, #43b556);
+  --uiSwitchBorderColorFocus: var(--switchBgColorFocus, rgb(104,41,124));
   --uiSwitchButtonBgColor: var(--switchButtonBgColor, #fff);
 
   display: inline-block;

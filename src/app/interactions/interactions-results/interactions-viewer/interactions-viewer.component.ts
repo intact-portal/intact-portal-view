@@ -16,14 +16,16 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   private _term: string;
+  private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
-  private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
+  private _interactionTypeFilter: string[];
   private _hostOrganismFilter: string[];
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
+  private _intraSpeciesFilter: boolean;
   private _graph: any;
   private _expanded: boolean;
   private _affectedByMutation: boolean;
@@ -49,16 +51,18 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       .filter(params => params.query)
       .subscribe(params => {
         this.term = params.query;
+        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
-        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
-        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
         this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
+        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
         // this.interactorSelected = params.interactorSelected ? params.interactorSelected.split('+') : [];
         // this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
+        this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
 
         this.requestIntactNetworkDetails();
       });
@@ -79,14 +83,16 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   private requestIntactNetworkDetails() {
     this.networkSearchService.getInteractionNetwork(
       this.term,
-      this.interactionHostOrganismFilter,
-      this.interactorTypeFilter,
+      this.batchSearchFilter,
       this.interactorSpeciesFilter,
-      this.interactionTypeFilter,
+      this.interactorTypeFilter,
       this.interactionDetectionMethodFilter,
+      this.interactionTypeFilter,
+      this.interactionHostOrganismFilter,
+      this.negativeFilter,
       this.miScoreMin,
       this.miScoreMax,
-      this.negativeFilter,
+      this.intraSpeciesFilter,
       this.compoundGraph
     ).subscribe(data => {
       this.interactionsJSON = data;
@@ -138,6 +144,14 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   set term(value: string) {
     this._term = value;
+  }
+
+  get batchSearchFilter(): boolean {
+    return this._batchSearchFilter;
+  }
+
+  set batchSearchFilter(value: boolean) {
+    this._batchSearchFilter = value;
   }
 
   get interactorSpeciesFilter(): string[] {
@@ -202,6 +216,14 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   set miScoreMax(value: any) {
     this._miScoreMax = value;
+  }
+
+  get intraSpeciesFilter(): boolean {
+    return this._intraSpeciesFilter;
+  }
+
+  set intraSpeciesFilter(value: boolean) {
+    this._intraSpeciesFilter = value;
   }
 
   get interactionsJSON(): any {

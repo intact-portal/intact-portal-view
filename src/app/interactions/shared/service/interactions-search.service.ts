@@ -16,15 +16,17 @@ export class InteractionsSearchService {
   constructor(private http: HttpClient) { }
 
   getAllInteractionsAndFacetsQuery(query: string,
+                                   batchSearchFilter: boolean,
                                    interactorSpeciesFilter: string[],
                                    interactorTypeFilter: string[],
-                                   interactionHostOrganismFilter: string[],
-                                   interactionTypeFilter: string[],
                                    interactionDetectionMethodFilter: string[],
+                                   interactionTypeFilter: string[],
+                                   interactionHostOrganismFilter: string[],
+                                   negativeFilter: any,
                                    miScoreMin: any,
                                    miScoreMax: any,
-                                   negativeFilter: any,
-                                   currentPageIndex = 1, pageSize = 20): Observable<InteractionsSearchResult> {
+                                   intraSpeciesFilter: boolean,
+                                   currentPageIndex = 1, pageSize = 10): Observable<InteractionsSearchResult> {
 
     query = query.trim();
     this.page = currentPageIndex;
@@ -33,14 +35,16 @@ export class InteractionsSearchService {
 
     const params = new HttpParams()
       .set('query', query)
-      .set('interactorTypeFilter', interactorTypeFilter.toString())
+      .set('batchSearch', batchSearchFilter.toString())
       .set('interactorSpeciesFilter', interactorSpeciesFilter.toString())
+      .set('interactorTypeFilter', interactorTypeFilter.toString())
+      .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())
       .set('interactionTypeFilter', interactionTypeFilter.toString())
       .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
-      .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())
+      .set('isNegativeFilter', negativeFilter.toString()) // By default should be always false
       .set('minMiScore', miScoreMin.toString())
       .set('maxMiScore', miScoreMax.toString())
-      .set('isNegativeFilter', negativeFilter.toString())
+      .set('interSpecies', intraSpeciesFilter.toString()) // TODO Noe change the name of the param in the web service the meaning is the opposite
       .set('page', currentPageIndex.toString())
       .set('pageSize', pageSize.toString());
 

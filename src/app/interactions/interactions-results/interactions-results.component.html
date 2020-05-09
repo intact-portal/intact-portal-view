@@ -9,12 +9,13 @@
                              [interactionFacets]="interactionsSearch.facetResultPage"
                              [interactorTypeFilter]="interactorTypeFilter"
                              [interactorSpeciesFilter]="interactorSpeciesFilter"
+                             [interactionHostOrganismFilter]="interactionHostOrganismFilter"
                              [interactionTypeFilter]="interactionTypeFilter"
                              [interactionDetectionMethodFilter]="interactionDetectionMethodFilter"
-                             [interactionHostOrganismFilter]="interactionHostOrganismFilter"
                              [negativeFilter]="negativeFilter"
                              [miScoreMinFilter]="miScoreMin"
                              [miScoreMaxFilter]="miScoreMax"
+                             [intraSpeciesFilter]="intraSpeciesFilter"
                              (onInteractorSpeciesFilterChanged)="onInteractorSpeciesFilterChanged($event)"
                              (onInteractorTypeFilterChanged)="onInteractorTypeFilterChanged($event)"
                              (onResetAllFilters)="onResetAllFilters()"
@@ -23,7 +24,8 @@
                              (onInteractionHostOrganismFilterChanged)="onInteractionHostOrganismFilterChanged($event)"
                              (onInteractionNegativeFilterChanged)="onInteractionNegativeFilterChanged($event)"
                              (onInteractionMiScoreMinFilterChanged)="onInteractionMiScoreMinFilterChanged($event)"
-                             (onInteractionMiScoreMaxFilterChanged)="onInteractionMiScoreMaxFilterChanged($event)">
+                             (onInteractionMiScoreMaxFilterChanged)="onInteractionMiScoreMaxFilterChanged($event)"
+                             (onInteractionIntraSpeciesFilterChanged)="onInteractionIntraSpeciesFilterChanged($event)">
 
     </iv-interactions-filters>
   </div>

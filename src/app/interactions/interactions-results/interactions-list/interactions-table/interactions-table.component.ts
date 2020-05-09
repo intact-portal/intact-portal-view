@@ -32,14 +32,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   @Input() interactionTab: boolean;
 
   private _term: string;
+  private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
-  private _interactionTypeFilter: string[];
   private _detectionMethodFilter: string[];
+  private _interactionTypeFilter: string[];
   private _hostOrganismFilter: string[];
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
+  private _intraSpeciesFilter: boolean;
   private _interactionSelected: string;
 
   dataTable: any;
@@ -98,14 +100,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
         this.term = params.query;
-        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
+        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
-        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
-        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
+        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
+        this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
 
         if (this.dataTable !== undefined) {
           // tslint:disable-next-line:no-shadowed-variable
@@ -242,14 +246,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         data: function (d) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
-          d.interactorType = this.interactorTypeFilter;
+          d.batchSearch = this.batchSearchFilter;
           d.interactorSpecies = this.interactorSpeciesFilter;
-          d.interactionType = this.interactionTypeFilter;
+          d.interactorType = this.interactorTypeFilter;
           d.interactionDetectionMethod = this.interactionDetectionMethodFilter;
+          d.interactionType = this.interactionTypeFilter;
           d.interactionHostOrganism = this.interactionHostOrganismFilter;
           d.negativeInteraction = this.negativeFilter;
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
+          d.intraSpecies = this.intraSpeciesFilter;
         }.bind(this)
       },
       columns: [
@@ -392,7 +398,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 '<span class="detailsExpansionsCell">' + data + '</span>' +
                 '</div>';
             }
-          }},
+          }
+        },
         {
           data: 'experimentalRoleA',
           defaultContent: ' ',
@@ -589,6 +596,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this._term = value;
   }
 
+  get batchSearchFilter(): boolean {
+    return this._batchSearchFilter;
+  }
+
+  set batchSearchFilter(value: boolean) {
+    this._batchSearchFilter = value;
+  }
+
   get interactorSpeciesFilter(): string[] {
     return this._interactorSpeciesFilter;
   }
@@ -651,6 +666,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   set miScoreMax(value: any) {
     this._miScoreMax = value;
+  }
+
+  get intraSpeciesFilter(): boolean {
+    return this._intraSpeciesFilter;
+  }
+
+  set intraSpeciesFilter(value: boolean) {
+    this._intraSpeciesFilter = value;
   }
 
   get columnNames(): string[] {

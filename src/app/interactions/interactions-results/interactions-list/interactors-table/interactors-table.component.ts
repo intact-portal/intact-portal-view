@@ -19,14 +19,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   @Input() interactorTab: boolean;
 
   private _term: string;
+  private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
-  private _interactionTypeFilter: string[];
   private _interactionDetectionMethodFilter: string[];
+  private _interactionTypeFilter: string[];
   private _interactionHostOrganismFilter: string[];
   private _negativeFilter: boolean;
   private _miScoreMin: any;
   private _miScoreMax: any;
+  private _intraSpeciesFilter: boolean;
   private _currentPageIndex: any;
   private _interactorSelected: string;
 
@@ -55,14 +57,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
         this.term = params.query;
+        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
-        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
-        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
         this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
+        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
+        this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
         this.currentPageIndex = params.page ? Number(params.page) : 1;
 
         if (this.dataTable !== undefined) {
@@ -158,14 +162,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         data: function (d) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
-          d.interactorType = this.interactorTypeFilter;
+          d.batchSearch = this.batchSearchFilter;
           d.interactorSpecies = this.interactorSpeciesFilter;
-          d.interactionType = this.interactionTypeFilter;
+          d.interactorType = this.interactorTypeFilter;
           d.interactionDetectionMethod = this.interactionDetectionMethodFilter;
+          d.interactionType = this.interactionTypeFilter;
           d.interactionHostOrganism = this.interactionHostOrganismFilter;
           d.negativeInteraction = this.negativeFilter;
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
+          d.intraSpecies = this.intraSpeciesFilter;
           // d.page = this.currentPageIndex - 1;
         }.bind(this)
       },
@@ -275,6 +281,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     this._term = value;
   }
 
+  get batchSearchFilter(): boolean {
+    return this._batchSearchFilter;
+  }
+
+  set batchSearchFilter(value: boolean) {
+    this._batchSearchFilter = value;
+  }
+
   get interactorSpeciesFilter(): string[] {
     return this._interactorSpeciesFilter;
   }
@@ -337,6 +351,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   set miScoreMax(value: any) {
     this._miScoreMax = value;
+  }
+
+  get intraSpeciesFilter(): boolean {
+    return this._intraSpeciesFilter;
+  }
+
+  set intraSpeciesFilter(value: boolean) {
+    this._intraSpeciesFilter = value;
   }
 
   get currentPageIndex(): any {

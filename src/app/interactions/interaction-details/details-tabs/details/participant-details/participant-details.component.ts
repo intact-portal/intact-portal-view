@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 
 import * as $ from 'jquery';
 import 'datatables.net';
-import {environment} from "../../../../../../environments/environment";
+import {environment} from '../../../../../../environments/environment';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -81,7 +81,10 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
         }
       },
       columns: [
-        {data: 'participantName', defaultContent: ' ', title: 'Select',
+        {
+          data: 'participantName',
+          defaultContent: ' ',
+          title: this.columnNames[0],
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<input type="checkbox" id="' + full.participantId.identifier + '" name="check" value="' + data + '"/>';
@@ -89,10 +92,24 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
             return data;
           }
         },
-        {data: 'participantAc', title: 'Ac'},
-        {data: 'type.shortName', title: 'Type', defaultContent: ''},
-        {data: 'participantId.identifier', title: 'Identifier', defaultContent: ''},
-        {data: 'aliases', title: 'Aliases', defaultContent: '',
+        {
+          data: 'participantAc',
+          title: this.columnNames[1]
+        },
+        {
+          data: 'type.shortName',
+          title: this.columnNames[2],
+          defaultContent: ''
+        },
+        {
+          data: 'participantId.identifier',
+          title: this.columnNames[3],
+          defaultContent: ''
+        },
+        {
+          data: 'aliases',
+          title: this.columnNames[4],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -103,10 +120,25 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
             }
           }
         },
-        {data: 'description', title: 'Description', defaultContent: ''},
-        {data: 'species.scientificName', title: 'Species', defaultContent: ''},
-        {data: 'expressionSystem', title: 'Expression System', defaultContent: ''},
-        {data: 'detectionMethod', title: 'Detection Methods', defaultContent: '',
+        {
+          data: 'description',
+          title: this.columnNames[5],
+          defaultContent: ''
+        },
+        {
+          data: 'species.scientificName',
+          title: this.columnNames[6],
+          defaultContent: ''
+        },
+        {
+          data: 'expressionSystem.scientificName',
+          title: this.columnNames[7],
+          defaultContent: ''
+        },
+        {
+          data: 'detectionMethod',
+          title: this.columnNames[8],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -116,9 +148,20 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
               }).join('');
             }
           }},
-        {data: 'experimentalRole.shortName', title: 'Experimental Role', defaultContent: ''},
-        {data: 'biologicalRole.shortName', title: 'Biological Role', defaultContent: ''},
-        {data: 'experimentalPreparations', title: 'Experimental Preparations', defaultContent: '',
+        {
+          data: 'experimentalRole.shortName',
+          title: this.columnNames[9],
+          defaultContent: ''
+        },
+        {
+          data: 'biologicalRole.shortName',
+          title: this.columnNames[10],
+          defaultContent: ''
+        },
+        {
+          data: 'experimentalPreparations',
+          title: this.columnNames[11],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -128,7 +171,10 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
               }).join('');
             }
           }},
-        {data: 'parameters', title: 'Parameters', defaultContent: '',
+        {
+          data: 'parameters',
+          title: this.columnNames[12],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -138,7 +184,10 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
               }).join('');
             }
           }},
-        {data: 'confidences', title: 'Confidences', defaultContent: '',
+        {
+          data: 'confidences',
+          title: this.columnNames[13],
+          defaultContent: '',
           render: function ( data, type, row, meta ) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -149,7 +198,10 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
             }
           }
         },
-        {data: 'xrefs', title: 'Cross References', defaultContent: '',
+        {
+          data: 'xrefs',
+          title: this.columnNames[14],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -166,7 +218,10 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
             }
           }
         },
-        {data: 'annotations', title: 'Annotations', defaultContent: '',
+        {
+          data: 'annotations',
+          title: this.columnNames[15],
+          defaultContent: '',
           render: function ( data, type, row, meta ) {
             if (type === 'display') {
               return $.map(data, function (d, i) {

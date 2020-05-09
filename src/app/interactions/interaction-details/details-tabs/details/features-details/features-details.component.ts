@@ -80,7 +80,10 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         }
       },
       columns: [
-        {data: 'participantName', defaultContent: ' ', title: 'Select',
+        {
+          data: 'participantName',
+          defaultContent: ' ',
+          title: this.columnNames[0],
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<input type="checkbox" id="' + full.featureAc + '" name="check" value="' + data + '"/>';
@@ -88,36 +91,76 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
             return data;
           }
         },
-        {data: 'featureAc', title: 'Ac'},
-        {data: 'name', title: 'Name'},
-        {data: 'type.shortName', title: 'Type'},
-        {data: 'role', title: 'Role', defaultContent: ''},
-        {data: 'ranges', title: 'Range Positions', defaultContent: '', render: '[, ]'},
-        {data: 'linkedFeatures', title: 'Linked Features', defaultContent: '',
+        {
+          data: 'featureAc',
+          title: this.columnNames[1]
+        },
+        {
+          data: 'name',
+          title: this.columnNames[2]
+        },
+        {
+          data: 'type.shortName',
+          title: this.columnNames[3]
+        },
+        {
+          data: 'role',
+          title: this.columnNames[4],
+          defaultContent: ''
+        },
+        {
+          data: 'ranges',
+          title: this.columnNames[5],
+          defaultContent: '',
+          render: '[, ]'
+        },
+        {
+          data: 'linkedFeatures',
+          title: this.columnNames[6],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div>' +
-                          '<span class="detailsCell">' + d.shortName + '</span>' +
-                       '</div>';
-              }).join('');
-            }
-          }},
-        {data: 'participantName', title: 'Participant Name', defaultContent: ''},
-        {data: 'participant.identifier', title: 'Participant Identifier', defaultContent: ''},
-        {data: 'participantAc', title: 'Participant Ac', defaultContent: ''},
-        {data: 'detectionMethods', title: 'Detection Methods', defaultContent: '',
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div>' +
-                         '<span class="detailsCell">' + d.shortName + '</span>' +
-                       '</div>';
+                  '<span class="detailsCell">' + d.shortName + '</span>' +
+                  '</div>';
               }).join('');
             }
           }
         },
-        {data: 'parameters', title: 'Parameters', defaultContent: '',
+        {
+          data: 'participantName',
+          title: this.columnNames[7],
+          defaultContent: ''
+        },
+        {
+          data: 'participant.identifier',
+          title: this.columnNames[8],
+          defaultContent: ''
+        },
+        {
+          data: 'participantAc',
+          title: this.columnNames[9],
+          defaultContent: ''
+        },
+        {
+          data: 'detectionMethods',
+          title: this.columnNames[10],
+          defaultContent: '',
+          render: function (data, type, row, meta) {
+            if (type === 'display') {
+              return $.map(data, function (d, i) {
+                return '<div>' +
+                  '<span class="detailsCell">' + d.shortName + '</span>' +
+                  '</div>';
+              }).join('');
+            }
+          }
+        },
+        {
+          data: 'parameters',
+          title: this.columnNames[11],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -126,42 +169,54 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
                   '</div>';
               }).join('');
             }
-          }},
-        {data: 'identifiers', title: 'Identifiers', defaultContent: '',
+          }
+        },
+        {
+          data: 'identifiers',
+          title: this.columnNames[12],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div class="margin-bottom-medium">' +
-                      '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                      '</div>';
+                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                  '</div>';
               }).join('');
             }
-          }},
-        {data: 'xrefs', title: 'Cross References', defaultContent: '',
+          }
+        },
+        {
+          data: 'xrefs',
+          title: this.columnNames[13],
+          defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return d.qualifier != null ?
-                    '<div class="margin-bottom-medium">' +
-                          '<span class="detailsXrefCell margin-right-medium">' +
-                          '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
-                          '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                    '</div>'  :
-                    '<div class="margin-bottom-medium">' +
-                      '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                    '</div>';
+                  '<div class="margin-bottom-medium">' +
+                  '<span class="detailsXrefCell margin-right-medium">' +
+                  '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
+                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                  '</div>' :
+                  '<div class="margin-bottom-medium">' +
+                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
+                  '</div>';
               }).join('');
             }
-          }},
-        {data: 'annotations', title: 'Annotations', defaultContent: '',
-          render: function ( data, type, row, meta ) {
+          }
+        },
+        {
+          data: 'annotations',
+          title: this.columnNames[14],
+          defaultContent: '',
+          render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
-                 return '<div class="margin-bottom-medium">' +
-                          '<span class="detailsAnnotationCell margin-right-medium">' +
-                          ' <i class="icon icon-common icon-tag"></i>  ' + d.topic.shortName + '</span>' +
-                        '<span class="detailsCell">' + d.description + '</span> ' +
-                        '</div>';
+                return '<div class="margin-bottom-medium">' +
+                  '<span class="detailsAnnotationCell margin-right-medium">' +
+                  ' <i class="icon icon-common icon-tag"></i>  ' + d.topic.shortName + '</span>' +
+                  '<span class="detailsCell">' + d.description + '</span> ' +
+                  '</div>';
               }).join('');
             }
           }}

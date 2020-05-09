@@ -1,0 +1,82 @@
+<form id="iSearch" name="content-search" action="[search-action]" method="get">
+  <div class="row margin-top-large">
+    <div id="searchBox3" class="columns small-12">
+      <textarea id="autocomplete" type="text" placeholder="Search..." rows="5" disabled></textarea>
+    </div>
+  </div>
+</form>
+
+<h3>Select files</h3>
+
+<!--<div ng2FileDrop-->
+<!--     [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"-->
+<!--     (fileOver)="fileOverBase($event)"-->
+<!--     [uploader]="uploader"-->
+<!--     class="well my-drop-zone">-->
+<!--  Base drop zone-->
+<!--</div>-->
+
+<input type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="fileSelected()"/>
+
+<h3>Upload</h3>
+<p>Queue length: {{ uploader?.queue?.length }}</p>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th width="50%">Name</th>
+    <th>Size</th>
+    <th>Progress</th>
+    <th>Status</th>
+    <th>Actions</th>
+    <th>Search</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of uploader.queue">
+    <td>
+      <strong>{{ item?.file?.name }}</strong>
+    </td>
+    <td *ngIf="uploader.options.isHTML5" nowrap>
+      {{ item?.file?.size / 1024 / 1024 | number:'.2' }} MB
+    </td>
+    <td *ngIf="uploader.options.isHTML5">
+      <div class="progress" role="progressbar" tabindex="0" aria-valuemin="0" aria-valuemax="100">
+                <span class="progress-meter" [ngStyle]="{ 'width': item.progress + '%' }">
+                  <span class="progress-meter-text">{{item.progress + '%' }}</span>
+                </span>
+      </div>
+    </td>
+    <td class="text-center">
+      <span *ngIf="item.isSuccess"><i class="icon icon-common icon-check-circle"></i></span>
+      <span *ngIf="item.isCancel"><i class="icon icon-common icon-ban"></i></span>
+      <span *ngIf="item.isError"><i class="icon icon-common icon-times-circle"></i></span>
+    </td>
+    <td nowrap>
+      <button type="button" class="btn btn-success btn-xs"
+              (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+        <span class="glyphicon glyphicon-upload"></span> Upload
+      </button>
+      <button type="button" class="btn btn-warning btn-xs"
+              (click)="item.cancel()" [disabled]="!item.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+      <button type="button" class="btn btn-danger btn-xs"
+              (click)="item.remove()">
+        <span class="glyphicon glyphicon-trash"></span> Remove
+      </button>
+    </td>
+    <td>
+      {{ response }}
+
+      <span *ngIf="item.isSuccess">
+      <div class="input-group-button">
+        <input id="batch-search-button" type="button" name="submit" value="1" (click)="batchSearch(response, 'button')"
+               class="button icon icon-functional">
+      </div>
+        </span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+

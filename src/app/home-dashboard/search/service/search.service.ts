@@ -14,6 +14,11 @@ export class SearchService {
     this.router.navigate(['search'], {queryParams: {query}});
   }
 
+  batchSearch(fileName: string) {
+    this._query = fileName;
+    this.router.navigate(['search'], {queryParams: {query: fileName, batchSearch: 'true'}});
+  }
+
   get query(): string {
     return this._query;
   }

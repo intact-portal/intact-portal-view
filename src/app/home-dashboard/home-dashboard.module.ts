@@ -14,6 +14,7 @@ import {AdvancedSearchComponent} from './advanced-search/advanced-search.compone
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FileUploadModule} from 'ng2-file-upload';
 import {QueryBuilderModule} from 'angular2-query-builder';
+import {BatchSearchComponent} from './batch-search/batch-search.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import {QueryBuilderModule} from 'angular2-query-builder';
         NewsComponent,
         DatasetArchiveComponent,
         AdvancedSearchComponent,
+        BatchSearchComponent,
     ]
 })
 export class HomeDashboardModule {

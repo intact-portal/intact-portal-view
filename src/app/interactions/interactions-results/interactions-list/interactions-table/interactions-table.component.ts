@@ -417,7 +417,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           data: 'aliasesA',
           defaultContent: ' ',
           title: this.columnNames[18],
-          width: '5%',
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
 
@@ -434,11 +433,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 const aliasType = data_s[2].slice(0, -2);
 
                 if (this.aliasesType.includes(aliasType)) {
-                  const item = '<div class="aliasesCell">' +
+                  return '<div class="aliasesCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
                     '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
                     '</div>';
-                  return item;
                 } else {
                   return  '<div class="aliasesCell">' +
                     '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
@@ -474,11 +472,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 const aliasType = data_s[2].slice(0, -2);
 
                 if (this.aliasesType.includes(aliasType)) {
-                  const item = '<div class="aliasesCell">' +
+                  return '<div class="aliasesCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
                     '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
                     '</div>';
-                  return item;
                 } else {
                   return  '<div class="aliasesCell">' +
                     '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
@@ -515,7 +512,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
-                console.log(d);
                 // figure legend (Supp fig 5Ii)
                 const data_s = d.split('(');
                 const annotationType = data_s[0].trim();

@@ -421,9 +421,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
 
-              const html = '<div class="myList">';
-              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+              const html = '<div class="aliasesList">';
+              const loadMoreButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
 
@@ -434,14 +434,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 const aliasType = data_s[2].slice(0, -2);
 
                 if (this.aliasesType.includes(aliasType)) {
-                  const item = '<div class="cell">' +
-                    '<span class="detailsCell">' + aliasName + '</span> ' +
-                    '<span class="detailsAliasesCell">' + aliasType + '</span>' +
+                  const item = '<div class="aliasesCell">' +
+                    '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
+                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
                     '</div>';
                   return item;
                 } else {
-                  return  '<div class="cell">' +
-                    '<span class="detailsCell">' + aliasName + '</span>' +
+                  return  '<div class="aliasesCell">' +
+                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
                     '</div>';
                 }
               }.bind(this)).join('');
@@ -462,8 +462,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             if (type === 'display' && data != null) {
 
               const html = '<div class="aliasesList">';
-              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+              const loadMoreButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
 
@@ -474,14 +474,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 const aliasType = data_s[2].slice(0, -2);
 
                 if (this.aliasesType.includes(aliasType)) {
-                  const item = '<div class="cell">' +
-                              '<span class="detailsCell">' + aliasName + '</span> ' +
-                              '<span class="detailsAliasesCell">' + aliasType + '</span>' +
-                              '</div>';
+                  const item = '<div class="aliasesCell">' +
+                    '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
+                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
+                    '</div>';
                   return item;
                 } else {
-                  return  '<div class="cell">' +
-                    '<span class="detailsCell">' + aliasName + '</span>' +
+                  return  '<div class="aliasesCell">' +
+                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
                     '</div>';
                 }
               }.bind(this)).join('');

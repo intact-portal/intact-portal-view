@@ -73,12 +73,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'Aliases B',
     'Feature count',
     'Parameters',
-    'Comments A',
-    'Comments B',
-    'Cautions'
+    'Annotations A',
+    'Annotations B',
+    'Interaction Annotations'
   ];
 
-  private _aliasestype: string[] = [
+  private _aliasesType: string[] = [
     'gene name',
     'gene name synonym',
     'isoform synonym',
@@ -92,6 +92,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'drug mixture brand name'
     ];
 
+  private _annotationsTypes: string[] = [
+    'figure legend',
+    'comment',
+    'caution'
+  ];
   constructor(private route: ActivatedRoute) {
   }
 
@@ -436,11 +441,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
                 // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
                 const data_s = d.split('(');
-                const aliasName = data_s[0];
+                const aliasName = data_s[0].trim();
                 const aliasId = data_s[1];
                 const aliasType = data_s[2].slice(0, -2);
 
-                if (this.aliasestype.includes(aliasType)) {
+                if (this.aliasesType.includes(aliasType)) {
                   const item = '<div class="cell">' +
                     '<span class="detailsCell">' + aliasName + '</span> ' +
                     '<span class="detailsAliasesCell">' + aliasType + '</span>' +
@@ -468,7 +473,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
 
-              const html = '<div class="myList">';
+              const html = '<div class="aliasesList">';
               const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
               const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
@@ -476,11 +481,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
                 // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
                 const data_s = d.split('(');
-                const aliasName = data_s[0];
+                const aliasName = data_s[0].trim();
                 const aliasId = data_s[1];
                 const aliasType = data_s[2].slice(0, -2);
 
-                if (this.aliasestype.includes(aliasType)) {
+                if (this.aliasesType.includes(aliasType)) {
                   const item = '<div class="cell">' +
                               '<span class="detailsCell">' + aliasName + '</span> ' +
                               '<span class="detailsAliasesCell">' + aliasType + '</span>' +
@@ -516,33 +521,124 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           defaultContent: ' ',
           title: this.columnNames[22],
           render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return  '<div>' +
-                          '<span class="detailsCell">' + d.substring(d.indexOf('(') + 1, d.indexOf(')')) + '</span>' +
-                        '</div>';
-              }).join('');
+            if (type === 'display' && data !== null) {
+              const html = '<div class="annotationsList">';
+              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+
+              const items = $.map(data, function (d, i) {
+                console.log(d);
+                // figure legend (Supp fig 5Ii)
+                const data_s = d.split('(');
+                const annotationType = data_s[0].trim();
+                const description = data_s[1].slice(0, -1);
+
+                if (annotationType === 'comment') {
+                  return '<div class="cell">' +
+                    '<span class="detailsCommentsCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                } else {
+                  return '<div class="cell">' +
+                    '<span class="detailsAllCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                }
+              }.bind(this)).join('');
+
+              if (data.length > 2) {
+                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+              } else {
+                return html.concat(items).concat('</div>');
+              }
             }
-          }
+          }.bind(this)
         },
         {
           data: 'annotationsB',
           defaultContent: ' ',
           title: this.columnNames[23],
           render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return  '<div>' +
-                          '<span class="detailsCell">' + d.substring(d.indexOf('(') + 1, d.indexOf(')')) + '</span>' +
-                        '</div>';
-              }).join('');
+            if (type === 'display' && data !== null) {
+              const html = '<div class="annotationsList">';
+              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+
+              const items = $.map(data, function (d, i) {
+                // figure legend (Supp fig 5Ii)
+                const data_s = d.split('(');
+                const annotationType = data_s[0].trim();
+                const description = data_s[1].slice(0, -1);
+
+                if (annotationType === 'comment') {
+                  return '<div class="cell">' +
+                    '<span class="detailsCommentsCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                } else {
+                  return '<div class="cell">' +
+                    '<span class="detailsAllCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                }
+              }.bind(this)).join('');
+
+              if (data.length > 2) {
+                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+              } else {
+                return html.concat(items).concat('</div>');
+              }
             }
-          }
+          }.bind(this)
         },
         {
-          data: 'cautions',
+          data: 'annotations',
           defaultContent: ' ',
-          title: this.columnNames[24]
+          title: this.columnNames[24],
+          render: function (data, type, row, meta) {
+            if (type === 'display' && data !== null) {
+
+              const html = '<div class="annotationsList">';
+              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+
+              const items = $.map(data, function (d, i) {
+              console.log(d);
+                // figure legend (Supp fig 5Ii)
+                const data_s = d.split('(');
+                const annotationType = data_s[0].trim();
+                const description = data_s[1].slice(0, -1);
+
+                if (annotationType === this.annotationsTypes[0]) {
+                  return '<div class="cell">' +
+                    '<span class="detailsFigureLegendCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                } else if (annotationType === this.annotationsTypes[1]) {
+                  return '<div class="cell">' +
+                    '<span class="detailsCommentsCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                } else if (annotationType === this.annotationsTypes[2]) {
+                  return '<div class="cell">' +
+                    '<span class="detailsCautionsCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                } else {
+                  return '<div class="cell">' +
+                    '<span class="detailsAllCell">' + annotationType + '</span> ' +
+                    '<span class="detailsCell">' + description + '</span>' +
+                    '</div>';
+                }
+              }.bind(this)).join('');
+
+              if (data.length > 2) {
+                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+              } else {
+                return html.concat(items).concat('</div>');
+              }
+            }
+          }.bind(this)
         }
       ],
       drawCallback: function( settings ) {
@@ -684,12 +780,20 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this._columnNames = value;
   }
 
-  get aliasestype(): string[] {
-    return this._aliasestype;
+  get aliasesType(): string[] {
+    return this._aliasesType;
   }
 
-  set aliasestype(value: string[]) {
-    this._aliasestype = value;
+  set aliasesType(value: string[]) {
+    this._aliasesType = value;
+  }
+
+  get annotationsTypes(): string[] {
+    return this._annotationsTypes;
+  }
+
+  set annotationsTypes(value: string[]) {
+    this._annotationsTypes = value;
   }
 
   get interactionSelected(): string {

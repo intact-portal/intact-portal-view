@@ -342,6 +342,16 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 3px 4px;
   white-space: nowrap;
 }
+.aliasesList {
+  padding: 2px;
+}
+.aliasesCell {
+  width: 250px;
+}
+.aliasesCellWidth {
+  max-width: 150px;
+  white-space: normal;
+}
 .detailsAliasesCell {
   background-color: #4ba77047;
   color: #0c6530;
@@ -349,7 +359,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   font-weight: bold;
   border-radius: 5px;
   padding: 2px 5px;;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 }
 
 .detailsFigureLegendCell {

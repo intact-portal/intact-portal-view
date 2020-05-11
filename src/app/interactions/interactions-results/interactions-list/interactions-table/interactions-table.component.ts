@@ -13,18 +13,6 @@ const baseURL = environment.intact_portal_ws;
   styleUrls: ['./interactions-table.component.css']
 })
 
-/*enum AliasesType {
-  ISOFORM_SYNONYM = 'isoform synonym',
-  AUTHOR_ASSIGNED = 'author assigned name',
-  LOCUS = 'locus name',
-  ORF = 'orf name',
-  COMPLEX_SYSTEMATIC = 'complex systematic name',
-  COMMERCIAL = 'commercial name',
-  IUPAC = 'iupac name',
-  DRUG_BRAND = 'drug brand name',
-  DRUG_MIXTURE = 'drug mixture brand name'
-}*/
-
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -603,7 +591,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
-              console.log(d);
                 // figure legend (Supp fig 5Ii)
                 const data_s = d.split('(');
                 const annotationType = data_s[0].trim();

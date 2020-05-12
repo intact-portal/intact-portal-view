@@ -494,12 +494,26 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'featureCount',
           defaultContent: ' ',
-          title: this.columnNames[20]
+          title: this.columnNames[20],
+          render: function (data, type, row, meta) {
+            if (type === 'display' && data != null) {
+              return '<div class="featureCell">' +
+                '<span>' + data + '</span>' +
+                '</div>';
+            }
+          }
         },
         {
           data: 'parameters',
           defaultContent: ' ',
-          title: this.columnNames[21]
+          title: this.columnNames[21],
+          render: function (data, type, row, meta) {
+            if (type === 'display' && data != null) {
+              return '<div class="parametersCell">' +
+                '<span>' + data + '</span>' +
+                '</div>';
+            }
+          }
         },
         {
           data: 'annotationsA',

@@ -377,15 +377,24 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 2px 5px;;
   white-space: nowrap;
 }
-
+.annotationsList {
+  padding: 0px 2px;
+}
+.annotationCell {
+  width: 380px;
+}
+.annotationCellWidth {
+  max-width: 300px;
+  white-space: normal;
+}
 .detailsCommentsCell {
   background-color: rgba(73, 165, 243, 0.29);
   color: #121d92;
   font-size: smaller;
   font-weight: bold;
   border-radius: 5px;
-  padding: 2px 5px;;
-  white-space: nowrap;
+  padding: 2px 5px;
+  /*white-space: nowrap;*/
 }
 
 .detailsCautionsCell {

@@ -396,7 +396,16 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 2px 5px;
   /*white-space: nowrap;*/
 }
-
+.annotationsInteractionList {
+  padding: 0px 2px;
+}
+.annotationInteractionCell {
+  width: 450px;
+}
+.annotationInteractionCellWidth {
+  max-width: 350px;
+  white-space: normal;
+}
 .detailsCautionsCell {
   background-color: #f9956552;
   color: #de4f09;

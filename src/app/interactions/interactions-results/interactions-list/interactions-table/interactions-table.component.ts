@@ -607,24 +607,24 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 const description = data_s[1].slice(0, -1);
 
                 if (annotationType === this.annotationsTypes[0]) {
-                  return '<div class="annotationCell">' +
+                  return '<div class="annotationInteractionCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsFigureLegendCell">' + annotationType + '</span></div> ' +
-                    '<div class="detailsCell annotationCellWidth">' + description + '</div>' +
+                    '<div class="detailsCell annotationInteractionCellWidth">' + description + '</div>' +
                     '</div>';
                 } else if (annotationType === this.annotationsTypes[1]) {
-                  return '<div class="annotationCell">' +
+                  return '<div class="annotationInteractionCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsCommentsCell">' + annotationType + '</span></div> ' +
-                    '<div class="detailsCell annotationCellWidth">' + description + '</div>' +
+                    '<div class="detailsCell annotationInteractionCellWidth">' + description + '</div>' +
                     '</div>';
                 } else if (annotationType === this.annotationsTypes[2]) {
-                  return '<div class="annotationCell">' +
+                  return '<div class="annotationInteractionCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsCautionsCell">' + annotationType + '</span></div> ' +
-                    '<div class="detailsCell annotationCellWidth">' + description + '</div>' +
+                    '<div class="detailsCell annotationInteractionCellWidth">' + description + '</div>' +
                     '</div>';
                 } else {
-                  return '<div class="annotationCell">' +
+                  return '<div class="annotationInteractionCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsAllCell">' + annotationType + '</span></div> ' +
-                    '<div class="detailsCell annotationCellWidth">' + description + '</div>' +
+                    '<div class="detailsCell annotationInteractionCellWidth">' + description + '</div>' +
                     '</div>';
                 }
               }.bind(this)).join('');

@@ -36,7 +36,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   columnView = 'interactors_columnView';
 
-  columnNames: string[] = [
+  private _columnNames: string[] = [
     'Select',
     'Accession',
     'Name',
@@ -48,6 +48,20 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     'Alternative Ids',
     'Interactions found in current search',
     'Total interactions in all IntAct'
+  ];
+
+  private _aliasesType: string[] = [
+    'gene name',
+    'gene name synonym',
+    'isoform synonym',
+    'author assigned name',
+    'locus name',
+    'orf name',
+    'complex systematic name',
+    'commercial name',
+    'iupac name',
+    'drug brand name',
+    'drug mixture brand name'
   ];
 
   constructor(private route: ActivatedRoute) {
@@ -141,6 +155,39 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         document.dispatchEvent(interactorSelectedEvent);
       }
     }.bind(this));
+
+    $('#interactorsTable tbody').on('click', 'button.showMore', function () {
+      const table: any = $('#interactorsTable');
+      const interactionsT = table.DataTable();
+
+      const rowIndex = $(this).parents('tr');
+      const row = interactionsT.row(rowIndex).node();
+      const col = $('#' + this.id).data('col');
+
+      const dataCell = interactionsT.cell(row, col).data();
+      interactionsT.cell(row, col).data(dataCell);
+
+      $('button#' + this.id + '.showMore').hide();
+      $('button#' + this.id + '.showLess').show();
+    });
+
+    $('#interactorsTable tbody').on('click', 'button.showLess', function () {
+      // tslint:disable-next-line:no-shadowed-variable
+      const table: any = $('#interactorsTable');
+      const interactionsT = table.DataTable();
+
+      const rowIndex = $(this).parents('tr');
+      const row = interactionsT.row(rowIndex).node();
+      const col = $('#' + this.id).data('col');
+
+      const htmlCollection = row.children[col].children[0].children;
+      for (let i = htmlCollection.length - 1; i >= 2; --i) {
+        htmlCollection[i].remove();
+      }
+
+      $('button#' + this.id + '.showMore').show();
+      $('button#' + this.id + '.showLess').hide();
+    });
   }
 
   private initDataTable(): void {
@@ -224,42 +271,125 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           defaultContent: ' ',
           title: this.columnNames[7],
           render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data,
-                function (d, i) {
-                  return '<div class="margin-bottom-medium">' +
-                    '<span class="detailsCell">' + d + '</span> ' +
+            if (type === 'display' && data != null) {
+
+              const html = '<div class="aliasesList">';
+              const loadMoreButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+
+              const items = $.map(data, function (d, i) {
+
+                // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
+                const data_s = d.split('(');
+                const aliasName = data_s[0].trim();
+                const aliasId = data_s[1];
+                const aliasType = data_s[2].slice(0, -2);
+
+                if (this.aliasesType.includes(aliasType)) {
+                  return '<div class="aliasesCell">' +
+                    '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
+                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
                     '</div>';
-                }).join('');
+                } else {
+                  return  '<div class="aliasesCell">' +
+                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
+                    '</div>';
+                }
+              }.bind(this)).join('');
+
+              if (data.length > 2) {
+                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+              } else {
+                return html.concat(items).concat('</div>');
+              }
             }
-          }
+          }.bind(this)
         },
         {
           data: 'interactorAltIds',
           defaultContent: ' ',
           title: this.columnNames[8],
           render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data,
-                function (d, i) {
-                  return '<div class="margin-bottom-medium">' +
-                    '<span class="detailsCell">' + d + '</span> ' +
+            if (type === 'display' && data != null) {
+              const html = '<div class="aliasesList">';
+              const loadMoreButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+
+              const items = $.map(data, function (d, i) {
+
+                // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
+                const data_s = d.split('(');
+                const altId = data_s[0].trim();
+                const database = data_s[1].slice(0, -1).trim();
+
+                return '<div class="aliasesCell">' +
+                    '<div class="detailsCell aliasesCellWidth">' + altId + '</div> ' +
                     '</div>';
-                }).join('');
+              }).join('');
+
+              if (data.length > 2) {
+                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
+              } else {
+                return html.concat(items).concat('</div>');
+              }
             }
           }
         },
         {
           data: 'interactionSearchCount',
           defaultContent: ' ',
-          title: this.columnNames[9]
+          title: this.columnNames[9],
+          render: function (data, type, row, meta) {
+            if (type === 'display' && data != null) {
+              return '<div class="alignCell">' +
+                '<span>' + data + '</span>' +
+                '</div>';
+            }
+          }
         },
         {
           data: 'interactionCount',
           defaultContent: ' ',
-          title: this.columnNames[10]
+          title: this.columnNames[10],
+          render: function (data, type, row, meta) {
+            if (type === 'display' && data != null) {
+              return '<div class="alignCell">' +
+                '<span>' + data + '</span>' +
+                '</div>';
+            }
+          }
         }
-      ]
+      ],
+      drawCallback: function( settings ) {
+        const api = this.api();
+        api.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+          const d = this.data();
+          const n = this.node();
+
+          if (d.interactorAlias != null) {
+            const htmlCollection = n.children[7].children[0].children;
+            for (let i = htmlCollection.length - 1; i >= 2; --i) {
+              htmlCollection[i].remove();
+            }
+
+            $('button#row' + n.sectionRowIndex + 'col7.showMore').show();
+            $('button#row' + n.sectionRowIndex + 'col7.showLess').hide();
+          }
+          if (d.interactorAltIds != null) {
+            const htmlCollection = n.children[8].children[0].children;
+            for (let i = htmlCollection.length - 1; i >= 2; --i) {
+              htmlCollection[i].remove();
+            }
+
+            $('button#row' + n.sectionRowIndex + 'col8.showMore').show();
+            $('button#row' + n.sectionRowIndex + 'col8.showLess').hide();
+          }
+        });
+      }
     });
   }
 
@@ -353,6 +483,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     this._miScoreMax = value;
   }
 
+  get columnNames(): string[] {
+    return this._columnNames;
+  }
+
+  set columnNames(value: string[]) {
+    this._columnNames = value;
+  }
+
   get intraSpeciesFilter(): boolean {
     return this._intraSpeciesFilter;
   }
@@ -375,5 +513,13 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   set interactorSelected(value: string) {
     this._interactorSelected = value;
+  }
+
+  get aliasesType(): string[] {
+    return this._aliasesType;
+  }
+
+  set aliasesType(value: string[]) {
+    this._aliasesType = value;
   }
 }

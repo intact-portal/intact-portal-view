@@ -499,7 +499,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[20],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
-              return '<div class="featureCell">' +
+              return '<div class="alignCell">' +
                 '<span>' + data + '</span>' +
                 '</div>';
             }

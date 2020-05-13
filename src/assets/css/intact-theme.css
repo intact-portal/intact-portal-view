@@ -365,7 +365,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   width: 100px;
   overflow: auto;
 }
-.featureCell {
+.alignCell {
   text-align: center;
 }
 .detailsFigureLegendCell {

@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SearchService} from './service/search.service';
 import {environment} from '../../../environments/environment';
-import {FileUploader} from 'ng2-file-upload';
 
 declare const Bloodhound;
 declare const $: any;
@@ -35,7 +34,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   private searchSuggestions(): void {
 
     const interactorsData = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('interactorAc'),
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
         url: `${baseURL}` + '/interactor/findInteractor/%QUERY',
@@ -48,7 +47,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     interactorsData.initialize();
 
     const interactionsData = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('authors'),
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
         url: `${baseURL}` + '/interaction/findInteractions/%QUERY',
@@ -131,6 +130,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       // },
       {
         name: 'interactors',
+        limit: 20,
         source: interactorsData,
         display: function (item) {
          return item.interactorAc
@@ -162,6 +162,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       },
       {
         name: 'interactions',
+        limit: 20,
         source: interactionsData,
         display: function (item) {
           return item.ac;

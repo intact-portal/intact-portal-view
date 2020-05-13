@@ -189,14 +189,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
       const rowIndex = $(this).parents('tr');
       const row = interactionsT.row(rowIndex).node();
-      const rowData = interactionsT.row(rowIndex).data();
-      const col = $('#row' + rowData.binaryInteractionId).data('col');
+      const col = $('#' + this.id).data('col');
 
       const dataCell = interactionsT.cell(row, col).data();
       interactionsT.cell(row, col).data(dataCell);
 
-      $('button#row' + rowData.binaryInteractionId + '.showMore').hide();
-      $('button#row' + rowData.binaryInteractionId + '.showLess').show();
+      $('button#' + this.id + '.showMore').hide();
+      $('button#' + this.id + '.showLess').show();
     });
 
     $('#interactionsTable tbody').on('click', 'button.showLess', function () {
@@ -206,16 +205,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
       const rowIndex = $(this).parents('tr');
       const row = interactionsT.row(rowIndex).node();
-      const rowData = interactionsT.row(rowIndex).data();
-      const col = $('#row' + rowData.binaryInteractionId).data('col');
+      const col = $('#' + this.id).data('col');
 
       const htmlCollection = row.children[col].children[0].children;
       for (let i = htmlCollection.length - 1; i >= 2; --i) {
         htmlCollection[i].remove();
       }
 
-      $('button#row' + rowData.binaryInteractionId + '.showMore').show();
-      $('button#row' + rowData.binaryInteractionId + '.showLess').hide();
+      $('button#' + this.id + '.showMore').show();
+      $('button#' + this.id + '.showLess').hide();
     });
   }
 
@@ -421,8 +419,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             if (type === 'display' && data != null) {
 
               const html = '<div class="aliasesList">';
-              const loadMoreButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+              const loadMoreButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
 
@@ -460,8 +460,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             if (type === 'display' && data != null) {
 
               const html = '<div class="aliasesList">';
-              const loadMoreButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div class="aliasesList"> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+              const loadMoreButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div class="aliasesList"> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
 
@@ -522,8 +524,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display' && data !== null) {
               const html = '<div class="annotationsList">';
-              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+              const loadMoreButton = '<div> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
                 // figure legend (Supp fig 5Ii)
@@ -559,8 +563,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display' && data !== null) {
               const html = '<div class="annotationsList">';
-              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+              const loadMoreButton = '<div> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
                 // figure legend (Supp fig 5Ii)
@@ -597,8 +603,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             if (type === 'display' && data !== null) {
 
               const html = '<div class="annotationsList">';
-              const loadMoreButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div> <button type="button" id="row' + row.binaryInteractionId + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+              const loadMoreButton = '<div> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
+              const loadLessButton = '<div> ' +
+                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
 
               const items = $.map(data, function (d, i) {
                 // figure legend (Supp fig 5Ii)
@@ -650,8 +658,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               htmlCollection[i].remove();
             }
 
-            $('button#row' + d.binaryInteractionId + '.showMore').show();
-            $('button#row' + d.binaryInteractionId + '.showLess').hide();
+            $('button#row' + n.sectionRowIndex + 'col18.showMore').show();
+            $('button#row' + n.sectionRowIndex + 'col18.showLess').hide();
           }
 
           if (d.aliasesB != null) {
@@ -660,12 +668,39 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               htmlCollection[i].remove();
             }
 
-            $('button#row' + d.binaryInteractionId + '.showMore').show();
-            $('button#row' + d.binaryInteractionId + '.showLess').hide();
+            $('button#row' + n.sectionRowIndex + 'col19.showMore').show();
+            $('button#row' + n.sectionRowIndex + 'col19.showLess').hide();
+          }
+
+          if (d.annotationsA != null) {
+            const htmlCollection = n.children[22].children[0].children;
+            for (let i = htmlCollection.length - 1; i >= 2; --i) {
+              htmlCollection[i].remove();
+            }
+
+            $('button#row' + n.sectionRowIndex + 'col22.showMore').show();
+            $('button#row' + n.sectionRowIndex + 'col22.showLess').hide();
+          }
+
+          if (d.annotationsB != null) {
+            const htmlCollection = n.children[23].children[0].children;
+            for (let i = htmlCollection.length - 1; i >= 2; --i) {
+              htmlCollection[i].remove();
+            }
+
+            $('button#row' + n.sectionRowIndex + 'col23.showMore').show();
+            $('button#row' + n.sectionRowIndex + 'col23.showLess').hide();
+          }
+          if (d.annotations != null) {
+            const htmlCollection = n.children[24].children[0].children;
+            for (let i = htmlCollection.length - 1; i >= 2; --i) {
+              htmlCollection[i].remove();
+            }
+
+            $('button#row' + n.sectionRowIndex + 'col24.showMore').show();
+            $('button#row' + n.sectionRowIndex + 'col24.showLess').hide();
           }
         });
-
-        // alert( 'DataTables has redrawn the table' );
       }
     });
 

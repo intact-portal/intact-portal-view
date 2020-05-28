@@ -106,7 +106,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
         highlight: true,
         minLength: 1
       },
-      // { Uncomment and adapt in the future when we have the term index in place
+      // { Uncomment and adapt in the future when we have the terms index in place
       //   name: 'terms',
       //   source: termsData,
       //   display: function (item) {

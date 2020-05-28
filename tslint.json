@@ -98,8 +98,8 @@
       "check-type"
     ],
 
-    "directive-selector": [true, "attribute", "iv", "camelCase"],
-    "component-selector": [true, "element", "iv", "kebab-case"],
+    "directive-selector": [true, "attribute", "ip", "camelCase"],
+    "component-selector": [true, "element", "ip", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'iv-news',
+  selector: 'ip-news',
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css', '../../app.component.css']
 })

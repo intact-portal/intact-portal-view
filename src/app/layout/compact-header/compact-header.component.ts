@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'iv-compact-header',
+  selector: 'ip-compact-header',
   templateUrl: './compact-header.component.html',
   styleUrls: ['./compact-header.component.css']
 })

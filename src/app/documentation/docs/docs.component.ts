@@ -5,7 +5,7 @@ import {Title} from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
-  selector: 'iv-docs',
+  selector: 'ip-docs',
   templateUrl: './docs.component.html',
   styleUrls: ['./docs.component.css']
 })
@@ -21,7 +21,7 @@ export class DocsComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Docs');
-    $('iv-docs').foundation();
+    $('ip-docs').foundation();
   }
 
 }

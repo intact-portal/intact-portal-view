@@ -5,7 +5,7 @@ import {ChangeContext, LabelType, Options} from 'ng5-slider';
 declare const $: any;
 
 @Component({
-  selector: 'iv-interactions-filters',
+  selector: 'ip-interactions-filters',
   templateUrl: './interactions-filters.component.html',
   styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css']
 })
@@ -64,7 +64,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    $('iv-interactions-filters').foundation();
+    $('ip-interactions-filters').foundation();
     $(window).trigger('load.zf.sticky');
   }
 

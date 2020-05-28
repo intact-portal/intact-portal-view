@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'iv-local-footer',
+  selector: 'ip-local-footer',
   templateUrl: './local-footer.component.html',
   styleUrls: ['./local-footer.component.css']
 })

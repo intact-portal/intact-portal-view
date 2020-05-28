@@ -4,7 +4,7 @@ import {Publication} from '../../../../shared/model/interaction-details/publicat
 declare const $: any;
 
 @Component({
-  selector: 'iv-publication',
+  selector: 'ip-publication',
   templateUrl: './publication.component.html',
   styleUrls: ['./publication.component.css']
 })

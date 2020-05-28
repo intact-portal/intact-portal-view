@@ -5,7 +5,7 @@ import {Title} from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
-  selector: 'iv-data-submission',
+  selector: 'ip-data-submission',
   templateUrl: './data-submission.component.html',
   styleUrls: ['./data-submission.component.css']
 })
@@ -17,6 +17,6 @@ export class DataSubmissionComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Data Submission');
-    $('iv-datasets').foundation();
+    $('ip-datasets').foundation();
   }
 }

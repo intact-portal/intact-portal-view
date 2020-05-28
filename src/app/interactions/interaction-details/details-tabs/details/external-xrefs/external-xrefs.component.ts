@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Xreferences} from '../../../../shared/model/interaction-details/xreferences.model';
 
 @Component({
-  selector: 'iv-external-xrefs',
+  selector: 'ip-external-xrefs',
   templateUrl: './external-xrefs.component.html',
   styleUrls: ['./external-xrefs.component.css']
 })

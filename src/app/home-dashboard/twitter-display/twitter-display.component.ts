@@ -8,7 +8,7 @@ declare global {
 }
 
 @Component({
-  selector: 'iv-twitter-display',
+  selector: 'ip-twitter-display',
   templateUrl: './twitter-display.component.html',
   styleUrls: ['./twitter-display.component.css']
 })

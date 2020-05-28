@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 declare const $: any;
 
 @Component({
-  selector: 'iv-tile-menu',
+  selector: 'ip-tile-menu',
   templateUrl: './tile-menu.component.html',
   styleUrls: ['./tile-menu.component.css']
 })
@@ -12,7 +12,7 @@ export class TileMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    $('iv-tile-menu').foundation();
+    $('ip-tile-menu').foundation();
   }
 
 }

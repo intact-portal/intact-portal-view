@@ -7,7 +7,7 @@ declare const $: any;
 const baseURL = environment.intact_portal_ws;
 
 @Component({
-  selector: 'iv-batch-search',
+  selector: 'ip-batch-search',
   templateUrl: './batch-search.component.html',
   styleUrls: ['./batch-search.component.css']
 })

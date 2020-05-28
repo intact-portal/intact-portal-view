@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
 
 @Component({
-  selector: 'iv-parameters',
+  selector: 'ip-parameters',
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.css']
 })

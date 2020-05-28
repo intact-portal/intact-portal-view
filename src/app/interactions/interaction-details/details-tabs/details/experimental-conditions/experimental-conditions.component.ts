@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'iv-experimental-conditions',
+  selector: 'ip-experimental-conditions',
   templateUrl: './experimental-conditions.component.html',
   styleUrls: ['./experimental-conditions.component.css']
 })

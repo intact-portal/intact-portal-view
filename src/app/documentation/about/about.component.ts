@@ -5,7 +5,7 @@ import {environment} from '../../../environments/environment';
 declare const $: any;
 
 @Component({
-  selector: 'iv-about',
+  selector: 'ip-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css']
 })
@@ -26,7 +26,7 @@ export class AboutComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - About');
-    $('iv-about').foundation();
+    $('ip-about').foundation();
   }
 
 }

@@ -5,7 +5,7 @@ import {environment} from '../../../../environments/environment';
 declare const $: any;
 
 @Component({
-  selector: 'iv-user-guide',
+  selector: 'ip-user-guide',
   templateUrl: './user-guide.component.html',
   styleUrls: ['./user-guide.component.css']
 })
@@ -18,7 +18,7 @@ export class UserGuideComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - User Guide');
-    $('iv-user-guide').foundation();
+    $('ip-user-guide').foundation();
   }
 
 }

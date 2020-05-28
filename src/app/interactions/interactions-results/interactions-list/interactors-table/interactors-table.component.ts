@@ -8,7 +8,7 @@ import {environment} from '../../../../../environments/environment';
 const baseURL = environment.intact_portal_ws;
 
 @Component({
-  selector: 'iv-interactors-table',
+  selector: 'ip-interactors-table',
   templateUrl: './interactors-table.component.html',
   styleUrls: ['./interactors-table.component.css']
 })

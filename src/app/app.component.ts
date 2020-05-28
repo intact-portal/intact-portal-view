@@ -4,7 +4,7 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 declare const $: any;
 
 @Component({
-  selector: 'iv-root',
+  selector: 'ip-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

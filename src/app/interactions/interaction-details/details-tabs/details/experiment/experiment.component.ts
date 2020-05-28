@@ -4,7 +4,7 @@ import {Experiment} from '../../../../shared/model/interaction-details/experimen
 declare const $: any;
 
 @Component({
-  selector: 'iv-experiment',
+  selector: 'ip-experiment',
   templateUrl: './experiment.component.html',
   styleUrls: ['./experiment.component.css']
 })

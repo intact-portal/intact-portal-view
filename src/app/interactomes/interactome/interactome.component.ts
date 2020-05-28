@@ -4,7 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'iv-interactome',
+  selector: 'ip-interactome',
   templateUrl: './interactome.component.html',
   styleUrls: ['./interactome.component.css']
 })

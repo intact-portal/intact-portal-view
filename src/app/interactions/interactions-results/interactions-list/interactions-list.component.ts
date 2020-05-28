@@ -3,7 +3,7 @@ import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/c
 declare const $: any;
 
 @Component({
-  selector: 'iv-interactions-list',
+  selector: 'ip-interactions-list',
   templateUrl: './interactions-list.component.html',
   styleUrls: ['./interactions-list.component.css']
 })
@@ -21,7 +21,7 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
-    $('iv-interactions-list').foundation();
+    $('ip-interactions-list').foundation();
   }
 
   ngAfterViewInit() {

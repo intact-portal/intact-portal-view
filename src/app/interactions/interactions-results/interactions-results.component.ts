@@ -7,7 +7,7 @@ import {InteractionsSearchResult} from '../shared/model/interactions-results/int
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 
 @Component({
-  selector: 'iv-interactions-results',
+  selector: 'ip-interactions-results',
   templateUrl: './interactions-results.component.html',
   styleUrls: ['./interactions-results.component.css']
 })

@@ -11,7 +11,7 @@ const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
 
 @Component({
-  selector: 'iv-dataset-archive',
+  selector: 'ip-dataset-archive',
   templateUrl: './dataset-archive.component.html',
   styleUrls: ['./dataset-archive.component.css']
 })

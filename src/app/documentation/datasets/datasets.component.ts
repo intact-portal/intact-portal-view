@@ -5,7 +5,7 @@ import {Title} from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
-  selector: 'iv-datasets',
+  selector: 'ip-datasets',
   templateUrl: './datasets.component.html',
   styleUrls: ['./datasets.component.css']
 })
@@ -20,7 +20,7 @@ export class DatasetsComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Datasets');
-    $('iv-datasets').foundation();
+    $('ip-datasets').foundation();
   }
 
 }

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ChangeDetectionStrategy, Change
 import * as $ from 'jquery';
 
 @Component({
-  selector: 'iv-column-toggle',
+  selector: 'ip-column-toggle',
   templateUrl: './column-toggle.component.html',
   styleUrls: ['./column-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

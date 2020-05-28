@@ -7,17 +7,17 @@
 <div class="row expanded">
 
   <div class="columns medium-12">
-    <iv-details-viewer *ngIf="interactionAc"
+    <ip-details-viewer *ngIf="interactionAc"
                        [interactionAc]="interactionAc"
                        [featureAc]="featureSelected"
-                       [participantsId]="participantsSelected"></iv-details-viewer>
+                       [participantsId]="participantsSelected"></ip-details-viewer>
   </div>
 
   <div class="columns medium-12">
-    <iv-details-tabs *ngIf="interactionAc"
+    <ip-details-tabs *ngIf="interactionAc"
                      [interactionAc]="interactionAc"
                      (featureChanged)="onFeatureSelectedChanged($event)"
-                     (participantChanged)="onParticipantSelectedChanged($event)"></iv-details-tabs>
+                     (participantChanged)="onParticipantSelectedChanged($event)"></ip-details-tabs>
   </div>
 
 </div>

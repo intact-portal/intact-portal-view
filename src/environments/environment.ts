@@ -27,7 +27,5 @@ export const environment = {
   intact_portal_support_url: EBI_BASE_URL + 'support/intact',
   intact_training_url: EBI_BASE_URL + 'intact/resources/training',
   intact_portal_ws: EBI_BASE_URL + '/intact/ws',
-  // TODO... below will be changed when have a graph server
-  // TODO check consistency too
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };

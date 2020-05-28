@@ -18,7 +18,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactorTab: boolean;
 
-  private _term: string;
+  private _terms: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
@@ -70,7 +70,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   ngOnInit() {
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
-        this.term = params.query;
+        this.terms = params.query;
         this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
@@ -204,11 +204,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       dom: '<"top"flip>rt<"bottom"ifp>',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/interaction/interactors/list/` + this.term,
+        url: `${baseURL}/interaction/interactors/list/`,
         type: 'POST',
         data: function (d) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
+          d.query = this.terms;
           d.batchSearch = this.batchSearchFilter;
           d.interactorSpecies = this.interactorSpeciesFilter;
           d.interactorType = this.interactorTypeFilter;
@@ -403,12 +404,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
    /** GETTERS AND SETTERS ** /
    /*************************/
 
-  get term(): string {
-    return this._term;
+  get terms(): string {
+    return this._terms;
   }
 
-  set term(value: string) {
-    this._term = value;
+  set terms(value: string) {
+    this._terms = value;
   }
 
   get batchSearchFilter(): boolean {

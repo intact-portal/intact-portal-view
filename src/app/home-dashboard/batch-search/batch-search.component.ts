@@ -27,6 +27,10 @@ export class BatchSearchComponent {
       disableMultipart: false
     });
 
+    this.uploader.onBeforeUploadItem = (item) => {
+      item.withCredentials = false;
+    }
+
     this.hasBaseDropZoneOver = false;
     this.response = '';
     this.uploader.response.subscribe(res => this.response = res);

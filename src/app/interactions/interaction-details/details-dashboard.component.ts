@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'iv-details-dashboard',
+  selector: 'ip-details-dashboard',
   templateUrl: './details-dashboard.component.html',
   styleUrls: ['./details-dashboard.component.css']
 })

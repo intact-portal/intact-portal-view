@@ -8,7 +8,7 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 
 
 @Component({
-  selector: 'iv-interactions-viewer',
+  selector: 'ip-interactions-viewer',
   templateUrl: './interactions-viewer.component.html',
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -44,7 +44,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    $('iv-interactions-viewer').foundation();
+    $('ip-interactions-viewer').foundation();
     this.graph = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
 
     this.route.queryParams

@@ -9,21 +9,21 @@
 
   <div class="tabs-content" data-tabs-content="details-tabs">
     <div class="tabs-panel is-active" id="interactionDetails">
-      <iv-interaction-details *ngIf="interactionDetails"
-                              [interactionDetails]="interactionDetails"></iv-interaction-details>
+      <ip-interaction-details *ngIf="interactionDetails"
+                              [interactionDetails]="interactionDetails"></ip-interaction-details>
     </div>
 
     <div class="tabs-panel" id="participants">
-      <iv-participant-details [participantTab]="isTabParticipantActive"
+      <ip-participant-details [participantTab]="isTabParticipantActive"
                               [interactionAc]="interactionAc"
-                              (participantChanged)="onParticipantSelectedChanged($event)"></iv-participant-details>
+                              (participantChanged)="onParticipantSelectedChanged($event)"></ip-participant-details>
 
     </div>
 
     <div class="tabs-panel" id="features">
-      <iv-features-details [interactionAc]="interactionAc"
+      <ip-features-details [interactionAc]="interactionAc"
                            [featureTab]="isTabFeatureActive"
-                           (featureChanged)="onFeatureSelectedChanged($event)"></iv-features-details>
+                           (featureChanged)="onFeatureSelectedChanged($event)"></ip-features-details>
     </div>
 
   </div>

@@ -5,7 +5,7 @@ import {InteractionsDetailsService} from '../../shared/service/interactions-deta
 declare const $: any;
 
 @Component({
-  selector: 'iv-details-tabs',
+  selector: 'ip-details-tabs',
   templateUrl: './details-tabs.component.html',
   styleUrls: ['./details-tabs.component.css']
 })
@@ -25,7 +25,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   constructor(private interactionsDetailsService: InteractionsDetailsService) { }
 
   ngOnInit() {
-    $('iv-details-tabs').foundation();
+    $('ip-details-tabs').foundation();
 
     this.requestInteractionDetails();
   }

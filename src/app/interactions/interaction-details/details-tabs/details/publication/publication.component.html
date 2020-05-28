@@ -29,12 +29,12 @@
     </div>
 
     <div id="extXrefs" class="margin-top-large" *ngIf="publication.publicationXrefs.length !== 0">
-      <iv-external-xrefs *ngIf="publication.publicationXrefs"
-                         [xrefs]="publication.publicationXrefs"></iv-external-xrefs>
+      <ip-external-xrefs *ngIf="publication.publicationXrefs"
+                         [xrefs]="publication.publicationXrefs"></ip-external-xrefs>
     </div>
     <div id="curationAnnotations" class="margin-top-large" *ngIf="publication.publicationAnnotations.length !== 0">
-      <iv-curation-annotations *ngIf="publication.publicationAnnotations"
-                               [annotations]="publication.publicationAnnotations"></iv-curation-annotations>
+      <ip-curation-annotations *ngIf="publication.publicationAnnotations"
+                               [annotations]="publication.publicationAnnotations"></ip-curation-annotations>
     </div>
   </div>
 

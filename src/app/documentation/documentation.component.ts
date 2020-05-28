@@ -4,7 +4,7 @@ import {Title} from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
-  selector: 'iv-documentation',
+  selector: 'ip-documentation',
   templateUrl: './documentation.component.html',
   styleUrls: ['./documentation.component.css']
 })
@@ -15,7 +15,7 @@ export class DocumentationComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Documentation');
-    $('iv-documentation').foundation();
+    $('ip-documentation').foundation();
   }
 
 }

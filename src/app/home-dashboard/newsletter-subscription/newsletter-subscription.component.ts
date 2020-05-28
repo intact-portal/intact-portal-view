@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'iv-newsletter-subscription',
+  selector: 'ip-newsletter-subscription',
   templateUrl: './newsletter-subscription.component.html',
   styleUrls: ['./newsletter-subscription.component.css']
 })

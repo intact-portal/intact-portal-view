@@ -1,5 +1,5 @@
-<iv-compact-header *ngIf="showCompactHeader; else elseBlock"></iv-compact-header>
-<ng-template #elseBlock><iv-expanded-header></iv-expanded-header></ng-template>
+<ip-compact-header *ngIf="showCompactHeader; else elseBlock"></ip-compact-header>
+<ng-template #elseBlock><ip-expanded-header></ip-expanded-header></ng-template>
 
 <!-- Suggested layout containers -->
 <section id="main-content-area" class="row margin-top-large margin-bottom-medium expanded" role="main">
@@ -9,4 +9,4 @@
   </section>
 </section>
 
-<iv-local-footer *ngIf="showFooter"></iv-local-footer>
+<ip-local-footer *ngIf="showFooter"></ip-local-footer>

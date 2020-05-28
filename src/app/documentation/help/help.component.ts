@@ -5,7 +5,7 @@ import {Title} from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
-  selector: 'iv-help',
+  selector: 'ip-help',
   templateUrl: './help.component.html',
   styleUrls: ['./help.component.css']
 })
@@ -15,7 +15,7 @@ export class HelpComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Help');
-    $('iv-help').foundation();
+    $('ip-help').foundation();
   }
 
 }

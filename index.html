@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <base href="https://ebi-intact.github.io/intact-view/">
-  <meta charset="utf-8"/>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="https://intact-portal.github.io/intact-portal/">
   <title>The European Bioinformatics Institute &lt; EMBL-EBI</title>
-  <base href="/">
   <meta name="description" content="EMBL-EBI"/><!-- Describe what this page is about -->
   <meta name="keywords" content="bioinformatics, europe, institute"/>
   <!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
@@ -15,7 +16,8 @@
   <meta name="theme-color" content="#70BDBD"/> <!-- Android Chrome mobile browser tab color -->
 
   <!-- Add information on the life cycle of this page -->
-  <meta name="ebi:owner" content="Molecular Interactions-Team (intact-help@ebi.ac.uk)"/> <!-- Who should be contacted about changes -->
+  <meta name="ebi:owner" content="Molecular Interactions-Team (intact-help@ebi.ac.uk)"/>
+  <!-- Who should be contacted about changes -->
   <meta name="ebi:review-cycle" content="30"/> <!-- In days, how often should the content be reviewed -->
   <meta name="ebi:last-review" content="2015-12-20"/> <!-- The last time the content was reviewed -->
   <meta name="ebi:expiry" content="2016-01-20"/> <!-- When this content is no longer relevant -->
@@ -64,16 +66,6 @@
   <link rel="stylesheet" href="assets/css/custom_typeahead.css">
   <link rel="stylesheet" href="assets/css/intact-theme.css">
 
-
-  <!-- Use this CSS file for any custom styling -->
-  <!--
-    <link rel="stylesheet" href="css/custom.css" type="text/css" media="all" />
-  -->
-
-  <!-- If you have a custom header image or colour -->
-  <meta name="ebi:masthead-color" content="#000" />
-  <meta name="ebi:masthead-image" content="assets/images/intact-background-2.png"/>
-
   <!-- end CSS-->
 </head>
 
@@ -88,23 +80,23 @@
 </div>
 
 <!-- EBI GLOBAL MASTHEAD SECTION -->
+<!-- This layout will be purged but we use this markup as a preaload placeholder -->
 <header id="masthead-black-bar" class="clearfix masthead-black-bar">
 </header>
 
 <div id="content">
-  <iv-root>Loading...</iv-root>
+  <ip-root>Loading...</ip-root>
+
+  <div id="elixir-banner"
+       data-color="blue"
+       data-name="This service"
+       data-description="IntAct is an ELIXIR Core Data Resource"
+       data-use-cdr-logo="true"
+       data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
+       data-use-basic-styles="true"></div>
+  <script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/elixirBanner.js"></script>
 </div>
 <!-- End suggested layout containers / #content -->
-
-<div id="elixir-banner"  class="margin-top-small margin-bottom-small"
-     data-color="blue"
-     data-name="This service"
-     data-description="IntAct is an ELIXIR Core Data Resource"
-     data-use-cdr-logo="true"
-     data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
-     data-use-basic-styles="true"></div>
-<script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/elixirBanner.js"></script>
-
 
 <footer>
   <!--<script src="assets/html/global-footer.html"></script>-->
@@ -115,8 +107,10 @@
 
     <section id="ebi-footer-meta" class="ebi-footer-meta row">
       <!-- Footer meta will be automatically inserted by footer.js -->
-      <p class="address">EMBL-EBI, Wellcome Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p>
-      <p>Copyright © EMBL-EBI 2016 | EBI is an outstation of the <a href="http://www.embl.org/">European Molecular Biology Laboratory</a> | <a href="https://ebiwd.github.io/about/terms-of-use">Terms of use</a></p>
+      <p class="address">EMBL-EBI, Wellcome Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44
+        (0)1223 49 44 44</p>
+      <p>Copyright © EMBL-EBI 2020 | EBI is an outstation of the <a href="http://www.embl.org/">European Molecular
+        Biology Laboratory</a> | <a href="https://ebiwd.github.io/about/terms-of-use">Terms of use</a></p>
     </section>
   </div>
 

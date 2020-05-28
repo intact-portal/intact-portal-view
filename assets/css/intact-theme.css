@@ -1,7 +1,3 @@
-/*.masthead{*/
-/*  background-color: #648880;*/
-/*}*/
-
 /*
   Colour palette: IntAct-Portal
 */
@@ -16,11 +12,11 @@ a.label,
 a:hover,
 a:focus,
 a:active {
-  color: rgb(107,72,107);
+  color: #68297c;
 }
 
 h1 { color: #312146; }
-h2 { color: rgb(107,72,107); }
+h2 { color: #68297c; }
 h3 { color: #444444; }
 
 a.special { background-color: #A699B7; }
@@ -30,77 +26,151 @@ a.special { background-color: #A699B7; }
 .tabs-title > a:hover,
 .button,
 .button.primary {
-  background-color: rgb(107,72,107);
+  background-color: #68297C;
 }
 a.tag:hover { color: #fff; }
 
 .tabs-title > a:hover,
 .button.hover,
 .button.primary:hover,
-.button.primary:focus { background: rgba(107,72,107,.9); }
+.button.primary:focus { background: rgba(104,41,124,.9); }
 .tabs-title > a:focus,
 .tabs-title > a[aria-selected='true'] {
   color: #fff;
-  background: rgb(107,72,107); }
+  background: rgb(104,41,124); }
 .tabs-title > a {
   color: #312146;
 }
-.masthead { background-color: rgb(107,72,107); }
+.masthead {
+  background-image: linear-gradient(#000000, #68297c);
+}
 
 /* end */
 
-/*IntAct tiles styling*/
-a.intact-background, .intact-background, .intact-background.button, .intact-background.button:hover, .intact-background.tag {
-  background: rgb(107,72,107);
+/*IntAct tiles and buttons styling*/
+a.intact-background,
+.intact-background,
+.intact-background.button,
+.intact-background.button:hover,
+.intact-background.tag {
+  background: #68297c;
 }
-
-/************** SEARCH SECTION *******************************/
-
-#search .tabs-panel {
-  background: #cec2d4 !important;
-}
-
-#search-tabs{
-  border: 1px solid #cec2d4;
-}
-
-#search .tabs-title > a {
-  font-size: 0.9rem;
-  color: #3e3e3e;
-}
-#search .tabs-title > a:hover {
-  background: #672e7b85;/*#7d96a75c; /*#57b2b787*/
-  color: #0a0a0a;
-}
-#search .tabs-title > a:focus,
-#search .tabs-title > a[aria-selected='true'] {
-  color: #3e3e3e;
-  background: rgba(90, 46, 110, 0.29);
-}
-
-.callout-advanced {
-  background-color: #f6f4f6;
-  border-radius: 5px;
-  border: 1px solid #CCC;
-}
-
-/************** END SEARCH SECTION *******************************/
-
 
 a.button {
-  color: #fff !important;
-  background: #6b486b;
+  color: #ffffff !important;
+  background: #68297c;
 }
 
-.button:focus, .button:hover, .button.hover {
-  background-color: #6b486bd6;
-  opacity: 0.8;
+.button:focus,
+.button:hover,
+.button.hover {
+  background-color: #68297c;
+  opacity: 0.9;
 }
+
+.button.disabled,
+.button.disabled:hover,
+.button.disabled:focus,
+.button[disabled],
+.button[disabled]:hover,
+.button[disabled]:focus {
+   background-color: #68297c;
+   color: #fefefe;
+}
+
+/* Accordion */
+.accordion-title {
+  position: relative;
+  display: block;
+  padding: 1.25rem 1rem;
+  border: 1px solid #e6e6e6;
+  border-bottom: 0;
+  font-size: 0.875rem;
+  line-height: 1;
+  color: #312146;
+}
+
+.accordion-item.is-active > .accordion-title {
+  background-color: #68297c;
+  color: #ffffff;
+}
+
+.accordion-item.is-active > .accordion-title:hover, .accordion-title:hover {
+  background-color: #68297c;
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.accordion-menu .is-accordion-submenu-parent:not(.has-submenu-toggle) > a::after {
+  display: block;
+  width: 0;
+  height: 0;
+  border: inset 6px;
+  content: '';
+  border-bottom-width: 0;
+  border-top-style: solid;
+  border-color: #68297c transparent transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -3px;
+  right: 1rem;
+}
+
+a:visited {
+  color: #312146;
+}
+
+/* Progress bar */
+.progress-meter {
+  position: relative;
+  display: block;
+  width: 0;
+  height: 100%;
+  background-color: #68297c;
+}
+
+.progress {
+  height: 1rem;
+  margin-bottom: 0;
+  border-radius: 0;
+  background-color: #b7b8b8;
+}
+
 
 /************** Feature Dataset SECTION *******************************/
 
 .archive a{
   border-bottom-style: none;
+}
+
+/************** Scrollbar *******************************/
+
+/* TODO adjust the color of the scroll */
+.scrollbar {
+  background-color: #F5F5F5;
+  /*float: left;*/
+  /*height: 200px;*/
+  /*margin-bottom: 25px;*/
+  /*margin-left: 22px;*/
+  /*margin-top: 40px;*/
+  /*width: 65px;*/
+  scrollbar-width: thin;
+  scrollbar-color: #90A4AE #CFD8DC;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #CFD8DC;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #90A4AE;
+  border-radius: 6px;
+  border: 2px solid #CFD8DC;
 }
 
 /**************************************************************/
@@ -167,17 +237,27 @@ a.button {
 /************** HOME PAGE SECTION *******************************/
 
 
-/* CONTRIBUTORS SECTION SYTLE */
+/* LOCAL NAVIGATION DROPDOWN */
 
-.contributors-container {
-  background-color: #EEE;
+.dropdown.menu > li.is-active > a {
+  background-color: rgba(34, 34, 34, 0.9);
+  color: #f8f8f8;
 }
 
-/* RIGHT SECTION NEWS PANEL STYLE */
+.masthead nav ul li.active a,
+.masthead nav ul li a:active,
+.masthead ul li.active-trail a,
+.masthead ul li.active a:visited,
+.masthead ul li.active-trail a:visited {
+  font-weight: bold;
+}
 
-.news-panel {
-  background-color: white;
-  border-radius: 6px;
+.dropdown.menu > li.is-dropdown-submenu-parent a.active {
+  background-color: #f8f8f8;
+  color: #555;
+}
+.dropdown.menu > li.is-dropdown-submenu-parent > a.active::after {
+  border-color: #555 transparent transparent;
 }
 
 /*********** END HOME PAGE SECTION *******************************/
@@ -258,8 +338,13 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 /********* DATATABLES ROWs COMMON STYLE ********************/
 
 .detailsCell {
-  font-size: 14px;
+  font-size: small;
   display: inline-block;
+}
+
+.limitWidth {
+  max-width: 100px;
+  word-wrap: break-word;
 }
 
 .detailsAnnotationCell {
@@ -283,8 +368,6 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 }
 
 .detailsConfidencesCell {
-  background-color: #8d4cbd3d;
-  color: #42186d;
   font-size: small;
   font-weight: bold;
   border-radius: 5px;
@@ -292,6 +375,98 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   white-space: nowrap;
 }
 
+.detailsExpansionsCell {
+  background-color: rgba(99, 103, 189, 0.24);
+  color: #19236d;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px 4px;
+  white-space: nowrap;
+}
+.aliasesList {
+  padding: 0px 2px;
+}
+.aliasesCell {
+  width: 250px;
+}
+.aliasesCellWidth {
+  max-width: 150px;
+  white-space: normal;
+}
+.detailsAliasesCell {
+  background-color: #4ba77047;
+  color: #0c6530;
+  font-size: smaller;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;;
+  /*white-space: nowrap;*/
+}
+.parametersCell {
+  width: 100px;
+  overflow: auto;
+}
+.alignCell {
+  text-align: center;
+}
+.detailsFigureLegendCell {
+  background-color: #4ba77047;
+  color: #0c6530;
+  font-size: smaller;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;;
+  white-space: nowrap;
+}
+.annotationsList {
+  padding: 0px 2px;
+}
+.annotationCell {
+  width: 380px;
+}
+.annotationCellWidth {
+  max-width: 300px;
+  white-space: normal;
+}
+.detailsCommentsCell {
+  background-color: rgba(73, 165, 243, 0.29);
+  color: #121d92;
+  font-size: smaller;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;
+  /*white-space: nowrap;*/
+}
+.annotationsInteractionList {
+  padding: 0px 2px;
+}
+.annotationInteractionCell {
+  width: 450px;
+}
+.annotationInteractionCellWidth {
+  max-width: 350px;
+  white-space: normal;
+}
+.detailsCautionsCell {
+  background-color: #f9956552;
+  color: #de4f09;
+  font-size: smaller;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;;
+  white-space: nowrap;
+}
+
+.detailsAllCell {
+  background-color: #8da0ad54;
+  color: #46555f;
+  font-size: smaller;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;;
+  white-space: nowrap;
+}
 
 .rowSelected {
   /*font-weight: bold;*/
@@ -304,6 +479,15 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   background-color: #305b7d66 !important;
   /*text-shadow: 1px 1px 0px #EEE;*/
   color: black;
+}
+
+button.showMore, button.showLess {
+  background-color: #67297cd6;
+  color: #f8f8f8;
+  font-size: smaller;
+  font-weight: bold;
+  padding: 2px 5px;
+  cursor: pointer;
 }
 
 /**************************************************************/

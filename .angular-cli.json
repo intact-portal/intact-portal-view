@@ -20,6 +20,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "iv",
       "styles": [
+        "../node_modules/angular-archwizard/archwizard.css",
         "styles.css"
       ],
       "scripts": [

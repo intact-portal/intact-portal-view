@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare const $: any;
+
 @Component({
   selector: 'ip-contributors',
   templateUrl: './contributors.component.html',
@@ -10,6 +12,7 @@ export class ContributorsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('ip-contributors').foundation();
   }
 
 }

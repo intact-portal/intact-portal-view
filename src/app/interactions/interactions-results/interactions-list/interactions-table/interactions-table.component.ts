@@ -19,7 +19,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactionTab: boolean;
 
-  private _term: string;
+  private _terms: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
@@ -92,10 +92,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
-        this.term = params.query;
+        this.terms = params.query;
         this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
-        this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
+        this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
         this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
         this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
@@ -232,11 +232,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       dom: '<"top"flip>rt<"bottom"ifp>',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/interaction/list/` + this.term,
+        url: `${baseURL}/interaction/list/`,
         type: 'POST',
         data: function (d) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
+          d.query = this.terms;
           d.batchSearch = this.batchSearchFilter;
           d.interactorSpecies = this.interactorSpeciesFilter;
           d.interactorType = this.interactorTypeFilter;
@@ -716,12 +717,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   }
 
 
-  get term(): string {
-    return this._term;
+  get terms(): string {
+    return this._terms;
   }
 
-  set term(value: string) {
-    this._term = value;
+  set terms(value: string) {
+    this._terms = value;
   }
 
   get batchSearchFilter(): boolean {

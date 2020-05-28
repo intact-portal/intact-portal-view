@@ -15,7 +15,7 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 })
 export class InteractionsViewerComponent implements OnInit, OnChanges {
 
-  private _term: string;
+  private _terms: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
@@ -50,7 +50,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.route.queryParams
       .filter(params => params.query)
       .subscribe(params => {
-        this.term = params.query;
+        this.terms = params.query;
         this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
@@ -82,7 +82,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   private requestIntactNetworkDetails() {
     this.networkSearchService.getInteractionNetwork(
-      this.term,
+      this.terms,
       this.batchSearchFilter,
       this.interactorSpeciesFilter,
       this.interactorTypeFilter,
@@ -138,12 +138,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.graph.search(interactorName);
   }
 
-  get term(): string {
-    return this._term;
+  get terms(): string {
+    return this._terms;
   }
 
-  set term(value: string) {
-    this._term = value;
+  set terms(value: string) {
+    this._terms = value;
   }
 
   get batchSearchFilter(): boolean {

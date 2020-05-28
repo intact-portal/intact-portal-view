@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare const $: any;
+
 @Component({
   selector: 'ip-expanded-header',
   templateUrl: './expanded-header.component.html',
@@ -10,6 +12,7 @@ export class ExpandedHeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('ip-expanded-header').foundation();
   }
 
 }

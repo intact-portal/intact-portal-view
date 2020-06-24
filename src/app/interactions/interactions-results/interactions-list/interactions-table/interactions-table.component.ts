@@ -86,6 +86,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'caution'
   ];
   constructor(private route: ActivatedRoute) {
+  //  pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
   ngOnInit(): void {

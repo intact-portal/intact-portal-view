@@ -4,7 +4,7 @@ import {Title} from '@angular/platform-browser';
 import {InteractomesConstants} from './interactomes-constants';
 
 @Component({
-  selector: 'iv-interactomes',
+  selector: 'ip-interactomes',
   templateUrl: './interactomes.component.html',
   styleUrls: ['./interactomes.component.css']
 })

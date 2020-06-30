@@ -12,7 +12,7 @@ const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
 
 @Component({
-  selector: 'iv-featured-dataset',
+  selector: 'ip-featured-dataset',
   templateUrl: './featured-dataset.component.html',
   styleUrls: ['./featured-dataset.component.css', '../../app.component.css']
 })

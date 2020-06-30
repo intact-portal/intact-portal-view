@@ -1,6 +1,6 @@
 <div class="margin-top-large margin-bottom-large">
 
-  <!--  TODO make this bookmarkable like the documentation-->
+  <!--  TODO make this bookmarkable like the documentation, it needs to take into account the url params -->
   <ul class="tabs" data-tabs id="details-tabs">
     <li class="tabs-title is-active"><a href="#interactionDetails" aria-selected="true">Interaction Details</a></li>
     <li class="tabs-title"><a href="#participants">Participants</a></li>
@@ -9,21 +9,21 @@
 
   <div class="tabs-content" data-tabs-content="details-tabs">
     <div class="tabs-panel is-active" id="interactionDetails">
-      <iv-interaction-details *ngIf="interactionDetails"
-                              [interactionDetails]="interactionDetails"></iv-interaction-details>
+      <ip-interaction-details *ngIf="interactionDetails"
+                              [interactionDetails]="interactionDetails"></ip-interaction-details>
     </div>
 
     <div class="tabs-panel" id="participants">
-      <iv-participant-details [participantTab]="isTabParticipantActive"
+      <ip-participant-details [participantTab]="isTabParticipantActive"
                               [interactionAc]="interactionAc"
-                              (participantChanged)="onParticipantSelectedChanged($event)"></iv-participant-details>
+                              (participantChanged)="onParticipantSelectedChanged($event)"></ip-participant-details>
 
     </div>
 
     <div class="tabs-panel" id="features">
-      <iv-features-details [interactionAc]="interactionAc"
+      <ip-features-details [interactionAc]="interactionAc"
                            [featureTab]="isTabFeatureActive"
-                           (featureChanged)="onFeatureSelectedChanged($event)"></iv-features-details>
+                           (featureChanged)="onFeatureSelectedChanged($event)"></ip-features-details>
     </div>
 
   </div>

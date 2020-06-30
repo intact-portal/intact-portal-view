@@ -5,7 +5,7 @@ import {Title} from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
-  selector: 'iv-technical-corner',
+  selector: 'ip-technical-corner',
   templateUrl: './technical-corner.component.html',
   styleUrls: ['./technical-corner.component.css']
 })
@@ -19,7 +19,7 @@ export class TechnicalCornerComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Technical Corner');
-    $('iv-technical-corner').foundation();
+    $('ip-technical-corner').foundation();
   }
 
 }

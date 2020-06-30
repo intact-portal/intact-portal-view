@@ -10,8 +10,8 @@ const baseURL = environment.intact_portal_ws;
 export class InteractionsDetailsService {
 
   private _totalElements = 0;
-  private _page: number = 1;
-  private _pageSize: number = 20;
+  private _page = 1;
+  private _pageSize = 20;
 
   constructor(private http: HttpClient) { }
 

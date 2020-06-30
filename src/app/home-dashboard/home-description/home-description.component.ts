@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'iv-home-description',
+  selector: 'ip-home-description',
   templateUrl: './home-description.component.html',
   styleUrls: ['./home-description.component.css']
 })

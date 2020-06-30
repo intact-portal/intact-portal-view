@@ -8,14 +8,14 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 
 
 @Component({
-  selector: 'iv-interactions-viewer',
+  selector: 'ip-interactions-viewer',
   templateUrl: './interactions-viewer.component.html',
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class InteractionsViewerComponent implements OnInit, OnChanges {
 
-  private _term: string;
+  private _terms: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
@@ -44,13 +44,13 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    $('iv-interactions-viewer').foundation();
+    $('ip-interactions-viewer').foundation();
     this.graph = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
 
     this.route.queryParams
       .filter(params => params.query)
       .subscribe(params => {
-        this.term = params.query;
+        this.terms = params.query;
         this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
@@ -82,7 +82,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   private requestIntactNetworkDetails() {
     this.networkSearchService.getInteractionNetwork(
-      this.term,
+      this.terms,
       this.batchSearchFilter,
       this.interactorSpeciesFilter,
       this.interactorTypeFilter,
@@ -138,12 +138,12 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.graph.search(interactorName);
   }
 
-  get term(): string {
-    return this._term;
+  get terms(): string {
+    return this._terms;
   }
 
-  set term(value: string) {
-    this._term = value;
+  set terms(value: string) {
+    this._terms = value;
   }
 
   get batchSearchFilter(): boolean {

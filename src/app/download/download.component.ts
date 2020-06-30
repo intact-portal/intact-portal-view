@@ -5,7 +5,7 @@ import {environment} from '../../environments/environment';
 declare const $: any;
 
 @Component({
-  selector: 'iv-download',
+  selector: 'ip-download',
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.css']
 })
@@ -20,6 +20,6 @@ export class DownloadComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Download');
-    $('iv-download').foundation();
+    $('ip-download').foundation();
   }
 }

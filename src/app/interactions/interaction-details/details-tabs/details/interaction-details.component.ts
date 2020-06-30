@@ -4,7 +4,7 @@ import {InteractionDetails} from '../../../shared/model/interaction-details/inte
 declare const $: any;
 
 @Component({
-  selector: 'iv-interaction-details',
+  selector: 'ip-interaction-details',
   templateUrl: './interaction-details.component.html',
   styleUrls: ['./interaction-details.component.css']
 })

@@ -7,7 +7,7 @@ import {environment} from '../../../../../../environments/environment';
 const baseURL = environment.intact_portal_ws;
 
 @Component({
-  selector: 'iv-participant-details',
+  selector: 'ip-participant-details',
   templateUrl: './participant-details.component.html',
   styleUrls: ['./participant-details.component.css']
 })

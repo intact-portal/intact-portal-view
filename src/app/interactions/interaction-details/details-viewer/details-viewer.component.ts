@@ -12,7 +12,7 @@ let xlv: any;
 
 
 @Component({
-  selector: 'iv-details-viewer',
+  selector: 'ip-details-viewer',
   templateUrl: './details-viewer.component.html',
   styleUrls: ['./details-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -38,7 +38,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.requestInteractionViewerDetails();
-    $('iv-interactions-viewer').foundation();
+    $('ip-interactions-viewer').foundation();
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -15,16 +15,19 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FileUploadModule} from 'ng2-file-upload';
 import {QueryBuilderModule} from 'angular2-query-builder';
 import {BatchSearchComponent} from './batch-search/batch-search.component';
+import {ArchwizardModule} from 'angular-archwizard';
+import {KeyvaluemapPipe} from './shared/keyvaluemap.pipe';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        QueryBuilderModule,
-        HomeDashboardRoutingModule,
-        FileUploadModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    QueryBuilderModule,
+    HomeDashboardRoutingModule,
+    FileUploadModule,
+    ArchwizardModule
+  ],
     declarations: [
         HomeDashboardComponent,
         HomeDescriptionComponent,
@@ -37,6 +40,7 @@ import {BatchSearchComponent} from './batch-search/batch-search.component';
         DatasetArchiveComponent,
         AdvancedSearchComponent,
         BatchSearchComponent,
+        KeyvaluemapPipe
     ]
 })
 export class HomeDashboardModule {

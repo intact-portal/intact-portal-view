@@ -21,12 +21,12 @@
       </div>
 
       <div id="extXrefs" class="margin-top-large" *ngIf="experiment.experimentXrefs.length !== 0">
-        <iv-external-xrefs *ngIf="experiment.experimentXrefs"
-                           [xrefs]="experiment.experimentXrefs"></iv-external-xrefs>
+        <ip-external-xrefs *ngIf="experiment.experimentXrefs"
+                           [xrefs]="experiment.experimentXrefs"></ip-external-xrefs>
       </div>
       <div id="curationAnnotations" class="margin-top-large" *ngIf="experiment.experimentAnnotations.length !== 0">
-        <iv-curation-annotations *ngIf="experiment.experimentAnnotations"
-                                 [annotations]="experiment.experimentAnnotations"></iv-curation-annotations>
+        <ip-curation-annotations *ngIf="experiment.experimentAnnotations"
+                                 [annotations]="experiment.experimentAnnotations"></ip-curation-annotations>
       </div>
 
   </div>

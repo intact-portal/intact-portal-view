@@ -14,14 +14,6 @@ export class FeatureDatasetService {
   }
 
   getFeaturedDataset(): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/xml'})
-        .append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
-        .append('Access-Control-Allow-Origin', '*')
-        .append('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method')
-    };
-
-    const url = `${intactDotmURL}`;
     return this.http.get(`${intactDotmURL}`, {responseType: 'text'})
       .catch(this.handleError);
   }

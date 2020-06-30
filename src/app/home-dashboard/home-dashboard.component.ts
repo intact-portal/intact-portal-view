@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 
 @Component({
-  selector: 'iv-home-dashboard',
+  selector: 'ip-home-dashboard',
   templateUrl: './home-dashboard.component.html',
   styleUrls: ['./home-dashboard.component.css']
 })

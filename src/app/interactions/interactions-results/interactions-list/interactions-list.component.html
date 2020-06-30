@@ -1,5 +1,6 @@
 <div class="row expanded margin-top-large margin-bottom-large">
 
+  <!--  TODO make this bookmarkable like the documentation, it needs to take into account the url params -->
   <ul class="tabs" data-tabs id="search-results-tabs">
     <li class="tabs-title is-active"><a href="#interactions" aria-selected="true" (click)="interactionsTabSelected()">Interactions</a></li>
     <li class="tabs-title"><a href="#interactor" (click)="interactorsTabSelected()">Interactors</a></li>
@@ -7,15 +8,15 @@
 
   <div class="tabs-content" data-tabs-content="search-results-tabs">
     <div class="tabs-panel is-active" id="interactions">
-      <iv-interactions-table [interactionTab]="isTabInteractionActive"
+      <ip-interactions-table [interactionTab]="isTabInteractionActive"
                              (interactionChanged)="onInteractionsSelectedChanged($event)"
-                             (pageChanged)="onPageChanged($event)"></iv-interactions-table>
+                             (pageChanged)="onPageChanged($event)"></ip-interactions-table>
     </div>
 
     <div class="tabs-panel" id="interactor">
-      <iv-interactors-table [interactorTab]="isTabInteractorActive"
+      <ip-interactors-table [interactorTab]="isTabInteractorActive"
                             (interactorChanged) = "onInteractorSelectedChanged($event)"
-                            (pageChanged)="onPageChanged($event)"></iv-interactors-table>
+                            (pageChanged)="onPageChanged($event)"></ip-interactors-table>
     </div>
 
   </div>

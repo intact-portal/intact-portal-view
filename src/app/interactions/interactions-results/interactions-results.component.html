@@ -1,10 +1,10 @@
 <div id="results" class="row expanded">
   <div class="columns medium-12">
-    <h2>Search for {{term}}</h2>
+    <h2>Search for {{terms}}</h2>
   </div>
 
   <div class="columns medium-12">
-    <iv-interactions-filters *ngIf="interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
+    <ip-interactions-filters *ngIf="interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
       && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined)"
                              [interactionFacets]="interactionsSearch.facetResultPage"
                              [interactorTypeFilter]="interactorTypeFilter"
@@ -27,16 +27,16 @@
                              (onInteractionMiScoreMaxFilterChanged)="onInteractionMiScoreMaxFilterChanged($event)"
                              (onInteractionIntraSpeciesFilterChanged)="onInteractionIntraSpeciesFilterChanged($event)">
 
-    </iv-interactions-filters>
+    </ip-interactions-filters>
   </div>
 
   <div class="columns medium-12">
-    <iv-interactions-viewer [interactorSelected]="interactorSelected"
-                            [interactionSelected]="interactionSelected"></iv-interactions-viewer>
+    <ip-interactions-viewer [interactorSelected]="interactorSelected"
+                            [interactionSelected]="interactionSelected"></ip-interactions-viewer>
 
-    <iv-interactions-list (interactionChanged)="onInteractionsSelectedChanged($event)"
+    <ip-interactions-list (interactionChanged)="onInteractionsSelectedChanged($event)"
                           (interactorChanged)="onInteractorSelectedChanged($event)"
-                          (pageChanged)="onPageChanged($event)"></iv-interactions-list>
+                          (pageChanged)="onPageChanged($event)"></ip-interactions-list>
   </div>
 
 </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+declare const $: any;
+
 @Component({
-  selector: 'iv-compact-header',
+  selector: 'ip-compact-header',
   templateUrl: './compact-header.component.html',
   styleUrls: ['./compact-header.component.css']
 })
@@ -10,6 +12,7 @@ export class CompactHeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('ip-compact-header').foundation();
   }
 
 }

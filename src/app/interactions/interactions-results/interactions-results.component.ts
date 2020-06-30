@@ -7,13 +7,13 @@ import {InteractionsSearchResult} from '../shared/model/interactions-results/int
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 
 @Component({
-  selector: 'iv-interactions-results',
+  selector: 'ip-interactions-results',
   templateUrl: './interactions-results.component.html',
   styleUrls: ['./interactions-results.component.css']
 })
 export class InteractionsResultsComponent implements OnInit {
 
-  private _term: string;
+  private _terms: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
@@ -46,7 +46,7 @@ export class InteractionsResultsComponent implements OnInit {
     this.route.queryParams
       .filter(params => params.query)
       .subscribe(params => {
-        this.term = params.query;
+        this.terms = params.query;
         this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
@@ -67,7 +67,7 @@ export class InteractionsResultsComponent implements OnInit {
 
   private requestInteractionsResults() {
     this.interactionsSearchService.getAllInteractionsAndFacetsQuery(
-      this.term,
+      this.terms,
       this.batchSearchFilter,
       this.interactorSpeciesFilter,
       this.interactorTypeFilter,
@@ -187,7 +187,7 @@ export class InteractionsResultsComponent implements OnInit {
 
   private updateURLParams(): void {
     const params: NavigationExtras = {};
-    params['query'] = this.term;
+    params['query'] = this.terms;
     params['page'] = this.currentPageIndex;
 
     if (this.batchSearchFilter !== undefined && this.batchSearchFilter !== false) {
@@ -231,12 +231,12 @@ export class InteractionsResultsComponent implements OnInit {
 
   /** GETTERS AND SETTERS **/
 
-  get term(): string {
-    return this._term;
+  get terms(): string {
+    return this._terms;
   }
 
-  set term(value: string) {
-    this._term = value;
+  set terms(value: string) {
+    this._terms = value;
   }
 
   get batchSearchFilter(): boolean {

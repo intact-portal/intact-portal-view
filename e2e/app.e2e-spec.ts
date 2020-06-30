@@ -1,14 +1,14 @@
-import { IntactViewPage } from './app.po';
+import { IntactPortalPage } from './app.po';
 
-describe('intact-view App', () => {
-  let page: IntactViewPage;
+describe('intact-portal App', () => {
+  let page: IntactPortalPage;
 
   beforeEach(() => {
-    page = new IntactViewPage();
+    page = new IntactPortalPage();
   });
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect<any>(page.getParagraphText()).toEqual('app works!');
   });
 });

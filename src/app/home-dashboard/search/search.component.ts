@@ -7,7 +7,7 @@ declare const $: any;
 const baseURL = environment.intact_portal_ws;
 
 @Component({
-  selector: 'iv-search',
+  selector: 'ip-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $('iv-search').foundation();
+    $('ip-search').foundation();
     this.searchSuggestions();
   }
 
@@ -106,7 +106,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
         highlight: true,
         minLength: 1
       },
-      // { Uncomment and adapt in the future when we have the term index in place
+      // { Uncomment and adapt in the future when we have the terms index in place
       //   name: 'terms',
       //   source: termsData,
       //   display: function (item) {

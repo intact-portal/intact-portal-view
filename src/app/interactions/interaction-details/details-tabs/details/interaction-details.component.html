@@ -23,26 +23,26 @@
 
 
       <div id="extXrefs" class="margin-top-large" *ngIf="interactionDetails.xrefs.length!=0">
-        <iv-external-xrefs *ngIf="interactionDetails.xrefs"
-                           [xrefs]="interactionDetails.xrefs"></iv-external-xrefs>
+        <ip-external-xrefs *ngIf="interactionDetails.xrefs"
+                           [xrefs]="interactionDetails.xrefs"></ip-external-xrefs>
       </div>
       <div id="curationAnnotations" class="margin-top-large" *ngIf="interactionDetails.annotations.length!=0">
-        <iv-curation-annotations *ngIf="interactionDetails.annotations"
-                                 [annotations]="interactionDetails.annotations"></iv-curation-annotations>
+        <ip-curation-annotations *ngIf="interactionDetails.annotations"
+                                 [annotations]="interactionDetails.annotations"></ip-curation-annotations>
       </div>
 
       <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="margin-top-large">
-        <iv-parameters *ngIf="interactionDetails.parameters"
-                       [parameters]="interactionDetails.parameters"></iv-parameters>
+        <ip-parameters *ngIf="interactionDetails.parameters"
+                       [parameters]="interactionDetails.parameters"></ip-parameters>
       </div>
       <div *ngIf="interactionDetails.confidences.length!=0" id="confidences" class="margin-top-large">
-        <iv-confidences *ngIf="interactionDetails.confidences"
-                        [confidences]="interactionDetails.confidences"></iv-confidences>
+        <ip-confidences *ngIf="interactionDetails.confidences"
+                        [confidences]="interactionDetails.confidences"></ip-confidences>
       </div>
     </div>
   </div>
 
-  <iv-experiment [experiment]="interactionDetails.experiment"></iv-experiment>
-  <iv-publication [publication]="interactionDetails.publication"></iv-publication>
+  <ip-experiment [experiment]="interactionDetails.experiment"></ip-experiment>
+  <ip-publication [publication]="interactionDetails.publication"></ip-publication>
 
 </div>

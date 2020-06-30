@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
 import {SearchService} from '../search/service/search.service';
@@ -7,15 +7,19 @@ declare const $: any;
 const baseURL = environment.intact_portal_ws;
 
 @Component({
-  selector: 'iv-batch-search',
+  selector: 'ip-batch-search',
   templateUrl: './batch-search.component.html',
   styleUrls: ['./batch-search.component.css']
 })
-export class BatchSearchComponent implements OnInit, AfterViewInit {
+export class BatchSearchComponent {
 
-  uploader: FileUploader;
-  hasBaseDropZoneOver: boolean;
-  response: any;
+  private _ids: string;
+
+  private _uploader: FileUploader;
+  private _hasBaseDropZoneOver: boolean;
+  private _response: any;
+  private _data: any;
+
 
   constructor(private searchService: SearchService) {
     this.uploader = new FileUploader({
@@ -23,27 +27,72 @@ export class BatchSearchComponent implements OnInit, AfterViewInit {
       disableMultipart: false
     });
 
+    this.uploader.onBeforeUploadItem = (item) => {
+      item.withCredentials = false;
+    }
+
     this.hasBaseDropZoneOver = false;
     this.response = '';
     this.uploader.response.subscribe(res => this.response = res);
   }
 
-  ngOnInit() {
+  private batchSearch(query: string, typeOfButton: string) {
+    this.searchService.batchSearch(query);
   }
 
-  ngAfterViewInit() {
-    $('iv-batch-search').foundation();
+  private setIds(response: string) {
+    this.ids = response;
   }
 
-  private batchSearch(fileName: string, typeOfButton: string) {
-    this.searchService.batchSearch(fileName);
+  private resolveSearch() {
+    this.searchService.resolveSearch(this.ids).subscribe(data => this.data = data);
   }
 
-  public fileOverBase(e: any): void {
+  private fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
   }
 
-  fileSelected() {
+  private fileSelected() {
     console.log('FileSelected');
+  }
+
+  get ids(): string {
+    return this._ids;
+  }
+
+  set ids(value: string) {
+    this._ids = value;
+  }
+
+  get uploader(): FileUploader {
+    return this._uploader;
+  }
+
+  set uploader(value: FileUploader) {
+    this._uploader = value;
+  }
+
+  get hasBaseDropZoneOver(): boolean {
+    return this._hasBaseDropZoneOver;
+  }
+
+  set hasBaseDropZoneOver(value: boolean) {
+    this._hasBaseDropZoneOver = value;
+  }
+
+  get response(): any {
+    return this._response;
+  }
+
+  set response(value: any) {
+    this._response = value;
+  }
+
+  get data(): any {
+    return this._data;
+  }
+
+  set data(value: any) {
+    this._data = value;
   }
 }

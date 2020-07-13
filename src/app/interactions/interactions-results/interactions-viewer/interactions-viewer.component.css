@@ -49,3 +49,10 @@
   padding-right: 0.3rem;
   font-size: 14px;
 }
+
+.alertNetwork {
+  font-size: 14px;
+  font-style: italic;
+  background-color: #e2444459;
+  padding: 10px;
+}

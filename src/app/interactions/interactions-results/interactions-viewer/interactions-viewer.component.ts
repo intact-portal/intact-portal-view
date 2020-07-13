@@ -66,6 +66,14 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
         this.requestIntactNetworkDetails();
       });
+
+    // this.requestIntactNetworkDetails() will give us a visible param to show or hide the network viewer
+    // We need to capture the exact error status To Check
+    if (this.interactionsJSON === 403) {
+      this.toggleNetworkViewer(false);
+    } else {
+      this.toggleNetworkViewer(true);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -76,6 +84,15 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     console.log('cur' + cur);
   }
 
+  toggleNetworkViewer(visible: boolean): void {
+    if (visible) {
+      $('#network-viewer-container').show();
+     // $('i#toggleDetails').removeClass('icon-minus').addClass('icon-plus');
+    } else {
+      $('#network-viewer-container').hide();
+     // $('i#toggleDetails').removeClass('icon-plus').addClass('icon-minus');
+    }
+  }
   findInteractor() {
     // IntactGraph.findInteractor()
   }

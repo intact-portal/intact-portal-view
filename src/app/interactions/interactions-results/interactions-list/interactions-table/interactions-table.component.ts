@@ -86,7 +86,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'caution'
   ];
   constructor(private route: ActivatedRoute) {
-  //  pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
   ngOnInit(): void {
@@ -261,7 +260,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               return '<div>' +
                 '<input type="checkbox" id="' + full.binaryInteractionId + '" name="check" value="' + data + '"/>' +
                 ' <span class="margin-left-medium">' +
-                '   <a href="/intact-portal-view/details/interaction/' + full.ac + '">' +
+                '   <a href="/intact/portal/details/interaction/' + full.ac + '">' +
                 '     <i class="icon icon-common icon-search-document"></i>' +
                 '   </a>' +
                 ' </span>' +

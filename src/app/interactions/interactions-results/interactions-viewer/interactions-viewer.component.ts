@@ -87,10 +87,10 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
   toggleNetworkViewer(visible: boolean): void {
     if (visible) {
       $('#network-viewer-container').show();
-     // $('i#toggleDetails').removeClass('icon-minus').addClass('icon-plus');
+      $('#no-network-viewer').hide();
     } else {
       $('#network-viewer-container').hide();
-     // $('i#toggleDetails').removeClass('icon-plus').addClass('icon-minus');
+      $('#no-network-viewer').show();
     }
   }
   findInteractor() {

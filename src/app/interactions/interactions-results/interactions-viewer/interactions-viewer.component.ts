@@ -67,13 +67,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
         this.requestIntactNetworkDetails();
       });
 
-    // this.requestIntactNetworkDetails() will give us a visible param to show or hide the network viewer
-    // We need to capture the exact error status To Check
-    if (this.interactionsJSON === 403) {
-      this.toggleNetworkViewer(false);
-    } else {
-      this.toggleNetworkViewer(true);
-    }
+    this.toggleNetworkViewer(true);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -92,9 +86,6 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       $('#network-viewer-container').hide();
       $('#no-network-viewer').show();
     }
-  }
-  findInteractor() {
-    // IntactGraph.findInteractor()
   }
 
   private requestIntactNetworkDetails() {
@@ -116,6 +107,11 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       console.log('Data loaded');
       // Makes the network expanded expanded by default
       this.graph.initializeWithData(this.interactionsJSON, true, this.affectedByMutation, this.layoutName);
+    }, error => {
+      // When network results are too big, capture error from server and hide the network viewer
+      if (this.interactionsJSON === undefined) {
+        this.toggleNetworkViewer(false);
+      }
     })
   }
 

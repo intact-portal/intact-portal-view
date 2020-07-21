@@ -341,7 +341,9 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   font-size: small;
   display: inline-block;
 }
-
+.xrefLinkCell {
+  cursor: pointer;
+}
 .limitWidth {
   max-width: 100px;
   word-wrap: break-word;

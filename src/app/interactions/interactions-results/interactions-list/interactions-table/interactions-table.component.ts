@@ -6,6 +6,7 @@ import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
 
 const baseURL = environment.intact_portal_ws;
+const ebiURL = environment.ebi_url;
 
 @Component({
   selector: 'ip-interactions-table',
@@ -260,7 +261,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               return '<div>' +
                 '<input type="checkbox" id="' + full.binaryInteractionId + '" name="check" value="' + data + '"/>' +
                 ' <span class="margin-left-medium">' +
-                '   <a href="/intact/portal/details/interaction/' + full.ac + '">' +
+                '   <a href="/intact-portal-view/details/interaction/' + full.ac + '">' +
                 '     <i class="icon icon-common icon-search-document"></i>' +
                 '   </a>' +
                 ' </span>' +
@@ -312,8 +313,25 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
+                const data_s = d.split('(');
+                const publicationId = data_s[0].trim();
+                const publicationSource = data_s[1].slice(0, -1);
+
+                let url = '';
+                if (publicationSource === 'intact') {
+                  url = '/intact-portal-view/details/interaction/' + publicationId;
+                } else if (publicationSource === 'pubmed') {
+                  url = 'https://europepmc.org/article/MED/' + publicationId;
+                } else if (publicationSource === 'imex') {
+                  url =  ebiURL + '/intact/imex/main.xhtml?query=' + publicationId;
+                } else if (publicationSource === 'mint') {
+                  url = '/intact-portal-view/details/interaction/' + publicationId;
+                } else if (publicationSource === 'doi') {
+                  url = 'https://www.embopress.org/doi/' + publicationId;
+                }
+
                 return '<div>' +
-                  '<span class="detailsCell">' + d + '</span>' +
+                  '<span class="detailsCell"><a href="' + url + '" target="_blank">' + publicationId + '</a></span>' +
                   '</div>';
               }).join('');
             }
@@ -327,7 +345,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'ac',
           defaultContent: ' ',
-          title: this.columnNames[10]
+          title: this.columnNames[10],
+          render: function (data, type, row, meta) {
+            if (type === 'display' && data != null) {
+              return '<div>' +
+                '<span><a href="/intact-portal-view/details/interaction/' + data + '">' + data + '</a></span>' +
+                '</div>';
+            }
+          }
         },
         {
           data: 'sourceDatabase',
@@ -436,11 +461,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 if (this.aliasesType.includes(aliasType)) {
                   return '<div class="aliasesCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
-                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
+                    '<div class="detailsCell aliasesCellWidth">' +
+                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a>' +
                     '</div>';
                 } else {
                   return  '<div class="aliasesCell">' +
-                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
+                    '<div class="detailsCell aliasesCellWidth">' +
+                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div>' +
                     '</div>';
                 }
               }.bind(this)).join('');
@@ -477,11 +504,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 if (this.aliasesType.includes(aliasType)) {
                   return '<div class="aliasesCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
-                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
+                    '<div class="detailsCell aliasesCellWidth">' +
+                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div>' +
                     '</div>';
                 } else {
                   return  '<div class="aliasesCell">' +
-                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
+                    '<div class="detailsCell aliasesCellWidth">' +
+                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div>' +
                     '</div>';
                 }
               }.bind(this)).join('');

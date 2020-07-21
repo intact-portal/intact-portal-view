@@ -8,6 +8,7 @@
 
 // Environment for development
 const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+const EBI_URL = 'https://www.ebi.ac.uk';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
@@ -18,6 +19,7 @@ export const environment = {
 
   // analytics_id: 'UA-XXXXXX-XX',
   ebi_base_url: EBI_BASE_URL,
+  ebi_url: EBI_URL,
   license_url: LICENSE_URL,
   intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25',
   intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30',

@@ -6,6 +6,7 @@ import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
 
 const baseURL = environment.intact_portal_ws;
+const ebiURL = environment.ebi_url;
 
 @Component({
   selector: 'ip-interactors-table',
@@ -291,11 +292,13 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
                 if (this.aliasesType.includes(aliasType)) {
                   return '<div class="aliasesCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
-                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div> ' +
+                    '<div class="detailsCell aliasesCellWidth">' +
+                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div> ' +
                     '</div>';
                 } else {
                   return  '<div class="aliasesCell">' +
-                    '<div class="detailsCell aliasesCellWidth">' + aliasName + '</div>' +
+                    '<div class="detailsCell aliasesCellWidth">' +
+                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div> ' +
                     '</div>';
                 }
               }.bind(this)).join('');
@@ -327,8 +330,18 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
                 const altId = data_s[0].trim();
                 const database = data_s[1].slice(0, -1).trim();
 
+                let url = '';
+                if (database === 'uniprotkb') {
+                  url = 'https://www.uniprot.org/uniprot/' + altId;
+                } else if (database === 'intact') {
+                  url = '/intact-portal-view/details/interaction/' + altId;
+                } else if (database === 'dip') {
+                  const id = altId.replace('DIP-', '');
+                  url = 'https://dip.doe-mbi.ucla.edu/dip/DIPview.cgi?PK=' + id;
+                }
+
                 return '<div class="aliasesCell">' +
-                    '<div class="detailsCell aliasesCellWidth">' + altId + '</div> ' +
+                    '<div class="detailsCell aliasesCellWidth"><a href="' + url + '" target="_blank">' + altId + '</a></div> ' +
                     '</div>';
               }).join('');
 

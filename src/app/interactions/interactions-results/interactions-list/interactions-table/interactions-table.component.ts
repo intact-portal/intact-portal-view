@@ -462,7 +462,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                   return '<div class="aliasesCell">' +
                     '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
                     '<div class="detailsCell aliasesCellWidth">' +
-                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a>' +
+                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div>' +
                     '</div>';
                 } else {
                   return  '<div class="aliasesCell">' +

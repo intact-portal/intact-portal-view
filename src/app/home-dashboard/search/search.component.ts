@@ -13,6 +13,8 @@ const baseURL = environment.intact_portal_ws;
 })
 export class SearchComponent implements OnInit, AfterViewInit {
 
+  static totalInteractors: number;
+
   constructor(private searchService: SearchService) {
   }
 
@@ -40,6 +42,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
         url: `${baseURL}/interactor/findInteractor/%QUERY`,
         wildcard: '%QUERY',
         transform: function (data) {
+          SearchComponent.totalInteractors = data.totalElements;
           return data.content;
         }
       }
@@ -136,7 +139,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
          return item.interactorAc
         },
         templates: {
-          header: '<h4 class="category-name">Interactors</h4>',
+          header: () => `<h4 class="category-name">Interactors (${SearchComponent.totalInteractors} found)</h4>`,
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: function (item) {
             return (item.interactorName === null) ?

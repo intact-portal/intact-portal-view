@@ -104,7 +104,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     $('#searchBox .typeahead').typeahead({
         hint: true,
         highlight: true,
-        minLength: 1
+        minLength: 3
       },
       // { Uncomment and adapt in the future when we have the terms index in place
       //   name: 'terms',

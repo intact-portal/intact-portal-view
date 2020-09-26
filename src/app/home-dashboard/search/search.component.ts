@@ -37,7 +37,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: `${baseURL}` + '/interactor/findInteractor/%QUERY',
+        url: `${baseURL}/interactor/findInteractor/%QUERY`,
         wildcard: '%QUERY',
         transform: function (data) {
           return data.content;
@@ -46,18 +46,18 @@ export class SearchComponent implements OnInit, AfterViewInit {
     });
     interactorsData.initialize();
 
-    const interactionsData = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.whitespace,
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      remote: {
-        url: `${baseURL}` + '/interaction/findInteractions/%QUERY',
-        wildcard: '%QUERY',
-        transform: function (data) {
-          return data.content;
-        }
-      }
-    });
-    interactionsData.initialize();
+    // const interactionsData = new Bloodhound({
+    //   datumTokenizer: Bloodhound.tokenizers.whitespace,
+    //   queryTokenizer: Bloodhound.tokenizers.whitespace,
+    //   remote: {
+    //     url: `${baseURL}` + '/interaction/findInteractions/%QUERY',
+    //     wildcard: '%QUERY',
+    //     transform: function (data) {
+    //       return data.content;
+    //     }
+    //   }
+    // });
+    // interactionsData.initialize();
 
     const jsonTermsData = [
       {
@@ -159,40 +159,41 @@ export class SearchComponent implements OnInit, AfterViewInit {
               '</span></div>'
           },
         }
-      },
-      {
-        name: 'interactions',
-        limit: 20,
-        source: interactionsData,
-        display: function (item) {
-          return item.ac;
-        },
-        templates: {
-          header: '<h4 class="category-name">Interactions</h4>',
-          notFound: '<div class="noResultsSuggestions"> No results found for Interactions</div>',
-          suggestion: function (item) {
-            // TODO: FIX THIS WHEN THE WS RETURN interactionCount
-            return (item.count === null) ? '<div class="row">' +
-              '<div class="columns small-3">' + item.firstAuthor + '</div>' +
-              '<div class="columns small-3">' + item.publicationIdentifiers + '</div>' +
-              '<div class="columns small-2">' + item.ac + '</div>' +
-              '<div class="columns small-2"><span class="labelWrapper">' + item.type + '</span></div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + ' 1 interaction' + '</span></div>' +
-              '</div>' :
-
-              '<div class="row">' +
-              '<div class="columns small-4">' + item.firstAuthor + '</div>' +
-              '<div class="columns small-2">' + item.publicationIdentifiers + '</div>' +
-              '<div class="columns small-3">' + item.identifiers + '</div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.count + ' interactions' + '</span></div>'
-              + '</div>'
-          },
-          // Uncomment and adapt in the future when we can display more results
-          // footer: '<div class="suggestions-footer">' +
-          //         '  <a><i class="icon icon-functional" data-icon="+"></i></a> Show more results' +
-          //         '</div>'
-        }
-      }).bind('typeahead:selected', (ev, item) => {
+      }
+      // {
+      //   name: 'interactions',
+      //   limit: 20,
+      //   source: interactionsData,
+      //   display: function (item) {
+      //     return item.ac;
+      //   },
+      //   templates: {
+      //     header: '<h4 class="category-name">Interactions</h4>',
+      //     notFound: '<div class="noResultsSuggestions"> No results found for Interactions</div>',
+      //     suggestion: function (item) {
+      //       // TODO: FIX THIS WHEN THE WS RETURN interactionCount
+      //       return (item.count === null) ? '<div class="row">' +
+      //         '<div class="columns small-3">' + item.firstAuthor + '</div>' +
+      //         '<div class="columns small-3">' + item.publicationIdentifiers + '</div>' +
+      //         '<div class="columns small-2">' + item.ac + '</div>' +
+      //         '<div class="columns small-2"><span class="labelWrapper">' + item.type + '</span></div>' +
+      //         '<div class="columns small-2"><span class="interactionsWrapper">' + ' 1 interaction' + '</span></div>' +
+      //         '</div>' :
+      //
+      //         '<div class="row">' +
+      //         '<div class="columns small-4">' + item.firstAuthor + '</div>' +
+      //         '<div class="columns small-2">' + item.publicationIdentifiers + '</div>' +
+      //         '<div class="columns small-3">' + item.identifiers + '</div>' +
+      //         '<div class="columns small-2"><span class="interactionsWrapper">' + item.count + ' interactions' + '</span></div>'
+      //         + '</div>'
+      //     },
+      //     // Uncomment and adapt in the future when we can display more results
+      //     // footer: '<div class="suggestions-footer">' +
+      //     //         '  <a><i class="icon icon-functional" data-icon="+"></i></a> Show more results' +
+      //     //         '</div>'
+      //   }
+      // }
+    ).bind('typeahead:selected', (ev, item) => {
       // Noe: So far I can't find in the documentation a way to know the dataset of the item selected. This code should improve with that information
       let id;
       if (item.interactorAc === undefined) {

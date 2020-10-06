@@ -8,3 +8,13 @@ markdown ::ng-deep h2 {
 markdown ::ng-deep h3 {
   font-size: large;
 }
+
+markdown ::ng-deep img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+markdown ::ng-deep img[alt="MI Score Sources"] {
+  max-width: 50%;
+}

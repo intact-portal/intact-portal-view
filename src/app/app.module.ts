@@ -16,11 +16,12 @@ import {InteractionDetailsModule} from './interactions/interaction-details/inter
 import {InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
 import {NetworkSearchService} from './interactions/shared/service/network-search.service';
 import {DownloadComponent} from './download/download.component';
-import {MarkdownModule} from 'ngx-markdown';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {DocumentationModule} from './documentation/documentation.module';
 import {InteractomeComponent} from './interactomes/interactome/interactome.component';
 import {LayoutModule} from './layout/layout.module';
+import {NetworkViewService} from "./interactions/shared/service/network-view.service";
+import {MarkdownModule} from "./documentation/shared/markdown/markdown.module";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import {LayoutModule} from './layout/layout.module';
     InteractionDetailsModule,
     DocumentationModule,
     AppRoutingModule,
-    MarkdownModule.forRoot()
+    MarkdownModule
   ],
   providers: [
     FeatureDatasetService,
@@ -51,4 +52,5 @@ import {LayoutModule} from './layout/layout.module';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

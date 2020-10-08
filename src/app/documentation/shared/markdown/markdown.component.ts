@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MarkdownRendererService} from "./service/markdown-renderer.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'markdown',
@@ -19,14 +20,12 @@ export class MarkdownComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data) {
-      this.md.render(this.data).then(value => this.output = this.sanitizer.bypassSecurityTrustHtml(value)
-      )
+      this.output = this.sanitizer.bypassSecurityTrustHtml(this.md.render(this.data))
     } else if (this.src) {
       fetch(this.src)
-        .then(src => this.md.render(src)
-        .then(value => this.output = this.sanitizer.bypassSecurityTrustHtml(value)
-        ))
+        .then(src => src.text())
+        .then(content => this.md.render(content.replace(/\.gitbook\/assets\//g, `intact-portal-view/assets/images/gitbook/`)))
+        .then(value => this.output = this.sanitizer.bypassSecurityTrustHtml(value));
     }
-
   }
 }

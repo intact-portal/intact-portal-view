@@ -14,7 +14,7 @@ export class MarkdownRendererService {
     this.md.use(mk);
   }
 
-  render(markdown: any): Promise<any> {
-    return markdown.text().then(content => this.md.render(content));
+  render(markdown: string): string {
+    return this.md.render(markdown);
   }
 }

@@ -4,8 +4,9 @@
     <div class="float-left">
       <a routerLink="/home" title="Back to IntAct homepage">
         <div class="media-object" id="local-title">
-          <div class="media-object-section" >
-            <img class="padding-bottom-small" src="assets/images/logo/intact_logo.svg" alt="IntAct logo" style="height: 3rem;">
+          <div class="media-object-section">
+            <img class="padding-bottom-small" src="assets/images/logo/intact_logo.svg" alt="IntAct logo"
+                 style="height: 3rem;">
           </div>
         </div>
       </a>
@@ -21,15 +22,17 @@
         <li routerLinkActive="active"><a routerLink="/documentation/about" routerLinkActive="active">About</a></li>
         <li class="extra-items-menu is-dropdown-submenu-parent opens-right">
           <a routerLinkActive="active" routerLink="/documentation">Documentation</a>
-          <ul class="menu submenu is-dropdown-submenu first-sub vertical" role="menu" >
+          <ul class="menu submenu is-dropdown-submenu first-sub vertical" role="menu">
             <li class="no-border-submenu" routerLinkActive="active"><a routerLink="/documentation/help">Help</a></li>
             <li class="no-border-submenu" routerLinkActive="active"><a routerLink="/documentation/docs">Docs</a></li>
             <li routerLinkActive="active"><a routerLink="/documentation/technical_corner">Technical corner</a></li>
           </ul>
         </li>
-        <li routerLinkActive="active"><a href="//www.ebi.ac.uk/support/intact">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
+        <li routerLinkActive="active"><a href="//www.ebi.ac.uk/support/intact">Support <i class="icon icon-generic"
+                                                                                          data-icon="x"></i></a></li>
       </ul>
     </nav>
     <!-- /local-nav -->
   </div>
+  <ip-progress-bar></ip-progress-bar>
 </header>

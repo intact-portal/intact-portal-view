@@ -42,3 +42,20 @@ select {
   width: 100%;
   border-radius: 0;
 }
+
+.top {
+  display: flex !important;
+  justify-content: space-around!important;
+}
+
+.top > .dataTables_info {
+  order: 0!important;
+}
+.top > .dataTables_paginate {
+  order: 1!important;
+  padding-top: 0;
+}
+.top > .dataTables_length {
+  order: 2!important;
+  padding-top: 3px;
+}

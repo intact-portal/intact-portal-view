@@ -283,17 +283,34 @@ div.dataTables_length > label > select {
   padding-bottom: 1em;
 }
 
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.top > .dataTables_info {
+  order: 0;
+}
+.top > .dataTables_paginate {
+  order: 1;
+  padding-top: 3px;
+}
+.top > .dataTables_length {
+  order: 2;
+  padding-top: 3px;
+}
+
+#column-toggle {
+  order: 3;
+}
+
+
 table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9;
 }
 
 .dataTable{
   width: 100% !important;
-}
-
-table.dataTable tbody th,
-table.dataTable tbody td {
-  white-space: nowrap;
 }
 
 table.dataTable,
@@ -308,7 +325,6 @@ table.dataTable td {
 table.dataTable tr, th {
   font-size: 13px;
 }
-
 /*************** PARTICIPANT DATATABLES ROW STYLE ********************/
 
 
@@ -375,6 +391,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   border-radius: 5px;
   padding: 3px 4px;
   white-space: nowrap;
+  color: salmon;
 }
 
 .detailsExpansionsCell {
@@ -386,19 +403,24 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 3px 4px;
   white-space: nowrap;
 }
+.elementList {
+  padding: 0px 2px;
+}
+
 .aliasesList {
   padding: 0px 2px;
 }
 .aliasesCell {
   width: 250px;
+
 }
 .aliasesCellWidth {
   max-width: 150px;
-  white-space: normal;
+  white-space: nowrap;
 }
 .detailsAliasesCell {
   background-color: #4ba77047;
-  color: #0c6530;
+  color: #0c6530 !important;
   font-size: smaller;
   font-weight: bold;
   border-radius: 5px;
@@ -426,6 +448,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 }
 .annotationCell {
   width: 380px;
+  white-space: nowrap;
 }
 .annotationCellWidth {
   max-width: 300px;

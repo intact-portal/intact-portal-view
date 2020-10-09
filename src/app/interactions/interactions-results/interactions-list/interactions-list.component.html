@@ -4,6 +4,17 @@
   <ul class="tabs" data-tabs id="search-results-tabs">
     <li class="tabs-title is-active"><a href="#interactions" aria-selected="true" (click)="interactionsTabSelected()">Interactions</a></li>
     <li class="tabs-title"><a href="#interactor" (click)="interactorsTabSelected()">Interactors</a></li>
+
+    <ip-column-toggle *ngIf="isInteractionTableShown"
+                      [columnNames]="interactionsTable.columnNames"
+                      [dataTable]="interactionsTable.dataTable"
+                      [columnView]="interactionsTable.columnView"
+                      (columnSelectionChanged)="interactionsTable.updateTable()" class="float-right"></ip-column-toggle>
+
+    <ip-column-toggle *ngIf="!isInteractionTableShown"
+                      [columnNames]="interactorsTable.columnNames"
+                      [dataTable]="interactorsTable.dataTable"
+                      [columnView]="interactorsTable.columnView" class="float-right"></ip-column-toggle>
   </ul>
 
   <div class="tabs-content" data-tabs-content="search-results-tabs">

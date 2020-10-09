@@ -1,4 +1,6 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {InteractionsTableComponent} from "./interactions-table/interactions-table.component";
+import {InteractorsTableComponent} from "./interactors-table/interactors-table.component";
 
 declare const $: any;
 
@@ -16,23 +18,32 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   private _isTabInteractionActive = false;
   private _isTabInteractorActive = false;
 
-  dataTable: any;
+  @ViewChild(InteractionsTableComponent)
+  interactionsTable: InteractionsTableComponent;
 
-  constructor() { }
+  @ViewChild(InteractorsTableComponent)
+  interactorsTable: InteractorsTableComponent;
+
+
+  constructor() {
+  }
 
   ngOnInit() {
     $('ip-interactions-list').foundation();
   }
 
   ngAfterViewInit() {
-
-    $('#search-results-tabs').on('change.zf.tabs', function() {
+    $('#search-results-tabs').on('change.zf.tabs', function () {
       if ($('#interactions').hasClass('is-active') === true) {
         this.isTabInteractionActive = true;
         this.isTabInteractorActive = false;
+        $('[aria-describedby="interactorsTable_info"]').css('visibility', 'hidden');
+        $('[aria-describedby="interactionsTable_info"]').css('visibility', 'visible');
       } else if ($('#interactor').hasClass('is-active') === true) {
         this.isTabInteractionActive = false;
         this.isTabInteractorActive = true;
+        $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
+        $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
       }
     }.bind(this));
   }
@@ -89,5 +100,9 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   set isTabInteractorActive(value: boolean) {
     this._isTabInteractorActive = value;
+  }
+
+  get isInteractionTableShown(): boolean {
+    return this.isTabInteractionActive || !(this.isTabInteractionActive || this.isTabInteractorActive);
   }
 }

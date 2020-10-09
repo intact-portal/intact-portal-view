@@ -440,6 +440,19 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                   'rgb(54, 19, 3)'
                 ];
 
+                const YELLOW_ORANGE_BROWN_PALETTE_TEXT: string[] = [
+                  'rgb(254,153,41)',
+                  'rgb(254,153,41)',
+                  'rgb(254,153,41)',
+                  'rgb(254,153,41)',
+                  'rgb(254,153,41)',
+                  'rgb(236,112,20)',
+                  'rgb(204,76,2)',
+                  'rgb(153,52,4)',
+                  'rgb(102,19,5)',
+                  'rgb(54, 19, 3)'
+                ];
+
                 const YELLOW_ORANGE_BROWN_PALETTE_BG: string[] = [
                   'rgba(255,255,229,0.1)',
                   'rgba(255,247,188,0.1)',
@@ -450,20 +463,25 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                   'rgba(204,76,2,0.1)',
                   'rgba(153,52,4,0.1)',
                   'rgba(102,19,5,0.1)',
-                  'rgba(54,19,3,0.1)'
+                  'rgba(54, 19,3,0.1)'
                 ];
 
                 const score = d.split(':');
                 const paletteIndex = Math.floor(score[1] * 10);
 
-                return '<div>' +
-                  '<span class="detailsConfidencesCell" ' +
-                  'style="background-color:' + YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex] + ';' +
-                  'color:' + YELLOW_ORANGE_BROWN_PALETTE[paletteIndex] + '">' + d + '</span>' +
-                  '</div>';
+                // noinspection CssInvalidPropertyValue
+                return `<div>
+                          <a class="detailsConfidencesCell" target="_blank"
+                          href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#interaction_scoring"
+                          style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
+                                 border:2px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
+                                 color: ${YELLOW_ORANGE_BROWN_PALETTE_TEXT[paletteIndex]}">
+                            ${d.replace('intact-miscore', 'MI Score')}
+                          </a>
+                        </div>`;
               }).join('');
             }
-          }
+          }.bind(this)
         },
         {
           data: 'expansionMethod',

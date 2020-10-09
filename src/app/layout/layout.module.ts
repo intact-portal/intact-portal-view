@@ -1,27 +1,34 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CompactHeaderComponent} from './compact-header/compact-header.component';
-import {ExpandedHeaderComponent} from './expanded-header/expanded-header.component';
+import {CompactHeaderComponent} from './header/compact-header/compact-header.component';
+import {ExpandedHeaderComponent} from './header/expanded-header/expanded-header.component';
 import {LocalFooterComponent} from './local-footer/local-footer.component';
 import {ContributorsComponent} from './contributors/contributors.component';
 import {RouterModule} from '@angular/router';
+import {ProgressBarComponent} from "./loading-indicators/progress-bar/progress-bar.component";
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
-  ],
-  exports: [
-    CompactHeaderComponent,
-    ExpandedHeaderComponent,
-    LocalFooterComponent,
-    ContributorsComponent
+    RouterModule,
+    MatProgressBarModule
   ],
   declarations: [
+    ProgressBarComponent,
     CompactHeaderComponent,
     ExpandedHeaderComponent,
     LocalFooterComponent,
     ContributorsComponent
+  ],
+  exports: [
+    ProgressBarComponent,
+    CompactHeaderComponent,
+    ExpandedHeaderComponent,
+    LocalFooterComponent,
+    ContributorsComponent
+
   ]
 })
 export class LayoutModule { }

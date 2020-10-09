@@ -73,7 +73,8 @@
                 <span *ngIf="item.isError"><i class="icon icon-common icon-times-circle is-error"></i></span>
               </td>
               <td class="text-center" nowrap>
-                <button type="button" class="button" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                <button type="button" class="button" (click)="item.upload()"
+                        [disabled]="item.isReady || item.isUploading || item.isSuccess">
                   <i class="icon icon-common icon-upload"></i> Upload
                 </button>
                 <button type="button" class="button" (click)="item.cancel()" [disabled]="!item.isUploading">
@@ -97,62 +98,62 @@
       </li>
     </ul>
   </aw-wizard-step>
+
   <aw-wizard-step [stepTitle]="'Explore results'"
                   [navigationSymbol]="{ symbol: '&#xf085;', fontFamily: 'EBI-Common'}">
-    <div class="margin-top-xlarge">
-      <h5 class="margin-bottom-medium">Resolved Identifiers</h5>
-
-      <span *ngIf="data">
-        <table>
-          <thead>
-          <tr>
-            <th>Input Term</th>
-            <th>Identifiers found</th>
-            <th>Summary</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let entry of data | keyvaluemap">
-            <td>
-              {{entry.key}}
-            </td>
-            <td>
-              {{entry.value['totalElements']}}
-            </td>
-            <td>
-              <table *ngIf="entry.value['totalElements'] > 0">
-                <thead>
-                <tr>
-                  <th>IntAct Ac</th>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Species</th>
-                  <th>Type</th>
-                  <th>Interaction Count</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let interactor of entry.value['content']">
-                  <td>{{ interactor.interactorAc }}</td>
-                  <td>{{ interactor.interactorPreferredIdentifier }}</td>
-                  <td>{{ interactor.interactorName }}</td>
-                  <td>{{ interactor.interactorDescription }}</td>
-                  <td>{{ interactor.interactorSpecies}}</td>
-                  <td>{{ interactor.interactorType }}</td>
-                  <td>{{ interactor.interactionCount }}</td>
-                </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </span>
+    <div class="margin-top-xlarge margin-bottom-xlarge">
+      <div *ngIf="dataReceived; else loadingSpinner">
+        <h5 class="margin-bottom-medium">Resolved Identifiers</h5>
+        <div class="terms-resolution-container">
+          <table [ngClass]="{'margin-bottom-none': !hasNotFoundEntries}">
+            <thead>
+            <tr>
+              <th>Input Term</th>
+              <th>Identifiers found</th>
+              <th>IntAct Ac</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Species</th>
+              <th>Type</th>
+              <th>Interaction Count</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let entry of foundEntries;">
+            <tr *ngFor="let interactor of entry['content']; let i = index;">
+              <td [rowSpan]="entry['totalElements']" *ngIf="i === 0">
+                {{entry['key']}}
+              </td>
+              <td [rowSpan]="entry['totalElements']" *ngIf="i === 0">
+                {{entry['totalElements']}}
+              </td>
+              <td>{{ interactor.interactorAc }}</td>
+              <td>{{ interactor.interactorPreferredIdentifier }}</td>
+              <td>{{ interactor.interactorName }}</td>
+              <td>{{ interactor.interactorDescription }}</td>
+              <td>{{ interactor.interactorSpecies}}</td>
+              <td>{{ interactor.interactorType }}</td>
+              <td>{{ interactor.interactionCount }}</td>
+            </tr>
+            </tbody>
+          </table>
+          <mat-expansion-panel *ngIf="hasNotFoundEntries">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h5>Terms not found</h5>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{notFoundEntries}}</p>
+          </mat-expansion-panel>
+        </div>
+      </div>
+      <ng-template #loadingSpinner>
+        <mat-spinner class="float-center"></mat-spinner>
+      </ng-template>
     </div>
 
-    <button class="button" type="button" awPreviousStep>Go to previous step</button>
-    <button class="button" type="button" awNextStep>Go to next step</button>
+    <button class="button" type="button" awPreviousStep (click)="resetData()">Go to previous step</button>
+    <button class="button" type="button" awNextStep [disabled]="!dataReceived">Go to next step</button>
   </aw-wizard-step>
   <aw-wizard-step [stepTitle]="'Navigate Results'" [navigationSymbol]="{ symbol: '&#xf002;', fontFamily: 'EBI-Common'}">
     <div>

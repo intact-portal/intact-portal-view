@@ -18,7 +18,10 @@ export class BatchSearchComponent {
   private _uploader: FileUploader;
   private _hasBaseDropZoneOver: boolean;
   private _response: any;
+  private _dataReceived: boolean = false;
   private _data: any;
+  private _foundEntries: any[] = [];
+  private _notFoundEntries: string[] = [];
 
 
   constructor(private searchService: SearchService) {
@@ -36,16 +39,34 @@ export class BatchSearchComponent {
     this.uploader.response.subscribe(res => this.response = res);
   }
 
-  private batchSearch(query: string, typeOfButton: string) {
+  resolveSearch() {
+    this.searchService.resolveSearch(this.ids)
+      .subscribe(data => {
+        this.data = data;
+        this.splitData()
+      });
+  }
+
+  batchSearch(query: string, typeOfButton: string) {
     this.searchService.batchSearch(query);
   }
 
-  private setIds(response: string) {
+  setIds(response: string) {
     this.ids = response;
   }
 
-  private resolveSearch() {
-    this.searchService.resolveSearch(this.ids).subscribe(data => this.data = data);
+  splitData() {
+    console.log(this.data);
+    for (let key of Object.keys(this.data)) {
+      let value = this.data[key];
+      if (value.totalElements !== 0) {
+        value.key = key;
+        this._foundEntries.push(value);
+      } else {
+        this._notFoundEntries.push(key);
+      }
+    }
+    this.dataReceived = true;
   }
 
   private fileOverBase(e: any): void {
@@ -88,11 +109,38 @@ export class BatchSearchComponent {
     this._response = value;
   }
 
+  get dataReceived(): boolean {
+    return this._dataReceived;
+  }
+
+  set dataReceived(value: boolean) {
+    this._dataReceived = value;
+  }
+
   get data(): any {
     return this._data;
   }
 
   set data(value: any) {
     this._data = value;
+  }
+
+  get foundEntries(): any[] {
+    return this._foundEntries;
+  }
+
+  get hasNotFoundEntries(): boolean {
+    return this._notFoundEntries.length !== 0;
+  }
+
+  get notFoundEntries(): string {
+    return this._notFoundEntries.join(' ');
+  }
+
+  resetData() {
+    this._data = {};
+    this._foundEntries = [];
+    this._notFoundEntries = [];
+    this._dataReceived = false;
   }
 }

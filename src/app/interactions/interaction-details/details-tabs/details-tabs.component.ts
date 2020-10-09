@@ -26,7 +26,6 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     $('ip-details-tabs').foundation();
-
     this.requestInteractionDetails();
   }
 

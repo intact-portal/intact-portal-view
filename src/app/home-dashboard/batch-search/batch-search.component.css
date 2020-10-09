@@ -5,8 +5,8 @@
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 
 /* Default class applied to drop zones on over */
@@ -38,4 +38,34 @@
 
 table tr, th {
   font-size: 13px;
+  white-space: nowrap;
+}
+
+
+.terms-resolution-container {
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.19);
+  max-height: 44vh;
+  overflow: auto;
+}
+
+th {
+  /*background: #68297c;*/
+  /*color: white;*/
+  /*-webkit-box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);*/
+  /*box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4), 0 -3px 0 0 white;*/
+  /*border: 1px solid white;*/
+  position: sticky;
+  top: 0; /* Don't forget this, required for the stickiness */
+  z-index: 2;
+  background-color: #f9f9f9;
+  box-shadow: 1px 2px 0 0 black, 0 -3px 0 0 white;
+  font-weight: bold;
+}
+
+tbody {
+  border-bottom: 2px solid black;
+}
+
+tbody:last-child {
+  border-bottom: 0;
 }

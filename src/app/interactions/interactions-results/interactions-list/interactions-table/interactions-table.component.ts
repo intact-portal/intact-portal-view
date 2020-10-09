@@ -5,7 +5,9 @@ import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-buttons';
 import 'datatables.net-fixedheader';
-import {environment, titleCase} from '../../../../../environments/environment';
+import {environment} from '../../../../../environments/environment';
+import {extractCVValue} from "../../../../shared/utils/string-utils";
+import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
 
 
 const baseURL = environment.intact_portal_ws;
@@ -88,8 +90,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'comment',
     'caution'
   ];
+  private binaryInteractionIds: number[] = [];
+  private interactorAcs: string[] = [];
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private resultTableFactory: ResultTableFactoryService) {
   }
 
   ngOnInit(): void {
@@ -112,10 +116,26 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           const table: any = $('#interactionsTable');
           this.dataTable = table.DataTable().ajax.reload();
         }
-
       });
 
+    document.addEventListener('graph-interaction-selected', (e: any) => {
+      this.binaryInteractionIds = e.detail.interactionIds();
+      this.interactorAcs = []
+      this.dataTable.ajax.reload();
+    });
+    document.addEventListener('graph-interactor-selected', (e: any) => {
+      this.binaryInteractionIds = [];
+      this.interactorAcs = [e.detail.interactorId()];
+      this.dataTable.ajax.reload();
+    });
+    document.addEventListener('graph-unselected', () => {
+      this.binaryInteractionIds = [];
+      this.interactorAcs = []
+      this.dataTable.ajax.reload();
+    });
+
     this.initDataTable();
+    this.initScrollbars();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -194,7 +214,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       const row = interactionsT.row(rowIndex).node();
       const col = $(`#${this.id}`).data('col');
 
-      $(this).parents('td').html(interactionsT.cell(row, col).render('more'))
+      $(this).parents('td').html(interactionsT.cell(row, col).render('more'));
     });
 
     tableBody.on('click', 'button.showLess', function () {
@@ -210,6 +230,55 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     });
   }
 
+  scrolling = false;
+
+  private initScrollbars() {
+    let topScroll = $('#tableTopScroll');
+    if (topScroll.length === 0) {
+      topScroll = $('<div id="tableTopScroll"><div id="interactionsTableWidthMimic"></div></div>');
+      topScroll.find('#interactionsTableWidthMimic').height(20);
+      topScroll.css('overflow-x', 'auto')
+      topScroll.css('overflow-y', 'hidden')
+      topScroll.insertAfter($('div.top'));
+    }
+    let bodyScroll = $('.dataTables_scrollBody');
+
+    topScroll.scroll(function () {
+      if (!this.scrolling) {
+        this.scrolling = true;
+        bodyScroll.scrollLeft(topScroll.scrollLeft())
+      } else {
+        this.scrolling = false;
+      }
+    }.bind(this));
+
+    const LEFT_BORDER = 32;
+    // Synchronise scrolling
+    bodyScroll.scroll(function () {
+      let scrollAmt = bodyScroll.scrollLeft();
+      $('.fixedHeader-floating').css('left', `${LEFT_BORDER - scrollAmt}px`);
+      if (!this.scrolling) {
+        this.scrolling = true;
+        topScroll.scrollLeft(scrollAmt); // Synchronize  top scroller
+      } else {
+        this.scrolling = false;
+      }
+    }.bind(this));
+
+    // Initial scrolling of the header when it appears
+    new MutationObserver(function () {
+      let scrollAmt = bodyScroll.scrollLeft();
+      $('.fixedHeader-floating').css('left', `${LEFT_BORDER - scrollAmt}px`);
+    }).observe(document, {
+      subtree: true,
+      childList: true
+    });
+  }
+
+  updateTable(visibleColumns: string[]) {
+    const table: any = $('#interactionsTable');
+    this.dataTable = table.DataTable().columns.adjust().draw();
+  }
 
   private initDataTable(): void {
     const table: any = $('#interactionsTable');
@@ -222,8 +291,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       pagingType: 'full_numbers',
       processing: true,
       serverSide: true,
-      dom: '<"top"flip>rt<"bottom"ifp>',
+      dom: '<"top"filp>rt<"bottom"ifp>',
       scrollX: true,
+      fixedHeader: true,
       ajax: {
         url: `${baseURL}/interaction/list/`,
         type: 'POST',
@@ -241,6 +311,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
           d.intraSpecies = this.intraSpeciesFilter;
+          d.binaryInteractionId = this.binaryInteractionIds;
+          d.interactorAc = this.interactorAcs;
         }.bind(this)
       },
       columns: [
@@ -310,21 +382,17 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 const publicationSource = data_s[1].slice(0, -1);
 
                 let url = '';
-                if (publicationSource === 'intact') {
-                  url = '/intact-portal-view/details/interaction/' + publicationId;
-                } else if (publicationSource === 'pubmed') {
+                if (publicationSource === 'pubmed') {
                   url = 'https://europepmc.org/article/MED/' + publicationId;
                 } else if (publicationSource === 'imex') {
                   url = ebiURL + '/intact/imex/main.xhtml?query=' + publicationId;
-                } else if (publicationSource === 'mint') {
-                  url = '/intact-portal-view/details/interaction/' + publicationId;
                 } else if (publicationSource === 'doi') {
-                  url = 'https://www.embopress.org/doi/' + publicationId;
+                  url = 'https://www.doi.org/' + publicationId;
                 }
 
-                return '<div>' +
-                  '<span class="detailsCell"><a href="' + url + '" target="_blank">' + publicationId + '</a></span>' +
-                  '</div>';
+                return `<div><span class="detailsCell">
+                            ${url !== '' ? `<a href="${url}" target="_blank">${publicationId}</a>` : publicationId}
+                        </span></div>`;
               }).join('');
             }
           }
@@ -341,7 +409,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div>' +
-                '<span><a href="/intact-portal-view/details/interaction/' + data + '">' + data + '</a></span>' +
+                '<span><a href="/intact-portal-view/details/interaction/' + data + '" style="white-space: nowrap">' + data + '</a></span>' +
                 '</div>';
             }
           }
@@ -403,9 +471,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[13],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
-              return '<div>' +
-                '<span class="detailsExpansionsCell">' + data + '</span>' +
-                '</div>';
+              return `<div><a target="_blank" href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" class="detailsExpansionsCell">${data}</a></div>`;
             }
           }
         },
@@ -435,21 +501,19 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[18],
           render: function (data, type, row, meta) {
             if (data == null) return;
-            const res = InteractionsTableComponent.createRenderingButton(data, type, row, meta)
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
             const items = $.map(res.data, function (d, i) {
               // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-              const data_s = d.split('(');
-              const aliasName = data_s[0].trim();
-              const aliasId = data_s[1];
-              const aliasType = data_s[2].slice(0, -2);
+              const alias = extractCVValue(d);
               return `<div class="aliasesCell">
-                          <div style="float:left; margin-right: 4px;">
-                            <a class="detailsAliasesCell" target="_blank" href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${aliasId}">${aliasType}</a>
-                          </div>
-                          <div class="detailsCell aliasesCellWidth">
-                            <span>${aliasName}</span>
-                          </div>
-                        </div>`;
+                        <div style="float:left; margin-right: 4px;">
+                          <a class="detailsAliasesCell" target="_blank"
+                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                            ${alias.type.shortName}
+                          </a>
+                        </div>
+                        <span>${alias.value}</span>
+                      </div>`;
             }.bind(this)).join('');
             let html = '<div class="annotationsList">'.concat(items).concat('</div>');
             return res.addButton ? html.concat(res.button) : html;
@@ -461,21 +525,19 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[19],
           render: function (data, type, row, meta) {
             if (data == null) return;
-            const res = InteractionsTableComponent.createRenderingButton(data, type, row, meta)
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
             const items = $.map(res.data, function (d, i) {
               // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-              const data_s = d.split('(');
-              const aliasName = data_s[0].trim();
-              const aliasId = data_s[1];
-              const aliasType = data_s[2].slice(0, -2);
+              const alias = extractCVValue(d);
               return `<div class="aliasesCell">
-                          <div style="float:left; margin-right: 4px;">
-                            <a class="detailsAliasesCell" target="_blank" href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${aliasId}">${aliasType}</a>
-                          </div>
-                          <div class="detailsCell aliasesCellWidth">
-                            <span>${aliasName}</span>
-                          </div>
-                        </div>`;
+                        <div style="float:left; margin-right: 4px;">
+                          <a class="detailsAliasesCell" target="_blank"
+                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                            ${alias.type.shortName}
+                          </a>
+                        </div>
+                        <span>${alias.value}</span>
+                      </div>`;
             }.bind(this)).join('');
             let html = '<div class="annotationsList">'.concat(items).concat('</div>');
             return res.addButton ? html.concat(res.button) : html;
@@ -511,7 +573,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[22],
           render: function (data, type, row, meta) {
             if (data == null) return;
-            const res = InteractionsTableComponent.createRenderingButton(data, type, row, meta)
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
             const items = $.map(res.data, function (d, i) {
               // figure legend (Supp fig 5Ii)
               const data_s = d.split('(');
@@ -538,7 +600,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[23],
           render: function (data, type, row, meta) {
             if (data == null) return;
-            const res = InteractionsTableComponent.createRenderingButton(data, type, row, meta)
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
             const items = $.map(res.data, function (d, i) {
               // figure legend (Supp fig 5Ii)
               const data_s = d.split('(');
@@ -566,7 +628,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[24],
           render: function (data, type, row, meta) {
             if (data == null) return;
-            const res = InteractionsTableComponent.createRenderingButton(data, type, row, meta)
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
 
             const items = $.map(res.data, function (d, i) {
               // figure legend (Supp fig 5Ii)
@@ -576,11 +638,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
               let cellClass = 'detailsAllCell';
               if (annotationType === this.annotationsTypes[0]) {
-                cellClass ="detailsFigureLegendCell";
+                cellClass = "detailsFigureLegendCell";
               } else if (annotationType === this.annotationsTypes[1]) {
-                cellClass ="detailsCommentsCell";
+                cellClass = "detailsCommentsCell";
               } else if (annotationType === this.annotationsTypes[2]) {
-                cellClass ="detailsCautionsCell";
+                cellClass = "detailsCautionsCell";
               }
               return `<div class="annotationInteractionCell">
                         <div style="float:left; margin-right: 4px;">
@@ -601,32 +663,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
       }
     });
-  }
-
-  private static createRenderingButton(data, type, row, meta): { data: any[], button: string, addButton: boolean } {
-    const addButton = data.length > 2;
-    let buttonType;
-    switch (type) {
-      case 'display':
-      case 'less':
-        buttonType = 'more'
-        data = data.slice(0, 2);
-        break;
-      case 'more':
-        buttonType = 'less'
-        break;
-      default:
-        return;
-    }
-    return {
-      data: data,
-      addButton: addButton,
-      button: `<div class="aliasesList">
-                 <button type="button" id="row${meta.row}col${meta.col}" data-col="${meta.col}" class="show${titleCase(buttonType)}">
-                   Show ${buttonType}
-                 </button>
-               </div>`
-    };
   }
 
 
@@ -759,4 +795,3 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this._interactionSelected = value;
   }
 }
-

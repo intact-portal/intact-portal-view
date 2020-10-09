@@ -4,6 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import * as $ from 'jquery';
 import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
+import {extractCVValue, extractIds} from "../../../../shared/utils/string-utils";
+import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
 
 const baseURL = environment.intact_portal_ws;
 const ebiURL = environment.ebi_url;
@@ -36,6 +38,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   dataTable: any;
 
   columnView = 'interactors_columnView';
+  table: any;
 
   private _columnNames: string[] = [
     'Select',
@@ -65,10 +68,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     'drug mixture brand name'
   ];
 
-  constructor(private route: ActivatedRoute) {
+  private binaryInteractionIds: number[];
+  private interactorAcs: string[];
+
+  constructor(private route: ActivatedRoute, private resultTableFactory: ResultTableFactoryService) {
   }
 
   ngOnInit() {
+    this.table = $('#interactorsTable');
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
         this.terms = params.query;
@@ -82,39 +89,56 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
-        this.currentPageIndex = params.page ? Number(params.page) : 1;
 
+        this.currentPageIndex = params.page ? Number(params.page) : 1;
         if (this.dataTable !== undefined) {
-          const table: any = $('#interactorsTable');
-          this.dataTable = table.DataTable().ajax.reload();
+          this.dataTable = this.table.DataTable().ajax.reload();
         }
+
       });
 
+    document.addEventListener('graph-interaction-selected', (e: any) => {
+      this.binaryInteractionIds = e.detail.interactionIds();
+      this.interactorAcs = [];
+      this.dataTable.ajax.reload();
+    });
+    document.addEventListener('graph-interactor-selected', (e: any) => {
+      this.binaryInteractionIds = [];
+      this.interactorAcs = [e.detail.interactorId()];
+      this.dataTable.ajax.reload();
+    });
+    document.addEventListener('graph-unselected', () => {
+      this.binaryInteractionIds = [];
+      this.interactorAcs = [];
+      this.dataTable.ajax.reload();
+    });
     this.initDataTable();
+    this.initScrollbars();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.interactorTab.currentValue) {
 
       // This fixes the alignment between the th and td when we have activated scrollX:true
-      const table: any = $('#interactorsTable');
-      this.dataTable = table.DataTable().columns.adjust().draw();
+      this.table = $('#interactorsTable');
+      this.dataTable = this.table.DataTable().columns.adjust().draw();
     }
   }
 
   ngAfterViewInit(): void {
-
-    $('#interactorsTable').on('change', 'input[type=\'checkbox\']', (e) => {
-      const table: any = $('#interactorsTable');
+    let interactorsTable = $('#interactorsTable');
+    let selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
+    interactorsTable.on('change', 'input[type=\'checkbox\']', (e) => {
+      const table: any = interactorsTable;
       const interactorSel = e.currentTarget.id;
 
       if (this.interactorSelected !== interactorSel) {
-        $('#' + this.interactorSelected + ':checkbox').prop('checked', false);
-        $('#' + this.interactorSelected + ':checkbox').closest('tr').removeClass('rowSelected');
+        selectedInteractorCheckbox.prop('checked', false);
+        selectedInteractorCheckbox.closest('tr').removeClass('rowSelected');
 
         this.interactorSelected = interactorSel;
-        $('#' + this.interactorSelected + ':checkbox').prop('checked', true);
-        $('#' + this.interactorSelected + ':checkbox').closest('tr').addClass('rowSelected');
+        selectedInteractorCheckbox.prop('checked', true);
+        selectedInteractorCheckbox.closest('tr').addClass('rowSelected');
 
         const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
           bubbles: true,
@@ -141,9 +165,9 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     });
 
     // When table redrawn keep row selection synchronization between tables
-    $('#interactorsTable').on( 'draw.dt', function () {
+    interactorsTable.on('draw.dt', function () {
       if (this.interactorSelected !== undefined) {
-        const selector = $('#' + this.interactorSelected + ':checkbox');
+        const selector = selectedInteractorCheckbox;
         selector.prop('checked', true);
         selector.closest('tr').addClass('rowSelected');
 
@@ -157,38 +181,68 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       }
     }.bind(this));
 
-    $('#interactorsTable tbody').on('click', 'button.showMore', function () {
-      const table: any = $('#interactorsTable');
-      const interactionsT = table.DataTable();
+    interactorsTable.on('resize',() => $('#interactorsTableWidthMimic').width(interactorsTable.width()))
+
+    let tableBody = $('#interactorsTable tbody');
+    tableBody.on('click', 'button.showMore', function () {
+      const table: any = interactorsTable;
+      const interactorsT = table.DataTable();
 
       const rowIndex = $(this).parents('tr');
-      const row = interactionsT.row(rowIndex).node();
-      const col = $('#' + this.id).data('col');
+      const row = interactorsT.row(rowIndex).node();
+      const col = $(`#${this.id}`).data('col');
 
-      const dataCell = interactionsT.cell(row, col).data();
-      interactionsT.cell(row, col).data(dataCell);
-
-      $('button#' + this.id + '.showMore').hide();
-      $('button#' + this.id + '.showLess').show();
+      $(this).parents('td').html(interactorsT.cell(row, col).render('more')).show();
     });
 
-    $('#interactorsTable tbody').on('click', 'button.showLess', function () {
-      // tslint:disable-next-line:no-shadowed-variable
-      const table: any = $('#interactorsTable');
-      const interactionsT = table.DataTable();
+    tableBody.on('click', 'button.showLess', function () {
+      const table: any = interactorsTable;
+      const interactorsT = table.DataTable();
 
       const rowIndex = $(this).parents('tr');
-      const row = interactionsT.row(rowIndex).node();
+      const row = interactorsT.row(rowIndex).node();
       const col = $('#' + this.id).data('col');
 
-      const htmlCollection = row.children[col].children[0].children;
-      for (let i = htmlCollection.length - 1; i >= 2; --i) {
-        htmlCollection[i].remove();
+      interactorsT.cell(row, col).render('less');
+      $(this).parents('td').html(interactorsT.cell(row, col).render('less'))
+    });
+
+  }
+
+  scrolling = false;
+
+  private initScrollbars() {
+    let tableWrapper = $('#interactorsTable_wrapper')
+    let topScroll = $('#interactorsTableTopScroll');
+    if (topScroll.length === 0) {
+      topScroll = $('<div id="interactorsTableTopScroll"><div id="interactorsTableWidthMimic"></div></div>');
+      topScroll.find('#interactorsTableWidthMimic').height(20);
+      topScroll.css('overflow-x', 'auto')
+      topScroll.css('overflow-y', 'hidden')
+      topScroll.insertAfter(tableWrapper.find('div.top'));
+    }
+
+    let bodyScroll = tableWrapper.find('.dataTables_scrollBody');
+    bodyScroll.scroll(function () {
+      let scrollAmt = bodyScroll.scrollLeft();
+      const LEFT_BORDER = 32;
+      tableWrapper.find('.fixedHeader-floating').css('left', `${LEFT_BORDER - scrollAmt}px`);  // Move sticky header to the same amount as the table
+      if (!this.scrolling) {
+        this.scrolling = true;
+        topScroll.scrollLeft(scrollAmt); // Synchronize  top scroller
+      } else {
+        this.scrolling = false;
       }
+    }.bind(this));
 
-      $('button#' + this.id + '.showMore').show();
-      $('button#' + this.id + '.showLess').hide();
-    });
+    topScroll.scroll(function () {
+      if (!this.scrolling) {
+        this.scrolling = true;
+        bodyScroll.scrollLeft(topScroll.scrollLeft())
+      } else {
+        this.scrolling = false;
+      }
+    }.bind(this));
   }
 
   private initDataTable(): void {
@@ -204,6 +258,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       serverSide: true,
       dom: '<"top"flip>rt<"bottom"ifp>',
       scrollX: true,
+      fixedHeader: true,
       ajax: {
         url: `${baseURL}/interaction/interactors/list/`,
         type: 'POST',
@@ -221,7 +276,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
           d.intraSpecies = this.intraSpeciesFilter;
-          // d.page = this.currentPageIndex - 1;
+          d.binaryInteractionId = this.binaryInteractionIds;
+          d.interactorAc = this.interactorAcs;
         }.bind(this)
       },
       columns: [
@@ -273,42 +329,23 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           defaultContent: ' ',
           title: this.columnNames[7],
           render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-
-              const html = '<div class="aliasesList">';
-              const loadMoreButton = '<div class="aliasesList"> ' +
-                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div class="aliasesList"> ' +
-                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
-
-              const items = $.map(data, function (d, i) {
-
-                // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-                const data_s = d.split('(');
-                const aliasName = data_s[0].trim();
-                const aliasId = data_s[1];
-                const aliasType = data_s[2].slice(0, -2);
-
-                if (this.aliasesType.includes(aliasType)) {
-                  return '<div class="aliasesCell">' +
-                    '<div style="float:left; margin-right: 4px;"><span class="detailsAliasesCell">' + aliasType + '</span></div>' +
-                    '<div class="detailsCell aliasesCellWidth">' +
-                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div> ' +
-                    '</div>';
-                } else {
-                  return  '<div class="aliasesCell">' +
-                    '<div class="detailsCell aliasesCellWidth">' +
-                    '<a class="xrefLinkCell" target="_blank" href="' + ebiURL + '/ols/ontologies/mi/terms?obo_id=' + aliasId + '">' + aliasName + '</a></div> ' +
-                    '</div>';
-                }
-              }.bind(this)).join('');
-
-              if (data.length > 2) {
-                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
-              } else {
-                return html.concat(items).concat('</div>');
-              }
-            }
+            if (data == null) return;
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
+            const items = $.map(res.data, function (d, i) {
+              // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
+              const alias = extractCVValue(d);
+              return `<div class="aliasesCell">
+                        <div style="float:left; margin-right: 4px;">
+                          <a class="detailsAliasesCell" target="_blank"
+                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                            ${alias.type.shortName}
+                          </a>
+                        </div>
+                        <span>${alias.value}</span>
+                      </div>`;
+            }.bind(this)).join('');
+            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
+            return res.addButton ? html.concat(res.button) : html;
           }.bind(this)
         },
         {
@@ -316,42 +353,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           defaultContent: ' ',
           title: this.columnNames[8],
           render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-              const html = '<div class="aliasesList">';
-              const loadMoreButton = '<div class="aliasesList"> ' +
-                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showMore">Show more</button> </div>'
-              const loadLessButton = '<div class="aliasesList"> ' +
-                '<button type="button" id="row' + meta.row + 'col' + meta.col + '" data-col="' + meta.col + '" class="showLess" >Show less</button> </div>'
+            if (data == null) return;
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
+            const items = $.map(res.data, function (d, i) {
+              // Q6FIE7 (uniprotkb)
+              return this.resultTableFactory.getInteractorLink(extractIds(d));
+            }.bind(this)).join('');
 
-              const items = $.map(data, function (d, i) {
-
-                // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-                const data_s = d.split('(');
-                const altId = data_s[0].trim();
-                const database = data_s[1].slice(0, -1).trim();
-
-                let url = '';
-                if (database === 'uniprotkb') {
-                  url = 'https://www.uniprot.org/uniprot/' + altId;
-                } else if (database === 'intact') {
-                  url = '/intact-portal-view/details/interaction/' + altId;
-                } else if (database === 'dip') {
-                  const id = altId.replace('DIP-', '');
-                  url = 'https://dip.doe-mbi.ucla.edu/dip/DIPview.cgi?PK=' + id;
-                }
-
-                return '<div class="aliasesCell">' +
-                    '<div class="detailsCell aliasesCellWidth"><a href="' + url + '" target="_blank">' + altId + '</a></div> ' +
-                    '</div>';
-              }).join('');
-
-              if (data.length > 2) {
-                return html.concat(items).concat('</div>').concat(loadLessButton).concat(loadMoreButton);
-              } else {
-                return html.concat(items).concat('</div>');
-              }
-            }
-          }
+            let html = `<div class="aliasesList">${items}</div>`;
+            return res.addButton ? html.concat(res.button) : html;
+          }.bind(this)
         },
         {
           data: 'interactionSearchCount',
@@ -359,9 +370,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           title: this.columnNames[9],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
-              return '<div class="alignCell">' +
-                '<span>' + data + '</span>' +
-                '</div>';
+              return `<div class="alignCell"><span>${data}</span></div>`;
             }
           }
         },
@@ -371,38 +380,13 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           title: this.columnNames[10],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
-              return '<div class="alignCell">' +
-                '<span>' + data + '</span>' +
-                '</div>';
+              return `<div class="alignCell"><span>${data}</span></div>`;
             }
           }
         }
       ],
-      drawCallback: function( settings ) {
-        const api = this.api();
-        api.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-          const d = this.data();
-          const n = this.node();
-
-          if (d.interactorAlias != null) {
-            const htmlCollection = n.children[7].children[0].children;
-            for (let i = htmlCollection.length - 1; i >= 2; --i) {
-              htmlCollection[i].remove();
-            }
-
-            $('button#row' + n.sectionRowIndex + 'col7.showMore').show();
-            $('button#row' + n.sectionRowIndex + 'col7.showLess').hide();
-          }
-          if (d.interactorAltIds != null) {
-            const htmlCollection = n.children[8].children[0].children;
-            for (let i = htmlCollection.length - 1; i >= 2; --i) {
-              htmlCollection[i].remove();
-            }
-
-            $('button#row' + n.sectionRowIndex + 'col8.showMore').show();
-            $('button#row' + n.sectionRowIndex + 'col8.showLess').hide();
-          }
-        });
+      drawCallback: function (settings) {
+        $('#interactorsTableWidthMimic').width($("#interactorsTable").width());
       }
     });
   }

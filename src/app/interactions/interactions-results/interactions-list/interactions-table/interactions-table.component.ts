@@ -288,7 +288,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       paging: true,
       lengthMenu: [25, 50, 75, 100, 150, 200, 500],
       pageLength: 25,
-      pagingType: 'full_numbers',
+      pagingType: 'numbers',
       processing: true,
       serverSide: true,
       dom: '<"top"filp>rt<"bottom"ifp>',

@@ -253,7 +253,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       paging: true,
       lengthMenu: [25, 50, 75, 100, 150, 200, 500],
       pageLength: 25,
-      pagingType: 'full_numbers',
+      pagingType: 'numbers',
       processing: true,
       serverSide: true,
       dom: '<"top"flip>rt<"bottom"ifp>',

@@ -1,10 +1,10 @@
 <div class="row expanded margin-top-large margin-bottom-large" id="network-viewer-container">
-  <div class="columns medium-2">
+  <div class="columns small-12 medium-6 large-2" id="toolbar-column">
     <h4 class="underline margin-bottom-large">
       <i class="icon icon-common icon-spacer icon-tool"></i>Network Tools
     </h4>
     <div class="row">
-      <button id="reset" class="button float-right" type="button" (click)="onClickReset()">
+      <button id="reset" class="button expanded" type="button" (click)="onClickReset()">
         <i class="icon icon-common icon-spacer icon-redo-alt"></i>Redraw Network
       </button>
     </div>
@@ -13,14 +13,14 @@
       <h5>Layout</h5>
       <div class="margin-bottom-large" style="background-color: #F5F5F5">
         <li>
-          <span>
+          <span class="margin-left-small">
           <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)"
                  value="fcose" checked/>
               <label>Force directed</label>
           </span>
         </li>
         <li>
-          <span>
+          <span class="margin-left-small">
           <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf"/>
                 <label>Circular</label>
           </span>
@@ -30,14 +30,17 @@
       <h5>Edges</h5>
       <div class="margin-bottom-large" style="background-color: #F5F5F5">
         <li>
-          <span>
-          <input #expand type="checkbox"  (change)="onChangeExpand(expand.checked, affectedByMutation)" checked/>
+          <span class="margin-left-small">
+          <input #expand type="checkbox" (change)="onChangeExpand(expand.checked, affectedByMutationCb)"
+                 [defaultChecked]="expanded"/>
             <label>Expand</label>
           </span>
         </li>
         <li>
-          <span>
-          <input #affectedByMutation type="checkbox" (change)="onChangeAffectedByMutation(affectedByMutation.checked, expand)"/>
+          <span class="margin-left-small">
+          <input #affectedByMutationCb type="checkbox"
+                 (change)="onChangeAffectedByMutation(affectedByMutationCb.checked, expand)"
+                 [defaultChecked]="affectedByMutation"/>
             <label>Affected By Mutation</label>
           </span>
         </li>
@@ -46,17 +49,18 @@
       <h5>Group By</h5>
       <div class="margin-bottom-large" style="background-color: #F5F5F5">
         <li>
-          <span>
-          <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"/>
+          <span class="margin-left-small">
+          <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"
+                 [defaultChecked]="viewService.groupBySpecies"/>
             <label>Species</label>
           </span>
         </li>
       </div>
     </ul>
 
-    <h4 class="underline margin-bottom-large">
+    <h4 class="underline margin-bottom-large ">
       <i class="icon icon-common icon-spacer icon-download-alt"></i>Download</h4>
-    <div class="download-graph-options">
+    <div class="download-graph-options expanded">
       <button id="download-png" class="button" type="button" (click)="onClickDownloadGraph('png')">
         PNG
       </button>
@@ -66,7 +70,7 @@
     </div>
   </div>
 
-  <div class="columns medium-8">
+  <div class="columns medium-12 large-8" id="viewer-column">
     <h4 class="underline margin-bottom-large">Interaction Network</h4>
     <div id="graph-top-panel">
       <div id="suggestions_div">
@@ -84,7 +88,7 @@
     <div id="for-canvas-graph"></div>
   </div>
 
-  <div class="columns medium-2">
+  <div class="columns small-12 medium-6 large-2" id="legend-column">
     <h4 class="underline margin-bottom-large">Legend</h4>
     <div id="legend"></div>
 
@@ -97,5 +101,6 @@
     The number of interactions in your results is too high for our network
     viewer display, sorry. <br> If you want to represent a graph with the full results of your search,
     you can download your results and use Cytoscape (www.cytoscape.org) for
-    large network visualisation.</div>
+    large network visualisation.
+  </div>
 </div>

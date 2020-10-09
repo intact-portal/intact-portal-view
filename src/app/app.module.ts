@@ -49,6 +49,7 @@ import {MarkdownModule} from "./documentation/shared/markdown/markdown.module";
     InteractionsSearchService,
     InteractionsDetailsService,
     NetworkSearchService,
+    NetworkViewService
   ],
   bootstrap: [AppComponent]
 })

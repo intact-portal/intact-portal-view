@@ -4,7 +4,7 @@
 }
 
 #for-canvas-graph {
-  height: 750px;
+  height: 44vh;
   background: #fbfbfb;
 }
 
@@ -55,4 +55,55 @@
   font-style: italic;
   background-color: #e2444459;
   padding: 10px;
+}
+
+.download-graph-options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#download-png,
+#download-graphml {
+  flex: 1 1 0;
+  margin: 5px;
+}
+
+#network-viewer-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#toolbar-column {
+  padding-left: 0;
+  order: 0;
+}
+
+#viewer-column {
+  order: 1;
+}
+
+#legend-column {
+  padding-right: 0;
+  order: 2;
+}
+
+@media print, screen and (max-width: 40em) {
+  /* Small size screen */
+  #viewer-column {
+    order: 1;
+  }
+}
+@media print, screen and (min-width: 40em) {
+  /* Medium size screen */
+  #viewer-column {
+    order: 3;
+  }
+}
+@media print, screen and (min-width: 64em) {
+  /* Large size screen */
+  #viewer-column {
+    order: 1;
+  }
 }

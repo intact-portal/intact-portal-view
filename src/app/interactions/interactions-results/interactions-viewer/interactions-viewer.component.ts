@@ -1,6 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
+import {NetworkViewService} from "../../shared/service/network-view.service";
 
 declare const require: any;
 declare const $: any;
@@ -39,13 +41,15 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private networkSearchService: NetworkSearchService) {
+              private networkSearchService: NetworkSearchService,
+              public viewService: NetworkViewService) {
 
   }
 
   ngOnInit(): void {
     $('ip-interactions-viewer').foundation();
     this.graph = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
+    this.loadViewState();
 
     this.route.queryParams
       .filter(params => params.query)
@@ -66,16 +70,17 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
 
         this.requestIntactNetworkDetails();
       });
-
     this.toggleNetworkViewer(true);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  private loadViewState() {
+    this.expanded = this.viewService.expanded;
+    this.affectedByMutation = this.viewService.affectedByMutation;
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
     const chng = changes['interactionSelected'];
     const cur = JSON.stringify(chng.currentValue);
-
-    console.log('cur' + cur);
   }
 
   toggleNetworkViewer(visible: boolean): void {
@@ -85,6 +90,7 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     } else {
       $('#network-viewer-container').hide();
       $('#no-network-viewer').show();
+      ProgressBarComponent.hideWithoutDelay();
     }
   }
 
@@ -104,9 +110,9 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       this.compoundGraph
     ).subscribe(data => {
       this.interactionsJSON = data;
-      console.log('Data loaded');
       // Makes the network expanded expanded by default
       this.graph.initializeWithData(this.interactionsJSON, true, this.affectedByMutation, this.layoutName);
+      this.graph.expandEdges(this.expanded, this.affectedByMutation);
     }, error => {
       // When network results are too big, capture error from server and hide the network viewer
       if (this.interactionsJSON === undefined) {
@@ -125,17 +131,21 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       affectedByMutationCheckBox.checked = false;
     }
     this.expanded = expandCheckBoxValue;
+    this.viewService.expanded = expandCheckBoxValue;
     this.graph.expandEdges(expandCheckBoxValue, false);
   }
 
   onChangeAffectedByMutation(affectedByMutationCheckBoxValue, expandCheckBox) {
     expandCheckBox.checked = true;
     this.affectedByMutation = affectedByMutationCheckBoxValue;
+    this.viewService.expanded = true;
+    this.viewService.affectedByMutation = affectedByMutationCheckBoxValue;
     this.graph.expandEdges(true, affectedByMutationCheckBoxValue);
   }
 
   onChangeGroupBy(groupByValue: boolean) {
     this.compoundGraph = groupByValue;
+    this.viewService.groupBySpecies = groupByValue;
     this.requestIntactNetworkDetails();
   }
 

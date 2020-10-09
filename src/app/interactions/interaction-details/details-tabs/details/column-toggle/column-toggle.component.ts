@@ -1,4 +1,12 @@
-import {AfterViewInit, Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Output, EventEmitter
+} from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -12,11 +20,13 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
   @Input() columnNames: string[];
   @Input() dataTable: any;
   @Input() columnView: string;
+  @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   private columnToggleHover = false;
   private columnsSelected: string[];
 
-  constructor(private cdRef: ChangeDetectorRef) {}
+  constructor(private cdRef: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
     const columnView = this.columnView + '_columns';
@@ -47,7 +57,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
 
     // Hide toggle list pop up when select somewhere outside the container
-    $(document).click(function(e) {
+    $(document).click(function (e) {
       if ($(e.target).closest('.columnToggle').length === 0) {
         if (table.is(':visible') && e.target.className !== 'list-view') {
           table.toggle();
@@ -77,6 +87,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     }
 
     localStorage.setItem(this.columnView + '_columns', JSON.stringify(this.columnsSelected));
+    this.columnSelectionChanged.emit(this.columnsSelected);
   }
 
   isColumnSelected(column: string) {
@@ -86,13 +97,14 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
   private showHideColumns(): void {
     const table = this.dataTable;
 
-    $('#' + this.columnView + ' input[type="checkbox"].list-view').on('click', function(e) {
+    $('#' + this.columnView + ' input[type="checkbox"].list-view').on('click', function (e) {
 
-        // Get the column API object
-        const column = table.column($(this).attr('data-column'));
+      // Get the column API object
+      const column = table.column($(this).attr('data-column'));
 
-        // Toggle the visibility
-        column.visible(!column.visible());
+
+      // Toggle the visibility
+      column.visible(!column.visible());
     });
   }
 }

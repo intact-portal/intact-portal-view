@@ -1,10 +1,12 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
 import 'rxjs/add/operator/filter';
 import {InteractionsSearchResult} from '../shared/model/interactions-results/interaction/interactions-search.model';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
+import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar/progress-bar.component";
+import {EFilter} from "./interactions-filters/interactions-filters.component";
 
 @Component({
   selector: 'ip-interactions-results',
@@ -48,10 +50,10 @@ export class InteractionsResultsComponent implements OnInit {
       .subscribe(params => {
         this.terms = params.query;
         this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
-        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
-        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
+        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
         this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
@@ -62,7 +64,7 @@ export class InteractionsResultsComponent implements OnInit {
         this.currentPageIndex = params.page ? Number(params.page) : 1;
 
         this.requestInteractionsResults();
-    });
+      });
   }
 
   private requestInteractionsResults() {
@@ -81,7 +83,8 @@ export class InteractionsResultsComponent implements OnInit {
       this.currentPageIndex
     ).subscribe(interactionsSearch => {
       this.interactionsSearch = interactionsSearch;
-      if (this.interactionsSearch.totalElements !== 0 ) {
+      ProgressBarComponent.hideWithoutDelay();
+      if (this.interactionsSearch.totalElements !== 0) {
         this.interactionsSearchService.totalElements = this.interactionsSearch.totalElements;
       }
     })
@@ -334,5 +337,4 @@ export class InteractionsResultsComponent implements OnInit {
   set interactionsSearch(value: InteractionsSearchResult) {
     this._interactionsSearch = value;
   }
-
 }

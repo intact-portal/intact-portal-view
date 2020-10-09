@@ -17,31 +17,37 @@ import {QueryBuilderModule} from 'angular2-query-builder';
 import {BatchSearchComponent} from './batch-search/batch-search.component';
 import {ArchwizardModule} from 'angular-archwizard';
 import {KeyvaluemapPipe} from './shared/keyvaluemap.pipe';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    QueryBuilderModule,
-    HomeDashboardRoutingModule,
-    FileUploadModule,
-    ArchwizardModule
-  ],
-    declarations: [
-        HomeDashboardComponent,
-        HomeDescriptionComponent,
-        SearchComponent,
-        TileMenuComponent,
-        NewsletterSubscriptionComponent,
-        TwitterDisplayComponent,
-        FeaturedDatasetComponent,
-        NewsComponent,
-        DatasetArchiveComponent,
-        AdvancedSearchComponent,
-        BatchSearchComponent,
-        KeyvaluemapPipe
-    ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        QueryBuilderModule,
+        HomeDashboardRoutingModule,
+        FileUploadModule,
+        ArchwizardModule,
+        MatProgressSpinnerModule,
+        MatExpansionModule,
+        MatTooltipModule
+    ],
+  declarations: [
+    HomeDashboardComponent,
+    HomeDescriptionComponent,
+    SearchComponent,
+    TileMenuComponent,
+    NewsletterSubscriptionComponent,
+    TwitterDisplayComponent,
+    FeaturedDatasetComponent,
+    NewsComponent,
+    DatasetArchiveComponent,
+    AdvancedSearchComponent,
+    BatchSearchComponent,
+    KeyvaluemapPipe
+  ]
 })
 export class HomeDashboardModule {
 }

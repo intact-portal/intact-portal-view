@@ -50,8 +50,10 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   @Output() onInteractionIntraSpeciesFilterChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output() onResetAllFilters: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onResetFilter: EventEmitter<EFilter> = new EventEmitter<EFilter>();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.initSliderRange();
@@ -69,7 +71,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   interactorSpeciesFilterStyle(): any {
-    if (this.interactionFacets.speciesA_B_str.length > 20 ) {
+    if (this.interactionFacets.speciesA_B_str.length > 20) {
       // TODO: Try to compact the styles in one function if they are the same between the different facets.
       return {
         height: '400px',
@@ -170,6 +172,29 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
           default:
             return String(value);
         }
+      },
+      getPointerColor: (value: number): string => {
+        if (value <= 0.1) {
+          return '#FFFFE5';
+        } else if (value <= 0.2) {
+          return '#FFF7BC';
+        } else if (value <= 0.3) {
+          return '#FEE391';
+        } else if (value <= 0.4) {
+          return '#FEC44F';
+        } else if (value <= 0.5) {
+          return '#FE9929';
+        } else if (value <= 0.6) {
+          return '#EC7014';
+        } else if (value <= 0.7) {
+          return '#CC4C02';
+        } else if (value <= 0.8) {
+          return '#993404';
+        } else if (value <= 0.9) {
+          return '#662506';
+        } else {
+          return '#361303';
+        }
       }
     };
 
@@ -177,54 +202,34 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.maxValue = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
   }
 
-  onChangeInteractorSpeciesFilter(filter: string) {
-    if (!this.interactorSpeciesFilter.includes(filter)) {
-      this.interactorSpeciesFilter.push(filter);
+  private onChangeDiscreteFilter = (filters: string[], emitter: EventEmitter<string[]>, filter: string) => {
+    if (!filters.includes(filter)) {
+      filters.push(filter);
     } else {
-      this.interactorSpeciesFilter.splice(this.interactorSpeciesFilter.indexOf(filter), 1);
+      filters.splice(filters.indexOf(filter), 1);
     }
 
-    this.onInteractorSpeciesFilterChanged.emit(this.interactorSpeciesFilter);
+    emitter.emit(filters);
+  }
+
+  onChangeInteractorSpeciesFilter(filter: string) {
+    this.onChangeDiscreteFilter(this.interactorSpeciesFilter, this.onInteractorSpeciesFilterChanged, filter);
   }
 
   onChangeInteractorTypeFilter(filter: string) {
-    if (!this.interactorTypeFilter.includes(filter)) {
-      this.interactorTypeFilter.push(filter);
-    } else {
-      this.interactorTypeFilter.splice(this.interactorTypeFilter.indexOf(filter), 1);
-    }
-
-    this.onInteractorTypeFilterChanged.emit(this.interactorTypeFilter);
+    this.onChangeDiscreteFilter(this.interactorTypeFilter, this.onInteractorTypeFilterChanged, filter);
   }
 
   onChangeInteractionTypeFilter(filter: string) {
-    if (!this.interactionTypeFilter.includes(filter)) {
-      this.interactionTypeFilter.push(filter);
-    } else {
-      this.interactionTypeFilter.splice(this.interactionTypeFilter.indexOf(filter), 1);
-    }
-
-    this.onInteractionTypeFilterChanged.emit(this.interactionTypeFilter);
+    this.onChangeDiscreteFilter(this.interactionTypeFilter, this.onInteractionTypeFilterChanged, filter);
   }
 
   onChangeInteractionDetectionMethodFilter(filter: string) {
-    if (!this.interactionDetectionMethodFilter.includes(filter)) {
-      this.interactionDetectionMethodFilter.push(filter);
-    } else {
-      this.interactionDetectionMethodFilter.splice(this.interactionDetectionMethodFilter.indexOf(filter), 1);
-    }
-
-    this.onInteractionDetectionMethodFilterChanged.emit(this.interactionDetectionMethodFilter);
+    this.onChangeDiscreteFilter(this.interactionDetectionMethodFilter, this.onInteractionDetectionMethodFilterChanged, filter);
   }
 
   onChangeInteractionHostOrganismFilter(filter: string) {
-    if (!this.interactionHostOrganismFilter.includes(filter)) {
-      this.interactionHostOrganismFilter.push(filter);
-    } else {
-      this.interactionHostOrganismFilter.splice(this.interactionHostOrganismFilter.indexOf(filter), 1);
-    }
-
-    this.onInteractionHostOrganismFilterChanged.emit(this.interactionHostOrganismFilter);
+    this.onChangeDiscreteFilter(this.interactionHostOrganismFilter, this.onInteractionHostOrganismFilterChanged, filter);
   }
 
   onChangeInteractionIntraSpeciesFilter(checked: boolean) {
@@ -267,8 +272,11 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   // TODO detect miScore filter
   anyFiltersSelected() {
-    return (this.interactorSpeciesFilter.length !== 0 || this.interactorTypeFilter.length !== 0 || this.interactionTypeFilter.length !== 0
-      || this.interactionDetectionMethodFilter.length !== 0 || this.interactionHostOrganismFilter.length !== 0);
+    return this.interactorSpeciesFilter.length !== 0 ||
+      this.interactorTypeFilter.length !== 0 ||
+      this.interactionTypeFilter.length !== 0 ||
+      this.interactionDetectionMethodFilter.length !== 0 ||
+      this.interactionHostOrganismFilter.length !== 0;
   }
 
   resetAllFilters() {
@@ -280,8 +288,8 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   /************************* /
-  /** GETTERS AND SETTERS ** /
-  /*************************/
+   /** GETTERS AND SETTERS ** /
+   /*************************/
   get interactionFacets(): InteractionFacets {
     return this._interactionFacets;
   }
@@ -415,4 +423,35 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   set options(options: Options) {
     this._options = options;
   }
+
+  resetFilter(filter: EFilter) {
+    this.onResetFilter.emit(filter);
+  }
+
+  getFilter(filter: EFilter): string[] {
+    switch (filter) {
+      case EFilter.SPECIES:
+        return this.interactorSpeciesFilter;
+      case EFilter.INTERACTOR_TYPE:
+        return this.interactorTypeFilter;
+      case EFilter.INTERACTION_TYPE:
+        return this.interactionTypeFilter;
+      case EFilter.DETECTION_METHOD:
+        return this.interactionDetectionMethodFilter;
+      case EFilter.HOST_ORGANISM:
+        return this.interactionHostOrganismFilter;
+    }
+  }
+
+  filter = EFilter;
+}
+
+export enum EFilter {
+  SPECIES,
+  INTERACTOR_TYPE,
+  INTERACTION_TYPE,
+  DETECTION_METHOD,
+  HOST_ORGANISM,
+  MI_SCORE,
+  NEGATIVE
 }

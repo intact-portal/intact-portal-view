@@ -1,11 +1,21 @@
 <div id="results" class="row expanded">
   <div class="columns medium-12">
-    <h2>Search for {{terms}}</h2>
+    <mat-expansion-panel *ngIf="isLongTitle; else standardTitle">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2>Search for {{shortTerms}}</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{terms}}</p>
+    </mat-expansion-panel>
+    <ng-template #standardTitle>
+      <h2>Search for {{terms}}</h2>
+    </ng-template>
   </div>
 
   <div class="columns medium-12">
     <ip-interactions-filters *ngIf="interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
-      && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined)"
+      && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined); else loadingSpinner"
                              [interactionFacets]="interactionsSearch.facetResultPage"
                              [interactorTypeFilter]="interactorTypeFilter"
                              [interactorSpeciesFilter]="interactorSpeciesFilter"
@@ -18,6 +28,7 @@
                              [intraSpeciesFilter]="intraSpeciesFilter"
                              (onInteractorSpeciesFilterChanged)="onInteractorSpeciesFilterChanged($event)"
                              (onInteractorTypeFilterChanged)="onInteractorTypeFilterChanged($event)"
+                             (onResetFilter)="onResetFilter($event)"
                              (onResetAllFilters)="onResetAllFilters()"
                              (onInteractionTypeFilterChanged)="onInteractionTypeFilterChanged($event)"
                              (onInteractionDetectionMethodFilterChanged)="onInteractionDetectionMethodFilterChanged($event)"
@@ -28,6 +39,9 @@
                              (onInteractionIntraSpeciesFilterChanged)="onInteractionIntraSpeciesFilterChanged($event)">
 
     </ip-interactions-filters>
+    <ng-template #loadingSpinner>
+      <ip-progress-spinner class="margin-top-large margin-bottom-large"></ip-progress-spinner>
+    </ng-template>
   </div>
 
   <div class="columns medium-12">

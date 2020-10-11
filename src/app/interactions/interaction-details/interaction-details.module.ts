@@ -15,11 +15,14 @@ import {PublicationComponent} from './details-tabs/details/publication/publicati
 import {ParticipantDetailsComponent} from './details-tabs/details/participant-details/participant-details.component';
 import {FeaturesDetailsComponent} from './details-tabs/details/features-details/features-details.component';
 import {ColumnToggleComponent} from './details-tabs/details/column-toggle/column-toggle.component';
+import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   imports: [
     CommonModule,
-    InteractionDetailsRoutingModule
+    InteractionDetailsRoutingModule,
+    MatTooltipModule
   ],
   exports: [
     ColumnToggleComponent
@@ -38,7 +41,9 @@ import {ColumnToggleComponent} from './details-tabs/details/column-toggle/column
     PublicationComponent,
     ParticipantDetailsComponent,
     FeaturesDetailsComponent,
-    ColumnToggleComponent
+    ColumnToggleComponent,
+    CvTermComponent
   ]
 })
-export class InteractionDetailsModule { }
+export class InteractionDetailsModule {
+}

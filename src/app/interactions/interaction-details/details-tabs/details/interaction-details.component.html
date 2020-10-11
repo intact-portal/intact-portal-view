@@ -1,34 +1,50 @@
 <div class="row expanded">
-  <div class="columns medium-4">
+  <div class="columns medium-6">
 
-    <h4><i id="toggleDetails" class="icon icon-common icon-minus icon-spacer"
-                                     (click)="toggleDetailsButton()"
-                                     (mouseover)="hover=true" (mouseleave)="hover=false"
-                                     [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}" ></i>Interaction Details</h4>
+    <h4>
+      <i id="toggleDetails" class="icon icon-common icon-minus icon-spacer"
+         (click)="toggleDetailsButton()"
+         (mouseover)="hover=true" (mouseleave)="hover=false"
+         [ngStyle]="{cursor: hover==true ? 'pointer' : 'default'}"></i>
+      Interaction Details
+    </h4>
 
     <div id="detailsPanel" class="margin-top-large margin-bottom-large">
 
-      <div class="margin-top-large margin-bottom-large">
-        <h5>Interaction Accession</h5>
-        {{interactionDetails.interactionAc}}
-      </div>
-      <div class="margin-top-large margin-bottom-large">
-        <h5>Shortlabel</h5>
-        {{interactionDetails.shortLabel}}
-      </div>
-      <div class="margin-top-large margin-bottom-xlarge">
-        <h5>Interaction Type</h5>
-        {{interactionDetails.interactionType}}
-      </div>
+      <div class="row expanded margin-top-large margin-bottom-large">
+        <div class="columns medium-6 small-12">
+          <div class="margin-top-large">
+            <h5>Accession</h5>
+            {{interactionDetails.interactionAc}}
+          </div>
+          <div class="margin-top-large">
+            <h5>Type</h5>
+            {{interactionDetails.interactionType | titlecase}}
+          </div>
+
+          <div class="margin-top-large">
+            <h5>Detection Method</h5>
+            {{interactionDetails.experiment.interactionDetectionMethod | titlecase}}
+          </div>
+
+          <div class="margin-top-large">
+            <h5>Host Organism</h5>
+            {{interactionDetails.experiment.interactionHostOrganism | titlecase}}
+          </div>
+        </div>
 
 
-      <div id="extXrefs" class="margin-top-large" *ngIf="interactionDetails.xrefs.length!=0">
-        <ip-external-xrefs *ngIf="interactionDetails.xrefs"
-                           [xrefs]="interactionDetails.xrefs"></ip-external-xrefs>
-      </div>
-      <div id="curationAnnotations" class="margin-top-large" *ngIf="interactionDetails.annotations.length!=0">
-        <ip-curation-annotations *ngIf="interactionDetails.annotations"
-                                 [annotations]="interactionDetails.annotations"></ip-curation-annotations>
+        <div class="columns medium-6 small-12">
+          <div id="extXrefs" class="margin-top-large" *ngIf="interactionDetails.xrefs.length!=0">
+            <ip-external-xrefs *ngIf="interactionDetails.xrefs"
+                               [xrefs]="interactionDetails.xrefs"></ip-external-xrefs>
+          </div>
+
+          <div id="curationAnnotations" class="margin-top-large" *ngIf="interactionDetails.annotations.length!=0">
+            <ip-curation-annotations *ngIf="interactionDetails.annotations"
+                                     [annotations]="interactionDetails.annotations"></ip-curation-annotations>
+          </div>
+        </div>
       </div>
 
       <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="margin-top-large">
@@ -41,8 +57,6 @@
       </div>
     </div>
   </div>
-
-  <ip-experiment [experiment]="interactionDetails.experiment"></ip-experiment>
   <ip-publication [publication]="interactionDetails.publication"></ip-publication>
 
 </div>

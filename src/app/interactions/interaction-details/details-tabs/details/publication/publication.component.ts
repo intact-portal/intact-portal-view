@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Publication} from '../../../../shared/model/interaction-details/publication.model';
+import {Router} from "@angular/router";
 
 declare const $: any;
 
@@ -14,9 +15,14 @@ export class PublicationComponent implements OnInit {
 
   private hover = false;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    this.publication.publicationDate = this.publication.publicationDate
+      .split("-")
+      .reverse()
+      .join('/');
   }
 
   togglePublicationButton(): void {

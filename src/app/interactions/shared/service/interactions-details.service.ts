@@ -16,7 +16,7 @@ export class InteractionsDetailsService {
   constructor(private http: HttpClient) { }
 
   getInteractionDetails(interactionAc: string): Observable<InteractionDetails> {
-    return this.http.get(`${baseURL}/graph/interaction/details/${interactionAc}`)
+    return this.http.get<InteractionDetails>(`${baseURL}/graph/interaction/details/${interactionAc}`)
       .catch(this.handleError);
   }
 

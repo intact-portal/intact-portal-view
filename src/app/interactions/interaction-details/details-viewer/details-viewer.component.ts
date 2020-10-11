@@ -3,6 +3,8 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 
 import '../../../../assets/js/rgbcolor.js';
+import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
+
 declare const RGBColor: any;
 
 declare const require: any;
@@ -34,7 +36,8 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
 
   private _annotationSelected: string;
 
-  constructor(private interactionsDetailsService: InteractionsDetailsService) { }
+  constructor(private interactionsDetailsService: InteractionsDetailsService) {
+  }
 
   ngAfterViewInit() {
     this.requestInteractionViewerDetails();
@@ -54,20 +57,22 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   private requestInteractionViewerDetails() {
     this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
       .subscribe(data => {
-        this.interactionData = data;
+          this.interactionData = data;
+          ProgressBarComponent.hide();
 
-        if (this.interactionData !== undefined) {
-          xlv = new xiNET('interaction-viewer-container');
-          xlv.readMIJSON(this.interactionData, true);
-          xlv.autoLayout();
+          if (this.interactionData !== undefined) {
+            xlv = new xiNET('interaction-viewer-container');
+            xlv.readMIJSON(this.interactionData, true);
+            xlv.autoLayout();
 
-          // Initialise the legend colours for the features by default MI features
-          this.legendColours();
+            // Initialise the legend colours for the features by default MI features
+            this.legendColours();
+          }
+        },
+        (err: HttpErrorResponse) => {
+          console.log(err.message);
         }
-      },
-      (err: HttpErrorResponse) => {
-        console.log (err.message);
-      });
+      );
   }
 
   expandAll(): void {
@@ -96,7 +101,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
         let table = '<table id="colourViewer">' +
           '            <tr>' +
           '               <td style=\'width:100px;margin:10px;background:#b3e2cd; border:1px solid #82ad98;\'></td>' +
-          '               <td>' + this.interactionAc  +  '</td>' +
+          '               <td>' + this.interactionAc + '</td>' +
           '            </tr>';
         const domain = colourAssignment.domain();
         const range = colourAssignment.range();

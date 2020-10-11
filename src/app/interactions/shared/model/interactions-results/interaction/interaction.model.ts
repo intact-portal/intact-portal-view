@@ -13,6 +13,10 @@ export class Interaction {
   private _expansionMethod: string;
   private _experimentalRoleA: string;
   private _experimentalRoleB: string;
+  private _biologicalRoleA: string;
+  private _biologicalRoleB: string;
+  private _aliasesA: string[];
+  private _aliasesB: string[];
   private _typeA: string;
   private _typeB: string;
   private _count: number;
@@ -20,6 +24,11 @@ export class Interaction {
   private _firstAuthor: string;
   private _identifiers: string[];
   private _binaryInteractionId: string;
+  private _features: string[];
+  private _parameters: string[];
+  private _annotationsA: string[];
+  private _annotationsB: string[];
+  private _annotations: string[];
 
 
   get moleculeA(): string {
@@ -118,12 +127,44 @@ export class Interaction {
     this._experimentalRoleA = value;
   }
 
+  get biologicalRoleA(): string {
+    return this._biologicalRoleA;
+  }
+
+  set biologicalRoleA(value: string) {
+    this._biologicalRoleA = value;
+  }
+
   get experimentalRoleB(): string {
     return this._experimentalRoleB;
   }
 
   set experimentalRoleB(value: string) {
     this._experimentalRoleB = value;
+  }
+
+  get biologicalRoleB(): string {
+    return this._biologicalRoleB;
+  }
+
+  set biologicalRoleB(value: string) {
+    this._biologicalRoleB = value;
+  }
+
+  get aliasesA(): string[] {
+    return this._aliasesA;
+  }
+
+  set aliasesA(value: string[]) {
+    this._aliasesA = value;
+  }
+
+  get aliasesB(): string[] {
+    return this._aliasesB;
+  }
+
+  set aliasesB(value: string[]) {
+    this._aliasesB = value;
   }
 
   get typeA(): string {
@@ -180,5 +221,45 @@ export class Interaction {
 
   set binaryInteractionId(value: string) {
     this._binaryInteractionId = value;
+  }
+
+  get features(): string[] {
+    return this._features;
+  }
+
+  set features(value: string[]) {
+    this._features = value;
+  }
+
+  get parameters(): string[] {
+    return this._parameters;
+  }
+
+  set parameters(value: string[]) {
+    this._parameters = value;
+  }
+
+  get annotationsA(): string[] {
+    return this._annotationsA;
+  }
+
+  set annotationsA(value: string[]) {
+    this._annotationsA = value;
+  }
+
+  get annotationsB(): string[] {
+    return this._annotationsB;
+  }
+
+  set annotationsB(value: string[]) {
+    this._annotationsB = value;
+  }
+
+  get annotations(): string[] {
+    return this._annotations;
+  }
+
+  set annotations(value: string[]) {
+    this._annotations = value;
   }
 }

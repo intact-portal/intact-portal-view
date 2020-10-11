@@ -7,7 +7,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let xref of xrefs">
-        <td>{{xref.database.shortName}}<span *ngIf="xref.database.identifier !== null"> ({{xref.database.identifier}})</span></td>
+        <td>
+          <ip-cv-term [cvTerm]="xref.database"></ip-cv-term>
+        </td>
         <td>{{xref.identifier}}</td>
       </tr>
     </tbody>

@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionDetails} from '../../shared/model/interaction-details/interaction-details.model';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
+import {Router} from "@angular/router";
 
 declare const $: any;
 
@@ -14,6 +15,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   @Input() interactionAc: string;
   @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() participantChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() moleculeTypesCollected: EventEmitter<Set<string>> = new EventEmitter<Set<string>>();
 
   private _currentPageIndex: number;
 
@@ -47,7 +49,6 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
     this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
       .subscribe(interactionDetails => {
         this.interactionDetails = interactionDetails;
-        console.log(this.interactionDetails);
     })
   }
 

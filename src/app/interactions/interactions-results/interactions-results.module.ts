@@ -9,13 +9,28 @@ import {InteractorsTableComponent} from './interactions-list/interactors-table/i
 import {InteractionsTableComponent} from './interactions-list/interactions-table/interactions-table.component';
 import {InteractionDetailsModule} from '../interaction-details/interaction-details.module';
 import {Ng5SliderModule} from 'ng5-slider';
+import {ProgressSpinnerModule} from "../../layout/loading-indicators/progress-spinner/progress-spinner.module";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {ResultTableFactoryService} from "../shared/service/result-table-factory.service";
 
 @NgModule({
   imports: [
     CommonModule,
     InteractionsRoutingModule,
     InteractionDetailsModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+    ProgressSpinnerModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatExpansionModule
   ],
   declarations: [
     InteractionsFiltersComponent,
@@ -23,6 +38,8 @@ import {Ng5SliderModule} from 'ng5-slider';
     InteractionsViewerComponent,
     InteractionsResultsComponent,
     InteractorsTableComponent,
-    InteractionsTableComponent]
+    InteractionsTableComponent
+  ],
+  providers: [ResultTableFactoryService]
 })
 export class InteractionsResultsModule { }

@@ -40,7 +40,8 @@ export class InteractionsResultsComponent implements OnInit {
   constructor(private titleService: Title,
               private route: ActivatedRoute,
               private router: Router,
-              private interactionsSearchService: InteractionsSearchService) { }
+              private interactionsSearchService: InteractionsSearchService) {
+  }
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Search Results');
@@ -94,70 +95,96 @@ export class InteractionsResultsComponent implements OnInit {
 
   public onInteractorSpeciesFilterChanged(filter: string[]): void {
     this.interactorSpeciesFilter = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection();
     this.updateURLParams();
   }
 
   public onInteractorTypeFilterChanged(filter: string[]): void {
     this.interactorTypeFilter = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractionTypeFilterChanged(filter: string[]): void {
     this.interactionTypeFilter = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractionDetectionMethodFilterChanged(filter: string[]): void {
     this.interactionDetectionMethodFilter = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractionHostOrganismFilterChanged(filter: string[]): void {
     this.interactionHostOrganismFilter = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractionNegativeFilterChanged(filter: boolean): void {
     this.negativeFilter = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractionMiScoreMinFilterChanged(filter: any): void {
     this.miScoreMin = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractionMiScoreMaxFilterChanged(filter: any): void {
     this.miScoreMax = filter;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractionIntraSpeciesFilterChanged(filter: boolean): void {
     this.intraSpeciesFilter = filter;
+    this.resetSelection()
+    this.updateURLParams();
+  }
+
+  private resetSelection() {
     this.interactorSelected = undefined;
     this.interactionSelected = undefined;
+  }
+
+  onResetFilter(filter: EFilter) {
+    switch (filter) {
+      case EFilter.SPECIES:
+        this.interactorSpeciesFilter = [];
+        this.intraSpeciesFilter = false;
+        break;
+      case EFilter.INTERACTOR_TYPE:
+        this.interactorTypeFilter = [];
+        break;
+      case EFilter.INTERACTION_TYPE:
+        this.interactionTypeFilter = [];
+        break;
+      case EFilter.DETECTION_METHOD:
+        this.interactionDetectionMethodFilter = [];
+        break;
+      case EFilter.HOST_ORGANISM:
+        this.interactionHostOrganismFilter = [];
+        break;
+      case EFilter.NEGATIVE:
+        this.negativeFilter = false;
+        break
+      case EFilter.MI_SCORE:
+        this.miScoreMin = 0;
+        this.miScoreMax = 1;
+        break;
+    }
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onResetAllFilters(): void {
-    this.interactorTypeFilter = [];
     this.interactorSpeciesFilter = [];
+    this.interactorTypeFilter = [];
     this.interactionDetectionMethodFilter = [];
     this.interactionTypeFilter = [];
     this.interactionHostOrganismFilter = [];
@@ -165,15 +192,15 @@ export class InteractionsResultsComponent implements OnInit {
     this.miScoreMin = 0;
     this.miScoreMax = 1;
     this.intraSpeciesFilter = false;
-    this.interactorSelected = undefined;
-    this.interactionSelected = undefined;
+    this.resetSelection()
     this.updateURLParams();
   }
 
   public onInteractorSelectedChanged(interactor: string): void {
-      this.interactorSelected = interactor;
-      this.updateURLParams();
+    this.interactorSelected = interactor;
+    this.updateURLParams();
   }
+
   public onInteractionsSelectedChanged(interaction: string): void {
     this.interactionSelected = interaction;
     this.updateURLParams();
@@ -224,15 +251,31 @@ export class InteractionsResultsComponent implements OnInit {
       params['intraSpecies'] = this.intraSpeciesFilter;
     }
 
-    this.router.navigate([], { queryParams: params });
+    this.router.navigate([], {queryParams: params});
   }
 
   private prepareFiltersForParams(filter: string[]): string {
     return filter.toString().replace(/,/g, '+');
   }
 
-
   /** GETTERS AND SETTERS **/
+
+  get isLongTitle(): boolean {
+    return this.terms.length > 50;
+  }
+
+  get shortTerms(): string {
+    if (!this.isLongTitle) {
+      return this.terms;
+    } else {
+      let terms = this.terms.split(/\s/);
+      let last = terms.pop();
+      while (last.length === 0 || !last.trim()) {
+        last = terms.pop();
+      }
+      return `${terms.shift()} ... ${last}`
+    }
+  }
 
   get terms(): string {
     return this._terms;

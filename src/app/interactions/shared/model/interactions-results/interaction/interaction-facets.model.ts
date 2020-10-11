@@ -26,7 +26,7 @@ export class InteractionFacets {
     return this._speciesA_B_str;
   }
 
-  set   speciesA_B_str(value: Facet[]) {
+  set speciesA_B_str(value: Facet[]) {
     this._speciesA_B_str = value;
   }
 

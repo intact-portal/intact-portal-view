@@ -256,7 +256,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     // Synchronise scrolling
     bodyScroll.scroll(function () {
       let scrollAmt = bodyScroll.scrollLeft();
-      $('.fixedHeader-floating').css('left', `${LEFT_BORDER - scrollAmt}px`);
+      let fixedHeader = $('table.fixedHeader-floating[aria-describedby="interactionsTable_info"]');
+      fixedHeader.css('left', `${LEFT_BORDER - scrollAmt}px`);
       if (!this.scrolling) {
         this.scrolling = true;
         topScroll.scrollLeft(scrollAmt); // Synchronize  top scroller

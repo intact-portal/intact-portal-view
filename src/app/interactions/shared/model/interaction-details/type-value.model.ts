@@ -1,25 +1,25 @@
-export class TypeValueModel {
-  private _type: string;
-  private _value: string;
+export class TypeValueModel<T = string, V = string> {
+  private _type: T;
+  private _value: V;
 
-  constructor(type: string, value: string) {
+  constructor(type: T, value: V) {
     this._type = type;
     this._value = value;
   }
 
-  get type(): string {
+  get type(): T {
     return this._type;
   }
 
-  set type(value: string) {
+  set type(value: T) {
     this._type = value;
   }
 
-  get value(): string {
+  get value(): V {
     return this._value;
   }
 
-  set value(value: string) {
+  set value(value: V) {
     this._value = value;
   }
 }

@@ -3,30 +3,33 @@ import {TypeValueModel} from './type-value.model';
 import {Experiment} from './experiment.model';
 import {Publication} from './publication.model';
 import {Annotation} from './annotation.model';
+import {CvTerm} from "./cv-term.model";
+import {Parameter} from "./parameter.model";
 
 export class InteractionDetails {
   private _interactionAc: string;
-  private _interactionType: string;
   private _shortLabel: string;
-  private _xrefs: Xreferences[];
+  private _hostOrganism: string;
+  private _type: CvTerm;
+  private _detectionMethod: CvTerm;
+  private _confidences: TypeValueModel<CvTerm>[];
+  private _parameters: Parameter[];
   private _annotations: Annotation[];
-  // private _experimentConditions: ExperimentalConditions[];
-  private _parameters: TypeValueModel[];
-  private _confidences: TypeValueModel[];
+  private _xrefs: Xreferences[];
 
-  private _experiment: Experiment;
   private _publication: Publication;
 
-  constructor(interactionAc: string, interactionType: string, shortLabel: string, xrefs: Xreferences[], annotations: Annotation[],
-              parameters: TypeValueModel[], confidences: TypeValueModel[], experiment: Experiment, publication: Publication) {
+  constructor(interactionAc: string, shortLabel: string,hostOrganism: string, type: CvTerm, detectionMethod: CvTerm, xrefs: Xreferences[], annotations: Annotation[],
+              parameters: Parameter[], confidences: TypeValueModel<CvTerm>[], publication: Publication) {
     this._interactionAc = interactionAc;
-    this._interactionType = interactionType;
     this._shortLabel = shortLabel;
+    this._hostOrganism = hostOrganism;
+    this._type = type;
+    this._detectionMethod = detectionMethod;
     this._xrefs = xrefs;
     this._annotations = annotations;
     this._parameters = parameters;
     this._confidences = confidences;
-    this._experiment = experiment;
     this._publication = publication;
   }
 
@@ -38,20 +41,36 @@ export class InteractionDetails {
     this._interactionAc = value;
   }
 
-  get interactionType(): string {
-    return this._interactionType;
-  }
-
-  set interactionType(value: string) {
-    this._interactionType = value;
-  }
-
   get shortLabel(): string {
     return this._shortLabel;
   }
 
   set shortLabel(value: string) {
     this._shortLabel = value;
+  }
+
+  get hostOrganism(): string {
+    return this._hostOrganism;
+  }
+
+  set hostOrganism(value: string) {
+    this._hostOrganism = value;
+  }
+
+  get type(): CvTerm {
+    return this._type;
+  }
+
+  set type(value: CvTerm) {
+    this._type = value;
+  }
+
+  get detectionMethod(): CvTerm {
+    return this._detectionMethod;
+  }
+
+  set detectionMethod(value: CvTerm) {
+    this._detectionMethod = value;
   }
 
   get xrefs(): Xreferences[] {
@@ -70,28 +89,20 @@ export class InteractionDetails {
     this._annotations = value;
   }
 
-  get parameters(): TypeValueModel[] {
+  get parameters(): Parameter[] {
     return this._parameters;
   }
 
-  set parameters(value: TypeValueModel[]) {
+  set parameters(value: Parameter[]) {
     this._parameters = value;
   }
 
-  get confidences(): TypeValueModel[] {
+  get confidences(): TypeValueModel<CvTerm>[] {
     return this._confidences;
   }
 
-  set confidences(value: TypeValueModel[]) {
+  set confidences(value: TypeValueModel<CvTerm>[]) {
     this._confidences = value;
-  }
-
-  get experiment(): Experiment {
-    return this._experiment;
-  }
-
-  set experiment(value: Experiment) {
-    this._experiment = value;
   }
 
   get publication(): Publication {

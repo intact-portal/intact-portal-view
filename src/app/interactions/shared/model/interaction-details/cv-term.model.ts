@@ -22,4 +22,5 @@ export class CvTerm {
   set identifier(value: string) {
     this._identifier = value;
   }
+
 }

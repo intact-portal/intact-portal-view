@@ -19,17 +19,17 @@
           </div>
           <div class="margin-top-large">
             <h5>Type</h5>
-            {{interactionDetails.interactionType | titlecase}}
+            {{interactionDetails.type.shortName | titlecase}}
           </div>
 
           <div class="margin-top-large">
             <h5>Detection Method</h5>
-            {{interactionDetails.experiment.interactionDetectionMethod | titlecase}}
+            {{interactionDetails.detectionMethod.shortName | titlecase}}
           </div>
 
           <div class="margin-top-large">
             <h5>Host Organism</h5>
-            {{interactionDetails.experiment.interactionHostOrganism | titlecase}}
+            {{interactionDetails.hostOrganism | titlecase}}
           </div>
         </div>
 

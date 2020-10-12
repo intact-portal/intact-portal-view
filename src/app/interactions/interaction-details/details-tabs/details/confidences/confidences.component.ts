@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
+import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model";
 
 @Component({
   selector: 'ip-confidences',
@@ -8,7 +9,7 @@ import {TypeValueModel} from '../../../../shared/model/interaction-details/type-
 })
 export class ConfidencesComponent implements OnInit {
 
-  @Input() confidences: TypeValueModel[];
+  @Input() confidences: TypeValueModel<CvTerm>[];
 
   constructor() { }
 

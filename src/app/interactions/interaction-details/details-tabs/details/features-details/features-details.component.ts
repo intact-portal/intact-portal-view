@@ -64,7 +64,7 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
       paging: true,
       lengthMenu: [ 10, 25, 50, 75, 100 ],
       pageLength: 10,
-      pagingType: 'full_numbers',
+      pagingType: 'numbers',
       processing: true,
       serverSide: true,
       dom: '<"top"li>rt<"bottom"p><"clear">',

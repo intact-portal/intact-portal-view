@@ -17,6 +17,8 @@ import {FeaturesDetailsComponent} from './details-tabs/details/features-details/
 import {ColumnToggleComponent} from './details-tabs/details/column-toggle/column-toggle.component';
 import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
+
 
 @NgModule({
   imports: [
@@ -42,7 +44,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     ParticipantDetailsComponent,
     FeaturesDetailsComponent,
     ColumnToggleComponent,
-    CvTermComponent
+    CvTermComponent,
+    CvToUrlPipe
   ]
 })
 export class InteractionDetailsModule {

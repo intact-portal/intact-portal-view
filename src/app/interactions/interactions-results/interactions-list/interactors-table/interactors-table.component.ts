@@ -226,7 +226,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     bodyScroll.scroll(function () {
       let scrollAmt = bodyScroll.scrollLeft();
       const LEFT_BORDER = 32;
-      tableWrapper.find('.fixedHeader-floating').css('left', `${LEFT_BORDER - scrollAmt}px`);  // Move sticky header to the same amount as the table
+      let fixedHeader = $('table.fixedHeader-floating[aria-describedby="interactorsTable_info"]');
+      fixedHeader.css('left', `${LEFT_BORDER - scrollAmt}px`);  // Move sticky header to the same amount as the table
       if (!this.scrolling) {
         this.scrolling = true;
         topScroll.scrollLeft(scrollAmt); // Synchronize  top scroller

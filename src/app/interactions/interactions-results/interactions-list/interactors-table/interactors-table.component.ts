@@ -312,12 +312,14 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         {
           data: 'interactorType',
           defaultContent: ' ',
-          title: this.columnNames[4]
+          title: this.columnNames[4],
+          render: this.resultTableFactory.cvRender('interactorTypeMIIdentifier')
         },
         {
           data: 'interactorSpecies',
           defaultContent: ' ',
-          title: this.columnNames[5]
+          title: this.columnNames[5],
+          render: this.resultTableFactory.speciesRender('interactorTaxId')
         },
         {
           data: 'interactorDescription',

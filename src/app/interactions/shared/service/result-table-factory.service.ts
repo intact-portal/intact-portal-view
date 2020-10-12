@@ -1,10 +1,30 @@
 import {Injectable} from '@angular/core';
 import {titleCase} from "../../../shared/utils/string-utils";
+import {log} from "util";
 
 @Injectable()
 export class ResultTableFactoryService {
 
   constructor() {
+  }
+
+  speciesRender = (identifierColumn: string) => (data, type, row, meta) => {
+    let id = row[identifierColumn];
+    if (parseInt(id) > 0) {
+      let url = `https://www.uniprot.org/taxonomy/${id}`;
+      return `<a href="${url}" class="has-tip cv-term" target="_blank">${data}</a>`;
+    } else {
+      return data;
+    }
+  }
+
+  cvRender = (identifierColumn: string) => (data, type, row, meta) => {
+    let miId = row[identifierColumn];
+    if (miId) {
+      let id = miId.replace(':','_');
+      let url = `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
+      return `<a href="${url}" class="has-tip cv-term" target="_blank">${data}</a>`
+    } else return data;
   }
 
   createRenderingButton(data, type, row, meta): { data: any[], button: string, addButton: boolean } {

@@ -47,8 +47,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'Select',
     'Molecule A',
     'Molecule B',
-    'Interactor Type A',
-    'Interactor Type B',
+    'Type A',
+    'Type B',
     'Species A',
     'Species B',
     'Detection Method',
@@ -347,28 +347,33 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'typeA',
           defaultContent: ' ',
-          title: this.columnNames[3]
+          title: this.columnNames[3],
+          render: this.resultTableFactory.cvRender('typeMIA')
         },
         {
           data: 'typeB',
           defaultContent: ' ',
-          title: this.columnNames[4]
+          title: this.columnNames[4],
+          render: this.resultTableFactory.cvRender('typeMIB')
         },
         {
           data: 'speciesA',
           defaultContent: ' ',
-          title: this.columnNames[5]
+          title: this.columnNames[5],
+          render: this.resultTableFactory.speciesRender('taxIdA')
         },
         {
           data: 'speciesB',
           defaultContent: ' ',
-          title: this.columnNames[6]
+          title: this.columnNames[6],
+          render: this.resultTableFactory.speciesRender('taxIdB')
         },
 
         {
           data: 'detectionMethod',
           defaultContent: ' ',
-          title: this.columnNames[7]
+          title: this.columnNames[7],
+          render: this.resultTableFactory.cvRender('detectionMethodMIIdentifier')
         },
         {
           data: 'publicationIdentifiers',
@@ -400,7 +405,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'type',
           defaultContent: ' ',
-          title: this.columnNames[9]
+          title: this.columnNames[9],
+          render: this.resultTableFactory.cvRender('typeMIIdentifier')
         },
         {
           data: 'ac',
@@ -496,22 +502,26 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'experimentalRoleA',
           defaultContent: ' ',
-          title: this.columnNames[14]
+          title: this.columnNames[14],
+          render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierA')
         },
         {
           data: 'experimentalRoleB',
           defaultContent: ' ',
-          title: this.columnNames[15]
+          title: this.columnNames[15],
+          render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierB')
         },
         {
           data: 'biologicalRoleA',
           defaultContent: ' ',
-          title: this.columnNames[16]
+          title: this.columnNames[16],
+          render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierA')
         },
         {
           data: 'biologicalRoleB',
           defaultContent: ' ',
-          title: this.columnNames[17]
+          title: this.columnNames[17],
+          render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierB')
         },
         {
           data: 'aliasesA',
@@ -679,6 +689,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       ],
       drawCallback: function (settings) {
         $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
+        console.log(settings.json.data[0])
       }
     });
   }

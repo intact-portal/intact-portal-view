@@ -304,6 +304,10 @@ div.dataTables_length > label > select {
   order: 3;
 }
 
+.cv-term {
+  background: none !important;
+  white-space: nowrap;
+}
 
 table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9;

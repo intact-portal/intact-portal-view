@@ -19,12 +19,12 @@
           </div>
           <div class="margin-top-large">
             <h5>Type</h5>
-            {{interactionDetails.type.shortName | titlecase}}
+            <ip-cv-term [cvTerm]="interactionDetails.type"></ip-cv-term>
           </div>
 
           <div class="margin-top-large">
             <h5>Detection Method</h5>
-            {{interactionDetails.detectionMethod.shortName | titlecase}}
+            <ip-cv-term [cvTerm]="interactionDetails.detectionMethod"></ip-cv-term>
           </div>
 
           <div class="margin-top-large">

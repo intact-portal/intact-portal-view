@@ -309,8 +309,9 @@ div.dataTables_length > label > select {
   white-space: nowrap;
 }
 
-table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
-  background-color: #f9f9f9;
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.display tbody tr.odd{
+  background-color: #f9f9f9 !important;
 }
 
 .dataTable{
@@ -324,6 +325,12 @@ table.dataTable td {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+  background-color: #68297c;
+  color: white;
+  border: 1px solid white;
 }
 
 table.dataTable tr, th {

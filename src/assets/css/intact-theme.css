@@ -402,7 +402,6 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   border-radius: 5px;
   padding: 3px 4px;
   white-space: nowrap;
-  color: salmon;
 }
 
 .detailsExpansionsCell {

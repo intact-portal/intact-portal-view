@@ -438,7 +438,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
-                if (! d.includes('intact-miscore')) return `<span class="detailsCommentsCell">${d}</span>`
+                if (! d.includes('intact-miscore')) return `<div><span class="detailsConfidencesCell">${d}</span></div>`
                 const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
                   'rgb(255,255,229)',
                   'rgb(255,247,188)',

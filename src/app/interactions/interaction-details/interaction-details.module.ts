@@ -18,6 +18,7 @@ import {ColumnToggleComponent} from './details-tabs/details/column-toggle/column
 import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
+import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
     FeaturesDetailsComponent,
     ColumnToggleComponent,
     CvTermComponent,
-    CvToUrlPipe
+    CvToUrlPipe,
+    OrganismPipe
   ]
 })
 export class InteractionDetailsModule {

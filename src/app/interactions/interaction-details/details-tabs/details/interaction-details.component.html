@@ -29,7 +29,7 @@
 
           <div class="margin-top-large">
             <h5>Host Organism</h5>
-            {{interactionDetails.hostOrganism | titlecase}}
+            <span [innerHTML]="interactionDetails.hostOrganism | organism"></span>
           </div>
         </div>
 

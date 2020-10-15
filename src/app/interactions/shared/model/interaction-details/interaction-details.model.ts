@@ -1,15 +1,15 @@
 import {Xreferences} from './xreferences.model';
 import {TypeValueModel} from './type-value.model';
-import {Experiment} from './experiment.model';
 import {Publication} from './publication.model';
 import {Annotation} from './annotation.model';
 import {CvTerm} from "./cv-term.model";
 import {Parameter} from "./parameter.model";
+import {Organism} from "./organism.model";
 
 export class InteractionDetails {
   private _interactionAc: string;
   private _shortLabel: string;
-  private _hostOrganism: string;
+  private _hostOrganism: Organism;
   private _type: CvTerm;
   private _detectionMethod: CvTerm;
   private _confidences: TypeValueModel<CvTerm>[];
@@ -19,7 +19,7 @@ export class InteractionDetails {
 
   private _publication: Publication;
 
-  constructor(interactionAc: string, shortLabel: string,hostOrganism: string, type: CvTerm, detectionMethod: CvTerm, xrefs: Xreferences[], annotations: Annotation[],
+  constructor(interactionAc: string, shortLabel: string,hostOrganism: Organism, type: CvTerm, detectionMethod: CvTerm, xrefs: Xreferences[], annotations: Annotation[],
               parameters: Parameter[], confidences: TypeValueModel<CvTerm>[], publication: Publication) {
     this._interactionAc = interactionAc;
     this._shortLabel = shortLabel;
@@ -49,11 +49,11 @@ export class InteractionDetails {
     this._shortLabel = value;
   }
 
-  get hostOrganism(): string {
+  get hostOrganism(): Organism {
     return this._hostOrganism;
   }
 
-  set hostOrganism(value: string) {
+  set hostOrganism(value: Organism) {
     this._hostOrganism = value;
   }
 

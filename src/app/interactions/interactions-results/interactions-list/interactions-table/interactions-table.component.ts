@@ -51,6 +51,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'Type B',
     'Species A',
     'Species B',
+    'Host Organism',
     'Detection Method',
     'Publication Ids',
     'Interaction Type',
@@ -369,17 +370,21 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[6],
           render: this.resultTableFactory.speciesRender('taxIdB')
         },
-
+        {
+          data: 'hostOrganism',
+          defaultContent: ' ',
+          title: this.columnNames[7]
+        },
         {
           data: 'detectionMethod',
           defaultContent: ' ',
-          title: this.columnNames[7],
+          title: this.columnNames[8],
           render: this.resultTableFactory.cvRender('detectionMethodMIIdentifier')
         },
         {
           data: 'publicationIdentifiers',
           defaultContent: ' ',
-          title: this.columnNames[8],
+          title: this.columnNames[9],
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -406,13 +411,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'type',
           defaultContent: ' ',
-          title: this.columnNames[9],
+          title: this.columnNames[10],
           render: this.resultTableFactory.cvRender('typeMIIdentifier')
         },
         {
           data: 'ac',
           defaultContent: ' ',
-          title: this.columnNames[10],
+          title: this.columnNames[11],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div>' +
@@ -424,16 +429,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'sourceDatabase',
           defaultContent: ' ',
-          title: this.columnNames[11]
+          title: this.columnNames[12]
         },
         {
           data: 'confidenceValues',
           defaultContent: ' ',
-          title: this.columnNames[12],
+          title: this.columnNames[13],
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
-
+                if (! d.includes('intact-miscore')) return `<span class="detailsCommentsCell">${d}</span>`
                 const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
                   'rgb(255,255,229)',
                   'rgb(255,247,188)',
@@ -493,7 +498,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'expansionMethod',
           defaultContent: ' ',
-          title: this.columnNames[13],
+          title: this.columnNames[14],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return `<div><a target="_blank" href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" class="detailsExpansionsCell">${data}</a></div>`;
@@ -503,53 +508,29 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'experimentalRoleA',
           defaultContent: ' ',
-          title: this.columnNames[14],
+          title: this.columnNames[15],
           render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierA')
         },
         {
           data: 'experimentalRoleB',
           defaultContent: ' ',
-          title: this.columnNames[15],
+          title: this.columnNames[16],
           render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierB')
         },
         {
           data: 'biologicalRoleA',
           defaultContent: ' ',
-          title: this.columnNames[16],
+          title: this.columnNames[17],
           render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierA')
         },
         {
           data: 'biologicalRoleB',
           defaultContent: ' ',
-          title: this.columnNames[17],
+          title: this.columnNames[18],
           render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierB')
         },
         {
           data: 'aliasesA',
-          defaultContent: ' ',
-          title: this.columnNames[18],
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-            const items = $.map(res.data, function (d, i) {
-              // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-              const alias = extractCVValue(d);
-              return `<div class="aliasesCell">
-                        <div style="float:left; margin-right: 4px;">
-                          <a class="detailsAliasesCell" target="_blank"
-                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
-                            ${alias.type.shortName}
-                          </a>
-                        </div>
-                        <span>${alias.value}</span>
-                      </div>`;
-            }.bind(this)).join('');
-            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
-        },
-        {
-          data: 'aliasesB',
           defaultContent: ' ',
           title: this.columnNames[19],
           render: function (data, type, row, meta) {
@@ -573,9 +554,33 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'featureCount',
+          data: 'aliasesB',
           defaultContent: ' ',
           title: this.columnNames[20],
+          render: function (data, type, row, meta) {
+            if (data == null) return;
+            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
+            const items = $.map(res.data, function (d, i) {
+              // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
+              const alias = extractCVValue(d);
+              return `<div class="aliasesCell">
+                        <div style="float:left; margin-right: 4px;">
+                          <a class="detailsAliasesCell" target="_blank"
+                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                            ${alias.type.shortName}
+                          </a>
+                        </div>
+                        <span>${alias.value}</span>
+                      </div>`;
+            }.bind(this)).join('');
+            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
+            return res.addButton ? html.concat(res.button) : html;
+          }.bind(this)
+        },
+        {
+          data: 'featureCount',
+          defaultContent: ' ',
+          title: this.columnNames[21],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div class="alignCell">' +
@@ -587,7 +592,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'parameters',
           defaultContent: ' ',
-          title: this.columnNames[21],
+          title: this.columnNames[22],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div class="parametersCell">' +
@@ -599,7 +604,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'annotationsA',
           defaultContent: ' ',
-          title: this.columnNames[22],
+          title: this.columnNames[23],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -626,7 +631,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'annotationsB',
           defaultContent: ' ',
-          title: this.columnNames[23],
+          title: this.columnNames[24],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -654,7 +659,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'annotations',
           defaultContent: ' ',
-          title: this.columnNames[24],
+          title: this.columnNames[25],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -690,7 +695,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       ],
       drawCallback: function (settings) {
         $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
-        console.log(settings.json.data[0])
       }
     });
   }

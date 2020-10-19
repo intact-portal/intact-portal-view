@@ -330,7 +330,9 @@ table.dataTable td {
 table.dataTable thead th, table.dataTable thead td {
   background-color: #68297c;
   color: white;
-  border: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  text-align: center;
 }
 
 table.dataTable tr, th {

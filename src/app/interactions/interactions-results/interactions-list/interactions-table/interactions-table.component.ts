@@ -3,11 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 
 import * as $ from 'jquery';
 import 'datatables.net';
-import 'datatables.net-buttons';
-import 'datatables.net-fixedheader';
 import {environment} from '../../../../../environments/environment';
 import {extractCVValue} from "../../../../shared/utils/string-utils";
 import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
+
 
 
 const baseURL = environment.intact_portal_ws;
@@ -97,7 +96,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   constructor(private route: ActivatedRoute, private resultTableFactory: ResultTableFactoryService) {
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void{
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
         this.terms = params.query;
@@ -136,7 +135,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     });
 
     this.initDataTable();
-    this.initScrollbars();
+    // this.initScrollbars();
+    this.resultTableFactory.initTopSlider('interactionsTable');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -234,13 +234,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   scrolling = false;
 
   private initScrollbars() {
-    let topScroll = $('#tableTopScroll');
+    let topScroll = $('#interactionTableTopScroll');
     if (topScroll.length === 0) {
-      topScroll = $('<div id="tableTopScroll"><div id="interactionsTableWidthMimic"></div></div>');
-      topScroll.find('#interactionsTableWidthMimic').height(20);
+      topScroll = $('<div id="interactionTableTopScroll"><div id="interactionsTableWidthMimic"></div></div>');
+      topScroll.find('#interactionsTableWidthMimic').height(1);
       topScroll.css('overflow-x', 'auto')
       topScroll.css('overflow-y', 'hidden')
-      topScroll.insertAfter($('div.top'));
+      topScroll.insertBefore($('div.dataTables_scrollHead'));
     }
     let bodyScroll = $('.dataTables_scrollBody');
 
@@ -253,28 +253,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       }
     }.bind(this));
 
-    const LEFT_BORDER = 32;
     // Synchronise scrolling
     bodyScroll.scroll(function () {
-      let scrollAmt = bodyScroll.scrollLeft();
-      let fixedHeader = $('table.fixedHeader-floating[aria-describedby="interactionsTable_info"]');
-      fixedHeader.css('left', `${LEFT_BORDER - scrollAmt}px`);
       if (!this.scrolling) {
         this.scrolling = true;
-        topScroll.scrollLeft(scrollAmt); // Synchronize  top scroller
+        topScroll.scrollLeft(bodyScroll.scrollLeft());
       } else {
         this.scrolling = false;
       }
     }.bind(this));
-
-    // Initial scrolling of the header when it appears
-    new MutationObserver(function () {
-      let scrollAmt = bodyScroll.scrollLeft();
-      $('.fixedHeader-floating').css('left', `${LEFT_BORDER - scrollAmt}px`);
-    }).observe(document, {
-      subtree: true,
-      childList: true
-    });
   }
 
   updateTable(visibleColumns: string[]) {
@@ -295,7 +282,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       serverSide: true,
       dom: '<"top"filp>rt<"bottom"ifp>',
       scrollX: true,
-      fixedHeader: true,
+      fixedHeader: false,
       ajax: {
         url: `${baseURL}/interaction/list/`,
         type: 'POST',
@@ -697,6 +684,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
       }
     });
+    this.resultTableFactory.makeTableHeaderSticky();
   }
 
 

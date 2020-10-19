@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {titleCase} from "../../../shared/utils/string-utils";
+import * as $ from "jquery";
 
 @Injectable()
 export class ResultTableFactoryService {
@@ -24,6 +25,45 @@ export class ResultTableFactoryService {
       let url = `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
       return `<a href="${url}" class="cv-term" target="_blank">${data}</a>`
     } else return data;
+  }
+
+  initTopSlider(tableId: string) {
+    let bodyScroll = $(`#${tableId}`).parent();
+    let topScroll = $(`#${tableId}TopScroll`);
+    if (topScroll.length === 0) {
+      topScroll = $(`<div id="${tableId}TopScroll"><div id="${tableId}WidthMimic"></div></div>`);
+      topScroll.find(`#${tableId}WidthMimic`).height(1);
+      topScroll.css('overflow-x', 'auto')
+      topScroll.css('overflow-y', 'hidden')
+      topScroll.insertBefore(bodyScroll.parent());
+    }
+    console.log(bodyScroll);
+    let scrolling = false;
+    topScroll.scroll(function () {
+      if (!scrolling) {
+        scrolling = true;
+        bodyScroll.scrollLeft(topScroll.scrollLeft())
+      } else {
+        scrolling = false;
+      }
+    });
+
+    bodyScroll.scroll(function () {
+      if (!scrolling) {
+        scrolling = true;
+        topScroll.scrollLeft(bodyScroll.scrollLeft());
+      } else {
+        scrolling = false;
+      }
+    });
+  }
+
+  makeTableHeaderSticky() {
+    $('div.dataTables_scrollBody').css('position', 'static');
+    $('div.dataTables_scrollHead')
+      .css('position','sticky')
+      .css('top','0px')
+      .css('box-shadow','0 6px 7px -2px #0000005c');
   }
 
   createRenderingButton(data, type, row, meta): { data: any[], button: string, addButton: boolean } {

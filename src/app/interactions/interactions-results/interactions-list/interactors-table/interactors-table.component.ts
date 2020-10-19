@@ -113,8 +113,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       this.dataTable.ajax.reload();
     });
     this.initDataTable();
-    this.initScrollbars();
+    // this.initScrollbars();
+    this.resultTableFactory.initTopSlider('interactorsTable')
   }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.interactorTab.currentValue) {
@@ -216,7 +218,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     let topScroll = $('#interactorsTableTopScroll');
     if (topScroll.length === 0) {
       topScroll = $('<div id="interactorsTableTopScroll"><div id="interactorsTableWidthMimic"></div></div>');
-      topScroll.find('#interactorsTableWidthMimic').height(20);
+      topScroll.find('#interactorsTableWidthMimic').height(1);
       topScroll.css('overflow-x', 'auto')
       topScroll.css('overflow-y', 'hidden')
       topScroll.insertAfter(tableWrapper.find('div.top'));
@@ -224,13 +226,9 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
     let bodyScroll = tableWrapper.find('.dataTables_scrollBody');
     bodyScroll.scroll(function () {
-      let scrollAmt = bodyScroll.scrollLeft();
-      const LEFT_BORDER = 32;
-      let fixedHeader = $('table.fixedHeader-floating[aria-describedby="interactorsTable_info"]');
-      fixedHeader.css('left', `${LEFT_BORDER - scrollAmt}px`);  // Move sticky header to the same amount as the table
       if (!this.scrolling) {
         this.scrolling = true;
-        topScroll.scrollLeft(scrollAmt); // Synchronize  top scroller
+        topScroll.scrollLeft(bodyScroll.scrollLeft()); // Synchronize  top scroller
       } else {
         this.scrolling = false;
       }
@@ -259,7 +257,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       serverSide: true,
       dom: '<"top"flip>rt<"bottom"ifp>',
       scrollX: true,
-      fixedHeader: true,
+      fixedHeader: false,
       ajax: {
         url: `${baseURL}/interaction/interactors/list/`,
         type: 'POST',
@@ -392,6 +390,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         $('#interactorsTableWidthMimic').width($("#interactorsTable").width());
       }
     });
+    this.resultTableFactory.makeTableHeaderSticky();
   }
 
 

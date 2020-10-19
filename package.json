@@ -32,8 +32,6 @@
     "complexviewer": "https://github.com/MICommunity/ComplexViewer/tarball/master",
     "core-js": "^2.4.1",
     "datatables.net": "^1.10.19",
-    "datatables.net-fixedheader-zf": "^3.1.7",
-    "datatables.net-buttons-zf": "^1.6.4",
     "ebi-framework": "^1.3.8",
     "ember-cli-cors": "0.0.2",
     "expose-loader": "^0.7.5",

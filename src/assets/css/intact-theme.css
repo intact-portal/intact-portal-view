@@ -121,6 +121,14 @@ a:visited {
   color: #312146;
 }
 
+.legend-label {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: normal;
+  line-height: 1.6;
+  color: #0a0a0a;
+}
+
 /* Progress bar */
 .progress-meter {
   position: relative;
@@ -329,9 +337,9 @@ table.dataTable td {
 }
 
 table.dataTable thead th, table.dataTable thead td {
-  background-color: #68297c;
+  background-color: #68297cbf;
   color: white;
-  border-left: 1px solid white;
+  border-bottom: none;
   border-right: 1px solid white;
   text-align: center;
 }

@@ -76,6 +76,7 @@ a.button {
 .button[disabled]:focus {
    background-color: #68297c;
    color: #fefefe;
+  opacity: 0.25;
 }
 
 /* Accordion */

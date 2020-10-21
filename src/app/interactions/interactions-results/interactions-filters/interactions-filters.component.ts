@@ -76,7 +76,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   filterStyle(filterKey: string): any {
     if (this.interactionFacets[filterKey].length > 20) {
       return {
-        height: ['detection_method_str','host_organism_str' ].includes(filterKey) ? '500px':'400px',
+        height: ['detection_method_str', 'host_organism_str'].includes(filterKey) ? '500px' : '400px',
         width: '100%',
         'overflow-y': 'auto',
       };
@@ -132,8 +132,9 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
       }
     };
 
-    this.minValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore[0].value : 0;
-    this.maxValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
+    let scores = this.interactionFacets.intact_miscore.map(facet => parseFloat(facet.value));
+    this.minValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? Math.min(...scores) : 0;
+    this.maxValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? Math.max(...scores) : 1;
     this.minValue = this.minValueCurrent;
     this.maxValue = this.maxValueCurrent;
   }

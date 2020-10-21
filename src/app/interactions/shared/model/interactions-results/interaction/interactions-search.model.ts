@@ -1,52 +1,21 @@
 import {Interaction} from './interaction.model';
 import {InteractionFacets} from './interaction-facets.model';
 import {Filter} from '../filter.model';
+import {Pagination} from "../../../../../home-dashboard/shared/pagination.model";
 
-export class InteractionsSearchResult {
-  private _content: Interaction[];
-  private _numberOfElements: number;
-  private _totalElements: number;
+export class InteractionsSearchResult extends Pagination<Interaction[]> {
   private _facetResultPage: InteractionFacets;
   private _facetFields: Filter[];
 
 
-  constructor(content: Interaction[],
-              numberOfElements: number,
-              totalElements: number,
-              facetResultPage: InteractionFacets,
+  constructor(facetResultPage: InteractionFacets,
               filtersType: Filter[]) {
-    this._content = content;
-    this._numberOfElements = numberOfElements;
-    this._totalElements = totalElements;
+    super();
     this._facetResultPage = facetResultPage;
     this._facetFields = filtersType;
   }
 
   /** GETTERS AND SETTERS **/
-
-  get content(): Interaction[] {
-    return this._content;
-  }
-
-  set content(value: Interaction[]) {
-    this._content = value;
-  }
-
-  get numberOfElements(): number {
-    return this._numberOfElements;
-  }
-
-  set numberOfElements(value: number) {
-    this._numberOfElements = value;
-  }
-
-  get totalElements(): number {
-    return this._totalElements;
-  }
-
-  set totalElements(value: number) {
-    this._totalElements = value;
-  }
 
   get facetResultPage(): InteractionFacets {
     return this._facetResultPage;

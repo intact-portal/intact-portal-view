@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SearchService} from './service/search.service';
 import {environment} from '../../../environments/environment';
+import {Pagination} from "../shared/pagination.model";
 
 declare const Bloodhound;
 declare const $: any;
@@ -12,8 +13,10 @@ const baseURL = environment.intact_portal_ws;
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit, AfterViewInit {
-
-  static totalInteractors: number;
+  currentPage = 0;
+  data: Pagination<any[]>;
+  private updatingPages = false;
+  private ignoreChange = false;
 
   constructor(private searchService: SearchService) {
   }
@@ -33,20 +36,30 @@ export class SearchComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('features_columnView_columns');
   }
 
+  private searchBox: any;
+  private bloodhound: any;
+
   private searchSuggestions(): void {
 
-    const interactorsData = new Bloodhound({
+    this.bloodhound = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
         url: `${baseURL}/interactor/findInteractor/%QUERY`,
-        wildcard: '%QUERY',
+        prepare: function (query, settings) {
+          if (!this.ignoreChange) {
+            console.log(this.currentPage);
+            settings.url = settings.url.replace('%QUERY', query);
+          }
+          return settings;
+        }.bind(this),
         transform: function (data) {
-          SearchComponent.totalInteractors = data.totalElements;
+          this.data = data;
           return data.content;
-        }
+        }.bind(this)
       }
     });
+    const interactorsData = this.bloodhound;
     interactorsData.initialize();
 
     // const interactionsData = new Bloodhound({
@@ -62,49 +75,51 @@ export class SearchComponent implements OnInit, AfterViewInit {
     // });
     // interactionsData.initialize();
 
-    const jsonTermsData = [
-      {
-        'dbOntology': 'PSI-MI',
-        'termId': 'MI:0007',
-        'termName': 'anti tag coip',
-        'description': 'anti tag coimmunoprecipitation',
-        'label': 'Interaction Detection Method',
-        'interactions': '6'
-      },
-      {
-        'dbOntology': 'NCBI',
-        'termId': '9606',
-        'termName': 'Homo sapiens',
-        'description': 'Human',
-        'label': 'Interactor Species',
-        'interactions': '6'
-      },
-      {
-        'dbOntology': 'PSI-MI',
-        'termId': 'MI:0326',
-        'termName': 'protein',
-        'description': 'protein',
-        'label': 'Interactor Type',
-        'interactions': '6'
-      },
-      {
-        'dbOntology': 'GO',
-        'termId': 'GO:0016032',
-        'termName': 'viral process',
-        'description': 'viral process',
-        'label': 'Interactor Xref',
-        'interactions': '1'
-      }
-    ];
+    // const jsonTermsData = [
+    //   {
+    //     'dbOntology': 'PSI-MI',
+    //     'termId': 'MI:0007',
+    //     'termName': 'anti tag coip',
+    //     'description': 'anti tag coimmunoprecipitation',
+    //     'label': 'Interaction Detection Method',
+    //     'interactions': '6'
+    //   },
+    //   {
+    //     'dbOntology': 'NCBI',
+    //     'termId': '9606',
+    //     'termName': 'Homo sapiens',
+    //     'description': 'Human',
+    //     'label': 'Interactor Species',
+    //     'interactions': '6'
+    //   },
+    //   {
+    //     'dbOntology': 'PSI-MI',
+    //     'termId': 'MI:0326',
+    //     'termName': 'protein',
+    //     'description': 'protein',
+    //     'label': 'Interactor Type',
+    //     'interactions': '6'
+    //   },
+    //   {
+    //     'dbOntology': 'GO',
+    //     'termId': 'GO:0016032',
+    //     'termName': 'viral process',
+    //     'description': 'viral process',
+    //     'label': 'Interactor Xref',
+    //     'interactions': '1'
+    //   }
+    // ];
+    //
+    // const termsData = new Bloodhound({
+    //   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('dbOntology'),
+    //   queryTokenizer: Bloodhound.tokenizers.whitespace,
+    //   local: jsonTermsData
+    // });
+    // termsData.initialize();
 
-    const termsData = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('dbOntology'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      local: jsonTermsData
-    });
-    termsData.initialize();
-
-    $('#searchBox .typeahead').typeahead({
+    const limit = 20;
+    this.searchBox = $('#searchBox .typeahead');
+    this.searchBox.typeahead({
         hint: true,
         highlight: true,
         minLength: 3
@@ -133,33 +148,33 @@ export class SearchComponent implements OnInit, AfterViewInit {
       // },
       {
         name: 'interactors',
-        limit: 20,
+        limit: limit,
         source: interactorsData,
         display: function (item) {
-         return item.interactorAc
+          return item.interactorAc
         },
         templates: {
-          header: () => `<h4 class="category-name">Interactors (${SearchComponent.totalInteractors} found)</h4>`,
+          header: () => `<h4 class="category-name">Interactors (${this.data.totalElements} found)</h4>`,
+          footer: () => {
+            if (this.data.totalPages > 1) {
+              return `<div class="alignCell">
+                        <button class="button" id="prev" ${this.data.first ? 'disabled' : ''}><i class="icon icon-common icon-previous-page"></i></button>
+                        <button class="button" id="next" ${this.data.last ? 'disabled' : ''}><i class="icon icon-common icon-next-page"></i></button>
+                      </div>`;
+            }
+          },
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: function (item) {
-            return (item.interactorName === null) ?
-              '<div class="row ">' +
-              '<div class="columns small-2">' + item.interactorAc + '</div>' +
-              '<div class="columns small-2">' + item.interactorPreferredIdentifier + '</div>'  +
-              '<div class="columns small-2"><i>"' + item.interactorDescription + '"</i> </div>' +
-              '<div class="columns small-2">' + item.interactorSpecies + '</div>' +
-              '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</span></div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' +
-              '</span></div>' +
-              '</div>' :
-              '<div class="row">' +
-              '<div class="columns small-2">' + item.interactorAc + '</div>' +
-              '<div class="columns small-2">' + item.interactorName + ' (' + item.interactorPreferredIdentifier + ')' + '</div>' +
-              '<div class="columns small-2"><i>"' + item.interactorDescription + '"</i> </div>' +
-              '<div class="columns small-2">' + item.interactorSpecies + '</div>' +
-              '<div class="columns small-2"><span class="labelWrapper">' + item.interactorType + '</span></div>' +
-              '<div class="columns small-2"><span class="interactionsWrapper">' + item.interactionCount + ' interactions' +
-              '</span></div>'
+            return `<div class="row ">
+                <div class="columns small-2">${item.interactorAc}</div>
+                <div class="columns small-2">
+                  ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}
+                </div>
+                <div class="columns small-2"><i>"${item.interactorDescription}"</i> </div>
+                <div class="columns small-2">${item.interactorSpecies}</div>
+                <div class="columns small-2"><span class="labelWrapper">${item.interactorType}</span></div>
+                <div class="columns small-2"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
+              </div>`
           },
         }
       }
@@ -207,6 +222,31 @@ export class SearchComponent implements OnInit, AfterViewInit {
       }
       this.search(id, '');
     });
+    $(document).on('click', '#prev', () => this.previousPage())
+    $(document).on('click', '#next', () => this.nextPage());
+    this.searchBox.on('input', () => {
+      this.currentPage = 0;
+    })
   }
 
+
+  nextPage() {
+    this.currentPage += 1;
+    this.updateAutosuggestion()
+  }
+
+  previousPage() {
+    this.currentPage -= 1;
+    this.updateAutosuggestion();
+  }
+
+  private updateAutosuggestion() {
+    this.updatingPages = true;
+    let val = this.searchBox.typeahead('val');
+    this.ignoreChange = true;
+    this.searchBox.typeahead('val', val + ' ');
+    this.ignoreChange = false;
+    this.searchBox.typeahead('val', val);
+    this.updatingPages = false;
+  }
 }

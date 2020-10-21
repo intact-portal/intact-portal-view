@@ -56,16 +56,14 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       .subscribe(params => {
         this.terms = params.query;
         this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
-        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
-        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
+        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
+        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
         this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
         this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
         this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
         this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
-        // this.interactorSelected = params.interactorSelected ? params.interactorSelected.split('+') : [];
-        // this.interactionSelected = params.interactionSelected ? params.interactionSelected : '';
         this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
 
         this.requestIntactNetworkDetails();

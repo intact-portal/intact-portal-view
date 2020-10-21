@@ -4,7 +4,7 @@
 }
 
 #for-canvas-graph {
-  height: 44vh;
+  flex-grow: 1;
   background: #fbfbfb;
 }
 
@@ -73,18 +73,24 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: stretch;
 }
 
 #toolbar-column {
+  /*flex: 1;*/
   padding-left: 0;
   order: 0;
 }
 
 #viewer-column {
+  /*flex: 1;*/
+  display: flex;
+  flex-direction: column;
   order: 1;
 }
 
 #legend-column {
+  /*flex: 1;*/
   padding-right: 0;
   order: 2;
 }
@@ -94,16 +100,31 @@
   #viewer-column {
     order: 1;
   }
+
+  body:after {
+    content: 'small';
+    display: none;
+  }
 }
 @media print, screen and (min-width: 40em) {
   /* Medium size screen */
   #viewer-column {
     order: 3;
   }
+
+  body:after {
+    content: 'medium';
+    display: none;
+  }
 }
 @media print, screen and (min-width: 64em) {
   /* Large size screen */
   #viewer-column {
     order: 1;
+  }
+
+  body:after {
+    content: 'large';
+    display: none;
   }
 }

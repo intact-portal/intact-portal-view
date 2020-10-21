@@ -21,7 +21,7 @@ export class ResultTableFactoryService {
   cvRender = (identifierColumn: string) => (data, type, row, meta) => {
     let miId = row[identifierColumn];
     if (miId) {
-      let id = miId.replace(':','_');
+      let id = miId.replace(':', '_');
       let url = `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
       return `<a href="${url}" class="cv-term" target="_blank">${data}</a>`
     } else return data;
@@ -37,7 +37,6 @@ export class ResultTableFactoryService {
       topScroll.css('overflow-y', 'hidden')
       topScroll.insertBefore(bodyScroll.parent());
     }
-    console.log(bodyScroll);
     let scrolling = false;
     topScroll.scroll(function () {
       if (!scrolling) {
@@ -60,10 +59,15 @@ export class ResultTableFactoryService {
 
   makeTableHeaderSticky() {
     $('div.dataTables_scrollBody').css('position', 'static');
+    let filterBar = $('#filters-bar');
     $('div.dataTables_scrollHead')
-      .css('position','sticky')
-      .css('top','0px')
-      .css('box-shadow','0 6px 7px -2px #0000005c');
+      .css('position', 'sticky')
+      .css('top', this.isScreenSize('large') && filterBar !== undefined ? filterBar.height() + 'px' : '0')
+      .css('box-shadow', '0 6px 7px -2px #0000005c');
+  }
+
+  isScreenSize(size: 'small' | 'medium' | 'large'): boolean {
+    return window.getComputedStyle(document.body, ':after').getPropertyValue('content').slice(1, -1) == size;
   }
 
   createRenderingButton(data, type, row, meta): { data: any[], button: string, addButton: boolean } {

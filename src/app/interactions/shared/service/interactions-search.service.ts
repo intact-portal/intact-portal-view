@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {InteractionsSearchResult} from '../model/interactions-results/interaction/interactions-search.model';
@@ -13,7 +13,8 @@ export class InteractionsSearchService {
   private _page = 1;
   private _pageSize = 20;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAllInteractionsAndFacetsQuery(query: string,
                                    batchSearchFilter: boolean,
@@ -58,8 +59,8 @@ export class InteractionsSearchService {
     try {
       return Math.ceil(this._totalElements / this._pageSize);
     } catch (e) {
-        console.error(e);
-        return 0;
+      console.error(e);
+      return 0;
     }
   }
 

@@ -1,5 +1,6 @@
-<div>
-  <div id="filters-bar" >
+<div data-sticky-container>
+  <div id="filters-bar" data-sticky data-sticky-on="large" data-margin-top="0"
+       data-top-anchor="filters-bar:top">
     <h4 class="underline">Filters</h4>
 
     <button class="button" type="button" data-toggle="interactor-species-dropdown">
@@ -7,7 +8,7 @@
     </button>
     <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <ul class="vertical menu facets margin-bottom-medium">
-        <div class=" scrollbar filter" [ngStyle]="interactorSpeciesFilterStyle()">
+        <div class=" scrollbar filter" [ngStyle]="filterStyle('speciesA_B_str')">
           <li *ngFor="let species of interactionFacets.speciesA_B_str">
           <span class="facet"><input #filter type="checkbox" value="{{species.value}}"
                                      (change)="onChangeInteractorSpeciesFilter(filter.value)"
@@ -40,7 +41,7 @@
     </button>
     <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <ul class="vertical menu facets">
-        <div class=" scrollbar filter" [ngStyle]="interactorTypeFilterStyle()">
+        <div class=" scrollbar filter" [ngStyle]="filterStyle('typeA_B_str')">
           <li *ngFor="let molecule of interactionFacets.typeA_B_str">
           <span class="facet"><input #filter type="checkbox" value="{{molecule.value}}"
                                      (change)="onChangeInteractorTypeFilter(filter.value)"
@@ -50,7 +51,7 @@
           </li>
         </div>
       </ul>
-      <div class="margin-top-medium" *ngIf="interactorTypeFilter.length > 0" style="display: flex; justify-content: center;align-content: center">
+      <div *ngIf="interactorTypeFilter.length > 0" class="margin-top-medium reset-button">
         <button mat-mini-fab color="primary" (click)="resetFilter(filter.INTERACTOR_TYPE)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
@@ -63,7 +64,7 @@
     </button>
     <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <ul class="vertical menu facets">
-        <div class=" scrollbar filter" [ngStyle]="interactionTypeFilterStyle()">
+        <div class=" scrollbar filter" [ngStyle]="filterStyle('type_str')">
           <li *ngFor="let interactionType of interactionFacets.type_str">
           <span class="facet"><input #filter type="checkbox" value="{{interactionType.value}}"
                                      (change)="onChangeInteractionTypeFilter(filter.value)"
@@ -73,9 +74,9 @@
           </li>
         </div>
       </ul>
-      <div *ngIf="interactionTypeFilter.length > 0" class="margin-top-medium" style="display: flex; justify-content: center;align-content: center">
+      <div *ngIf="interactionTypeFilter.length > 0" class="margin-top-medium reset-button">
         <button mat-mini-fab color="primary" (click)="resetFilter(filter.INTERACTION_TYPE)"
-                 matTooltip="Remove filter" matTooltipPosition="below">
+                matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
       </div>
@@ -87,7 +88,7 @@
     <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true">
       <ul class="vertical menu facets margin-bottom-medium">
-        <div class="scrollbar filter" [ngStyle]="interactionDetectionMethodFilterStyle()">
+        <div class="scrollbar filter" [ngStyle]="filterStyle('detection_method_str')">
           <li *ngFor="let detectionMethod of interactionFacets.detection_method_str">
           <span class="facet"><input #filter type="checkbox" value="{{detectionMethod.value}}"
                                      (change)="onChangeInteractionDetectionMethodFilter(filter.value)"
@@ -97,9 +98,9 @@
           </li>
         </div>
       </ul>
-      <div *ngIf="interactionDetectionMethodFilter.length > 0" class="margin-top-medium" style="display: flex; justify-content: center;align-content: center">
+      <div *ngIf="interactionDetectionMethodFilter.length > 0" class="margin-top-medium reset-button">
         <button mat-mini-fab color="primary" (click)="resetFilter(filter.DETECTION_METHOD)"
-                 matTooltip="Remove filter"
+                matTooltip="Remove filter"
                 matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -112,7 +113,7 @@
     <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true">
       <ul class="vertical menu facets">
-        <div class="scrollbar filter" [ngStyle]="interactionHostOrganismFilterStyle()">
+        <div class="scrollbar filter" [ngStyle]="filterStyle('host_organism_str')">
           <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
             <span class="facet"> <input #filter type="checkbox" value="{{hostOrganism.value}}"
                                         (change)="onChangeInteractionHostOrganismFilter(filter.value)"
@@ -122,9 +123,9 @@
           </li>
         </div>
       </ul>
-      <div *ngIf="interactionHostOrganismFilter.length > 0" class="margin-top-medium" style="display: flex; justify-content: center;align-content: center">
+      <div *ngIf="interactionHostOrganismFilter.length > 0" class="margin-top-medium reset-button">
         <button mat-mini-fab color="primary" (click)="resetFilter(filter.HOST_ORGANISM)"
-                 matTooltip="Remove filter" matTooltipPosition="below">
+                matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
       </div>
@@ -135,25 +136,31 @@
     </button>
     <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <div style="width: 300px" class="custom-slider margin-bottom-large">
-        <ng5-slider class="columns medium-3" [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+        <ng5-slider class="columns medium-3" [(value)]="minValueCurrent" [(highValue)]="maxValueCurrent" [options]="options"
                     (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
+      </div>
+      <div *ngIf="isFilteringScore()" class="margin-top-medium reset-button">
+        <button mat-mini-fab color="primary" (click)="resetFilter(filter.MI_SCORE)"
+                matTooltip="Remove filter" matTooltipPosition="below">
+          <i class="icon icon-functional" data-icon="d"></i>
+        </button>
       </div>
     </div>
 
-<!--    <button class="button" type="button" data-toggle="others-dropdown">-->
-<!--      <i class="icon icon-functional icon-spacer icon-filter"></i>Others-->
-<!--    </button>-->
-<!--    <div class="dropdown-pane" id="others-dropdown" data-dropdown data-hover="true" data-hover-pane="true">-->
-<!--      <div class="margin-top-medium">-->
-<!--        <div class="float:left">-->
-<!--          <label class="switch switch_type1" role="switch">-->
-<!--            <input type="checkbox" class="switch__toggle" disabled="disabled">-->
-<!--            <span class="switch__label"></span>-->
-<!--          </label>-->
-<!--          <b class="margin-left-medium disabled-color">Add inter-node connections</b>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--    <button class="button" type="button" data-toggle="others-dropdown">-->
+    <!--      <i class="icon icon-functional icon-spacer icon-filter"></i>Others-->
+    <!--    </button>-->
+    <!--    <div class="dropdown-pane" id="others-dropdown" data-dropdown data-hover="true" data-hover-pane="true">-->
+    <!--      <div class="margin-top-medium">-->
+    <!--        <div class="float:left">-->
+    <!--          <label class="switch switch_type1" role="switch">-->
+    <!--            <input type="checkbox" class="switch__toggle" disabled="disabled">-->
+    <!--            <span class="switch__label"></span>-->
+    <!--          </label>-->
+    <!--          <b class="margin-left-medium disabled-color">Add inter-node connections</b>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <button *ngIf="anyFiltersSelected()" class="button" type="button" (click)="resetAllFilters()">
       <i class="icon icon-functional" data-icon="d"></i> Reset filters

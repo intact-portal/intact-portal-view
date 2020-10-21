@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
+import {ResultTableFactoryService} from "../../shared/service/result-table-factory.service";
 
 declare const $: any;
 
@@ -28,8 +29,8 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   private _miScoreMaxFilter: any;
 
   /** Slider **/
-  private _minValue: string | number;
-  private _maxValue: string | number;
+  private _minValueCurrent: string | number;
+  private _maxValueCurrent: string | number;
   private _options: Options;
 
   /** This variable is used to check if the param is in the URL and update the state of the checkbox */
@@ -51,8 +52,10 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   @Output() onResetAllFilters: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onResetFilter: EventEmitter<EFilter> = new EventEmitter<EFilter>();
+  private minValue: string | number;
+  private maxValue: string | number;
 
-  constructor() {
+  constructor(private tableFactory: ResultTableFactoryService) {
   }
 
   ngOnInit() {
@@ -62,89 +65,20 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     //  it is what was causing the bad behaviour with the negative interaction in the url and the filters
     this.isNegativeInteraction = (this.negativeFilter !== 'false');
     this.isIntraSpecies = this.intraSpeciesFilter;
-
   }
 
   ngAfterViewInit(): void {
     $('ip-interactions-filters').foundation();
     $(window).trigger('load.zf.sticky');
+    this.tableFactory.makeTableHeaderSticky();
   }
 
-  interactorSpeciesFilterStyle(): any {
-    if (this.interactionFacets.speciesA_B_str.length > 20) {
-      // TODO: Try to compact the styles in one function if they are the same between the different facets.
+  filterStyle(filterKey: string): any {
+    if (this.interactionFacets[filterKey].length > 20) {
       return {
-        height: '400px',
+        height: ['detection_method_str','host_organism_str' ].includes(filterKey) ? '500px':'400px',
         width: '100%',
         'overflow-y': 'auto',
-      };
-    } else {
-      return {
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'hidden',
-      };
-    }
-  }
-
-  interactorTypeFilterStyle(): any {
-    if (this.interactionFacets.typeA_B_str.length > 20) {
-      return {
-        height: '400px',
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'auto'
-      };
-    } else {
-      return {
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'hidden',
-      };
-    }
-  }
-
-  interactionDetectionMethodFilterStyle(): any {
-    if (this.interactionFacets.detection_method_str.length > 20) {
-      return {
-        height: '500px',
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'auto'
-      };
-    } else {
-      return {
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'hidden',
-      };
-    }
-  }
-
-  interactionTypeFilterStyle(): any {
-    if (this.interactionFacets.type_str.length > 20) {
-      return {
-        height: '400px',
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'auto'
-      };
-    } else {
-      return {
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'hidden',
-      };
-    }
-  }
-
-  interactionHostOrganismFilterStyle(): any {
-    if (this.interactionFacets.host_organism_str.length > 20) {
-      return {
-        height: '500px',
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'auto'
       };
     } else {
       return {
@@ -198,8 +132,10 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
       }
     };
 
-    this.minValue = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore[0].value : 0;
-    this.maxValue = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
+    this.minValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore[0].value : 0;
+    this.maxValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? this.interactionFacets.intact_miscore.slice(-1)[0].value : 1;
+    this.minValue = this.minValueCurrent;
+    this.maxValue = this.maxValueCurrent;
   }
 
   private onChangeDiscreteFilter = (filters: string[], emitter: EventEmitter<string[]>, filter: string) => {
@@ -208,7 +144,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     } else {
       filters.splice(filters.indexOf(filter), 1);
     }
-
     emitter.emit(filters);
   }
 
@@ -270,13 +205,18 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     return this.interactorSpeciesFilter.length > 1;
   }
 
+  isFilteringScore() {
+    return this.minValueCurrent > this.minValue || this.maxValueCurrent < this.maxValue;
+  }
+
   // TODO detect miScore filter
   anyFiltersSelected() {
     return this.interactorSpeciesFilter.length !== 0 ||
       this.interactorTypeFilter.length !== 0 ||
       this.interactionTypeFilter.length !== 0 ||
       this.interactionDetectionMethodFilter.length !== 0 ||
-      this.interactionHostOrganismFilter.length !== 0;
+      this.interactionHostOrganismFilter.length !== 0 ||
+      this.isFilteringScore();
   }
 
   resetAllFilters() {
@@ -284,6 +224,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.negativeFilter = false;
     this.isIntraSpecies = false;
     this.intraSpeciesFilter = false;
+    this.resetMISCoreFilter();
     this.onResetAllFilters.emit(true);
   }
 
@@ -383,20 +324,20 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this._miScoreMaxFilter = value;
   }
 
-  get minValue(): string | number {
-    return this._minValue;
+  get minValueCurrent(): string | number {
+    return this._minValueCurrent;
   }
 
-  set minValue(value: string | number) {
-    this._minValue = value;
+  set minValueCurrent(value: string | number) {
+    this._minValueCurrent = value;
   }
 
-  get maxValue(): string | number {
-    return this._maxValue;
+  get maxValueCurrent(): string | number {
+    return this._maxValueCurrent;
   }
 
-  set maxValue(value: string | number) {
-    this._maxValue = value;
+  set maxValueCurrent(value: string | number) {
+    this._maxValueCurrent = value;
   }
 
   get intraSpeciesFilter(): any {
@@ -425,7 +366,15 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   resetFilter(filter: EFilter) {
+    if (filter === this.filter.MI_SCORE) {
+      this.resetMISCoreFilter();
+    }
     this.onResetFilter.emit(filter);
+  }
+
+  private resetMISCoreFilter() {
+    this.minValueCurrent = this.minValue;
+    this.maxValueCurrent = this.maxValue;
   }
 
   getFilter(filter: EFilter): string[] {

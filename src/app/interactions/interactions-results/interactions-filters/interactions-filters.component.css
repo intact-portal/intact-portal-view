@@ -79,3 +79,13 @@
   color: #847f7f;
 }
 
+.sticky.is-stuck {
+  box-shadow: 0 7px 8px -8px #00000096;
+  padding-left: 1rem;
+}
+
+div.reset-button {
+  text-align: center;
+}
+
+

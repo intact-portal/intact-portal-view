@@ -50,7 +50,7 @@ table tr, th {
 
 tr.separator td{
   height: 2px;
-  background-color: #68297c !important;
+  background-color: rgba(104, 41, 124, 0.50) !important;
   padding: 0 0;
 }
 /*th {*/

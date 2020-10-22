@@ -388,6 +388,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       ],
       drawCallback: function (settings) {
         $('#interactorsTableWidthMimic').width($("#interactorsTable").width());
+        console.log(settings.json.data[0])
       }
     });
     this.resultTableFactory.makeTableHeaderSticky();

@@ -4,9 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import * as $ from 'jquery';
 import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
-import {extractCVValue} from "../../../../shared/utils/string-utils";
+import {extractCVValue, extractIds} from "../../../../shared/utils/string-utils";
 import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
-
 
 
 const baseURL = environment.intact_portal_ws;
@@ -46,6 +45,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     'Select',
     'Molecule A',
     'Molecule B',
+    'Identifier A',
+    'Identifier B',
     'Type A',
     'Type B',
     'Species A',
@@ -96,7 +97,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   constructor(private route: ActivatedRoute, private resultTableFactory: ResultTableFactoryService) {
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.route.queryParams.filter(params => params.query)
       .subscribe(params => {
         this.terms = params.query;
@@ -334,44 +335,66 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this.columnNames[2]
         },
         {
+          data: 'idA',
+          defaultContent: '',
+          title: this.columnNames[3],
+          render: function (data, type) {
+            if (type === 'display' && data !== null) {
+              return this.resultTableFactory.getInteractorLink(extractIds(data))
+            }
+            return data
+          }.bind(this)
+        },
+        {
+          data: 'idB',
+          defaultContent: '',
+          title: this.columnNames[4],
+          render: function (data, type) {
+            if (type === 'display' && data !== null) {
+              return this.resultTableFactory.getInteractorLink(extractIds(data))
+            }
+            return data
+          }.bind(this)
+        },
+        {
           data: 'typeA',
           defaultContent: ' ',
-          title: this.columnNames[3],
+          title: this.columnNames[5],
           render: this.resultTableFactory.cvRender('typeMIA')
         },
         {
           data: 'typeB',
           defaultContent: ' ',
-          title: this.columnNames[4],
+          title: this.columnNames[6],
           render: this.resultTableFactory.cvRender('typeMIB')
         },
         {
           data: 'speciesA',
           defaultContent: ' ',
-          title: this.columnNames[5],
+          title: this.columnNames[7],
           render: this.resultTableFactory.speciesRender('taxIdA')
         },
         {
           data: 'speciesB',
           defaultContent: ' ',
-          title: this.columnNames[6],
+          title: this.columnNames[8],
           render: this.resultTableFactory.speciesRender('taxIdB')
         },
         {
           data: 'hostOrganism',
           defaultContent: ' ',
-          title: this.columnNames[7]
+          title: this.columnNames[9]
         },
         {
           data: 'detectionMethod',
           defaultContent: ' ',
-          title: this.columnNames[8],
+          title: this.columnNames[10],
           render: this.resultTableFactory.cvRender('detectionMethodMIIdentifier')
         },
         {
           data: 'publicationIdentifiers',
           defaultContent: ' ',
-          title: this.columnNames[9],
+          title: this.columnNames[11],
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -398,13 +421,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'type',
           defaultContent: ' ',
-          title: this.columnNames[10],
+          title: this.columnNames[12],
           render: this.resultTableFactory.cvRender('typeMIIdentifier')
         },
         {
           data: 'ac',
           defaultContent: ' ',
-          title: this.columnNames[11],
+          title: this.columnNames[13],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div>' +
@@ -416,16 +439,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'sourceDatabase',
           defaultContent: ' ',
-          title: this.columnNames[12]
+          title: this.columnNames[14]
         },
         {
           data: 'confidenceValues',
           defaultContent: ' ',
-          title: this.columnNames[13],
+          title: this.columnNames[15],
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
-                if (! d.includes('intact-miscore')) return `<div><span class="detailsConfidencesCell">${d}</span></div>`
+                if (!d.includes('intact-miscore')) return `<div><span class="detailsConfidencesCell">${d}</span></div>`
                 const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
                   'rgb(255,255,229)',
                   'rgb(255,247,188)',
@@ -485,7 +508,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'expansionMethod',
           defaultContent: ' ',
-          title: this.columnNames[14],
+          title: this.columnNames[16],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return `<div><a target="_blank" href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" class="detailsExpansionsCell">${data}</a></div>`;
@@ -495,31 +518,31 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'experimentalRoleA',
           defaultContent: ' ',
-          title: this.columnNames[15],
+          title: this.columnNames[17],
           render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierA')
         },
         {
           data: 'experimentalRoleB',
           defaultContent: ' ',
-          title: this.columnNames[16],
+          title: this.columnNames[18],
           render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierB')
         },
         {
           data: 'biologicalRoleA',
           defaultContent: ' ',
-          title: this.columnNames[17],
+          title: this.columnNames[19],
           render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierA')
         },
         {
           data: 'biologicalRoleB',
           defaultContent: ' ',
-          title: this.columnNames[18],
+          title: this.columnNames[20],
           render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierB')
         },
         {
           data: 'aliasesA',
           defaultContent: ' ',
-          title: this.columnNames[19],
+          title: this.columnNames[21],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -543,7 +566,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'aliasesB',
           defaultContent: ' ',
-          title: this.columnNames[20],
+          title: this.columnNames[22],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -567,7 +590,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'featureCount',
           defaultContent: ' ',
-          title: this.columnNames[21],
+          title: this.columnNames[23],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div class="alignCell">' +
@@ -579,7 +602,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'parameters',
           defaultContent: ' ',
-          title: this.columnNames[22],
+          title: this.columnNames[24],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div class="parametersCell">' +
@@ -591,7 +614,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'annotationsA',
           defaultContent: ' ',
-          title: this.columnNames[23],
+          title: this.columnNames[25],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -618,7 +641,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'annotationsB',
           defaultContent: ' ',
-          title: this.columnNames[24],
+          title: this.columnNames[26],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -646,7 +669,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         {
           data: 'annotations',
           defaultContent: ' ',
-          title: this.columnNames[25],
+          title: this.columnNames[27],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -682,6 +705,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       ],
       drawCallback: function (settings) {
         $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
+        console.log(settings.json.data[0])
       }
     });
     this.resultTableFactory.makeTableHeaderSticky();

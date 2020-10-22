@@ -190,6 +190,7 @@ export class ResultTableFactoryService {
 
 
   getInteractorLink(id: { value: string, database: string }): string {
+    if (id === null) return ;
     let access: DatabaseAccess = this.databaseToAccess.get(id.database);
     let url = null
     let style = ''
@@ -198,9 +199,9 @@ export class ResultTableFactoryService {
       if (access.color) style = `style="color:${access.color};
                                       background-color:${access.backColor ? access.backColor : access.color.replace('1.0', '0.05')};"`
     }
-    return `<div class="aliasesCell">
+    return `<div class="identifierCell">
               <span class="detailsCommentsCell" ${style}>${access ? access.fancyName : id.database}</span>
-              <div class="detailsCell aliasesCellWidth">
+              <div class="detailsCell identifierCellWidth">
                 ${url !== null ? `<a href="${url}" target="_blank" >${id.value}</a>` : id.value}
               </div>
             </div>`;

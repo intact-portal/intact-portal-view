@@ -21,6 +21,7 @@ export function extractCVValue(rawData: string): { value: string, type: CvTerm }
  * @param rawData: "id (database) "
  */
 export function extractIds(rawData: string): { value: string, database: string } {
+  if (rawData === null) return null
   let split = rawData.split('(')
   return {
     value: split.slice(0, -1).join('(').trim(),

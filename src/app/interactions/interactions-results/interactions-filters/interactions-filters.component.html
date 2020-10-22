@@ -1,7 +1,6 @@
-<div data-sticky-container>
-  <div id="filters-bar" data-sticky data-sticky-on="large" data-margin-top="0"
-       data-top-anchor="filters-bar:top">
-    <h4 class="underline">Filters</h4>
+<div>
+  <div id="filters-bar">
+    <h4>Filters</h4>
 
     <button class="button" type="button" data-toggle="interactor-species-dropdown">
       <i class="icon icon-functional icon-spacer icon-filter"></i>Interactor Species
@@ -136,7 +135,8 @@
     </button>
     <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <div style="width: 300px" class="custom-slider margin-bottom-large">
-        <ng5-slider class="columns medium-3" [(value)]="minValueCurrent" [(highValue)]="maxValueCurrent" [options]="options"
+        <ng5-slider class="columns medium-3" [(value)]="minValueCurrent" [(highValue)]="maxValueCurrent"
+                    [options]="options"
                     (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
       </div>
       <div *ngIf="isFilteringScore()" class="margin-top-medium reset-button">

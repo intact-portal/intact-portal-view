@@ -15,11 +15,21 @@ a:active {
   color: #68297c;
 }
 
-h1 { color: #312146; }
-h2 { color: #68297c; }
-h3 { color: #444444; }
+h1 {
+  color: #312146;
+}
 
-a.special { background-color: #A699B7; }
+h2 {
+  color: #68297c;
+}
+
+h3 {
+  color: #444444;
+}
+
+a.special {
+  background-color: #A699B7;
+}
 
 .menu .active > a,
 .tag,
@@ -28,19 +38,28 @@ a.special { background-color: #A699B7; }
 .button.primary {
   background-color: #68297C;
 }
-a.tag:hover { color: #fff; }
+
+a.tag:hover {
+  color: #fff;
+}
 
 .tabs-title > a:hover,
 .button.hover,
 .button.primary:hover,
-.button.primary:focus { background: rgba(104,41,124,.9); }
+.button.primary:focus {
+  background: rgba(104, 41, 124, .9);
+}
+
 .tabs-title > a:focus,
 .tabs-title > a[aria-selected='true'] {
   color: #fff;
-  background: rgb(104,41,124); }
+  background: rgb(104, 41, 124);
+}
+
 .tabs-title > a {
   color: #312146;
 }
+
 .masthead {
   background-image: linear-gradient(#000000, #68297c);
 }
@@ -74,8 +93,8 @@ a.button {
 .button[disabled],
 .button[disabled]:hover,
 .button[disabled]:focus {
-   background-color: #68297c;
-   color: #fefefe;
+  background-color: #68297c;
+  color: #fefefe;
   opacity: 0.25;
 }
 
@@ -148,7 +167,7 @@ a:visited {
 
 /************** Feature Dataset SECTION *******************************/
 
-.archive a{
+.archive a {
   border-bottom-style: none;
 }
 
@@ -202,7 +221,7 @@ a:visited {
 
 [_nghost-c11] .q-button[_ngcontent-c11]:focus {
   outline: 0;
-  box-shadow: inset 0 0 0px 0.2rem rgba(0,123,255,.25);
+  box-shadow: inset 0 0 0px 0.2rem rgba(0, 123, 255, .25);
 }
 
 [_nghost-c11] .q-remove-button[_ngcontent-c11] {
@@ -242,7 +261,6 @@ a:visited {
 /**************************************************************/
 
 
-
 /************** HOME PAGE SECTION *******************************/
 
 
@@ -265,6 +283,7 @@ a:visited {
   background-color: #f8f8f8;
   color: #555;
 }
+
 .dropdown.menu > li.is-dropdown-submenu-parent > a.active::after {
   border-color: #555 transparent transparent;
 }
@@ -299,14 +318,18 @@ div.dataTables_length > label > select {
 
 .top > .dataTables_info {
   order: 0;
+  padding-left: 1rem;
 }
+
 .top > .dataTables_paginate {
   order: 1;
   padding-top: 3px;
 }
+
 .top > .dataTables_length {
   order: 2;
   padding-top: 3px;
+  padding-right: 1rem;
 }
 
 #column-toggle {
@@ -319,11 +342,11 @@ div.dataTables_length > label > select {
 }
 
 table.dataTable.stripe tbody tr.odd,
-table.dataTable.display tbody tr.odd{
+table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9 !important;
 }
 
-.dataTable{
+.dataTable {
   width: 100% !important;
 }
 
@@ -347,6 +370,7 @@ table.dataTable thead th, table.dataTable thead td {
 table.dataTable tr, th {
   font-size: 13px;
 }
+
 /*************** PARTICIPANT DATATABLES ROW STYLE ********************/
 
 
@@ -379,9 +403,11 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   font-size: small;
   display: inline-block;
 }
+
 .xrefLinkCell {
   cursor: pointer;
 }
+
 .limitWidth {
   max-width: 100px;
   word-wrap: break-word;
@@ -398,7 +424,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 }
 
 .detailsXrefCell {
-  background-color:#dacee0;
+  background-color: #dacee0;
   color: #482c56f7;
   font-size: small;
   font-weight: bold;
@@ -424,6 +450,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 3px 4px;
   white-space: nowrap;
 }
+
 .elementList {
   padding: 0px 2px;
 }
@@ -431,14 +458,22 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 .aliasesList {
   padding: 0px 2px;
 }
-.aliasesCell {
-  width: 250px;
-
-}
-.aliasesCellWidth {
-  max-width: 150px;
+.identifierCell {
   white-space: nowrap;
 }
+
+.identifierCellWidth {
+  white-space: nowrap;
+}
+
+.aliasesCell {
+  width: 250px;
+}
+
+.aliasesCellWidth {
+  white-space: nowrap;
+}
+
 .detailsAliasesCell {
   background-color: #4ba77047;
   color: #0c6530 !important;
@@ -448,13 +483,16 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 2px 5px;;
   /*white-space: nowrap;*/
 }
+
 .parametersCell {
   width: 100px;
   overflow: auto;
 }
+
 .alignCell {
   text-align: center;
 }
+
 .detailsFigureLegendCell {
   background-color: #4ba77047;
   color: #0c6530;
@@ -464,17 +502,21 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 2px 5px;;
   white-space: nowrap;
 }
+
 .annotationsList {
   padding: 0px 2px;
 }
+
 .annotationCell {
   width: 380px;
   white-space: nowrap;
 }
+
 .annotationCellWidth {
   max-width: 300px;
   white-space: normal;
 }
+
 .detailsCommentsCell {
   background-color: rgba(73, 165, 243, 0.29);
   color: #121d92;
@@ -484,16 +526,20 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 2px 5px;
   /*white-space: nowrap;*/
 }
+
 .annotationsInteractionList {
   padding: 0px 2px;
 }
+
 .annotationInteractionCell {
   width: 450px;
 }
+
 .annotationInteractionCellWidth {
   max-width: 350px;
   white-space: normal;
 }
+
 .detailsCautionsCell {
   background-color: #f9956552;
   color: #de4f09;
@@ -520,6 +566,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   /*text-shadow: 1px 1px 0px #EEE;*/
   color: black;
 }
+
 .rowUnSelected {
   /*font-weight: bold;*/
   background-color: #305b7d66 !important;

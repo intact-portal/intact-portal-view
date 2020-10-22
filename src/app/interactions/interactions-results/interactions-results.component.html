@@ -13,7 +13,7 @@
     </ng-template>
   </div>
 
-  <div class="columns medium-12">
+  <div class="columns medium-12 sticky-bar">
     <ip-interactions-filters *ngIf="interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
       && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined); else loadingSpinner"
                              [interactionFacets]="interactionsSearch.facetResultPage"

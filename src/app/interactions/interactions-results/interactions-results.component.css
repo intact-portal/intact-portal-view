@@ -1,0 +1,10 @@
+@media print, screen and (min-width: 64em) {
+  /* Large size screen */
+  .sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background-color: white;
+    box-shadow: 0 1rem 14px -1rem rgba(33, 33, 33, 0.2);
+  }
+}

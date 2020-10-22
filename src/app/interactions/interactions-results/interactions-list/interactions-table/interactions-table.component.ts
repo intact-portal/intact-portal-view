@@ -8,7 +8,6 @@ import {extractCVValue, extractIds} from "../../../../shared/utils/string-utils"
 import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
 import {InteractionTable} from "../../../shared/model/tables/interaction-table.model";
 import {Column} from "../../../shared/model/tables/column.model";
-import {Interaction} from "../../../shared/model/interactions-results/interaction/interaction.model";
 
 
 const baseURL = environment.intact_portal_ws;
@@ -282,14 +281,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           title: this._columns.id.name,
           render: function (data, type, full, meta) {
             if (type === 'display') {
-              return '<div>' +
-                '<input type="checkbox" id="' + full.binaryInteractionId + '" name="check" value="' + data + '"/>' +
-                ' <span class="margin-left-medium">' +
-                '   <a href="/intact-portal-view/details/interaction/' + full.ac + '">' +
-                '     <i class="icon icon-common icon-search-document"></i>' +
-                '   </a>' +
-                ' </span>' +
-                '</div>';
+              return `<div>
+                        <input type="checkbox" id="${full.binaryInteractionId}" name="check" value="${data}"/>
+                        <span class="margin-left-medium">
+                          <a href="/intact-portal-view/details/interaction/${full.ac}" class="icon-link tool-tip" target="_blank">
+                            <i class="icon icon-common icon-search-document"></i>
+                            <span class="tool-tip-text">Show details of <span class="nowrap">${full.ac}</span></span>
+                          </a>
+                        </span>
+                      </div>`;
             }
             return data;
           }
@@ -450,7 +450,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
                 // noinspection CssInvalidPropertyValue
                 return `<div>
-                          <a class="detailsConfidencesCell" target="_blank"
+                          <a class="detailsConfidencesCell table-list" target="_blank"
                           href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
                                  border:2px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
@@ -506,13 +506,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             const items = $.map(res.data, function (d, i) {
               // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
               const alias = extractCVValue(d);
-              return `<div class="aliasesCell">
-                        <div style="float:left; margin-right: 4px;">
+              return `<div class="aliasesCell table-list">
+
                           <a class="detailsAliasesCell" target="_blank"
                              href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
                             ${alias.type.shortName}
                           </a>
-                        </div>
+
                         <span>${alias.value}</span>
                       </div>`;
             }.bind(this)).join('');
@@ -530,13 +530,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             const items = $.map(res.data, function (d, i) {
               // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
               const alias = extractCVValue(d);
-              return `<div class="aliasesCell">
-                        <div style="float:left; margin-right: 4px;">
-                          <a class="detailsAliasesCell" target="_blank"
-                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
-                            ${alias.type.shortName}
-                          </a>
-                        </div>
+              return `<div class="aliasesCell table-list">
+
+                        <a class="detailsAliasesCell" target="_blank"
+                           href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                          ${alias.type.shortName}
+                        </a>
+
                         <span>${alias.value}</span>
                       </div>`;
             }.bind(this)).join('');
@@ -580,10 +580,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               const annotationType = data_s[0].trim();
               const description = data_s[1].slice(0, -1);
               let cellClass = annotationType === 'comment' ? 'detailsCommentsCell' : 'detailsAllCell';
-              return `<div class="annotationCell">
-                        <div style="float:left; margin-right: 4px;">
-                          <span class="${cellClass}">${annotationType}</span>
-                        </div>
+              return `<div class="annotationCell table-list">
+                        <span class="${cellClass}">${annotationType}</span>
                         <div class="detailsCell annotationCellWidth">
                           ${description}
                         </div>
@@ -608,7 +606,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               const description = data_s[1].slice(0, -1);
 
               let cellClass = annotationType === 'comment' ? 'detailsCommentsCell' : 'detailsAllCell';
-              return `<div class="annotationCell">
+              return `<div class="annotationCell table-list">
                         <div style="float:left; margin-right: 4px;">
                           <span class="${cellClass}">${annotationType}</span>
                         </div>
@@ -644,7 +642,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               } else if (annotationType === this.annotationsTypes[2]) {
                 cellClass = "detailsCautionsCell";
               }
-              return `<div class="annotationInteractionCell">
+              return `<div class="annotationInteractionCell table-list">
                         <div style="float:left; margin-right: 4px;">
                           <span class="${cellClass}">${annotationType}</span>
                         </div>

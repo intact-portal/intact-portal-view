@@ -31,6 +31,14 @@ a.special {
   background-color: #A699B7;
 }
 
+a.icon-link {
+  border-bottom: none;
+}
+
+a.icon-link:hover {
+  border-bottom: none;
+}
+
 .menu .active > a,
 .tag,
 .tabs-title > a:hover,
@@ -164,6 +172,36 @@ a:visited {
   background-color: #b7b8b8;
 }
 
+
+/***************** Tool tips **********************/
+/* Tooltip container */
+.tool-tip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tool-tip .tool-tip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgba(0,0,0,0.85);
+  color: #fff;
+  text-align: center;
+  padding: 5px 5px;
+  border-radius: 6px;
+  margin-left: 5px;
+  top: -25%;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tool-tip:hover .tool-tip-text {
+  visibility: visible;
+}
 
 /************** Feature Dataset SECTION *******************************/
 
@@ -357,6 +395,7 @@ table.dataTable td {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+  text-align: center;
 }
 
 table.dataTable thead th, table.dataTable thead td {
@@ -404,6 +443,10 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   display: inline-block;
 }
 
+.table-list {
+  text-align: left;
+}
+
 .xrefLinkCell {
   cursor: pointer;
 }
@@ -421,6 +464,8 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   border-radius: 5px;
   padding: 3px 4px;
   white-space: nowrap;
+  margin-right: 4px;
+
 }
 
 .detailsXrefCell {
@@ -431,6 +476,8 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   border-radius: 5px;
   padding: 3px 4px;
   white-space: nowrap;
+  margin-right: 4px;
+
 }
 
 .detailsConfidencesCell {
@@ -449,6 +496,8 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   border-radius: 5px;
   padding: 3px 4px;
   white-space: nowrap;
+  margin-right: 4px;
+
 }
 
 .elementList {
@@ -480,8 +529,8 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   font-size: smaller;
   font-weight: bold;
   border-radius: 5px;
-  padding: 2px 5px;;
-  /*white-space: nowrap;*/
+  padding: 2px 2px 2px 5px;
+  margin-right: 4px;
 }
 
 .parametersCell {
@@ -579,8 +628,17 @@ button.showMore, button.showLess {
   color: #f8f8f8;
   font-size: smaller;
   font-weight: bold;
-  padding: 2px 5px;
+  padding: 2px 3px 2px 5px;
   cursor: pointer;
+}
+
+.icon-search-document {
+  font-size: 15pt;
+  color: #ffffff;
+  background-color: #68297c;
+  padding: 3px 5px 3px 4px;
+  text-align: center;
+  border-radius: 18px;
 }
 
 /**************************************************************/

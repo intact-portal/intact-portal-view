@@ -96,6 +96,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
       minLimit: 0,
       maxLimit: 1,
       step: 0.01,
+      animate: false,
       showSelectionBar: true,
       translate: (value: number, label: LabelType): string => {
         switch (label) {

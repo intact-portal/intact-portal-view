@@ -6,13 +6,13 @@
     <li class="tabs-title"><a href="#interactor" (click)="interactorsTabSelected()">Interactors</a></li>
 
     <ip-column-toggle *ngIf="isInteractionTableShown"
-                      [columnNames]="interactionsTable.columnNames"
+                      [columns]="interactionsTable.columns"
                       [dataTable]="interactionsTable.dataTable"
                       [columnView]="interactionsTable.columnView"
                       (columnSelectionChanged)="interactionsTable.updateTable()" class="float-right"></ip-column-toggle>
 
     <ip-column-toggle *ngIf="!isInteractionTableShown"
-                      [columnNames]="interactorsTable.columnNames"
+                      [columns]="interactorsTable.columns"
                       [dataTable]="interactorsTable.dataTable"
                       [columnView]="interactorsTable.columnView" class="float-right"></ip-column-toggle>
   </ul>
@@ -29,7 +29,5 @@
                             (interactorChanged) = "onInteractorSelectedChanged($event)"
                             (pageChanged)="onPageChanged($event)"></ip-interactors-table>
     </div>
-
   </div>
-
 </div>

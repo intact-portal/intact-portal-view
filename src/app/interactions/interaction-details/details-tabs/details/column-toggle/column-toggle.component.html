@@ -11,11 +11,11 @@
     <div id="{{columnView}}" class="row column_toggle_btnwrap column_toggle_popup">
 
       <ul class="no-bullet">
-        <li *ngFor="let column of columnNames; let i = index">
+        <li *ngFor="let column of columns; let i = index">
           <label>
-            <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i" value="{{column}}"
+            <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i" value="{{column.name}}"
                         (change)="onChangeColumnSelected(col.value)"
-                        [checked]="isColumnSelected(col.value)">{{column}}
+                        [checked]="isColumnSelected(col.value)">{{column.name}}
           </label>
         </li>
       </ul>

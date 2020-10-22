@@ -3,6 +3,8 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import * as $ from 'jquery';
 import 'datatables.net';
 import {environment} from '../../../../../../environments/environment';
+import {Column} from "../../../../shared/model/tables/column.model";
+import {ParticipantTable} from "../../../../shared/model/tables/participant-table.model";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -21,24 +23,7 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
 
   @Output() participantChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  private _columnNames: string[] = [
-    'Select',
-    'Ac',
-    'Type',
-    'Identifier',
-    'Aliases',
-    'Description',
-    'Species',
-    'Expression System',
-    'Detection Methods',
-    'Experimental Role',
-    'Biological Role',
-    'Experimental Preparations',
-    'Parameters',
-    'Confidences',
-    'Cross References',
-    'Annotations'
-  ];
+  private _columns = new ParticipantTable();
 
   private _participantsSelected = [];
 
@@ -82,9 +67,9 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
       },
       columns: [
         {
-          data: 'participantName',
+          data: this._columns.select.key,
           defaultContent: ' ',
-          title: this.columnNames[0],
+          title: this._columns.select.name,
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<input type="checkbox" id="' + full.participantId.identifier + '" name="check" value="' + data + '"/>';
@@ -93,22 +78,22 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'participantAc',
-          title: this.columnNames[1]
+          data: this._columns.ac.key,
+          title: this._columns.ac.name
         },
         {
-          data: 'type.shortName',
-          title: this.columnNames[2],
+          data: this._columns.type.key,
+          title: this._columns.type.name,
           defaultContent: ''
         },
         {
-          data: 'participantId.identifier',
-          title: this.columnNames[3],
+          data: this._columns.identifier.key,
+          title: this._columns.identifier.name,
           defaultContent: ''
         },
         {
-          data: 'aliases',
-          title: this.columnNames[4],
+          data: this._columns.aliases.key,
+          title: this._columns.aliases.name,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -121,23 +106,23 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'description',
-          title: this.columnNames[5],
+          data: this._columns.description.key,
+          title: this._columns.description.name,
           defaultContent: ''
         },
         {
-          data: 'species.scientificName',
-          title: this.columnNames[6],
+          data: this._columns.species.key,
+          title: this._columns.species.name,
           defaultContent: ''
         },
         {
-          data: 'expressionSystem.scientificName',
-          title: this.columnNames[7],
+          data: this._columns.expressionSystem.key,
+          title: this._columns.expressionSystem.name,
           defaultContent: ''
         },
         {
-          data: 'detectionMethod',
-          title: this.columnNames[8],
+          data: this._columns.detectionMethods.key,
+          title: this._columns.detectionMethods.name,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -149,18 +134,18 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
             }
           }},
         {
-          data: 'experimentalRole.shortName',
-          title: this.columnNames[9],
+          data: this._columns.experimentalRole.key,
+          title: this._columns.experimentalRole.name,
           defaultContent: ''
         },
         {
-          data: 'biologicalRole.shortName',
-          title: this.columnNames[10],
+          data: this._columns.biologicalRole.key,
+          title: this._columns.biologicalRole.name,
           defaultContent: ''
         },
         {
-          data: 'experimentalPreparations',
-          title: this.columnNames[11],
+          data: this._columns.experimentalPreparations.key,
+          title: this._columns.experimentalPreparations.name,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -172,8 +157,8 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
             }
           }},
         {
-          data: 'parameters',
-          title: this.columnNames[12],
+          data: this._columns.parameters.key,
+          title: this._columns.parameters.name,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -185,8 +170,8 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
             }
           }},
         {
-          data: 'confidences',
-          title: this.columnNames[13],
+          data: this._columns.confidences.key,
+          title: this._columns.confidences.name,
           defaultContent: '',
           render: function ( data, type, row, meta ) {
             if (type === 'display') {
@@ -199,8 +184,8 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'xrefs',
-          title: this.columnNames[14],
+          data: this._columns.crossReferences.key,
+          title: this._columns.crossReferences.name,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -219,8 +204,8 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'annotations',
-          title: this.columnNames[15],
+          data: this._columns.annotations.key,
+          title: this._columns.annotations.name,
           defaultContent: '',
           render: function ( data, type, row, meta ) {
             if (type === 'display') {
@@ -265,8 +250,8 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
   }
 
 
-  get columnNames(): string[] {
-    return this._columnNames;
+  get columns(): Column[] {
+    return this._columns;
   }
 
   get participantsSelected(): string[] {

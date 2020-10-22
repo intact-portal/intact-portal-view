@@ -211,7 +211,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     return this.minValueCurrent > this.minValue || this.maxValueCurrent < this.maxValue;
   }
 
-  // TODO detect miScore filter
   anyFiltersSelected() {
     return this.interactorSpeciesFilter.length !== 0 ||
       this.interactorTypeFilter.length !== 0 ||
@@ -228,6 +227,23 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.intraSpeciesFilter = false;
     this.resetMISCoreFilter();
     this.onResetAllFilters.emit(true);
+  }
+
+  resetFilter(filter: EFilter) {
+    switch (filter) {
+      case EFilter.MI_SCORE:
+        this.resetMISCoreFilter();
+        break;
+      case EFilter.SPECIES:
+        this.isIntraSpecies = false;
+        break;
+    }
+    this.onResetFilter.emit(filter);
+  }
+
+  private resetMISCoreFilter() {
+    this.minValueCurrent = this.minValue;
+    this.maxValueCurrent = this.maxValue;
   }
 
   /************************* /
@@ -367,17 +383,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this._options = options;
   }
 
-  resetFilter(filter: EFilter) {
-    if (filter === this.filter.MI_SCORE) {
-      this.resetMISCoreFilter();
-    }
-    this.onResetFilter.emit(filter);
-  }
 
-  private resetMISCoreFilter() {
-    this.minValueCurrent = this.minValue;
-    this.maxValueCurrent = this.maxValue;
-  }
 
   getFilter(filter: EFilter): string[] {
     switch (filter) {

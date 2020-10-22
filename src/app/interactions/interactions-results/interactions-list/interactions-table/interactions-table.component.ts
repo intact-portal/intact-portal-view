@@ -6,6 +6,9 @@ import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
 import {extractCVValue, extractIds} from "../../../../shared/utils/string-utils";
 import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
+import {InteractionTable} from "../../../shared/model/tables/interaction-table.model";
+import {Column} from "../../../shared/model/tables/column.model";
+import {Interaction} from "../../../shared/model/interactions-results/interaction/interaction.model";
 
 
 const baseURL = environment.intact_portal_ws;
@@ -16,7 +19,6 @@ const ebiURL = environment.ebi_url;
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -40,38 +42,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   columnView = 'interactions_columnView';
 
   private showMoreSelected = false;
-
-  private _columnNames: string[] = [
-    'Select',
-    'Molecule A',
-    'Molecule B',
-    'Identifier A',
-    'Identifier B',
-    'Type A',
-    'Type B',
-    'Species A',
-    'Species B',
-    'Host Organism',
-    'Detection Method',
-    'Publication Ids',
-    'Interaction Type',
-    'Interaction Ac',
-    'Database',
-    'Confidence Value',
-    'Expansion Method',
-    'Experimental Role A',
-    'Experimental Role B',
-    'Biological Role A',
-    'Biological Role B',
-    'Aliases A',
-    'Aliases B',
-    'Feature count',
-    'Parameters',
-    'Annotations A',
-    'Annotations B',
-    'Interaction Annotations'
-  ];
-
+  private _columns = new InteractionTable();
   private _aliasesType: string[] = [
     'gene name',
     'gene name synonym',
@@ -265,7 +236,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     }.bind(this));
   }
 
-  updateTable(visibleColumns: string[]) {
+  updateTable() {
     const table: any = $('#interactionsTable');
     this.dataTable = table.DataTable().columns.adjust().draw();
   }
@@ -307,9 +278,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       },
       columns: [
         {
-          data: 'binaryInteractionId',
-          defaultContent: ' ',
-          title: this.columnNames[0],
+          data: this._columns.id.key,
+          title: this._columns.id.name,
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<div>' +
@@ -325,19 +295,17 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         },
         {
-          data: 'moleculeA',
-          defaultContent: ' ',
-          title: this.columnNames[1]
+          data: this._columns.moleculeA.key,
+          title: this._columns.moleculeA.name
         },
         {
-          data: 'moleculeB',
-          defaultContent: ' ',
-          title: this.columnNames[2]
+          data: this._columns.moleculeB.key,
+          title: this._columns.moleculeB.name
         },
         {
-          data: 'idA',
+          data: this._columns.identifierA.key,
           defaultContent: '',
-          title: this.columnNames[3],
+          title: this._columns.identifierA.name,
           render: function (data, type) {
             if (type === 'display' && data !== null) {
               return this.resultTableFactory.getInteractorLink(extractIds(data))
@@ -346,9 +314,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'idB',
+          data: this._columns.identifierB.key,
           defaultContent: '',
-          title: this.columnNames[4],
+          title: this._columns.identifierB.name,
           render: function (data, type) {
             if (type === 'display' && data !== null) {
               return this.resultTableFactory.getInteractorLink(extractIds(data))
@@ -357,44 +325,37 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'typeA',
-          defaultContent: ' ',
-          title: this.columnNames[5],
+          data: this._columns.typeA.key,
+          title: this._columns.typeA.name,
           render: this.resultTableFactory.cvRender('typeMIA')
         },
         {
-          data: 'typeB',
-          defaultContent: ' ',
-          title: this.columnNames[6],
+          data: this._columns.typeB.key,
+          title: this._columns.typeB.name,
           render: this.resultTableFactory.cvRender('typeMIB')
         },
         {
-          data: 'speciesA',
-          defaultContent: ' ',
-          title: this.columnNames[7],
+          data: this._columns.speciesA.key,
+          title: this._columns.speciesA.name,
           render: this.resultTableFactory.speciesRender('taxIdA')
         },
         {
-          data: 'speciesB',
-          defaultContent: ' ',
-          title: this.columnNames[8],
+          data: this._columns.speciesB.key,
+          title: this._columns.speciesB.name,
           render: this.resultTableFactory.speciesRender('taxIdB')
         },
         {
-          data: 'hostOrganism',
-          defaultContent: ' ',
-          title: this.columnNames[9]
+          data: this._columns.hostOrganism.key,
+          title: this._columns.hostOrganism.name
         },
         {
-          data: 'detectionMethod',
-          defaultContent: ' ',
-          title: this.columnNames[10],
+          data: this._columns.detectionMethod.key,
+          title: this._columns.detectionMethod.name,
           render: this.resultTableFactory.cvRender('detectionMethodMIIdentifier')
         },
         {
-          data: 'publicationIdentifiers',
-          defaultContent: ' ',
-          title: this.columnNames[11],
+          data: this._columns.publicationIdentifiers.key,
+          title: this._columns.publicationIdentifiers.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -419,15 +380,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         },
         {
-          data: 'type',
-          defaultContent: ' ',
-          title: this.columnNames[12],
+          data: this._columns.type.key,
+          title: this._columns.type.name,
           render: this.resultTableFactory.cvRender('typeMIIdentifier')
         },
         {
-          data: 'ac',
-          defaultContent: ' ',
-          title: this.columnNames[13],
+          data: this._columns.ac.key,
+          title: this._columns.ac.name,
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div>' +
@@ -437,14 +396,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         },
         {
-          data: 'sourceDatabase',
-          defaultContent: ' ',
-          title: this.columnNames[14]
+          data: this._columns.database.key,
+          title: this._columns.database.name
         },
         {
-          data: 'confidenceValues',
-          defaultContent: ' ',
-          title: this.columnNames[15],
+          data: this._columns.confidenceValue.key,
+          title: this._columns.confidenceValue.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -506,9 +463,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'expansionMethod',
+          data: this._columns.expansionMethod.key,
+          title: this._columns.expansionMethod.name,
           defaultContent: ' ',
-          title: this.columnNames[16],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return `<div><a target="_blank" href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" class="detailsExpansionsCell">${data}</a></div>`;
@@ -516,33 +473,33 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         },
         {
-          data: 'experimentalRoleA',
+          data: this._columns.experimentalRoleA.key,
+          title: this._columns.experimentalRoleA.name,
           defaultContent: ' ',
-          title: this.columnNames[17],
           render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierA')
         },
         {
-          data: 'experimentalRoleB',
+          data: this._columns.experimentalRoleB.key,
+          title: this._columns.experimentalRoleB.name,
           defaultContent: ' ',
-          title: this.columnNames[18],
           render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierB')
         },
         {
-          data: 'biologicalRoleA',
+          data: this._columns.biologicalRoleA.key,
+          title: this._columns.biologicalRoleA.name,
           defaultContent: ' ',
-          title: this.columnNames[19],
           render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierA')
         },
         {
-          data: 'biologicalRoleB',
+          data: this._columns.biologicalRoleB.key,
+          title: this._columns.biologicalRoleB.name,
           defaultContent: ' ',
-          title: this.columnNames[20],
           render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierB')
         },
         {
-          data: 'aliasesA',
+          data: this._columns.aliasesA.key,
+          title: this._columns.aliasesA.name,
           defaultContent: ' ',
-          title: this.columnNames[21],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -564,9 +521,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'aliasesB',
+          data: this._columns.aliasesB.key,
+          title: this._columns.aliasesB.name,
           defaultContent: ' ',
-          title: this.columnNames[22],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -588,9 +545,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'featureCount',
-          defaultContent: ' ',
-          title: this.columnNames[23],
+          data: this._columns.featureCount.key,
+          title: this._columns.featureCount.name,
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div class="alignCell">' +
@@ -600,9 +556,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         },
         {
-          data: 'parameters',
+          data: this._columns.parameters.key,
+          title: this._columns.parameters.name,
           defaultContent: ' ',
-          title: this.columnNames[24],
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return '<div class="parametersCell">' +
@@ -612,9 +568,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         },
         {
-          data: 'annotationsA',
+          data: this._columns.annotationsA.key,
+          title: this._columns.annotationsA.name,
           defaultContent: ' ',
-          title: this.columnNames[25],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -639,9 +595,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'annotationsB',
+          data: this._columns.annotationsB.key,
+          title: this._columns.annotationsB.name,
           defaultContent: ' ',
-          title: this.columnNames[26],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -667,9 +623,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }.bind(this)
         },
         {
-          data: 'annotations',
+          data: this._columns.annotations.key,
+          title: this._columns.annotations.name,
           defaultContent: ' ',
-          title: this.columnNames[27],
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -809,12 +765,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this._intraSpeciesFilter = value;
   }
 
-  get columnNames(): string[] {
-    return this._columnNames;
-  }
-
-  set columnNames(value: string[]) {
-    this._columnNames = value;
+  get columns(): Column[] {
+    return this._columns;
   }
 
   get aliasesType(): string[] {

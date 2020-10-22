@@ -8,6 +8,7 @@ import {
   Output, EventEmitter
 } from '@angular/core';
 import * as $ from 'jquery';
+import {Column} from "../../../../shared/model/tables/column.model";
 
 @Component({
   selector: 'ip-column-toggle',
@@ -17,7 +18,7 @@ import * as $ from 'jquery';
 })
 export class ColumnToggleComponent implements OnInit, AfterViewInit {
 
-  @Input() columnNames: string[];
+  @Input() columns: Column[];
   @Input() dataTable: any;
   @Input() columnView: string;
   @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -35,17 +36,18 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem(columnView) != null) {
       this.columnsSelected = JSON.parse(localStorage.getItem(this.columnView + '_columns'));
     } else {
-      this.columnsSelected = [];
+      this.columnsSelected = this.columns.filter(column => column.hiddenByDefault).map(column => column.name);
     }
+
+    let columnsToHide = this.columnsSelected;
 
     // Hide the columns from the table that are already selected to hide
     this.dataTable.columns().every(function (index) {
-      if (localStorage.getItem(columnView) != null) {
-        if (localStorage.getItem(columnView).indexOf($(this.header()).text()) >= 0) {
+        if (columnsToHide.indexOf($(this.header()).text()) >= 0) {
           this.visible(!this.visible());
         }
       }
-    });
+    );
   }
 
   ngAfterViewInit(): void {
@@ -66,7 +68,6 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
         }
       }
     });
-
   }
 
   private toggleColumnView() {

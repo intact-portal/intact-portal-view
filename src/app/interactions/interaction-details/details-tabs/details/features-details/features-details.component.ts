@@ -3,6 +3,8 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import * as $ from 'jquery';
 import 'datatables.net';
 import {environment} from '../../../../../../environments/environment';
+import {FeatureTable} from "../../../../shared/model/tables/feature-table.model";
+import {Column} from "../../../../shared/model/tables/column.model";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -21,23 +23,7 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
   dataTable: any;
   columnView = 'features_columnView';
 
-  private _columnNames: string[] = [
-    'Select',
-    'Ac',
-    'Name',
-    'Type',
-    'Role',
-    'Range Positions',
-    'Linked Features',
-    'Participant Name',
-    'Participant Identifier',
-    'Participant Ac',
-    'Detection Methods',
-    'Parameters',
-    'Identifiers',
-    'Cross References',
-    'Annotations'
-  ];
+  private _columns = new FeatureTable();
 
   private _featureSelected: string;
 
@@ -81,10 +67,9 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
       },
       columns: [
         {
-          data: 'participantName',
-          defaultContent: ' ',
-          title: this.columnNames[0],
-          render: function (data, type, full, meta) {
+          data: this._columns.participantName.key,
+          title: this._columns.participantName.name,
+          render: function (data, type, full) {
             if (type === 'display') {
               return '<input type="checkbox" id="' + full.featureAc + '" name="check" value="' + data + '"/>';
             }
@@ -92,32 +77,29 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'featureAc',
-          title: this.columnNames[1]
+          data: this._columns.ac.key,
+          title: this._columns.ac.name
         },
         {
-          data: 'name',
-          title: this.columnNames[2]
+          data: this._columns.name.key,
+          title: this._columns.name.name
         },
         {
-          data: 'type.shortName',
-          title: this.columnNames[3]
+          data: this._columns.type.key,
+          title: this._columns.type.name
         },
         {
-          data: 'role',
-          title: this.columnNames[4],
-          defaultContent: ''
+          data: this._columns.role.key,
+          title: this._columns.role.name
         },
         {
-          data: 'ranges',
-          title: this.columnNames[5],
-          defaultContent: '',
+          data: this._columns.rangePositions.key,
+          title: this._columns.rangePositions.name,
           render: '[, ]'
         },
         {
-          data: 'linkedFeatures',
-          title: this.columnNames[6],
-          defaultContent: '',
+          data: this._columns.linkedFeatures.key,
+          title: this._columns.linkedFeatures.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -129,24 +111,20 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'participantName',
-          title: this.columnNames[7],
-          defaultContent: ''
+          data: this._columns.participantName.key,
+          title: this._columns.participantName.name,
         },
         {
-          data: 'participant.identifier',
-          title: this.columnNames[8],
-          defaultContent: ''
+          data: this._columns.participantIdentifier.key,
+          title: this._columns.participantIdentifier.name,
         },
         {
-          data: 'participantAc',
-          title: this.columnNames[9],
-          defaultContent: ''
+          data: this._columns.participantAc.key,
+          title: this._columns.participantAc.name,
         },
         {
-          data: 'detectionMethods',
-          title: this.columnNames[10],
-          defaultContent: '',
+          data: this._columns.detectionMethods.key,
+          title: this._columns.detectionMethods.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -158,9 +136,8 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'parameters',
-          title: this.columnNames[11],
-          defaultContent: '',
+          data: this._columns.parameters.key,
+          title: this._columns.parameters.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -172,9 +149,8 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'identifiers',
-          title: this.columnNames[12],
-          defaultContent: '',
+          data: this._columns.identifiers.key,
+          title: this._columns.identifiers.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -186,9 +162,8 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'xrefs',
-          title: this.columnNames[13],
-          defaultContent: '',
+          data: this._columns.crossReferences.key,
+          title: this._columns.crossReferences.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -206,9 +181,8 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: 'annotations',
-          title: this.columnNames[14],
-          defaultContent: '',
+          data: this._columns.annotations.key,
+          title: this._columns.annotations.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -228,7 +202,7 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
       }
     });
 
-    $('#featureTable').on('change', 'input[type=\'checkbox\']', (e) => {
+    table.on('change', 'input[type=\'checkbox\']', (e) => {
 
       const featureSel = e.currentTarget.id;
 
@@ -261,8 +235,8 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
     });
   }
 
-  get columnNames(): string[] {
-    return this._columnNames;
+  get columns(): Column[] {
+    return this._columns;
   }
 
   get featureSelected(): string {

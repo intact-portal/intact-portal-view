@@ -6,6 +6,8 @@ import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
 import {extractCVValue, extractIds} from "../../../../shared/utils/string-utils";
 import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
+import {InteractorTable} from "../../../shared/model/tables/interactor-table.model";
+import {Column} from "../../../shared/model/tables/column.model";
 
 const baseURL = environment.intact_portal_ws;
 const ebiURL = environment.ebi_url;
@@ -40,19 +42,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   columnView = 'interactors_columnView';
   table: any;
 
-  private _columnNames: string[] = [
-    'Select',
-    'Accession',
-    'Name',
-    'Preferred Id.',
-    'Type',
-    'Species',
-    'Description',
-    'Alias',
-    'Alternative Ids',
-    'Interactions found in current search',
-    'Total interactions in all IntAct'
-  ];
+  private _columns = new InteractorTable();
 
   private _aliasesType: string[] = [
     'gene name',
@@ -183,7 +173,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       }
     }.bind(this));
 
-    interactorsTable.on('resize',() => $('#interactorsTableWidthMimic').width(interactorsTable.width()))
+    interactorsTable.on('resize', () => $('#interactorsTableWidthMimic').width(interactorsTable.width()))
 
     let tableBody = $('#interactorsTable tbody');
     tableBody.on('click', 'button.showMore', function () {
@@ -281,9 +271,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       },
       columns: [
         {
-          data: 'interactorAc',
-          defaultContent: ' ',
-          title: this.columnNames[0],
+          data: this._columns.select.key,
+          title: this._columns.select.name,
           render: function (data, type, full, meta) {
             if (type === 'display') {
               return '<div class="margin-left-large">' +
@@ -294,41 +283,34 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: 'interactorAc',
-          defaultContent: ' ',
-          title: this.columnNames[1]
+          data: this._columns.accession.key,
+          title: this._columns.accession.name
         },
         {
-          data: 'interactorName',
-          defaultContent: ' ',
-          title: this.columnNames[2]
+          data: this._columns.name.key,
+          title: this._columns.name.name
         },
         {
-          data: 'interactorPreferredIdentifier',
-          defaultContent: ' ',
-          title: this.columnNames[3]
+          data: this._columns.preferredId.key,
+          title: this._columns.preferredId.name
         },
         {
-          data: 'interactorType',
-          defaultContent: ' ',
-          title: this.columnNames[4],
+          data: this._columns.type.key,
+          title: this._columns.type.name,
           render: this.resultTableFactory.cvRender('interactorTypeMIIdentifier')
         },
         {
-          data: 'interactorSpecies',
-          defaultContent: ' ',
-          title: this.columnNames[5],
+          data: this._columns.species.key,
+          title: this._columns.species.name,
           render: this.resultTableFactory.speciesRender('interactorTaxId')
         },
         {
-          data: 'interactorDescription',
-          defaultContent: ' ',
-          title: this.columnNames[6]
+          data: this._columns.description.key,
+          title: this._columns.description.name
         },
         {
-          data: 'interactorAlias',
-          defaultContent: ' ',
-          title: this.columnNames[7],
+          data: this._columns.alias.key,
+          title: this._columns.alias.name,
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -350,9 +332,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }.bind(this)
         },
         {
-          data: 'interactorAltIds',
-          defaultContent: ' ',
-          title: this.columnNames[8],
+          data: this._columns.alternativeIds.key,
+          title: this._columns.alternativeIds.name,
           render: function (data, type, row, meta) {
             if (data == null) return;
             const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
@@ -366,9 +347,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }.bind(this)
         },
         {
-          data: 'interactionSearchCount',
-          defaultContent: ' ',
-          title: this.columnNames[9],
+          data: this._columns.interactionSearchCount.key,
+          title: this._columns.interactionSearchCount.name,
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return `<div class="alignCell"><span>${data}</span></div>`;
@@ -376,9 +356,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: 'interactionCount',
-          defaultContent: ' ',
-          title: this.columnNames[10],
+          data: this._columns.interactionCount.key,
+          title: this._columns.interactionCount.name,
           render: function (data, type, row, meta) {
             if (type === 'display' && data != null) {
               return `<div class="alignCell"><span>${data}</span></div>`;
@@ -484,13 +463,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     this._miScoreMax = value;
   }
 
-  get columnNames(): string[] {
-    return this._columnNames;
+  get columns(): Column[] {
+    return this._columns;
   }
 
-  set columnNames(value: string[]) {
-    this._columnNames = value;
-  }
 
   get intraSpeciesFilter(): boolean {
     return this._intraSpeciesFilter;

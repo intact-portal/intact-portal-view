@@ -379,6 +379,10 @@ div.dataTables_length > label > select {
   white-space: nowrap;
 }
 
+.cv-term.species {
+  white-space: normal;
+}
+
 table.dataTable.stripe tbody tr.odd,
 table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9 !important;
@@ -465,7 +469,6 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   padding: 3px 4px;
   white-space: nowrap;
   margin-right: 4px;
-
 }
 
 .detailsXrefCell {
@@ -509,6 +512,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 }
 .identifierCell {
   white-space: nowrap;
+  text-align: left;
 }
 
 .identifierCellWidth {

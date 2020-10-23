@@ -1,15 +1,11 @@
 import {CvTerm} from './cv-term.model';
 
-export class Xreferences {
+export class CrossReference {
   private _database: CvTerm;
   private _ac: string;
   private _identifier: string;
   private _qualifier: CvTerm;
 
-  // constructor(database: CvTerm, identifier: string) {
-  //   this._database = database;
-  //   this._identifier = identifier;
-  // }
 
   constructor(database: CvTerm, ac: string, identifier: string, qualifier: CvTerm) {
     this._database = database;

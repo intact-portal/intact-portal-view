@@ -1,14 +1,14 @@
-import {Xreferences} from './xreferences.model';
+import {CrossReference} from './cross-reference.model';
 import {Annotation} from './annotation.model';
 
 export class Experiment {
   private _experimentAc: string;
   private _interactionHostOrganism: string;
   private _interactionDetectionMethod: string;
-  private _experimentXrefs: Xreferences[];
+  private _experimentXrefs: CrossReference[];
   private _experimentAnnotations: Annotation[];
 
-  constructor(experimentAc: string, interactionHostOrganism: string, interactionDetectionMethod: string, experimentXrefs: Xreferences[],
+  constructor(experimentAc: string, interactionHostOrganism: string, interactionDetectionMethod: string, experimentXrefs: CrossReference[],
               experimentAnnotations: Annotation[]) {
     this._experimentAc = experimentAc;
     this._interactionHostOrganism = interactionHostOrganism;
@@ -41,11 +41,11 @@ export class Experiment {
     this._interactionDetectionMethod = value;
   }
 
-  get experimentXrefs(): Xreferences[] {
+  get experimentXrefs(): CrossReference[] {
     return this._experimentXrefs;
   }
 
-  set experimentXrefs(value: Xreferences[]) {
+  set experimentXrefs(value: CrossReference[]) {
     this._experimentXrefs = value;
   }
 

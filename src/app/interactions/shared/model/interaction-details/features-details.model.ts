@@ -1,15 +1,15 @@
 import {CvTerm} from './cv-term.model';
-import {Xreferences} from './xreferences.model';
+import {CrossReference} from './cross-reference.model';
 
 export class FeaturesDetails {
   private _participantAc: string;
   private _name: string;
   private _regionType: CvTerm;
-  private _interactor: Xreferences;
+  private _interactor: CrossReference;
   private _interactorName: string;
   private _range: string[];
 
-  constructor(participantAc: string, name: string, regionType: CvTerm, interactor: Xreferences, interactorName: string, range: string[]) {
+  constructor(participantAc: string, name: string, regionType: CvTerm, interactor: CrossReference, interactorName: string, range: string[]) {
     this._participantAc = participantAc;
     this._name = name;
     this._regionType = regionType;
@@ -42,11 +42,11 @@ export class FeaturesDetails {
     this._regionType = value;
   }
 
-  get interactor(): Xreferences {
+  get interactor(): CrossReference {
     return this._interactor;
   }
 
-  set interactor(value: Xreferences) {
+  set interactor(value: CrossReference) {
     this._interactor = value;
   }
 

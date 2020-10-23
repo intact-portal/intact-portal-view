@@ -1,30 +1,72 @@
 import {Injectable} from '@angular/core';
 import {titleCase} from "../../../shared/utils/string-utils";
 import * as $ from "jquery";
+import {CvTerm} from "../model/interaction-details/cv-term.model";
+import {Annotation} from "../model/interaction-details/annotation.model";
+import {Organism} from "../model/interaction-details/organism.model";
 
 @Injectable()
-export class ResultTableFactoryService {
+export class TableFactoryService {
 
   constructor() {
   }
+
 
   speciesRender = (identifierColumn: string) => (data, type, row, meta) => {
     let id = row[identifierColumn];
     if (parseInt(id) > 0) {
       let url = `https://www.uniprot.org/taxonomy/${id}`;
-      return `<a href="${url}" class="cv-term" target="_blank">${data}</a>`;
+      return `<a href="${url}" class="cv-term species" target="_blank">${data}</a>`;
     } else {
       return data;
     }
   }
 
+  speciesRenderStructured = (species: Organism) => {
+    if (species.taxId > 0) {
+      let url = `https://www.uniprot.org/taxonomy/${species.taxId}`;
+      return `<a href="${url}" class="cv-term species" target="_blank">${species.scientificName}</a>`;
+    } else {
+      return species.scientificName;
+    }
+  }
+
+  private static getCvURL(miId: string) {
+    let id = miId.replace(':', '_');
+    return `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
+  }
+
   cvRender = (identifierColumn: string) => (data, type, row, meta) => {
     let miId = row[identifierColumn];
     if (miId) {
-      let id = miId.replace(':', '_');
-      let url = `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
-      return `<a href="${url}" class="cv-term" target="_blank">${data}</a>`
+      return `<a href="${TableFactoryService.getCvURL(miId)}" class="cv-term" target="_blank">${data}</a>`
     } else return data;
+  }
+
+  cvRenderStructured = (data: CvTerm) => {
+    if (data.identifier) {
+      return `<a href="${TableFactoryService.getCvURL(data.identifier)}" class="cv-term" target="_blank">${data.shortName}</a>`
+    } else return data.shortName;
+  }
+
+  annotationsRender = (data: Annotation[]) => {
+    return $.map(data, d => {
+      return `<div class="margin-bottom-medium">
+                <span class="detailsAnnotationCell">
+                  <i class="icon icon-common icon-tag"></i>
+                  ${d.topic.shortName}
+                </span>
+                <span class="detailsCell">${d.description}</span>
+              </div>`;
+    }).join('')
+  }
+
+  enlist = (func: (data: any, i?: number) => (string), containerClass = 'aliasesList') => (data: any[], type, row, meta) => {
+    if (data == null) return;
+    const res = this.createRenderingButton(data, type, row, meta)
+    const items = $.map(res.data, func).join('');
+    let html = `<div class="${containerClass} table-list">${items}</div>`;
+    return res.addButton ? html.concat(res.button) : html;
   }
 
   initTopSlider(tableId: string) {
@@ -62,8 +104,9 @@ export class ResultTableFactoryService {
     let filterBar = $('#filters-bar');
     $('div.dataTables_scrollHead')
       .css('position', 'sticky')
-      .css('top', this.isScreenSize('large') && filterBar !== undefined ? filterBar.height() + 'px' : '0')
-      .css('box-shadow', '0 6px 7px -2px #0000005c');
+      .css('top', this.isScreenSize('large') && filterBar !== undefined ? filterBar.height() - 1 + 'px' : '0')
+      .css('box-shadow', '0 6px 7px -2px #0000005c')
+      .css('z-index', '2');
   }
 
   isScreenSize(size: 'small' | 'medium' | 'large'): boolean {
@@ -72,6 +115,7 @@ export class ResultTableFactoryService {
 
   createRenderingButton(data, type, row, meta): { data: any[], button: string, addButton: boolean } {
     const addButton = data.length > 2;
+    let size = data.length - 2;
     let buttonType;
     switch (type) {
       case 'display':
@@ -88,16 +132,51 @@ export class ResultTableFactoryService {
     return {
       data: data,
       addButton: addButton,
-      button: `<div class="elementList">
+      button: `<div class="elementList table-list">
                  <button type="button" id="row${meta.row}col${meta.col}" data-col="${meta.col}" class="show${titleCase(buttonType)}">
-                   Show ${buttonType}
+                   Show ${buttonType} (${size})
                  </button>
                </div>`
     };
   }
 
 
-  private databaseToAccess: Map<string, DatabaseAccess> = new Map<string, DatabaseAccess>([
+  getIdentifierLink(id: { identifier: string, database: string | any, qualifier?: any }): string {
+    if (id === null) return;
+    let shortDbName = id.database.shortName !== undefined ? id.database.shortName : id.database;
+    let access: DatabaseAccess = TableFactoryService.databaseToAccess.get(shortDbName);
+    let url = null
+    let style = ''
+    if (access) {
+      url = access.getURL(id.identifier);
+      if (access.color) {
+        style = `color:${access.color};
+                 background-color:${access.backColor ? access.backColor : access.color.replace('1.0', '0.05')};`
+      }
+    }
+
+    let databaseTag: string;
+    if (id.database.shortName !== undefined) {
+      style += 'padding: 2px 2px 2px 5px; margin-right: 4px;';
+      databaseTag = `<a class="detailsCommentsCell" style="${style}" target="_blank"
+                        href="${TableFactoryService.getCvURL(id.database.identifier)}">
+                          ${access ? access.fancyName : shortDbName}
+                     </a>`
+    } else {
+      databaseTag = `<span class="detailsCommentsCell" style="${style}">${access ? access.fancyName : shortDbName}</span>`
+    }
+
+    return `<div class="identifierCell">
+              ${databaseTag}
+              <div class="detailsCell identifierCellWidth">
+                ${id.qualifier ? '<b> ' : ''}
+                  ${url !== null ? `<a href="${url}" target="_blank" >${id.identifier}</a>` : id.identifier}
+                ${id.qualifier ? '</b>' : ''}
+              </div>
+            </div>`;
+  }
+
+  private static databaseToAccess: Map<string, DatabaseAccess> = new Map<string, DatabaseAccess>([
     ["uniprotkb", {
       fancyName: "UniProt",
       getURL: id => `https://www.uniprot.org/uniprot/${id}`,
@@ -187,25 +266,6 @@ export class ResultTableFactoryService {
       color: 'rgba(83,136,136,1.0)'
     }]
   ]);
-
-
-  getInteractorLink(id: { value: string, database: string }): string {
-    if (id === null) return ;
-    let access: DatabaseAccess = this.databaseToAccess.get(id.database);
-    let url = null
-    let style = ''
-    if (access) {
-      url = access.getURL(id.value);
-      if (access.color) style = `style="color:${access.color};
-                                      background-color:${access.backColor ? access.backColor : access.color.replace('1.0', '0.05')};"`
-    }
-    return `<div class="identifierCell">
-              <span class="detailsCommentsCell" ${style}>${access ? access.fancyName : id.database}</span>
-              <div class="detailsCell identifierCellWidth">
-                ${url !== null ? `<a href="${url}" target="_blank" >${id.value}</a>` : id.value}
-              </div>
-            </div>`;
-  }
 }
 
 interface DatabaseAccess {

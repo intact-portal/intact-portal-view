@@ -1,4 +1,4 @@
-import {Xreferences} from './xreferences.model';
+import {CrossReference} from './cross-reference.model';
 import {Annotation} from './annotation.model';
 
 export class Publication {
@@ -7,11 +7,11 @@ export class Publication {
   private _journal: string;
   private _publicationDate: String;
   private _authors: string[];
-  private _publicationXrefs: Xreferences[];
+  private _publicationXrefs: CrossReference[];
   private _publicationAnnotations: Annotation[];
 
   constructor(pubmedId: string, title: string, journal: string, publicationDate: String, authors: string[],
-              publicationXrefs: Xreferences[], publicationAnnotations: Annotation[]) {
+              publicationXrefs: CrossReference[], publicationAnnotations: Annotation[]) {
     this._pubmedId = pubmedId;
     this._title = title;
     this._journal = journal;
@@ -61,11 +61,11 @@ export class Publication {
     this._authors = value;
   }
 
-  get publicationXrefs(): Xreferences[] {
+  get publicationXrefs(): CrossReference[] {
     return this._publicationXrefs;
   }
 
-  set publicationXrefs(value: Xreferences[]) {
+  set publicationXrefs(value: CrossReference[]) {
     this._publicationXrefs = value;
   }
 

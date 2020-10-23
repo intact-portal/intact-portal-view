@@ -1,4 +1,4 @@
-import {Xreferences} from './xreferences.model';
+import {CrossReference} from './cross-reference.model';
 import {TypeValueModel} from './type-value.model';
 import {Publication} from './publication.model';
 import {Annotation} from './annotation.model';
@@ -15,11 +15,11 @@ export class InteractionDetails {
   private _confidences: TypeValueModel<CvTerm>[];
   private _parameters: Parameter[];
   private _annotations: Annotation[];
-  private _xrefs: Xreferences[];
+  private _xrefs: CrossReference[];
 
   private _publication: Publication;
 
-  constructor(interactionAc: string, shortLabel: string,hostOrganism: Organism, type: CvTerm, detectionMethod: CvTerm, xrefs: Xreferences[], annotations: Annotation[],
+  constructor(interactionAc: string, shortLabel: string, hostOrganism: Organism, type: CvTerm, detectionMethod: CvTerm, xrefs: CrossReference[], annotations: Annotation[],
               parameters: Parameter[], confidences: TypeValueModel<CvTerm>[], publication: Publication) {
     this._interactionAc = interactionAc;
     this._shortLabel = shortLabel;
@@ -73,11 +73,11 @@ export class InteractionDetails {
     this._detectionMethod = value;
   }
 
-  get xrefs(): Xreferences[] {
+  get xrefs(): CrossReference[] {
     return this._xrefs;
   }
 
-  set xrefs(value: Xreferences[]) {
+  set xrefs(value: CrossReference[]) {
     this._xrefs = value;
   }
 

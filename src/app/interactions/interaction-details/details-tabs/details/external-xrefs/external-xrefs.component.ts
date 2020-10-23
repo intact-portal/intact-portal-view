@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Xreferences} from '../../../../shared/model/interaction-details/xreferences.model';
+import {CrossReference} from "../../../../shared/model/interaction-details/cross-reference.model";
+
 
 @Component({
   selector: 'ip-external-xrefs',
@@ -8,7 +9,7 @@ import {Xreferences} from '../../../../shared/model/interaction-details/xreferen
 })
 export class ExternalXrefsComponent implements OnInit {
 
-  @Input() xrefs: Xreferences[];
+  @Input() xrefs: CrossReference[];
 
   constructor() { }
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
@@ -15,7 +15,7 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network');
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class InteractionsViewerComponent implements OnInit, OnChanges {
+export class InteractionsViewerComponent implements OnInit {
 
   private _terms: string;
   private _batchSearchFilter: boolean;
@@ -76,11 +76,6 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
     this.affectedByMutation = this.viewService.affectedByMutation;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const chng = changes['interactionSelected'];
-    const cur = JSON.stringify(chng.currentValue);
-  }
-
   toggleNetworkViewer(visible: boolean): void {
     if (visible) {
       $('#network-viewer-container').show();
@@ -111,11 +106,9 @@ export class InteractionsViewerComponent implements OnInit, OnChanges {
       // Makes the network expanded expanded by default
       this.graph.initializeWithData(this.interactionsJSON, true, this.affectedByMutation, this.layoutName);
       this.graph.expandEdges(this.expanded, this.affectedByMutation);
-    }, error => {
-      // When network results are too big, capture error from server and hide the network viewer
-      if (this.interactionsJSON === undefined) {
-        this.toggleNetworkViewer(false);
-      }
+      this.toggleNetworkViewer(true);
+    }, () => {
+      this.toggleNetworkViewer(false);
     })
   }
 

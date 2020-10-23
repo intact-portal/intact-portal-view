@@ -13,9 +13,9 @@ export class InteractionTable extends Table {
   public readonly speciesB = new Column(this, 'Species B', 'speciesB');
   public readonly hostOrganism = new Column(this, 'Host Organism', 'hostOrganism');
   public readonly detectionMethod = new Column(this, 'Detection Method', 'detectionMethod');
-  public readonly publicationIdentifiers = new Column(this, 'Publication Ids', 'publicationIdentifiers');
+  public readonly publicationIdentifiers = new Column(this, 'Publication IDs', 'publicationIdentifiers');
   public readonly type = new Column(this, 'Interaction Type', 'type');
-  public readonly ac = new Column(this, 'Interaction Ac', 'ac');
+  public readonly ac = new Column(this, 'Interaction AC', 'ac');
   public readonly database = new Column(this, 'Database', 'sourceDatabase', true);
   public readonly confidenceValue = new Column(this, 'Confidence Value', 'confidenceValues');
   public readonly expansionMethod = new Column(this, 'Expansion Method', 'expansionMethod');

@@ -59,16 +59,16 @@
           <h5>Protein Expansion</h5>
           <div class="margin-bottom-large" style="background-color: #F5F5F5">
             <li>
-          <span>
-          <input type="radio" name="expansion" (change)="expandAll()" checked/>
-              <label>Expand</label>
-          </span>
+              <span>
+                <input id="expand-all" type="radio" name="expansion" (change)="expandAll()" checked/>
+                <label for="expand-all">Expand</label>
+              </span>
             </li>
             <li>
-          <span>
-          <input type="radio" name="expansion" (change)="collapseAll()"/>
-              <label>Collapse</label>
-          </span>
+              <span>
+                <input id="collapse-all" type="radio" name="expansion" (change)="collapseAll()"/>
+                <label for="collapse-all">Collapse</label>
+              </span>
             </li>
           </div>
         </ul>
@@ -80,10 +80,9 @@
           <option selected='selected' value="MI features">MI features</option>
           <option value="UniprotKB">UniprotKB</option>
           <option value="SuperFamily">SuperFamily</option>
-          <option value="None">None</option>
+          <option value="null">None</option>
           <option value="Interactor">Interactor</option>
         </select>
-
       </div>
 
       <div id="colours" class="scrollbar"></div>

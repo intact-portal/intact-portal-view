@@ -27,7 +27,6 @@ div#viewerLegend {
 }
 
 #colours {
-  height: 102px;
   min-height: auto;
   overflow-y: auto;
 }
@@ -38,7 +37,6 @@ table#colourViewer {
 
 table#colourViewer tbody tr {
   background-color: white;
-  line-height: 0.5;
   font-size: 15px;
 }
 
@@ -134,4 +132,8 @@ svg {
   /*width: 65px;*/
   scrollbar-width: thin;
   scrollbar-color: #90A4AE #CFD8DC;
+}
+
+td.legend-label {
+  padding: 2px 2px 2px 0.5rem;
 }

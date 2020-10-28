@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 
 import '../../../../assets/js/rgbcolor.js';
@@ -23,7 +23,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
 
   @Input() interactionAc: string;
   @Input() featureAc: string;
-  @Input() participantsId: string[];
+  @Input() expandedParticipantAc: string[];
 
   private _interactionData: any;
   private SMALL_MOL = require('../../../../assets/images/detailsViewer/svgForKey/smallMol.svg');
@@ -45,8 +45,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
-    const chng = changes['participantsId'];
+    const chng = changes['expandedParticipantAc'];
     const cur = JSON.stringify(chng.currentValue);
 
     if (cur !== undefined) {
@@ -86,11 +85,9 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   changeAnnotations(event): void {
     this.annotationSelected = event.target.value;
     xlv.setAnnotations(this.annotationSelected);
-    this.legendColours();
   }
 
   private legendColours(): void {
-
     xlv.legendCallbacks.push(function (colourAssignment) {
 
       const coloursKeyDiv = document.getElementById('colours');
@@ -98,25 +95,24 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
       if (colourAssignment) {
         // TODO: Replace this (ugly code) for more readable code, copy and paste from the complexviewer for the SAB.
         // TODO: Add the html in the template html and process in the ts the values as we use to do for the rest of the app.
-        let table = '<table id="colourViewer">' +
-          '            <tr>' +
-          '               <td style=\'width:100px;margin:10px;background:#b3e2cd; border:1px solid #82ad98;\'></td>' +
-          '               <td>' + this.interactionAc + '</td>' +
-          '            </tr>';
+        let table = `<table id="colourViewer">
+                       <tr>
+                         <td style='width:100px;margin:10px;background:#b3e2cd; border:1px solid #82ad98;'></td>
+                         <td class="legend-label">${this.interactionAc}</td>
+                       </tr>`;
         const domain = colourAssignment.domain();
         const range = colourAssignment.range();
 
         for (let i = 0; i < domain.length; i++) {
           // make transparent version of colour
           const temp = new RGBColor(range[i % 20]);
-          const trans = 'rgba(' + temp.r + ',' + temp.g + ',' + temp.b + ', 0.6)';
-          table += '<tr>' +
-            '         <td style=\'width:75px;margin:10px;background:' + trans + ';border:1px solid ' + range[i % 20] + ';\'></td>' +
-            '         <td>' + domain[i] + '</td>' +
-            '</tr>';
+          const trans = `rgba(${temp.r},${temp.g},${temp.b}, 0.6)`;
+          table += `<tr>
+                      <td style='width:75px;margin:10px;background:${trans};border:1px solid ${range[i % 20]};'></td>
+                      <td class="legend-label">${domain[i]}</td>
+                    </tr>`;
         }
-
-        table = table + '</table>';
+        table += '</table>';
         coloursKeyDiv.innerHTML = table;
       }
     }.bind(this));

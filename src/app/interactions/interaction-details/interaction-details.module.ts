@@ -12,8 +12,8 @@ import {ConfidencesComponent} from './details-tabs/details/confidences/confidenc
 import {InteractionDetailsRoutingModule} from './interaction-details-routing.module';
 import {ExperimentComponent} from './details-tabs/details/experiment/experiment.component';
 import {PublicationComponent} from './details-tabs/details/publication/publication.component';
-import {ParticipantTableComponent} from './details-tabs/details/participant-details/participant-table.component';
-import {FeaturesTableComponent} from './details-tabs/details/features-details/features-table.component';
+import {ParticipantTableComponent} from './details-tabs/details/participant-table/participant-table.component';
+import {FeaturesTableComponent} from './details-tabs/details/features-table/features-table.component';
 import {ColumnToggleComponent} from './details-tabs/details/column-toggle/column-toggle.component';
 import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
 import {MatTooltipModule} from "@angular/material/tooltip";

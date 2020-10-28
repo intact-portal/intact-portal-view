@@ -19,7 +19,7 @@
       </ul>
 
       <mat-dialog-actions>
-        <button mat-mini-fab color="primary" class="centered" (click)="resetFilter(filter.SPECIES)"
+        <button class="centered delete-button" (click)="resetFilter(filter.SPECIES)"
                 *ngIf="interactorSpeciesFilter.length > 0" matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -51,8 +51,7 @@
         </div>
       </ul>
       <div *ngIf="interactorTypeFilter.length > 0" class="margin-top-medium reset-button">
-        <button mat-mini-fab color="primary" (click)="resetFilter(filter.INTERACTOR_TYPE)"
-                matTooltip="Remove filter" matTooltipPosition="below">
+        <button class="delete-button"(click)="resetFilter(filter.INTERACTOR_TYPE)" matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
       </div>
@@ -74,7 +73,7 @@
         </div>
       </ul>
       <div *ngIf="interactionTypeFilter.length > 0" class="margin-top-medium reset-button">
-        <button mat-mini-fab color="primary" (click)="resetFilter(filter.INTERACTION_TYPE)"
+        <button class="delete-button" (click)="resetFilter(filter.INTERACTION_TYPE)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -98,7 +97,7 @@
         </div>
       </ul>
       <div *ngIf="interactionDetectionMethodFilter.length > 0" class="margin-top-medium reset-button">
-        <button mat-mini-fab color="primary" (click)="resetFilter(filter.DETECTION_METHOD)"
+        <button class="delete-button" (click)="resetFilter(filter.DETECTION_METHOD)"
                 matTooltip="Remove filter"
                 matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
@@ -123,7 +122,7 @@
         </div>
       </ul>
       <div *ngIf="interactionHostOrganismFilter.length > 0" class="margin-top-medium reset-button">
-        <button mat-mini-fab color="primary" (click)="resetFilter(filter.HOST_ORGANISM)"
+        <button class="delete-button" (click)="resetFilter(filter.HOST_ORGANISM)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -140,7 +139,7 @@
                     (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
       </div>
       <div *ngIf="isFilteringScore()" class="margin-top-medium reset-button">
-        <button mat-mini-fab color="primary" (click)="resetFilter(filter.MI_SCORE)"
+        <button class="delete-button" (click)="resetFilter(filter.MI_SCORE)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>

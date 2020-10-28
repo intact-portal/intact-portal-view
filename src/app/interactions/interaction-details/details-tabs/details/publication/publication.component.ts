@@ -13,7 +13,7 @@ export class PublicationComponent implements OnInit {
 
   @Input() publication: Publication;
 
-  private hover = false;
+  hover = false;
 
   constructor() {
   }

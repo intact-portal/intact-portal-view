@@ -14,7 +14,7 @@ export class InteractionDetailsComponent implements OnInit {
 
   @Output() featureToEmit: EventEmitter<string> = new EventEmitter<string>();
 
-  private hover = false;
+  hover = false;
 
   constructor() { }
 

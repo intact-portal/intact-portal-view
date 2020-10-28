@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {InteractionDetails} from '../../shared/model/interaction-details/interaction-details.model';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
-import {ParticipantTableComponent} from "./details/participant-details/participant-table.component";
-import {FeaturesTableComponent} from "./details/features-details/features-table.component";
+import {ParticipantTableComponent} from "./details/participant-table/participant-table.component";
+import {FeaturesTableComponent} from "./details/features-table/features-table.component";
 
 declare const $: any;
 

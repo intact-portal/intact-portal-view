@@ -1,11 +1,12 @@
 import {
   AfterViewInit,
-  Component,
-  Input,
-  OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Output, EventEmitter
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
 } from '@angular/core';
 import * as $ from 'jquery';
 import {Column} from "../../../../shared/model/tables/column.model";
@@ -23,7 +24,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
   @Input() columnView: string;
   @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  private columnToggleHover = false;
+  columnToggleHover = false;
   private columnsSelected: string[];
 
   constructor(private cdRef: ChangeDetectorRef) {
@@ -42,7 +43,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     let columnsToHide = this.columnsSelected;
 
     // Hide the columns from the table that are already selected to hide
-    this.dataTable.columns().every(function (index) {
+    this.dataTable.columns().every(function () {
         if (columnsToHide.indexOf($(this.header()).text()) >= 0) {
           this.visible(!this.visible());
         }
@@ -70,7 +71,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private toggleColumnView() {
+  toggleColumnView() {
     const table = $('#' + this.columnView);
 
     table.toggle();

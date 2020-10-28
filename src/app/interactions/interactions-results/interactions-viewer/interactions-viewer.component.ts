@@ -32,6 +32,7 @@ export class InteractionsViewerComponent implements OnInit {
   private _expanded: boolean;
   private _affectedByMutation: boolean;
   private _compoundGraph = false;
+  private _hasMutation = false;
   private _layoutName = 'fcose';
 
   @Input() interactorSelected: string;
@@ -49,7 +50,6 @@ export class InteractionsViewerComponent implements OnInit {
   ngOnInit(): void {
     $('ip-interactions-viewer').foundation();
     this.graph = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
-    this.loadViewState();
 
     this.route.queryParams
       .filter(params => params.query)
@@ -103,6 +103,8 @@ export class InteractionsViewerComponent implements OnInit {
       this.compoundGraph
     ).subscribe(data => {
       this.interactionsJSON = data;
+      this.loadViewState();
+      this._hasMutation = data.some(elt => elt.data.mutation);
       // Makes the network expanded expanded by default
       this.graph.initializeWithData(this.interactionsJSON, true, this.affectedByMutation, this.layoutName);
       this.graph.expandEdges(this.expanded, this.affectedByMutation);
@@ -120,6 +122,7 @@ export class InteractionsViewerComponent implements OnInit {
   onChangeExpand(expandCheckBoxValue, affectedByMutationCheckBox) {
     if (!expandCheckBoxValue) {
       affectedByMutationCheckBox.checked = false;
+      this.viewService.affectedByMutation = false;
     }
     this.expanded = expandCheckBoxValue;
     this.viewService.expanded = expandCheckBoxValue;
@@ -127,9 +130,11 @@ export class InteractionsViewerComponent implements OnInit {
   }
 
   onChangeAffectedByMutation(affectedByMutationCheckBoxValue, expandCheckBox) {
-    expandCheckBox.checked = true;
+    if (affectedByMutationCheckBoxValue) {
+      expandCheckBox.checked = true;
+      this.viewService.expanded = true;
+    }
     this.affectedByMutation = affectedByMutationCheckBoxValue;
-    this.viewService.expanded = true;
     this.viewService.affectedByMutation = affectedByMutationCheckBoxValue;
     this.graph.expandEdges(true, affectedByMutationCheckBoxValue);
   }
@@ -286,5 +291,9 @@ export class InteractionsViewerComponent implements OnInit {
 
   set layoutName(value: string) {
     this._layoutName = value;
+  }
+
+  get hasMutation(): boolean {
+    return this._hasMutation;
   }
 }

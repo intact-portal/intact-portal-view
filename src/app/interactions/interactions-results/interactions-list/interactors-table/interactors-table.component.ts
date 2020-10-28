@@ -240,7 +240,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         {
           data: this._columns.alternativeIds.key,
           title: this._columns.alternativeIds.name,
-          render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.identifierRender(extractId(d)))
+          render: this.tableFactory.groupBy<string, string>(
+            (d) => extractId(d).database,
+            this.tableFactory.enlist((d) => this.tableFactory.identifierLink(extractId(d))),
+            this.tableFactory.databaseTag)
         },
         {
           data: this._columns.interactionSearchCount.key,
@@ -258,7 +261,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       }
     });
     this.tableFactory.makeTableHeaderSticky();
-    this.tableFactory.enableCollapsedPanels();
+    this.tableFactory.initGroupBy();
   }
 
 

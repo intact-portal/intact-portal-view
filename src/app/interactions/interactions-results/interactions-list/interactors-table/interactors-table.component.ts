@@ -242,7 +242,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           title: this._columns.alternativeIds.name,
           render: this.tableFactory.groupBy<string, string>(
             (d) => extractId(d).database,
-            this.tableFactory.enlist((d) => this.tableFactory.identifierRender(extractId(d))),
+            this.tableFactory.enlist((d) => this.tableFactory.identifierLink(extractId(d))),
             this.tableFactory.databaseTag)
         },
         {
@@ -257,6 +257,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       drawCallback: function () {
         $('#interactorsTableWidthMimic').width($("#interactorsTable").width());
         $('.table-list').parent('td').css('vertical-align', 'top');
+        $('.collapse-panel').hide();
       }
     });
     this.tableFactory.makeTableHeaderSticky();

@@ -16,6 +16,7 @@
 
 .dropdown-pane {
   width: max-content;
+  padding: 1rem 1rem 0.5rem 1rem;
 }
 
 /* Filters bar styling */
@@ -56,6 +57,11 @@
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
 }
 
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:active,
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:focus {
+  box-shadow: 0 0 0 3px #216fd1;
+  outline: none;
+}
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:after {
   background-color: white !important;
   top: 10px;
@@ -77,3 +83,9 @@ div.reset-button {
 }
 
 
+button.delete-button {
+  background-color: #68297C;
+  color: white;
+  border-radius: 30px;
+  padding: 10px;
+}

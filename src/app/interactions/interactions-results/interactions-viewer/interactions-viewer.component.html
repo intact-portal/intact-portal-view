@@ -15,14 +15,14 @@
         <li>
           <span class="margin-left-small">
           <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)"
-                 value="fcose" checked/>
-              <label>Force directed</label>
+                 value="fcose" checked id="force-directed"/>
+              <label for="force-directed">Force directed</label>
           </span>
         </li>
         <li>
           <span class="margin-left-small">
-          <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf"/>
-                <label>Circular</label>
+          <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf" id="circular"/>
+                <label for="circular">Circular</label>
           </span>
         </li>
       </div>
@@ -32,16 +32,17 @@
         <li>
           <span class="margin-left-small">
           <input #expand type="checkbox" (change)="onChangeExpand(expand.checked, affectedByMutationCb)"
-                 [defaultChecked]="expanded"/>
-            <label>Expand</label>
+                 [defaultChecked]="expanded" id="expand"/>
+            <label for="expand">Expand</label>
           </span>
         </li>
         <li>
-          <span class="margin-left-small">
-          <input #affectedByMutationCb type="checkbox"
-                 (change)="onChangeAffectedByMutation(affectedByMutationCb.checked, expand)"
-                 [defaultChecked]="affectedByMutation"/>
-            <label>Affected By Mutation</label>
+          <span class="margin-left-small tool-tip">
+            <input #affectedByMutationCb type="checkbox" id="affectedByMutationCb"
+                   (change)="onChangeAffectedByMutation(affectedByMutationCb.checked, expand)"
+                   [defaultChecked]="affectedByMutation" [disabled]="!hasMutation"/>
+            <label for="affectedByMutationCb" [ngClass]="{'disabled':!hasMutation}">Affected By Mutation</label>
+            <span class="tool-tip-text" *ngIf="!hasMutation">There is no mutation in this network</span>
           </span>
         </li>
       </div>
@@ -51,8 +52,8 @@
         <li>
           <span class="margin-left-small">
           <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"
-                 [defaultChecked]="viewService.groupBySpecies"/>
-            <label>Species</label>
+                 [defaultChecked]="viewService.groupBySpecies" id="group-by"/>
+            <label for="group-by">Species</label>
           </span>
         </li>
       </div>

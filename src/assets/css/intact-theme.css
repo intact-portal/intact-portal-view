@@ -178,7 +178,6 @@ a:visited {
 .tool-tip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
 
 /* Tooltip text */
@@ -410,37 +409,49 @@ table.dataTable thead th, table.dataTable thead td {
   text-align: center;
 }
 
+table.dataTable thead th:last-child {
+  border-right: none;
+}
+
 table.dataTable tr, th {
   font-size: 13px;
 }
 
-/*************** PARTICIPANT DATATABLES ROW STYLE ********************/
-
-
-table#participantTable.tableDisplay td:nth-child(1) {
-  text-align: center !important;
+.tabs-panel {
+  padding: 1rem;
 }
 
-/********* Features table style ********************/
+.tabs-panel.table-tab {
+  padding: 1rem 0;
+}
+/************** TABLES ELEMENTS **************/
 
-table#featureTable.tableDisplay td:nth-child(1) {
-  text-align: center !important;
+.shadow-left {
+  display: block;
+  position: absolute;
+  width: 8px;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+}
+
+.shadow-right {
+  display: block;
+  position: absolute;
+  width: 8px;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
 }
 
 
-/********* Interactions table style ********************/
-
-table#interactionsTable.tableDisplay td:nth-child(1) {
-  text-align: center !important;
+div.dataTables_scroll {
+  position: relative;
 }
-
-/********* Interactors table style ********************/
-
-table#interactorsTable.tableDisplay td:nth-child(1) {
-  text-align: left !important;
-}
-
-/********* DATATABLES ROWs COMMON STYLE ********************/
 
 .detailsCell {
   font-size: small;
@@ -460,59 +471,56 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
   word-wrap: break-word;
 }
 
+.tag-cell-container {
+  margin: 1px 0;
+  display: flex;
+}
+
+.tag-cell {
+  margin: 0 4px 0 0;
+  white-space: nowrap;
+  font-size: smaller;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0 4px;
+  align-self: flex-start;
+}
+
 .detailsAnnotationCell {
   background-color: #569fec52;
   color: #14385f;
-  font-size: small;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 3px 4px;
-  white-space: nowrap;
-  margin-right: 4px;
+  /*padding: 3px 4px;*/
 }
 
 .detailsXrefCell {
   background-color: #dacee0;
   color: #482c56f7;
-  font-size: small;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 3px 4px;
-  white-space: nowrap;
-  margin-right: 4px;
-
+  /*padding: 3px 4px;*/
 }
 
 .detailsConfidencesCell {
-  font-size: small;
-  font-weight: bold;
-  border-radius: 5px;
   padding: 3px 4px;
-  white-space: nowrap;
+  font-size: small;
 }
 
 .detailsExpansionsCell {
   background-color: rgba(99, 103, 189, 0.24);
   color: #19236d;
-  font-size: small;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 3px 4px;
-  white-space: nowrap;
-  margin-right: 4px;
-
+  /*padding: 3px 4px;*/
 }
 
-.elementList {
-  padding: 0px 2px;
-}
 
-.aliasesList {
-  padding: 0px 2px;
-}
-.identifierCell {
+
+.identifier-cell-container {
   white-space: nowrap;
   text-align: left;
+}
+
+.identifier-cell {
+  background-color: rgba(99, 103, 189, 0.24);
+  color: #19236d;
+  margin: 0 4px;
+  padding: 0 4px;
 }
 
 .identifierCellWidth {
@@ -520,7 +528,8 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 }
 
 .aliasesCell {
-  width: 250px;
+  width: 300px;
+  /*display: flex;*/
 }
 
 .aliasesCellWidth {
@@ -530,11 +539,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 .detailsAliasesCell {
   background-color: #4ba77047;
   color: #0c6530 !important;
-  font-size: smaller;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 2px 2px 2px 5px;
-  margin-right: 4px;
+  /*padding: 0 3px;*/
 }
 
 .parametersCell {
@@ -549,15 +554,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 .detailsFigureLegendCell {
   background-color: #4ba77047;
   color: #0c6530;
-  font-size: smaller;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 2px 5px;;
-  white-space: nowrap;
-}
-
-.annotationsList {
-  padding: 0px 2px;
+  /*padding: 2px 4px;*/
 }
 
 .annotationCell {
@@ -573,15 +570,7 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 .detailsCommentsCell {
   background-color: rgba(73, 165, 243, 0.29);
   color: #121d92;
-  font-size: smaller;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 2px 5px;
-  /*white-space: nowrap;*/
-}
-
-.annotationsInteractionList {
-  padding: 0px 2px;
+  /*padding: 2px 4px;*/
 }
 
 .annotationInteractionCell {
@@ -596,21 +585,13 @@ table#interactorsTable.tableDisplay td:nth-child(1) {
 .detailsCautionsCell {
   background-color: #f9956552;
   color: #de4f09;
-  font-size: smaller;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 2px 5px;;
-  white-space: nowrap;
+  /*padding: 2px 5px;*/
 }
 
 .detailsAllCell {
   background-color: #8da0ad54;
   color: #46555f;
-  font-size: smaller;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 2px 5px;;
-  white-space: nowrap;
+  /*padding: 2px 5px;*/
 }
 
 .rowSelected {
@@ -634,6 +615,7 @@ button.showMore, button.showLess {
   font-weight: bold;
   padding: 2px 3px 2px 5px;
   cursor: pointer;
+  text-align: left;
 }
 
 .icon-search-document {
@@ -648,3 +630,67 @@ button.showMore, button.showLess {
 /**************************************************************/
 /********* END DATATABLES ROW STYLES ********************/
 /**************************************************************/
+
+.collapse-header .tag-cell {
+  padding: 2px 4px;
+  margin-right: 0;
+}
+
+ul.elementList {
+  margin-bottom: 0;
+  margin-left: 0.45rem;
+}
+
+ul.elementList li::marker {
+  color: #68297c;
+}
+
+span.collapsable-counter {
+  margin-left: 4px;
+  color: #ffffff;
+  background-color: #68297cbf;
+  padding: 1px 4px;
+  font-weight: bolder;
+  font-size: smaller;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.collapse-header {
+  display: block;
+  text-align: left;
+  cursor: pointer;
+  color: #68297c;
+  white-space: nowrap;
+}
+
+.collapse-header *:first-child {
+  margin-left: 4px;
+}
+
+.collapse-header::before {
+  content: "\f107";
+  text-decoration: none;
+  font-style: normal;
+  font-size: medium;
+  text-rendering: optimizeLegibility !important;
+  background-size: contain;
+  font-weight: 400;
+  font-family: 'EBI-Common';
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.collapse-header.collapsed::before {
+  transform: rotate(-90deg);
+}
+
+.collapse-panel.collapsed {
+  visibility: hidden;
+  height: 0;
+}
+
+.collapse-panel {
+  padding-left: 0.7rem;
+}
+

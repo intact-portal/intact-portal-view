@@ -12,13 +12,14 @@ import {ConfidencesComponent} from './details-tabs/details/confidences/confidenc
 import {InteractionDetailsRoutingModule} from './interaction-details-routing.module';
 import {ExperimentComponent} from './details-tabs/details/experiment/experiment.component';
 import {PublicationComponent} from './details-tabs/details/publication/publication.component';
-import {ParticipantDetailsComponent} from './details-tabs/details/participant-details/participant-details.component';
-import {FeaturesDetailsComponent} from './details-tabs/details/features-details/features-details.component';
+import {ParticipantTableComponent} from './details-tabs/details/participant-details/participant-table.component';
+import {FeaturesTableComponent} from './details-tabs/details/features-details/features-table.component';
 import {ColumnToggleComponent} from './details-tabs/details/column-toggle/column-toggle.component';
 import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
 import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
+import {TableFactoryService} from "../shared/service/table-factory.service";
 
 
 @NgModule({
@@ -42,12 +43,15 @@ import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
     ConfidencesComponent,
     ExperimentComponent,
     PublicationComponent,
-    ParticipantDetailsComponent,
-    FeaturesDetailsComponent,
+    ParticipantTableComponent,
+    FeaturesTableComponent,
     ColumnToggleComponent,
     CvTermComponent,
     CvToUrlPipe,
     OrganismPipe
+  ],
+  providers: [
+    TableFactoryService
   ]
 })
 export class InteractionDetailsModule {

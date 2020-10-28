@@ -3,7 +3,7 @@
   .sticky-bar {
     position: sticky;
     top: 0;
-    z-index: 5;
+    z-index: 15;
     background-color: white;
     box-shadow: 0 1rem 14px -1rem rgba(33, 33, 33, 0.2);
   }

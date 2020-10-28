@@ -139,28 +139,10 @@ export class TableFactoryService {
 
   identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
     if (id === null) return;
-    let shortDbName = id.database.shortName !== undefined ? id.database.shortName : id.database;
-    let access: DatabaseAccess = TableFactoryService.databaseToAccess.get(shortDbName);
-    let url = null
-    let style = ''
-    if (access) {
-      url = access.getURL(id.identifier);
-      if (access.color) {
-        style = `color:${access.color};
-                 background-color:${access.backColor ? access.backColor : access.color.replace('1.0', '0.05')};`
-      }
-    }
-
-    let databaseTag: string;
-    if (id.database.shortName !== undefined) {
-      databaseTag = `<a class="identifier-cell tag-cell" style="${style}" target="_blank" href="${TableFactoryService.getCvURL(id.database.identifier)}"
-                       >${access ? access.fancyName : shortDbName}</a>`
-    } else {
-      databaseTag = `<span class="identifier-cell tag-cell" style="${style}">${access ? access.fancyName : shortDbName}</span>`
-    }
-
+    let db = TableFactoryService.processDatabase(id.database);
+    let url = db.access ? db.access.getURL(id.identifier) : null;
     return `<div class="tag-cell-container identifier-cell-container">
-              ${databaseTag}
+              ${db.tag}
               <div class="detailsCell identifierCellWidth">
                 ${id.qualifier ? '<b> ' : ''}
                   ${url !== null ? `<a href="${url}" target="_blank" >${id.identifier}</a>` : id.identifier}
@@ -170,6 +152,21 @@ export class TableFactoryService {
   }
 
   databaseTag(database: string | any): string {
+    return TableFactoryService.processDatabase(database).tag;
+  }
+
+  identifierLink(id: { identifier: string, database: string | any, qualifier?: any }) {
+    if (id === null) return;
+    let db = TableFactoryService.processDatabase(id.database);
+    let url = db.access ? db.access.getURL(id.identifier) : null;
+    return `<div class="detailsCell identifierCellWidth">
+              ${id.qualifier ? '<b> ' : ''}
+                ${url !== null ? `<a href="${url}" target="_blank" >${id.identifier}</a>` : id.identifier}
+              ${id.qualifier ? '</b>' : ''}
+            </div>`;
+  }
+
+  private static processDatabase(database: string | any): { tag: string, access: DatabaseAccess } {
     let shortDbName = database.shortName !== undefined ? database.shortName : database;
     let access: DatabaseAccess = TableFactoryService.databaseToAccess.get(shortDbName);
     let style = ''
@@ -187,7 +184,7 @@ export class TableFactoryService {
     } else {
       databaseTag = `<span class="identifier-cell tag-cell" style="${style}">${access ? access.fancyName : shortDbName}</span>`
     }
-    return databaseTag
+    return {tag: databaseTag, access: access};
   }
 
 

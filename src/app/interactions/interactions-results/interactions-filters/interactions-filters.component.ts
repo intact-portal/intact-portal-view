@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
-import {ResultTableFactoryService} from "../../shared/service/result-table-factory.service";
 
 declare const $: any;
 
@@ -55,7 +54,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   private minValue: string | number;
   private maxValue: string | number;
 
-  constructor(private tableFactory: ResultTableFactoryService) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -70,7 +69,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     $('ip-interactions-filters').foundation();
     $(window).trigger('load.zf.sticky');
-    this.tableFactory.makeTableHeaderSticky();
   }
 
   filterStyle(filterKey: string): any {

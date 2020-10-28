@@ -16,7 +16,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {ResultTableFactoryService} from "../shared/service/result-table-factory.service";
+import {TableFactoryService} from "../shared/service/table-factory.service";
+import {NetworkSelectionService} from "../shared/service/network-selection.service";
 
 @NgModule({
   imports: [
@@ -40,6 +41,9 @@ import {ResultTableFactoryService} from "../shared/service/result-table-factory.
     InteractorsTableComponent,
     InteractionsTableComponent
   ],
-  providers: [ResultTableFactoryService]
+  providers: [
+    TableFactoryService,
+    NetworkSelectionService
+  ]
 })
 export class InteractionsResultsModule { }

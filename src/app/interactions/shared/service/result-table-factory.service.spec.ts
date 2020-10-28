@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ResultTableFactoryService } from './result-table-factory.service';
+import { TableFactoryService } from './table-factory.service';
 
 describe('ResultTableFactoryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ResultTableFactoryService]
+      providers: [TableFactoryService]
     });
   });
 
-  it('should be created', inject([ResultTableFactoryService], (service: ResultTableFactoryService) => {
+  it('should be created', inject([TableFactoryService], (service: TableFactoryService) => {
     expect(service).toBeTruthy();
   }));
 });

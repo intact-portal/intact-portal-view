@@ -4,20 +4,21 @@ import {ActivatedRoute} from '@angular/router';
 import * as $ from 'jquery';
 import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
-import {extractCVValue, extractIds} from "../../../../shared/utils/string-utils";
-import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
+import {extractAlias, extractId} from "../../../../shared/utils/string-utils";
+import {TableFactoryService} from "../../../shared/service/table-factory.service";
 import {InteractorTable} from "../../../shared/model/tables/interactor-table.model";
 import {Column} from "../../../shared/model/tables/column.model";
+import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
+import {ResultTable} from "../../../shared/model/interactions-results/result-table-interface";
 
 const baseURL = environment.intact_portal_ws;
-const ebiURL = environment.ebi_url;
 
 @Component({
   selector: 'ip-interactors-table',
   templateUrl: './interactors-table.component.html',
   styleUrls: ['./interactors-table.component.css']
 })
-export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit {
+export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
 
   @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
@@ -44,24 +45,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   private _columns = new InteractorTable();
 
-  private _aliasesType: string[] = [
-    'gene name',
-    'gene name synonym',
-    'isoform synonym',
-    'author assigned name',
-    'locus name',
-    'orf name',
-    'complex systematic name',
-    'commercial name',
-    'iupac name',
-    'drug brand name',
-    'drug mixture brand name'
-  ];
-
-  private binaryInteractionIds: number[];
-  private interactorAcs: string[];
-
-  constructor(private route: ActivatedRoute, private resultTableFactory: ResultTableFactoryService) {
+  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService) {
   }
 
   ngOnInit() {
@@ -87,24 +71,11 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
       });
 
-    document.addEventListener('graph-interaction-selected', (e: any) => {
-      this.binaryInteractionIds = e.detail.interactionIds();
-      this.interactorAcs = [];
-      this.dataTable.ajax.reload();
-    });
-    document.addEventListener('graph-interactor-selected', (e: any) => {
-      this.binaryInteractionIds = [];
-      this.interactorAcs = [e.detail.interactorId()];
-      this.dataTable.ajax.reload();
-    });
-    document.addEventListener('graph-unselected', () => {
-      this.binaryInteractionIds = [];
-      this.interactorAcs = [];
-      this.dataTable.ajax.reload();
-    });
+
     this.initDataTable();
-    // this.initScrollbars();
-    this.resultTableFactory.initTopSlider('interactorsTable')
+    this.networkSelection.registerSelectionListener(this.dataTable, this);
+    this.tableFactory.initTopSlider('interactorsTable');
+    this.tableFactory.initShadowBorder('interactorsTable');
   }
 
 
@@ -174,65 +145,18 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     }.bind(this));
 
     interactorsTable.on('resize', () => $('#interactorsTableWidthMimic').width(interactorsTable.width()))
+  }
 
-    let tableBody = $('#interactorsTable tbody');
-    tableBody.on('click', 'button.showMore', function () {
-      const table: any = interactorsTable;
-      const interactorsT = table.DataTable();
-
-      const rowIndex = $(this).parents('tr');
-      const row = interactorsT.row(rowIndex).node();
-      const col = $(`#${this.id}`).data('col');
-
-      $(this).parents('td').html(interactorsT.cell(row, col).render('more')).show();
-    });
-
-    tableBody.on('click', 'button.showLess', function () {
-      const table: any = interactorsTable;
-      const interactorsT = table.DataTable();
-
-      const rowIndex = $(this).parents('tr');
-      const row = interactorsT.row(rowIndex).node();
-      const col = $('#' + this.id).data('col');
-
-      interactorsT.cell(row, col).render('less');
-      $(this).parents('td').html(interactorsT.cell(row, col).render('less'))
-    });
-
+  clearTableSelection() {
+    if (!this.interactorSelected) return;
+    let selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
+    if (selectedInteractorCheckbox.length > 0) {
+      selectedInteractorCheckbox.prop('checked', false);
+      this.interactorSelected = undefined;
+    }
   }
 
   scrolling = false;
-
-  private initScrollbars() {
-    let tableWrapper = $('#interactorsTable_wrapper')
-    let topScroll = $('#interactorsTableTopScroll');
-    if (topScroll.length === 0) {
-      topScroll = $('<div id="interactorsTableTopScroll"><div id="interactorsTableWidthMimic"></div></div>');
-      topScroll.find('#interactorsTableWidthMimic').height(1);
-      topScroll.css('overflow-x', 'auto')
-      topScroll.css('overflow-y', 'hidden')
-      topScroll.insertAfter(tableWrapper.find('div.top'));
-    }
-
-    let bodyScroll = tableWrapper.find('.dataTables_scrollBody');
-    bodyScroll.scroll(function () {
-      if (!this.scrolling) {
-        this.scrolling = true;
-        topScroll.scrollLeft(bodyScroll.scrollLeft()); // Synchronize  top scroller
-      } else {
-        this.scrolling = false;
-      }
-    }.bind(this));
-
-    topScroll.scroll(function () {
-      if (!this.scrolling) {
-        this.scrolling = true;
-        bodyScroll.scrollLeft(topScroll.scrollLeft())
-      } else {
-        this.scrolling = false;
-      }
-    }.bind(this));
-  }
 
   private initDataTable(): void {
     const table: any = $('#interactorsTable');
@@ -251,7 +175,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       ajax: {
         url: `${baseURL}/interaction/interactors/list/`,
         type: 'POST',
-        data: function (d) {
+        data: (d) => {
           d.page = d.start / d.length;
           d.pageSize = d.length;
           d.query = this.terms;
@@ -265,19 +189,19 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           d.miScoreMin = this.miScoreMin;
           d.miScoreMax = this.miScoreMax;
           d.intraSpecies = this.intraSpeciesFilter;
-          d.binaryInteractionId = this.binaryInteractionIds;
-          d.interactorAc = this.interactorAcs;
-        }.bind(this)
+          d.binaryInteractionId = this.networkSelection.binaryInteractionIds;
+          d.interactorAc = this.networkSelection.interactorAcs;
+        }
       },
       columns: [
         {
           data: this._columns.select.key,
           title: this._columns.select.name,
-          render: function (data, type, full, meta) {
+          render: function (data, type, full) {
             if (type === 'display') {
-              return '<div class="margin-left-large">' +
-                '<input type="checkbox" id="' + full.interactorAc + '" name="check" value="' + data + '"/>' +
-                '</div>';
+              return `<div class="margin-left-large">
+                        <input type="checkbox" id="${full.interactorAc}" name="check" value="${data}"/>
+                      </div>`;
             }
             return data;
           }
@@ -297,12 +221,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         {
           data: this._columns.type.key,
           title: this._columns.type.name,
-          render: this.resultTableFactory.cvRender('interactorTypeMIIdentifier')
+          render: this.tableFactory.cvRender('interactorTypeMIIdentifier')
         },
         {
           data: this._columns.species.key,
           title: this._columns.species.name,
-          render: this.resultTableFactory.speciesRender('interactorTaxId')
+          render: this.tableFactory.speciesRender('interactorTaxId')
         },
         {
           data: this._columns.description.key,
@@ -311,66 +235,32 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         {
           data: this._columns.alias.key,
           title: this._columns.alias.name,
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-            const items = $.map(res.data, function (d, i) {
-              // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-              const alias = extractCVValue(d);
-              return `<div class="aliasesCell">
-                        <div style="float:left; margin-right: 4px;">
-                          <a class="detailsAliasesCell" target="_blank"
-                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
-                            ${alias.type.shortName}
-                          </a>
-                        </div>
-                        <span>${alias.value}</span>
-                      </div>`;
-            }.bind(this)).join('');
-            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
+          render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
         },
         {
           data: this._columns.alternativeIds.key,
           title: this._columns.alternativeIds.name,
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-            const items = $.map(res.data, function (d, i) {
-              // Q6FIE7 (uniprotkb)
-              return this.resultTableFactory.getInteractorLink(extractIds(d));
-            }.bind(this)).join('');
-
-            let html = `<div class="aliasesList">${items}</div>`;
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
+          render: this.tableFactory.groupBy<string, string>(
+            (d) => extractId(d).database,
+            this.tableFactory.enlist((d) => this.tableFactory.identifierRender(extractId(d))),
+            this.tableFactory.databaseTag)
         },
         {
           data: this._columns.interactionSearchCount.key,
           title: this._columns.interactionSearchCount.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-              return `<div class="alignCell"><span>${data}</span></div>`;
-            }
-          }
         },
         {
           data: this._columns.interactionCount.key,
-          title: this._columns.interactionCount.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-              return `<div class="alignCell"><span>${data}</span></div>`;
-            }
-          }
+          title: this._columns.interactionCount.name
         }
       ],
-      drawCallback: function (settings) {
+      drawCallback: function () {
         $('#interactorsTableWidthMimic').width($("#interactorsTable").width());
-        console.log(settings.json.data[0])
+        $('.table-list').parent('td').css('vertical-align', 'top');
       }
     });
-    this.resultTableFactory.makeTableHeaderSticky();
+    this.tableFactory.makeTableHeaderSticky();
+    this.tableFactory.initGroupBy();
   }
 
 
@@ -490,13 +380,5 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   set interactorSelected(value: string) {
     this._interactorSelected = value;
-  }
-
-  get aliasesType(): string[] {
-    return this._aliasesType;
-  }
-
-  set aliasesType(value: string[]) {
-    this._aliasesType = value;
   }
 }

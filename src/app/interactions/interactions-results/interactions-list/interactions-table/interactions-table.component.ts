@@ -4,10 +4,12 @@ import {ActivatedRoute} from '@angular/router';
 import * as $ from 'jquery';
 import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
-import {extractCVValue, extractIds} from "../../../../shared/utils/string-utils";
-import {ResultTableFactoryService} from "../../../shared/service/result-table-factory.service";
+import {extractAlias, extractAnnotation, extractId} from "../../../../shared/utils/string-utils";
+import {TableFactoryService} from "../../../shared/service/table-factory.service";
 import {InteractionTable} from "../../../shared/model/tables/interaction-table.model";
 import {Column} from "../../../shared/model/tables/column.model";
+import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
+import {ResultTable} from "../../../shared/model/interactions-results/result-table-interface";
 
 
 const baseURL = environment.intact_portal_ws;
@@ -18,7 +20,7 @@ const ebiURL = environment.ebi_url;
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit {
+export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
@@ -40,31 +42,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   columnView = 'interactions_columnView';
 
-  private showMoreSelected = false;
   private _columns = new InteractionTable();
-  private _aliasesType: string[] = [
-    'gene name',
-    'gene name synonym',
-    'isoform synonym',
-    'author assigned name',
-    'locus name',
-    'orf name',
-    'complex systematic name',
-    'commercial name',
-    'iupac name',
-    'drug brand name',
-    'drug mixture brand name'
-  ];
 
-  private _annotationsTypes: string[] = [
-    'figure legend',
-    'comment',
-    'caution'
-  ];
-  private binaryInteractionIds: number[] = [];
-  private interactorAcs: string[] = [];
-
-  constructor(private route: ActivatedRoute, private resultTableFactory: ResultTableFactoryService) {
+  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService) {
   }
 
   ngOnInit(): void {
@@ -89,30 +69,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         }
       });
 
-    document.addEventListener('graph-interaction-selected', (e: any) => {
-      this.binaryInteractionIds = e.detail.interactionIds();
-      this.interactorAcs = []
-      this.dataTable.ajax.reload();
-    });
-    document.addEventListener('graph-interactor-selected', (e: any) => {
-      this.binaryInteractionIds = [];
-      this.interactorAcs = [e.detail.interactorId()];
-      this.dataTable.ajax.reload();
-    });
-    document.addEventListener('graph-unselected', () => {
-      this.binaryInteractionIds = [];
-      this.interactorAcs = []
-      this.dataTable.ajax.reload();
-    });
-
     this.initDataTable();
-    // this.initScrollbars();
-    this.resultTableFactory.initTopSlider('interactionsTable');
+    this.networkSelection.registerSelectionListener(this.dataTable, this);
+    this.tableFactory.enableShowButtons();
+    this.tableFactory.initTopSlider('interactionsTable');
+    this.tableFactory.initShadowBorder('interactionsTable');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.interactionTab.currentValue) {
-
       // This fixes the alignment between the th and td when we have activated scrollX:true
       const table: any = $('#interactionsTable');
       this.dataTable = table.DataTable().columns.adjust().draw();
@@ -121,37 +86,25 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   ngAfterViewInit(): void {
     let interactionsTable = $('#interactionsTable');
-    let selectedInteractions = $(`#${this.interactionSelected}:checkbox`);
     interactionsTable.on('change', 'input[type=\'checkbox\']', (e) => {
-      const table: any = interactionsTable;
       const interactionSel = e.currentTarget.id;
 
       if (this.interactionSelected !== interactionSel) {
-        selectedInteractions.prop('checked', false);
-        selectedInteractions.closest('tr').removeClass('rowSelected');
+        let previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
+        previousCheckbox.prop('checked', false);
 
         this.interactionSelected = interactionSel;
-        selectedInteractions.prop('checked', true);
-        selectedInteractions.closest('tr').addClass('rowSelected');
+        let newCheckbox = $(`#${interactionSel}:checkbox`);
+        newCheckbox.prop('checked', true);
 
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
           bubbles: true,
           detail: {
             interactionId: this.interactionSelected
-
           }
         });
         document.dispatchEvent(interactionSelectedEvent);
-
       } else {
-        // None is selected, remove class
-        this.interactionSelected = undefined;
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each(function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
-
         const tableUnselectEvent = new CustomEvent('tableUnselected', {
           bubbles: true,
         });
@@ -159,12 +112,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       }
     });
 
-
     // When table redrawn keep row selection synchronization between tables
     interactionsTable.on('draw.dt', function () {
       if (this.interactionSelected !== undefined) {
-        selectedInteractions.prop('checked', true);
-        selectedInteractions.closest('tr').addClass('rowSelected');
+        let previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
+        previousCheckbox.prop('checked', true);
+        previousCheckbox.closest('tr').addClass('rowSelected');
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
           bubbles: true,
           detail: {
@@ -175,64 +128,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         document.dispatchEvent(interactionSelectedEvent);
       }
     }.bind(this));
-
-
-    let tableBody = $('#interactionsTable tbody');
-    tableBody.on('click', 'button.showMore', function () {
-      const table: any = interactionsTable;
-      const interactionsT = table.DataTable();
-
-      const rowIndex = $(this).parents('tr');
-      const row = interactionsT.row(rowIndex).node();
-      const col = $(`#${this.id}`).data('col');
-
-      $(this).parents('td').html(interactionsT.cell(row, col).render('more'));
-    });
-
-    tableBody.on('click', 'button.showLess', function () {
-      const table: any = interactionsTable;
-      const interactionsT = table.DataTable();
-
-      const rowIndex = $(this).parents('tr');
-      const row = interactionsT.row(rowIndex).node();
-      const col = $('#' + this.id).data('col');
-
-      interactionsT.cell(row, col).render('less');
-      $(this).parents('td').html(interactionsT.cell(row, col).render('less'))
-    });
   }
 
-  scrolling = false;
-
-  private initScrollbars() {
-    let topScroll = $('#interactionTableTopScroll');
-    if (topScroll.length === 0) {
-      topScroll = $('<div id="interactionTableTopScroll"><div id="interactionsTableWidthMimic"></div></div>');
-      topScroll.find('#interactionsTableWidthMimic').height(1);
-      topScroll.css('overflow-x', 'auto')
-      topScroll.css('overflow-y', 'hidden')
-      topScroll.insertBefore($('div.dataTables_scrollHead'));
+  clearTableSelection() {
+    if (!this.interactionSelected) return;
+    let selectedInteraction = $(`#${this.interactionSelected}:checkbox`);
+    if (selectedInteraction.length > 0) {
+      selectedInteraction.prop('checked', false);
+      this.interactionSelected = undefined;
     }
-    let bodyScroll = $('.dataTables_scrollBody');
-
-    topScroll.scroll(function () {
-      if (!this.scrolling) {
-        this.scrolling = true;
-        bodyScroll.scrollLeft(topScroll.scrollLeft())
-      } else {
-        this.scrolling = false;
-      }
-    }.bind(this));
-
-    // Synchronise scrolling
-    bodyScroll.scroll(function () {
-      if (!this.scrolling) {
-        this.scrolling = true;
-        topScroll.scrollLeft(bodyScroll.scrollLeft());
-      } else {
-        this.scrolling = false;
-      }
-    }.bind(this));
   }
 
   updateTable() {
@@ -243,45 +147,45 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   private initDataTable(): void {
     const table: any = $('#interactionsTable');
     this.dataTable = table.DataTable({
-      bSort: false,
-      searching: false,
-      paging: true,
-      lengthMenu: [25, 50, 75, 100, 150, 200, 500],
-      pageLength: 25,
-      pagingType: 'numbers',
-      processing: true,
-      serverSide: true,
-      dom: '<"top"filp>rt<"bottom"ifp>',
-      scrollX: true,
-      fixedHeader: false,
-      ajax: {
-        url: `${baseURL}/interaction/list/`,
-        type: 'POST',
-        data: function (d) {
-          d.page = d.start / d.length;
-          d.pageSize = d.length;
-          d.query = this.terms;
-          d.batchSearch = this.batchSearchFilter;
-          d.interactorSpecies = this.interactorSpeciesFilter;
-          d.interactorType = this.interactorTypeFilter;
-          d.interactionDetectionMethod = this.interactionDetectionMethodFilter;
-          d.interactionType = this.interactionTypeFilter;
-          d.interactionHostOrganism = this.interactionHostOrganismFilter;
-          d.negativeInteraction = this.negativeFilter;
-          d.miScoreMin = this.miScoreMin;
-          d.miScoreMax = this.miScoreMax;
-          d.intraSpecies = this.intraSpeciesFilter;
-          d.binaryInteractionId = this.binaryInteractionIds;
-          d.interactorAc = this.interactorAcs;
-        }.bind(this)
-      },
-      columns: [
-        {
-          data: this._columns.id.key,
-          title: this._columns.id.name,
-          render: function (data, type, full, meta) {
-            if (type === 'display') {
-              return `<div>
+        bSort: false,
+        searching: false,
+        paging: true,
+        lengthMenu: [25, 50, 75, 100, 150, 200, 500],
+        pageLength: 25,
+        pagingType: 'numbers',
+        processing: true,
+        serverSide: true,
+        dom: '<"top"filp>rt<"bottom"ifp>',
+        scrollX: true,
+        fixedHeader: false,
+        ajax: {
+          url: `${baseURL}/interaction/list/`,
+          type: 'POST',
+          data: (d) => {
+            d.page = d.start / d.length;
+            d.pageSize = d.length;
+            d.query = this.terms;
+            d.batchSearch = this.batchSearchFilter;
+            d.interactorSpecies = this.interactorSpeciesFilter;
+            d.interactorType = this.interactorTypeFilter;
+            d.interactionDetectionMethod = this.interactionDetectionMethodFilter;
+            d.interactionType = this.interactionTypeFilter;
+            d.interactionHostOrganism = this.interactionHostOrganismFilter;
+            d.negativeInteraction = this.negativeFilter;
+            d.miScoreMin = this.miScoreMin;
+            d.miScoreMax = this.miScoreMax;
+            d.intraSpecies = this.intraSpeciesFilter;
+            d.binaryInteractionId = this.networkSelection.binaryInteractionIds;
+            d.interactorAc = this.networkSelection.interactorAcs;
+          }
+        },
+        columns: [
+          {
+            data: this._columns.id.key,
+            title: this._columns.id.name,
+            render: function (data, type, full) {
+              if (type === 'display') {
+                return `<div>
                         <input type="checkbox" id="${full.binaryInteractionId}" name="check" value="${data}"/>
                         <span class="margin-left-medium">
                           <a href="/intact-portal-view/details/interaction/${full.ac}" class="icon-link tool-tip" target="_blank">
@@ -290,167 +194,162 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                           </a>
                         </span>
                       </div>`;
+              }
+              return data;
             }
-            return data;
-          }
-        },
-        {
-          data: this._columns.moleculeA.key,
-          title: this._columns.moleculeA.name
-        },
-        {
-          data: this._columns.moleculeB.key,
-          title: this._columns.moleculeB.name
-        },
-        {
-          data: this._columns.identifierA.key,
-          defaultContent: '',
-          title: this._columns.identifierA.name,
-          render: function (data, type) {
-            if (type === 'display' && data !== null) {
-              return this.resultTableFactory.getInteractorLink(extractIds(data))
+          },
+          {
+            data: this._columns.moleculeA.key,
+            title: this._columns.moleculeA.name
+          },
+          {
+            data: this._columns.moleculeB.key,
+            title: this._columns.moleculeB.name
+          },
+          {
+            data: this._columns.identifierA.key,
+            defaultContent: '',
+            title: this._columns.identifierA.name,
+            render: (data, type) => {
+              if (type === 'display' && data !== null) {
+                return this.tableFactory.identifierRender(extractId(data))
+              }
+              return data
             }
-            return data
-          }.bind(this)
-        },
-        {
-          data: this._columns.identifierB.key,
-          defaultContent: '',
-          title: this._columns.identifierB.name,
-          render: function (data, type) {
-            if (type === 'display' && data !== null) {
-              return this.resultTableFactory.getInteractorLink(extractIds(data))
+          },
+          {
+            data: this._columns.identifierB.key,
+            defaultContent: '',
+            title: this._columns.identifierB.name,
+            render: (data, type) => {
+              if (type === 'display' && data !== null) {
+                return this.tableFactory.identifierRender(extractId(data))
+              }
+              return data
             }
-            return data
-          }.bind(this)
-        },
-        {
-          data: this._columns.typeA.key,
-          title: this._columns.typeA.name,
-          render: this.resultTableFactory.cvRender('typeMIA')
-        },
-        {
-          data: this._columns.typeB.key,
-          title: this._columns.typeB.name,
-          render: this.resultTableFactory.cvRender('typeMIB')
-        },
-        {
-          data: this._columns.speciesA.key,
-          title: this._columns.speciesA.name,
-          render: this.resultTableFactory.speciesRender('taxIdA')
-        },
-        {
-          data: this._columns.speciesB.key,
-          title: this._columns.speciesB.name,
-          render: this.resultTableFactory.speciesRender('taxIdB')
-        },
-        {
-          data: this._columns.hostOrganism.key,
-          title: this._columns.hostOrganism.name
-        },
-        {
-          data: this._columns.detectionMethod.key,
-          title: this._columns.detectionMethod.name,
-          render: this.resultTableFactory.cvRender('detectionMethodMIIdentifier')
-        },
-        {
-          data: this._columns.publicationIdentifiers.key,
-          title: this._columns.publicationIdentifiers.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                const data_s = d.split('(');
-                const publicationId = data_s[0].trim();
-                const publicationSource = data_s[1].slice(0, -1);
+          },
+          {
+            data: this._columns.typeA.key,
+            title: this._columns.typeA.name,
+            render: this.tableFactory.cvRender('typeMIA')
+          },
+          {
+            data: this._columns.typeB.key,
+            title: this._columns.typeB.name,
+            render: this.tableFactory.cvRender('typeMIB')
+          },
+          {
+            data: this._columns.speciesA.key,
+            title: this._columns.speciesA.name,
+            render: this.tableFactory.speciesRender('taxIdA')
+          },
+          {
+            data: this._columns.speciesB.key,
+            title: this._columns.speciesB.name,
+            render: this.tableFactory.speciesRender('taxIdB')
+          },
+          {
+            data: this._columns.hostOrganism.key,
+            title: this._columns.hostOrganism.name
+          },
+          {
+            data: this._columns.detectionMethod.key,
+            title: this._columns.detectionMethod.name,
+            render: this.tableFactory.cvRender('detectionMethodMIIdentifier')
+          },
+          {
+            data: this._columns.publicationIdentifiers.key,
+            title: this._columns.publicationIdentifiers.name,
+            render: this.tableFactory.enlistWithButtons((d) => {
+              const data_s = d.split('(');
+              const publicationId = data_s[0].trim();
+              const publicationSource = data_s[1].slice(0, -1);
+              let url = '';
+              if (publicationSource === 'pubmed') {
+                url = 'https://europepmc.org/article/MED/' + publicationId;
+              } else if (publicationSource === 'imex') {
+                url = ebiURL + '/intact/imex/main.xhtml?query=' + publicationId;
+              } else if (publicationSource === 'doi') {
+                url = 'https://www.doi.org/' + publicationId;
+              } else if (publicationSource === 'intact') {
+                return;
+              }
 
-                let url = '';
-                if (publicationSource === 'pubmed') {
-                  url = 'https://europepmc.org/article/MED/' + publicationId;
-                } else if (publicationSource === 'imex') {
-                  url = ebiURL + '/intact/imex/main.xhtml?query=' + publicationId;
-                } else if (publicationSource === 'doi') {
-                  url = 'https://www.doi.org/' + publicationId;
-                }
-
-                return `<div><span class="detailsCell">
-                            ${url !== '' ? `<a href="${url}" target="_blank">${publicationId}</a>` : publicationId}
-                        </span></div>`;
-              }).join('');
+              return `<div><span class="detailsCell">
+                          ${url !== '' ? `<a href="${url}" target="_blank">${publicationId}</a>` : publicationId}
+                      </span></div>`;
+            }, 'alignCell', false)
+          },
+          {
+            data: this._columns.type.key,
+            title: this._columns.type.name,
+            render: this.tableFactory.cvRender('typeMIIdentifier')
+          },
+          {
+            data: this._columns.ac.key,
+            title: this._columns.ac.name,
+            render: function (data, type) {
+              if (type === 'display' && data != null) {
+                return '<div>' +
+                  '<span><a href="/intact-portal-view/details/interaction/' + data + '" style="white-space: nowrap">' + data + '</a></span>' +
+                  '</div>';
+              }
             }
-          }
-        },
-        {
-          data: this._columns.type.key,
-          title: this._columns.type.name,
-          render: this.resultTableFactory.cvRender('typeMIIdentifier')
-        },
-        {
-          data: this._columns.ac.key,
-          title: this._columns.ac.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-              return '<div>' +
-                '<span><a href="/intact-portal-view/details/interaction/' + data + '" style="white-space: nowrap">' + data + '</a></span>' +
-                '</div>';
-            }
-          }
-        },
-        {
-          data: this._columns.database.key,
-          title: this._columns.database.name
-        },
-        {
-          data: this._columns.confidenceValue.key,
-          title: this._columns.confidenceValue.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                if (!d.includes('intact-miscore')) return `<div><span class="detailsConfidencesCell">${d}</span></div>`
-                const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
-                  'rgb(255,255,229)',
-                  'rgb(255,247,188)',
-                  'rgb(254,227,145)',
-                  'rgb(254,196,79)',
-                  'rgb(254,153,41)',
-                  'rgb(236,112,20)',
-                  'rgb(204,76,2)',
-                  'rgb(153,52,4)',
-                  'rgb(102,19,5)',
-                  'rgb(54, 19, 3)'
-                ];
+          },
+          {
+            data: this._columns.database.key,
+            title: this._columns.database.name
+          },
+          {
+            data: this._columns.confidenceValue.key,
+            title: this._columns.confidenceValue.name,
+            render: this.tableFactory.enlistWithButtons(d => {
+              if (!d.includes('intact-miscore')) return `<div><span class="detailsConfidencesCell">${d}</span></div>`
+              const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
+                'rgb(255,255,229)',
+                'rgb(255,247,188)',
+                'rgb(254,227,145)',
+                'rgb(254,196,79)',
+                'rgb(254,153,41)',
+                'rgb(236,112,20)',
+                'rgb(204,76,2)',
+                'rgb(153,52,4)',
+                'rgb(102,19,5)',
+                'rgb(54, 19, 3)'
+              ];
 
-                const YELLOW_ORANGE_BROWN_PALETTE_TEXT: string[] = [
-                  'rgb(254,153,41)',
-                  'rgb(254,153,41)',
-                  'rgb(254,153,41)',
-                  'rgb(254,153,41)',
-                  'rgb(254,153,41)',
-                  'rgb(236,112,20)',
-                  'rgb(204,76,2)',
-                  'rgb(153,52,4)',
-                  'rgb(102,19,5)',
-                  'rgb(54, 19, 3)'
-                ];
+              const YELLOW_ORANGE_BROWN_PALETTE_TEXT: string[] = [
+                'rgb(254,153,41)',
+                'rgb(254,153,41)',
+                'rgb(254,153,41)',
+                'rgb(254,153,41)',
+                'rgb(254,153,41)',
+                'rgb(236,112,20)',
+                'rgb(204,76,2)',
+                'rgb(153,52,4)',
+                'rgb(102,19,5)',
+                'rgb(54, 19, 3)'
+              ];
 
-                const YELLOW_ORANGE_BROWN_PALETTE_BG: string[] = [
-                  'rgba(255,255,229,0.1)',
-                  'rgba(255,247,188,0.1)',
-                  'rgba(254,227,145,0.1)',
-                  'rgba(254,196,79,0.1)',
-                  'rgba(254,153,41,0.1)',
-                  'rgba(236,112,20,0.1)',
-                  'rgba(204,76,2,0.1)',
-                  'rgba(153,52,4,0.1)',
-                  'rgba(102,19,5,0.1)',
-                  'rgba(54, 19,3,0.1)'
-                ];
+              const YELLOW_ORANGE_BROWN_PALETTE_BG: string[] = [
+                'rgba(255,255,229,0.1)',
+                'rgba(255,247,188,0.1)',
+                'rgba(254,227,145,0.1)',
+                'rgba(254,196,79,0.1)',
+                'rgba(254,153,41,0.1)',
+                'rgba(236,112,20,0.1)',
+                'rgba(204,76,2,0.1)',
+                'rgba(153,52,4,0.1)',
+                'rgba(102,19,5,0.1)',
+                'rgba(54, 19,3,0.1)'
+              ];
 
-                const score = d.split(':');
-                const paletteIndex = Math.floor(score[1] * 10);
+              const score = d.split(':');
+              const paletteIndex = Math.floor(score[1] * 10);
 
-                // noinspection CssInvalidPropertyValue
-                return `<div>
-                          <a class="detailsConfidencesCell table-list" target="_blank"
+              // noinspection CssInvalidPropertyValue
+              return `<div>
+                          <a class="detailsConfidencesCell tag-cell" target="_blank"
                           href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
                                  border:2px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
@@ -458,211 +357,116 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                             ${d.replace('intact-miscore', 'MI Score')}
                           </a>
                         </div>`;
-              }).join('');
-            }
-          }.bind(this)
-        },
-        {
-          data: this._columns.expansionMethod.key,
-          title: this._columns.expansionMethod.name,
-          defaultContent: ' ',
-          render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-              return `<div><a target="_blank" href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" class="detailsExpansionsCell">${data}</a></div>`;
-            }
-          }
-        },
-        {
-          data: this._columns.experimentalRoleA.key,
-          title: this._columns.experimentalRoleA.name,
-          defaultContent: ' ',
-          render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierA')
-        },
-        {
-          data: this._columns.experimentalRoleB.key,
-          title: this._columns.experimentalRoleB.name,
-          defaultContent: ' ',
-          render: this.resultTableFactory.cvRender('experimentalRoleMIIdentifierB')
-        },
-        {
-          data: this._columns.biologicalRoleA.key,
-          title: this._columns.biologicalRoleA.name,
-          defaultContent: ' ',
-          render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierA')
-        },
-        {
-          data: this._columns.biologicalRoleB.key,
-          title: this._columns.biologicalRoleB.name,
-          defaultContent: ' ',
-          render: this.resultTableFactory.cvRender('biologicalRoleMIIdentifierB')
-        },
-        {
-          data: this._columns.aliasesA.key,
-          title: this._columns.aliasesA.name,
-          defaultContent: ' ',
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-            const items = $.map(res.data, function (d, i) {
-              // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-              const alias = extractCVValue(d);
-              return `<div class="aliasesCell table-list">
-
-                          <a class="detailsAliasesCell" target="_blank"
-                             href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
-                            ${alias.type.shortName}
-                          </a>
-
-                        <span>${alias.value}</span>
-                      </div>`;
-            }.bind(this)).join('');
-            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
-        },
-        {
-          data: this._columns.aliasesB.key,
-          title: this._columns.aliasesB.name,
-          defaultContent: ' ',
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-            const items = $.map(res.data, function (d, i) {
-              // Anaplastic lymphoma kinase (MI:0302 (gene name synonym))
-              const alias = extractCVValue(d);
-              return `<div class="aliasesCell table-list">
-
-                        <a class="detailsAliasesCell" target="_blank"
-                           href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
-                          ${alias.type.shortName}
+            }, '', false)
+          },
+          {
+            data: this._columns.expansionMethod.key,
+            title: this._columns.expansionMethod.name,
+            defaultContent: ' ',
+            render: function (data, type) {
+              if (type === 'display' && data != null) {
+                return `<div style="display: flex">
+                        <a target="_blank" class="detailsExpansionsCell tag-cell"
+                           href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" >
+                            ${data}
                         </a>
-
-                        <span>${alias.value}</span>
                       </div>`;
-            }.bind(this)).join('');
-            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
-        },
-        {
-          data: this._columns.featureCount.key,
-          title: this._columns.featureCount.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-              return '<div class="alignCell">' +
-                '<span>' + data + '</span>' +
-                '</div>';
-            }
-          }
-        },
-        {
-          data: this._columns.parameters.key,
-          title: this._columns.parameters.name,
-          defaultContent: ' ',
-          render: function (data, type, row, meta) {
-            if (type === 'display' && data != null) {
-              return '<div class="parametersCell">' +
-                '<span>' + data + '</span>' +
-                '</div>';
-            }
-          }
-        },
-        {
-          data: this._columns.annotationsA.key,
-          title: this._columns.annotationsA.name,
-          defaultContent: ' ',
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-            const items = $.map(res.data, function (d, i) {
-              // figure legend (Supp fig 5Ii)
-              const data_s = d.split('(');
-              const annotationType = data_s[0].trim();
-              const description = data_s[1].slice(0, -1);
-              let cellClass = annotationType === 'comment' ? 'detailsCommentsCell' : 'detailsAllCell';
-              return `<div class="annotationCell table-list">
-                        <span class="${cellClass}">${annotationType}</span>
-                        <div class="detailsCell annotationCellWidth">
-                          ${description}
-                        </div>
-                      </div>`;
-            }.bind(this)).join('');
-
-            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
-        },
-        {
-          data: this._columns.annotationsB.key,
-          title: this._columns.annotationsB.name,
-          defaultContent: ' ',
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-            const items = $.map(res.data, function (d, i) {
-              // figure legend (Supp fig 5Ii)
-              const data_s = d.split('(');
-              const annotationType = data_s[0].trim();
-              const description = data_s[1].slice(0, -1);
-
-              let cellClass = annotationType === 'comment' ? 'detailsCommentsCell' : 'detailsAllCell';
-              return `<div class="annotationCell table-list">
-                        <div style="float:left; margin-right: 4px;">
-                          <span class="${cellClass}">${annotationType}</span>
-                        </div>
-                        <div class="detailsCell annotationCellWidth">
-                          ${description}
-                        </div>
-                      </div>`;
-            }.bind(this)).join('');
-
-            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
-        },
-        {
-          data: this._columns.annotations.key,
-          title: this._columns.annotations.name,
-          defaultContent: ' ',
-          render: function (data, type, row, meta) {
-            if (data == null) return;
-            const res = this.resultTableFactory.createRenderingButton(data, type, row, meta)
-
-            const items = $.map(res.data, function (d, i) {
-              // figure legend (Supp fig 5Ii)
-              const data_s = d.split('(');
-              const annotationType = data_s[0].trim();
-              const description = data_s[1].slice(0, -1);
-
-              let cellClass = 'detailsAllCell';
-              if (annotationType === this.annotationsTypes[0]) {
-                cellClass = "detailsFigureLegendCell";
-              } else if (annotationType === this.annotationsTypes[1]) {
-                cellClass = "detailsCommentsCell";
-              } else if (annotationType === this.annotationsTypes[2]) {
-                cellClass = "detailsCautionsCell";
               }
-              return `<div class="annotationInteractionCell table-list">
-                        <div style="float:left; margin-right: 4px;">
-                          <span class="${cellClass}">${annotationType}</span>
-                        </div>
-                        <div class="detailsCell annotationInteractionCellWidth">
-                          ${description}
-                        </div>
-                      </div>`;
-            }.bind(this)).join('');
-
-            let html = '<div class="annotationsList">'.concat(items).concat('</div>');
-            return res.addButton ? html.concat(res.button) : html;
-          }.bind(this)
+            }
+          },
+          {
+            data: this._columns.experimentalRoleA.key,
+            title: this._columns.experimentalRoleA.name,
+            defaultContent: ' ',
+            render: this.tableFactory.cvRender('experimentalRoleMIIdentifierA')
+          },
+          {
+            data: this._columns.experimentalRoleB.key,
+            title: this._columns.experimentalRoleB.name,
+            defaultContent: ' ',
+            render: this.tableFactory.cvRender('experimentalRoleMIIdentifierB')
+          },
+          {
+            data: this._columns.biologicalRoleA.key,
+            title: this._columns.biologicalRoleA.name,
+            defaultContent: ' ',
+            render: this.tableFactory.cvRender('biologicalRoleMIIdentifierA')
+          },
+          {
+            data: this._columns.biologicalRoleB.key,
+            title: this._columns.biologicalRoleB.name,
+            defaultContent: ' ',
+            render: this.tableFactory.cvRender('biologicalRoleMIIdentifierB')
+          },
+          {
+            data: this._columns.aliasesA.key,
+            title: this._columns.aliasesA.name,
+            defaultContent: ' ',
+            render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
+          },
+          {
+            data: this._columns.aliasesB.key,
+            title: this._columns.aliasesB.name,
+            defaultContent: ' ',
+            render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
+          },
+          {
+            data: this._columns.featureCount.key,
+            title: this._columns.featureCount.name,
+            render: function (data, type) {
+              if (type === 'display' && data != null) {
+                return `<div class="alignCell"><span>${data}</span></div>`;
+              }
+            }
+          },
+          {
+            data: this._columns.parameters.key,
+            title: this._columns.parameters.name,
+            defaultContent: ' ',
+            render: function (data, type) {
+              if (type === 'display' && data != null) {
+                return `<div class="parametersCell"><span>${data}</span></div>`;
+              }
+            }
+          },
+          {
+            data: this._columns.annotationsA.key,
+            title: this._columns.annotationsA.name,
+            defaultContent: ' ',
+            render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
+              ['comment', {class: 'detailsCommentsCell', symbol: 'icon-comment'}],
+              ['default', {class: 'detailsAllCell', symbol: 'icon-tag'}]
+            ]))(extractAnnotation(d)), 'annotationsList')
+          },
+          {
+            data: this._columns.annotationsB.key,
+            title: this._columns.annotationsB.name,
+            defaultContent: ' ',
+            render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
+              ['comment', {class: 'detailsCommentsCell', symbol: 'icon-comment'}],
+              ['default', {class: 'detailsAllCell', symbol: 'icon-tag'}]
+            ]))(extractAnnotation(d)), 'annotationsList')
+          },
+          {
+            data: this._columns.annotations.key,
+            title: this._columns.annotations.name,
+            defaultContent: ' ',
+            render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
+              ['figure legend', {class: 'detailsFigureLegendCell', symbol: 'icon-image'}],
+              ['comment', {class: 'detailsCommentsCell', symbol: 'icon-comment'}],
+              ['caution', {class: 'detailsCautionsCell', symbol: 'icon-exclamation-triangle'}],
+              ['default', {class: 'detailsAllCell', symbol: 'icon-tag'}]
+            ]))(extractAnnotation(d)), 'annotationsList')
+          }
+        ],
+        drawCallback: function () {
+          $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
+          $('.table-list').parent('td').css('vertical-align', 'top');
+          $('.collapse-panel').css('display', 'none');
         }
-      ],
-      drawCallback: function (settings) {
-        $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
-        console.log(settings.json.data[0])
       }
-    });
-    this.resultTableFactory.makeTableHeaderSticky();
+    );
+    this.tableFactory.makeTableHeaderSticky();
   }
 
 
@@ -670,7 +474,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
    /** GETTERS AND SETTERS ** /
    /*************************/
 
-  public onPageChanged(pageIndex: number): void {
+  onPageChanged(pageIndex: number): void {
     this.pageChanged.emit(pageIndex);
   }
 
@@ -765,22 +569,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   get columns(): Column[] {
     return this._columns;
-  }
-
-  get aliasesType(): string[] {
-    return this._aliasesType;
-  }
-
-  set aliasesType(value: string[]) {
-    this._aliasesType = value;
-  }
-
-  get annotationsTypes(): string[] {
-    return this._annotationsTypes;
-  }
-
-  set annotationsTypes(value: string[]) {
-    this._annotationsTypes = value;
   }
 
   get interactionSelected(): string {

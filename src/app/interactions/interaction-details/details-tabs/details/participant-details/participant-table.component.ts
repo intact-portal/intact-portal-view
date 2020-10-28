@@ -5,15 +5,16 @@ import 'datatables.net';
 import {environment} from '../../../../../../environments/environment';
 import {Column} from "../../../../shared/model/tables/column.model";
 import {ParticipantTable} from "../../../../shared/model/tables/participant-table.model";
+import {TableFactoryService} from "../../../../shared/service/table-factory.service";
 
 const baseURL = environment.intact_portal_ws;
 
 @Component({
-  selector: 'ip-participant-details',
-  templateUrl: './participant-details.component.html',
-  styleUrls: ['./participant-details.component.css']
+  selector: 'ip-participant-table',
+  templateUrl: './participant-table.component.html',
+  styleUrls: ['./participant-table.component.css']
 })
-export class ParticipantDetailsComponent implements OnInit, OnChanges {
+export class ParticipantTableComponent implements OnInit, OnChanges {
 
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
@@ -25,12 +26,17 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
 
   private _columns = new ParticipantTable();
 
-  private _participantsSelected = [];
+  private _participantsSelected = new Set<string>();
 
-  constructor() { }
+  constructor(private tableFactory: TableFactoryService) {
+  }
 
   ngOnInit(): void {
     this.initDataTable();
+    this.tableFactory.initTopSlider('participantTable');
+    this.tableFactory.initShadowBorder('participantTable');
+    this.tableFactory.makeTableHeaderSticky();
+    this.tableFactory.enableShowButtons();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,9 +54,9 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
       bSort: false,
       searching: false,
       paging: true,
-      lengthMenu: [ 10, 25, 50, 75, 100 ],
+      lengthMenu: [10, 25, 50, 75, 100],
       pageLength: 10,
-      pagingType: 'full_numbers',
+      pagingType: 'numbers',
       processing: true,
       serverSide: true,
       dom: '<"top"li>rt<"bottom"p><"clear">',
@@ -58,22 +64,35 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
       ajax: {
         url: `${baseURL}/graph/participants/datatables/` + this.interactionAc,
         type: 'POST',
-      //   error: function(xhr, error, code) { console.log(error); },
-      //   success: function(result) {console.log(JSON.stringify(result))},
-        data: function ( d ) {
+        //   error: function(xhr, error, code) { console.log(error); },
+        //   success: function(result) {console.log(JSON.stringify(result))},
+        data: function (d) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
         }
       },
       columns: [
         {
-          data: this._columns.select.key,
+          data: this._columns.expand.key,
           defaultContent: ' ',
-          title: this._columns.select.name,
-          render: function (data, type, full, meta) {
+          title: this._columns.expand.name,
+          render: (data, type, full) => {
             if (type === 'display') {
-              return '<input type="checkbox" id="' + full.participantId.identifier + '" name="check" value="' + data + '"/>';
+              let selectionIdentifier = full.participantId.identifier;
+              this._participantsSelected.add(selectionIdentifier);
+              if (full.type.shortName === 'protein') {
+                  return `<input type="checkbox" id="${selectionIdentifier}" name="check" value="${data}" checked/>`;
+                  // TODO Switch to participants AC for correct interaction
+              }
             }
+            return '';
+          }
+        },
+        {
+          data: this._columns.name.key,
+          title: this._columns.name.name,
+          defaultContent: ' ',
+          render: (data, type, row) => {
             return data;
           }
         },
@@ -84,12 +103,14 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
         {
           data: this._columns.type.key,
           title: this._columns.type.name,
-          defaultContent: ''
+          defaultContent: '',
+          render: this.tableFactory.cvRenderStructured
         },
         {
           data: this._columns.identifier.key,
           title: this._columns.identifier.name,
-          defaultContent: ''
+          defaultContent: '',
+          render: this.tableFactory.identifierRender
         },
         {
           data: this._columns.aliases.key,
@@ -98,9 +119,7 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
-                return '<div>' +
-                  '<span class="detailsCell">' + d.name + '</span>' +
-                  '</div>';
+                return `<div><span class="detailsCell">${d.name}</span></div>`;
               }).join('');
             }
           }
@@ -113,49 +132,39 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
         {
           data: this._columns.species.key,
           title: this._columns.species.name,
-          defaultContent: ''
+          defaultContent: '',
+          render: this.tableFactory.speciesRenderStructured
         },
         {
           data: this._columns.expressionSystem.key,
           title: this._columns.expressionSystem.name,
-          defaultContent: ''
+          defaultContent: '',
+          render: this.tableFactory.speciesRenderStructured
         },
         {
           data: this._columns.detectionMethods.key,
           title: this._columns.detectionMethods.name,
           defaultContent: '',
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div>' +
-                  '<span class="detailsCell">' + d.shortName + '</span>' +
-                  '</div>';
-              }).join('');
-            }
-          }},
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
+        },
         {
           data: this._columns.experimentalRole.key,
           title: this._columns.experimentalRole.name,
-          defaultContent: ''
+          defaultContent: '',
+          render: this.tableFactory.cvRenderStructured
         },
         {
           data: this._columns.biologicalRole.key,
           title: this._columns.biologicalRole.name,
-          defaultContent: ''
+          defaultContent: '',
+          render: this.tableFactory.cvRenderStructured
         },
         {
           data: this._columns.experimentalPreparations.key,
           title: this._columns.experimentalPreparations.name,
           defaultContent: '',
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div>' +
-                  '<span class="detailsCell">' + d.shortName + '</span>' +
-                  '</div>';
-              }).join('');
-            }
-          }},
+          render: this.tableFactory.cvRenderStructured
+        },
         {
           data: this._columns.parameters.key,
           title: this._columns.parameters.name,
@@ -168,12 +177,13 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
                   '</div>';
               }).join('');
             }
-          }},
+          }
+        },
         {
           data: this._columns.confidences.key,
           title: this._columns.confidences.name,
           defaultContent: '',
-          render: function ( data, type, row, meta ) {
+          render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 return '<div class="margin-bottom-medium">' +
@@ -195,7 +205,7 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
                   '<span class="detailsXrefCell margin-right-medium">' +
                   '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
                   '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                  '</div>'  :
+                  '</div>' :
                   '<div class="margin-bottom-medium">' +
                   '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
                   '</div>';
@@ -207,45 +217,36 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
           data: this._columns.annotations.key,
           title: this._columns.annotations.name,
           defaultContent: '',
-          render: function ( data, type, row, meta ) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div class="margin-bottom-medium">' +
-                  '<span class="detailsAnnotationCell margin-right-medium">' +
-                  ' <i class="icon icon-common icon-tag"></i>  ' + d.topic.shortName + '</span>' +
-                  '<span class="detailsCell">' + d.description + '</span> ' +
-                  '</div>';
-              }).join('');
-            }
-          }
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.annotationRender())
         }
       ],
     });
 
-    $('#participantTable').on('change', 'input[type=\'checkbox\']', (e) => {
+    // Collapse / Expand all changing all checkboxes in the table
+    $(document).on('change', 'input[name=\'expansion\']', (e) => {
+      const type = e.currentTarget.id;
+      let tableSelectors = $('input[name=\'check\']:checkbox');
+      switch (type) {
+        case 'expand-all':
+          tableSelectors.prop('checked', true);
+          break;
+        case 'collapse-all':
+          tableSelectors.prop('checked', false);
+          break;
+      }
+    })
 
+    table.on('change', 'input[name=\'check\']', (e) => {
       const participantSel = e.currentTarget.id;
-
       if (this.participantsSelected !== undefined) {
-
-        $(e.target.parentNode.parentNode).addClass('rowSelected');
-
-        if (!this.participantsSelected.includes(participantSel)) {
-          this.participantsSelected.push(participantSel);
-          this.participantsSelected = this.participantsSelected.slice();
+        if ($(`#${participantSel}:checkbox`).prop('checked')) {
+          this._participantsSelected.add(participantSel);
         } else {
-          this.participantsSelected.splice(this.participantsSelected.indexOf(participantSel), 1);
-          this.participantsSelected = this.participantsSelected.slice();
-
-          $( '#' + participantSel + ':checkbox').prop('checked', false);
-          $(e.target.parentNode.parentNode).removeClass('rowSelected');
+          this._participantsSelected.delete(participantSel);
         }
-
-        console.info(this.participantsSelected);
-
+        console.log(this._participantsSelected)
         this.participantChanged.emit(this.participantsSelected);
       }
-
     });
   }
 
@@ -255,10 +256,10 @@ export class ParticipantDetailsComponent implements OnInit, OnChanges {
   }
 
   get participantsSelected(): string[] {
-    return this._participantsSelected;
+    return Array.from(this._participantsSelected);
   }
 
   set participantsSelected(value: string[]) {
-    this._participantsSelected = value;
+    this._participantsSelected = new Set<string>(value);
   }
 }

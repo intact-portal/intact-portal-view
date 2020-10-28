@@ -1,9 +1,14 @@
 import {Injectable} from '@angular/core';
-import {titleCase} from "../../../shared/utils/string-utils";
 import * as $ from "jquery";
 import {CvTerm} from "../model/interaction-details/cv-term.model";
 import {Annotation} from "../model/interaction-details/annotation.model";
 import {Organism} from "../model/interaction-details/organism.model";
+import {Alias} from "../model/interaction-details/alias.model";
+import {environment} from "../../../../environments/environment";
+import {groupBy} from "../../../shared/utils/array-utils";
+
+
+const ebiURL = environment.ebi_url;
 
 @Injectable()
 export class TableFactoryService {
@@ -11,6 +16,52 @@ export class TableFactoryService {
   constructor() {
   }
 
+  enlist<T>(elementRenderer: (T) => string) {
+    return (data: T[], type, row, meta) => {
+      if (data == null || type != "display") return null;
+      return `<ul class="elementList table-list">${data.map(elementRenderer).map((render) => `<li>${render}</li>`).join('')}</ul>`;
+    }
+  }
+
+  enlistWithButtons = (renderer: (data: any, i?: number) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
+    if (data == null || type != 'display') return data;
+    let html = '<div class="show-more-content">'
+    for (let i = 0; i < data.length; i++) {
+      if (i === 2) html += '<div class="to-hide" style="display: none">';
+      let render = renderer(data[i], i);
+      html += render ? render : '';
+    }
+    if (data.length > 2) {
+      html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${data.length - 2})</button>`;
+    } else html += '</div>';
+    return `<div class="${containerClass} ${alignTop ? 'table-list' : ''}">${html}</div>`;
+  }
+
+  groupBy<T, K>(grouper: (data: T) => K,
+                groupRenderer: (data: T[], type?, row?, meta?) => string,
+                headerRenderer: (K) => string = group => ' ' + group) {
+    return (data: T[], type, row, meta) => {
+      if (data == null) return;
+      let html = '<div class="table-list">';
+      let groups = groupBy(data, grouper);
+      groups.forEach(group => {
+        html += `<span class="collapse-header collapsed">${headerRenderer(group.group)}<span class="collapsable-counter">${group.elements.length}</span></span>`;
+        html += '<div class="collapse-panel">';
+        html += groupRenderer(group.elements, type, row, meta);
+        html += '</div>';
+      })
+      return html + '</div>';
+    }
+  }
+
+  initGroupBy() {
+    $(document).on('click', '.collapse-header', event => {
+      let panel = $(event.target).next('.collapse-panel');
+      if (panel.length === 0) panel = $(event.target).parent().next('.collapse-panel');
+      panel.slideToggle({duration: panel.height(), easing: 'linear'});
+      panel.prev('.collapse-header').toggleClass('collapsed')
+    })
+  }
 
   speciesRender = (identifierColumn: string) => (data, type, row, meta) => {
     let id = row[identifierColumn];
@@ -23,7 +74,8 @@ export class TableFactoryService {
   }
 
   speciesRenderStructured = (species: Organism) => {
-    if (species.taxId > 0) {
+    if (species == null) return;
+    if (species.taxId != null && species.taxId > 0) {
       let url = `https://www.uniprot.org/taxonomy/${species.taxId}`;
       return `<a href="${url}" class="cv-term species" target="_blank">${species.scientificName}</a>`;
     } else {
@@ -32,116 +84,60 @@ export class TableFactoryService {
   }
 
   private static getCvURL(miId: string) {
+    if (miId == undefined) return null;
     let id = miId.replace(':', '_');
     return `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
   }
 
-  cvRender = (identifierColumn: string) => (data, type, row, meta) => {
+  cvRender = (identifierColumn: string) => (data, type, row) => {
     let miId = row[identifierColumn];
     if (miId) {
       return `<a href="${TableFactoryService.getCvURL(miId)}" class="cv-term" target="_blank">${data}</a>`
     } else return data;
   }
 
-  cvRenderStructured = (data: CvTerm) => {
+  cvRenderStructured = (data: CvTerm, type?) => {
+    if (type != undefined && type !== 'display') return;
     if (data.identifier) {
       return `<a href="${TableFactoryService.getCvURL(data.identifier)}" class="cv-term" target="_blank">${data.shortName}</a>`
     } else return data.shortName;
   }
 
-  annotationsRender = (data: Annotation[]) => {
-    return $.map(data, d => {
-      return `<div class="margin-bottom-medium">
-                <span class="detailsAnnotationCell">
-                  <i class="icon icon-common icon-tag"></i>
-                  ${d.topic.shortName}
-                </span>
-                <span class="detailsCell">${d.description}</span>
-              </div>`;
-    }).join('')
-  }
-
-  enlist = (func: (data: any, i?: number) => (string), containerClass = 'aliasesList') => (data: any[], type, row, meta) => {
-    if (data == null) return;
-    const res = this.createRenderingButton(data, type, row, meta)
-    const items = $.map(res.data, func).join('');
-    let html = `<div class="${containerClass} table-list">${items}</div>`;
-    return res.addButton ? html.concat(res.button) : html;
-  }
-
-  initTopSlider(tableId: string) {
-    let bodyScroll = $(`#${tableId}`).parent();
-    let topScroll = $(`#${tableId}TopScroll`);
-    if (topScroll.length === 0) {
-      topScroll = $(`<div id="${tableId}TopScroll"><div id="${tableId}WidthMimic"></div></div>`);
-      topScroll.find(`#${tableId}WidthMimic`).height(1);
-      topScroll.css('overflow-x', 'auto')
-      topScroll.css('overflow-y', 'hidden')
-      topScroll.insertBefore(bodyScroll.parent());
-    }
-    let scrolling = false;
-    topScroll.scroll(function () {
-      if (!scrolling) {
-        scrolling = true;
-        bodyScroll.scrollLeft(topScroll.scrollLeft())
-      } else {
-        scrolling = false;
+  annotationRender = (tagStyleMap?: Map<string, { class: string, symbol: string }>) => (annotation: Annotation) => {
+    let tagStyle = {class: 'detailsAnnotationCell', symbol: ''};
+    if (tagStyleMap != null) {
+      if (tagStyleMap.has(annotation.topic.shortName)) {
+        tagStyle = tagStyleMap.get(annotation.topic.shortName);
+      } else if (tagStyleMap.has('default')) {
+        tagStyle = tagStyleMap.get('default');
       }
-    });
-
-    bodyScroll.scroll(function () {
-      if (!scrolling) {
-        scrolling = true;
-        topScroll.scrollLeft(bodyScroll.scrollLeft());
-      } else {
-        scrolling = false;
-      }
-    });
-  }
-
-  makeTableHeaderSticky() {
-    $('div.dataTables_scrollBody').css('position', 'static');
-    let filterBar = $('#filters-bar');
-    $('div.dataTables_scrollHead')
-      .css('position', 'sticky')
-      .css('top', this.isScreenSize('large') && filterBar !== undefined ? filterBar.height() - 1 + 'px' : '0')
-      .css('box-shadow', '0 6px 7px -2px #0000005c')
-      .css('z-index', '2');
-  }
-
-  isScreenSize(size: 'small' | 'medium' | 'large'): boolean {
-    return window.getComputedStyle(document.body, ':after').getPropertyValue('content').slice(1, -1) == size;
-  }
-
-  createRenderingButton(data, type, row, meta): { data: any[], button: string, addButton: boolean } {
-    const addButton = data.length > 2;
-    let size = data.length - 2;
-    let buttonType;
-    switch (type) {
-      case 'display':
-      case 'less':
-        buttonType = 'more'
-        data = data.slice(0, 2);
-        break;
-      case 'more':
-        buttonType = 'less'
-        break;
-      default:
-        return;
     }
-    return {
-      data: data,
-      addButton: addButton,
-      button: `<div class="elementList table-list">
-                 <button type="button" id="row${meta.row}col${meta.col}" data-col="${meta.col}" class="show${titleCase(buttonType)}">
-                   Show ${buttonType} (${size})
-                 </button>
-               </div>`
-    };
+
+    let symbol = tagStyle.symbol !== '' ? `<i class="icon icon-common ${tagStyle.symbol}"></i>` : '';
+
+    let tag = annotation.topic.identifier != null ?
+      `<a class="${tagStyle.class} tag-cell" target="_blank" href="${TableFactoryService.getCvURL(annotation.topic.identifier)}"
+         >${symbol} ${annotation.topic.shortName}</a>` :
+      `<span class="${tagStyle.class} tag-cell">${symbol} ${annotation.topic.shortName}</span>`;
+
+    return `<div class="annotationInteractionCell tag-cell-container">
+              ${tag}
+              <span class="detailsCell annotationInteractionCellWidth">${annotation.description}</span>
+            </div>`;
+  }
+
+  aliasRender = (alias: Alias, type?) => {
+    if (type != undefined && type !== 'display') return;
+    return `<div class="aliasesCell tag-cell-container">
+              <a class="detailsAliasesCell tag-cell" target="_blank"
+                 href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                ${alias.type.shortName}</a>
+              <span class="detailsCell">${alias.name}</span>
+            </div>`;
   }
 
 
-  getIdentifierLink(id: { identifier: string, database: string | any, qualifier?: any }): string {
+  identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
     if (id === null) return;
     let shortDbName = id.database.shortName !== undefined ? id.database.shortName : id.database;
     let access: DatabaseAccess = TableFactoryService.databaseToAccess.get(shortDbName);
@@ -157,16 +153,13 @@ export class TableFactoryService {
 
     let databaseTag: string;
     if (id.database.shortName !== undefined) {
-      style += 'padding: 2px 2px 2px 5px; margin-right: 4px;';
-      databaseTag = `<a class="detailsCommentsCell" style="${style}" target="_blank"
-                        href="${TableFactoryService.getCvURL(id.database.identifier)}">
-                          ${access ? access.fancyName : shortDbName}
-                     </a>`
+      databaseTag = `<a class="identifier-cell tag-cell" style="${style}" target="_blank" href="${TableFactoryService.getCvURL(id.database.identifier)}"
+                       >${access ? access.fancyName : shortDbName}</a>`
     } else {
-      databaseTag = `<span class="detailsCommentsCell" style="${style}">${access ? access.fancyName : shortDbName}</span>`
+      databaseTag = `<span class="identifier-cell tag-cell" style="${style}">${access ? access.fancyName : shortDbName}</span>`
     }
 
-    return `<div class="identifierCell">
+    return `<div class="tag-cell-container identifier-cell-container">
               ${databaseTag}
               <div class="detailsCell identifierCellWidth">
                 ${id.qualifier ? '<b> ' : ''}
@@ -175,6 +168,28 @@ export class TableFactoryService {
               </div>
             </div>`;
   }
+
+  databaseTag(database: string | any): string {
+    let shortDbName = database.shortName !== undefined ? database.shortName : database;
+    let access: DatabaseAccess = TableFactoryService.databaseToAccess.get(shortDbName);
+    let style = ''
+    if (access) {
+      if (access.color) {
+        style = `color:${access.color};
+                 background-color:${access.backColor ? access.backColor : access.color.replace('1.0', '0.05')};`
+      }
+    }
+
+    let databaseTag: string;
+    if (database.shortName !== undefined) {
+      databaseTag = `<a class="identifier-cell tag-cell" style="${style}" target="_blank" href="${TableFactoryService.getCvURL(database.identifier)}"
+                       >${access ? access.fancyName : shortDbName}</a>`
+    } else {
+      databaseTag = `<span class="identifier-cell tag-cell" style="${style}">${access ? access.fancyName : shortDbName}</span>`
+    }
+    return databaseTag
+  }
+
 
   private static databaseToAccess: Map<string, DatabaseAccess> = new Map<string, DatabaseAccess>([
     ["uniprotkb", {
@@ -266,6 +281,78 @@ export class TableFactoryService {
       color: 'rgba(83,136,136,1.0)'
     }]
   ]);
+
+  initTopSlider(tableId: string) {
+    let bodyScroll = $(`#${tableId}`).parent();
+    let topScroll = $(`#${tableId}TopScroll`);
+    if (topScroll.length === 0) {
+      topScroll = $(`<div id="${tableId}TopScroll"><div id="${tableId}WidthMimic"></div></div>`);
+      topScroll.find(`#${tableId}WidthMimic`).height(1);
+      topScroll.css('overflow-x', 'auto')
+      topScroll.css('overflow-y', 'hidden')
+      topScroll.insertBefore(bodyScroll.parent());
+    }
+    let scrolling = false;
+    topScroll.scroll(function () {
+      if (!scrolling) {
+        scrolling = true;
+        bodyScroll.scrollLeft(topScroll.scrollLeft())
+      } else {
+        scrolling = false;
+      }
+    });
+
+    bodyScroll.scroll(function () {
+      if (!scrolling) {
+        scrolling = true;
+        topScroll.scrollLeft(bodyScroll.scrollLeft());
+      } else {
+        scrolling = false;
+      }
+    });
+  }
+
+  makeTableHeaderSticky() {
+    $('div.dataTables_scrollBody').css('position', 'static');
+    let filterBar = $('#filters-bar');
+    $('div.dataTables_scrollHead')
+      .css('position', 'sticky')
+      .css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.height() - 1 + 'px' : '0')
+      .css('box-shadow', '0 6px 7px -2px #0000005c')
+      .css('z-index', '2');
+  }
+
+  isScreenSize(size: 'small' | 'medium' | 'large'): boolean {
+    return window.getComputedStyle(document.body, ':after').getPropertyValue('content').slice(1, -1) == size;
+  }
+
+  initShadowBorder(tableId: string) {
+    let table = $('#' + tableId);
+    let scrollArea = table.parents('div.dataTables_scroll');
+    scrollArea.append($('<div class="shadow-left"></div>'))
+    scrollArea.append($('<div class="shadow-right"></div>'))
+    table.parent('.dataTables_scrollBody').scroll((e) => {
+      if (e.target.scrollLeft <= 10) {
+        $('.shadow-left').hide();
+      } else $('.shadow-left').show();
+      if (e.target.scrollWidth - (e.target.clientWidth + e.target.scrollLeft) <= 10) {
+        $('.shadow-right').hide();
+      } else $('.shadow-right').show();
+    })
+  }
+
+  enableShowButtons() {
+    $(document).on('click', 'button.showMore', event => {
+      let button = $(event.target);
+      let buttonText = button.text();
+      if (buttonText.includes('more')) {
+        button.text(buttonText.replace('more', 'less'));
+      } else {
+        button.text(buttonText.replace('less', 'more'));
+      }
+      button.prev('.show-more-content').children('.to-hide').slideToggle();
+    });
+  }
 }
 
 interface DatabaseAccess {

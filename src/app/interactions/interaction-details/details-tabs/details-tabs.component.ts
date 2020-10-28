@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {InteractionDetails} from '../../shared/model/interaction-details/interaction-details.model';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
-import {Router} from "@angular/router";
+import {ParticipantTableComponent} from "./details/participant-details/participant-table.component";
+import {FeaturesTableComponent} from "./details/features-details/features-table.component";
 
 declare const $: any;
 
@@ -24,7 +25,14 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   private _isTabParticipantActive = false;
   private _isTabFeatureActive = false;
 
-  constructor(private interactionsDetailsService: InteractionsDetailsService) { }
+  @ViewChild(ParticipantTableComponent)
+  participantTable: ParticipantTableComponent;
+
+  @ViewChild(FeaturesTableComponent)
+  featureTable: FeaturesTableComponent;
+
+  constructor(private interactionsDetailsService: InteractionsDetailsService) {
+  }
 
   ngOnInit() {
     $('ip-details-tabs').foundation();
@@ -32,14 +40,16 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
-    $('#details-tabs').on('change.zf.tabs', function() {
+    $('#details-tabs').on('change.zf.tabs', function () {
       if ($('#participants').hasClass('is-active') === true) {
         this.isTabParticipantActive = true;
         this.isTabFeatureActive = false;
       } else if ($('#features').hasClass('is-active') === true) {
         this.isTabParticipantActive = false;
         this.isTabFeatureActive = true;
+      } else {
+        this.isTabParticipantActive = false;
+        this.isTabFeatureActive = false;
       }
     }.bind(this));
   }
@@ -49,7 +59,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
     this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
       .subscribe(interactionDetails => {
         this.interactionDetails = interactionDetails;
-    })
+      })
   }
 
   get interactionDetails(): InteractionDetails {

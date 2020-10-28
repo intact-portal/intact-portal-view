@@ -5,15 +5,16 @@ import 'datatables.net';
 import {environment} from '../../../../../../environments/environment';
 import {FeatureTable} from "../../../../shared/model/tables/feature-table.model";
 import {Column} from "../../../../shared/model/tables/column.model";
+import {TableFactoryService} from "../../../../shared/service/table-factory.service";
 
 const baseURL = environment.intact_portal_ws;
 
 @Component({
-  selector: 'ip-features-details',
-  templateUrl: './features-details.component.html',
-  styleUrls: ['./features-details.component.css']
+  selector: 'ip-features-table',
+  templateUrl: './features-table.component.html',
+  styleUrls: ['./features-table.component.css']
 })
-export class FeaturesDetailsComponent implements OnInit, OnChanges {
+export class FeaturesTableComponent implements OnInit, OnChanges {
 
   @Input() interactionAc: string;
   @Input() featureTab: boolean;
@@ -27,10 +28,14 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
 
   private _featureSelected: string;
 
-  constructor() { }
+  constructor(private tableFactory: TableFactoryService) {
+  }
 
   ngOnInit(): void {
     this.initDataTable();
+    this.tableFactory.initTopSlider('featureTable');
+    this.tableFactory.initShadowBorder('featureTable');
+    this.tableFactory.makeTableHeaderSticky();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,7 +53,7 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
       bSort: false,
       searching: false,
       paging: true,
-      lengthMenu: [ 10, 25, 50, 75, 100 ],
+      lengthMenu: [10, 25, 50, 75, 100],
       pageLength: 10,
       pagingType: 'numbers',
       processing: true,
@@ -60,22 +65,12 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         type: 'POST',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
-        data: function ( d ) {
+        data: function (d) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
         }
       },
       columns: [
-        {
-          data: this._columns.participantName.key,
-          title: this._columns.participantName.name,
-          render: function (data, type, full) {
-            if (type === 'display') {
-              return '<input type="checkbox" id="' + full.featureAc + '" name="check" value="' + data + '"/>';
-            }
-            return data;
-          }
-        },
         {
           data: this._columns.ac.key,
           title: this._columns.ac.name
@@ -86,7 +81,8 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         },
         {
           data: this._columns.type.key,
-          title: this._columns.type.name
+          title: this._columns.type.name,
+          render: this.tableFactory.cvRenderStructured
         },
         {
           data: this._columns.role.key,
@@ -100,15 +96,7 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         {
           data: this._columns.linkedFeatures.key,
           title: this._columns.linkedFeatures.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div>' +
-                  '<span class="detailsCell">' + d.shortName + '</span>' +
-                  '</div>';
-              }).join('');
-            }
-          }
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
         },
         {
           data: this._columns.participantName.key,
@@ -117,6 +105,7 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         {
           data: this._columns.participantIdentifier.key,
           title: this._columns.participantIdentifier.name,
+          render: this.tableFactory.identifierRender
         },
         {
           data: this._columns.participantAc.key,
@@ -125,15 +114,7 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         {
           data: this._columns.detectionMethods.key,
           title: this._columns.detectionMethods.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div>' +
-                  '<span class="detailsCell">' + d.shortName + '</span>' +
-                  '</div>';
-              }).join('');
-            }
-          }
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
         },
         {
           data: this._columns.parameters.key,
@@ -151,49 +132,18 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         {
           data: this._columns.identifiers.key,
           title: this._columns.identifiers.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div class="margin-bottom-medium">' +
-                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                  '</div>';
-              }).join('');
-            }
-          }
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.identifierRender)
         },
         {
           data: this._columns.crossReferences.key,
           title: this._columns.crossReferences.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return d.qualifier != null ?
-                  '<div class="margin-bottom-medium">' +
-                  '<span class="detailsXrefCell margin-right-medium">' +
-                  '<i class="icon icon-common icon-tag"></i>  ' + d.qualifier.shortName + '</span>' +
-                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                  '</div>' :
-                  '<div class="margin-bottom-medium">' +
-                  '<span class="detailsCell">' + d.database.shortName + ':' + d.identifier + '</span>' +
-                  '</div>';
-              }).join('');
-            }
-          }
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.identifierRender)
         },
         {
           data: this._columns.annotations.key,
           title: this._columns.annotations.name,
-          render: function (data, type, row, meta) {
-            if (type === 'display') {
-              return $.map(data, function (d, i) {
-                return '<div class="margin-bottom-medium">' +
-                  '<span class="detailsAnnotationCell margin-right-medium">' +
-                  ' <i class="icon icon-common icon-tag"></i>  ' + d.topic.shortName + '</span>' +
-                  '<span class="detailsCell">' + d.description + '</span> ' +
-                  '</div>';
-              }).join('');
-            }
-          }}
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.annotationRender())
+        }
       ],
       select: {
         style: 'os',
@@ -207,11 +157,11 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
       const featureSel = e.currentTarget.id;
 
       if (this.featureSelected !== featureSel) {
-        $( '#' + this.featureSelected + ':checkbox').prop('checked', false);
+        $('#' + this.featureSelected + ':checkbox').prop('checked', false);
 
         // TODO: To find another way to do the highlighting
         $(table.dataTableSettings).each(function () {
-          $(this.aoData).each( function () {
+          $(this.aoData).each(function () {
             $(this.nTr).removeClass('rowSelected');
           })
         });
@@ -225,11 +175,10 @@ export class FeaturesDetailsComponent implements OnInit, OnChanges {
         // None is selected, remove class
         this.featureSelected = undefined;
         $(table.dataTableSettings).each(function () {
-          $(this.aoData).each( function () {
+          $(this.aoData).each(function () {
             $(this.nTr).removeClass('rowSelected');
           })
         });
-
         this.featureChanged.emit(this.featureSelected);
       }
     });

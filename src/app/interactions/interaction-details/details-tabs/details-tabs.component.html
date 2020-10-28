@@ -5,6 +5,16 @@
     <li class="tabs-title is-active"><a href="#interactionDetails" aria-selected="true">Interaction Details</a></li>
     <li class="tabs-title"><a href="#participants">Participants</a></li>
     <li class="tabs-title"><a href="#features">Features</a></li>
+
+    <ip-column-toggle *ngIf="isTabParticipantActive"
+                      [columns]="participantTable.columns"
+                      [dataTable]="participantTable.dataTable"
+                      [columnView]="participantTable.columnView" class="float-right"></ip-column-toggle>
+
+    <ip-column-toggle *ngIf="isTabFeatureActive"
+                      [columns]="featureTable.columns"
+                      [dataTable]="featureTable.dataTable"
+                      [columnView]="featureTable.columnView" class="float-right"></ip-column-toggle>
   </ul>
 
   <div class="tabs-content" data-tabs-content="details-tabs">
@@ -13,17 +23,17 @@
                               [interactionDetails]="interactionDetails"></ip-interaction-details>
     </div>
 
-    <div class="tabs-panel" id="participants">
-      <ip-participant-details [participantTab]="isTabParticipantActive"
-                              [interactionAc]="interactionAc"
-                              (participantChanged)="onParticipantSelectedChanged($event)"></ip-participant-details>
+    <div class="tabs-panel table-tab" id="participants">
+      <ip-participant-table [participantTab]="isTabParticipantActive"
+                            [interactionAc]="interactionAc"
+                            (participantChanged)="onParticipantSelectedChanged($event)"></ip-participant-table>
 
     </div>
 
-    <div class="tabs-panel" id="features">
-      <ip-features-details [interactionAc]="interactionAc"
-                           [featureTab]="isTabFeatureActive"
-                           (featureChanged)="onFeatureSelectedChanged($event)"></ip-features-details>
+    <div class="tabs-panel table-tab" id="features">
+      <ip-features-table [interactionAc]="interactionAc"
+                         [featureTab]="isTabFeatureActive"
+                         (featureChanged)="onFeatureSelectedChanged($event)"></ip-features-table>
     </div>
 
   </div>

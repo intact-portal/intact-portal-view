@@ -32,5 +32,4 @@ export class NetworkViewService {
   set groupBySpecies(value: boolean) {
     this._groupBySpecies = value;
   }
-
 }

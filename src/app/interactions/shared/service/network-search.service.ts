@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
@@ -9,7 +9,8 @@ const baseURL = environment.intact_portal_ws;
 @Injectable()
 export class NetworkSearchService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getInteractionNetwork(query: string,
                         batchSearchFilter: boolean,
@@ -22,7 +23,7 @@ export class NetworkSearchService {
                         miScoreMin: any,
                         miScoreMax: any,
                         intraSpeciesFilter: boolean,
-                        compoundGraph: boolean): Observable<any> {
+                        compoundGraph: boolean): Observable<{ data: any, group: string }[]> {
 
     query = query.trim();
 
@@ -45,11 +46,11 @@ export class NetworkSearchService {
 
 
     return this.http.get(`${baseURL}/network/getInteractions`, options)
-      .catch(this.handleError);
+      .catch(NetworkSearchService.handleError);
   }
 
 
-  private handleError(err: HttpErrorResponse | any): Observable<any> {
+  private static handleError(err: HttpErrorResponse | any): Observable<any> {
     if (err.error instanceof Error) {
       return Observable.throw(err);
     } else {

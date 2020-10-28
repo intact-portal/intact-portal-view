@@ -466,7 +466,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         }
       }
     );
-    this.tableFactory.makeTableHeaderSticky();
   }
 
 

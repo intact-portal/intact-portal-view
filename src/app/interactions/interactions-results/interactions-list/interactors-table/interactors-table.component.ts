@@ -240,10 +240,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         {
           data: this._columns.alternativeIds.key,
           title: this._columns.alternativeIds.name,
-          render: this.tableFactory.groupBy<string, string>(
-            (d) => extractId(d).database,
-            this.tableFactory.enlist((d) => this.tableFactory.identifierLink(extractId(d))),
-            this.tableFactory.databaseTag)
+          render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.identifierRender(extractId(d)))
         },
         {
           data: this._columns.interactionSearchCount.key,

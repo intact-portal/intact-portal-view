@@ -1,5 +1,5 @@
 <div class="row expanded">
-  <div class="columns medium-6">
+  <div class="columns medium-12 large-6">
 
     <h4>
       <i id="toggleDetails" class="icon icon-common icon-minus icon-spacer"
@@ -33,7 +33,6 @@
           </div>
         </div>
 
-
         <div class="columns medium-6 small-12">
           <div id="extXrefs" class="margin-top-large" *ngIf="interactionDetails.xrefs.length!=0">
             <ip-external-xrefs *ngIf="interactionDetails.xrefs"
@@ -45,15 +44,16 @@
                                      [annotations]="interactionDetails.annotations"></ip-curation-annotations>
           </div>
         </div>
-      </div>
 
-      <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="margin-top-large">
-        <ip-parameters *ngIf="interactionDetails.parameters"
-                       [parameters]="interactionDetails.parameters"></ip-parameters>
-      </div>
-      <div *ngIf="interactionDetails.confidences.length!=0" id="confidences" class="margin-top-large">
-        <ip-confidences *ngIf="interactionDetails.confidences"
-                        [confidences]="interactionDetails.confidences"></ip-confidences>
+        <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="columns medium-6 small-12 margin-top-large">
+          <ip-parameters *ngIf="interactionDetails.parameters"
+                         [parameters]="interactionDetails.parameters"></ip-parameters>
+        </div>
+
+        <div *ngIf="interactionDetails.confidences.length!=0" id="confidences" class="columns medium-6 small-12 margin-top-large">
+          <ip-confidences *ngIf="interactionDetails.confidences"
+                          [confidences]="interactionDetails.confidences"></ip-confidences>
+        </div>
       </div>
     </div>
   </div>

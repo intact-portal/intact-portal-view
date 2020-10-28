@@ -2,15 +2,21 @@
   <h5>Parameters ({{parameters.length}})</h5>
   <table id="parameters">
     <thead>
+    <tr>
       <th>Type</th>
       <th>Unit</th>
       <th>Value</th>
+    </tr>
     </thead>
     <tbody>
     <tr *ngFor="let param of parameters">
-      <td>{{param.type.shortName}}<span *ngIf="param.type.identifier !== null"> ({{param.type.identifier}})</span></td>
-      <td>{{param.unit.shortName}}<span *ngIf="param.unit.identifier !== null"> ({{param.unit.identifier}})</span></td>
+      <td>
+        <ip-cv-term [cvTerm]="param.type"></ip-cv-term>
+      </td>
       <td>{{param.value}}</td>
+      <td>
+        <ip-cv-term [cvTerm]="param.unit"></ip-cv-term>
+      </td>
     </tr>
     </tbody>
   </table>

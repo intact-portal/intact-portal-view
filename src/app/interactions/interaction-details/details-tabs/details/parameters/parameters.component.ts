@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
 import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model";
+import {Parameter} from "../../../../shared/model/interaction-details/parameter.model";
 
 @Component({
   selector: 'ip-parameters',
@@ -9,7 +10,7 @@ import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model
 })
 export class ParametersComponent implements OnInit {
 
-  @Input() parameters: TypeValueModel<CvTerm>[];
+  @Input() parameters: Parameter[];
 
   constructor() { }
 

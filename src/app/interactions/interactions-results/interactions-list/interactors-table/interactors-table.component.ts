@@ -258,7 +258,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       }
     });
     this.tableFactory.makeTableHeaderSticky();
-    this.tableFactory.initGroupBy();
+    this.tableFactory.enableCollapsedPanels();
   }
 
 

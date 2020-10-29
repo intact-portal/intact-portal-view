@@ -19,7 +19,7 @@ export class InteractomeComponent implements OnInit {
   }
 
   search(specieName: string) {
-    this.router.navigate(['search'], {queryParams: {query: specieName, species: specieName, miScoreMin: 0, miScoreMax: 1, page: 1}});
+    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpecies: specieName, miScoreMin: 0, miScoreMax: 1, page: 1}});
   }
 
   goToInteractomePSI25(): void {

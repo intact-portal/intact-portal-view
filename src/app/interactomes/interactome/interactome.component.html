@@ -1,22 +1,21 @@
-<div class="row" *ngIf="interactome.symbol" style="text-align: center; padding-top: 30px;">
-  <div class="columns medium-12" style="height: 60px">
-    <h5>{{interactome.name}}</h5>
+<div class="card" *ngIf="interactome.symbol">
+  <div class="medium-12">
+    <b>{{interactome.scientificName}}</b><br>
+    {{interactome.nameDetails}}
   </div>
+  <a href="https://www.uniprot.org/taxonomy/{{interactome.taxid}}" target="_blank">{{interactome.taxid}}</a>
 
-  <div class="columns medium-12" style="text-align: center">
-    <ng-container *ngIf="interactome.symbol !== '?'">
-      <a (click)="search(interactome.name)">
-        <span class="icon icon-species" attr.data-icon="{{interactome.symbol}}"></span>
-        <br>[{{interactome.taxid}}]</a>
-    </ng-container>
-    <ng-container *ngIf="interactome.symbol === '?'">
-      <a (click)="search(interactome.name)">
-        <span class="icon icon-functional" attr.data-icon="{{interactome.symbol}}"></span>
-        <br>[{{interactome.taxid}}]</a>
-    </ng-container>
+  <div class="flex-spacer"></div>
+  <div class="medium-12" style="text-align: center">
+      <button (click)="search(interactome.name)" class="species-button">
+        <span attr.data-icon="{{interactome.symbol}}" style="color: #68297c"
+              [ngClass]="{'icon ': true,'icon-species': interactome.symbol !== '?', 'icon-functional': interactome.symbol === '?'}">
+        </span>
+      </button>
   </div>
-  <div style="text-align: center">
-    <a class="intact-background tag" (click)="goToInteractomePSI25()">miXML 2.5</a>
-    <a class="intact-background tag" (click)="goToInteractomePSI30()">miXML 3.0</a>
+  <div class="actions">
+      <button mat-raised-button color="primary" (click)="goToInteractomePSI25()">miXML 2.5</button>
+      <button mat-raised-button color="primary" (click)="goToInteractomePSI30()">miXML 3.0</button>
   </div>
 </div>
+

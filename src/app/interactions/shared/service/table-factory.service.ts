@@ -54,15 +54,6 @@ export class TableFactoryService {
     }
   }
 
-  initGroupBy() {
-    $(document).on('click', '.collapse-header', event => {
-      let panel = $(event.target).next('.collapse-panel');
-      if (panel.length === 0) panel = $(event.target).parent().next('.collapse-panel');
-      panel.slideToggle({duration: panel.height(), easing: 'linear'});
-      panel.prev('.collapse-header').toggleClass('collapsed')
-    })
-  }
-
   speciesRender = (identifierColumn: string) => (data, type, row, meta) => {
     let id = row[identifierColumn];
     if (parseInt(id) > 0) {
@@ -136,10 +127,9 @@ export class TableFactoryService {
             </div>`;
   }
 
-
   identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
     if (id === null) return;
-    let db = TableFactoryService.processDatabase(id.database);
+    let db = this.processDatabase(id.database);
     let url = db.access ? db.access.getURL(id.identifier) : null;
     return `<div class="tag-cell-container identifier-cell-container">
               ${db.tag}
@@ -151,13 +141,14 @@ export class TableFactoryService {
             </div>`;
   }
 
+
   databaseTag(database: string | any): string {
-    return TableFactoryService.processDatabase(database).tag;
+    return this.processDatabase(database).tag;
   }
 
   identifierLink(id: { identifier: string, database: string | any, qualifier?: any }) {
     if (id === null) return;
-    let db = TableFactoryService.processDatabase(id.database);
+    let db = this.processDatabase(id.database);
     let url = db.access ? db.access.getURL(id.identifier) : null;
     return `<div class="detailsCell identifierCellWidth">
               ${id.qualifier ? '<b> ' : ''}
@@ -166,7 +157,7 @@ export class TableFactoryService {
             </div>`;
   }
 
-  private static processDatabase(database: string | any): { tag: string, access: DatabaseAccess } {
+  private processDatabase(database: string | any): { tag: string, access: DatabaseAccess } {
     let shortDbName = database.shortName !== undefined ? database.shortName : database;
     let access: DatabaseAccess = TableFactoryService.databaseToAccess.get(shortDbName);
     let style = ''
@@ -186,7 +177,6 @@ export class TableFactoryService {
     }
     return {tag: databaseTag, access: access};
   }
-
 
   private static databaseToAccess: Map<string, DatabaseAccess> = new Map<string, DatabaseAccess>([
     ["uniprotkb", {
@@ -279,6 +269,7 @@ export class TableFactoryService {
     }]
   ]);
 
+
   initTopSlider(tableId: string) {
     let bodyScroll = $(`#${tableId}`).parent();
     let topScroll = $(`#${tableId}TopScroll`);
@@ -347,8 +338,18 @@ export class TableFactoryService {
       } else {
         button.text(buttonText.replace('less', 'more'));
       }
-      button.prev('.show-more-content').children('.to-hide').slideToggle();
+      let toToggle = button.prev('.show-more-content').children('.to-hide');
+      toToggle.slideToggle(toToggle.height());
     });
+  }
+
+  enableCollapsedPanels() {
+    $(document).on('click', '.collapse-header', event => {
+      let panel = $(event.target).next('.collapse-panel');
+      if (panel.length === 0) panel = $(event.target).parent().next('.collapse-panel');
+      panel.slideToggle({duration: panel.height(), easing: 'linear'});
+      panel.prev('.collapse-header').toggleClass('collapsed')
+    })
   }
 }
 

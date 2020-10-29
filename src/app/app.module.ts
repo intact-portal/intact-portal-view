@@ -22,6 +22,7 @@ import {InteractomeComponent} from './interactomes/interactome/interactome.compo
 import {LayoutModule} from './layout/layout.module';
 import {NetworkViewService} from "./interactions/shared/service/network-view.service";
 import {MarkdownModule} from "./documentation/shared/markdown/markdown.module";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {MarkdownModule} from "./documentation/shared/markdown/markdown.module";
     InteractionDetailsModule,
     DocumentationModule,
     AppRoutingModule,
-    MarkdownModule
+    MarkdownModule,
+    MatButtonModule
   ],
   providers: [
     FeatureDatasetService,

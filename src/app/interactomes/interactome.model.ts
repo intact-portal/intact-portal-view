@@ -1,6 +1,7 @@
 export class Interactome {
-
   private _name: string;
+  private _scientificName: string;
+  private _nameDetails: string;
   private _symbol: string;
   private _psi25: string;
   private _psi30: string;
@@ -8,6 +9,9 @@ export class Interactome {
 
   constructor(name: string, symbol: string, psi25: string, psi30: string, taxid: number) {
     this.name = name;
+    let split  = name.split(/[()]/)
+    this.scientificName = split[0];
+    this.nameDetails = split[1];
     this.symbol = symbol;
     this.psi25 = psi25;
     this.psi30 = psi30;
@@ -20,6 +24,22 @@ export class Interactome {
 
   set name(value: string) {
     this._name = value;
+  }
+
+  get scientificName(): string {
+    return this._scientificName;
+  }
+
+  set scientificName(value: string) {
+    this._scientificName = value;
+  }
+
+  get nameDetails(): string {
+    return this._nameDetails;
+  }
+
+  set nameDetails(value: string) {
+    this._nameDetails = value;
   }
 
   get symbol(): string {

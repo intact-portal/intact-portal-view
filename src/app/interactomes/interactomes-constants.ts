@@ -1,6 +1,6 @@
 import {Interactome} from './interactome.model';
 
-// ## 1: taxid:9606(human)|taxid:9606(Homo sapiens)
+// ##  1: taxid:9606(human)|taxid:9606(Homo sapiens)
 // ##  2: taxid:559292(yeast)|taxid:559292(Saccharomyces cerevisiae)
 // ##  3: taxid:7227(drome)|taxid:7227("Drosophila melanogaster (Fruit fly)")
 // ##  4: taxid:6239(caeel)|taxid:6239(Caenorhabditis elegans)
@@ -20,7 +20,7 @@ import {Interactome} from './interactome.model';
 export abstract class InteractomesConstants {
   static readonly interactomes: Interactome[] = [
     new Interactome('Homo sapiens', 'H', 'human', 'human', 9606),
-    new Interactome('Saccharomyces cerevisiae (strain ATCC 204508 / S288c)', 'Y', 'yeast', 'yeast', 559292),
+    new Interactome('Saccharomyces cerevisiae', 'Y', 'yeast', 'yeast', 559292),
     new Interactome('Drosophila melanogaster (Fruit fly)', 'F', 'drome', 'drome', 7227),
     new Interactome('Caenorhabditis elegans', 'W', 'caeel', 'caeel', 6239),
     new Interactome('Arabidopsis thaliana (Mouse-ear cress)', 'B', 'arath', 'arath', 3702),

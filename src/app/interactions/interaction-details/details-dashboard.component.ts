@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {HttpErrorResponse} from "@angular/common/http";
+import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar/progress-bar.component";
 
 @Component({
   selector: 'ip-details-dashboard',
@@ -8,10 +10,10 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./details-dashboard.component.css']
 })
 export class DetailsDashboardComponent implements OnInit {
-
-  private _interactionAc: string;
+    private _interactionAc: string;
   @Input() featureSelected: string;
   @Input() participantsSelected: string[];
+  private _error: HttpErrorResponse;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) { }
@@ -22,6 +24,11 @@ export class DetailsDashboardComponent implements OnInit {
         this.interactionAc = params['id'];
         this.titleService.setTitle('Interaction - ' + this.interactionAc);
       })
+  }
+
+  public searchError(error: HttpErrorResponse) {
+    this._error = error;
+    ProgressBarComponent.hideWithoutDelay();
   }
 
   get interactionAc(): string {
@@ -38,5 +45,9 @@ export class DetailsDashboardComponent implements OnInit {
 
   public onParticipantSelectedChanged(participantsSelected: string[]): void {
     this.participantsSelected = participantsSelected;
+  }
+
+  get error(): HttpErrorResponse {
+    return this._error;
   }
 }

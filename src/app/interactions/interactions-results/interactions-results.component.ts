@@ -14,7 +14,6 @@ import {EFilter} from "./interactions-filters/interactions-filters.component";
   styleUrls: ['./interactions-results.component.css']
 })
 export class InteractionsResultsComponent implements OnInit {
-
   private _terms: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
@@ -36,6 +35,7 @@ export class InteractionsResultsComponent implements OnInit {
   @Input() interactionSelected: string;
 
   // private _termsSearch: any;
+  private _hasResults = true;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute,
@@ -86,7 +86,10 @@ export class InteractionsResultsComponent implements OnInit {
       this.interactionsSearch = interactionsSearch;
       ProgressBarComponent.hideWithoutDelay();
       if (this.interactionsSearch.totalElements !== 0) {
+        this._hasResults = true;
         this.interactionsSearchService.totalElements = this.interactionsSearch.totalElements;
+      } else {
+        this._hasResults = false;
       }
     })
   }
@@ -275,6 +278,10 @@ export class InteractionsResultsComponent implements OnInit {
       }
       return `${terms.shift()} ... ${last}`
     }
+  }
+
+  get hasResults(): boolean {
+    return this._hasResults;
   }
 
   get terms(): string {

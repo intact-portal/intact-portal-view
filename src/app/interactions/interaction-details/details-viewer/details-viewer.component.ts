@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 
@@ -24,6 +33,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   @Input() interactionAc: string;
   @Input() featureAc: string;
   @Input() expandedParticipantAc: string[];
+  @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
   private _interactionData: any;
   private SMALL_MOL = require('../../../../assets/images/detailsViewer/svgForKey/smallMol.svg');
@@ -69,7 +79,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
           }
         },
         (err: HttpErrorResponse) => {
-          console.log(err.message);
+          this.error.emit(err);
         }
       );
   }

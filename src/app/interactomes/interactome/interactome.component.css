@@ -25,14 +25,15 @@ div.actions {
   text-align: center;
 }
 
-button.species-button {
+.species-button {
   padding: 1em;
   color: #68297c;
   border-radius: 50%;
   margin: 1em;
+  border: none;
 }
 
-button.species-button:hover {
+.species-button:hover {
   opacity: 0.9;
   box-shadow: 0 0 20px #68297c;
 }

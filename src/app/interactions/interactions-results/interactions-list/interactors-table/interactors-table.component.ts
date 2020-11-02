@@ -216,7 +216,13 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         },
         {
           data: this._columns.preferredId.key,
-          title: this._columns.preferredId.name
+          title: this._columns.preferredId.name,
+          render: (data, type) => {
+            if (type === 'display' && data !== null) {
+              return this.tableFactory.identifierRender(extractId(data))
+            }
+            return data
+          }
         },
         {
           data: this._columns.type.key,
@@ -261,7 +267,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       }
     });
     this.tableFactory.makeTableHeaderSticky();
-    this.tableFactory.initGroupBy();
+    this.tableFactory.enableCollapsedPanels();
   }
 
 

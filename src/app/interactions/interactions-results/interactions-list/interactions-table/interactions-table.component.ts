@@ -250,7 +250,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           },
           {
             data: this._columns.hostOrganism.key,
-            title: this._columns.hostOrganism.name
+            title: this._columns.hostOrganism.name,
+            render: this.tableFactory.speciesRender('hostOrganismTaxId')
           },
           {
             data: this._columns.detectionMethod.key,
@@ -352,7 +353,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                           <a class="detailsConfidencesCell tag-cell" target="_blank"
                           href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
-                                 border:2px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
+                                 border:1px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
                                  color: ${YELLOW_ORANGE_BROWN_PALETTE_TEXT[paletteIndex]}">
                             ${d.replace('intact-miscore', 'MI Score')}
                           </a>
@@ -366,7 +367,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             render: function (data, type) {
               if (type === 'display' && data != null) {
                 return `<div style="display: flex">
-                        <a target="_blank" class="detailsExpansionsCell tag-cell"
+                        <a target="_blank" class="tag-cell detailsExpansionsCell"
                            href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" >
                             ${data}
                         </a>

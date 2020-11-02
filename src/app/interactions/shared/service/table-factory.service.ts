@@ -129,7 +129,7 @@ export class TableFactoryService {
 
   identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
     if (id === null) return;
-    let db = this.processDatabase(id.database);
+    let db = TableFactoryService.processDatabase(id.database);
     let url = db.access ? db.access.getURL(id.identifier) : null;
     return `<div class="tag-cell-container identifier-cell-container">
               ${db.tag}
@@ -143,12 +143,12 @@ export class TableFactoryService {
 
 
   databaseTag(database: string | any): string {
-    return this.processDatabase(database).tag;
+    return TableFactoryService.processDatabase(database).tag;
   }
 
   identifierLink(id: { identifier: string, database: string | any, qualifier?: any }) {
     if (id === null) return;
-    let db = this.processDatabase(id.database);
+    let db = TableFactoryService.processDatabase(id.database);
     let url = db.access ? db.access.getURL(id.identifier) : null;
     return `<div class="detailsCell identifierCellWidth">
               ${id.qualifier ? '<b> ' : ''}
@@ -157,7 +157,7 @@ export class TableFactoryService {
             </div>`;
   }
 
-  private processDatabase(database: string | any): { tag: string, access: DatabaseAccess } {
+  private static processDatabase(database: string | any): { tag: string, access: DatabaseAccess } {
     let shortDbName = database.shortName !== undefined ? database.shortName : database;
     let access: DatabaseAccess = TableFactoryService.databaseToAccess.get(shortDbName);
     let style = ''

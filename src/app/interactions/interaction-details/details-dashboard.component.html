@@ -1,23 +1,51 @@
-<div class="row expanded">
-  <div class="columns medium-12">
+<div class="row expanded" *ngIf="interactionAc; else noInteractor;">
+  <div>
     <h2 class="padding-left-large">Details of {{interactionAc}}</h2>
   </div>
 </div>
 
-<div class="row expanded">
+<div class="row expanded" *ngIf="!error; else errorBlock;">
 
-  <div class="columns medium-12">
-    <ip-details-viewer *ngIf="interactionAc"
-                       [interactionAc]="interactionAc"
+  <div>
+    <ip-details-viewer [interactionAc]="interactionAc"
                        [featureAc]="featureSelected"
-                       [expandedParticipantAc]="participantsSelected"></ip-details-viewer>
+                       [expandedParticipantAc]="participantsSelected"
+                       (error)="searchError($event)"></ip-details-viewer>
   </div>
 
   <div class="columns medium-12">
-    <ip-details-tabs *ngIf="interactionAc"
-                     [interactionAc]="interactionAc"
+    <ip-details-tabs [interactionAc]="interactionAc"
                      (featureChanged)="onFeatureSelectedChanged($event)"
                      (participantChanged)="onParticipantSelectedChanged($event)"></ip-details-tabs>
   </div>
 
 </div>
+
+<ng-template #errorBlock>
+  <div class="row expanded margin-top-large margin-bottom-large margin-left-medium margin-right-medium">
+    <div class="columns medium-12">
+      <div class="alert-panel">
+        <h3><i class="icon icon-common icon-exclamation-triangle"></i> <b>{{interactionAc}}</b> not found</h3>
+        No interactions were found for the given accession number: <b>{{interactionAc}}</b><br>
+        This can be due to:
+        <ul>
+          <li>An incomplete accession number (format: EBI-XXXXXXX) </li>
+          <li>A spelling mistake</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noInteractor>
+  <div class="row expanded margin-top-large margin-bottom-large margin-left-medium margin-right-medium">
+    <div class="columns medium-12">
+      <div class="alert-panel">
+        <h3><i class="icon icon-common icon-exclamation-triangle"></i> Missing parameter</h3>
+        Could not find any interaction accession number in the url.<br>
+        Please add one to retrieve the details of the related interaction.<br>
+        An accession number follow the following format: <b>EBI-XXXXXXX</b>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -172,7 +172,17 @@ a:visited {
   background-color: #b7b8b8;
 }
 
+/***************** Alert **********************/
+.alert-panel {
+  font-size: 16px;
+  font-style: italic;
+  background-color: #68297b3d;
+  padding: 1em;
+}
 
+.alert-panel h3 {
+  color: #68297c;
+}
 /***************** Tool tips **********************/
 /* Tooltip container */
 .tool-tip {
@@ -506,6 +516,7 @@ div.dataTables_scroll {
 .detailsExpansionsCell {
   background-color: rgba(99, 103, 189, 0.24);
   color: #19236d;
+  font-size: small;
   /*padding: 3px 4px;*/
 }
 

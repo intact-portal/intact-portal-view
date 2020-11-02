@@ -23,11 +23,16 @@ const routes: Routes = [
     component: InteractomesComponent,
     data: {showCompactHeader: false, showFooter: true}
   },
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
 ];
 
 @NgModule({
-  exports: [ RouterModule ],
-  imports: [ RouterModule.forRoot(routes, {useHash: false}) ],
+  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes, {useHash: false})],
 })
 
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

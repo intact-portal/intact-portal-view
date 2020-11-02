@@ -28,6 +28,23 @@
   background: white;
 }
 
+#filters-bar button.button {
+  margin-right: 0.3em;
+}
+
+.rounded {
+  border-radius: 20px;
+}
+
+.rounded:focus, .rounded:active {
+  box-shadow: 0 0 0 3px #216fd1;
+  outline: none;
+}
+
+.dropdown-pane.rounded:focus, .dropdown-pane.rounded:active {
+  box-shadow: none;
+}
+
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
   background-image: url('../../../../assets/images/results/mi-score-slider-image.svg') !important;
   background-position: center !important; /* Center the image */
@@ -41,7 +58,7 @@
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-selection {
   z-index: 2 !important;
-  background: rgba(255,255,255,0) !important;
+  background: rgba(255, 255, 255, 0) !important;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   border-radius: 2px !important;
   height: 12px;
@@ -62,6 +79,7 @@
   box-shadow: 0 0 0 3px #216fd1;
   outline: none;
 }
+
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:after {
   background-color: white !important;
   top: 10px;
@@ -86,6 +104,5 @@ div.reset-button {
 button.delete-button {
   background-color: #68297C;
   color: white;
-  border-radius: 30px;
   padding: 10px;
 }

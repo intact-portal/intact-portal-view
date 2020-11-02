@@ -2,12 +2,12 @@
   <div id="filters-bar">
     <h4>Filters</h4>
 
-    <button class="button" type="button" data-toggle="interactor-species-dropdown">
+    <button class="button rounded" type="button" data-toggle="interactor-species-dropdown">
       <i class="icon icon-functional icon-spacer icon-filter"></i>Interactor Species
     </button>
-    <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane rounded" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <ul class="vertical menu facets margin-bottom-medium">
-        <div class=" scrollbar filter" [ngStyle]="filterStyle('speciesA_B_str')">
+        <div class="scrollbar filter" [ngStyle]="filterStyle('speciesA_B_str')">
           <li *ngFor="let species of interactionFacets.speciesA_B_str">
           <span class="facet"><input #filter type="checkbox" value="{{species.value}}"
                                      (change)="onChangeInteractorSpeciesFilter(filter.value)"
@@ -19,7 +19,7 @@
       </ul>
 
       <mat-dialog-actions>
-        <button class="centered delete-button" (click)="resetFilter(filter.SPECIES)"
+        <button class="centered delete-button rounded" (click)="resetFilter(filter.SPECIES)"
                 *ngIf="interactorSpeciesFilter.length > 0" matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -35,10 +35,10 @@
       </mat-dialog-actions>
     </div>
 
-    <button class="button" type="button" data-toggle="interactor-type-dropdown">
+    <button class="button rounded" type="button" data-toggle="interactor-type-dropdown">
       <i class="icon icon-functional icon-spacer icon-filter"></i>Interactor Type
     </button>
-    <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane rounded" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <ul class="vertical menu facets">
         <div class=" scrollbar filter" [ngStyle]="filterStyle('typeA_B_str')">
           <li *ngFor="let molecule of interactionFacets.typeA_B_str">
@@ -51,16 +51,16 @@
         </div>
       </ul>
       <div *ngIf="interactorTypeFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button"(click)="resetFilter(filter.INTERACTOR_TYPE)" matTooltip="Remove filter" matTooltipPosition="below">
+        <button class="delete-button rounded"(click)="resetFilter(filter.INTERACTOR_TYPE)" matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
       </div>
     </div>
 
-    <button class="button" type="button" data-toggle="interaction-type-dropdown">
+    <button class="button rounded" type="button" data-toggle="interaction-type-dropdown">
       <i class="icon icon-functional icon-spacer icon-filter"></i>Interaction Type
     </button>
-    <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane rounded" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <ul class="vertical menu facets">
         <div class=" scrollbar filter" [ngStyle]="filterStyle('type_str')">
           <li *ngFor="let interactionType of interactionFacets.type_str">
@@ -73,17 +73,17 @@
         </div>
       </ul>
       <div *ngIf="interactionTypeFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.INTERACTION_TYPE)"
+        <button class="delete-button rounded" (click)="resetFilter(filter.INTERACTION_TYPE)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
       </div>
     </div>
 
-    <button class="button" type="button" data-toggle="interaction-detection-method-dropdown">
+    <button class="button rounded" type="button" data-toggle="interaction-detection-method-dropdown">
       <i class="icon icon-functional icon-spacer icon-filter"></i>Interaction Detection Method
     </button>
-    <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
+    <div class="dropdown-pane rounded" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true">
       <ul class="vertical menu facets margin-bottom-medium">
         <div class="scrollbar filter" [ngStyle]="filterStyle('detection_method_str')">
@@ -97,7 +97,7 @@
         </div>
       </ul>
       <div *ngIf="interactionDetectionMethodFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.DETECTION_METHOD)"
+        <button class="delete-button rounded" (click)="resetFilter(filter.DETECTION_METHOD)"
                 matTooltip="Remove filter"
                 matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
@@ -105,10 +105,10 @@
       </div>
     </div>
 
-    <button class="button" type="button" data-toggle="interaction-host-organism-dropdown">
+    <button class="button rounded" type="button" data-toggle="interaction-host-organism-dropdown">
       <i class="icon icon-functional icon-spacer icon-filter"></i>Interaction Host Organism
     </button>
-    <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
+    <div class="dropdown-pane rounded" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true">
       <ul class="vertical menu facets">
         <div class="scrollbar filter" [ngStyle]="filterStyle('host_organism_str')">
@@ -122,24 +122,24 @@
         </div>
       </ul>
       <div *ngIf="interactionHostOrganismFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.HOST_ORGANISM)"
+        <button class="delete-button rounded" (click)="resetFilter(filter.HOST_ORGANISM)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
       </div>
     </div>
 
-    <button class="button" type="button" data-toggle="score-dropdown">
-      <i class="icon icon-functional icon-spacer icon-filter"></i>Score
+    <button class="button rounded" type="button" data-toggle="score-dropdown">
+      <i class="icon icon-functional icon-spacer icon-filter"></i>MI Score
     </button>
-    <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane rounded" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
       <div style="width: 300px" class="custom-slider margin-bottom-large">
         <ng5-slider class="columns medium-3" [(value)]="minValueCurrent" [(highValue)]="maxValueCurrent"
                     [options]="options"
                     (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
       </div>
       <div *ngIf="isFilteringScore()" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.MI_SCORE)"
+        <button class="delete-button rounded" (click)="resetFilter(filter.MI_SCORE)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -149,7 +149,7 @@
     <!--    <button class="button" type="button" data-toggle="others-dropdown">-->
     <!--      <i class="icon icon-functional icon-spacer icon-filter"></i>Others-->
     <!--    </button>-->
-    <!--    <div class="dropdown-pane" id="others-dropdown" data-dropdown data-hover="true" data-hover-pane="true">-->
+    <!--    <div class="dropdown-pane rounded" id="others-dropdown" data-dropdown data-hover="true" data-hover-pane="true">-->
     <!--      <div class="margin-top-medium">-->
     <!--        <div class="float:left">-->
     <!--          <label class="switch switch_type1" role="switch">-->
@@ -161,7 +161,7 @@
     <!--      </div>-->
     <!--    </div>-->
 
-    <button *ngIf="anyFiltersSelected()" class="button" type="button" (click)="resetAllFilters()">
+    <button *ngIf="anyFiltersSelected()" class="button rounded" type="button" (click)="resetAllFilters()">
       <i class="icon icon-functional" data-icon="d"></i> Reset filters
     </button>
 

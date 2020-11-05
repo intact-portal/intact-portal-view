@@ -1,21 +1,11 @@
-<div id="datase_archive" class="row expanded">
+<div id="dataset_archive" class="row">
+  <div class="sticky-container">
+    <h3 class="columns margin-bottom-xlarge margin-top-medium text-justify">
+      Featured datasets - Archive
+    </h3>
+  </div>
 
-  <h3 class="margin-bottom-xlarge margin-left-medium margin-top-medium padding-left-large text-justify">Datasets of the month - Archive</h3>
-
-  <ul class="margin-top-large" *ngFor="let featuredDataset of featuredDatasets">
-
-    <h4 class="text-justify">{{featuredDataset.$.title}} </h4>
-    <ul class="text-justify padding-left-large">
-      <li *ngFor="let pubmed of featuredDataset.pubmed">
-        <div id="pdfButtons">
-          <span>{{pubmed.author}}</span>
-          <a class="button tiny margin-top-large" (click)="goPSIMI25FTP(pubmed.year, pubmed.id)">PSI-MI XML 2.5</a>
-          <a class="button tiny margin-top-large" (click)="goPSIMITABFTP(pubmed.year, pubmed.id)">PSI-MI TAB 2.7</a>
-        </div>
-      </li>
-    </ul>
-
-  </ul>
-
-
+  <div *ngFor="let datasetsOfYear of datasetsByYear" class="column">
+    <ip-dataset-by-year [year]="datasetsOfYear.group" [datasets]="datasetsOfYear.elements"></ip-dataset-by-year>
+  </div>
 </div>

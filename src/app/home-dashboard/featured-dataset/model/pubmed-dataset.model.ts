@@ -3,7 +3,6 @@ export class PubmedDataset {
   private _author: string;
   private _year: string;
 
-
   constructor(id: string, author: string, year: string) {
     this._id = id;
     this._author = author;
@@ -19,7 +18,7 @@ export class PubmedDataset {
   }
 
   get author(): string {
-    return this._author;
+    return this._author.toString();
   }
 
   set author(value: string) {
@@ -27,7 +26,7 @@ export class PubmedDataset {
   }
 
   get year(): string {
-    return this._year;
+    return this._year.toString();
   }
 
   set year(value: string) {

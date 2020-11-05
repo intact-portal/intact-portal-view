@@ -22,7 +22,6 @@ i {
   color: white;
   background-color: #68297c;
   /*background-color: #b46eb4;*/
-
 }
 
 table {
@@ -32,6 +31,15 @@ table {
 
 td, th, tbody {
   border:none;
+  padding-left: 1em;
+}
+
+tr {
+  /*background-color: #ffedff;*/
+}
+
+tr:nth-child(even) {
+  /*background-color: #f8e0ff;*/
 }
 
 .accordion-content {

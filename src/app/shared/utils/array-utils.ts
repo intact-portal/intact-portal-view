@@ -1,5 +1,5 @@
-export function groupBy<T, K>(array: T[], groupBy: (T) => K): Map<string, { group: K, elements: T[] }> {
-  return array.reduce((groups: Map<string, { group: K, elements: T[] }>, value) => {
+export function groupBy<T, K>(array: T[], groupBy: (element: T) => K): { group: K; elements: T[] }[] {
+  return Array.from(array.reduce((groups: Map<string, { group: K, elements: T[] }>, value) => {
     let group = groupBy(value);
     let key = JSON.stringify(group);
     if (groups.has(key)) {
@@ -8,5 +8,5 @@ export function groupBy<T, K>(array: T[], groupBy: (T) => K): Map<string, { grou
       groups.set(key, {group: group, elements: [value]})
     }
     return groups
-  }, new Map<string, { group: K, elements: T[] }>());
+  }, new Map<string, { group: K, elements: T[] }>()).values());
 }

@@ -31,9 +31,9 @@ $intact-purple: (
   contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,
-    200: $dark-primary-text,
-    300: $dark-primary-text,
-    400: $dark-primary-text,
+    200: $light-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
     500: $light-primary-text,
     600: $light-primary-text,
     700: $light-primary-text,
@@ -46,7 +46,7 @@ $intact-purple: (
   )
 );
 $intact-portal-primary: mat-palette($intact-purple, 800, 100, 900);
-$intact-portal-accent: mat-palette($intact-purple, 800, 100, 400);
+$intact-portal-accent: mat-palette($intact-purple, 300, 100, 400);
 
 // The warn palette is optional (defaults to red).
 $intact-portal-warn: mat-palette($mat-deep-orange);

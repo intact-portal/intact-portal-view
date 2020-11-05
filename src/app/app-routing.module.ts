@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {DownloadComponent} from './download/download.component';
+import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
+import {FaqComponent} from "./navigation/faq/faq.component";
+import {AboutComponent} from "./navigation/about/about.component";
 
 const routes: Routes = [
   {path: 'home', loadChildren: 'app/home-dashboard/home-dashboard.module#HomeDashboardModule'},
@@ -21,6 +23,16 @@ const routes: Routes = [
   {
     path: 'interactomes',
     component: InteractomesComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'faq',
+    component: FaqComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
     data: {showCompactHeader: false, showFooter: true}
   },
   {

@@ -20,20 +20,27 @@ import {KeyvaluemapPipe} from './shared/keyvaluemap.pipe';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {DatasetByYearComponent} from './featured-dataset/dataset-archive/dataset-by-year/dataset-by-year.component';
+import {ProgressSpinnerModule} from "../layout/loading-indicators/progress-spinner/progress-spinner.module";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        QueryBuilderModule,
-        HomeDashboardRoutingModule,
-        FileUploadModule,
-        ArchwizardModule,
-        MatProgressSpinnerModule,
-        MatExpansionModule,
-        MatTooltipModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    QueryBuilderModule,
+    HomeDashboardRoutingModule,
+    FileUploadModule,
+    ArchwizardModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatCardModule,
+    ProgressSpinnerModule
+  ],
   declarations: [
     HomeDashboardComponent,
     HomeDescriptionComponent,
@@ -46,7 +53,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     DatasetArchiveComponent,
     AdvancedSearchComponent,
     BatchSearchComponent,
-    KeyvaluemapPipe
+    KeyvaluemapPipe,
+    DatasetByYearComponent
   ]
 })
 export class HomeDashboardModule {

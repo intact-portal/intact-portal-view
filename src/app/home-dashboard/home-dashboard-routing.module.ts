@@ -14,7 +14,7 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'},
   {
-    path: 'dotm/archive',
+    path: 'featured-dataset/archive',
     component: DatasetArchiveComponent,
     data: {showCompactHeader: false, showFooter: true}
   }

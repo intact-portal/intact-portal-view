@@ -329,27 +329,34 @@ export class TableFactoryService {
     })
   }
 
+
   enableShowButtons() {
-    $(document).on('click', 'button.showMore', event => {
-      let button = $(event.target);
-      let buttonText = button.text();
-      if (buttonText.includes('more')) {
-        button.text(buttonText.replace('more', 'less'));
-      } else {
-        button.text(buttonText.replace('less', 'more'));
-      }
-      let toToggle = button.prev('.show-more-content').children('.to-hide');
-      toToggle.slideToggle(toToggle.height());
-    });
+    $(document).off('click', 'button.showMore', TableFactoryService.toggleShowMoreLess);
+    $(document).on('click', 'button.showMore', TableFactoryService.toggleShowMoreLess);
+  }
+
+  static toggleShowMoreLess = (event: JQueryEventObject) => {
+    let button = $(event.target);
+    let buttonText = button.text();
+    if (buttonText.includes('more')) {
+      button.text(buttonText.replace('more', 'less'));
+    } else {
+      button.text(buttonText.replace('less', 'more'));
+    }
+    let toToggle = button.prev('.show-more-content').children('.to-hide');
+    toToggle.slideToggle(toToggle.height());
   }
 
   enableCollapsedPanels() {
-    $(document).on('click', '.collapse-header', event => {
-      let panel = $(event.target).next('.collapse-panel');
-      if (panel.length === 0) panel = $(event.target).parent().next('.collapse-panel');
-      panel.slideToggle({duration: panel.height(), easing: 'linear'});
-      panel.prev('.collapse-header').toggleClass('collapsed')
-    })
+    $(document).off('click', '.collapse-header', TableFactoryService.toggleCollapsedPanels)
+    $(document).on('click', '.collapse-header', TableFactoryService.toggleCollapsedPanels)
+  }
+
+  static toggleCollapsedPanels = (event: JQueryEventObject) => {
+    let panel = $(event.target).next('.collapse-panel');
+    if (panel.length === 0) panel = $(event.target).parent().next('.collapse-panel');
+    panel.slideToggle({duration: panel.height(), easing: 'linear'});
+    panel.prev('.collapse-header').toggleClass('collapsed')
   }
 }
 

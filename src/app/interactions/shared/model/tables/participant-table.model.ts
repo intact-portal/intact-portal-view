@@ -3,7 +3,7 @@ import {Column} from "./column.model";
 
 export class ParticipantTable extends Table {
   public readonly expand = new Column(this, 'Expand', 'participantName');
-  public readonly name = new Column(this, 'Name', 'participantName');
+  public readonly name = new Column(this, 'Name', 'shortLabel');
   public readonly ac = new Column(this, 'AC', 'participantAc');
   public readonly type = new Column(this, 'Type', 'type');
   public readonly identifier = new Column(this, 'Identifier', 'participantId');

@@ -64,7 +64,7 @@ export class FeaturedDatasetComponent implements OnInit {
   }
 
   goDOTMArchiveFTP() {
-    this.router.navigate(['/dotm/archive']);
+    this.router.navigate(['/featured-dataset/archive']);
   }
 
   get title(): string {

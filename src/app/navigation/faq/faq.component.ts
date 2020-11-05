@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from '../../../../environments/environment';
+import {environment} from '../../../environments/environment';
 import {Title} from '@angular/platform-browser';
 
 declare const $: any;

@@ -15,21 +15,25 @@ import {InteractionsSearchService} from './interactions/shared/service/interacti
 import {InteractionDetailsModule} from './interactions/interaction-details/interaction-details.module';
 import {InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
 import {NetworkSearchService} from './interactions/shared/service/network-search.service';
-import {DownloadComponent} from './download/download.component';
+import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
-import {DocumentationModule} from './documentation/documentation.module';
+import {DocumentationModule} from './navigation/documentation/documentation.module';
 import {InteractomeComponent} from './interactomes/interactome/interactome.component';
 import {LayoutModule} from './layout/layout.module';
 import {NetworkViewService} from "./interactions/shared/service/network-view.service";
-import {MarkdownModule} from "./documentation/shared/markdown/markdown.module";
+import {MarkdownModule} from "./navigation/documentation/shared/markdown/markdown.module";
 import {MatButtonModule} from "@angular/material/button";
+import {AboutComponent} from "./navigation/about/about.component";
+import {FaqComponent} from "./navigation/faq/faq.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     DownloadComponent,
     InteractomesComponent,
-    InteractomeComponent
+    InteractomeComponent,
+    AboutComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MarkdownRendererService} from "./service/markdown-renderer.service";
-import {environment} from "../../../../environments/environment";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'markdown',

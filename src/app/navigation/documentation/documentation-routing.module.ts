@@ -3,19 +3,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {DocumentationComponent} from './documentation.component';
 import {TechnicalCornerComponent} from './technical-corner/technical-corner.component';
 import {DocsComponent} from './docs/docs.component';
-import {AboutComponent} from './about/about.component';
 import {DataSubmissionComponent} from './data-submission/data-submission.component';
 import {DatasetsComponent} from './datasets/datasets.component';
+import {UserGuideComponent} from "./user-guide/user-guide.component";
 
 const documentationRoutes: Routes = [
   {
     path: 'documentation',
     component: DocumentationComponent,
-    data: {showCompactHeader: false, showFooter: true}
-  },
-  {
-    path: 'documentation/about',
-    component: AboutComponent,
     data: {showCompactHeader: false, showFooter: true}
   },
   {
@@ -26,6 +21,11 @@ const documentationRoutes: Routes = [
   {
     path: 'documentation/data_submission',
     component: DataSubmissionComponent,
+    data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'documentation/user-guide',
+    component: UserGuideComponent,
     data: {showCompactHeader: false, showFooter: true}
   },
   {

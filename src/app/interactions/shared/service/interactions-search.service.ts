@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {InteractionsSearchResult} from '../model/interactions-results/interaction/interactions-search.model';
 import {environment} from '../../../../environments/environment';
+import {InteractionSearchResult} from "../model/interactions-results/interaction/interaction-search-result.model";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -27,8 +27,7 @@ export class InteractionsSearchService {
                                    miScoreMin: any,
                                    miScoreMax: any,
                                    intraSpeciesFilter: boolean,
-                                   currentPageIndex = 1, pageSize = 10): Observable<InteractionsSearchResult> {
-
+                                   currentPageIndex = 1, pageSize = 10): Observable<InteractionSearchResult> {
     query = query.trim();
     this.page = currentPageIndex;
 
@@ -49,9 +48,7 @@ export class InteractionsSearchService {
       .set('page', currentPageIndex.toString())
       .set('pageSize', pageSize.toString());
 
-    const options = query ? {params: params} : {};
-
-    return this.http.get(`${baseURL}/interaction/findInteractionWithFacet`, options)
+    return this.http.post<InteractionSearchResult>(`${baseURL}/interaction/findInteractionWithFacet`, params)
       .catch(this.handleError);
   }
 

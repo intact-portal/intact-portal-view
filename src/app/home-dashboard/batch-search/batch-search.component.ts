@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
 import {SearchService} from '../search/service/search.service';
+import {Pagination} from "../shared/pagination.model";
+import {Interactor} from "../../interactions/shared/model/interactions-results/interactor/interactor.model";
+import {ResolutionEntry} from "./resolution-interactor-model";
 
 declare const $: any;
 const baseURL = environment.intact_portal_ws;
@@ -12,17 +15,22 @@ const baseURL = environment.intact_portal_ws;
   styleUrls: ['./batch-search.component.css']
 })
 export class BatchSearchComponent {
-
-  private _ids: string;
+  private _query: string;
 
   private _uploader: FileUploader;
   private _hasBaseDropZoneOver: boolean;
   private _response: any;
   private _dataReceived: boolean = false;
-  private _data: any;
-  private _foundEntries: any[] = [];
+  private _foundEntries: ResolutionEntry[] = [];
   private _notFoundEntries: string[] = [];
 
+  private _entriesToComplete: Map<string, ResolutionEntry> = new Map<string, ResolutionEntry>();
+
+  private _interactorAcs: Set<string> = new Set<string>();
+  private _totalInteractorsToQuery = 0;
+  private _interactorsQueried = 0;
+  private _acCollectionProgress = 0;
+  private _acCollectionFinished = false;
 
   constructor(private searchService: SearchService) {
     this.uploader = new FileUploader({
@@ -40,28 +48,20 @@ export class BatchSearchComponent {
   }
 
   resolveSearch() {
-    this.searchService.resolveSearch(this.ids)
+    this.searchService.resolveSearch(this.query)
       .subscribe(data => {
-        this.data = data;
-        this.splitData()
+        this.splitData(data)
       });
   }
 
-  batchSearch(query: string, typeOfButton: string) {
-    this.searchService.batchSearch(query);
-  }
-
-  setIds(response: string) {
-    this.ids = response;
-  }
-
-  splitData() {
-    console.log(this.data);
-    for (let key of Object.keys(this.data)) {
-      let value = this.data[key];
-      if (value.totalElements !== 0) {
-        value.key = key;
-        this._foundEntries.push(value);
+  splitData(data: { [term: string]: Pagination<Interactor[]> }) {
+    for (let key of Object.keys(data)) {
+      let entry: ResolutionEntry = data[key];
+      if (entry.totalElements !== 0) {
+        entry.term = key;
+        entry.content.forEach(interactor => this._interactorAcs.add(interactor.interactorAc));
+        if (!entry.last) this._entriesToComplete.set(key, entry);
+        this._foundEntries.push(entry);
       } else {
         this._notFoundEntries.push(key);
       }
@@ -69,20 +69,101 @@ export class BatchSearchComponent {
     this.dataReceived = true;
   }
 
-  private fileOverBase(e: any): void {
+  batchSearch() {
+    this.searchService.batchSearch(Array.from(this.interactorAcs.values()).join('\n'));
+  }
+
+  setQuery(response: string) {
+    this.query = response;
+  }
+
+  fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
   }
 
-  private fileSelected() {
+  fileSelected() {
     console.log('FileSelected');
   }
 
-  get ids(): string {
-    return this._ids;
+  onInteractorSelection(event) {
+    if (event.target.checked) {
+      this._interactorAcs.add(event.target.value)
+    } else {
+      this._interactorAcs.delete(event.target.value)
+    }
   }
 
-  set ids(value: string) {
-    this._ids = value;
+  onCompletionSelection(event) {
+    let term = event.target.value;
+    if (event.target.checked) {
+      let entry = this._foundEntries.find(value => value.term === term);
+      this._entriesToComplete.set(term, entry);
+    } else {
+      this._entriesToComplete.delete(term);
+    }
+  }
+
+  collectNextPagesInteractors(entriesToComplete?: ResolutionEntry[], page = 1) {
+    if (page === 1) {
+      entriesToComplete = Array.from(this._entriesToComplete.values());
+      this._totalInteractorsToQuery = entriesToComplete.reduce((total, entry) => total + entry.totalElements - 50, 0);
+    }
+    let query = entriesToComplete.map(entry => entry.term).join(', ')
+    this.searchService.resolveSearch(query, page, 50).subscribe(data => {
+      let nextEntriesToComplete = [];
+      for (let key of Object.keys(data)) {
+        let entry: ResolutionEntry = data[key];
+        entry.term = key;
+        entry.content.forEach(interactor => {
+          this._interactorAcs.add(interactor.interactorAc);
+          this._interactorsQueried++;
+          this._acCollectionProgress = (this._interactorsQueried / this._totalInteractorsToQuery) * 100;
+        });
+        if (!entry.last) nextEntriesToComplete.push(entry);
+      }
+      if (nextEntriesToComplete.length !== 0) this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
+      else this._acCollectionFinished = true;
+    })
+  }
+
+  resetSteps() {
+    this.resetSecondStep();
+    this.resetThirdStep();
+  }
+  resetSecondStep() {
+    this._foundEntries = [];
+    this._notFoundEntries = [];
+    this._dataReceived = false;
+    this._entriesToComplete.clear();
+
+    this._totalInteractorsToQuery = 0;
+    this._interactorsQueried = 0;
+    this._acCollectionProgress = 0;
+    this._acCollectionFinished = false;
+
+    this._interactorAcs.clear();
+  }
+
+  resetThirdStep() {
+    this._totalInteractorsToQuery = 0;
+    this._interactorsQueried = 0;
+    this._acCollectionProgress = 0;
+    this._acCollectionFinished = false;
+
+    this._interactorAcs.clear();
+    $('input[name="interactor"]').each((i, input) => {
+      if (input.checked) {
+        this.interactorAcs.add(input.value);
+      }
+    });
+  }
+
+  get query(): string {
+    return this._query;
+  }
+
+  set query(query: string) {
+    this._query = query;
   }
 
   get uploader(): FileUploader {
@@ -117,15 +198,7 @@ export class BatchSearchComponent {
     this._dataReceived = value;
   }
 
-  get data(): any {
-    return this._data;
-  }
-
-  set data(value: any) {
-    this._data = value;
-  }
-
-  get foundEntries(): any[] {
+  get foundEntries(): ResolutionEntry[] {
     return this._foundEntries;
   }
 
@@ -137,10 +210,27 @@ export class BatchSearchComponent {
     return this._notFoundEntries.join(' ');
   }
 
-  resetData() {
-    this._data = {};
-    this._foundEntries = [];
-    this._notFoundEntries = [];
-    this._dataReceived = false;
+  get entriesToComplete(): Map<string, ResolutionEntry> {
+    return this._entriesToComplete;
+  }
+
+  get totalInteractorsToQuery(): number {
+    return this._totalInteractorsToQuery;
+  }
+
+  get interactorsQueried(): number {
+    return this._interactorsQueried;
+  }
+
+  get acCollectionProgress(): number {
+    return this._acCollectionProgress;
+  }
+
+  get acCollectionFinished(): boolean {
+    return this._acCollectionFinished;
+  }
+
+  get interactorAcs(): Set<string> {
+    return this._interactorAcs;
   }
 }

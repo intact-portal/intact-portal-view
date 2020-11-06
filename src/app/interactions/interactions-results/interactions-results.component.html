@@ -6,10 +6,10 @@
           <h2>Search for {{shortTerms}}</h2>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <p>{{terms}}</p>
+      <p>{{query}}</p>
     </mat-expansion-panel>
     <ng-template #standardTitle>
-      <h2>Search for {{terms}}</h2>
+      <h2>Search for {{query}}</h2>
     </ng-template>
   </div>
 
@@ -60,12 +60,12 @@
       <div class="columns medium-12">
         <div class="alert-panel">
           <h3><i class="icon icon-common icon-exclamation-triangle"></i> No results found</h3>
-          No interactions were found for your query: <b>{{terms}}</b><br>
+          No interactions were found for your query: <b>{{query}}</b><br>
           To solve this problem, you can:
           <ul>
             <li>Check the spelling</li>
             <li>Use the auto suggestion</li>
-            <li>Use <a href="http://www.ebi.ac.uk/Tools/webservices/psicquic/view/main.xhtml?query={{terms}}" target="_blank">PSICQUIC</a> to search among our IMEx partner databases</li>
+            <li>Use <a href="http://www.ebi.ac.uk/Tools/webservices/psicquic/view/main.xhtml?query={{query}}" target="_blank">PSICQUIC</a> to search among our IMEx partner databases</li>
           </ul>
         </div>
       </div>

@@ -7,7 +7,7 @@
 
   <div class="flex-spacer"></div>
   <div class="medium-12" style="text-align: center">
-      <button (click)="search(interactome.name)" class="species-button">
+      <button (click)="search.speciesSearch(interactome.name)" class="species-button">
         <span attr.data-icon="{{interactome.symbol}}" style="color: #68297c"
               [ngClass]="{'icon ': true,'icon-species': interactome.symbol !== '?', 'icon-functional': interactome.symbol === '?'}">
         </span>

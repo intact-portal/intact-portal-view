@@ -10,6 +10,7 @@ import {InteractorTable} from "../../../shared/model/tables/interactor-table.mod
 import {Column} from "../../../shared/model/tables/column.model";
 import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
 import {ResultTable} from "../../../shared/model/interactions-results/result-table-interface";
+import {SearchService} from "../../../../home-dashboard/search/service/search.service";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -45,15 +46,15 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   private _columns = new InteractorTable();
 
-  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService) {
+  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService, private search: SearchService) {
   }
 
   ngOnInit() {
     this.table = $('#interactorsTable');
-    this.route.queryParams.filter(params => params.query)
+    this.route.queryParams
       .subscribe(params => {
-        this.terms = params.query;
-        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
+        this.terms = params.query ? params.query : this.search.query;
+        this.batchSearchFilter = params.batchSearch ? params.batchSearch : this.search.isBatchSearch;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
         this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];

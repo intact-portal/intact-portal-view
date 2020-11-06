@@ -45,14 +45,15 @@ export class SearchComponent implements OnInit, AfterViewInit {
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: `${baseURL}/interactor/findInteractor/%QUERY`,
-        prepare: function (query, settings) {
+        url: `${baseURL}/interactor/findInteractor/%QUERY?page=0&pageSize=10`,
+        prepare: (query, settings) =>{
           if (!this.ignoreChange) {
             console.log(this.currentPage);
             settings.url = settings.url.replace('%QUERY', query);
+            settings.url = settings.url.replace('page=0', `page=${this.currentPage}`)
           }
           return settings;
-        }.bind(this),
+        },
         transform: function (data) {
           this.data = data;
           return data.content;

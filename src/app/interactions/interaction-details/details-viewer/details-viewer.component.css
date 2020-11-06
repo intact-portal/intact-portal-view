@@ -30,6 +30,7 @@ div#viewerLegend {
   min-height: auto;
   overflow-y: auto;
   overflow-x: hidden;
+  max-height: 11.5em;
 }
 
 table.color-key {
@@ -165,4 +166,8 @@ td.legend-label {
 .color-key thead {
   background-color: white;
   border: none;
+}
+
+.color-key:last-child {
+  margin-bottom: 0;
 }

@@ -14,8 +14,11 @@ export class FeatureDatasetService {
   }
 
   getFeaturedDataset(): Observable<any> {
-    return this.http.get(`${intactDotmURL}`, {responseType: 'text'})
-      .catch(this.handleError);
+    //TODO Replace when in wwwdev production
+    // return this.http.get(`${intactDotmURL}`, {responseType: 'text'})
+    //   .catch(this.handleError);
+    return this.http.get('assets/data/dotm-1.1.xml', {responseType: 'text'})
+      .catch(this.handleError)
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {

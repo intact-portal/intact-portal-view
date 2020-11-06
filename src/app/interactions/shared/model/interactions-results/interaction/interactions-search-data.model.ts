@@ -3,7 +3,7 @@ import {InteractionFacets} from './interaction-facets.model';
 import {Filter} from '../filter.model';
 import {Pagination} from "../../../../../home-dashboard/shared/pagination.model";
 
-export class InteractionsSearchResult extends Pagination<Interaction[]> {
+export class InteractionsSearchResultData extends Pagination<Interaction[]> {
   private _facetResultPage: InteractionFacets;
   private _facetFields: Filter[];
 

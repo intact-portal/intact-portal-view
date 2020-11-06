@@ -3,10 +3,11 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
 import 'rxjs/add/operator/filter';
-import {InteractionsSearchResult} from '../shared/model/interactions-results/interaction/interactions-search.model';
+import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar/progress-bar.component";
 import {EFilter} from "./interactions-filters/interactions-filters.component";
+import {SearchService} from "../../home-dashboard/search/service/search.service";
 
 @Component({
   selector: 'ip-interactions-results',
@@ -14,8 +15,8 @@ import {EFilter} from "./interactions-filters/interactions-filters.component";
   styleUrls: ['./interactions-results.component.css']
 })
 export class InteractionsResultsComponent implements OnInit {
-  private _terms: string;
-  private _batchSearchFilter: boolean;
+  private _query: string;
+  private _batchSearch: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
   private _detectionMethodFilter: string[];
@@ -28,7 +29,7 @@ export class InteractionsResultsComponent implements OnInit {
 
   private _currentPageIndex: number;
 
-  private _interactionsSearch: InteractionsSearchResult;
+  private _interactionsSearch: InteractionsSearchResultData;
 
   // Interactors selected checkboxes list from the results-list
   @Input() interactorSelected: string;
@@ -38,6 +39,7 @@ export class InteractionsResultsComponent implements OnInit {
   private _hasResults = true;
 
   constructor(private titleService: Title,
+              private search: SearchService,
               private route: ActivatedRoute,
               private router: Router,
               private interactionsSearchService: InteractionsSearchService) {
@@ -47,10 +49,9 @@ export class InteractionsResultsComponent implements OnInit {
     this.titleService.setTitle('IntAct - Search Results');
 
     this.route.queryParams
-      .filter(params => params.query)
       .subscribe(params => {
-        this.terms = params.query;
-        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
+        this.query = params.query ? params.query : this.search.query;
+        this.batchSearch = this.search.isBatchSearch;
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
@@ -70,8 +71,8 @@ export class InteractionsResultsComponent implements OnInit {
 
   private requestInteractionsResults() {
     this.interactionsSearchService.getAllInteractionsAndFacetsQuery(
-      this.terms,
-      this.batchSearchFilter,
+      this.query,
+      this.batchSearch,
       this.interactorSpeciesFilter,
       this.interactorTypeFilter,
       this.interactionDetectionMethodFilter,
@@ -83,7 +84,7 @@ export class InteractionsResultsComponent implements OnInit {
       this.intraSpeciesFilter,
       this.currentPageIndex
     ).subscribe(interactionsSearch => {
-      this.interactionsSearch = interactionsSearch;
+      this.interactionsSearch = interactionsSearch.data;
       ProgressBarComponent.hideWithoutDelay();
       if (this.interactionsSearch.totalElements !== 0) {
         this._hasResults = true;
@@ -220,11 +221,13 @@ export class InteractionsResultsComponent implements OnInit {
 
   private updateURLParams(): void {
     const params: NavigationExtras = {};
-    params['query'] = this.terms;
+    if (!this.batchSearch) {
+      params['query'] = this.query;
+    }
     params['page'] = this.currentPageIndex;
 
-    if (this.batchSearchFilter !== undefined && this.batchSearchFilter !== false) {
-      params['batchSearch'] = this.batchSearchFilter;
+    if (this.batchSearch !== undefined && this.batchSearch !== false) {
+      params['batchSearch'] = this.batchSearch;
     }
     if (this.interactorTypeFilter !== undefined && this.interactorTypeFilter.length !== 0) {
       params['interactorType'] = this.prepareFiltersForParams(this.interactorTypeFilter);
@@ -264,14 +267,14 @@ export class InteractionsResultsComponent implements OnInit {
   /** GETTERS AND SETTERS **/
 
   get isLongTitle(): boolean {
-    return this.terms.length > 50;
+    return this.query.length > 50;
   }
 
   get shortTerms(): string {
     if (!this.isLongTitle) {
-      return this.terms;
+      return this.query;
     } else {
-      let terms = this.terms.split(/\s/);
+      let terms = this.query.split(/\s/);
       let last = terms.pop();
       while (last.length === 0 || !last.trim()) {
         last = terms.pop();
@@ -284,20 +287,20 @@ export class InteractionsResultsComponent implements OnInit {
     return this._hasResults;
   }
 
-  get terms(): string {
-    return this._terms;
+  get query(): string {
+    return this._query;
   }
 
-  set terms(value: string) {
-    this._terms = value;
+  set query(value: string) {
+    this._query = value;
   }
 
-  get batchSearchFilter(): boolean {
-    return this._batchSearchFilter;
+  get batchSearch(): boolean {
+    return this._batchSearch;
   }
 
-  set batchSearchFilter(value: boolean) {
-    this._batchSearchFilter = value;
+  set batchSearch(value: boolean) {
+    this._batchSearch = value;
   }
 
   get interactorSpeciesFilter(): string[] {
@@ -380,11 +383,11 @@ export class InteractionsResultsComponent implements OnInit {
     this._currentPageIndex = value;
   }
 
-  get interactionsSearch(): InteractionsSearchResult {
+  get interactionsSearch(): InteractionsSearchResultData {
     return this._interactionsSearch;
   }
 
-  set interactionsSearch(value: InteractionsSearchResult) {
+  set interactionsSearch(value: InteractionsSearchResultData) {
     this._interactionsSearch = value;
   }
 }

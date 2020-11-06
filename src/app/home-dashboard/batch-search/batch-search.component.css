@@ -35,6 +35,14 @@
   margin: 0;
 }
 
+.sticky-cell {
+  vertical-align: top;
+}
+
+.sticky-cell > * {
+  position: sticky;
+  top: 50%;
+}
 
 table tr, th {
   font-size: 13px;
@@ -59,19 +67,15 @@ tr.separator td{
   background-color: rgba(104, 41, 124, 0.50) !important;
   padding: 0 0;
 }
-/*th {*/
-/*  !*background: #68297c;*!*/
-/*  !*color: white;*!*/
-/*  !*-webkit-box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);*!*/
-/*  !*box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4), 0 -3px 0 0 white;*!*/
-/*  !*border: 1px solid white;*!*/
-/*  position: sticky;*/
-/*  top: 0; !* Don't forget this, required for the stickiness *!*/
-/*  z-index: 2;*/
-/*  background-color: #f9f9f9;*/
-/*  box-shadow: 1px 2px 0 0 black, 0 -3px 0 0 white;*/
-/*  font-weight: bold;*/
-/*}*/
+
+tr.other-interactors {
+  background-color: #ffeaff;
+}
+
+tr.other-interactors td:last-child {
+  font-weight: bold;
+  text-align: left;
+}
 
 tbody {
   border-bottom: 2px solid black !important;
@@ -79,4 +83,16 @@ tbody {
 
 tbody:last-child {
   border-bottom: 0 !important;
+}
+
+
+.y-overflowed {
+  height: 5em;
+  overflow-y: auto;
+  box-shadow: inset 0px -5px 5px -5px #00000066, inset 0px 5px 5px -5px #00000066;
+  margin: 1em 0;
+}
+
+ul {
+  margin: 0;
 }

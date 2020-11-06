@@ -3,6 +3,7 @@ import {NetworkSearchService} from '../../shared/service/network-search.service'
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
 import {NetworkViewService} from "../../shared/service/network-view.service";
+import {SearchService} from "../../../home-dashboard/search/service/search.service";
 
 declare const require: any;
 declare const $: any;
@@ -17,7 +18,7 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 })
 export class InteractionsViewerComponent implements OnInit {
 
-  private _terms: string;
+  private _query: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
@@ -43,7 +44,8 @@ export class InteractionsViewerComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private networkSearchService: NetworkSearchService,
-              public viewService: NetworkViewService) {
+              public viewService: NetworkViewService,
+              private search: SearchService) {
 
   }
 
@@ -52,10 +54,9 @@ export class InteractionsViewerComponent implements OnInit {
     this.graph = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
 
     this.route.queryParams
-      .filter(params => params.query)
       .subscribe(params => {
-        this.terms = params.query;
-        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
+        this.query = params.query? params.query: this.search.query;
+        this.batchSearchFilter = params.batchSearch ? params.batchSearch : this.search.isBatchSearch;
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
@@ -89,7 +90,7 @@ export class InteractionsViewerComponent implements OnInit {
 
   private requestIntactNetworkDetails() {
     this.networkSearchService.getInteractionNetwork(
-      this.terms,
+      this.query,
       this.batchSearchFilter,
       this.interactorSpeciesFilter,
       this.interactorTypeFilter,
@@ -157,12 +158,12 @@ export class InteractionsViewerComponent implements OnInit {
     this.graph.search(interactorName);
   }
 
-  get terms(): string {
-    return this._terms;
+  get query(): string {
+    return this._query;
   }
 
-  set terms(value: string) {
-    this._terms = value;
+  set query(value: string) {
+    this._query = value;
   }
 
   get batchSearchFilter(): boolean {

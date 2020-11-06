@@ -41,11 +41,7 @@ export class NetworkSearchService {
       .set('interSpecies', intraSpeciesFilter.toString()) // TODO Noe change the name of the param in the web service the meaning is the opposite
       .set('isCompound', compoundGraph.toString());
 
-
-    const options = query ? {params: params} : {};
-
-
-    return this.http.get(`${baseURL}/network/getInteractions`, options)
+    return this.http.post(`${baseURL}/network/getInteractions`, params)
       .catch(NetworkSearchService.handleError);
   }
 

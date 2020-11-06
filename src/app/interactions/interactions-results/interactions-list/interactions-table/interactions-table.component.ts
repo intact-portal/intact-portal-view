@@ -10,6 +10,7 @@ import {InteractionTable} from "../../../shared/model/tables/interaction-table.m
 import {Column} from "../../../shared/model/tables/column.model";
 import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
 import {ResultTable} from "../../../shared/model/interactions-results/result-table-interface";
+import {SearchService} from "../../../../home-dashboard/search/service/search.service";
 
 
 const baseURL = environment.intact_portal_ws;
@@ -26,7 +27,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactionTab: boolean;
 
-  private _terms: string;
+  private _query: string;
   private _batchSearchFilter: boolean;
   private _interactorSpeciesFilter: string[];
   private _interactorTypeFilter: string[];
@@ -44,14 +45,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   private _columns = new InteractionTable();
 
-  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService) {
+  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService, private search: SearchService) {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.filter(params => params.query)
+    this.route.queryParams
       .subscribe(params => {
-        this.terms = params.query;
-        this.batchSearchFilter = params.batchSearch ? params.batchSearch : false;
+        this.query = params.query ? params.query : this.search.query;
+        this.batchSearchFilter = params.batchSearch ? params.batchSearch : this.search.isBatchSearch;
         this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
         this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
         this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
@@ -164,7 +165,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           data: (d) => {
             d.page = d.start / d.length;
             d.pageSize = d.length;
-            d.query = this.terms;
+            d.query = this.query;
             d.batchSearch = this.batchSearchFilter;
             d.interactorSpecies = this.interactorSpeciesFilter;
             d.interactorType = this.interactorTypeFilter;
@@ -479,12 +480,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   }
 
 
-  get terms(): string {
-    return this._terms;
+  get query(): string {
+    return this._query;
   }
 
-  set terms(value: string) {
-    this._terms = value;
+  set query(value: string) {
+    this._query = value;
   }
 
   get batchSearchFilter(): boolean {

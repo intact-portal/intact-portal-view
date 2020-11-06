@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Interactome} from '../interactome.model';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
+import {SearchService} from "../../home-dashboard/search/service/search.service";
 
 @Component({
   selector: 'ip-interactome',
@@ -12,14 +13,10 @@ export class InteractomeComponent implements OnInit {
 
   private _interactome: Interactome;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, public search: SearchService) {
   }
 
   ngOnInit() {
-  }
-
-  search(specieName: string) {
-    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpecies: specieName, miScoreMin: 0, miScoreMax: 1, page: 1}});
   }
 
   goToInteractomePSI25(): void {

@@ -1,9 +1,9 @@
 <aw-wizard [navBarLayout]="'large-empty-symbols'">
-  <aw-wizard-step [stepTitle]="'Add Identifiers'"
+  <aw-wizard-step stepTitle="Design query"
                   [navigationSymbol]="{ symbol: '&#xf093;', fontFamily: 'EBI-Common'}"
                   (stepExit)="resolveSearch()">
 
-    <ul class="accordion margin-top-large" data-accordion data-deep-link="true" data-update-history="false">
+    <ul class="accordion margin-top-large" data-accordion>
       <li class="accordion-item is-active" data-accordion-item>
         <!-- Accordion tab title -->
         <a href="home#identifier-list" class="accordion-title">Interactor Identifiers List</a>
@@ -12,8 +12,8 @@
         <div id="identifier-list" class="accordion-content" data-tab-content>
           <div class="row margin-top-large">
             <div id="searchBox3" class="columns small-12">
-              <textarea #query id="id-list" placeholder="Search..." rows="5"></textarea>
-              <button class="button" type="button" (click)="setIds(query.value)" awNextStep>
+              <textarea #query id="term-list" placeholder="Search..." rows="5"></textarea>
+              <button class="button" type="button" (click)="setQuery(query.value)" awNextStep>
                 <i class="icon icon-common icon-cogs"></i> Next Step
               </button>
             </div>
@@ -87,7 +87,7 @@
               <td class="text-center">
                 <span *ngIf="item.isSuccess">
                     <button id="batch-search-button" type="button" class="button" name="submit" value="1"
-                            (click)="setIds(response)" awNextStep>
+                            (click)="setQuery(response)" awNextStep>
                       <i class="icon icon-common icon-cogs"></i> Next Step</button>
                 </span>
               </td>
@@ -99,7 +99,7 @@
     </ul>
   </aw-wizard-step>
 
-  <aw-wizard-step [stepTitle]="'Explore results'"
+  <aw-wizard-step [stepTitle]="'Resolve terms'"
                   [navigationSymbol]="{ symbol: '&#xf085;', fontFamily: 'EBI-Common'}">
     <div class="margin-top-xlarge margin-bottom-xlarge">
       <div *ngIf="dataReceived; else loadingSpinner">
@@ -109,7 +109,7 @@
             <thead>
             <tr>
               <th>Input Term</th>
-              <th>Identifiers found</th>
+              <th>Include</th>
               <th>IntAct Ac</th>
               <th>ID</th>
               <th>Name</th>
@@ -120,13 +120,16 @@
             </tr>
             </thead>
             <tbody *ngFor="let entry of foundEntries; let j = index;">
-            <tr *ngFor="let interactor of entry['content']; let i = index;"
-                [ngClass]="{'odd': i % 2 !== 0, 'even': i %2 ===0}">
-              <td [rowSpan]="entry['totalElements']" *ngIf="i === 0">
-                {{entry['key']}}
+            <tr *ngFor="let interactor of entry.content; let i = index;"
+                [ngClass]="{'odd': i % 2 !== 0, 'even': i % 2 ===0}" style="position: relative">
+              <td [rowSpan]="entry.totalElements < 50 ? entry.totalElements : 51" *ngIf="i === 0" class="sticky-cell">
+                <div>{{entry.term}}</div>
               </td>
-              <td [rowSpan]="entry['totalElements']" *ngIf="i === 0">
-                {{entry['totalElements']}}
+              <td>
+                <div>
+                  <input type="checkbox" checked name="interactor"
+                         [value]="interactor.interactorAc" (change)="onInteractorSelection($event)">
+                </div>
               </td>
               <td>{{ interactor.interactorAc }}</td>
               <td>{{ interactor.interactorPreferredIdentifier }}</td>
@@ -135,6 +138,17 @@
               <td>{{ interactor.interactorSpecies}}</td>
               <td>{{ interactor.interactorType }}</td>
               <td>{{ interactor.interactionCount }}</td>
+            </tr>
+            <tr *ngIf="!entry.last" class="other-interactors">
+              <td>
+                <div>
+                  <input type="checkbox" checked name="completion"
+                         [value]="entry.term" (change)="onCompletionSelection($event)">
+                </div>
+              </td>
+              <td colspan="7">
+                {{entry.totalElements - 50}} other interactors
+              </td>
             </tr>
             <tr class="separator" *ngIf="j < foundEntries.length - 1">
               <td colspan="9">
@@ -157,15 +171,32 @@
       </ng-template>
     </div>
 
-    <button class="button" type="button" awPreviousStep (click)="resetData()">Go to previous step</button>
-    <button class="button" type="button" awNextStep [disabled]="!dataReceived">Go to next step</button>
+    <button class="button" type="button" awPreviousStep (click)="resetSecondStep()">Go to previous step</button>
+    <button class="button" type="button" awNextStep [disabled]="!dataReceived"
+            (click)="collectNextPagesInteractors()">Go to next step
+    </button>
   </aw-wizard-step>
-  <aw-wizard-step [stepTitle]="'Navigate Results'" [navigationSymbol]="{ symbol: '&#xf002;', fontFamily: 'EBI-Common'}">
-    <div>
-      Content {{ids}}
+  <aw-wizard-step stepTitle="Collect interactors" [navigationSymbol]="{ symbol: '&#xf002;', fontFamily: 'EBI-Common'}">
+    <div class="small-5 small-centered columns" *ngIf="entriesToComplete.size > 0">
+      <mat-progress-spinner color="primary" mode="determinate" [value]="acCollectionProgress" style="margin:0 auto;">
+      </mat-progress-spinner>
+      <div style="text-align: center">
+        <h5>Gathering missing interactors</h5>
+        <p>{{interactorsQueried}} / {{totalInteractorsToQuery}}</p>
+      </div>
     </div>
-    <button class="button" type="button" awPreviousStep>Previous Step</button>
-    <button class="button" type="button" (click)="batchSearch(ids, 'button')">
+
+    <div class="y-overflowed">
+      <ul style="flex-direction: column-reverse;
+    display: flex;">
+        <li *ngFor="let ac of interactorAcs">
+          {{ac}}
+        </li>
+      </ul>
+    </div>
+
+    <button class="button" type="button" (click)="resetThirdStep()" awPreviousStep>Previous Step</button>
+    <button class="button" type="button" (click)="batchSearch()" [disabled]="!acCollectionFinished">
       <i class="icon icon-common icon-search"></i> Search
     </button>
   </aw-wizard-step>

@@ -8,7 +8,7 @@
   background: #fbfbfb;
 }
 
-#complexViewerSVG {
+.complexViewerSVG {
   height: 100%;
   width: 100%;
   display: block;
@@ -29,13 +29,14 @@ div#viewerLegend {
 #colours {
   min-height: auto;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
-table#colourViewer {
-  margin-bottom: 0rem
+table.color-key {
+  margin-bottom: 1rem;
 }
 
-table#colourViewer tbody tr {
+table.color-key tbody tr {
   background-color: white;
   font-size: 15px;
 }
@@ -95,7 +96,7 @@ svg {
 
 .custom-menu li {
   padding: 8px 12px;
-  cursor: pointer;
+  cursor: default;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -103,12 +104,23 @@ svg {
   user-select: none;
 }
 
+.custom-menu input {
+  cursor: pointer;
+}
 .custom-menu li:hover {
   background-color: #DEF;
 }
 
+.custom-menu li:nth-child(1) {
+  cursor: pointer;
+}
+
+.custom-menu li:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+}
+
 .barScale {
-  display: inline;
   padding-left: 10px;
 }
 
@@ -136,4 +148,21 @@ svg {
 
 td.legend-label {
   padding: 2px 2px 2px 0.5rem;
+}
+
+.tooltip[display="none"] {
+  display: none;
+}
+
+.color-key td:nth-child(1) {
+  width: 90px;
+}
+
+.color-key td {
+  padding: 0.4rem;
+}
+
+.color-key thead {
+  background-color: white;
+  border: none;
 }

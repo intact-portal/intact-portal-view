@@ -229,11 +229,17 @@ export class ParticipantTableComponent implements OnInit, OnChanges {
       switch (type) {
         case 'expand-all':
           tableSelectors.prop('checked', true);
+          tableSelectors.each((index, elem) => {
+            this._participantsSelected.add(elem.id);
+          })
+
           break;
         case 'collapse-all':
           tableSelectors.prop('checked', false);
+          this._participantsSelected.clear();
           break;
       }
+      this.participantChanged.emit(this.participantsSelected);
     })
 
     table.on('change', 'input[name=\'check\']', (e) => {
@@ -244,7 +250,6 @@ export class ParticipantTableComponent implements OnInit, OnChanges {
         } else {
           this._participantsSelected.delete(participantSel);
         }
-        console.log(this._participantsSelected)
         this.participantChanged.emit(this.participantsSelected);
       }
     });

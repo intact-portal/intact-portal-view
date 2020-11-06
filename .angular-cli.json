@@ -32,6 +32,7 @@
         "../node_modules/typeahead.js/dist/bloodhound.js",
         "../node_modules/typeahead.js/dist/typeahead.jquery.js",
         "../node_modules/datatables.net/js/jquery.dataTables.js",
+        "../node_modules/complexviewer/dist/complexviewer.js",
         "./assets/js/rgbcolor.js"
       ],
       "environmentSource": "environments/environment.ts",

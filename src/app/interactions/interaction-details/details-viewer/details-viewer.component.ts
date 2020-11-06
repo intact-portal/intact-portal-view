@@ -13,13 +13,13 @@ import {InteractionsDetailsService} from '../../shared/service/interactions-deta
 
 import '../../../../assets/js/rgbcolor.js';
 import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
+import * as complexviewer from 'complexviewer';
 
 declare const RGBColor: any;
 
 declare const require: any;
 declare const $: any;
-const xiNET = require('expose-loader?xiNET!complexviewer');
-let xlv: any;
+let viewer: any;
 
 
 @Component({
@@ -44,7 +44,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   private PROTEIN_BLOB = require('../../../../assets/images/detailsViewer/svgForKey/proteinBlob.svg');
   private PROTEIN_BAR = require('../../../../assets/images/detailsViewer/svgForKey/proteinBar.svg');
 
-  private _annotationSelected: string;
+  private _annotationSelected: string = 'MI Features';
 
   constructor(private interactionsDetailsService: InteractionsDetailsService) {
   }
@@ -57,9 +57,8 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const chng = changes['expandedParticipantAc'];
     const cur = JSON.stringify(chng.currentValue);
-
     if (cur !== undefined) {
-      xlv.expandAndCollapseSelection(cur);
+      viewer.expandAndCollapseSelection(cur);
     }
   }
 
@@ -70,12 +69,14 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
           ProgressBarComponent.hide();
 
           if (this.interactionData !== undefined) {
-            xlv = new xiNET('interaction-viewer-container');
-            xlv.readMIJSON(this.interactionData, true);
-            xlv.autoLayout();
-
-            // Initialise the legend colours for the features by default MI features
+            viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
+            viewer.readMIJSON(this.interactionData, true);
+            console.log(viewer);
+            viewer.autoLayout();
             this.legendColours();
+            //TODO Replace by proper implementation with complexviewer
+            $('#colours').on('DOMSubtreeModified', this.adjustLegend);
+            this.viewerActionsToTable();
           }
         },
         (err: HttpErrorResponse) => {
@@ -85,52 +86,65 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   }
 
   expandAll(): void {
-    xlv.expandAll();
+    viewer.expandAll();
   }
 
   collapseAll(): void {
-    xlv.collapseAll();
+    viewer.collapseAll();
   }
 
   changeAnnotations(event): void {
+    viewer.showAnnotations(this.annotationSelected, false);
     this.annotationSelected = event.target.value;
-    xlv.setAnnotations(this.annotationSelected);
+    if (this.annotationSelected !== 'None') {
+      viewer.showAnnotations(this.annotationSelected, true);
+    }
+    // this.adjustLegend();
   }
 
+  selectedMolecule;
+
   private legendColours(): void {
-    xlv.legendCallbacks.push(function (colourAssignment) {
+    viewer.addColorSchemeKey(document.getElementById('colours'));
+  }
 
-      const coloursKeyDiv = document.getElementById('colours');
-
-      if (colourAssignment) {
-        // TODO: Replace this (ugly code) for more readable code, copy and paste from the complexviewer for the SAB.
-        // TODO: Add the html in the template html and process in the ts the values as we use to do for the rest of the app.
-        let table = `<table id="colourViewer">
-                       <tr>
-                         <td style='width:100px;margin:10px;background:#b3e2cd; border:1px solid #82ad98;'></td>
-                         <td class="legend-label">${this.interactionAc}</td>
-                       </tr>`;
-        const domain = colourAssignment.domain();
-        const range = colourAssignment.range();
-
-        for (let i = 0; i < domain.length; i++) {
-          // make transparent version of colour
-          const temp = new RGBColor(range[i % 20]);
-          const trans = `rgba(${temp.r},${temp.g},${temp.b}, 0.6)`;
-          table += `<tr>
-                      <td style='width:75px;margin:10px;background:${trans};border:1px solid ${range[i % 20]};'></td>
-                      <td class="legend-label">${domain[i]}</td>
-                    </tr>`;
-        }
-        table += '</table>';
-        coloursKeyDiv.innerHTML = table;
-      }
-    }.bind(this));
-
-    // By default the annotation selected is MI Features when the page is loaded the first time
-    if (this.annotationSelected === undefined) {
-      xlv.setAnnotations('MI features');
+  private adjustLegend(): void {
+    let interactionLegend = $('table.color-key').first();
+    let thead = interactionLegend.children('thead');
+    if (thead.text() !== 'Interaction') {
+      thead.text('Interaction')
+      interactionLegend.find('td').last().text(function () {
+        return $(this).text().replace('intact_', '')
+      })
     }
+  }
+
+  private viewerActionsToTable() {
+    //TODO Replace by proper listener implementation in complexviewer
+    viewer.addHoverListener((e: string[]) => {
+      if (e.length > 0) {
+        this.selectedMolecule = e[0].split('_').slice(1).join('_');
+      }
+    });
+
+    $(document).on('click', '.collapse', () => $(`#${this.selectedMolecule}:checkbox`).prop('checked', false))
+
+    var dragging = 0;
+    function isDragging() {
+      return dragging = 1;
+    }
+    $('#proteinUpper rect').mousedown(() => $(document).on('mousemove', '#proteinUpper rect', isDragging));
+
+    $(document).on('click', '#proteinUpper rect', (e) => {
+      if (dragging === 0) {
+        let moleculeTableSelector = $(`#${this.selectedMolecule}:checkbox`);
+        if (!moleculeTableSelector.prop('checked')) {
+          moleculeTableSelector.prop('checked', true);
+        }
+      }
+      dragging = 0;
+      $(document).off('mousemove', '#proteinUpper rect', isDragging);
+    })
   }
 
   get interactionData(): any {

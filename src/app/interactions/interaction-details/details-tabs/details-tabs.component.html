@@ -9,12 +9,14 @@
     <ip-column-toggle *ngIf="isTabParticipantActive"
                       [columns]="participantTable.columns"
                       [dataTable]="participantTable.dataTable"
-                      [columnView]="participantTable.columnView" class="float-right"></ip-column-toggle>
+                      [columnView]="participantTable.columnView"
+                      [isTabActive]="isTabParticipantActive" class="float-right"></ip-column-toggle>
 
     <ip-column-toggle *ngIf="isTabFeatureActive"
                       [columns]="featureTable.columns"
                       [dataTable]="featureTable.dataTable"
-                      [columnView]="featureTable.columnView" class="float-right"></ip-column-toggle>
+                      [columnView]="featureTable.columnView"
+                      [isTabActive]="isTabFeatureActive" class="float-right"></ip-column-toggle>
   </ul>
 
   <div class="tabs-content" data-tabs-content="details-tabs">

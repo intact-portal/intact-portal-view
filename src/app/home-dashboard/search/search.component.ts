@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   data: Pagination<any[]>;
   private updatingPages = false;
   private ignoreChange = false;
+  private query: string;
 
   constructor(private searchService: SearchService) {
   }
@@ -29,8 +30,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.searchSuggestions();
   }
 
-  private search(query: string, typeOfButton: string) {
+  search(query: string, typeOfButton: string) {
     this.searchService.search(query);
+
+    if (typeOfButton === 'enter' || typeOfButton === 'button') {
+      this.searchService.title = query;
+    }
 
     localStorage.removeItem('participants_columnView_columns');
     localStorage.removeItem('features_columnView_columns');
@@ -46,18 +51,18 @@ export class SearchComponent implements OnInit, AfterViewInit {
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
         url: `${baseURL}/interactor/findInteractor/%QUERY?page=0&pageSize=10`,
-        prepare: (query, settings) =>{
+        prepare: (query, settings) => {
           if (!this.ignoreChange) {
-            console.log(this.currentPage);
+            this.query = query;
             settings.url = settings.url.replace('%QUERY', query);
             settings.url = settings.url.replace('page=0', `page=${this.currentPage}`)
           }
           return settings;
         },
-        transform: function (data) {
+        transform: (data) => {
           this.data = data;
           return data.content;
-        }.bind(this)
+        }
       }
     });
     const interactorsData = this.bloodhound;
@@ -221,6 +226,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       } else {
         id = item.interactorAc;
       }
+      this.searchService.title = `${this.query} · ${id}`;
       this.search(id, '');
     });
     $(document).on('click', '#prev', () => this.previousPage())

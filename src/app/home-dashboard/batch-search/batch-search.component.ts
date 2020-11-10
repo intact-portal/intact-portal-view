@@ -32,7 +32,7 @@ export class BatchSearchComponent {
   private _acCollectionProgress = 0;
   private _acCollectionFinished = false;
 
-  constructor(private searchService: SearchService) {
+  constructor(private search: SearchService) {
     this.uploader = new FileUploader({
       url: `${baseURL}/interaction/uploadFile/`,
       disableMultipart: false
@@ -40,6 +40,7 @@ export class BatchSearchComponent {
 
     this.uploader.onBeforeUploadItem = (item) => {
       item.withCredentials = false;
+      this.search.title = item.file.name;
     }
 
     this.hasBaseDropZoneOver = false;
@@ -48,7 +49,7 @@ export class BatchSearchComponent {
   }
 
   resolveSearch() {
-    this.searchService.resolveSearch(this.query)
+    this.search.resolveSearch(this.query)
       .subscribe(data => {
         this.splitData(data)
       });
@@ -70,7 +71,12 @@ export class BatchSearchComponent {
   }
 
   batchSearch() {
-    this.searchService.batchSearch(Array.from(this.interactorAcs.values()).join('\n'));
+    this.search.batchSearch(Array.from(this.interactorAcs.values()).join('\n'));
+  }
+
+  validateSearchBox(query: string) {
+    this.search.title = query;
+    this.setQuery(query)
   }
 
   setQuery(response: string) {
@@ -109,7 +115,7 @@ export class BatchSearchComponent {
       this._totalInteractorsToQuery = entriesToComplete.reduce((total, entry) => total + entry.totalElements - 50, 0);
     }
     let query = entriesToComplete.map(entry => entry.term).join(', ')
-    this.searchService.resolveSearch(query, page, 50).subscribe(data => {
+    this.search.resolveSearch(query, page, 50).subscribe(data => {
       let nextEntriesToComplete = [];
       for (let key of Object.keys(data)) {
         let entry: ResolutionEntry = data[key];

@@ -39,7 +39,7 @@ export class InteractionsResultsComponent implements OnInit {
   private _hasResults = true;
 
   constructor(private titleService: Title,
-              private search: SearchService,
+              public search: SearchService,
               private route: ActivatedRoute,
               private router: Router,
               private interactionsSearchService: InteractionsSearchService) {
@@ -265,16 +265,19 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   /** GETTERS AND SETTERS **/
+  get title(): string {
+    return this.search.title ? this.search.title : this.query;
+  }
 
   get isLongTitle(): boolean {
-    return this.query.length > 50;
+    return this.title.length > 50;
   }
 
   get shortTerms(): string {
     if (!this.isLongTitle) {
-      return this.query;
+      return this.title;
     } else {
-      let terms = this.query.split(/\s/);
+      let terms = this.title.split(/\s/);
       let last = terms.pop();
       while (last.length === 0 || !last.trim()) {
         last = terms.pop();

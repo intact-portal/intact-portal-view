@@ -96,7 +96,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
         {
           data: this._columns.linkedFeatures.key,
           title: this._columns.linkedFeatures.name,
-          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
+          render: this.tableFactory.enlistWithButtons((d) => `${d.shortName} (${d.ac})`)
         },
         {
           data: this._columns.participantName.key,
@@ -121,6 +121,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
           title: this._columns.parameters.name,
           render: function (data, type, row, meta) {
             if (type === 'display') {
+              console.log(row)
               return $.map(data, function (d, i) {
                 return '<div class="margin-bottom-medium">' +
                   '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +

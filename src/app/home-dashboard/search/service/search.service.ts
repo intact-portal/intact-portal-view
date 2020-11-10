@@ -11,8 +11,8 @@ const baseURL = environment.intact_portal_ws;
 
 @Injectable()
 export class SearchService {
-
   private _query: string;
+  private _title:string;
   private _isBatchSearch = false;
 
 
@@ -64,6 +64,14 @@ export class SearchService {
 
   set query(value: string) {
     this._query = value;
+  }
+
+  get title(): string {
+    return this._title;
+  }
+
+  set title(value: string) {
+    this._title = value;
   }
 
   get isBatchSearch(): boolean {

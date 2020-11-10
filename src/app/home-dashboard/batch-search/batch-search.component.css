@@ -53,6 +53,7 @@ th {
   position: sticky;
   top: 0;
   background-color: #8c5d9b !important;
+  z-index: 1;
 }
 
 

@@ -9,12 +9,13 @@
                       [columns]="interactionsTable.columns"
                       [dataTable]="interactionsTable.dataTable"
                       [columnView]="interactionsTable.columnView"
-                      (columnSelectionChanged)="interactionsTable.updateTable()" class="float-right"></ip-column-toggle>
+                      [isTabActive]="isTabInteractionActive" class="float-right"></ip-column-toggle>
 
     <ip-column-toggle *ngIf="!isInteractionTableShown"
                       [columns]="interactorsTable.columns"
                       [dataTable]="interactorsTable.dataTable"
-                      [columnView]="interactorsTable.columnView" class="float-right"></ip-column-toggle>
+                      [columnView]="interactorsTable.columnView"
+                      [isTabActive]="isTabInteractorActive" class="float-right"></ip-column-toggle>
   </ul>
 
   <div class="tabs-content" data-tabs-content="search-results-tabs" data-deep-link="true" data-update-history="false">

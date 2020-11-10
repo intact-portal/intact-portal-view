@@ -4,9 +4,9 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnInit,
-  Output
+  Output, SimpleChanges
 } from '@angular/core';
 import * as $ from 'jquery';
 import {Column} from "../../../../shared/model/tables/column.model";
@@ -17,11 +17,12 @@ import {Column} from "../../../../shared/model/tables/column.model";
   styleUrls: ['./column-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ColumnToggleComponent implements OnInit, AfterViewInit {
+export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() columns: Column[];
   @Input() dataTable: any;
   @Input() columnView: string;
+  @Input() isTabActive: boolean;
   @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   columnToggleHover = false;
@@ -31,6 +32,16 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.initColumnVisibility()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.isTabActive.currentValue) {
+      this.initColumnVisibility()
+    }
+  }
+
+  private initColumnVisibility() {
     const columnView = this.columnView + '_columns';
 
     // Initialize columns that are already selected to view
@@ -50,6 +61,8 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+
 
   ngAfterViewInit(): void {
     const table = $('#' + this.columnView);
@@ -71,7 +84,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit {
     });
   }
 
-  toggleColumnView() {
+  private toggleColumnView() {
     const table = $('#' + this.columnView);
 
     table.toggle();

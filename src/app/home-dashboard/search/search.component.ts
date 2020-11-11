@@ -226,7 +226,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       } else {
         id = item.interactorAc;
       }
-      this.searchService.title = `${this.query} · ${id}`;
+      this.searchService.title = `${this.query} · ${item.interactorPreferredIdentifier}`;
       this.search(id, '');
     });
     $(document).on('click', '#prev', () => this.previousPage())

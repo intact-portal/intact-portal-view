@@ -264,16 +264,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             title: this._columns.publicationIdentifiers.name,
             render: this.tableFactory.enlistWithButtons((d) => {
               const data_s = d.split('(');
-              const publicationId = data_s[0].trim();
+              const publicationId :string= data_s[0].trim();
               const publicationSource = data_s[1].slice(0, -1);
               let url = '';
-              if (publicationSource === 'pubmed') {
+              if (publicationSource === 'pubmed' && !publicationId.includes('unassigned')) {
                 url = 'https://europepmc.org/article/MED/' + publicationId;
               } else if (publicationSource === 'imex') {
                 url = ebiURL + '/intact/imex/main.xhtml?query=' + publicationId;
               } else if (publicationSource === 'doi') {
                 url = 'https://www.doi.org/' + publicationId;
-              } else if (publicationSource === 'intact') {
+              } else {
                 return;
               }
 

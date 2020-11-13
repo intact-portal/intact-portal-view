@@ -26,12 +26,16 @@ export class TableFactoryService {
   enlistWithButtons = (renderer: (data: any, i?: number) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
     if (data == null || type != 'display') return data;
     let html = '<div class="show-more-content">'
+    let displayed = 0;
     for (let i = 0; i < data.length; i++) {
       if (i === 2) html += '<div class="to-hide" style="display: none">';
       let render = renderer(data[i], i);
-      html += render ? render : '';
+      if (render) {
+        html += render;
+        displayed++;
+      }
     }
-    if (data.length > 2) {
+    if (displayed > 2) {
       html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${data.length - 2})</button>`;
     } else html += '</div>';
     return `<div class="${containerClass} ${alignTop ? 'table-list' : ''}">${html}</div>`;

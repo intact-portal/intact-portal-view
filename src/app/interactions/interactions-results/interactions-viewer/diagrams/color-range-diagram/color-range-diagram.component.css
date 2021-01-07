@@ -1,0 +1,11 @@
+.upper-filled {
+  paint-order: markers stroke fill;
+}
+
+rect {
+  stroke: #ababab;
+}
+
+text {
+  fill: #3c3c3c;
+}

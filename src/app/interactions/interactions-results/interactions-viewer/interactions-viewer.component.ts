@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
 import {NetworkViewService} from "../../shared/service/network-view.service";
 import {SearchService} from "../../../home-dashboard/search/service/search.service";
+import {NetworkLegend} from "../../shared/model/interaction-legend/network-legend";
 
 declare const require: any;
 declare const $: any;
@@ -35,6 +36,7 @@ export class InteractionsViewerComponent implements OnInit {
   private _compoundGraph = false;
   private _hasMutation = false;
   private _layoutName = 'fcose';
+  legend: NetworkLegend;
 
   @Input() interactorSelected: string;
   @Input() interactionSelected: string;
@@ -102,10 +104,11 @@ export class InteractionsViewerComponent implements OnInit {
       this.miScoreMax,
       this.intraSpeciesFilter,
       this.compoundGraph
-    ).subscribe(data => {
-      this.interactionsJSON = data;
+    ).subscribe(json => {
+      this.interactionsJSON = json;
+      this.legend = json.legend;
       this.loadViewState();
-      this._hasMutation = data.some(elt => elt.data.mutation);
+      this._hasMutation = json.legend.edge_legend.mutation_color.true !== undefined;
       // Makes the network expanded expanded by default
       this.graph.initializeWithData(this.interactionsJSON, true, this.affectedByMutation, this.layoutName);
       this.graph.expandEdges(this.expanded, this.affectedByMutation);

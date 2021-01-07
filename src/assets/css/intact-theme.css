@@ -2,6 +2,27 @@
   Colour palette: IntAct-Portal
 */
 
+.edge-diagram {
+  height: 20pt;
+}
+
+.node-diagram {
+  height: 20pt;
+}
+
+.node-diagram text {
+  font-size: xx-large;
+  font-weight: bold;
+  stroke: black;
+  stroke-width: 8;
+  stroke-opacity: 0.7;
+  paint-order: stroke;
+}
+svg.complete-legend-line {
+  max-height: 30pt;
+  width: fit-content;
+  max-width: 100%;
+}
 a {
   color: #222;
 }
@@ -156,6 +177,10 @@ a:visited {
   color: #0a0a0a;
 }
 
+.legend-label span {
+  vertical-align: super;
+}
+
 /* Progress bar */
 .progress-meter {
   position: relative;
@@ -183,6 +208,7 @@ a:visited {
 .alert-panel h3 {
   color: #68297c;
 }
+
 /***************** Tool tips **********************/
 /* Tooltip container */
 .tool-tip {
@@ -194,7 +220,7 @@ a:visited {
 .tool-tip .tool-tip-text {
   visibility: hidden;
   width: 120px;
-  background-color: rgba(0,0,0,0.85);
+  background-color: rgba(0, 0, 0, 0.85);
   color: #fff;
   text-align: center;
   padding: 5px 5px;
@@ -434,6 +460,7 @@ table.dataTable tr, th {
 .tabs-panel.table-tab {
   padding: 1rem 0;
 }
+
 /************** TABLES ELEMENTS **************/
 
 .shadow-left {
@@ -519,7 +546,6 @@ div.dataTables_scroll {
   font-size: small;
   /*padding: 3px 4px;*/
 }
-
 
 
 .identifier-cell-container {

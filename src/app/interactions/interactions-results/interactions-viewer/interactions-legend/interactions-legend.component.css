@@ -1,0 +1,27 @@
+.node-line,
+.edge-line {
+  padding-left: 5pt;
+  background: #fbfbfb;
+}
+.node-line {
+  height: 22pt;
+}
+.edge-line {
+  height: 13pt;
+}
+
+.node-line span,
+.edge-line span{
+  vertical-align: middle;
+  padding-left: 4pt;
+}
+
+.edge-line:last-child {
+  padding-bottom: 21pt;
+}
+
+h5 {
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+}
+

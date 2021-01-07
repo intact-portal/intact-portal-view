@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
+import {NetworkLegend} from "../model/interaction-legend/network-legend";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -23,7 +24,7 @@ export class NetworkSearchService {
                         miScoreMin: any,
                         miScoreMax: any,
                         intraSpeciesFilter: boolean,
-                        compoundGraph: boolean): Observable<{ data: any, group: string }[]> {
+                        compoundGraph: boolean): Observable<{ data: { data: any, group: string }[], legend: NetworkLegend }> {
 
     query = query.trim();
 

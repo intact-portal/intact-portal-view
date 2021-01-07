@@ -1,0 +1,84 @@
+<h4 class="underline margin-bottom-large">Legend</h4>
+
+<div id="node-legends">
+  <h5>Nodes</h5>
+  <div>
+    <span>Color ~ <i>Species</i></span>
+    <div id="species-colors" *ngIf="legend.node_legend.species_color">
+      <div *ngFor="let key of objectKeys(legend.node_legend.species_color)" class="node-line">
+        <ip-node-diagram [color]="legend.node_legend.species_color[key]"></ip-node-diagram>
+        <span><i>{{key}}</i></span>
+      </div>
+    </div>
+
+    <div id="kingdom-colors" *ngIf="legend.node_legend.kingdom_color">
+      <div *ngFor="let key of objectKeys(legend.node_legend.kingdom_color)" class="node-line">
+        <ip-node-diagram [color]="legend.node_legend.kingdom_color[key]"></ip-node-diagram>
+        <span>{{key}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="node-shapes" *ngIf="legend.node_legend.shape">
+    <span>Shape ~ <i>Type</i></span>
+    <div *ngFor="let key of objectKeys(legend.node_legend.shape)" class="node-line">
+      <ip-node-diagram [shape]="legend.node_legend.shape[key]"></ip-node-diagram>
+      <span>{{key}}</span>
+    </div>
+  </div>
+
+  <div *ngIf="mutation && legend.node_legend.border_color.true" id="node-mutation">
+    <span>Border ~ <i>Affected by mutation</i></span>
+    <div *ngFor="let status of ['true']" class="node-line">
+      <ip-node-diagram [borderColor]="legend.node_legend.border_color[status].value"></ip-node-diagram>
+      <span>{{legend.node_legend.border_color[status].label}}</span>
+    </div>
+  </div>
+</div>
+
+<div id="edge-legends">
+  <h5>Edges</h5>
+
+  <div *ngIf="expanded; else collapsedLegend">
+    <div *ngIf="!mutation; else mutationLegend">
+      <span>Color ~ <i>Type</i></span>
+      <div *ngFor="let key of objectKeys(legend.edge_legend.evidence_color)" class="edge-line">
+        <ip-edge-diagram [color]="legend.edge_legend.evidence_color[key]"></ip-edge-diagram>
+        <span>{{key}}</span>
+      </div>
+    </div>
+
+    <ng-template #mutationLegend>
+      <div>
+        <span>Color ~ <i>Affected by mutation</i></span>
+        <div *ngFor="let status of ['true']" class="edge-line">
+          <ip-edge-diagram [color]="legend.edge_legend.mutation_color[status].value"></ip-edge-diagram>
+          <span>{{legend.edge_legend.mutation_color[status].label}}</span>
+        </div>
+      </div>
+    </ng-template>
+    <div *ngIf="legend.edge_legend.expansion">
+      <span>Shape ~ <i>Expansion method</i></span>
+      <div *ngFor="let status of ['true']" class="edge-line">
+        <ip-edge-diagram [shape]="legend.edge_legend.expansion[status].value"></ip-edge-diagram>
+        <span>{{legend.edge_legend.expansion[status].label}}</span>
+      </div>
+    </div>
+
+  </div>
+  <ng-template #collapsedLegend>
+    <div *ngIf="legend.edge_legend.summary_color">
+      <span>Color ~ <i>MI Score</i></span>
+      <ip-color-range-diagram [rangeMap]="legend.edge_legend.summary_color"></ip-color-range-diagram>
+    </div>
+
+    <div>
+      <span>Width ~ <i>#Evidence</i></span>
+      <ip-edge-thickness-diagram [minValue]="legend.edge_legend.summary_width.minValue"
+                                 [maxValue]="legend.edge_legend.summary_width.maxValue"
+                                 [minThickness]="legend.edge_legend.summary_width.minWidth"
+                                 [maxThickness]="legend.edge_legend.summary_width.maxWidth"
+                                 [color]="'#e75a00'"></ip-edge-thickness-diagram>
+    </div>
+  </ng-template>
+</div>

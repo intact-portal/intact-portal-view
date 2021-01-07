@@ -15,11 +15,9 @@ import '../../../../assets/js/rgbcolor.js';
 import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
 import * as complexviewer from 'complexviewer';
 
-declare const RGBColor: any;
-
 declare const require: any;
 declare const $: any;
-let viewer: any;
+export var viewer: any;
 
 
 @Component({
@@ -71,11 +69,11 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
           if (this.interactionData !== undefined) {
             viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
             viewer.readMIJSON(this.interactionData, true);
-            console.log(viewer);
+            console.log(data);
             viewer.autoLayout();
             this.legendColours();
             //TODO Replace by proper implementation with complexviewer
-            $('#colours').on('DOMSubtreeModified', this.adjustLegend);
+            // $('#colours').on('DOMSubtreeModified', this.adjustLegend);
             this.viewerActionsToTable();
           }
         },
@@ -105,7 +103,11 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   selectedMolecule;
 
   private legendColours(): void {
+    console.log(viewer.getFeatureColors());
     viewer.addColorSchemeKey(document.getElementById('colours'));
+    console.log(this.interactionData);
+    for (let elt of this.interactionData) {
+    }
   }
 
   private adjustLegend(): void {
@@ -130,9 +132,11 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
     $(document).on('click', '.collapse', () => $(`#${this.selectedMolecule}:checkbox`).prop('checked', false))
 
     var dragging = 0;
+
     function isDragging() {
       return dragging = 1;
     }
+
     $('#proteinUpper rect').mousedown(() => $(document).on('mousemove', '#proteinUpper rect', isDragging));
 
     $(document).on('click', '#proteinUpper rect', (e) => {

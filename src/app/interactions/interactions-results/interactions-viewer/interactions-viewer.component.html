@@ -89,11 +89,8 @@
     <div id="for-canvas-graph"></div>
   </div>
 
-  <div class="columns small-12 medium-6 large-2" id="legend-column">
-    <h4 class="underline margin-bottom-large">Legend</h4>
-    <div id="legend"></div>
-
-    <div id="node-shape-legend" class="row"></div>
+  <div class="columns small-12 medium-6 large-2" id="legend-column" *ngIf="legend">
+    <ip-interactions-legend [legend]="legend" [expanded]="expand.checked" [mutation]="affectedByMutationCb.checked"></ip-interactions-legend>
   </div>
 </div>
 

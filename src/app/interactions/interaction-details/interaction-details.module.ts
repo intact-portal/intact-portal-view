@@ -20,6 +20,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
 import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
 import {TableFactoryService} from "../shared/service/table-factory.service";
+import {InteractionParticipantsService} from "./shared/service/interaction-participants.service";
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {TableFactoryService} from "../shared/service/table-factory.service";
     OrganismPipe
   ],
   providers: [
-    TableFactoryService
+    TableFactoryService,
+    InteractionParticipantsService
   ]
 })
 export class InteractionDetailsModule {

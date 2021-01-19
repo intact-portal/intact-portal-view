@@ -9,14 +9,12 @@
   <div>
     <ip-details-viewer [interactionAc]="interactionAc"
                        [featureAc]="featureSelected"
-                       [expandedParticipantAc]="participantsSelected"
                        (error)="searchError($event)"></ip-details-viewer>
   </div>
 
   <div class="columns medium-12">
     <ip-details-tabs [interactionAc]="interactionAc"
-                     (featureChanged)="onFeatureSelectedChanged($event)"
-                     (participantChanged)="onParticipantSelectedChanged($event)"></ip-details-tabs>
+                     (featureChanged)="onFeatureSelectedChanged($event)"></ip-details-tabs>
   </div>
 
 </div>

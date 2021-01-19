@@ -1,22 +1,36 @@
 .download-buttons {
-  border: 1px solid #68297c;
-  border-radius: 0.4rem;
+  /*border: 1px solid #68297c;*/
+  /*border-radius: 0.4rem;*/
   display: inline-flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .download-buttons i {
   background-color: #68297c;
   color: #FFFFFF;
-  padding-left: 0.3rem;
-  padding-right: 0.3rem;
-  border-radius: 0.2rem;
+  /*padding-left: 0.3rem;*/
+  /*padding-right: 0.3rem;*/
+  border-radius: 0.4rem;
   font-size: 1.2em;
+  text-align: center;
+}
+
+.download-buttons-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5;
+  border: 1px solid #68297c;
+  border-radius: 0 0 0.3rem 0.3rem;
+  background-color: #FFFFFF;
 }
 
 .download-buttons-container a {
-  border-left: 1px solid #68297c;
+  border-bottom: 1px solid #68297c;
   color: #68297c;
-  border-bottom: none;
   padding-left: 4px;
   padding-right: 4px;
   white-space: nowrap;
@@ -24,19 +38,12 @@
   align-items: center;
   display: flex;
 }
-
-.download-buttons-container a:first-child {
-  border-radius: 0.2rem 0 0 0.2rem;
-}
-.download-buttons-container {
-  display: flex;
+.download-buttons-container a:last-child {
+  border-radius: 0 0 0.3rem 0.3rem;
+  border-bottom: none;
 }
 
-.download-buttons div a:first-child {
-  border-left: none;
-}
-
-.download-buttons div a:hover {
+.download-buttons-container a:hover {
   background-color: rgba(104, 41, 124, 0.7);
   color: #FFFFFF;
 }

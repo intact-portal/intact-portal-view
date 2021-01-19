@@ -18,11 +18,12 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TableFactoryService} from "../shared/service/table-factory.service";
 import {NetworkSelectionService} from "../shared/service/network-selection.service";
-import { InteractionsLegendComponent } from './interactions-viewer/interactions-legend/interactions-legend.component';
-import { NodeDiagramComponent } from './interactions-viewer/diagrams/node-diagram/node-diagram.component';
-import { EdgeDiagramComponent } from './interactions-viewer/diagrams/edge-diagram/edge-diagram.component';
-import { ColorRangeDiagramComponent } from './interactions-viewer/diagrams/color-range-diagram/color-range-diagram.component';
-import { EdgeThicknessDiagramComponent } from './interactions-viewer/diagrams/edge-thickness-diagram/edge-thickness-diagram.component';
+import {InteractionsLegendComponent} from './interactions-viewer/interactions-legend/interactions-legend.component';
+import {NodeDiagramComponent} from './interactions-viewer/diagrams/node-diagram/node-diagram.component';
+import {EdgeDiagramComponent} from './interactions-viewer/diagrams/edge-diagram/edge-diagram.component';
+import {ColorRangeDiagramComponent} from './interactions-viewer/diagrams/color-range-diagram/color-range-diagram.component';
+import {EdgeThicknessDiagramComponent} from './interactions-viewer/diagrams/edge-thickness-diagram/edge-thickness-diagram.component';
+import {ComponentsModule} from "../../shared/components/components.module";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { EdgeThicknessDiagramComponent } from './interactions-viewer/diagrams/ed
     MatTooltipModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ComponentsModule
   ],
   declarations: [
     InteractionsFiltersComponent,
@@ -56,4 +58,5 @@ import { EdgeThicknessDiagramComponent } from './interactions-viewer/diagrams/ed
     NetworkSelectionService
   ]
 })
-export class InteractionsResultsModule { }
+export class InteractionsResultsModule {
+}

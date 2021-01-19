@@ -1,0 +1,6 @@
+<div class="download-buttons" (mouseleave)="hideDownloads()">
+  <div class="download-buttons-container" style="display: none">
+    <a *ngFor="let format of formats" download [href]="format.url" (click)="hideDownloads()">{{format.name}}</a>
+  </div>
+  <i class="icon icon-common icon-download" (mouseenter)="showDownloads()"></i>
+</div>

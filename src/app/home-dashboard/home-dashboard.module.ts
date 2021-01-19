@@ -41,6 +41,9 @@ import {ProgressSpinnerModule} from "../layout/loading-indicators/progress-spinn
     MatCardModule,
     ProgressSpinnerModule
   ],
+  exports: [
+    KeyvaluemapPipe
+  ],
   declarations: [
     HomeDashboardComponent,
     HomeDescriptionComponent,

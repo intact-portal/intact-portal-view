@@ -16,6 +16,9 @@
                       [dataTable]="interactorsTable.dataTable"
                       [columnView]="interactorsTable.columnView"
                       [isTabActive]="isTabInteractorActive" class="float-right"></ip-column-toggle>
+
+    <ip-download-button [formats]="[{name:'MI tab', url:'.'}, {name:'MI XML', url:'.'}, {name:'MI JSON', url:'.'}]" class="float-right" style="margin-top: 0.7rem">
+    </ip-download-button>
   </ul>
 
   <div class="tabs-content" data-tabs-content="search-results-tabs" data-deep-link="true" data-update-history="false">

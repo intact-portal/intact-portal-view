@@ -57,7 +57,7 @@
         </div>
       </div>
     </ng-template>
-    <div *ngIf="legend.edge_legend.expansion">
+    <div *ngIf="legend.edge_legend.expansion.true">
       <span>Shape ~ <i>Expansion method</i></span>
       <div *ngFor="let status of ['true']" class="edge-line">
         <ip-edge-diagram [shape]="legend.edge_legend.expansion[status].value"></ip-edge-diagram>

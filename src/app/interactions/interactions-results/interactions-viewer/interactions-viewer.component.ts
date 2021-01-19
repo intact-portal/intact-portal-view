@@ -31,7 +31,7 @@ export class InteractionsViewerComponent implements OnInit {
   private _miScoreMax: any;
   private _intraSpeciesFilter: boolean;
   private _graph: any;
-  private _expanded: boolean;
+  private _expanded: boolean = true;
   private _affectedByMutation: boolean;
   private _compoundGraph = false;
   private _hasMutation = false;

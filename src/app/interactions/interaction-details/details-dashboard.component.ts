@@ -12,7 +12,6 @@ import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar
 export class DetailsDashboardComponent implements OnInit {
     private _interactionAc: string;
   @Input() featureSelected: string;
-  @Input() participantsSelected: string[];
   private _error: HttpErrorResponse;
 
   constructor(private titleService: Title,
@@ -41,10 +40,6 @@ export class DetailsDashboardComponent implements OnInit {
 
   public onFeatureSelectedChanged(featureAc: string): void {
     this.featureSelected = featureAc;
-  }
-
-  public onParticipantSelectedChanged(participantsSelected: string[]): void {
-    this.participantsSelected = participantsSelected;
   }
 
   get error(): HttpErrorResponse {

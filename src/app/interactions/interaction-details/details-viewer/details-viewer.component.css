@@ -33,13 +33,17 @@ div#viewerLegend {
   max-height: 11.5em;
 }
 
-table.color-key {
-  margin-bottom: 1rem;
+table.color-key tr:nth-child(even) {
+  background: #fbfbfb;
 }
 
-table.color-key tbody tr {
-  background-color: white;
-  font-size: 15px;
+table.color-key tbody {
+  border: none;
+}
+
+td.color-square {
+  width: 1.7rem;
+  height: 1.7rem;
 }
 
 /* Styling of right click menu in the viewer */
@@ -153,21 +157,4 @@ td.legend-label {
 
 .tooltip[display="none"] {
   display: none;
-}
-
-.color-key td:nth-child(1) {
-  width: 90px;
-}
-
-.color-key td {
-  padding: 0.4rem;
-}
-
-.color-key thead {
-  background-color: white;
-  border: none;
-}
-
-.color-key:last-child {
-  margin-bottom: 0;
 }

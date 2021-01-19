@@ -85,7 +85,19 @@
         </select>
       </div>
 
-      <div id="colours" class="scrollbar"></div>
+      <div id="colours" class="scrollbar">
+        <table *ngIf="colorLegendGroups" class="color-key">
+          <tbody *ngFor="let group of colorLegendGroups" id="{{group.name}}-colors">
+          <tr class="legend-group">
+            <td colspan="2">{{group.name}}</td>
+          </tr>
+          <tr *ngFor="let legend of group.legends">
+            <td [ngStyle]="{'background-color':legend.color}" class="color-square"></td>
+            <td class="legend-label">{{legend.name}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
 
     </div>
   </div>

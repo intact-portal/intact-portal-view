@@ -15,7 +15,6 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   @Input() interactionAc: string;
   @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() participantChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() moleculeTypesCollected: EventEmitter<Set<string>> = new EventEmitter<Set<string>>();
 
   private _currentPageIndex: number;
@@ -98,9 +97,5 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   public onFeatureSelectedChanged(featureAc: string): void {
     this.featureChanged.emit(featureAc);
-  }
-
-  public onParticipantSelectedChanged(participantsSelected: string[]): void {
-    this.participantChanged.emit(participantsSelected);
   }
 }

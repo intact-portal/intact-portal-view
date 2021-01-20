@@ -1,25 +1,19 @@
-<div class="columns medium-12">
+<div class="column-toggle-container">
+  <button class="dropdown button stick-and-fill-right adjust-width" type="button" [attr.data-toggle]="columnView">
+    Column toggle
+  </button>
 
-  <div class="columns medium-12" style="text-align: right">
-
-    <span> Column Toggle: </span>
-    <button class="columnToggle" type="button" (click)="toggleColumnView()"
-                                          (mouseover)="columnToggleHover=true" (mouseleave)="columnToggleHover=false">
-      <i id="iconColumn" class="icon icon-common icon-caret-down iconColumn"></i>
-    </button>
-
-    <div id="{{columnView}}" class="row column_toggle_btnwrap column_toggle_popup">
-
-      <ul class="no-bullet">
-        <li *ngFor="let column of columns; let i = index">
-          <label>
-            <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i" value="{{column.name}}"
-                        (change)="onChangeColumnSelected(col.value)"
-                        [checked]="isColumnSelected(col.value)">{{column.name}}
-          </label>
-        </li>
-      </ul>
-    </div>
+  <div id="{{columnView}}" class="dropdown-pane" data-dropdown data-hover="true" data-hover-pane="true">
+    <ul class="no-bullet tight">
+      <li *ngFor="let column of columns; let i = index">
+        <label>
+          <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i" value="{{column.name}}"
+                 (change)="onChangeColumnSelected(col.value)"
+                 [checked]="isColumnSelected(col.value)">{{column.name}}
+        </label>
+      </li>
+    </ul>
   </div>
-
 </div>
+
+

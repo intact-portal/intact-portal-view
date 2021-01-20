@@ -5,7 +5,7 @@ import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@a
   templateUrl: './download-button.component.html',
   styleUrls: ['./download-button.component.css']
 })
-export class DownloadButtonComponent implements OnInit, AfterViewInit {
+export class DownloadButtonComponent implements AfterViewInit {
 
   @Input()
   formats: { name: string, url: string }[] = [];
@@ -18,9 +18,6 @@ export class DownloadButtonComponent implements OnInit, AfterViewInit {
   private $icon: JQuery;
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
   ngAfterViewInit(): void {

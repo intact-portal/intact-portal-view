@@ -1,20 +1,9 @@
 <div class="download-buttons" (mouseleave)="hideDownloads()">
-  <i #icon class="icon icon-common icon-download" (mouseenter)="showDownloads()"></i>
+  <button #icon class="button" (mouseenter)="showDownloads()" (click)="showDownloads()">
+    <i class="icon icon-common icon-share"></i> Export
+  </button>
 
   <div class="download-buttons-container" #container style="display: none">
-    <a *ngFor="let format of formats" download [href]="format.url" (click)="hideDownloads()">{{format.name}}</a>
+    <a *ngFor="let format of formats" download [href]="format.url" (click)="hideDownloads()" [innerHTML]="format.name"> </a>
   </div>
 </div>
-
-
-<!--<a href="#" download class="button split">-->
-<!--  <span data-dropdown="drop">-->
-<!--  <i class="icon icon-common icon-download"></i>-->
-<!--</span>-->
-<!--</a>-->
-<!--<br>-->
-<!--<ul id="drop" class="f-dropdown" data-dropdown-content>-->
-<!--  <li *ngFor="let format of formats">-->
-<!--    <a download [href]="format.url">{{format.name}}</a>-->
-<!--  </li>-->
-<!--</ul>-->

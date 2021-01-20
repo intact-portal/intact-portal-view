@@ -39,7 +39,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    $('#details-tabs').on('change.zf.tabs', function () {
+    $('#details-tabs').on('change.zf.tabs', () => {
       if ($('#participants').hasClass('is-active') === true) {
         this.isTabParticipantActive = true;
         this.isTabFeatureActive = false;
@@ -50,7 +50,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
         this.isTabParticipantActive = false;
         this.isTabFeatureActive = false;
       }
-    }.bind(this));
+    });
   }
 
 

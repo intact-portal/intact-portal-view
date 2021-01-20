@@ -8,8 +8,10 @@ import {
   OnInit,
   Output, SimpleChanges
 } from '@angular/core';
-import * as $ from 'jquery';
 import {Column} from "../../../../shared/model/tables/column.model";
+import {FoundationUtils} from "../../../../../shared/utils/foundation-utils";
+
+declare const $: any;
 
 @Component({
   selector: 'ip-column-toggle',
@@ -25,7 +27,6 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() isTabActive: boolean;
   @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  columnToggleHover = false;
   private columnsSelected: string[];
 
   constructor(private cdRef: ChangeDetectorRef) {
@@ -36,13 +37,14 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.isTabActive.currentValue) {
+    if (changes.isTabActive.firstChange && changes.isTabActive.currentValue) {
       this.initColumnVisibility()
     }
   }
 
   private initColumnVisibility() {
     const columnView = this.columnView + '_columns';
+    console.log('initColumnVisibility');
 
     // Initialize columns that are already selected to view
     if (localStorage.getItem(columnView) != null) {
@@ -55,7 +57,9 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
 
     // Hide the columns from the table that are already selected to hide
     this.dataTable.columns().every(function () {
-        if (columnsToHide.indexOf($(this.header()).text()) >= 0) {
+      let title = $(this.header()).text();
+      let index = columnsToHide.indexOf(title);
+      if (index >= 0) {
           this.visible(!this.visible());
         }
       }
@@ -65,33 +69,14 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   ngAfterViewInit(): void {
-    const table = $('#' + this.columnView);
-
-    table.addClass('hiddenToggle');
-    this.showHideColumns();
-
     this.cdRef.detectChanges();
-
-    // Hide toggle list pop up when select somewhere outside the container
-    $(document).click(function (e) {
-      if ($(e.target).closest('.columnToggle').length === 0) {
-        if (table.is(':visible') && e.target.className !== 'list-view') {
-          table.toggle();
-
-          $('i#iconColumn').removeClass('icon-caret-up').addClass('icon-caret-down');
-        }
-      }
-    });
-  }
-
-  private toggleColumnView() {
-    const table = $('#' + this.columnView);
-
-    table.toggle();
-
-    table.is(':visible') ?
-      $('i#iconColumn').removeClass('icon-caret-down').addClass('icon-caret-up') :
-      $('i#iconColumn').removeClass('icon-caret-up').addClass('icon-caret-down');
+    this.showHideColumns();
+    FoundationUtils.adjustWidth();
+    let container = $('.column-toggle-container');
+    // @ts-ignore
+    container.foundation();
+    // @ts-ignore
+    container.foundationExtendEBI();
   }
 
   onChangeColumnSelected(column: string) {
@@ -101,6 +86,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
       this.columnsSelected.splice(this.columnsSelected.indexOf(column), 1);
     }
 
+    console.log('onChangeColumnSelected',this.columnsSelected)
     localStorage.setItem(this.columnView + '_columns', JSON.stringify(this.columnsSelected));
     this.columnSelectionChanged.emit(this.columnsSelected);
   }
@@ -111,13 +97,12 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
 
   private showHideColumns(): void {
     const table = this.dataTable;
+    console.log('showHideColumns');
 
-    $('#' + this.columnView + ' input[type="checkbox"].list-view').on('click', function (e) {
+    $('#' + this.columnView + ' input[type="checkbox"]').on('click', function (e) {
 
       // Get the column API object
       const column = table.column($(this).attr('data-column'));
-
-
       // Toggle the visibility
       column.visible(!column.visible());
     });

@@ -33,7 +33,7 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $('#search-results-tabs').on('change.zf.tabs', function () {
+    $('#search-results-tabs').on('change.zf.tabs', () => {
       if ($('#interactions').hasClass('is-active') === true) {
         this.isTabInteractionActive = true;
         this.isTabInteractorActive = false;
@@ -45,7 +45,7 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
         $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
         $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
       }
-    }.bind(this));
+    });
   }
 
   /** EVENT EMITTERS **/

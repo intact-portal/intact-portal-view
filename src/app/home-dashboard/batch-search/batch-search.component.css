@@ -31,18 +31,38 @@
 }
 
 /* Tweaks ebi-global */
-.button {
-  margin: 0;
-}
 
 .sticky-cell {
   vertical-align: top;
+  border-right: 1px solid white;
+  background-color: rgb(197, 147, 222);
+  /*border-left: 1px solid rgb(149, 85, 171);*/
 }
 
 .sticky-cell > * {
   position: sticky;
-  top: 50%;
+  top: 35%;
 }
+
+.sticky-cell div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.select-buttons * {
+  width: 72%;
+  margin-bottom: -1px;
+}
+
+.select-buttons span:first-child {
+  font-weight: bolder;
+  color: #FFFFFF;
+  font-size: large;
+  margin-bottom: 0.5em;
+}
+
 
 table tr, th {
   font-size: 13px;
@@ -52,7 +72,7 @@ table tr, th {
 th {
   position: sticky;
   top: 0;
-  background-color: #8c5d9b !important;
+  background-color: rgb(149, 85, 171) !important;
   z-index: 1;
 }
 
@@ -63,9 +83,9 @@ th {
   overflow: auto;
 }
 
-tr.separator td{
-  height: 2px;
-  background-color: rgba(104, 41, 124, 0.50) !important;
+tr.separator td {
+  height: 1px;
+  background-color: rgb(149, 85, 171) !important;
   padding: 0 0;
 }
 

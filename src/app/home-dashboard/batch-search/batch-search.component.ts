@@ -91,6 +91,31 @@ export class BatchSearchComponent {
     console.log('FileSelected');
   }
 
+  selectAll(term: string) {
+    $(`input[group='${term}']:checkbox`).prop('checked', true)
+      .each((i, checkBox) => {
+        let checkbox = $(checkBox);
+        if (checkbox.attr('name') === 'interactor') {
+          this._interactorAcs.add(checkbox.val());
+        } else {
+          let entry = this._foundEntries.find(value => value.term === term);
+          this._entriesToComplete.set(term, entry);
+        }
+      });
+  }
+
+  unselectAll(term: string) {
+    $(`input[group='${term}']:checkbox`).prop('checked', false)
+      .each((i, checkBox) => {
+        let checkbox = $(checkBox);
+        if (checkbox.attr('name') === 'interactor') {
+          this._interactorAcs.delete(checkbox.val());
+        } else {
+          this._entriesToComplete.delete(term);
+        }
+      });
+  }
+
   onInteractorSelection(event) {
     if (event.target.checked) {
       this._interactorAcs.add(event.target.value)
@@ -136,6 +161,7 @@ export class BatchSearchComponent {
     this.resetSecondStep();
     this.resetThirdStep();
   }
+
   resetSecondStep() {
     this._foundEntries = [];
     this._notFoundEntries = [];
@@ -239,4 +265,6 @@ export class BatchSearchComponent {
   get interactorAcs(): Set<string> {
     return this._interactorAcs;
   }
+
+
 }

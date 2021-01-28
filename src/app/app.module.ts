@@ -25,6 +25,7 @@ import {MarkdownModule} from "./navigation/documentation/shared/markdown/markdow
 import {MatButtonModule} from "@angular/material/button";
 import {AboutComponent} from "./navigation/about/about.component";
 import {FaqComponent} from "./navigation/faq/faq.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {FaqComponent} from "./navigation/faq/faq.component";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([]),
     FormsModule,
     HttpClientModule,
@@ -47,7 +49,7 @@ import {FaqComponent} from "./navigation/faq/faq.component";
     DocumentationModule,
     AppRoutingModule,
     MarkdownModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   providers: [
     FeatureDatasetService,

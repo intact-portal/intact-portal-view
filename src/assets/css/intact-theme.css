@@ -6,9 +6,6 @@
   height: 20pt;
 }
 
-.node-diagram {
-  height: 20pt;
-}
 
 .node-diagram text {
   font-size: xx-large;
@@ -18,11 +15,13 @@
   stroke-opacity: 0.7;
   paint-order: stroke;
 }
+
 svg.complete-legend-line {
   max-height: 30pt;
   width: fit-content;
   max-width: 100%;
 }
+
 a {
   color: #222;
 }
@@ -104,9 +103,10 @@ a.intact-background,
   background: #68297c;
 }
 
-a.button {
+.button {
   color: #ffffff !important;
   background: #68297c;
+  white-space: nowrap;
 }
 
 .button:focus,
@@ -114,6 +114,84 @@ a.button {
 .button.hover {
   background-color: #68297c;
   opacity: 0.9;
+}
+
+.button.rounded {
+  border-radius: 5em;
+}
+
+.button.lighter {
+  background-color: rgb(149, 85, 171);
+}
+
+.button.lighter:focus,
+.button.lighter:hover,
+.button.lighter.hover {
+  background-color: rgb(180, 123, 208);
+  opacity: 1;
+}
+
+.button.lightest {
+  background-color: rgb(197, 147, 222);
+}
+
+.button.lightest:focus,
+.button.lightest:hover,
+.button.lightest.hover {
+  background-color: rgb(205, 170, 224);
+  opacity: 1;
+}
+
+.button.outlined {
+  background-color: white;
+  color: #68297c !important;
+  border: 1px solid #68297c;
+}
+
+.button.tight {
+  margin-bottom: -1px;
+}
+
+.button.outlined:focus,
+.button.outlined:hover,
+.button.outlined.hover {
+  color: rgb(149, 85, 171) !important;
+  border: 1px solid rgb(149, 85, 171);
+  opacity: 1;
+}
+
+.no-background {
+  background-color: transparent;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-padding-left {
+  padding-left: 0 !important;
+}
+
+.no-horizontal-padding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.button.no-hover {
+  cursor: default;
+}
+
+.button.no-hover:focus,
+.button.no-hover:hover {
+  opacity: 1;
 }
 
 .button.disabled,
@@ -125,6 +203,42 @@ a.button {
   background-color: #68297c;
   color: #fefefe;
   opacity: 0.25;
+}
+
+.dropdown-pane {
+  width: max-content;
+}
+
+.button-bar {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  flex-wrap: wrap;
+  padding-top: 1em;
+  align-items: flex-end;
+}
+
+.button-group.rounded > .button:first-child {
+  border-radius: 1.4em 0 0 1.4em;
+  font-weight: bold;
+}
+
+.button-group.rounded > .button:last-of-type {
+  border-radius: 0 1.4em 1.4em 0;
+}
+
+.button-group.rounded > .button.hover:last-of-type {
+  border-radius: 0 1.4em 0 0;
+}
+
+.on-top {
+  position: relative;
+  z-index: 100;
+  opacity: 1;
+}
+
+.dropdown-pane.rounded:focus, .dropdown-pane.rounded:active {
+  box-shadow: none;
 }
 
 /* Accordion */
@@ -197,6 +311,14 @@ a:visited {
   background-color: #b7b8b8;
 }
 
+.tight-focus:active,
+.tight-focus:focus,
+.tight-focus.focus{
+  box-shadow: 0 0 0 2px #216fd1;
+  outline: none;
+  z-index: 2;
+}
+
 /***************** Alert **********************/
 .alert-panel {
   font-size: 16px;
@@ -246,32 +368,17 @@ a:visited {
 
 /************** Scrollbar *******************************/
 
-/* TODO adjust the color of the scroll */
-.scrollbar {
-  background-color: #F5F5F5;
-  /*float: left;*/
-  /*height: 200px;*/
-  /*margin-bottom: 25px;*/
-  /*margin-left: 22px;*/
-  /*margin-top: 40px;*/
-  /*width: 65px;*/
-  scrollbar-width: thin;
-  scrollbar-color: #90A4AE #CFD8DC;
-}
-
 .scrollbar::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  background: #CFD8DC;
+  background: rgb(205, 170, 224);
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background-color: #90A4AE;
-  border-radius: 6px;
-  border: 2px solid #CFD8DC;
+  background-color: #68297c;
 }
 
 /**************************************************************/
@@ -384,6 +491,17 @@ div.dataTables_length > label > select {
   padding-bottom: 1em;
 }
 
+.dataTables_scrollHead {
+  overflow-x: auto !important;
+  box-shadow: rgba(0, 0, 0, 0.36) 0 -5px 7px !important;
+  transform: rotateX(180deg);
+  z-index: 6 !important;
+}
+
+.dataTables_scrollHeadInner {
+  transform: rotateX(180deg);
+}
+
 .top {
   display: flex;
   justify-content: space-between;
@@ -438,7 +556,7 @@ table.dataTable td {
 }
 
 table.dataTable thead th, table.dataTable thead td {
-  background-color: #68297cbf;
+  background-color: rgb(149, 85, 171);
   color: white;
   border-bottom: none;
   border-right: 1px solid white;
@@ -459,6 +577,10 @@ table.dataTable tr, th {
 
 .tabs-panel.table-tab {
   padding: 1rem 0;
+}
+
+.tabs {
+  position: relative;
 }
 
 /************** TABLES ELEMENTS **************/

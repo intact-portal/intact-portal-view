@@ -24,23 +24,25 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import {DatasetByYearComponent} from './featured-dataset/dataset-archive/dataset-by-year/dataset-by-year.component';
 import {ProgressSpinnerModule} from "../layout/loading-indicators/progress-spinner/progress-spinner.module";
+import {ComponentsModule} from "../shared/components/components.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    QueryBuilderModule,
-    HomeDashboardRoutingModule,
-    FileUploadModule,
-    ArchwizardModule,
-    MatProgressSpinnerModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatCardModule,
-    ProgressSpinnerModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        QueryBuilderModule,
+        HomeDashboardRoutingModule,
+        FileUploadModule,
+        ArchwizardModule,
+        MatProgressSpinnerModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatButtonModule,
+        MatCardModule,
+        ProgressSpinnerModule,
+        ComponentsModule
+    ],
   exports: [
     KeyvaluemapPipe
   ],

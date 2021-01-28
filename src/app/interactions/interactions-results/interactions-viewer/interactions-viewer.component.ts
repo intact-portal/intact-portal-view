@@ -54,6 +54,7 @@ export class InteractionsViewerComponent implements OnInit {
   ngOnInit(): void {
     $('ip-interactions-viewer').foundation();
     this.graph = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
+    this.viewService.viewer = this.graph;
 
     this.route.queryParams
       .subscribe(params => {

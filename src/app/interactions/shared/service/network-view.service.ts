@@ -3,11 +3,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class NetworkViewService {
 
+  private _viewer: any;
   private _expanded: boolean = true;
   private _affectedByMutation: boolean = false;
   private _groupBySpecies: boolean = false;
 
   constructor() { }
+
+
+  get viewer(): any {
+    return this._viewer;
+  }
+
+  set viewer(value: any) {
+    this._viewer = value;
+  }
 
   get expanded(): boolean {
     return this._expanded;

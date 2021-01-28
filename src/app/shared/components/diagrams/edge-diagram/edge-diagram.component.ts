@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EdgeShape} from "../../../../shared/model/network-shapes/edge-shape";
+import {EdgeShape} from "../../../../interactions/shared/model/network-shapes/edge-shape";
 
 @Component({
   selector: 'ip-edge-diagram',

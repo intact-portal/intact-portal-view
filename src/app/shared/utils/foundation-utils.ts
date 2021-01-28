@@ -5,7 +5,11 @@ export class FoundationUtils {
       let $button = $(button);
       let pane = $('#' + $button.attr('data-toggle'));
 
-      $button.width(pane.outerWidth(true) - ($button.outerWidth() -$button.width()));
+      if (pane.outerWidth() > $button.outerWidth()) {
+        $button.width(pane.outerWidth(true) - ($button.outerWidth() - $button.width()));
+      } else {
+        pane.width($button.outerWidth() - 1);
+      }
     })
   }
 }

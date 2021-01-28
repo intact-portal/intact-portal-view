@@ -14,10 +14,6 @@
   display: block;
 }
 
-div#viewerLegend {
-  height: 600px;
-}
-
 .image-center {
   text-align: center;
 }
@@ -26,14 +22,23 @@ div#viewerLegend {
   width: auto;
 }
 
-#colours {
-  min-height: auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 11.5em;
+#legend {
+  overflow: auto;
+  max-height: 699px;
+  margin-bottom: 0;
 }
 
-table.color-key tr:nth-child(even) {
+@media print, screen and (min-width: 64em) {
+  #legend {
+    max-height: 657px;
+  }
+}
+
+tr.legend-group {
+  background-color: white !important;
+}
+
+table.color-key tr {
   background: #fbfbfb;
 }
 
@@ -61,15 +66,10 @@ svg {
 }
 
 .xlv_text {
-  /*font-weight: bold;*/
   text-shadow: -1px -1px 0 white,
   1px -1px 0 white,
   -1px 1px 0 white,
   1px 1px 0 white;
-  /*   -2px -1px 0 white,
-      2px -1px 0 white,
-      -2px 1px 0 white,
-      2px 1px 0 white;*/
 }
 
 
@@ -103,15 +103,14 @@ svg {
   padding: 8px 12px;
   cursor: default;
   -webkit-user-select: none;
-  -khtml-user-select: none;
   -moz-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 
 .custom-menu input {
   cursor: pointer;
 }
+
 .custom-menu li:hover {
   background-color: #DEF;
 }
@@ -139,22 +138,94 @@ svg {
   margin-bottom: 0;
 }
 
-.scrollbar {
-  background-color: unset;
-  /*float: left;*/
-  /*height: 200px;*/
-  /*margin-bottom: 25px;*/
-  /*margin-left: 22px;*/
-  /*margin-top: 40px;*/
-  /*width: 65px;*/
-  scrollbar-width: thin;
-  scrollbar-color: #90A4AE #CFD8DC;
-}
-
 td.legend-label {
   padding: 2px 2px 2px 0.5rem;
 }
 
 .tooltip[display="none"] {
   display: none;
+}
+
+
+@keyframes rect-to-circle-morph {
+  20% {
+    x: 1;
+    y: 6;
+    rx: 0;
+    height: 18px;
+    width: 98px;
+  }
+
+  30% {
+    x: 35;
+    y: 1;
+    rx: 14;
+    width: 28px;
+    height: 28px;
+  }
+
+  70% {
+    x: 35;
+    y: 1;
+    rx: 14;
+    width: 28px;
+    height: 28px;
+  }
+
+  80% {
+    x: 1;
+    y: 6;
+    rx: 0;
+    height: 18px;
+    width: 98px;
+  }
+}
+
+#rect-to-circle {
+  stroke-width: 2;
+  stroke: black;
+  paint-order: markers fill stroke;
+  fill: none;
+  animation: rect-to-circle-morph 5s ease infinite;
+}
+
+@keyframes rect-tick-morph {
+  20% {
+    y: 17;
+    height: 8px;
+  }
+
+  30% {
+    y: 29;
+    height: 0;
+  }
+
+  70% {
+    y: 29;
+    height: 0;
+  }
+
+  80% {
+    y: 17;
+    height: 8px;
+  }
+}
+
+#rect-tick {
+  animation: rect-tick-morph 5s ease infinite;
+  stroke-width: 0;
+  fill: black;
+}
+
+#protein-svg {
+  height: 15pt;
+  vertical-align: middle;
+}
+
+.no-padding {
+  text-align: center;
+}
+
+.node-diagram {
+  height: 17pt;
 }

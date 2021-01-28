@@ -1,9 +1,38 @@
 <div class="row expanded" *ngIf="interactionAc; else noInteractor;">
-  <div>
+  <div class="button-bar">
     <h2 class="padding-left-large">Details of {{interactionAc}}</h2>
+
+    <div class="button-group rounded float-right margin-right-medium" id="detail-export" style="margin-left: 17px;">
+      <div class="button no-hover">
+        <i class="icon icon-functional icon-spacer icon-share"></i> Export
+      </div>
+
+      <button class="button lighter adjust-width no-horizontal-padding" type="button" data-toggle="export-viewer">
+        View
+      </button>
+      <div class="dropdown-pane no-padding no-border" id="export-viewer" data-dropdown data-hover="true"
+           data-hover-pane="true">
+        <ul class="no-bullet no-margin">
+          <li><a class="button lightest expanded" download="{{interactionAc}}.svg" id="SVG-download"
+                 (click)="exportSVG()">SVG</a></li>
+        </ul>
+      </div>
+
+      <button class="button lighter adjust-width" type="button" data-toggle="export-table">
+        Interaction
+      </button>
+      <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true"
+           data-hover-pane="true">
+        <ul class="no-bullet no-margin">
+          <li><a class="button lightest expanded" download="" href=".">miTab<sub>2.7</sub></a></li>
+          <li><a class="button lightest expanded" download="" href=".">miXML<sub>2.5</sub></a></li>
+          <li><a class="button lightest expanded" download="" href=".">miXML<sub>3.0</sub></a></li>
+          <li><a class="button lightest expanded no-margin" download="" href=".">miJSON<sub>1.0</sub></a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
-
 <div class="row expanded" *ngIf="!error; else errorBlock;">
 
   <div>
@@ -27,7 +56,7 @@
         No interactions were found for the given accession number: <b>{{interactionAc}}</b><br>
         This can be due to:
         <ul>
-          <li>An incomplete accession number (format: EBI-XXXXXXX) </li>
+          <li>An incomplete accession number (format: EBI-XXXXXXX)</li>
           <li>A spelling mistake</li>
         </ul>
       </div>

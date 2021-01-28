@@ -75,6 +75,12 @@ export class InteractionParticipantsService {
     return selectedParticipants;
   }
 
+  get participants(): Participant[] {
+    let participants = [];
+    this.participantStatus.forEach((status, participant) => participants.push(participant));
+    return participants;
+  }
+
   get expandedParticipants(): Participant[] {
     return this.getParticipantsByStatus(Status.EXPANDED);
   }

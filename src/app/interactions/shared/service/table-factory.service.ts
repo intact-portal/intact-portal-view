@@ -276,32 +276,29 @@ export class TableFactoryService {
 
   initTopSlider(tableId: string) {
     let bodyScroll = $(`#${tableId}`).parent();
-    let topScroll = $(`#${tableId}TopScroll`);
-    if (topScroll.length === 0) {
-      topScroll = $(`<div id="${tableId}TopScroll"><div id="${tableId}WidthMimic"></div></div>`);
-      topScroll.find(`#${tableId}WidthMimic`).height(1);
-      topScroll.css('overflow-x', 'auto')
-      topScroll.css('overflow-y', 'hidden')
-      topScroll.insertBefore(bodyScroll.parent());
-    }
+    let headScroll = bodyScroll.siblings('.dataTables_scrollHead');
+    bodyScroll.addClass('scrollbar');
+    headScroll.addClass('scrollbar');
+
     let scrolling = false;
-    topScroll.scroll(function () {
+    headScroll.scroll(() => {
       if (!scrolling) {
         scrolling = true;
-        bodyScroll.scrollLeft(topScroll.scrollLeft())
+        bodyScroll.scrollLeft(headScroll.scrollLeft())
       } else {
         scrolling = false;
       }
     });
 
-    bodyScroll.scroll(function () {
+    bodyScroll.unbind('scroll');
+    bodyScroll.scroll(() => {
       if (!scrolling) {
         scrolling = true;
-        topScroll.scrollLeft(bodyScroll.scrollLeft());
+        headScroll.scrollLeft(bodyScroll.scrollLeft())
       } else {
         scrolling = false;
       }
-    });
+    })
   }
 
   makeTableHeaderSticky() {
@@ -309,7 +306,7 @@ export class TableFactoryService {
     let filterBar = $('#filters-bar');
     $('div.dataTables_scrollHead')
       .css('position', 'sticky')
-      .css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.height() - 1 + 'px' : '0')
+      .css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.outerHeight(true) - 1 + 'px' : '0')
       .css('box-shadow', '0 6px 7px -2px #0000005c')
       .css('z-index', '2');
   }

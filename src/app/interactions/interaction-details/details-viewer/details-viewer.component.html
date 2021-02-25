@@ -29,7 +29,8 @@
 
         <div class="button-group expanded columns large-4 medium-12 no-pad-left no-pad-right no-margin">
           <button class="button lighter" (click)="expandAll()">Expand <span class="show-for-large">all</span></button>
-          <button class="button lighter" (click)="collapseAll()">Collapse <span class="show-for-large">all</span></button>
+          <button class="button lighter" (click)="collapseAll()">Collapse <span class="show-for-large">all</span>
+          </button>
         </div>
       </div>
     </div>
@@ -108,7 +109,19 @@
             </td>
           </tr>
           <tr *ngFor="let legend of group.legends">
-            <td [ngStyle]="{'background-color':legend.color}" class="color-square"></td>
+            <td *ngIf="legend.certain && !legend.uncertain" [ngStyle]="{'background-color':legend.certain.color}"
+                class="color-square"></td>
+            <td *ngIf="!legend.certain && legend.uncertain"
+                [ngStyle]="{'background':'repeating-linear-gradient(45deg, white, white 3px,'+legend.uncertain.color+' 0px,'+legend.uncertain.color+' 12px)'}"
+                class="color-square"></td>
+            <td *ngIf="legend.certain && legend.uncertain" class="color-square no-padding">
+              <div [ngStyle]="{width: '50%', height:'100%', float: 'left',
+              'background-color':legend.certain.color}">
+              </div>
+              <div [ngStyle]="{width: '50%', height:'100%', float: 'right',
+              'background':'repeating-linear-gradient(45deg, white, white 3px,'+legend.uncertain.color+' 0px,'+legend.uncertain.color+' 12px)'}">
+              </div>
+            </td>
             <td class="legend-label">{{legend.name}}</td>
           </tr>
           </tbody>

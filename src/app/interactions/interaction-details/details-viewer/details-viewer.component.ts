@@ -192,6 +192,21 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
 }
 
 class ColorLegend {
-  constructor(public name: string, public color: string) {
+  public name: string;
+  public certain?: Color;
+  public uncertain?: Color;
+
+  constructor(name: string, certain?: Color, uncertain?: Color) {
+    this.name = name;
+    this.certain = certain;
+    this.uncertain = uncertain;
+  }
+}
+
+class Color {
+  public color: string;
+
+  constructor(color: string) {
+    this.color = color;
   }
 }

@@ -17,7 +17,7 @@ default:
 
 variables:
   DIST_DIR: dist/intact-portal-view
-  CLI_VERSION: 5.2.8
+  CLI_VERSION: 1.7.4
 
 init:
   stage: init

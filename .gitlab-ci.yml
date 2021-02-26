@@ -13,7 +13,7 @@ default:
     policy: pull
 
   before_script:
-    - "[ -d node_modules ] || npm ci"
+    - "[ -d node_modules ] || npm install"
 
 variables:
   DIST_DIR: dist/intact-portal-view

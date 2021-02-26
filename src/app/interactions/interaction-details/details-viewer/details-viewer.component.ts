@@ -15,8 +15,6 @@ import '../../../../assets/js/rgbcolor.js';
 import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
 import * as complexviewer from 'complexviewer';
 
-declare const RGBColor: any;
-
 declare const require: any;
 declare const $: any;
 let viewer: any;

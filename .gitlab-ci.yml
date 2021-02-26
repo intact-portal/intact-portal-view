@@ -22,6 +22,8 @@ variables:
 init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
+  before_script:
+    - "[ -d node_modules ] || npm install"
   script: ['']
   cache:
     policy: push

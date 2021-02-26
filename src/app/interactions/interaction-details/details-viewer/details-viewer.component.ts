@@ -10,9 +10,7 @@ import {
 } from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
-
-import '../../../../assets/js/rgbcolor.js';
-import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
+import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
 import * as complexviewer from 'complexviewer';
 
 declare const require: any;

@@ -189,7 +189,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
                 return `<div>
                         <input type="checkbox" id="${full.binaryInteractionId}" name="check" value="${data}"/>
                         <span class="margin-left-medium">
-                          <a href="/intact-portal-view/details/interaction/${full.ac}" class="icon-link tool-tip" target="_blank">
+                          <a href="${environment.context_path}/details/interaction/${full.ac}" class="icon-link tool-tip" target="_blank">
                             <i class="icon icon-common icon-search-document"></i>
                             <span class="tool-tip-text">Show details of <span class="nowrap">${full.ac}</span></span>
                           </a>
@@ -293,7 +293,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             render: function (data, type) {
               if (type === 'display' && data != null) {
                 return '<div>' +
-                  '<span><a href="/intact-portal-view/details/interaction/' + data + '" style="white-space: nowrap">' + data + '</a></span>' +
+                  '<span><a href="${environment.context_path}/details/interaction/' + data + '" style="white-space: nowrap">' + data + '</a></span>' +
                   '</div>';
               }
             }
@@ -352,7 +352,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               // noinspection CssInvalidPropertyValue
               return `<div>
                           <a class="detailsConfidencesCell tag-cell" target="_blank"
-                          href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#interaction_scoring"
+                          href="${environment.ebi_base_url}${environment.context_path}/documentation/docs#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
                                  border:1px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
                                  color: ${YELLOW_ORANGE_BROWN_PALETTE_TEXT[paletteIndex]}">
@@ -369,7 +369,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               if (type === 'display' && data != null) {
                 return `<div style="display: flex">
                         <a target="_blank" class="tag-cell detailsExpansionsCell"
-                           href="${environment.ebi_base_url}/intact-portal-view/documentation/docs#expansion_method" >
+                           href="${environment.ebi_base_url}${environment.context_path}/documentation/docs#expansion_method" >
                             ${data}
                         </a>
                       </div>`;

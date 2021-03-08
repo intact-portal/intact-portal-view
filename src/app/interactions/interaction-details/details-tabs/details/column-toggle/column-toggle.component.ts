@@ -84,7 +84,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
-  private toggleColumnView() {
+  toggleColumnView() {
     const table = $('#' + this.columnView);
 
     table.toggle();

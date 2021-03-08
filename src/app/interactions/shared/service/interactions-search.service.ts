@@ -42,8 +42,8 @@ export class InteractionsSearchService {
       .set('interactionTypeFilter', interactionTypeFilter.toString())
       .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
       .set('isNegativeFilter', negativeFilter.toString()) // By default should be always false
-      .set('minMiScore', miScoreMin.toString())
-      .set('maxMiScore', miScoreMax.toString())
+      .set('minMiscore', miScoreMin.toString())
+      .set('maxMiscore', miScoreMax.toString())
       .set('interSpecies', intraSpeciesFilter.toString()) // TODO Noe change the name of the param in the web service the meaning is the opposite
       .set('page', currentPageIndex.toString())
       .set('pageSize', pageSize.toString());

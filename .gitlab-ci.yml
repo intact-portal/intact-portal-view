@@ -11,9 +11,8 @@ default:
     paths:
       - node_modules
     policy: pull
-  # TODO: Revisit when we should remove the node_modules and rerun npm install
-  # before_script:
-    # - "[ -d node_modules ] || npm install"
+  before_script:
+    - "[ -d node_modules ] || npm install"
 
 variables:
   DIST_DIR: dist/intact-portal-view
@@ -22,8 +21,6 @@ variables:
 init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
-  before_script:
-    - "[ -d node_modules ] || npm install"
   script: ['']
   cache:
     policy: push

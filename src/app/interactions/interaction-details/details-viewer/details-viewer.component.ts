@@ -10,12 +10,8 @@ import {
 } from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
-
-import '../../../../assets/js/rgbcolor.js';
-import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
+import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
 import * as complexviewer from 'complexviewer';
-
-declare const RGBColor: any;
 
 declare const require: any;
 declare const $: any;
@@ -36,13 +32,13 @@ export class DetailsViewerComponent implements AfterViewInit, OnChanges {
   @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
   private _interactionData: any;
-  private SMALL_MOL = require('../../../../assets/images/detailsViewer/svgForKey/smallMol.svg');
-  private GENE = require('../../../../assets/images/detailsViewer/svgForKey/gene.svg');
-  private DNA = require('../../../../assets/images/detailsViewer/svgForKey/DNA.svg');
-  private RNA = require('../../../../assets/images/detailsViewer/svgForKey/RNA.svg');
-  private COMPLEX = require('../../../../assets/images/detailsViewer/svgForKey/RNA.svg');
-  private PROTEIN_BLOB = require('../../../../assets/images/detailsViewer/svgForKey/proteinBlob.svg');
-  private PROTEIN_BAR = require('../../../../assets/images/detailsViewer/svgForKey/proteinBar.svg');
+  SMALL_MOL = require('../../../../assets/images/detailsViewer/svgForKey/smallMol.svg');
+  GENE = require('../../../../assets/images/detailsViewer/svgForKey/gene.svg');
+  DNA = require('../../../../assets/images/detailsViewer/svgForKey/DNA.svg');
+  RNA = require('../../../../assets/images/detailsViewer/svgForKey/RNA.svg');
+  COMPLEX = require('../../../../assets/images/detailsViewer/svgForKey/RNA.svg');
+  PROTEIN_BLOB = require('../../../../assets/images/detailsViewer/svgForKey/proteinBlob.svg');
+  PROTEIN_BAR = require('../../../../assets/images/detailsViewer/svgForKey/proteinBar.svg');
 
   private _annotationSelected: string = 'MI Features';
 

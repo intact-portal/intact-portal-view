@@ -14,23 +14,23 @@ import {ExperimentComponent} from './details-tabs/details/experiment/experiment.
 import {PublicationComponent} from './details-tabs/details/publication/publication.component';
 import {ParticipantTableComponent} from './details-tabs/details/participant-table/participant-table.component';
 import {FeaturesTableComponent} from './details-tabs/details/features-table/features-table.component';
-import {ColumnToggleComponent} from './details-tabs/details/column-toggle/column-toggle.component';
 import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
 import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
 import {TableFactoryService} from "../shared/service/table-factory.service";
+import {InteractionParticipantsService} from "./shared/service/interaction-participants.service";
+import {ComponentsModule} from "../../shared/components/components.module";
 
 
 @NgModule({
   imports: [
     CommonModule,
     InteractionDetailsRoutingModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ComponentsModule
   ],
-  exports: [
-    ColumnToggleComponent
-  ],
+  exports: [],
   declarations: [
     DetailsDashboardComponent,
     DetailsViewerComponent,
@@ -45,13 +45,13 @@ import {TableFactoryService} from "../shared/service/table-factory.service";
     PublicationComponent,
     ParticipantTableComponent,
     FeaturesTableComponent,
-    ColumnToggleComponent,
     CvTermComponent,
     CvToUrlPipe,
     OrganismPipe
   ],
   providers: [
-    TableFactoryService
+    TableFactoryService,
+    InteractionParticipantsService
   ]
 })
 export class InteractionDetailsModule {

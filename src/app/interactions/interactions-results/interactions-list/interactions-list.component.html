@@ -2,7 +2,9 @@
 
   <!--  TODO make this bookmarkable like the documentation, it needs to take into account the url params -->
   <ul class="tabs" data-tabs id="search-results-tabs">
-    <li class="tabs-title is-active"><a href="#interactions" aria-selected="true" (click)="interactionsTabSelected()">Interactions</a></li>
+    <li class="tabs-title is-active">
+      <a href="#interactions" aria-selected="true" (click)="interactionsTabSelected()">Interactions</a>
+    </li>
     <li class="tabs-title"><a href="#interactor" (click)="interactorsTabSelected()">Interactors</a></li>
 
     <ip-column-toggle *ngIf="isInteractionTableShown"
@@ -27,7 +29,7 @@
 
     <div class="tabs-panel table-tab" id="interactor">
       <ip-interactors-table [interactorTab]="isTabInteractorActive"
-                            (interactorChanged) = "onInteractorSelectedChanged($event)"
+                            (interactorChanged)="onInteractorSelectedChanged($event)"
                             (pageChanged)="onPageChanged($event)"></ip-interactors-table>
     </div>
   </div>

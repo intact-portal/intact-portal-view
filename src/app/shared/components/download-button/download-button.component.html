@@ -1,0 +1,9 @@
+<div class="download-buttons" (mouseleave)="hideDownloads()">
+  <button #icon class="button" (mouseenter)="showDownloads()" (click)="showDownloads()">
+    <i class="icon icon-common icon-share"></i> Export
+  </button>
+
+  <div class="download-buttons-container" #container style="display: none">
+    <a *ngFor="let format of formats" download [href]="format.url" (click)="hideDownloads()" [innerHTML]="format.name"> </a>
+  </div>
+</div>

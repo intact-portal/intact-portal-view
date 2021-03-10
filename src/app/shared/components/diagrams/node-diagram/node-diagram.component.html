@@ -1,4 +1,4 @@
-<svg viewBox="0 0 100 100" [attr.viewBox]="viewBox" class="node-diagram">
+<svg viewBox="0 0 100 100" class="node-diagram" [ngStyle]="{'height': height}" #svg>
   <g [ngSwitch]="shape" #shapeGroup>
     <circle *ngSwitchCase="NodeShape.ELLIPSE"
             r="47.57" cx="50%" cy="50%"/>
@@ -11,7 +11,7 @@
     <path *ngSwitchCase="NodeShape.OCTAGON"
           d="M 97.443707,69.535644 69.733981,97.361553 30.464356,97.443707 2.6384466,69.733981 2.5562928,30.464356 30.266019,2.6384466 69.535644,2.5562928 97.361553,30.266019 Z"/>
     <rect *ngSwitchCase="NodeShape.ROUNDED_RECTANGLE"
-          width="95.125" height="95.125" ry="25"/>
+          width="95.125" height="95.125" ry="25" x="2.5" y="2.5"/>
     <path *ngSwitchCase="NodeShape.PARALLELOGRAM"
           d="m4.1071 2.7838h44.523l47.084 94.477-47.023 0.17857z"/>
     <path *ngSwitchCase="NodeShape.VEE"
@@ -19,7 +19,8 @@
     <path *ngSwitchCase="NodeShape.TAG"
           d="m1.9643 98.214-0.056406-96.306h48.092l47.302 47.697-47.302 48.59z"/>
   </g>
-  <text *ngIf="label !== null" fill="white" y="50%" [attr.x]="labelX" #labelElt>
+
+  <text *ngIf="label !== null" fill="white" x="50%" y="52.5%" dominant-baseline="middle" text-anchor="middle" #labelElt>
     {{label}}
   </text>
 </svg>

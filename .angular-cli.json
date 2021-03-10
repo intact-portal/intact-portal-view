@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "dist/intact-portal-view",
       "assets": [
         "assets",
         "favicon.ico"
@@ -32,8 +32,7 @@
         "../node_modules/typeahead.js/dist/bloodhound.js",
         "../node_modules/typeahead.js/dist/typeahead.jquery.js",
         "../node_modules/datatables.net/js/jquery.dataTables.js",
-        "../node_modules/complexviewer/dist/complexviewer.js",
-        "./assets/js/rgbcolor.js"
+        "../node_modules/complexviewer/dist/complexviewer.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

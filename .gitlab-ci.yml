@@ -1,0 +1,146 @@
+stages:
+  - init
+  - test
+  - build
+  - build-image
+  - deploy
+
+default:
+  cache:
+    key: ${CI_COMMIT_SHA}
+    paths:
+      - node_modules
+    policy: pull
+  before_script:
+    - "[ -d node_modules ] || npm install"
+
+variables:
+  DIST_DIR: dist/intact-portal-view
+  CLI_VERSION: 1.7.4
+
+init:
+  stage: init
+  image: trion/ng-cli:${CLI_VERSION}
+  script: ['']
+  cache:
+    policy: push
+    key: ${CI_COMMIT_SHA}
+    paths:
+      - node_modules
+  tags:
+    - docker
+
+.lint:nglint:
+  stage: test
+  image: trion/ng-cli:${CLI_VERSION}
+  script:
+    - ng lint
+  tags:
+    - docker
+
+.lint:sonar:
+  stage: test
+  image: trion/ng-cli:${CLI_VERSION}
+  script:
+    - npm install -g sonarqube-scanner
+    - >
+      sonar-scanner
+      -Dsonar.projectKey=demo
+      -Dsonar.organization=everflux-github
+      -Dsonar.host.url=https://sonarcloud.io
+      -Dsonar.login=d845eb783684e8d78c36c48ae92a971b92151976
+      -Dsonar.typescript.lcov.reportPaths=coverage/lcov/lcov.info
+      -Dsonar.sourceEncoding=UTF-8
+      -Dsonar.sources=src/app
+      -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
+      -Dsonar.tests=src/app
+      -Dsonar.test.inclusions=**/*.spec.ts
+
+.test:karma:
+  stage: test
+  image: trion/ng-cli-karma:${CLI_VERSION}
+  allow_failure: false
+  script:
+    - ng test --code-coverage --progress false --watch false
+  coverage: '/Lines \W+: (\d+\.\d+)%.*/'
+  artifacts:
+    paths:
+      - coverage/
+  tags:
+    - docker
+
+.test:e2e:
+  stage: test
+  image: trion/ng-cli-e2e:${CLI_VERSION}
+  allow_failure: false
+  script:
+    - ng e2e
+  tags:
+    - docker
+
+build:
+  stage: build
+  image: trion/ng-cli:${CLI_VERSION}
+  script:
+    - ng build --prod --build-optimizer=false --base-href "/intact/beta/"
+    - sed -i "s/commit_hash = ''/commit_hash = '${CI_COMMIT_SHA}'/" $DIST_DIR/index.html
+    - sed -i "s/build_date = ''/build_date = '$(date)'/" $DIST_DIR/index.html
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - $DIST_DIR
+  tags:
+    - docker
+
+build-image:
+  stage: build-image
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker --version
+    - echo ${CONTAINER_IMAGE}
+  script:
+    - echo Building ${CONTAINER_IMAGE}
+    - docker build -t ${CONTAINER_IMAGE} --no-cache .
+    - docker image ls
+    - docker push ${CONTAINER_IMAGE}
+    - docker rmi ${CONTAINER_IMAGE}
+    - docker logout "$CI_REGISTRY"
+  tags:
+    - dind
+  only:
+    refs:
+      - master
+
+kubernetes-staging-deploy:
+  stage: deploy
+  image: alpine
+  before_script: []
+  script:
+    - apk add --no-cache curl git
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
+    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN}@gitlab.ebi.ac.uk/anjali/k8s-config-test
+    - mkdir ~/.kube
+    - cp k8s-config-test/config ~/.kube/
+    - kubectl config get-contexts
+    - kubectl config use-context team-admin-hx-wp-webadmin-24
+    - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
+    - kubectl get secrets gitlab-registry -o yaml
+    - kubectl apply -f k8s_deploy.yml
+    - kubectl rollout restart deployment/intact-portal-view-deployment
+    - kubectl get nodes
+  when: manual
+
+kubernetes-production-deploy:
+  stage: deploy
+  image: alpine
+  before_script: []
+  script:
+    - echo "Deploy to production server"
+  when: manual

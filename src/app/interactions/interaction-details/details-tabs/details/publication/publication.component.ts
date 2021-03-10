@@ -19,10 +19,11 @@ export class PublicationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.publication.publicationDate = this.publication.publicationDate
-      .split("-")
-      .reverse()
-      .join('/');
+    if (this.publication.publicationDate)
+      this.publication.publicationDate = this.publication.publicationDate
+        .split("-")
+        .reverse()
+        .join('/');
   }
 
   togglePublicationButton(): void {

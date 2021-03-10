@@ -4,41 +4,42 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service-label-key: intact-portal-view
-  name: intact-portal-view-service
+    service-label-key: intact-portal-view-dev
+  name: intact-portal-view-service-dev
 spec:
   type: NodePort
   ports:
-    - port: 31240
+      # Port for dev version
+    - port: 31245
       protocol: TCP
       # The port which will be externally exposed. Must be in the range [30000, 32767].
-      nodePort: 31240
+      nodePort: 31245
       # The port on your Deployment which it will expose
       targetPort: 4200
       #Trying
   selector:
       # Selects intact-portal-view Deployment to attach the Service to
-      app: intact-portal-view
+      app: intact-portal-view-dev
         # Tell K8s this wants to expose an external port
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: intact-portal-view-deployment
+  name: intact-portal-view-deployment-dev
 spec:
   selector:
     matchLabels:
-      app: intact-portal-view
+      app: intact-portal-view-dev
   replicas: 1
   template:
     metadata:
       labels:
-        app: intact-portal-view
+        app: intact-portal-view-dev
     spec:
       containers:
-        - name: intact-portal-view
+        - name: intact-portal-view-dev
           # Pull the latest image which contains the angular application from EBI's dockerhub
-          image: dockerhub.ebi.ac.uk/intact-ci/intact-portal-view:latest
+          image: dockerhub.ebi.ac.uk/intact-ci/intact-portal-view:dev
           # image: ntoro/spa-demo:v1
           imagePullPolicy: Always
           ports:

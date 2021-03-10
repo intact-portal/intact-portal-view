@@ -82,7 +82,7 @@ build:
   stage: build
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - ng build --prod --build-optimizer=false --base-href "/intact/beta/"
+    - ng build --prod --build-optimizer=false --base-href "/intact/dev/"
     - sed -i "s/commit_hash = ''/commit_hash = '${CI_COMMIT_SHA}'/" $DIST_DIR/index.html
     - sed -i "s/build_date = ''/build_date = '$(date)'/" $DIST_DIR/index.html
   artifacts:
@@ -98,7 +98,7 @@ build-image:
   services:
     - docker:dind
   variables:
-    CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
+    CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:dev
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - docker --version
@@ -114,7 +114,7 @@ build-image:
     - dind
   only:
     refs:
-      - master
+      - develop
 
 kubernetes-staging-deploy:
   stage: deploy
@@ -133,7 +133,7 @@ kubernetes-staging-deploy:
     - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
     - kubectl get secrets gitlab-registry -o yaml
     - kubectl apply -f k8s_deploy.yml
-    - kubectl rollout restart deployment/intact-portal-view-deployment
+    - kubectl rollout restart deployment/intact-portal-view-deployment-dev
     - kubectl get nodes
   when: manual
 

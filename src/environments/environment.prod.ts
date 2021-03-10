@@ -10,7 +10,7 @@ const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact/';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
 // TODO inject the context path programmatically.
 // No trailing bar
-const CONTEXT_PATH = '/intact/beta'
+const CONTEXT_PATH = '/intact/dev'
 
 export const environment = {
   production: true,

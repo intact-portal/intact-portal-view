@@ -3,10 +3,14 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 // Environment for production
-const EBI_BASE_URL = 'https://www.ebi.ac.uk/';
+const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk/';
+const EBI_URL = 'https://www.ebi.ac.uk';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact/';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
+// TODO inject the context path programmatically.
+// No trailing bar
+const CONTEXT_PATH = '/intact/beta'
 
 export const environment = {
   production: true,
@@ -14,6 +18,8 @@ export const environment = {
 
   // analytics_id: 'UA-XXXXXX-XX',
   ebi_base_url: EBI_BASE_URL,
+  ebi_url: EBI_URL,
+  context_path: CONTEXT_PATH,
   license_url: LICENSE_URL,
   intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25',
   intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30',

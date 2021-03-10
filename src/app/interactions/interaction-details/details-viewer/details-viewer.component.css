@@ -146,69 +146,12 @@ td.legend-label {
   display: none;
 }
 
-
-@keyframes rect-to-circle-morph {
-  20% {
-    x: 1;
-    y: 6;
-    rx: 0;
-    height: 18px;
-    width: 98px;
-  }
-
-  30% {
-    x: 35;
-    y: 1;
-    rx: 14;
-    width: 28px;
-    height: 28px;
-  }
-
-  70% {
-    x: 35;
-    y: 1;
-    rx: 14;
-    width: 28px;
-    height: 28px;
-  }
-
-  80% {
-    x: 1;
-    y: 6;
-    rx: 0;
-    height: 18px;
-    width: 98px;
-  }
-}
-
 #rect-to-circle {
   stroke-width: 2;
   stroke: black;
   paint-order: markers fill stroke;
   fill: none;
   animation: rect-to-circle-morph 5s ease infinite;
-}
-
-@keyframes rect-tick-morph {
-  20% {
-    y: 17;
-    height: 8px;
-  }
-
-  30% {
-    y: 29;
-    height: 0;
-  }
-
-  70% {
-    y: 29;
-    height: 0;
-  }
-
-  80% {
-    y: 17;
-    height: 8px;
-  }
 }
 
 #rect-tick {

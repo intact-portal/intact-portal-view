@@ -82,7 +82,7 @@ build:
   stage: build
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - ng build --dev --build-optimizer=false --base-href "/intact/dev/"
+    - ng build --prod --build-optimizer=false --base-href "/intact/dev/"
     - sed -i "s/commit_hash = ''/commit_hash = '${CI_COMMIT_SHA}'/" $DIST_DIR/index.html
     - sed -i "s/build_date = ''/build_date = '$(date)'/" $DIST_DIR/index.html
   artifacts:

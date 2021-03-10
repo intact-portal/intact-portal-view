@@ -4,7 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service-label-key: intact-portal-view
+    service-label-key: intact-portal-view-dev
   name: intact-portal-view-service-dev
 spec:
   type: NodePort
@@ -19,7 +19,7 @@ spec:
       #Trying
   selector:
       # Selects intact-portal-view Deployment to attach the Service to
-      app: intact-portal-view
+      app: intact-portal-view-dev
         # Tell K8s this wants to expose an external port
 ---
 apiVersion: apps/v1
@@ -29,15 +29,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: intact-portal-view
+      app: intact-portal-view-dev
   replicas: 1
   template:
     metadata:
       labels:
-        app: intact-portal-view
+        app: intact-portal-view-dev
     spec:
       containers:
-        - name: intact-portal-view
+        - name: intact-portal-view-dev
           # Pull the latest image which contains the angular application from EBI's dockerhub
           image: dockerhub.ebi.ac.uk/intact-ci/intact-portal-view:dev
           # image: ntoro/spa-demo:v1

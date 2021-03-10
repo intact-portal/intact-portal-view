@@ -853,3 +853,34 @@ span.collapsable-counter {
   padding-left: 0.7rem;
 }
 
+/*********** ANIMATIONS ************/
+
+@keyframes rect-to-circle-morph {
+  20%, 80% {
+    rx: 0;
+    transform: translate(0px, 0px);
+
+    height: 18px;
+    width: 98px;
+  }
+
+  30%, 70% {
+    rx: 14;
+    transform: translate(34px, -5px);
+    border-radius: 999px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@keyframes rect-tick-morph {
+  20%, 80% {
+    y: 17;
+    height: 8px;
+  }
+
+  30%, 70% {
+    y: 29;
+    height: 0;
+  }
+}

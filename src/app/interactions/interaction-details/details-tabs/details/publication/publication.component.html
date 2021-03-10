@@ -17,7 +17,7 @@
           <h5>Authors</h5>
           {{publication.authors}}
         </div>
-        <div class="margin-top-large margin-bottom-large">
+        <div class="margin-top-large margin-bottom-large" *ngIf="publication.publicationDate">
           <h5>Publication date</h5>
           {{publication.publicationDate}}
         </div>

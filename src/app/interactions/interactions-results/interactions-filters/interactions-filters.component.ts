@@ -2,13 +2,45 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@an
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
 import {TableFactoryService} from "../../shared/service/table-factory.service";
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {NetworkViewService} from "../../shared/service/network-view.service";
+import {FoundationUtils} from "../../../shared/utils/foundation-utils";
+
 
 declare const $: any;
 
 @Component({
   selector: 'ip-interactions-filters',
   templateUrl: './interactions-filters.component.html',
-  styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css']
+  styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css'],
+  animations: [
+    trigger('bendTip', [
+      state('tipBended', style({
+        borderRadius: '0 1.4em 1.4em 0'
+      })),
+      state('tipStraight', style({
+        borderRadius: '0 0 0 0'
+      })),
+      transition('tipBended => tipStraight', [
+        animate('250ms')
+      ]),
+      transition('tipStraight => tipBended', [
+        animate('250ms 250ms')
+      ]),
+    ]),
+    trigger('slideIn', [
+      state('in', style({
+        transform: 'translateX(0)'
+      })),
+      transition(':enter', [
+        style({transform: 'translateX(-100%)'}),
+        animate('350ms 150ms')
+      ]),
+      transition(':leave', [
+        animate('350ms', style({transform: 'translateX(-100%)'}))
+      ])
+    ]),
+  ]
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
@@ -55,7 +87,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   private minValue: string | number;
   private maxValue: string | number;
 
-  constructor(private tableFactory: TableFactoryService) {
+  constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService) {
   }
 
   ngOnInit() {
@@ -71,6 +103,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     $('ip-interactions-filters').foundation();
     $(window).trigger('load.zf.sticky');
     this.tableFactory.makeTableHeaderSticky();
+    FoundationUtils.adjustWidth();
   }
 
   filterStyle(filterKey: string): any {
@@ -88,6 +121,8 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
       };
     }
   }
+
+
 
   initSliderRange(): void {
     this.options = {
@@ -382,7 +417,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   set options(options: Options) {
     this._options = options;
   }
-
 
 
   getFilter(filter: EFilter): string[] {

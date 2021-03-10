@@ -1,24 +1,48 @@
-<div id="dataset" class="margin-top-large margin-bottom-large">
+<div id="dataset" class="margin-top-large">
   <h4 class="margin-bottom-large">
     <i class="icon icon-generic" data-icon="D"></i> Featured Dataset
   </h4>
 
   <div>
-    <div class="text-justify"> {{title}}</div>
+    <div class="text-justify margin-bottom-large">{{title}} - <b>{{pubmedAuthor}}</b></div>
 
-    <div class="margin-top-medium">
-      <span>{{pubmedAuthor}}</span>
+    <div class="expanded no-margin button-group stacked-for-medium" id="dataset-group">
+
+      <button class="button lighter adjust-width" type="button" data-toggle="access">
+        <i class="icon icon-common icon-search"></i>
+        Access
+      </button>
+      <div class="dropdown-pane no-padding no-border" id="access" data-dropdown data-hover="true"
+           data-hover-pane="true">
+        <ul class="no-bullet no-margin">
+          <li><a class="button lightest expanded no-margin" [href]="searchUrl()">IntAct</a></li>
+          <li><a class="button lightest expanded no-margin" [href]="pubMedUrl()">Europe PMC</a></li>
+        </ul>
+      </div>
+
+      <button class="button lighter adjust-width" type="button" data-toggle="download">
+        <i class="icon icon-functional icon-download"></i> Download
+      </button>
+      <div class="dropdown-pane no-padding no-border" id="download" data-dropdown data-hover="true"
+           data-hover-pane="true">
+        <ul class="no-bullet no-margin">
+          <li>
+            <a class="button lightest expanded no-margin" [download]="pubmedId + '.tab'"
+               [href]="miTabUrl()">miTab<sub>2.7</sub></a>
+          </li>
+          <li>
+            <a class="button lightest expanded no-margin" [download]="pubmedId + '.xml'"
+               [href]="miXmlUrl()">miXML<sub>2.5</sub></a>
+          </li>
+        </ul>
+      </div>
+
     </div>
-
-    <div class="margin-top-medium">
-      <a class="button small" (click)="goIntactPubId()">IntAct</a>
-      <a class="button small" (click)="goPSIMI25FTP()" >PSI-MI XML 2.5</a>
-      <a class="button small" (click)="goPSIMITABFTP()">PSI-MI TAB 2.7</a>
+    <div class="archive">
+      <a class="button outlined expanded no-margin" [href]="archiveUrl()">
+        <i class="icon icon-generic" data-icon=";"></i>
+        Archive
+      </a>
     </div>
-
-    <div class="row archive">
-      <p><i class="icon icon-generic" data-icon=";"></i> <a (click)="goDOTMArchiveFTP()">Dataset archive</a></p>
-    </div>
-
   </div>
 </div>

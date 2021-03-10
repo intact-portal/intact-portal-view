@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -6,6 +6,8 @@ import {environment} from '../../../../../../environments/environment';
 import {Column} from "../../../../shared/model/tables/column.model";
 import {ParticipantTable} from "../../../../shared/model/tables/participant-table.model";
 import {TableFactoryService} from "../../../../shared/service/table-factory.service";
+import {InteractionParticipantsService, Status} from "../../../shared/service/interaction-participants.service";
+import {Subscription} from "rxjs";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -14,7 +16,7 @@ const baseURL = environment.intact_portal_ws;
   templateUrl: './participant-table.component.html',
   styleUrls: ['./participant-table.component.css']
 })
-export class ParticipantTableComponent implements OnInit, OnChanges {
+export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
@@ -22,13 +24,14 @@ export class ParticipantTableComponent implements OnInit, OnChanges {
   dataTable: any;
   columnView = 'participants_columnView';
 
-  @Output() participantChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   private _columns = new ParticipantTable();
 
-  private _participantsSelected = new Set<string>();
+  private fillParticipants = true;
 
-  constructor(private tableFactory: TableFactoryService) {
+  private proteinExpansionSubscription: Subscription;
+
+  constructor(private tableFactory: TableFactoryService, private participantsService: InteractionParticipantsService) {
   }
 
   ngOnInit(): void {
@@ -44,6 +47,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges {
 
       // This fixes the alignment between the th and td when we have activated scrollX:true
       const table: any = $('#participantTable');
+      this.fillParticipants = false;
       this.dataTable = table.DataTable().columns.adjust().draw();
     }
   }
@@ -78,11 +82,11 @@ export class ParticipantTableComponent implements OnInit, OnChanges {
           title: this._columns.expand.name,
           render: (data, type, full) => {
             if (type === 'display') {
-              let selectionIdentifier = full.participantId.identifier;
-              this._participantsSelected.add(selectionIdentifier);
+              let id = full.participantId.identifier;
               if (full.type.shortName === 'protein') {
-                  return `<input type="checkbox" id="${selectionIdentifier}" name="check" value="${data}" checked/>`;
-                  // TODO Switch to participants AC for correct interaction
+                let expanded = this.participantsService.getParticipantAndStatusById(id).status === Status.EXPANDED;
+                return `<input type="checkbox" id="${id}" name="check" value="${data}" ${expanded ? 'checked' : ''}/>`;
+                // TODO Switch to participants AC for correct interaction
               }
             }
             return '';
@@ -222,37 +226,21 @@ export class ParticipantTableComponent implements OnInit, OnChanges {
       ],
     });
 
-    // Collapse / Expand all changing all checkboxes in the table
-    $(document).on('change', 'input[name=\'expansion\']', (e) => {
-      const type = e.currentTarget.id;
-      let tableSelectors = $('input[name=\'check\']:checkbox');
-      switch (type) {
-        case 'expand-all':
-          tableSelectors.prop('checked', true);
-          tableSelectors.each((index, elem) => {
-            this._participantsSelected.add(elem.id);
-          })
-
-          break;
-        case 'collapse-all':
-          tableSelectors.prop('checked', false);
-          this._participantsSelected.clear();
-          break;
-      }
-      this.participantChanged.emit(this.participantsSelected);
-    })
+    this.proteinExpansionSubscription = this.participantsService.proteinSetsUpdated.subscribe(proteins => {
+      proteins.expanded.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', true));
+      proteins.collapsed.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', false));
+    });
 
     table.on('change', 'input[name=\'check\']', (e) => {
-      const participantSel = e.currentTarget.id;
-      if (this.participantsSelected !== undefined) {
-        if ($(`#${participantSel}:checkbox`).prop('checked')) {
-          this._participantsSelected.add(participantSel);
+        const id = e.currentTarget.id;
+        let protein = this.participantsService.getParticipantAndStatusById(id).participant;
+        if ($(`#${id}:checkbox`).prop('checked')) {
+          this.participantsService.setProteinStatus(protein, Status.EXPANDED);
         } else {
-          this._participantsSelected.delete(participantSel);
+          this.participantsService.setProteinStatus(protein, Status.COLLAPSED);
         }
-        this.participantChanged.emit(this.participantsSelected);
       }
-    });
+    );
   }
 
 
@@ -260,11 +248,9 @@ export class ParticipantTableComponent implements OnInit, OnChanges {
     return this._columns;
   }
 
-  get participantsSelected(): string[] {
-    return Array.from(this._participantsSelected);
+  ngOnDestroy(): void {
+    if (this.proteinExpansionSubscription) this.proteinExpansionSubscription.unsubscribe();
   }
 
-  set participantsSelected(value: string[]) {
-    this._participantsSelected = new Set<string>(value);
-  }
+
 }

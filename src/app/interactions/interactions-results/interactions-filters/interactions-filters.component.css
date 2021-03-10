@@ -6,12 +6,11 @@
 .facet {
   white-space: nowrap;
   padding: 5px;
-  /*background: white;*/
 }
 
 .facet > label {
   font-size: 13px;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .dropdown-pane {
@@ -28,22 +27,7 @@
   background: white;
 }
 
-#filters-bar button.button {
-  margin-right: 0.3em;
-}
 
-.rounded {
-  border-radius: 20px;
-}
-
-.rounded:focus, .rounded:active {
-  box-shadow: 0 0 0 3px #216fd1;
-  outline: none;
-}
-
-.dropdown-pane.rounded:focus, .dropdown-pane.rounded:active {
-  box-shadow: none;
-}
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
   background-image: url('../../../../assets/images/results/mi-score-slider-image.svg') !important;
@@ -106,3 +90,4 @@ button.delete-button {
   color: white;
   padding: 10px;
 }
+

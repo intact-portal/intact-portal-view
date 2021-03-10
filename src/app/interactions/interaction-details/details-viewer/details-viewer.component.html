@@ -3,90 +3,130 @@
     <div id="interaction-viewer" class="columns medium-9">
       <h4>Interaction Viewer</h4>
       <div id="interaction-viewer-container"></div>
+      <div class="row expanded button-bar">
+        <div class="button-group expanded columns large-8 medium-12 no-pad-left no-pad-right no-margin">
+          <button class="button" (click)="onChangeAnnotation('MI Features')"
+                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['MI Features'],
+                              'outlined': !annotations['MI Features']}">
+            MI <span class="show-for-large">Features</span>
+          </button>
+          <button class="button" (click)="onChangeAnnotation('UniprotKB')"
+                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['UniprotKB'],
+                              'outlined': !annotations['UniprotKB']}">
+            Uniprot <span class="show-for-large">Features</span>
+          </button>
+          <button class="button" (click)="onChangeAnnotation('Superfamily')"
+                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['Superfamily'],
+                              'outlined': !annotations['Superfamily']}">
+            <span class="show-for-large">Super</span>Family
+          </button>
+          <button class="button" (click)="onChangeAnnotation('Interactor')"
+                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['Interactor'],
+                              'outlined': !annotations['Interactor']}">
+            Interactor
+          </button>
+        </div>
+
+        <div class="button-group expanded columns large-4 medium-12 no-pad-left no-pad-right no-margin">
+          <button class="button lighter" (click)="expandAll()">Expand <span class="show-for-large">all</span></button>
+          <button class="button lighter" (click)="collapseAll()">Collapse <span class="show-for-large">all</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <div id="viewer-legend" class="columns medium-3">
       <h4>Legend</h4>
+      <div id="legend" class="scrollbar margin-bottom-small">
+        <table *ngIf="colorLegendGroups" class="color-key no-margin">
+          <tbody>
+          <tr class="legend-group">
+            <td colspan="2" class="no-padding-left">
+              <h5 class="no-margin">Node Shape</h5>
+            </td>
+          </tr>
+          <tr *ngIf="hasNodeShapeOf('bioactive entity')">
+            <td class="no-padding">
+              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                               [shape]="NodeShape.TRIANGLE" height="13pt">
+              </ip-node-diagram>
+            </td>
+            <td class="legend-label">Bioactive Entity</td>
+          </tr>
 
-      <div class="margin-bottom-large">
-        <h5>Node Shape</h5>
+          <tr *ngIf="hasNodeShapeOf('complex')">
+            <td class="no-padding">
+              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                               [shape]="NodeShape.HEXAGON">
+              </ip-node-diagram>
+            </td>
+            <td class="legend-label">Complex</td>
+          </tr>
 
-        <div class="padding-top-medium margin-bottom-medium">
-          <div class="row">
-            <div class="columns medium-3 image-center">
-              <img [src]="SMALL_MOL" alt="Bioactive Entity">
-            </div>
-            <div class="columns medium-9"><span>Bioactive Entity</span></div>
-          </div>
+          <tr *ngIf="hasNodeShapeOf('gene')">
+            <td class="no-padding">
+              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                               [shape]="NodeShape.ROUNDED_RECTANGLE">
+              </ip-node-diagram>
+            </td>
+            <td class="legend-label">Gene</td>
+          </tr>
 
-          <div class="row">
-            <div class="columns medium-3 image-center">
-              <img [src]="GENE" alt="Gene">
-            </div>
-            <div class="columns medium-9"><span>Gene</span></div>
-          </div>
+          <tr *ngIf="hasNodeShapeOf('dna')">
+            <td class="no-padding">
+              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                               [shape]="NodeShape.VEE">
+              </ip-node-diagram>
+            </td>
+            <td class="legend-label">DNA</td>
+          </tr>
 
-          <div class="row">
-            <div class="columns medium-3 image-center">
-              <img [src]="DNA" alt="DNA">
-            </div>
-            <div class="columns medium-9"><span>DNA</span></div>
-          </div>
+          <tr *ngIf="hasNodeShapeOf('rna')">
+            <td class="no-padding">
+              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                               [shape]="NodeShape.DIAMOND">
+              </ip-node-diagram>
+            </td>
+            <td class="legend-label">RNA</td>
+          </tr>
 
-          <div class="row">
-            <div class="columns medium-3 image-center">
-              <img [src]="RNA" alt="RNA">
-            </div>
-            <div class="columns medium-9"><span>RNA</span></div>
-          </div>
+          <tr *ngIf="hasNodeShapeOf('protein')">
+            <td class="no-padding">
+              <svg viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" id="protein-svg">
+                <rect id="rect-to-circle" x="1" y="6" width="98" height="18"/>
+                <rect id="rect-tick" x="48" y="17" width="2" height="8"/>
+              </svg>
+            </td>
+            <td class="legend-label">Protein: click to switch</td>
+          </tr>
 
+          </tbody>
 
-          <div class="row">
-            <div class="columns medium-3 image-center">
-              <div><img [src]="PROTEIN_BLOB" alt="Protein"></div>
-              <div><img [src]="PROTEIN_BAR" alt="Protein"></div>
-            </div>
-            <div class="columns medium-9">
-              Protein - click to toggle between circle and bar
-            </div>
-          </div>
-        </div>
-
+          <tbody *ngFor="let group of colorLegendGroups" id="{{group.name}}-colors">
+          <tr class="legend-group">
+            <td colspan="2" class="no-padding-left">
+              <h5 class="no-margin">{{group.name}}</h5>
+            </td>
+          </tr>
+          <tr *ngFor="let legend of group.legends">
+            <td *ngIf="legend.certain && !legend.uncertain" [ngStyle]="{'background-color':legend.certain.color}"
+                class="color-square"></td>
+            <td *ngIf="!legend.certain && legend.uncertain"
+                [ngStyle]="{'background':'repeating-linear-gradient(45deg, white, white 3px,'+legend.uncertain.color+' 0px,'+legend.uncertain.color+' 12px)'}"
+                class="color-square"></td>
+            <td *ngIf="legend.certain && legend.uncertain" class="color-square no-padding">
+              <div [ngStyle]="{width: '50%', height:'100%', float: 'left',
+              'background-color':legend.certain.color}">
+              </div>
+              <div [ngStyle]="{width: '50%', height:'100%', float: 'right',
+              'background':'repeating-linear-gradient(45deg, white, white 3px,'+legend.uncertain.color+' 0px,'+legend.uncertain.color+' 12px)'}">
+              </div>
+            </td>
+            <td class="legend-label">{{legend.name}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-
-      <div id="legend-expansion">
-        <ul class="vertical menu facets">
-          <h5>Protein Expansion</h5>
-          <div class="margin-bottom-large" style="background-color: #fbfbfb">
-            <li>
-              <span>
-                <input id="expand-all" type="radio" name="expansion" (change)="expandAll()" checked/>
-                <label for="expand-all">Expand</label>
-              </span>
-            </li>
-            <li>
-              <span>
-                <input id="collapse-all" type="radio" name="expansion" (change)="collapseAll()"/>
-                <label for="collapse-all">Collapse</label>
-              </span>
-            </li>
-          </div>
-        </ul>
-      </div>
-
-      <div id="annotations" class="margin-bottom-small">
-        <h5>Annotations</h5>
-        <select id="annotations-select" (change)="changeAnnotations($event)">
-          <option selected='selected' value="MI Features">MI Features</option>
-          <option value="UniprotKB">UniprotKB</option>
-          <option value="SuperFamily">SuperFamily</option>
-          <option value="None">None</option>
-          <option value="Interactor">Interactor</option>
-        </select>
-      </div>
-
-      <div id="colours" class="scrollbar"></div>
-
     </div>
   </div>
 </div>

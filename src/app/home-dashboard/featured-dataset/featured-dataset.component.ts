@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { Parser } from 'xml2js';
 import { FeatureDatasetService } from './service/feature-dataset.service';
 import { environment } from '../../../environments/environment';
+import {FoundationUtils} from "../../shared/utils/foundation-utils";
 
 declare const require: any;
 
@@ -16,15 +16,14 @@ const intactFTPMiTab_URL = environment.intact_psimitab_url;
   templateUrl: './featured-dataset.component.html',
   styleUrls: ['./featured-dataset.component.css', '../../app.component.css']
 })
-export class FeaturedDatasetComponent implements OnInit {
+export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 
   private _title: string;
   private _pubmedId: any;
   private _pubmedAuthor: any;
   private _pubmedYear: any;
 
-  constructor(private featureDatasetService: FeatureDatasetService,
-              private router: Router) {
+  constructor(private featureDatasetService: FeatureDatasetService) {
   }
 
   ngOnInit() {
@@ -49,22 +48,31 @@ export class FeaturedDatasetComponent implements OnInit {
       });
   }
 
-  goIntactPubId() {
-    const url = `${baseURL}/intact/query/pubid:${this.pubmedId}`;
-    window.open(url, '_blank');
-    // this.router.navigate(['/intact/query'], this.pubmedId)
+  ngAfterViewInit(): void {
+    // @ts-ignore
+    $('#dataset-group').foundation();
+    FoundationUtils.adjustWidth();
   }
 
-  goPSIMI25FTP() {
-    window.open(intactFTP_URL + `/pmid/${this.pubmedYear}/${this.pubmedId}.zip`);
+
+  pubMedUrl() {
+    return `http://europepmc.org/article/MED/${this.pubmedId}`;
   }
 
-  goPSIMITABFTP() {
-    window.open(intactFTPMiTab_URL + `/${this.pubmedYear}/${this.pubmedId}.txt`);
+  searchUrl() {
+    return `${baseURL}/intact/query/pubid:${this.pubmedId}`;
   }
 
-  goDOTMArchiveFTP() {
-    this.router.navigate(['/featured-dataset/archive']);
+  miXmlUrl() {
+    return `${intactFTP_URL}/pmid/${this.pubmedYear}/${this.pubmedId}.zip`;
+  }
+
+  miTabUrl() {
+    return `${intactFTPMiTab_URL}/${this.pubmedYear}/${this.pubmedId}.txt`;
+  }
+
+  archiveUrl() {
+    return '/featured-dataset/archive';
   }
 
   get title(): string {

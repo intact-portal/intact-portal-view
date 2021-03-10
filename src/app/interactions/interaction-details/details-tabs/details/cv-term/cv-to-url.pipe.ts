@@ -7,6 +7,7 @@ import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model
 export class CvToUrlPipe implements PipeTransform {
 
   transform(value: CvTerm, type?: 'access' | 'details'): string {
+    if (value.identifier === null) return '';
     let id = value.identifier.replace(':','_');
     switch (type) {
       default:

@@ -1,3 +1,5 @@
+import {NodeShape} from "../../network-shapes/node-shape";
+
 export class Interactor {
   private _interactorName: string;
   private _interactorAc: string;
@@ -6,6 +8,8 @@ export class Interactor {
   private _interactorType: string;
   private _interactorSpecies: string;
   private _interactionCount: number;
+  private _color: string;
+  private _shape: NodeShape;
 
   constructor(interactorName: string,
               interactorDescription: string,
@@ -13,7 +17,9 @@ export class Interactor {
               interactorAlias: string,
               interactorType: string,
               interactorSpecies: string,
-              interactionCount: number) {
+              interactionCount: number,
+              color: string,
+              shape: NodeShape) {
     this._interactorName = interactorName;
     this._interactorDescription = interactorDescription;
     this._interactorPreferredIdentifier = interactorAlias;
@@ -21,6 +27,8 @@ export class Interactor {
     this._interactorType = interactorType;
     this._interactorSpecies = interactorSpecies;
     this._interactionCount = interactionCount;
+    this._color = color;
+    this._shape = shape;
   }
 
 
@@ -50,5 +58,13 @@ export class Interactor {
 
   get interactionCount(): number {
     return this._interactionCount;
+  }
+
+  get color(): string {
+    return this._color;
+  }
+
+  get shape(): NodeShape {
+    return this._shape;
   }
 }

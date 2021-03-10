@@ -3,3 +3,13 @@ h4 {
   border-color:#5ca23561;
 }
 
+
+#dataset-group > .button {
+  margin-right: 1px !important;
+  margin-bottom: 1px !important;
+  width: calc(50% - 0.5px);
+}
+
+#dataset-group .button:last-of-type {
+  margin-right: 0 !important;
+}

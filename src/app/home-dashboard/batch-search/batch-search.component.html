@@ -184,7 +184,7 @@
       <button class="button" type="button" awPreviousStep (click)="resetSecondStep()">Previous Step</button>
       <button class="button" type="button" awNextStep [disabled]="!dataReceived"
               (click)="collectNextPagesInteractors()">
-        <i class="icon icon-common icon-cogs"></i> Next Step
+        <i class="icon icon-common icon-cogs"></i> Search
       </button>
     </div>
   </aw-wizard-step>
@@ -198,20 +198,8 @@
       </div>
     </div>
 
-    <div class="y-overflowed">
-      <ul style="flex-direction: column-reverse;
-    display: flex;">
-        <li *ngFor="let ac of interactorAcs">
-          {{ac}}
-        </li>
-      </ul>
-    </div>
-
     <div class="button-group">
       <button class="button" type="button" (click)="resetThirdStep()" awPreviousStep>Previous Step</button>
-      <button class="button" type="button" (click)="batchSearch()" [disabled]="!acCollectionFinished">
-        <i class="icon icon-common icon-search"></i> Search
-      </button>
     </div>
   </aw-wizard-step>
 </aw-wizard>

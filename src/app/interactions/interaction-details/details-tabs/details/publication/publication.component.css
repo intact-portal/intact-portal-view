@@ -2,3 +2,7 @@ h4 {
   border-bottom-style: solid;
   border-color: #2e6e314f;
 }
+
+.button.alert {
+  cursor: default;
+}

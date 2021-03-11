@@ -1,0 +1,20 @@
+.submit-to-link {
+  cursor: pointer;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  border-bottom-color: inherit;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 0;
+  background: none;
+}
+
+.submit-to-link:hover,
+.submit-to-link:focus,
+.submit-to-link:active {
+  border-bottom-style: solid;
+  border-bottom-color: #68297c;
+  color: #68297c;
+  opacity: 0.9;
+}

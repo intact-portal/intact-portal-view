@@ -2,16 +2,27 @@
   <h5>External Cross References ({{xrefs.length}})</h5>
   <table id="externalXref">
     <thead>
-      <th>Database</th>
-      <th>Identifier</th>
+    <th>Database</th>
+    <th>Identifier</th>
     </thead>
     <tbody>
-      <tr *ngFor="let xref of xrefs">
-        <td>
-          <ip-cv-term [cvTerm]="xref.database"></ip-cv-term>
-        </td>
-        <td>{{xref.identifier}}</td>
-      </tr>
+    <tr *ngFor="let xref of xrefs">
+      <td>
+        <ip-cv-term [cvTerm]="xref.database"></ip-cv-term>
+      </td>
+
+      <td [ngSwitch]="xref.database.shortName">
+        <form action="https://imexcentral.org/icentral/pubsrc.action" method="post" target="_blank"
+              *ngSwitchCase="'imex'">
+          <input name="opp.ns" value="imex" hidden/>
+          <input name="opp.ac" [value]="extractImexPubId(xref.identifier)" hidden/>
+          <input name="op.esrc" value="SEARCH" hidden/>
+          <input type="submit" class="submit-to-link" [value]="xref.identifier">
+        </form>
+
+        <span *ngSwitchDefault>{{xref.identifier}}</span>
+      </td>
+    </tr>
     </tbody>
   </table>
 </div>

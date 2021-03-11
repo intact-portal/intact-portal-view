@@ -16,4 +16,10 @@ export class ExternalXrefsComponent implements OnInit {
   ngOnInit() {
   }
 
+  public extractImexPubId(imexRef: string): string {
+    let parts = imexRef.split('-');
+    if (parts.length > 2) parts.splice(2, parts.length - 2)
+    return parts.join('-')
+  }
+
 }

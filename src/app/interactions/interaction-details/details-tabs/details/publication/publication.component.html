@@ -5,15 +5,15 @@
   <div id="publicationPanel" class="margin-top-large margin-bottom-large">
     <div class="row expanded">
       <div class="columns medium-6">
-        <div class="margin-top-large margin-bottom-large">
+        <div class="margin-top-large margin-bottom-large" *ngIf="publication.title">
           <h5>Title</h5>
           {{publication.title}}
         </div>
-        <div class="margin-top-large margin-bottom-large">
+        <div class="margin-top-large margin-bottom-large" *ngIf="publication.journal">
           <h5>Journal</h5>
           {{publication.journal}}
         </div>
-        <div class="margin-top-large margin-bottom-large">
+        <div class="margin-top-large margin-bottom-large" *ngIf="publication.authors">
           <h5>Authors</h5>
           {{publication.authors}}
         </div>
@@ -22,12 +22,15 @@
           {{publication.publicationDate}}
         </div>
 
-        <div class="margin-top-large margin-bottom-xlarge">
+        <div class="margin-top-large margin-bottom-xlarge" *ngIf="publication.pubmedId">
           <h5>Publication reference</h5>
           <a href="https://europepmc.org/article/MED/{{publication.pubmedId}}?singleResult=true"
-             target="_blank">
+             target="_blank" *ngIf="!publication.pubmedId.startsWith('unassigned'); else unassigned">
             PubMed: {{publication.pubmedId}}
           </a>
+          <ng-template #unassigned>
+            <div class="button alert">This publication is not present on PubMed yet.<br> Thus, this interaction is likely to come from a pre-publication </div>
+          </ng-template>
         </div>
 
       </div>

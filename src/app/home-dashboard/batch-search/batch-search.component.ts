@@ -30,7 +30,7 @@ export class BatchSearchComponent {
   private _totalInteractorsToQuery = 0;
   private _interactorsQueried = 0;
   private _acCollectionProgress = 0;
-  private _acCollectionFinished = false;
+  private collectionReset = false;
 
   constructor(private search: SearchService) {
     this.uploader = new FileUploader({
@@ -137,7 +137,12 @@ export class BatchSearchComponent {
   collectNextPagesInteractors(entriesToComplete?: ResolutionEntry[], page = 1) {
     if (page === 1) {
       entriesToComplete = Array.from(this._entriesToComplete.values());
+      if (entriesToComplete.length === 0) return this.batchSearch();
       this._totalInteractorsToQuery = entriesToComplete.reduce((total, entry) => total + entry.totalElements - 50, 0);
+    }
+    if (this.collectionReset) {
+      this.collectionReset = false
+      return ;
     }
     let query = entriesToComplete.map(entry => entry.term).join(', ')
     this.search.resolveSearch(query, page, 50).subscribe(data => {
@@ -153,7 +158,7 @@ export class BatchSearchComponent {
         if (!entry.last) nextEntriesToComplete.push(entry);
       }
       if (nextEntriesToComplete.length !== 0) this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
-      else this._acCollectionFinished = true;
+      else this.batchSearch();
     })
   }
 
@@ -171,7 +176,6 @@ export class BatchSearchComponent {
     this._totalInteractorsToQuery = 0;
     this._interactorsQueried = 0;
     this._acCollectionProgress = 0;
-    this._acCollectionFinished = false;
 
     this._interactorAcs.clear();
   }
@@ -180,7 +184,7 @@ export class BatchSearchComponent {
     this._totalInteractorsToQuery = 0;
     this._interactorsQueried = 0;
     this._acCollectionProgress = 0;
-    this._acCollectionFinished = false;
+    this.collectionReset = true;
 
     this._interactorAcs.clear();
     $('input[name="interactor"]').each((i, input) => {
@@ -256,10 +260,6 @@ export class BatchSearchComponent {
 
   get acCollectionProgress(): number {
     return this._acCollectionProgress;
-  }
-
-  get acCollectionFinished(): boolean {
-    return this._acCollectionFinished;
   }
 
   get interactorAcs(): Set<string> {

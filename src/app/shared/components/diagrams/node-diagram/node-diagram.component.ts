@@ -7,11 +7,11 @@ import {NodeShape} from "../../../../interactions/shared/model/network-shapes/no
   styleUrls: ['./node-diagram.component.css']
 })
 export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() shape: NodeShape = NodeShape.ELLIPSE;
-  @Input() color: string = "#d6d6d6";
-  @Input() borderColor: string = null;
-  @Input() label: string = null;
-  @Input() height: string = '20pt';
+  @Input() shape: NodeShape;
+  @Input() color: string;
+  @Input() borderColor: string;
+  @Input() label: string;
+  @Input() height: string;
   @ViewChild("labelElt") labelElt: ElementRef;
   @ViewChild("svg") svgElt: ElementRef;
   @ViewChild("shapeGroup") shapeGroupElt: ElementRef;
@@ -21,6 +21,9 @@ export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    if (!this.shape) this.shape = NodeShape.ELLIPSE;
+    if (!this.color) this.color = "#d6d6d6";
+    if (!this.height) this.height = "20pt"
   }
 
   ngAfterViewInit(): void {

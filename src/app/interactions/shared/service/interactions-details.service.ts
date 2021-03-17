@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {environment} from '../../../../environments/environment';
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.intact_portal_graph_ws;
 
 @Injectable()
 export class InteractionsDetailsService {

@@ -7,7 +7,7 @@ import {Column} from "../../../../shared/model/tables/column.model";
 import {ParticipantTable} from "../../../../shared/model/tables/participant-table.model";
 import {TableFactoryService} from "../../../../shared/service/table-factory.service";
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
   selector: 'ip-participant-table',

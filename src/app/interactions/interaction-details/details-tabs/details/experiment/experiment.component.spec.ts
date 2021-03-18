@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExperimentComponent } from './experiment.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {Experiment} from "../../../../shared/model/interaction-details/experiment.model";
 
 describe('ExperimentComponent', () => {
   let component: ExperimentComponent;
@@ -8,7 +10,8 @@ describe('ExperimentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExperimentComponent ]
+      declarations: [ ExperimentComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -16,6 +19,7 @@ describe('ExperimentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExperimentComponent);
     component = fixture.componentInstance;
+    component.experiment = new Experiment('','','',[],[]);
     fixture.detectChanges();
   });
 

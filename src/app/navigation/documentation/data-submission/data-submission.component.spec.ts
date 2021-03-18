@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataSubmissionComponent } from './data-submission.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('DataSubmissionComponent', () => {
   let component: DataSubmissionComponent;
@@ -8,7 +9,8 @@ describe('DataSubmissionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataSubmissionComponent ]
+      declarations: [ DataSubmissionComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

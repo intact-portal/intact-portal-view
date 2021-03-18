@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TechnicalCornerComponent } from './technical-corner.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('TechnicalCornerComponent', () => {
   let component: TechnicalCornerComponent;
@@ -8,7 +9,8 @@ describe('TechnicalCornerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TechnicalCornerComponent ]
+      declarations: [ TechnicalCornerComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

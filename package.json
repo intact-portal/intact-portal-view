@@ -59,7 +59,7 @@
     "@types/datatables.net": "1.10.6",
     "@types/datatables.net-fixedheader": "~3.1.4",
     "@types/file-saver": "^2.0.1",
-    "@types/jasmine": "~2.8.3",
+    "@types/jasmine": "2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/jquery": "^3.5.5",
     "@types/node": "~14.0.1",
@@ -76,6 +76,6 @@
     "protractor": "^5.1.2",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
-    "typescript": "2.7.2"
+    "typescript": "2.8.4"
   }
 }

@@ -56,7 +56,7 @@ init:
       -Dsonar.tests=src/app
       -Dsonar.test.inclusions=**/*.spec.ts
 
-.test:karma:
+test:karma:
   stage: test
   image: trion/ng-cli-karma:${CLI_VERSION}
   allow_failure: false

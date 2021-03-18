@@ -1,6 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AboutComponent } from './about.component';
+import {AboutComponent} from './about.component';
+import {MarkdownComponent} from "../documentation/shared/markdown/markdown.component";
+import {MarkdownModule} from "../documentation/shared/markdown/markdown.module";
+import {MarkdownRendererService} from "../documentation/shared/markdown/service/markdown-renderer.service";
+
+
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
@@ -8,9 +13,11 @@ describe('AboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AboutComponent ]
+      declarations: [AboutComponent],
+      imports: [MarkdownModule],
+      providers: [MarkdownRendererService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,3 +30,4 @@ describe('AboutComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

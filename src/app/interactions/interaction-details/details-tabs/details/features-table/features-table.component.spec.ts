@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FeaturesTableComponent } from './features-table.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {TableFactoryService} from "../../../../shared/service/table-factory.service";
 
 describe('FeaturesDetailsComponent', () => {
   let component: FeaturesTableComponent;
@@ -8,7 +10,9 @@ describe('FeaturesDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FeaturesTableComponent ]
+      declarations: [ FeaturesTableComponent ],
+      providers: [TableFactoryService],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

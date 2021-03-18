@@ -1,6 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DetailsViewerComponent } from './details-viewer.component';
+import {DetailsViewerComponent} from './details-viewer.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {InteractionsDetailsService} from "../../shared/service/interactions-details.service";
+import {InteractionParticipantsService} from "../shared/service/interaction-participants.service";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('DetailsViewerComponent', () => {
   let component: DetailsViewerComponent;
@@ -8,7 +12,10 @@ describe('DetailsViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailsViewerComponent ]
+      declarations: [ DetailsViewerComponent ],
+      providers: [InteractionsDetailsService, InteractionParticipantsService],
+      imports: [HttpClientTestingModule],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

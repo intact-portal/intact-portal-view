@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LocalFooterComponent } from './local-footer.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('LocalFooterComponent', () => {
   let component: LocalFooterComponent;
@@ -8,7 +9,8 @@ describe('LocalFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocalFooterComponent ]
+      declarations: [ LocalFooterComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

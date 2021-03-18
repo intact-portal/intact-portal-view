@@ -13,6 +13,7 @@ default:
     policy: pull
   before_script:
     - "[ -d node_modules ] || npm install"
+    - "[ -d src/types/typeahead.js ] || npm run update-types"
 
 variables:
   DIST_DIR: dist/intact-portal-view
@@ -21,8 +22,7 @@ variables:
 init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
-  script:
-    - npm run update-types
+  script: ['']
   cache:
     policy: push
     key: ${CI_COMMIT_SHA}

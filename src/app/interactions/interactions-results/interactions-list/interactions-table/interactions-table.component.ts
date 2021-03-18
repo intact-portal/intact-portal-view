@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-import * as $ from 'jquery';
-import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
 import {extractAlias, extractAnnotation, extractId} from "../../../../shared/utils/string-utils";
 import {TableFactoryService} from "../../../shared/service/table-factory.service";
@@ -39,7 +37,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   private _miScoreMax: any;
   private _intraSpeciesFilter: boolean;
   private _interactionSelected: string;
-  dataTable: any;
+  dataTable: DataTables.Api;
 
   columnView = 'interactions_columnView';
 
@@ -64,7 +62,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
 
         if (this.dataTable !== undefined) {
-          // tslint:disable-next-line:no-shadowed-variable
           const table: any = $('#interactionsTable');
           this.dataTable = table.DataTable().ajax.reload();
         }
@@ -80,7 +77,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.interactionTab.currentValue) {
       // This fixes the alignment between the th and td when we have activated scrollX:true
-      const table: any = $('#interactionsTable');
+      const table = $('#interactionsTable');
       this.dataTable = table.DataTable().columns.adjust().draw();
     }
   }
@@ -146,9 +143,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   }
 
   private initDataTable(): void {
-    const table: any = $('#interactionsTable');
+    const table = $('#interactionsTable');
     this.dataTable = table.DataTable({
-        bSort: false,
+        ordering: false,
         searching: false,
         paging: true,
         lengthMenu: [25, 50, 75, 100, 150, 200, 500],
@@ -162,7 +159,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         ajax: {
           url: `${baseURL}/interaction/list/`,
           type: 'POST',
-          data: (d) => {
+          data: (d: any) => {
             d.page = d.start / d.length;
             d.pageSize = d.length;
             d.query = this.query;
@@ -264,7 +261,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             title: this._columns.publicationIdentifiers.name,
             render: this.tableFactory.enlistWithButtons((d) => {
               const data_s = d.split('(');
-              const publicationId :string= data_s[0].trim();
+              const publicationId: string = data_s[0].trim();
               const publicationSource = data_s[1].slice(0, -1);
               let url = '';
               if (publicationSource === 'pubmed' && !publicationId.includes('unassigned')) {
@@ -305,8 +302,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           {
             data: this._columns.confidenceValue.key,
             title: this._columns.confidenceValue.name,
-            render: this.tableFactory.enlistWithButtons(d => {
-              if (!d.includes('intact-miscore')) return `<div><span class="detailsConfidencesCell">${d}</span></div>`
+            render: this.tableFactory.enlistWithButtons((d: string) => {
+
+              if (!d.includes('intact-miscore')) {
+                let [name, value] = d.split(/[()]/);
+                let fixed = parseFloat(value).toFixed(2);
+                return `<div class="tag-cell-container vertical-flex"><span class="detailsExpansionsCell tag-cell centered">${name}:${fixed}</span></div>`
+              }
               const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
                 'rgb(255,255,229)',
                 'rgb(255,247,188)',
@@ -347,11 +349,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               ];
 
               const score = d.split(':');
-              const paletteIndex = Math.floor(score[1] * 10);
+              const paletteIndex = Math.floor(parseFloat(score[1]) * 10);
 
               // noinspection CssInvalidPropertyValue
-              return `<div>
-                          <a class="detailsConfidencesCell tag-cell" target="_blank"
+              return `<div class="tag-cell-container vertical-flex">
+                          <a class="detailsConfidencesCell tag-cell centered" target="_blank"
                           href="${environment.ebi_base_url}${environment.context_path}/documentation/docs#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
                                  border:1px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};

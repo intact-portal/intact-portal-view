@@ -1,18 +1,11 @@
-import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FeatureDatasetService} from '../service/feature-dataset.service';
-import {environment} from '../../../../environments/environment';
 import {Dataset} from '../model/dataset.model';
-import {PubmedDataset} from "../model/pubmed-dataset.model";
 import {groupBy} from "../../../shared/utils/array-utils";
 
 declare const require: any;
-declare const $: any;
 
 const parseString = require('xml2js').parseString;
-
-const baseURL = environment.ebi_base_url;
-const intactFTP_URL = environment.intact_psi25_url;
-const intactFTPMiTab_URL = environment.intact_psimitab_url;
 
 @Component({
   selector: 'ip-dataset-archive',

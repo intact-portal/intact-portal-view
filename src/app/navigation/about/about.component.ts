@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 
-declare const $: any;
 
 @Component({
   selector: 'ip-about',
@@ -28,5 +27,4 @@ export class AboutComponent implements OnInit {
     this.titleService.setTitle('IntAct - About');
     $('ip-about').foundation();
   }
-
 }

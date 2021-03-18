@@ -3,7 +3,6 @@ import {Dataset} from "../../model/dataset.model";
 import {environment} from "../../../../../environments/environment";
 import {PubmedDataset} from "../../model/pubmed-dataset.model";
 
-declare const $: any;
 
 const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
@@ -26,7 +25,7 @@ export class DatasetByYearComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     $(`#accordion-${this.year}`).foundation();
-    $('.accordion-title').on('mouseup', function (e) {
+    $('.accordion-title').on('mouseup', function () {
       var $accordionItem = $(this).parent(),
         //is the section hidden? if the section is not yet visible, the click is to open it
         opening = ($accordionItem.find('.accordion-content:hidden').length === 1);

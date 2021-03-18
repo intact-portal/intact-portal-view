@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-import * as $ from 'jquery';
-import 'datatables.net';
 import {environment} from '../../../../../environments/environment';
 import {extractAlias, extractId} from "../../../../shared/utils/string-utils";
 import {TableFactoryService} from "../../../shared/service/table-factory.service";
@@ -39,10 +37,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   private _currentPageIndex: any;
   private _interactorSelected: string;
 
-  dataTable: any;
+  dataTable: DataTables.Api;
 
   columnView = 'interactors_columnView';
-  table: any;
+  table: JQuery;
 
   private _columns = new InteractorTable();
 
@@ -160,9 +158,9 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   scrolling = false;
 
   private initDataTable(): void {
-    const table: any = $('#interactorsTable');
+    const table = $('#interactorsTable');
     this.dataTable = table.DataTable({
-      bSort: false,
+      ordering: false,
       searching: false,
       paging: true,
       lengthMenu: [25, 50, 75, 100, 150, 200, 500],
@@ -176,7 +174,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       ajax: {
         url: `${baseURL}/interaction/interactors/list/`,
         type: 'POST',
-        data: (d) => {
+        data: (d: any) => {
           d.page = d.start / d.length;
           d.pageSize = d.length;
           d.query = this.terms;

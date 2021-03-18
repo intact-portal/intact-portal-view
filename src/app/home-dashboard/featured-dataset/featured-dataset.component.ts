@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { FeatureDatasetService } from './service/feature-dataset.service';
-import { environment } from '../../../environments/environment';
+import {FeatureDatasetService} from './service/feature-dataset.service';
+import {environment} from '../../../environments/environment';
 import {FoundationUtils} from "../../shared/utils/foundation-utils";
 
 declare const require: any;
@@ -49,7 +48,6 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // @ts-ignore
     $('#dataset-group').foundation();
     FoundationUtils.adjustWidth();
   }

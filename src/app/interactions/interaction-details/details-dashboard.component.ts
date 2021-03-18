@@ -78,6 +78,7 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
       var te;
 
       try {
+        // @ts-ignore
         te = new TextEncoder("utf-8");
       } catch (e) {
         te = undefined;

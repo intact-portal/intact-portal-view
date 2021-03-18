@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 
-import * as $ from 'jquery';
-import 'datatables.net';
 import {environment} from '../../../../../../environments/environment';
 import {FeatureTable} from "../../../../shared/model/tables/feature-table.model";
 import {Column} from "../../../../shared/model/tables/column.model";
@@ -21,7 +19,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
 
   @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
 
-  dataTable: any;
+  dataTable: DataTables.Api;
   columnView = 'features_columnView';
 
   private _columns = new FeatureTable();
@@ -42,7 +40,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
     if (changes.featureTab.currentValue) {
 
       // This fixes the alignment between the th and td when we have activated scrollX:true
-      const table: any = $('#featureTable');
+      const table = $('#featureTable');
       this.dataTable = table.DataTable().columns.adjust().draw();
     }
   }

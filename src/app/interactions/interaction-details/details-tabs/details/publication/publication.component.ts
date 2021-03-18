@@ -1,8 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Publication} from '../../../../shared/model/interaction-details/publication.model';
-import {Router} from "@angular/router";
 
-declare const $: any;
 
 @Component({
   selector: 'ip-publication',

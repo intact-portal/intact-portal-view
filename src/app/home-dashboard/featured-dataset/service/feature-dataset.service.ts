@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {environment} from '../../../../environments/environment';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 
 const intactDotmURL = environment.intact_dotm_url;
@@ -13,11 +13,13 @@ export class FeatureDatasetService {
   constructor(private http: HttpClient) {
   }
 
+  public readonly API_URL = 'assets/data/dotm-1.1.xml';
+
   getFeaturedDataset(): Observable<any> {
     //TODO Replace when in wwwdev production
     // return this.http.get(`${intactDotmURL}`, {responseType: 'text'})
     //   .catch(this.handleError);
-    return this.http.get('assets/data/dotm-1.1.xml', {responseType: 'text'})
+    return this.http.get(this.API_URL, {responseType: 'text'})
       .catch(this.handleError)
   }
 
@@ -28,4 +30,6 @@ export class FeatureDatasetService {
       console.error(err.message ? err.message : err.toString());
     }
   }
+
+
 }

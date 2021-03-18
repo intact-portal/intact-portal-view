@@ -13,7 +13,6 @@ import {
 import {Column} from "../../../interactions/shared/model/tables/column.model";
 import {FoundationUtils} from "../../utils/foundation-utils";
 
-declare const $: any;
 
 @Component({
   selector: 'ip-column-toggle',
@@ -24,7 +23,7 @@ declare const $: any;
 export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() columns: Column[];
-  @Input() dataTable: any;
+  @Input() dataTable: DataTables.Api;
   @Input() columnView: string;
   @Input() isTabActive: boolean;
   @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -69,9 +68,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
     this.showHideColumns();
     FoundationUtils.adjustWidth();
     let container = $('.column-toggle-container');
-    // @ts-ignore
     container.foundation();
-    // @ts-ignore
     container.foundationExtendEBI();
   }
 

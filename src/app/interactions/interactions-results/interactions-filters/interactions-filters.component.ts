@@ -7,8 +7,6 @@ import {NetworkViewService} from "../../shared/service/network-view.service";
 import {FoundationUtils} from "../../../shared/utils/foundation-utils";
 
 
-declare const $: any;
-
 @Component({
   selector: 'ip-interactions-filters',
   templateUrl: './interactions-filters.component.html',
@@ -121,7 +119,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
       };
     }
   }
-
 
 
   initSliderRange(): void {

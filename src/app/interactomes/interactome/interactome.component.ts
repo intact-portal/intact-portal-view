@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Interactome} from '../interactome.model';
 import {environment} from '../../../environments/environment';
-import {Router} from '@angular/router';
 import {SearchService} from "../../home-dashboard/search/service/search.service";
 
 @Component({
@@ -13,7 +12,7 @@ export class InteractomeComponent implements OnInit {
 
   private _interactome: Interactome;
 
-  constructor(private router: Router, public search: SearchService) {
+  constructor(public search: SearchService) {
   }
 
   ngOnInit() {

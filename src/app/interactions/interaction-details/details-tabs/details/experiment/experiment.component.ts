@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Experiment} from '../../../../shared/model/interaction-details/experiment.model';
 
-declare const $: any;
 
 @Component({
   selector: 'ip-experiment',

@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 
-declare const $: any;
 
 @Component({
   selector: 'ip-download',

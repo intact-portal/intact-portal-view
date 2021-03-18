@@ -1,7 +1,5 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 
-import * as $ from 'jquery';
-import 'datatables.net';
 import {environment} from '../../../../../../environments/environment';
 import {Column} from "../../../../shared/model/tables/column.model";
 import {ParticipantTable} from "../../../../shared/model/tables/participant-table.model";
@@ -21,7 +19,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy {
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
 
-  dataTable: any;
+  dataTable: DataTables.Api;
   columnView = 'participants_columnView';
 
 

@@ -1,11 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { NetworkSearchService } from './network-search.service';
+import {NetworkSearchService} from './network-search.service';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('NetworkSearchService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NetworkSearchService]
+      providers: [NetworkSearchService],
+      imports: [HttpClientTestingModule],
+      schemas: [NO_ERRORS_SCHEMA]
     });
   });
 

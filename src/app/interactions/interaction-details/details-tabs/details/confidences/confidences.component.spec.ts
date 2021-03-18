@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfidencesComponent } from './confidences.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('ConfidencesComponent', () => {
   let component: ConfidencesComponent;
@@ -8,7 +9,8 @@ describe('ConfidencesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfidencesComponent ]
+      declarations: [ ConfidencesComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -16,6 +18,7 @@ describe('ConfidencesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfidencesComponent);
     component = fixture.componentInstance;
+    component.confidences = [];
     fixture.detectChanges();
   });
 

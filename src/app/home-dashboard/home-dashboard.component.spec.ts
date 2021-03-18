@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeDashboardComponent } from './home-dashboard.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('HomeDashboardComponent', () => {
   let component: HomeDashboardComponent;
@@ -8,7 +9,8 @@ describe('HomeDashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeDashboardComponent ]
+      declarations: [ HomeDashboardComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

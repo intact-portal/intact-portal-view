@@ -1,11 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { InteractionsDetailsService } from './interactions-details.service';
+import {InteractionsDetailsService} from './interactions-details.service';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('InteractionsDetailsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [InteractionsDetailsService]
+      providers: [InteractionsDetailsService],
+      imports: [HttpClientTestingModule],
+      schemas: [NO_ERRORS_SCHEMA]
     });
   });
 

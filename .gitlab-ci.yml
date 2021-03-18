@@ -22,7 +22,7 @@ init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - npm update-types
+    - npm run update-types
   cache:
     policy: push
     key: ${CI_COMMIT_SHA}

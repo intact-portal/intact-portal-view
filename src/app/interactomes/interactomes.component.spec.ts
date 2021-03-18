@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InteractomesComponent } from './interactomes.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('InteractomesComponent', () => {
   let component: InteractomesComponent;
@@ -8,7 +9,8 @@ describe('InteractomesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InteractomesComponent ]
+      declarations: [ InteractomesComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdvancedSearchComponent } from './advanced-search.component';
+import {QueryBuilderComponent, QueryBuilderModule} from "angular2-query-builder";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('AdvancedSearchComponent', () => {
   let component: AdvancedSearchComponent;
@@ -8,7 +10,8 @@ describe('AdvancedSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdvancedSearchComponent ]
+      declarations: [ AdvancedSearchComponent, QueryBuilderComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

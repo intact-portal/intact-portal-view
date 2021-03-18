@@ -8,7 +8,6 @@ import {Participant} from "../shared/model/participant.model";
 import {Subscription} from "rxjs";
 import {NodeShape} from "../../shared/model/network-shapes/node-shape";
 
-declare const $: any;
 export var viewer: any;
 
 
@@ -50,7 +49,7 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.proteinUpdateSubscription.unsubscribe();
+    if (this.proteinUpdateSubscription) this.proteinUpdateSubscription.unsubscribe();
   }
 
   public hasNodeShapeOf(type: string): boolean {

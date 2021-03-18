@@ -6,7 +6,7 @@ import {Pagination} from "../shared/pagination.model";
 import {Interactor} from "../../interactions/shared/model/interactions-results/interactor/interactor.model";
 import {ResolutionEntry} from "./resolution-interactor-model";
 
-declare const $: any;
+
 const baseURL = environment.intact_portal_ws;
 
 @Component({
@@ -93,10 +93,10 @@ export class BatchSearchComponent {
 
   selectAll(term: string) {
     $(`input[group='${term}']:checkbox`).prop('checked', true)
-      .each((i, checkBox) => {
+      .each((i, checkBox: HTMLInputElement) => {
         let checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {
-          this._interactorAcs.add(checkbox.val());
+          this._interactorAcs.add(<string>checkbox.val());
         } else {
           let entry = this._foundEntries.find(value => value.term === term);
           this._entriesToComplete.set(term, entry);
@@ -109,7 +109,7 @@ export class BatchSearchComponent {
       .each((i, checkBox) => {
         let checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {
-          this._interactorAcs.delete(checkbox.val());
+          this._interactorAcs.delete(<string>checkbox.val());
         } else {
           this._entriesToComplete.delete(term);
         }
@@ -142,7 +142,7 @@ export class BatchSearchComponent {
     }
     if (this.collectionReset) {
       this.collectionReset = false
-      return ;
+      return;
     }
     let query = entriesToComplete.map(entry => entry.term).join(', ')
     this.search.resolveSearch(query, page, 50).subscribe(data => {
@@ -187,7 +187,7 @@ export class BatchSearchComponent {
     this.collectionReset = true;
 
     this._interactorAcs.clear();
-    $('input[name="interactor"]').each((i, input) => {
+    $('input[name="interactor"]').each((i, input: HTMLInputElement) => {
       if (input.checked) {
         this.interactorAcs.add(input.value);
       }

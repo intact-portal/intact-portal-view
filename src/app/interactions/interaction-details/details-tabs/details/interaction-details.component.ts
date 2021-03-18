@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InteractionDetails} from '../../../shared/model/interaction-details/interaction-details.model';
 
-declare const $: any;
 
 @Component({
   selector: 'ip-interaction-details',

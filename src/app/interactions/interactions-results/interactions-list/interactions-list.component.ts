@@ -2,8 +2,6 @@ import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from 
 import {InteractionsTableComponent} from "./interactions-table/interactions-table.component";
 import {InteractorsTableComponent} from "./interactors-table/interactors-table.component";
 
-declare const $: any;
-
 @Component({
   selector: 'ip-interactions-list',
   templateUrl: './interactions-list.component.html',

@@ -21,7 +21,7 @@ export class NetworkSelectionService {
     });
   }
 
-  private dataTables = new Set();
+  private dataTables = new Set<DataTables.Api>();
   private resultTables: ResultTable[] = [];
   private _binaryInteractionIds: number[] = [];
   private _interactorAcs: string[] = [];

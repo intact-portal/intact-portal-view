@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 
-declare const $: any;
 
 @Component({
   selector: 'ip-documentation',

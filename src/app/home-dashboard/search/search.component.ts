@@ -2,9 +2,9 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SearchService} from './service/search.service';
 import {environment} from '../../../environments/environment';
 import {Pagination} from "../shared/pagination.model";
+import {Interactor} from "../../interactions/shared/model/interactions-results/interactor/interactor.model";
 
-declare const Bloodhound;
-declare const $: any;
+
 const baseURL = environment.intact_portal_ws;
 
 @Component({
@@ -41,8 +41,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('features_columnView_columns');
   }
 
-  private searchBox: any;
-  private bloodhound: any;
+  private bloodhound: Bloodhound<Interactor>;
+  private searchBox: JQuery;
 
   private searchSuggestions(): void {
 
@@ -59,7 +59,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
           }
           return settings;
         },
-        transform: (data) => {
+        transform: (data: any) => {
           this.data = data;
           return data.content;
         }
@@ -156,7 +156,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
         name: 'interactors',
         limit: limit,
         source: interactorsData,
-        display: function (item) {
+        display: function (item: Interactor) {
           return item.interactorAc
         },
         templates: {
@@ -170,18 +170,17 @@ export class SearchComponent implements OnInit, AfterViewInit {
             }
           },
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
-          suggestion: function (item) {
-            return `<div class="row ">
-                <div class="columns small-2">${item.interactorAc}</div>
-                <div class="columns small-2">
-                  ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}
-                </div>
-                <div class="columns small-2"><i>"${item.interactorDescription}"</i> </div>
-                <div class="columns small-2">${item.interactorSpecies}</div>
-                <div class="columns small-2"><span class="labelWrapper">${item.interactorType}</span></div>
-                <div class="columns small-2"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
-              </div>`
-          },
+          suggestion: (item: Interactor) =>
+            `<div class="row">
+               <div class="columns small-2">${item.interactorAc}</div>
+               <div class="columns small-2">
+                ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}
+               </div>
+               <div class="columns small-2"><i>"${item.interactorDescription}"</i> </div>
+               <div class="columns small-2">${item.interactorSpecies}</div>
+               <div class="columns small-2"><span class="labelWrapper">${item.interactorType}</span></div>
+               <div class="columns small-2"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
+             </div>`,
         }
       }
       // {
@@ -217,7 +216,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       //     //         '</div>'
       //   }
       // }
-    ).bind('typeahead:selected', (ev, item) => {
+    ).on('typeahead:selected', (ev, item) => {
       // Noe: So far I can't find in the documentation a way to know the dataset of the item selected. This code should improve with that information
       let id;
       if (item.interactorAc === undefined) {

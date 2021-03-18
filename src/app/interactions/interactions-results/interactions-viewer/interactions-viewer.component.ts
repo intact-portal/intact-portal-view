@@ -7,7 +7,6 @@ import {SearchService} from "../../../home-dashboard/search/service/search.servi
 import {NetworkLegend} from "../../shared/model/interaction-legend/network-legend";
 
 declare const require: any;
-declare const $: any;
 const IntactGraph = require('expose-loader?IntactGraph!intact-network');
 
 
@@ -107,9 +106,11 @@ export class InteractionsViewerComponent implements OnInit {
       this.compoundGraph
     ).subscribe(json => {
       this.interactionsJSON = json;
-      this.legend = json.legend;
+      if (json.legend) {
+        this.legend = json.legend;
+        this._hasMutation = json.legend.edge_legend.mutation_color.true !== undefined;
+      }
       this.loadViewState();
-      this._hasMutation = json.legend.edge_legend.mutation_color.true !== undefined;
       // Makes the network expanded expanded by default
       this.graph.initializeWithData(this.interactionsJSON, true, this.affectedByMutation, this.layoutName);
       this.graph.expandEdges(this.expanded, this.affectedByMutation);

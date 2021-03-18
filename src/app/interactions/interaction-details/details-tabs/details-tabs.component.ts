@@ -4,7 +4,6 @@ import {InteractionsDetailsService} from '../../shared/service/interactions-deta
 import {ParticipantTableComponent} from "./details/participant-table/participant-table.component";
 import {FeaturesTableComponent} from "./details/features-table/features-table.component";
 
-declare const $: any;
 
 @Component({
   selector: 'ip-details-tabs',

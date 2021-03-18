@@ -6,6 +6,7 @@ import {Organism} from "../model/interaction-details/organism.model";
 import {Alias} from "../model/interaction-details/alias.model";
 import {environment} from "../../../../environments/environment";
 import {groupBy} from "../../../shared/utils/array-utils";
+import ClickEvent = JQuery.ClickEvent;
 
 
 const ebiURL = environment.ebi_url;
@@ -318,7 +319,7 @@ export class TableFactoryService {
   initShadowBorder(tableId: string) {
     let table = $('#' + tableId);
     let scrollArea = table.parents('div.dataTables_scroll');
-    scrollArea.append($('<div class="shadow-left"></div>'))
+    scrollArea.append($('<div class="shadow-left" style="display: none"></div>'))
     scrollArea.append($('<div class="shadow-right"></div>'))
     table.parent('.dataTables_scrollBody').scroll((e) => {
       if (e.target.scrollLeft <= 10) {
@@ -336,7 +337,7 @@ export class TableFactoryService {
     $(document).on('click', 'button.showMore', TableFactoryService.toggleShowMoreLess);
   }
 
-  static toggleShowMoreLess = (event: JQueryEventObject) => {
+  static toggleShowMoreLess = (event: ClickEvent) => {
     let button = $(event.target);
     let buttonText = button.text();
     if (buttonText.includes('more')) {
@@ -353,7 +354,7 @@ export class TableFactoryService {
     $(document).on('click', '.collapse-header', TableFactoryService.toggleCollapsedPanels)
   }
 
-  static toggleCollapsedPanels = (event: JQueryEventObject) => {
+  static toggleCollapsedPanels = (event: ClickEvent) => {
     let panel = $(event.target).next('.collapse-panel');
     if (panel.length === 0) panel = $(event.target).parent().next('.collapse-panel');
     panel.slideToggle({duration: panel.height(), easing: 'linear'});

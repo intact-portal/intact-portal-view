@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {environment} from '../../../../environments/environment';
@@ -12,16 +12,19 @@ export class InteractionsDetailsService {
   private _totalElements = 0;
   private _page = 1;
   private _pageSize = 20;
+  public readonly interactionDetailsURL = `${baseURL}/graph/interaction/details/`;
+  public readonly interactionViewerURL = `${baseURL}/graph/interaction/export/`;
+
 
   constructor(private http: HttpClient) { }
 
   getInteractionDetails(interactionAc: string): Observable<InteractionDetails> {
-    return this.http.get<InteractionDetails>(`${baseURL}/graph/interaction/details/${interactionAc}`)
+    return this.http.get<InteractionDetails>(`${this.interactionDetailsURL}${interactionAc}`)
       .catch(this.handleError);
   }
 
   getInteractionViewer(interactionAc: string): Observable<any> {
-    return this.http.get(`${baseURL}/graph/interaction/export/${interactionAc}`)
+    return this.http.get(`${this.interactionViewerURL}${interactionAc}`)
       .catch(this.handleError);
   }
 

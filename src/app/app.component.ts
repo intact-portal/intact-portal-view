@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {ProgressBarComponent} from "./layout/loading-indicators/progress-bar/progress-bar.component";
 
-declare const $: any;
 
 @Component({
   selector: 'ip-root',
@@ -13,11 +12,13 @@ export class AppComponent implements OnInit {
   version = '0.0.1';
   showCompactHeader = false;
   showFooter = true;
+  title = 'IntAct';
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
-    this.initFoundation();
+    AppComponent.initFoundation();
     console.log('The component is initialized.');
 
     this.router.events.subscribe(event => {
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private initFoundation(): void {
+  private static initFoundation(): void {
     $(document).foundation();
     $(document).foundationExtendEBI();
   }

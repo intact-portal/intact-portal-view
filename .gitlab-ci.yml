@@ -62,7 +62,7 @@ test:karma:
   image: trion/ng-cli-karma:${CLI_VERSION}
   allow_failure: false
   script:
-    - ng test --code-coverage --progress false --watch false
+    - ng test --code-coverage
   coverage: '/Lines \W+: (\d+\.\d+)%.*/'
   artifacts:
     paths:

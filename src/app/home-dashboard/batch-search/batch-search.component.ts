@@ -34,7 +34,7 @@ export class BatchSearchComponent {
 
   constructor(private search: SearchService) {
     this.uploader = new FileUploader({
-      url: `${baseURL}/interaction/uploadFile/`,
+      url: `${baseURL}/interactor /uploadFile/`,
       disableMultipart: false
     });
 

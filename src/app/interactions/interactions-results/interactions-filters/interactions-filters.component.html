@@ -1,6 +1,6 @@
 <div id="filters-bar" class="button-bar">
 
-  <div class="button-group rounded stack-for-small">
+  <div class="button-group rounded stack-for-small" id="filter-button-group">
     <div class="button no-hover">
       <i class="icon icon-functional icon-spacer icon-filter"></i> Filters
     </div>
@@ -158,6 +158,9 @@
 
   </div>
 
+  <mat-progress-bar id="download-bar" *ngIf="download$ | async as download"
+                    mode="buffer" [value]="download.progress"></mat-progress-bar>
+
   <div class="button-group rounded stack-for-small">
     <div class="button no-hover">
       <i class="icon icon-functional icon-spacer icon-share"></i> Export
@@ -166,22 +169,25 @@
     <button class="button lighter adjust-width" type="button" data-toggle="export-network" *ngIf="viewerService.viewer">
       Network
     </button>
-    <div class="dropdown-pane no-padding no-border" id="export-network" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane no-padding no-border" id="export-network" data-dropdown data-hover="true"
+         data-hover-pane="true">
       <ul class="no-bullet no-margin">
         <li><a class="button lightest expanded" (click)="viewerService.viewer.exportAs('png')">PNG</a></li>
-        <li><a class="button lightest expanded no-margin" (click)="viewerService.viewer.exportAs('graphml')">GraphML</a></li>
+        <li><a class="button lightest expanded no-margin" (click)="viewerService.viewer.exportAs('graphml')">GraphML</a>
+        </li>
       </ul>
     </div>
 
     <button class="button lighter adjust-width" type="button" data-toggle="export-table">
       Table
     </button>
-    <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true"
+         data-hover-pane="true">
       <ul class="no-bullet no-margin">
-        <li><a class="button lightest expanded" download="" href=".">miTab<sub>2.7</sub></a></li>
-        <li><a class="button lightest expanded" download="" href=".">miXML<sub>2.5</sub></a></li>
-        <li><a class="button lightest expanded" download="" href=".">miXML<sub>3.0</sub></a></li>
-        <li><a class="button lightest expanded no-margin" download="" href=".">miJSON<sub>1.0</sub></a></li>
+        <li *ngFor="let format of formats; let last= last;">
+          <a class="button lightest expanded" [ngClass]="{'no-margin':last}"
+             download="" (click)="export(format)" [innerHTML]="format.html"></a>
+        </li>
       </ul>
     </div>
   </div>

@@ -28,7 +28,6 @@
 }
 
 
-
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
   background-image: url('../../../../assets/images/results/mi-score-slider-image.svg') !important;
   background-position: center !important; /* Center the image */
@@ -91,3 +90,25 @@ button.delete-button {
   padding: 10px;
 }
 
+#download-bar {
+  align-self: center;
+  flex-grow: 1;
+  order: 1;
+  width: auto;
+  margin: 1rem 1rem 2rem 1rem;
+}
+
+#filter-button-group {
+  width: 100%;
+}
+
+@media print, screen and (min-width: 1600px) {
+  #download-bar {
+    flex-grow: 1;
+    order: 0;
+  }
+
+  #filter-button-group {
+    width: auto;
+  }
+}

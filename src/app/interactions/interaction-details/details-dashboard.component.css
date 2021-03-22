@@ -1,0 +1,12 @@
+#download-bar {
+  align-self: center;
+  width: 100%;
+  margin: 1em
+}
+
+@media print, screen and (min-width: 40em) {
+  #download-bar {
+    flex-grow: 1;
+    width: auto;
+  }
+}

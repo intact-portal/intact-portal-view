@@ -21,6 +21,7 @@ import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
 import {TableFactoryService} from "../shared/service/table-factory.service";
 import {InteractionParticipantsService} from "./shared/service/interaction-participants.service";
 import {ComponentsModule} from "../../shared/components/components.module";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {ComponentsModule} from "../../shared/components/components.module";
     CommonModule,
     InteractionDetailsRoutingModule,
     MatTooltipModule,
-    ComponentsModule
+    ComponentsModule,
+    MatProgressBarModule
   ],
   exports: [],
   declarations: [

@@ -1,8 +1,10 @@
 <div class="row expanded" *ngIf="interactionAc; else noInteractor;">
   <div class="button-bar">
     <h2 class="padding-left-large">Details of {{interactionAc}}</h2>
+    <mat-progress-bar *ngIf="download$ | async as download" id="download-bar"
+                      mode="buffer" [value]="download.progress"></mat-progress-bar>
 
-    <div class="button-group rounded float-right margin-right-medium" id="detail-export" style="margin-left: 17px;">
+    <div class="button-group rounded float-right" style="align-self: center; margin: 0 8px" id="detail-export">
       <div class="button no-hover">
         <i class="icon icon-functional icon-spacer icon-share"></i> Export
       </div>
@@ -24,10 +26,10 @@
       <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true"
            data-hover-pane="true">
         <ul class="no-bullet no-margin">
-          <li><a class="button lightest expanded" download="" href=".">miTab<sub>2.7</sub></a></li>
-          <li><a class="button lightest expanded" download="" href=".">miXML<sub>2.5</sub></a></li>
-          <li><a class="button lightest expanded" download="" href=".">miXML<sub>3.0</sub></a></li>
-          <li><a class="button lightest expanded no-margin" download="" href=".">miJSON<sub>1.0</sub></a></li>
+          <li *ngFor="let format of formats; let last= last;">
+            <a class="button lightest expanded" [ngClass]="{'no-margin':last}"
+               download="" (click)="export(format)" [innerHTML]="format.html"></a>
+          </li>
         </ul>
       </div>
     </div>

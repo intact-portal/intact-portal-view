@@ -6,15 +6,21 @@ import {TableFactoryService} from "../../shared/service/table-factory.service";
 import {NetworkViewService} from "../../shared/service/network-view.service";
 import {InteractionFacets} from "../../shared/model/interactions-results/interaction/interaction-facets.model";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {DownloadService} from "../../shared/service/download/download.service";
 
 describe('InteractionsFiltersComponent', () => {
   let component: InteractionsFiltersComponent;
   let fixture: ComponentFixture<InteractionsFiltersComponent>;
+  const downloads = jasmine.createSpy('downloads');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [InteractionsFiltersComponent],
-      providers: [TableFactoryService, NetworkViewService],
+      providers: [
+        TableFactoryService,
+        NetworkViewService,
+        {provide: DownloadService, useValue: downloads}
+      ],
       imports: [BrowserAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA]
     })

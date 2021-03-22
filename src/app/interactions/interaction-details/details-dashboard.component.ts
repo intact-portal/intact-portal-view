@@ -6,8 +6,11 @@ import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar
 import {viewer} from "./details-viewer/details-viewer.component";
 import {FoundationUtils} from "../../shared/utils/foundation-utils";
 import {TextEncoder} from "util";
-
-declare const $: any;
+import {saveAs} from "file-saver";
+import {Download, DownloadService, DownloadState} from "../shared/service/download/download.service";
+import {Observable} from "rxjs/Observable";
+import {Subscription} from "rxjs";
+import {Format} from "../shared/model/download/format.model";
 
 
 @Component({
@@ -20,9 +23,13 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   @Input() featureSelected: string;
   private _error: HttpErrorResponse;
   viewer = viewer;
+  formats = Format.instances;
+  states = DownloadState;
+  download$: Observable<Download>;
 
   constructor(private titleService: Title,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private downloads: DownloadService) {
   }
 
   ngOnInit() {
@@ -37,7 +44,6 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
     $('#detail-export').foundation();
     FoundationUtils.adjustWidth();
   }
-
 
 
   public searchError(error: HttpErrorResponse) {
@@ -59,6 +65,18 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
 
   get error(): HttpErrorResponse {
     return this._error;
+  }
+
+  export(format: Format) {
+    this.download$ = this.downloads.downloadByAc(this.interactionAc, format);
+    let subscription: Subscription;
+    let clear = () => {
+      subscription.unsubscribe();
+      this.download$ = null;
+    }
+    subscription = this.download$.subscribe(value => {
+      if (value.state === DownloadState.DONE) clear();
+    }, clear);
   }
 
   exportSVG() {
@@ -121,22 +139,6 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
       });
     }
 
-    let blob = dataURItoBlob(content);
-
-    if (navigator.msSaveOrOpenBlob) {
-      navigator.msSaveOrOpenBlob(blob, fileName);
-    } else {
-      let a = document.createElement("a");
-      a.href = window.URL.createObjectURL(blob);
-      // Give filename you wish to download
-      a.download = fileName;
-      a.style.display = "none";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(a.href); // clear up url reference to blob so it can be g.c.'ed
-    }
-
-    blob = null;
+    saveAs(dataURItoBlob(content), fileName)
   }
 }

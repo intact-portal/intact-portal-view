@@ -25,6 +25,8 @@ import {MarkdownModule} from "./navigation/documentation/shared/markdown/markdow
 import {MatButtonModule} from "@angular/material/button";
 import {AboutComponent} from "./navigation/about/about.component";
 import {FaqComponent} from "./navigation/faq/faq.component";
+import {getSaver, SAVER} from "./interactions/shared/service/download/saver.provide";
+import {DownloadService} from "./interactions/shared/service/download/download.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
@@ -52,6 +54,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatButtonModule,
   ],
   providers: [
+    DownloadService,
+    {provide: SAVER, useFactory: getSaver},
     FeatureDatasetService,
     SearchService,
     InteractionsSearchService,

@@ -5,6 +5,10 @@ import {TableFactoryService} from "../../shared/service/table-factory.service";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NetworkViewService} from "../../shared/service/network-view.service";
 import {FoundationUtils} from "../../../shared/utils/foundation-utils";
+import {Download, DownloadService, DownloadState} from "../../shared/service/download/download.service";
+import {Observable} from "rxjs/Observable";
+import {Format} from "../../shared/model/download/format.model";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -41,31 +45,32 @@ import {FoundationUtils} from "../../../shared/utils/foundation-utils";
   ]
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
-
-  private _interactionFacets: InteractionFacets;
+  @Input() query: string;
+  @Input() batchSearch: boolean;
+  @Input() interactionFacets: InteractionFacets;
 
   /** INTERACTORS FILTERS **/
-  private _interactorSpeciesFilter: string[];
-  private _interactorTypeFilter: string[];
+  @Input() interactorSpeciesFilter: string[];
+  @Input() interactorTypeFilter: string[];
 
   /** INTERACTIONS FILTERS **/
-  private _interactionTypeFilter: string[];
-  private _detectionMethodFilter: string[];
-  private _hostOrganismFilter: string[];
-  private _negativeFilter: any;
+  @Input() interactionTypeFilter: string[];
+  @Input() interactionDetectionMethodFilter: string[];
+  @Input() interactionHostOrganismFilter: string[];
+  @Input() negativeFilter: any;
   // Noe: I am not sure if I need this as a filter
-  private _intraSpeciesFilter: any;
-  private _miScoreMinFilter: any;
-  private _miScoreMaxFilter: any;
+  @Input() intraSpeciesFilter: any;
+  @Input() miScoreMinFilter: any;
+  @Input() miScoreMaxFilter: any;
 
   /** Slider **/
-  private _minValueCurrent: string | number;
-  private _maxValueCurrent: string | number;
-  private _options: Options;
+  @Input() minValueCurrent: string | number;
+  @Input() maxValueCurrent: string | number;
+  @Input() options: Options;
 
   /** This variable is used to check if the param is in the URL and update the state of the checkbox */
-  private _isNegativeInteraction: boolean;
-  private _isIntraSpecies: boolean;
+  @Input() isNegativeInteraction: boolean;
+  @Input() isIntraSpecies: boolean;
 
   @Output() onInteractorSpeciesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onInteractorTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -84,8 +89,13 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   @Output() onResetFilter: EventEmitter<EFilter> = new EventEmitter<EFilter>();
   private minValue: string | number;
   private maxValue: string | number;
+  formats = Format.instances;
+  states = DownloadState;
+  download$: Observable<Download>;
 
-  constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService) {
+  constructor(private tableFactory: TableFactoryService,
+              public viewerService: NetworkViewService,
+              private downloads: DownloadService) {
   }
 
   ngOnInit() {
@@ -170,6 +180,29 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.maxValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? Math.max(...scores) : 1;
     this.minValue = this.minValueCurrent;
     this.maxValue = this.maxValueCurrent;
+  }
+
+  public export(format: Format) {
+    this.download$ = this.downloads.downloadByQuery(format,
+      this.query,
+      this.batchSearch,
+      this.interactorSpeciesFilter,
+      this.interactorTypeFilter,
+      this.interactionDetectionMethodFilter,
+      this.interactionTypeFilter,
+      this.interactionHostOrganismFilter,
+      this.isNegativeInteraction,
+      this.minValueCurrent,
+      this.maxValueCurrent,
+      this.isIntraSpecies);
+    let subscription: Subscription;
+    let clear = () => {
+      subscription.unsubscribe();
+      this.download$ = null;
+    }
+    subscription = this.download$.subscribe(value => {
+      if (value.state === DownloadState.DONE) clear();
+    }, clear);
   }
 
   private onChangeDiscreteFilter = (filters: string[], emitter: EventEmitter<string[]>, filter: string) => {
@@ -277,144 +310,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.minValueCurrent = this.minValue;
     this.maxValueCurrent = this.maxValue;
   }
-
-  /************************* /
-   /** GETTERS AND SETTERS ** /
-   /*************************/
-  get interactionFacets(): InteractionFacets {
-    return this._interactionFacets;
-  }
-
-  @Input()
-  set interactionFacets(value: InteractionFacets) {
-    this._interactionFacets = value;
-  }
-
-  /***** INTERACTORS FILTERS ******/
-
-  get interactorSpeciesFilter(): string[] {
-    return this._interactorSpeciesFilter;
-  }
-
-  @Input()
-  set interactorSpeciesFilter(value: string[]) {
-    this._interactorSpeciesFilter = value;
-  }
-
-  get interactorTypeFilter(): string[] {
-    return this._interactorTypeFilter;
-  }
-
-  @Input()
-  set interactorTypeFilter(value: string[]) {
-    this._interactorTypeFilter = value;
-  }
-
-  get interactionTypeFilter(): string[] {
-    return this._interactionTypeFilter;
-  }
-
-  /***** INTERACTIONS FILTERS ******/
-
-  @Input()
-  set interactionTypeFilter(value: string[]) {
-    this._interactionTypeFilter = value;
-  }
-
-  get interactionDetectionMethodFilter(): string[] {
-    return this._detectionMethodFilter;
-  }
-
-  @Input()
-  set interactionDetectionMethodFilter(value: string[]) {
-    this._detectionMethodFilter = value;
-  }
-
-  get interactionHostOrganismFilter(): string[] {
-    return this._hostOrganismFilter;
-  }
-
-  @Input()
-  set interactionHostOrganismFilter(value: string[]) {
-    this._hostOrganismFilter = value;
-  }
-
-  get negativeFilter(): any {
-    return this._negativeFilter;
-  }
-
-  @Input()
-  set negativeFilter(value: any) {
-    this._negativeFilter = value;
-  }
-
-  get isNegativeInteraction(): boolean {
-    return this._isNegativeInteraction;
-  }
-
-  set isNegativeInteraction(value: boolean) {
-    this._isNegativeInteraction = value;
-  }
-
-  get miScoreMinFilter(): any {
-    return this._miScoreMinFilter;
-  }
-
-  @Input()
-  set miScoreMinFilter(value: any) {
-    this._miScoreMinFilter = value;
-  }
-
-  get miScoreMaxFilter(): any {
-    return this._miScoreMaxFilter;
-  }
-
-  @Input()
-  set miScoreMaxFilter(value: any) {
-    this._miScoreMaxFilter = value;
-  }
-
-  get minValueCurrent(): string | number {
-    return this._minValueCurrent;
-  }
-
-  set minValueCurrent(value: string | number) {
-    this._minValueCurrent = value;
-  }
-
-  get maxValueCurrent(): string | number {
-    return this._maxValueCurrent;
-  }
-
-  set maxValueCurrent(value: string | number) {
-    this._maxValueCurrent = value;
-  }
-
-  get intraSpeciesFilter(): any {
-    return this._intraSpeciesFilter;
-  }
-
-  @Input()
-  set intraSpeciesFilter(value: any) {
-    this._intraSpeciesFilter = value;
-  }
-
-  get isIntraSpecies(): boolean {
-    return this._isIntraSpecies;
-  }
-
-  set isIntraSpecies(value: boolean) {
-    this._isIntraSpecies = value;
-  }
-
-  get options(): Options {
-    return this._options;
-  }
-
-  set options(options: Options) {
-    this._options = options;
-  }
-
 
   getFilter(filter: EFilter): string[] {
     switch (filter) {

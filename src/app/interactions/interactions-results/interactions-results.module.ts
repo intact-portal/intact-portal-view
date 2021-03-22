@@ -20,6 +20,7 @@ import {TableFactoryService} from "../shared/service/table-factory.service";
 import {NetworkSelectionService} from "../shared/service/network-selection.service";
 import {InteractionsLegendComponent} from './interactions-viewer/interactions-legend/interactions-legend.component';
 import {ComponentsModule} from "../../shared/components/components.module";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {ComponentsModule} from "../../shared/components/components.module";
     BrowserAnimationsModule,
     MatSlideToggleModule,
     MatExpansionModule,
-    ComponentsModule
+    ComponentsModule,
+    MatProgressBarModule
   ],
   declarations: [
     InteractionsFiltersComponent,

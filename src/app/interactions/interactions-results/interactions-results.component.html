@@ -17,6 +17,8 @@
     <div class="columns medium-12 sticky-bar">
       <ip-interactions-filters *ngIf="interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
       && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined); else loadingSpinner"
+                               [query]="query"
+                               [batchSearch]="batchSearch"
                                [interactionFacets]="interactionsSearch.facetResultPage"
                                [interactorTypeFilter]="interactorTypeFilter"
                                [interactorSpeciesFilter]="interactorSpeciesFilter"

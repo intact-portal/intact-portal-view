@@ -6,6 +6,7 @@
 #for-canvas-graph {
   flex-grow: 1;
   background: #fbfbfb;
+  min-height: 40vh;
 }
 
 /* Legend adjustments */

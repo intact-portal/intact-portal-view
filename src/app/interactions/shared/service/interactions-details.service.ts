@@ -16,7 +16,7 @@ export class InteractionsDetailsService {
   public readonly interactionViewerURL = `${baseURL}/graph/interaction/export/`;
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) { }
 
   getInteractionDetails(interactionAc: string): Observable<InteractionDetails> {
     return this.http.get<InteractionDetails>(`${this.interactionDetailsURL}${interactionAc}`)
@@ -28,7 +28,8 @@ export class InteractionsDetailsService {
       .catch(this.handleError);
   }
 
-  private handleError(err: HttpErrorResponse | any): Observable<any> {
+  private handleError(err: HttpErrorResponse | any): ErrorObservable {
+    this.reporter.reportError(err);
     if (err.error instanceof Error) {
       return Observable.throw(err);
     } else {

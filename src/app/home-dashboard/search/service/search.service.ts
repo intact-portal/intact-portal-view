@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ParamMap, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Pagination} from "../../shared/pagination.model";
 import {Interactor} from "../../../interactions/shared/model/interactions-results/interactor/interactor.model";
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -16,7 +17,7 @@ export class SearchService {
   private _isBatchSearch = false;
 
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
   search(query: string) {
@@ -50,6 +51,7 @@ export class SearchService {
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
+    this.reporter.reportError(err)
     if (err.error instanceof Error) {
       return Observable.throw(err);
     } else {

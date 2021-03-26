@@ -3,6 +3,9 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 import {NetworkLegend} from "../model/interaction-legend/network-legend";
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {FilterService} from "./filter.service";
+import {SearchService} from "../../../home-dashboard/search/service/search.service";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -10,7 +13,7 @@ const baseURL = environment.intact_portal_ws;
 @Injectable()
 export class NetworkSearchService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private reporter: GoogleAnalyticsService, private search: SearchService, private filters: FilterService) {
   }
 
   getInteractionNetwork(query: string,
@@ -47,7 +50,8 @@ export class NetworkSearchService {
   }
 
 
-  private static handleError(err: HttpErrorResponse | any): Observable<any> {
+  private handleError(err: HttpErrorResponse | any): Observable<any> {
+    this.reporter.reportError(err);
     if (err.error instanceof Error) {
       return Observable.throw(err);
     } else {

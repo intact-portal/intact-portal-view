@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "proxy": "ng serve --base-href \"/intact/dev/\"  --proxy-config proxy.conf.json",
-    "update-types": "npm install; for toCopy in \"datatables.net-fixedheader\" \"typeahead.js\"; do rm -rf src/types/$toCopy; cp -rf node_modules/@types/${toCopy} src/types/; done;"
+    "update-types": "npm install; for toCopy in \"datatables.net-fixedheader\" \"typeahead.js\" \"google.analytics\"; do rm -rf src/types/$toCopy; cp -rf node_modules/@types/${toCopy} src/types/; done;"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +31,7 @@
     "angular-cli-ghpages": "^0.6.2",
     "angular2-query-builder": "^0.4.0",
     "angulartics2": "3.6.0",
-    "complexviewer": "2.1.2",
+    "complexviewer": "2.1.5",
     "core-js": "^2.4.1",
     "datatables.net": "^1.10.19",
     "ebi-framework": "1.3.8",
@@ -59,6 +59,7 @@
     "@types/datatables.net": "1.10.6",
     "@types/datatables.net-fixedheader": "~3.1.4",
     "@types/file-saver": "^2.0.1",
+    "@types/google.analytics": "^0.0.41",
     "@types/jasmine": "2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/jquery": "^3.5.5",

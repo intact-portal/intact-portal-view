@@ -15,29 +15,8 @@
 
   <div *ngIf="hasResults; else noResults" style="display: contents">
     <div class="columns medium-12 sticky-bar">
-      <ip-interactions-filters *ngIf="interactionsSearch && interactorTypeFilter && interactorSpeciesFilter
-      && interactionTypeFilter && interactionDetectionMethodFilter && interactionHostOrganismFilter && (negativeFilter !== undefined); else loadingSpinner"
-                               [interactionFacets]="interactionsSearch.facetResultPage"
-                               [interactorTypeFilter]="interactorTypeFilter"
-                               [interactorSpeciesFilter]="interactorSpeciesFilter"
-                               [interactionHostOrganismFilter]="interactionHostOrganismFilter"
-                               [interactionTypeFilter]="interactionTypeFilter"
-                               [interactionDetectionMethodFilter]="interactionDetectionMethodFilter"
-                               [negativeFilter]="negativeFilter"
-                               [miScoreMinFilter]="miScoreMin"
-                               [miScoreMaxFilter]="miScoreMax"
-                               [intraSpeciesFilter]="intraSpeciesFilter"
-                               (onInteractorSpeciesFilterChanged)="onInteractorSpeciesFilterChanged($event)"
-                               (onInteractorTypeFilterChanged)="onInteractorTypeFilterChanged($event)"
-                               (onResetFilter)="onResetFilter($event)"
-                               (onResetAllFilters)="onResetAllFilters()"
-                               (onInteractionTypeFilterChanged)="onInteractionTypeFilterChanged($event)"
-                               (onInteractionDetectionMethodFilterChanged)="onInteractionDetectionMethodFilterChanged($event)"
-                               (onInteractionHostOrganismFilterChanged)="onInteractionHostOrganismFilterChanged($event)"
-                               (onInteractionNegativeFilterChanged)="onInteractionNegativeFilterChanged($event)"
-                               (onInteractionMiScoreMinFilterChanged)="onInteractionMiScoreMinFilterChanged($event)"
-                               (onInteractionMiScoreMaxFilterChanged)="onInteractionMiScoreMaxFilterChanged($event)"
-                               (onInteractionIntraSpeciesFilterChanged)="onInteractionIntraSpeciesFilterChanged($event)">
+      <ip-interactions-filters *ngIf="interactionsSearch; else loadingSpinner"
+                               [interactionFacets]="interactionsSearch.facetResultPage">
 
       </ip-interactions-filters>
       <ng-template #loadingSpinner>
@@ -46,12 +25,9 @@
     </div>
 
     <div class="columns medium-12">
-      <ip-interactions-viewer [interactorSelected]="interactorSelected"
-                              [interactionSelected]="interactionSelected"></ip-interactions-viewer>
+      <ip-interactions-viewer></ip-interactions-viewer>
 
-      <ip-interactions-list (interactionChanged)="onInteractionsSelectedChanged($event)"
-                            (interactorChanged)="onInteractorSelectedChanged($event)"
-                            (pageChanged)="onPageChanged($event)"></ip-interactions-list>
+      <ip-interactions-list (pageChanged)="onPageChanged($event)"></ip-interactions-list>
     </div>
   </div>
 
@@ -60,12 +36,14 @@
       <div class="columns medium-12">
         <div class="alert-panel">
           <h3><i class="icon icon-common icon-exclamation-triangle"></i> No results found</h3>
-          No interactions were found for your query: <b>{{query}}</b><br>
+          No interactions were found for your query: <b>{{search.query}}</b><br>
           To solve this problem, you can:
           <ul>
             <li>Check the spelling</li>
             <li>Use the auto suggestion</li>
-            <li>Use <a href="http://www.ebi.ac.uk/Tools/webservices/psicquic/view/main.xhtml?query={{query}}" target="_blank">PSICQUIC</a> to search among our IMEx partner databases</li>
+            <li>Use <a href="http://www.ebi.ac.uk/Tools/webservices/psicquic/view/main.xhtml?query={{search.query}}"
+                       target="_blank">PSICQUIC</a> to search among our IMEx partner databases
+            </li>
           </ul>
         </div>
       </div>

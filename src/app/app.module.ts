@@ -23,6 +23,7 @@ import {LayoutModule} from './layout/layout.module';
 import {NetworkViewService} from "./interactions/shared/service/network-view.service";
 import {MarkdownModule} from "./navigation/documentation/shared/markdown/markdown.module";
 import {MatButtonModule} from "@angular/material/button";
+import {FilterService} from "./interactions/shared/service/filter.service";
 import {AboutComponent} from "./navigation/about/about.component";
 import {FaqComponent} from "./navigation/faq/faq.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -60,6 +61,7 @@ import {GoogleAnalyticsService} from "./shared/service/google-analytics/google-a
     SearchService,
     InteractionsSearchService,
     InteractionsDetailsService,
+    FilterService,
     NetworkSearchService,
     NetworkViewService,
     GoogleAnalyticsService,

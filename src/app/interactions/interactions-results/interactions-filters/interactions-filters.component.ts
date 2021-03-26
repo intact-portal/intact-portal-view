@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
 import {TableFactoryService} from "../../shared/service/table-factory.service";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NetworkViewService} from "../../shared/service/network-view.service";
 import {FoundationUtils} from "../../../shared/utils/foundation-utils";
+import {Format} from "../../shared/model/download/format.model";
+import {Filter, FilterService} from "../../shared/service/filter.service";
+import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 
 
 @Component({
@@ -42,65 +45,22 @@ import {FoundationUtils} from "../../../shared/utils/foundation-utils";
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
-  private _interactionFacets: InteractionFacets;
+  @Input() interactionFacets: InteractionFacets;
+  options: Options;
+  formats = Format.instances;
+  filterTypes = Filter;
 
-  /** INTERACTORS FILTERS **/
-  private _interactorSpeciesFilter: string[];
-  private _interactorTypeFilter: string[];
-
-  /** INTERACTIONS FILTERS **/
-  private _interactionTypeFilter: string[];
-  private _detectionMethodFilter: string[];
-  private _hostOrganismFilter: string[];
-  private _negativeFilter: any;
-  // Noe: I am not sure if I need this as a filter
-  private _intraSpeciesFilter: any;
-  private _miScoreMinFilter: any;
-  private _miScoreMaxFilter: any;
-
-  /** Slider **/
-  private _minValueCurrent: string | number;
-  private _maxValueCurrent: string | number;
-  private _options: Options;
-
-  /** This variable is used to check if the param is in the URL and update the state of the checkbox */
-  private _isNegativeInteraction: boolean;
-  private _isIntraSpecies: boolean;
-
-  @Output() onInteractorSpeciesFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onInteractorTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-
-  @Output() onInteractionTypeFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onInteractionDetectionMethodFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onInteractionHostOrganismFilterChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onInteractionNegativeFilterChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  @Output() onInteractionMiScoreMinFilterChanged: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onInteractionMiScoreMaxFilterChanged: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() onInteractionIntraSpeciesFilterChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  @Output() onResetAllFilters: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() onResetFilter: EventEmitter<EFilter> = new EventEmitter<EFilter>();
-  private minValue: string | number;
-  private maxValue: string | number;
-
-  constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService) {
+  constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService, public filters: FilterService) {
   }
 
   ngOnInit() {
     this.initSliderRange();
-    this.isNegativeInteraction = this.negativeFilter;
-    // TODO: TO review this,
-    //  it is what was causing the bad behaviour with the negative interaction in the url and the filters
-    this.isNegativeInteraction = (this.negativeFilter !== 'false');
-    this.isIntraSpecies = this.intraSpeciesFilter;
   }
 
   ngAfterViewInit(): void {
     $('ip-interactions-filters').foundation();
     $(window).trigger('load.zf.sticky');
-    this.tableFactory.makeTableHeaderSticky();
+    this.tableFactory.makeTableHeaderSticky(); // Enables sticky header for all tables on the page
     FoundationUtils.adjustWidth();
   }
 
@@ -164,282 +124,38 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
         }
       }
     };
-
-    let scores = this.interactionFacets.intact_miscore.map(facet => parseFloat(facet.value));
-    this.minValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? Math.min(...scores) : 0;
-    this.maxValueCurrent = this.interactionFacets.intact_miscore.length !== 0 ? Math.max(...scores) : 1;
-    this.minValue = this.minValueCurrent;
-    this.maxValue = this.maxValueCurrent;
   }
 
-  private onChangeDiscreteFilter = (filters: string[], emitter: EventEmitter<string[]>, filter: string) => {
-    if (!filters.includes(filter)) {
-      filters.push(filter);
-    } else {
-      filters.splice(filters.indexOf(filter), 1);
+  onChangeInteractorSpeciesFilter(event: Event) {
+    let target = event.target as HTMLInputElement;
+    if (!this.filters.intraSpecies) {
+      this.filters.updateFilter(Filter.SPECIES, target.value);
+    } else if (target.checked) {
+      this.filters.setUniqueSpecies(target.value);
     }
-    emitter.emit(filters);
   }
 
-  onChangeInteractorSpeciesFilter(filter: string) {
-    this.onChangeDiscreteFilter(this.interactorSpeciesFilter, this.onInteractorSpeciesFilterChanged, filter);
+  onChangeInteractorTypeFilter(event: Event) {
+    this.filters.updateFilter(Filter.INTERACTOR_TYPE, (event.target as HTMLInputElement).value);
   }
 
-  onChangeInteractorTypeFilter(filter: string) {
-    this.onChangeDiscreteFilter(this.interactorTypeFilter, this.onInteractorTypeFilterChanged, filter);
+  onChangeInteractionTypeFilter(event: Event) {
+    this.filters.updateFilter(Filter.INTERACTION_TYPE, (event.target as HTMLInputElement).value);
   }
 
-  onChangeInteractionTypeFilter(filter: string) {
-    this.onChangeDiscreteFilter(this.interactionTypeFilter, this.onInteractionTypeFilterChanged, filter);
+  onChangeInteractionDetectionMethodFilter(event: Event) {
+    this.filters.updateFilter(Filter.DETECTION_METHOD, (event.target as HTMLInputElement).value);
   }
 
-  onChangeInteractionDetectionMethodFilter(filter: string) {
-    this.onChangeDiscreteFilter(this.interactionDetectionMethodFilter, this.onInteractionDetectionMethodFilterChanged, filter);
+  onChangeInteractionHostOrganismFilter(event: Event) {
+    this.filters.updateFilter(Filter.HOST_ORGANISM, (event.target as HTMLInputElement).value);
   }
 
-  onChangeInteractionHostOrganismFilter(filter: string) {
-    this.onChangeDiscreteFilter(this.interactionHostOrganismFilter, this.onInteractionHostOrganismFilterChanged, filter);
-  }
-
-  onChangeInteractionIntraSpeciesFilter(checked: boolean) {
-    this.isIntraSpecies = checked;
-    this.onInteractionIntraSpeciesFilterChanged.emit(this.isIntraSpecies);
+  onChangeInteractionIntraSpeciesFilter(event: MatSlideToggleChange) {
+    this.filters.updateFilter(Filter.INTRA_SPECIES, event.checked)
   }
 
   onUserChangeEnd(changeContext: ChangeContext): void {
-    this.onInteractionMiScoreMinFilterChanged.emit(changeContext.value);
-    this.onInteractionMiScoreMaxFilterChanged.emit(changeContext.highValue);
+    this.filters.updateFilter(Filter.MI_SCORE, {min: changeContext.value, max: changeContext.highValue})
   }
-
-  isSelectedInteractorSpecies(interactorSpecies: string) {
-    return this.interactorSpeciesFilter !== undefined ? this.interactorSpeciesFilter.indexOf(interactorSpecies) >= 0 : false;
-  }
-
-  isSelectedInteractorType(interactorType: string) {
-    return this.interactorTypeFilter !== undefined ? this.interactorTypeFilter.indexOf(interactorType) >= 0 : false;
-  }
-
-  isSelectedInteractionType(interactionType: string) {
-    return this.interactionTypeFilter !== undefined ? this.interactionTypeFilter.indexOf(interactionType) >= 0 : false;
-  }
-
-  isSelectedInteractionDetectionMethod(interactionDetectionMethod: string) {
-    return this.interactionDetectionMethodFilter !== undefined ? this.interactionDetectionMethodFilter.indexOf(interactionDetectionMethod) >= 0 : false;
-  }
-
-  isSelectedInteractionHostOrganism(interactionHostOrganism: string) {
-    return this.interactionHostOrganismFilter !== undefined ? this.interactionHostOrganismFilter.indexOf(interactionHostOrganism) >= 0 : false;
-  }
-
-  isSelectedInteractionIntraSpecies() {
-    return this.isIntraSpecies !== undefined ? this.isIntraSpecies : false;
-  }
-
-  isSelectedMoreThanOneSpecies() {
-    return this.interactorSpeciesFilter.length > 1;
-  }
-
-  isFilteringScore() {
-    return this.minValueCurrent > this.minValue || this.maxValueCurrent < this.maxValue;
-  }
-
-  anyFiltersSelected() {
-    return this.interactorSpeciesFilter.length !== 0 ||
-      this.interactorTypeFilter.length !== 0 ||
-      this.interactionTypeFilter.length !== 0 ||
-      this.interactionDetectionMethodFilter.length !== 0 ||
-      this.interactionHostOrganismFilter.length !== 0 ||
-      this.isFilteringScore();
-  }
-
-  resetAllFilters() {
-    this.isNegativeInteraction = false;
-    this.negativeFilter = false;
-    this.isIntraSpecies = false;
-    this.intraSpeciesFilter = false;
-    this.resetMISCoreFilter();
-    this.onResetAllFilters.emit(true);
-  }
-
-  resetFilter(filter: EFilter) {
-    switch (filter) {
-      case EFilter.MI_SCORE:
-        this.resetMISCoreFilter();
-        break;
-      case EFilter.SPECIES:
-        this.isIntraSpecies = false;
-        break;
-    }
-    this.onResetFilter.emit(filter);
-  }
-
-  private resetMISCoreFilter() {
-    this.minValueCurrent = this.minValue;
-    this.maxValueCurrent = this.maxValue;
-  }
-
-  /************************* /
-   /** GETTERS AND SETTERS ** /
-   /*************************/
-  get interactionFacets(): InteractionFacets {
-    return this._interactionFacets;
-  }
-
-  @Input()
-  set interactionFacets(value: InteractionFacets) {
-    this._interactionFacets = value;
-  }
-
-  /***** INTERACTORS FILTERS ******/
-
-  get interactorSpeciesFilter(): string[] {
-    return this._interactorSpeciesFilter;
-  }
-
-  @Input()
-  set interactorSpeciesFilter(value: string[]) {
-    this._interactorSpeciesFilter = value;
-  }
-
-  get interactorTypeFilter(): string[] {
-    return this._interactorTypeFilter;
-  }
-
-  @Input()
-  set interactorTypeFilter(value: string[]) {
-    this._interactorTypeFilter = value;
-  }
-
-  get interactionTypeFilter(): string[] {
-    return this._interactionTypeFilter;
-  }
-
-  /***** INTERACTIONS FILTERS ******/
-
-  @Input()
-  set interactionTypeFilter(value: string[]) {
-    this._interactionTypeFilter = value;
-  }
-
-  get interactionDetectionMethodFilter(): string[] {
-    return this._detectionMethodFilter;
-  }
-
-  @Input()
-  set interactionDetectionMethodFilter(value: string[]) {
-    this._detectionMethodFilter = value;
-  }
-
-  get interactionHostOrganismFilter(): string[] {
-    return this._hostOrganismFilter;
-  }
-
-  @Input()
-  set interactionHostOrganismFilter(value: string[]) {
-    this._hostOrganismFilter = value;
-  }
-
-  get negativeFilter(): any {
-    return this._negativeFilter;
-  }
-
-  @Input()
-  set negativeFilter(value: any) {
-    this._negativeFilter = value;
-  }
-
-  get isNegativeInteraction(): boolean {
-    return this._isNegativeInteraction;
-  }
-
-  set isNegativeInteraction(value: boolean) {
-    this._isNegativeInteraction = value;
-  }
-
-  get miScoreMinFilter(): any {
-    return this._miScoreMinFilter;
-  }
-
-  @Input()
-  set miScoreMinFilter(value: any) {
-    this._miScoreMinFilter = value;
-  }
-
-  get miScoreMaxFilter(): any {
-    return this._miScoreMaxFilter;
-  }
-
-  @Input()
-  set miScoreMaxFilter(value: any) {
-    this._miScoreMaxFilter = value;
-  }
-
-  get minValueCurrent(): string | number {
-    return this._minValueCurrent;
-  }
-
-  set minValueCurrent(value: string | number) {
-    this._minValueCurrent = value;
-  }
-
-  get maxValueCurrent(): string | number {
-    return this._maxValueCurrent;
-  }
-
-  set maxValueCurrent(value: string | number) {
-    this._maxValueCurrent = value;
-  }
-
-  get intraSpeciesFilter(): any {
-    return this._intraSpeciesFilter;
-  }
-
-  @Input()
-  set intraSpeciesFilter(value: any) {
-    this._intraSpeciesFilter = value;
-  }
-
-  get isIntraSpecies(): boolean {
-    return this._isIntraSpecies;
-  }
-
-  set isIntraSpecies(value: boolean) {
-    this._isIntraSpecies = value;
-  }
-
-  get options(): Options {
-    return this._options;
-  }
-
-  set options(options: Options) {
-    this._options = options;
-  }
-
-
-  getFilter(filter: EFilter): string[] {
-    switch (filter) {
-      case EFilter.SPECIES:
-        return this.interactorSpeciesFilter;
-      case EFilter.INTERACTOR_TYPE:
-        return this.interactorTypeFilter;
-      case EFilter.INTERACTION_TYPE:
-        return this.interactionTypeFilter;
-      case EFilter.DETECTION_METHOD:
-        return this.interactionDetectionMethodFilter;
-      case EFilter.HOST_ORGANISM:
-        return this.interactionHostOrganismFilter;
-    }
-  }
-
-  filter = EFilter;
-}
-
-export enum EFilter {
-  SPECIES,
-  INTERACTOR_TYPE,
-  INTERACTION_TYPE,
-  DETECTION_METHOD,
-  HOST_ORGANISM,
-  MI_SCORE,
-  NEGATIVE
 }

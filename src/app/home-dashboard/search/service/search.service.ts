@@ -13,7 +13,7 @@ const baseURL = environment.intact_portal_ws;
 @Injectable()
 export class SearchService {
   private _query: string;
-  private _title:string;
+  private _title: string;
   private _isBatchSearch = false;
 
 
@@ -35,7 +35,7 @@ export class SearchService {
   speciesSearch(specieName: string) {
     this._query = '*'
     this._isBatchSearch = false;
-    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpecies: specieName, miScoreMin: 0, miScoreMax: 1, page: 1}});
+    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpecies: specieName}});
   }
 
   resolveSearch(query: string, page = 0, pageSize = 50): Observable<{ [term: string]: Pagination<Interactor[]> }> {
@@ -78,5 +78,16 @@ export class SearchService {
 
   get isBatchSearch(): boolean {
     return this._isBatchSearch;
+  }
+
+  fromParams(params: ParamMap) {
+    if (params.has('query')) this._query = params.get('query');
+    if (params.has('batchSearch')) this._isBatchSearch = params.get('batchSearch') === 'true';
+  }
+
+  toParams(params: any = {}): any {
+    if (this.query) params.query = this.query.trim();
+    if (this.isBatchSearch) params.batchSearch = this.isBatchSearch;
+    return params;
   }
 }

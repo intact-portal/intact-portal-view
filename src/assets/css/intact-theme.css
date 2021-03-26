@@ -635,6 +635,10 @@ div.dataTables_scroll {
   display: flex;
 }
 
+.vertical-flex {
+  flex-direction: column;
+}
+
 .tag-cell {
   margin: 0 4px 0 0;
   white-space: nowrap;
@@ -643,6 +647,11 @@ div.dataTables_scroll {
   border-radius: 5px;
   padding: 0 4px;
   align-self: flex-start;
+}
+
+.tag-cell.centered {
+  align-self: center;
+  margin: 2px 0;
 }
 
 .detailsAnnotationCell {
@@ -660,6 +669,9 @@ div.dataTables_scroll {
 .detailsConfidencesCell {
   padding: 3px 4px;
   font-size: small;
+  background-color: #68297c44;
+  color: #68297c;
+  border: 1px solid #68297c;
 }
 
 .detailsExpansionsCell {

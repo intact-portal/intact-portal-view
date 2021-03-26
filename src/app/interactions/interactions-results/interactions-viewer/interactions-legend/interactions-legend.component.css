@@ -2,12 +2,15 @@
 .edge-line {
   padding-left: 5pt;
   background: #fbfbfb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .node-line {
   height: 22pt;
 }
 .edge-line {
-  height: 13pt;
+  height: 17pt;
 }
 
 .node-line span,
@@ -25,3 +28,6 @@ h5 {
   margin-top: 0.5rem;
 }
 
+
+.network-legend-label {
+}

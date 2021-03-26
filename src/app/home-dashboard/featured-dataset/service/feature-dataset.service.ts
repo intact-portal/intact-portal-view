@@ -4,13 +4,14 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
 
 const intactDotmURL = environment.intact_dotm_url;
 
 @Injectable()
 export class FeatureDatasetService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
   public readonly API_URL = 'assets/data/dotm-1.1.xml';
@@ -24,6 +25,7 @@ export class FeatureDatasetService {
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
+    this.reporter.reportError(err);
     if (err.error instanceof Error) {
       return Observable.throw(err);
     } else {

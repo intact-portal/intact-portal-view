@@ -26,6 +26,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {AboutComponent} from "./navigation/about/about.component";
 import {FaqComponent} from "./navigation/faq/faq.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {Angulartics2Module} from "angulartics2";
+import {Angulartics2GoogleAnalytics} from "angulartics2/ga";
+import {GoogleAnalyticsService} from "./shared/service/google-analytics/google-analytics.service";
 
 @NgModule({
   declarations: [
@@ -50,6 +53,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AppRoutingModule,
     MarkdownModule,
     MatButtonModule,
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
   ],
   providers: [
     FeatureDatasetService,
@@ -57,7 +61,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     InteractionsSearchService,
     InteractionsDetailsService,
     NetworkSearchService,
-    NetworkViewService
+    NetworkViewService,
+    GoogleAnalyticsService,
   ],
   bootstrap: [AppComponent]
 })

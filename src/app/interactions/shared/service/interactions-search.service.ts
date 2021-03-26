@@ -3,6 +3,9 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 import {InteractionSearchResult} from "../model/interactions-results/interaction/interaction-search-result.model";
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {FilterService} from "./filter.service";
+import {SearchService} from "../../../home-dashboard/search/service/search.service";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -13,7 +16,7 @@ export class InteractionsSearchService {
   private _page = 1;
   private _pageSize = 20;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private reporter: GoogleAnalyticsService, private search: SearchService, private filters: FilterService) {
   }
 
   getAllInteractionsAndFacetsQuery(query: string,
@@ -88,6 +91,7 @@ export class InteractionsSearchService {
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
+    this.reporter.reportError(err);
     if (err.error instanceof Error) {
       return Observable.throw(err);
     } else {

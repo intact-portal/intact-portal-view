@@ -9,6 +9,7 @@ import {Column} from "../../../shared/model/tables/column.model";
 import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
 import {ResultTable} from "../../../shared/model/interactions-results/result-table-interface";
 import {SearchService} from "../../../../home-dashboard/search/service/search.service";
+import {FilterService} from "../../../shared/service/filter.service";
 
 
 const baseURL = environment.intact_portal_ws;
@@ -25,17 +26,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactionTab: boolean;
 
-  private _query: string;
-  private _batchSearchFilter: boolean;
-  private _interactorSpeciesFilter: string[];
-  private _interactorTypeFilter: string[];
-  private _detectionMethodFilter: string[];
-  private _interactionTypeFilter: string[];
-  private _hostOrganismFilter: string[];
-  private _negativeFilter: boolean;
-  private _miScoreMin: any;
-  private _miScoreMax: any;
-  private _intraSpeciesFilter: boolean;
+
   private _interactionSelected: string;
   dataTable: DataTables.Api;
 
@@ -43,24 +34,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   private _columns = new InteractionTable();
 
-  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService, private search: SearchService) {
+  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService, private search: SearchService, private filters: FilterService) {
   }
 
   ngOnInit(): void {
     this.route.queryParams
       .subscribe(params => {
-        this.query = params.query ? params.query : this.search.query;
-        this.batchSearchFilter = params.batchSearch ? params.batchSearch : this.search.isBatchSearch;
-        this.interactorTypeFilter = params.interactorType ? params.interactorType.split('+') : [];
-        this.interactorSpeciesFilter = params.interactorSpecies ? params.interactorSpecies.split('+') : [];
-        this.interactionDetectionMethodFilter = params.interactionDetectionMethod ? params.interactionDetectionMethod.split('+') : [];
-        this.interactionTypeFilter = params.interactionType ? params.interactionType.split('+') : [];
-        this.interactionHostOrganismFilter = params.interactionHostOrganism ? params.interactionHostOrganism.split('+') : [];
-        this.negativeFilter = params.negativeInteraction ? params.negativeInteraction : false;
-        this.miScoreMax = params.miScoreMax ? params.miScoreMax : 1;
-        this.miScoreMin = params.miScoreMin ? params.miScoreMin : 0;
-        this.intraSpeciesFilter = params.intraSpecies ? params.intraSpecies : false;
-
         if (this.dataTable !== undefined) {
           const table: any = $('#interactionsTable');
           this.dataTable = table.DataTable().ajax.reload();
@@ -162,19 +141,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           data: (d: any) => {
             d.page = d.start / d.length;
             d.pageSize = d.length;
-            d.query = this.query;
-            d.batchSearch = this.batchSearchFilter;
-            d.interactorSpecies = this.interactorSpeciesFilter;
-            d.interactorType = this.interactorTypeFilter;
-            d.interactionDetectionMethod = this.interactionDetectionMethodFilter;
-            d.interactionType = this.interactionTypeFilter;
-            d.interactionHostOrganism = this.interactionHostOrganismFilter;
-            d.negativeInteraction = this.negativeFilter;
-            d.miScoreMin = this.miScoreMin;
-            d.miScoreMax = this.miScoreMax;
-            d.intraSpecies = this.intraSpeciesFilter;
-            d.binaryInteractionId = this.networkSelection.binaryInteractionIds;
-            d.interactorAc = this.networkSelection.interactorAcs;
+            this.search.toParams(d);
+            this.networkSelection.toParams(d);
+            this.filters.toParams(d);
           }
         },
         columns: [
@@ -481,94 +450,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     this.pageChanged.emit(pageIndex);
   }
 
-
-  get query(): string {
-    return this._query;
-  }
-
-  set query(value: string) {
-    this._query = value;
-  }
-
-  get batchSearchFilter(): boolean {
-    return this._batchSearchFilter;
-  }
-
-  set batchSearchFilter(value: boolean) {
-    this._batchSearchFilter = value;
-  }
-
-  get interactorSpeciesFilter(): string[] {
-    return this._interactorSpeciesFilter;
-  }
-
-  set interactorSpeciesFilter(value: string[]) {
-    this._interactorSpeciesFilter = value;
-  }
-
-  get interactorTypeFilter(): string[] {
-    return this._interactorTypeFilter;
-  }
-
-  set interactorTypeFilter(value: string[]) {
-    this._interactorTypeFilter = value;
-  }
-
-  get interactionTypeFilter(): string[] {
-    return this._interactionTypeFilter;
-  }
-
-  set interactionTypeFilter(value: string[]) {
-    this._interactionTypeFilter = value;
-  }
-
-  get interactionDetectionMethodFilter(): string[] {
-    return this._detectionMethodFilter;
-  }
-
-  set interactionDetectionMethodFilter(value: string[]) {
-    this._detectionMethodFilter = value;
-  }
-
-  get interactionHostOrganismFilter(): string[] {
-    return this._hostOrganismFilter;
-  }
-
-  set interactionHostOrganismFilter(value: string[]) {
-    this._hostOrganismFilter = value;
-  }
-
-  get negativeFilter(): boolean {
-    return this._negativeFilter;
-  }
-
-  set negativeFilter(value: boolean) {
-    this._negativeFilter = value;
-  }
-
-  get miScoreMin(): any {
-    return this._miScoreMin;
-  }
-
-  set miScoreMin(value: any) {
-    this._miScoreMin = value;
-  }
-
-  get miScoreMax(): any {
-    return this._miScoreMax;
-  }
-
-  set miScoreMax(value: any) {
-    this._miScoreMax = value;
-  }
-
-  get intraSpeciesFilter(): boolean {
-    return this._intraSpeciesFilter;
-  }
-
-  set intraSpeciesFilter(value: boolean) {
-    this._intraSpeciesFilter = value;
-  }
 
   get columns(): Column[] {
     return this._columns;

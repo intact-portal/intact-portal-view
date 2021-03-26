@@ -19,35 +19,12 @@ export class InteractionsSearchService {
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService, private search: SearchService, private filters: FilterService) {
   }
 
-  getAllInteractionsAndFacetsQuery(query: string,
-                                   batchSearchFilter: boolean,
-                                   interactorSpeciesFilter: string[],
-                                   interactorTypeFilter: string[],
-                                   interactionDetectionMethodFilter: string[],
-                                   interactionTypeFilter: string[],
-                                   interactionHostOrganismFilter: string[],
-                                   negativeFilter: any,
-                                   miScoreMin: any,
-                                   miScoreMax: any,
-                                   intraSpeciesFilter: boolean,
-                                   currentPageIndex = 1, pageSize = 10): Observable<InteractionSearchResult> {
-    query = query.trim();
+  getAllInteractionsAndFacetsQuery(currentPageIndex = 1, pageSize = 10): Observable<InteractionSearchResult> {
     this.page = currentPageIndex;
 
     currentPageIndex = currentPageIndex - 1;
 
-    const params = new HttpParams()
-      .set('query', query)
-      .set('batchSearch', batchSearchFilter.toString())
-      .set('interactorSpeciesFilter', interactorSpeciesFilter.toString())
-      .set('interactorTypeFilter', interactorTypeFilter.toString())
-      .set('interactionDetectionMethodFilter', interactionDetectionMethodFilter.toString())
-      .set('interactionTypeFilter', interactionTypeFilter.toString())
-      .set('interactionHostOrganismFilter', interactionHostOrganismFilter.toString())
-      .set('isNegativeFilter', negativeFilter.toString()) // By default should be always false
-      .set('minMiscore', miScoreMin.toString())
-      .set('maxMiscore', miScoreMax.toString())
-      .set('interSpecies', intraSpeciesFilter.toString()) // TODO Noe change the name of the param in the web service the meaning is the opposite
+    let params = new HttpParams({fromObject:{...this.search.toParams(), ...this.filters.toParams()}})
       .set('page', currentPageIndex.toString())
       .set('pageSize', pageSize.toString());
 

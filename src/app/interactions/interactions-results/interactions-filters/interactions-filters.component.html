@@ -7,13 +7,16 @@
     <button class="button lighter" type="button" data-toggle="interactor-species-dropdown">
       Interactor Species
     </button>
-    <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
+         *ngIf="filterTypes.SPECIES as filter">
       <ul class="vertical menu facets margin-bottom-medium">
         <div class="scrollbar filter" [ngStyle]="filterStyle('speciesA_B_str')">
           <li *ngFor="let species of interactionFacets.speciesA_B_str">
-          <span class="facet"><input #filter type="checkbox" value="{{species.value}}"
-                                     (change)="onChangeInteractorSpeciesFilter(filter.value)"
-                                     [checked]="isSelectedInteractorSpecies(species.value)"/>
+          <span class="facet"><input name="species"
+                                     [type]="filters.intraSpecies ? 'radio' : 'checkbox'"
+                                     value="{{species.value}}"
+                                     (change)="onChangeInteractorSpeciesFilter($event)"
+                                     [checked]="filters.isFilteringValue(filter,species.value)"/>
             <label>{{species.value}} ({{species.valueCount}})</label>
           </span>
           </li>
@@ -21,15 +24,15 @@
       </ul>
 
       <mat-dialog-actions>
-        <button class="centered delete-button" (click)="resetFilter(filter.SPECIES)"
-                *ngIf="interactorSpeciesFilter.length > 0" matTooltip="Remove filter" matTooltipPosition="below">
+        <button class="centered delete-button" (click)="filters.resetFilter(filter)"
+                *ngIf="filters.isFiltering(filter)" matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
 
-        <mat-slide-toggle #filterInterSpecies color="primary"
-                          (change)="onChangeInteractionIntraSpeciesFilter(filterInterSpecies.checked)"
-                          [disabled]="isSelectedMoreThanOneSpecies()"
-                          [checked]="isSelectedInteractionIntraSpecies()"
+        <mat-slide-toggle color="primary"
+                          (change)="onChangeInteractionIntraSpeciesFilter($event)"
+                          [disabled]="filters.isSelectedMoreThanOneSpecies()"
+                          [checked]="filters.intraSpecies"
                           class="float-right margin-top-medium margin-bottom-medium margin-left-medium"
                           style="align-content: center">
           Intra species only
@@ -40,20 +43,22 @@
     <button class="button lighter" type="button" data-toggle="interactor-type-dropdown">
       Interactor Type
     </button>
-    <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
+         *ngIf="filterTypes.INTERACTOR_TYPE as filter">
       <ul class="vertical menu facets">
         <div class=" scrollbar filter" [ngStyle]="filterStyle('typeA_B_str')">
           <li *ngFor="let molecule of interactionFacets.typeA_B_str">
-          <span class="facet"><input #filter type="checkbox" value="{{molecule.value}}"
-                                     (change)="onChangeInteractorTypeFilter(filter.value)"
-                                     [checked]="isSelectedInteractorType(molecule.value)"/>
+          <span class="facet"><input type="checkbox" value="{{molecule.value}}"
+                                     (change)="onChangeInteractorTypeFilter($event)"
+                                     [checked]="filters.isFilteringValue(filter, molecule.value)"/>
             <label>{{molecule.value}} ({{molecule.valueCount}})</label>
           </span>
           </li>
         </div>
       </ul>
-      <div *ngIf="interactorTypeFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.INTERACTOR_TYPE)" matTooltip="Remove filter"
+      <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
+        <button class="delete-button" (click)="filters.resetFilter(filter)"
+                matTooltip="Remove filter"
                 matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -63,20 +68,21 @@
     <button class="button lighter" type="button" data-toggle="interaction-type-dropdown">
       Interaction Type
     </button>
-    <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
+         *ngIf="filterTypes.INTERACTION_TYPE as filter">
       <ul class="vertical menu facets">
         <div class=" scrollbar filter" [ngStyle]="filterStyle('type_str')">
           <li *ngFor="let interactionType of interactionFacets.type_str">
-          <span class="facet"><input #filter type="checkbox" value="{{interactionType.value}}"
-                                     (change)="onChangeInteractionTypeFilter(filter.value)"
-                                     [checked]="isSelectedInteractionType(interactionType.value)"/>
+          <span class="facet"><input type="checkbox" value="{{interactionType.value}}"
+                                     (change)="onChangeInteractionTypeFilter($event)"
+                                     [checked]="filters.isFilteringValue(filter, interactionType.value)"/>
             <label>{{interactionType.value}} ({{interactionType.valueCount}})</label>
           </span>
           </li>
         </div>
       </ul>
-      <div *ngIf="interactionTypeFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.INTERACTION_TYPE)"
+      <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
+        <button class="delete-button" (click)="filters.resetFilter(filter)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -87,20 +93,20 @@
       Interaction Detection Method
     </button>
     <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
-         data-hover-pane="true">
+         data-hover-pane="true" *ngIf="filterTypes.DETECTION_METHOD as filter">
       <ul class="vertical menu facets margin-bottom-medium">
         <div class="scrollbar filter" [ngStyle]="filterStyle('detection_method_str')">
           <li *ngFor="let detectionMethod of interactionFacets.detection_method_str">
-          <span class="facet"><input #filter type="checkbox" value="{{detectionMethod.value}}"
-                                     (change)="onChangeInteractionDetectionMethodFilter(filter.value)"
-                                     [checked]="isSelectedInteractionDetectionMethod(detectionMethod.value)"/>
+          <span class="facet"><input type="checkbox" value="{{detectionMethod.value}}"
+                                     (change)="onChangeInteractionDetectionMethodFilter($event)"
+                                     [checked]="filters.isFilteringValue(filter, detectionMethod.value)"/>
             <label>{{detectionMethod.value}} ({{detectionMethod.valueCount}})</label>
           </span>
           </li>
         </div>
       </ul>
-      <div *ngIf="interactionDetectionMethodFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.DETECTION_METHOD)"
+      <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
+        <button class="delete-button" (click)="filters.resetFilter(filter)"
                 matTooltip="Remove filter"
                 matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
@@ -112,20 +118,20 @@
       Interaction Host Organism
     </button>
     <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
-         data-hover-pane="true">
+         data-hover-pane="true" *ngIf="filterTypes.HOST_ORGANISM as filter">
       <ul class="vertical menu facets">
         <div class="scrollbar filter" [ngStyle]="filterStyle('host_organism_str')">
           <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
-            <span class="facet"> <input #filter type="checkbox" value="{{hostOrganism.value}}"
-                                        (change)="onChangeInteractionHostOrganismFilter(filter.value)"
-                                        [checked]="isSelectedInteractionHostOrganism(hostOrganism.value)"/>
+            <span class="facet"> <input type="checkbox" value="{{hostOrganism.value}}"
+                                        (change)="onChangeInteractionHostOrganismFilter($event)"
+                                        [checked]="filters.isFilteringValue(filter, hostOrganism.value)"/>
               <label>{{hostOrganism.value}} ({{hostOrganism.valueCount}})</label>
             </span>
           </li>
         </div>
       </ul>
-      <div *ngIf="interactionHostOrganismFilter.length > 0" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.HOST_ORGANISM)"
+      <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
+        <button class="delete-button" (click)="filters.resetFilter(filter)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -133,17 +139,19 @@
     </div>
 
     <button class="button lighter on-top" type="button" data-toggle="score-dropdown"
-            [@bendTip]="anyFiltersSelected() ? 'tipStraight' : 'tipBended'">
+            [@bendTip]="filters.anyFiltersSelected() ? 'tipStraight' : 'tipBended'">
       MI Score
     </button>
-    <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
+         *ngIf="filterTypes.MI_SCORE as filter">
       <div style="width: 300px" class="custom-slider margin-bottom-large">
-        <ng5-slider class="columns medium-3" [(value)]="minValueCurrent" [(highValue)]="maxValueCurrent"
+        <ng5-slider class="columns medium-3" [(value)]="filters.currentMinMIScore"
+                    [(highValue)]="filters.currentMaxMIScore"
                     [options]="options"
                     (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
       </div>
-      <div *ngIf="isFilteringScore()" class="margin-top-medium reset-button">
-        <button class="delete-button" (click)="resetFilter(filter.MI_SCORE)"
+      <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
+        <button class="delete-button" (click)="filters.resetFilter(filter)"
                 matTooltip="Remove filter" matTooltipPosition="below">
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
@@ -151,7 +159,8 @@
     </div>
 
 
-    <button @slideIn *ngIf="anyFiltersSelected()" class="button lighter" type="button" (click)="resetAllFilters()"
+    <button @slideIn *ngIf="filters.anyFiltersSelected()" class="button lighter" type="button"
+            (click)="filters.resetAllFilters()"
             style="z-index: 0">
       <i class="icon icon-functional" data-icon="d"></i>
     </button>
@@ -166,22 +175,24 @@
     <button class="button lighter adjust-width" type="button" data-toggle="export-network" *ngIf="viewerService.viewer">
       Network
     </button>
-    <div class="dropdown-pane no-padding no-border" id="export-network" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane no-padding no-border" id="export-network" data-dropdown data-hover="true"
+         data-hover-pane="true">
       <ul class="no-bullet no-margin">
         <li><a class="button lightest expanded" (click)="viewerService.viewer.exportAs('png')">PNG</a></li>
-        <li><a class="button lightest expanded no-margin" (click)="viewerService.viewer.exportAs('graphml')">GraphML</a></li>
+        <li><a class="button lightest expanded no-margin" (click)="viewerService.viewer.exportAs('graphml')">GraphML</a>
+        </li>
       </ul>
     </div>
 
     <button class="button lighter adjust-width" type="button" data-toggle="export-table">
       Table
     </button>
-    <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true" data-hover-pane="true">
+    <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true"
+         data-hover-pane="true">
       <ul class="no-bullet no-margin">
-        <li><a class="button lightest expanded" download="" href=".">miTab<sub>2.7</sub></a></li>
-        <li><a class="button lightest expanded" download="" href=".">miXML<sub>2.5</sub></a></li>
-        <li><a class="button lightest expanded" download="" href=".">miXML<sub>3.0</sub></a></li>
-        <li><a class="button lightest expanded no-margin" download="" href=".">miJSON<sub>1.0</sub></a></li>
+        <li *ngFor="let format of formats; let last = last;">
+          <ip-download-form [format]="format" [last]="last"></ip-download-form>
+        </li>
       </ul>
     </div>
   </div>

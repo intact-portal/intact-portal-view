@@ -1,4 +1,4 @@
-<div class="margin-top-large margin-bottom-large" id="network-viewer-container">
+<div class="margin-top-large margin-bottom-large" id="network-viewer-container" *ngIf="visible; else tooMany">
   <div class="columns small-12 medium-6 large-2" id="toolbar-column">
     <h4 class="underline margin-bottom-large">
       <i class="icon icon-common icon-spacer icon-tool"></i>Network Tools
@@ -15,13 +15,14 @@
         <li>
           <span class="margin-left-small">
           <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)"
-                 value="fcose" checked id="force-directed"/>
+                 value="fcose" [checked]="view.layoutName === forcedirected.value" id="force-directed"/>
               <label for="force-directed">Force directed</label>
           </span>
         </li>
         <li>
           <span class="margin-left-small">
-          <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf" id="circular"/>
+          <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf"
+                 id="circular" [checked]="view.layoutName === circular.value"/>
                 <label for="circular">Circular</label>
           </span>
         </li>
@@ -32,7 +33,7 @@
         <li>
           <span class="margin-left-small">
           <input #expand type="checkbox" (change)="onChangeExpand(expand.checked, affectedByMutationCb)"
-                 [defaultChecked]="expanded" id="expand"/>
+                 [checked]="view.expanded" id="expand"/>
             <label for="expand">Expand</label>
           </span>
         </li>
@@ -40,7 +41,7 @@
           <span class="margin-left-small tool-tip">
             <input #affectedByMutationCb type="checkbox" id="affectedByMutationCb"
                    (change)="onChangeAffectedByMutation(affectedByMutationCb.checked, expand)"
-                   [defaultChecked]="affectedByMutation" [disabled]="!hasMutation"/>
+                   [checked]="view.affectedByMutation" [disabled]="!hasMutation"/>
             <label for="affectedByMutationCb" [ngClass]="{'disabled':!hasMutation}">Affected By Mutation</label>
             <span class="tool-tip-text" *ngIf="!hasMutation">There is no mutation in this network</span>
           </span>
@@ -52,7 +53,7 @@
         <li>
           <span class="margin-left-small">
           <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"
-                 [defaultChecked]="viewService.groupBySpecies" id="group-by"/>
+                 [checked]="view.groupBySpecies" id="group-by"/>
             <label for="group-by">Species</label>
           </span>
         </li>
@@ -79,20 +80,25 @@
   </div>
 
   <div class="columns small-12 medium-6 large-2" id="legend-column" *ngIf="legend">
-    <ip-interactions-legend [legend]="legend" [expanded]="expand.checked" [mutation]="affectedByMutationCb.checked"></ip-interactions-legend>
+    <ip-interactions-legend [legend]="legend" [expanded]="view.expanded"
+                            [mutation]="view.affectedByMutation"></ip-interactions-legend>
   </div>
 </div>
 
-<div class="row expanded margin-top-large margin-bottom-large" id="no-network-viewer">
-  <div class="alert-panel">
-    <h3><i class="icon icon-common icon-exclamation-triangle"></i> Too many results</h3>
-    There are more than <b>1300 interactions</b> in your results, too many for our network
-    viewer display, sorry.<br>
-    To solve this problem, you can:
-    <ul>
-      <li>Use the filters above</li>
-      <li>Make your research more specific</li>
-      <li>Use <a href="https://apps.cytoscape.org/apps/intactapp">IntAct App</a> on <a href="https://cytoscape.org/">Cytoscape</a> to visualise without size restrictions</li>
-    </ul>
+<ng-template #tooMany>
+  <div class="row expanded margin-top-large margin-bottom-large" id="no-network-viewer">
+    <div class="alert-panel">
+      <h3><i class="icon icon-common icon-exclamation-triangle"></i> Too many results</h3>
+      There are more than <b>1300 interactions</b> in your results, too many for our network
+      viewer display, sorry.<br>
+      To solve this problem, you can:
+      <ul>
+        <li>Use the filters above</li>
+        <li>Make your research more specific</li>
+        <li>Use <a href="https://apps.cytoscape.org/apps/intactapp">IntAct App</a> on <a href="https://cytoscape.org/">Cytoscape</a>
+          to visualise without size restrictions
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
+</ng-template>

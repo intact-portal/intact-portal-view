@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 
 import {environment} from '../../../../../../environments/environment';
 import {Column} from "../../../../shared/model/tables/column.model";
@@ -14,7 +14,7 @@ const baseURL = environment.intact_portal_ws;
   templateUrl: './participant-table.component.html',
   styleUrls: ['./participant-table.component.css']
 })
-export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy {
+export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
@@ -36,6 +36,9 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy {
     this.initDataTable();
     this.tableFactory.initTopSlider('participantTable');
     this.tableFactory.initShadowBorder('participantTable');
+  }
+
+  ngAfterViewInit(): void {
     this.tableFactory.makeTableHeaderSticky();
     this.tableFactory.enableShowButtons();
   }

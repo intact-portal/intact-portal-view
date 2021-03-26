@@ -10,10 +10,15 @@ import {SearchService} from "../../../home-dashboard/search/service/search.servi
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub} from "../../../../testing/activated-route-stub";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {FilterService} from "../../shared/service/filter.service";
 
 describe('InteractionsListComponent', () => {
   let component: InteractionsListComponent;
   let fixture: ComponentFixture<InteractionsListComponent>;
+  const reporter = jasmine.createSpy('reporter');
+  const filters = jasmine.createSpyObj('filters', ['toParams']);
+  const search = jasmine.createSpy('search');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,9 +27,12 @@ describe('InteractionsListComponent', () => {
         NetworkSelectionService,
         SearchService,
         {provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate'])},
-        {provide: ActivatedRoute, useValue: new ActivatedRouteStub({query:'stat3'})},
+        {provide: ActivatedRoute, useValue: new ActivatedRouteStub()},
+        {provide: SearchService, useValue: search},
+        {provide: FilterService, useValue: filters},
+        {provide: GoogleAnalyticsService, useValue: reporter}
       ],
-      declarations: [InteractionsListComponent, InteractionsTableComponent, InteractorsTableComponent],
+      declarations: [InteractionsListComponent],
       imports: [HttpClientTestingModule],
       schemas: [NO_ERRORS_SCHEMA]
     })

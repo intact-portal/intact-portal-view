@@ -6,10 +6,14 @@ import {SearchService} from "../search/service/search.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub} from "../../../testing/activated-route-stub";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {Angulartics2GoogleAnalytics} from "angulartics2/ga";
+import {GoogleAnalyticsService} from "../../shared/service/google-analytics/google-analytics.service";
 
 describe('BatchSearchComponent', () => {
   let component: BatchSearchComponent;
   let fixture: ComponentFixture<BatchSearchComponent>;
+  const reporter = jasmine.createSpy('reporter');
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,6 +23,7 @@ describe('BatchSearchComponent', () => {
         SearchService,
         {provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate'])},
         {provide: ActivatedRoute, useValue: new ActivatedRouteStub({query: 'stat3'})},
+        {provide: GoogleAnalyticsService, useValue: reporter}
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

@@ -4,6 +4,7 @@ import {FeaturedDatasetComponent} from './featured-dataset.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {FeatureDatasetService} from "./service/feature-dataset.service";
 import {HttpClientTestingModule, HttpTestingController, TestRequest} from "@angular/common/http/testing";
+import {GoogleAnalyticsService} from "../../shared/service/google-analytics/google-analytics.service";
 
 describe('FeaturedDatasetComponent', () => {
   let component: FeaturedDatasetComponent;
@@ -11,6 +12,7 @@ describe('FeaturedDatasetComponent', () => {
   let featuredDatasetService: FeatureDatasetService;
   let req: TestRequest;
   let httpMock: HttpTestingController;
+  const reporter = jasmine.createSpy('reporter');
 
   let subset =
     '<datasets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
@@ -27,7 +29,10 @@ describe('FeaturedDatasetComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FeaturedDatasetComponent],
-      providers: [FeatureDatasetService],
+      providers: [
+        FeatureDatasetService,
+        {provide: GoogleAnalyticsService, useValue: reporter}
+      ],
       imports: [HttpClientTestingModule],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

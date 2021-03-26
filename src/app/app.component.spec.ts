@@ -5,12 +5,17 @@ import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {ActivatedRoute, Router, RouterEvent} from "@angular/router";
 import {ActivatedRouteStub} from "../testing/activated-route-stub";
 import {ReplaySubject} from "rxjs";
+import {Angulartics2GoogleAnalytics} from "angulartics2/ga";
+import {Angulartics2} from "angulartics2";
 
 const activatedRoute = new ActivatedRouteStub();
 
 describe('AppComponent', () => {
   let routerEventRelaySubject: ReplaySubject<RouterEvent>;
   let routerMock;
+  const analytics = jasmine.createSpy('analytics');
+
+
   beforeEach(async(() => {
     routerEventRelaySubject = new ReplaySubject<RouterEvent>(1);
     routerMock = {
@@ -24,6 +29,7 @@ describe('AppComponent', () => {
       providers: [
         {provide: Router, useValue: routerMock},
         {provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: Angulartics2GoogleAnalytics, useValue: analytics}
       ]
     }).compileComponents();
   }));

@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {DownloadButtonComponent} from "./download-button/download-button.component";
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {NodeDiagramComponent} from "./diagrams/node-diagram/node-diagram.component";
 import {EdgeDiagramComponent} from "./diagrams/edge-diagram/edge-diagram.component";
 import {ColorRangeDiagramComponent} from "./diagrams/color-range-diagram/color-range-diagram.component";
@@ -12,7 +11,6 @@ import {ColumnToggleComponent} from "./column-toggle/column-toggle.component";
     CommonModule
   ],
   declarations: [
-    DownloadButtonComponent,
     ColumnToggleComponent,
     NodeDiagramComponent,
     EdgeDiagramComponent,
@@ -20,7 +18,6 @@ import {ColumnToggleComponent} from "./column-toggle/column-toggle.component";
     EdgeThicknessDiagramComponent
   ],
   exports: [
-    DownloadButtonComponent,
     ColumnToggleComponent,
     NodeDiagramComponent,
     EdgeDiagramComponent,

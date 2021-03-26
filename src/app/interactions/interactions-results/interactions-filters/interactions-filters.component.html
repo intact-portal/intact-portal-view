@@ -138,6 +138,23 @@
       </div>
     </div>
 
+    <button class="button lighter" type="button" data-toggle="interaction-mutation-dropdown">
+      Mutation
+    </button>
+    <div class="dropdown-pane" id="interaction-mutation-dropdown" data-dropdown data-hover="true"
+         data-hover-pane="true" *ngIf="filterTypes.MUTATION as filter">
+      <ul class="vertical menu facets">
+        <div class="scrollbar filter" [ngStyle]="filterStyle('disrupted_by_mutation')">
+          <mat-slide-toggle color="primary"
+                            (change)="filters.updateFilter(filter, $event.checked)"
+                            [disabled]="!filters.hasMutation"
+                            [checked]="filters.mutation">
+            Interactions affected by mutation only ({{filters.nbMutation}})
+          </mat-slide-toggle>
+        </div>
+      </ul>
+    </div>
+
     <button class="button lighter on-top" type="button" data-toggle="score-dropdown"
             [@bendTip]="filters.anyFiltersSelected() ? 'tipStraight' : 'tipBended'">
       MI Score

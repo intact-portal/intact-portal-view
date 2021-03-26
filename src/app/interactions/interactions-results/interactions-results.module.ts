@@ -20,6 +20,8 @@ import {TableFactoryService} from "../shared/service/table-factory.service";
 import {NetworkSelectionService} from "../shared/service/network-selection.service";
 import {InteractionsLegendComponent} from './interactions-viewer/interactions-legend/interactions-legend.component';
 import {ComponentsModule} from "../../shared/components/components.module";
+import {DownloadFormComponent} from './interactions-filters/download-form/download-form.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
@@ -34,7 +36,8 @@ import {ComponentsModule} from "../../shared/components/components.module";
     BrowserAnimationsModule,
     MatSlideToggleModule,
     MatExpansionModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule
   ],
   declarations: [
     InteractionsFiltersComponent,
@@ -43,7 +46,8 @@ import {ComponentsModule} from "../../shared/components/components.module";
     InteractionsResultsComponent,
     InteractorsTableComponent,
     InteractionsTableComponent,
-    InteractionsLegendComponent
+    InteractionsLegendComponent,
+    DownloadFormComponent,
   ],
   providers: [
     TableFactoryService,

@@ -1,0 +1,29 @@
+<form ngNoForm [action]="URL" method="post" target="_blank">
+  <label>
+    <input class="hidden" type="text" name="format" [value]="format.name">
+    <input class="hidden" type="text" name="query" [value]="search.query">
+
+    <input class="hidden" type="checkbox" name="batchSearch" [checked]="search.isBatchSearch">
+    <input class="hidden" type="checkbox" name="negativeFilter" [checked]="filters.negative">
+    <input class="hidden" type="checkbox" name="mutationFilter" [checked]="filters.mutation">
+    <input class="hidden" type="checkbox" name="intraSpecies" [checked]="filters.intraSpecies">
+
+    <input class="hidden" type="text" name="interactorAcs"
+           *ngFor="let value of selection.interactorAcs" [value]="value">
+    <input class="hidden" type="text" name="binaryInteractionIds"
+           *ngFor="let value of selection.binaryInteractionIds" [value]="value">
+
+
+    <input class="hidden" type="text" name="interactorSpeciesFilter"
+           *ngFor="let value of filters.getFilter(filterTypes.SPECIES)" [value]="value">
+    <input class="hidden" type="text" name="interactorTypesFilter"
+           *ngFor="let value of filters.getFilter(filterTypes.INTERACTOR_TYPE)" [value]="value">
+    <input class="hidden" type="text" name="interactionTypesFilter"
+           *ngFor="let value of filters.getFilter(filterTypes.INTERACTION_TYPE)" [value]="value">
+    <input class="hidden" type="text" name="interactionDetectionMethodsFilter"
+           *ngFor="let value of filters.getFilter(filterTypes.DETECTION_METHOD)" [value]="value">
+    <input class="hidden" type="text" name="interactionHostOrganismsFilter"
+           *ngFor="let value of filters.getFilter(filterTypes.HOST_ORGANISM)" [value]="value">
+  </label>
+  <button class="button lightest expanded" [ngClass]="{'no-margin':last}" [innerHTML]="format.html"></button>
+</form>

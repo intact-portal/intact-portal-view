@@ -3,6 +3,8 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {environment} from '../../../../environments/environment';
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -13,7 +15,7 @@ export class InteractionsDetailsService {
   private _page = 1;
   private _pageSize = 20;
   public readonly interactionDetailsURL = `${baseURL}/graph/interaction/details/`;
-  public readonly interactionViewerURL = `${baseURL}/graph/interaction/export/`;
+  public readonly interactionViewerURL = `${baseURL}/graph/export/interaction/`;
 
 
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) { }
@@ -24,7 +26,7 @@ export class InteractionsDetailsService {
   }
 
   getInteractionViewer(interactionAc: string): Observable<any> {
-    return this.http.get(`${this.interactionViewerURL}${interactionAc}`)
+    return this.http.get(`${this.interactionViewerURL}${interactionAc}`, {params:{format:'miJSON'}})
       .catch(this.handleError);
   }
 

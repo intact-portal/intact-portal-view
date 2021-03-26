@@ -6,6 +6,7 @@ import {InteractionsDetailsService} from "../../shared/service/interactions-deta
 import {HttpClientTestingModule, HttpTestingController, TestRequest} from "@angular/common/http/testing";
 import {environment} from "../../../../environments/environment";
 import {FeatureDatasetService} from "../../../home-dashboard/featured-dataset/service/feature-dataset.service";
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -16,11 +17,15 @@ describe('DetailsTabsComponent', () => {
   let httpMock: HttpTestingController;
   let interactionsDetailsService: InteractionsDetailsService;
   let req: TestRequest;
+  const reporter = jasmine.createSpy('reporter');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DetailsTabsComponent],
-      providers: [InteractionsDetailsService],
+      providers: [
+        InteractionsDetailsService,
+        {provide: GoogleAnalyticsService, useValue: reporter}
+      ],
       imports: [HttpClientTestingModule],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

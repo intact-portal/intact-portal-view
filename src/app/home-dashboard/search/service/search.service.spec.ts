@@ -5,8 +5,10 @@ import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub} from "../../../../testing/activated-route-stub";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
 
 describe('SearchService', () => {
+  const reporter = jasmine.createSpy('reporter');
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -14,6 +16,7 @@ describe('SearchService', () => {
         SearchService,
         {provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate'])},
         {provide: ActivatedRoute, useValue: new ActivatedRouteStub({query: 'stat3'})},
+        {provide: GoogleAnalyticsService, useValue: reporter}
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });

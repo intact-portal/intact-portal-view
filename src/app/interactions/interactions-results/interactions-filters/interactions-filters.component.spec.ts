@@ -6,6 +6,7 @@ import {TableFactoryService} from "../../shared/service/table-factory.service";
 import {NetworkViewService} from "../../shared/service/network-view.service";
 import {InteractionFacets} from "../../shared/model/interactions-results/interaction/interaction-facets.model";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FilterService} from "../../shared/service/filter.service";
 
 describe('InteractionsFiltersComponent', () => {
   let component: InteractionsFiltersComponent;
@@ -14,7 +15,7 @@ describe('InteractionsFiltersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [InteractionsFiltersComponent],
-      providers: [TableFactoryService, NetworkViewService],
+      providers: [TableFactoryService, NetworkViewService, FilterService],
       imports: [BrowserAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -25,16 +26,7 @@ describe('InteractionsFiltersComponent', () => {
     fixture = TestBed.createComponent(InteractionsFiltersComponent);
 
     component = fixture.componentInstance;
-    component.interactionFacets = new InteractionFacets([], [], [], [], [], [], []);
-    component.interactorTypeFilter = [];
-    component.interactorSpeciesFilter = [];
-    component.interactionHostOrganismFilter = [];
-    component.interactionTypeFilter = [];
-    component.interactionDetectionMethodFilter = [];
-    component.negativeFilter = ""
-    component.miScoreMinFilter = 0;
-    component.miScoreMaxFilter = 1;
-    component.intraSpeciesFilter = false;
+    component.interactionFacets = new InteractionFacets([], [], [], [], [], [], [], []);
 
     fixture.detectChanges();
   });

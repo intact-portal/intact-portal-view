@@ -7,10 +7,12 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub} from "../../../testing/activated-route-stub";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Interactome} from "../interactome.model";
+import {GoogleAnalyticsService} from "../../shared/service/google-analytics/google-analytics.service";
 
 describe('InteractomeComponent', () => {
   let component: InteractomeComponent;
   let fixture: ComponentFixture<InteractomeComponent>;
+  const reporter = jasmine.createSpy('reporter');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,6 +21,7 @@ describe('InteractomeComponent', () => {
         SearchService,
         {provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate'])},
         {provide: ActivatedRoute, useValue: new ActivatedRouteStub({query: 'stat3'})},
+        {provide: GoogleAnalyticsService, useValue: reporter}
       ],
       imports: [HttpClientTestingModule],
       schemas: [NO_ERRORS_SCHEMA]

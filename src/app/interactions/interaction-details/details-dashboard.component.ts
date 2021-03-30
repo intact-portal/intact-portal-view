@@ -6,9 +6,10 @@ import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar
 import {viewer} from "./details-viewer/details-viewer.component";
 import {FoundationUtils} from "../../shared/utils/foundation-utils";
 import {TextEncoder} from "util";
+import {Format} from "../shared/model/download/format.model";
+import {environment} from "../../../environments/environment";
 
-declare const $: any;
-
+const baseURL = environment.intact_portal_ws;
 
 @Component({
   selector: 'ip-details-dashboard',
@@ -20,9 +21,14 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   @Input() featureSelected: string;
   private _error: HttpErrorResponse;
   viewer = viewer;
+  formatTypes = Format.instances;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) {
+  }
+
+  downloadURL(format: Format): string {
+    return `${baseURL}/graph/export/interaction/${this.interactionAc}?format=${format.name}`;
   }
 
   ngOnInit() {
@@ -37,8 +43,6 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
     $('#detail-export').foundation();
     FoundationUtils.adjustWidth();
   }
-
-
 
   public searchError(error: HttpErrorResponse) {
     this._error = error;

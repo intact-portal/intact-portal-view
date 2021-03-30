@@ -24,10 +24,12 @@
       <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true"
            data-hover-pane="true">
         <ul class="no-bullet no-margin">
-          <li><a class="button lightest expanded" download="" href=".">miTab<sub>2.7</sub></a></li>
-          <li><a class="button lightest expanded" download="" href=".">miXML<sub>2.5</sub></a></li>
-          <li><a class="button lightest expanded" download="" href=".">miXML<sub>3.0</sub></a></li>
-          <li><a class="button lightest expanded no-margin" download="" href=".">miJSON<sub>1.0</sub></a></li>
+
+          <li *ngFor="let format of formatTypes; let last = last;">
+            <a class="button lightest expanded" [ngClass]="{'no-margin':last}"
+               [download]="interactionAc + '.' + format.extension" target="_blank"
+               [href]="downloadURL(format)" [innerHTML]="format.html"></a>
+          </li>
         </ul>
       </div>
     </div>

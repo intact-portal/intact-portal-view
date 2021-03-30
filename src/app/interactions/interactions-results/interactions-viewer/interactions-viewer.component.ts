@@ -6,7 +6,7 @@ import {NetworkViewService} from "../../shared/service/network-view.service";
 import {NetworkLegend} from "../../shared/model/interaction-legend/network-legend";
 
 declare const require: any;
-const IntactGraph = require('expose-loader?IntactGraph!intact-network');
+const IntactGraph = require('expose-loader?IntactGraph!intact-network-viewer');
 
 
 @Component({

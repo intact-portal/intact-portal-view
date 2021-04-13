@@ -177,10 +177,15 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
+                if (d.unit !== null) {
                 return '<div class="margin-bottom-medium">' +
                   '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +
                   '</div>';
-              }).join('');
+              } else {
+                return '<div class="margin-bottom-medium">' +
+                  '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '</span>' +
+                  '</div>';
+              }}).join('');
             }
           }
         },

@@ -15,7 +15,10 @@
       </td>
       <td>{{param.value}}</td>
       <td>
-        <ip-cv-term [cvTerm]="param.unit"></ip-cv-term>
+        <!-- Parameter units are optional-->
+        <div *ngIf="param.unit">
+          <ip-cv-term [cvTerm]="param.unit"></ip-cv-term>
+        </div>
       </td>
     </tr>
     </tbody>

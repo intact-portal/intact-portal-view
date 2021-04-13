@@ -258,9 +258,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             title: this._columns.ac.name,
             render: function (data, type) {
               if (type === 'display' && data != null) {
-                return '<div>' +
-                  '<span><a href="${environment.context_path}/details/interaction/' + data + '" style="white-space: nowrap">' + data + '</a></span>' +
-                  '</div>';
+                return `<div>
+                          <span>
+                            <a href="${environment.context_path}/details/interaction/${data}" style="white-space: nowrap">${data}</a>
+                          </span>
+                        </div>`;
               }
             }
           },

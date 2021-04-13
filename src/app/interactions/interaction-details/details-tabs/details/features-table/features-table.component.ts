@@ -5,7 +5,7 @@ import {FeatureTable} from "../../../../shared/model/tables/feature-table.model"
 import {Column} from "../../../../shared/model/tables/column.model";
 import {TableFactoryService} from "../../../../shared/service/table-factory.service";
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
   selector: 'ip-features-table',

@@ -7,7 +7,7 @@ import {TableFactoryService} from "../../../../shared/service/table-factory.serv
 import {InteractionParticipantsService, Status} from "../../../shared/service/interaction-participants.service";
 import {Subscription} from "rxjs";
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
   selector: 'ip-participant-table',

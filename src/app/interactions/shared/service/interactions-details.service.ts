@@ -6,7 +6,7 @@ import {environment} from '../../../../environments/environment';
 import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
 import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.intact_portal_graph_ws;
 
 @Injectable()
 export class InteractionsDetailsService {

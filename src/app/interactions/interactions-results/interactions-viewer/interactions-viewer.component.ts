@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
@@ -15,7 +15,7 @@ const IntactGraph = require('expose-loader?IntactGraph!intact-network-viewer');
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class InteractionsViewerComponent implements OnInit {
+export class InteractionsViewerComponent implements AfterViewInit {
   private _hasMutation: boolean = false;
   private _interactionsJSON: any = {};
   legend: NetworkLegend = undefined;
@@ -28,16 +28,13 @@ export class InteractionsViewerComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     $('ip-interactions-viewer').foundation();
     this.view.viewer = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
     this.route.queryParamMap.subscribe((paramMap: ParamMap) => {
       this.view.fromParams(paramMap);
-      if (this.view.mustQuery) {
-        this.requestIntactNetworkDetails();
-      } else {
-        this.view.mustQuery = true;
-      }
+      if (this.view.mustQuery) this.requestIntactNetworkDetails()
+      this.view.mustQuery = true;
     });
   }
 

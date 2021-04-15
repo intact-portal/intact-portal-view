@@ -50,7 +50,6 @@ export class InteractionsResultsComponent implements OnInit {
       this.currentPageIndex
     ).subscribe(interactionsSearch => {
       this.interactionsSearch = interactionsSearch.data;
-      ProgressBarComponent.hideWithoutDelay();
       if (this.interactionsSearch.totalElements !== 0) {
         this._hasResults = true;
         this.filters.initFacets(this.interactionsSearch.facetResultPage);
@@ -58,6 +57,7 @@ export class InteractionsResultsComponent implements OnInit {
       } else {
         this._hasResults = false;
       }
+      ProgressBarComponent.hideWithoutDelay();
     })
   }
 
@@ -104,7 +104,6 @@ export class InteractionsResultsComponent implements OnInit {
   get hasResults(): boolean {
     return this._hasResults;
   }
-
 
   get currentPageIndex(): number {
     return this._currentPageIndex;

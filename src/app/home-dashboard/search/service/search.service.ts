@@ -40,11 +40,10 @@ export class SearchService {
     let query = this._query;
     let title = this._title
     localStorage.setItem(SearchService.localTokenId(this._token), JSON.stringify({query, title}));
-
     let tokens: string[] = JSON.parse(localStorage.getItem('intact-tokens') || "[]");
-    console.log(tokens);
+    console.table(tokens);
     tokens.push(this._token);
-    if (tokens.length > 10) localStorage.removeItem(SearchService.localTokenId(tokens.pop()));
+    if (tokens.length > 10) localStorage.removeItem(SearchService.localTokenId(tokens.shift()));
     localStorage.setItem('intact-tokens', JSON.stringify(tokens))
   }
 
@@ -104,8 +103,12 @@ export class SearchService {
     else if (params.has('token')) {
       this._token = params.get('token');
       let mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
-      this._query = mem.query;
-      this._title = mem.title;
+      if (mem) {
+        this._query = mem.query;
+        this._title = mem.title;
+      } else {
+        this.router.navigate([''])
+      }
     }
     if (params.has('batchSearch')) this._isBatchSearch = params.get('batchSearch') === 'true';
   }

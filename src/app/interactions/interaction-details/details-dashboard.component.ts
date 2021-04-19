@@ -5,7 +5,6 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar/progress-bar.component";
 import {viewer} from "./details-viewer/details-viewer.component";
 import {FoundationUtils} from "../../shared/utils/foundation-utils";
-import {TextEncoder} from "util";
 import {Format} from "../shared/model/download/format.model";
 import {environment} from "../../../environments/environment";
 

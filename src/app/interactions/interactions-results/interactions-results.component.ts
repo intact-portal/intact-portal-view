@@ -50,7 +50,6 @@ export class InteractionsResultsComponent implements OnInit {
       this.currentPageIndex
     ).subscribe(interactionsSearch => {
       this.interactionsSearch = interactionsSearch.data;
-      ProgressBarComponent.hideWithoutDelay();
       if (this.interactionsSearch.totalElements !== 0) {
         this._hasResults = true;
         this.filters.initFacets(this.interactionsSearch.facetResultPage);
@@ -58,6 +57,7 @@ export class InteractionsResultsComponent implements OnInit {
       } else {
         this._hasResults = false;
       }
+      ProgressBarComponent.hideWithoutDelay();
     })
   }
 
@@ -70,11 +70,12 @@ export class InteractionsResultsComponent implements OnInit {
   /** END OF EVENT EMITTERS **/
 
   private updateURLParams(): void {
-    const params: any = {};
-    if (!this.search.isBatchSearch) params.query = this.search.query;
-    params.page = this.currentPageIndex;
-
-    this.router.navigate([], {queryParams: {...params, ...this.filters.toParams(), ...this.view.toParams()}});
+    this.router.navigate([], {
+      queryParams: {
+        ...this.search.toURLParams(), ...this.filters.toParams(), ...this.view.toParams(),
+        page: this.currentPageIndex
+      }
+    });
   }
 
 
@@ -103,7 +104,6 @@ export class InteractionsResultsComponent implements OnInit {
   get hasResults(): boolean {
     return this._hasResults;
   }
-
 
   get currentPageIndex(): number {
     return this._currentPageIndex;

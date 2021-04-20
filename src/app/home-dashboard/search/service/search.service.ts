@@ -12,6 +12,7 @@ const baseURL = environment.intact_portal_ws;
 
 @Injectable()
 export class SearchService {
+  private _token: string;
   private _query: string;
   private _title: string;
   private _isBatchSearch = false;
@@ -29,8 +30,25 @@ export class SearchService {
   batchSearch(query: string) {
     this._query = query;
     this._isBatchSearch = true;
-    this.router.navigate(['search']);
+
+    this.manageTokens();
+    this.router.navigate(['search'], {queryParams: {token: this._token, batchSearch: true}});
   }
+
+  private manageTokens() {
+    this._token = this.genToken(5);
+    let query = this._query;
+    let title = this._title
+    localStorage.setItem(SearchService.localTokenId(this._token), JSON.stringify({query, title}));
+    let tokens: string[] = JSON.parse(localStorage.getItem('intact-tokens') || "[]");
+    console.table(tokens);
+    tokens.push(this._token);
+    if (tokens.length > 10) localStorage.removeItem(SearchService.localTokenId(tokens.shift()));
+    localStorage.setItem('intact-tokens', JSON.stringify(tokens))
+  }
+
+  private rand = () => Math.random().toString(36).substr(2);
+  private genToken = (length) => (this.rand() + this.rand() + this.rand() + this.rand()).substr(0, length);
 
   speciesSearch(specieName: string) {
     this._query = '*'
@@ -59,10 +77,10 @@ export class SearchService {
     }
   }
 
+
   get query(): string {
     return this._query;
   }
-
 
   set query(value: string) {
     this._query = value;
@@ -82,12 +100,35 @@ export class SearchService {
 
   fromParams(params: ParamMap) {
     if (params.has('query')) this._query = params.get('query');
+    else if (params.has('token')) {
+      this._token = params.get('token');
+      let mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
+      if (mem) {
+        this._query = mem.query;
+        this._title = mem.title;
+      } else {
+        this.router.navigate([''])
+      }
+    }
     if (params.has('batchSearch')) this._isBatchSearch = params.get('batchSearch') === 'true';
+  }
+
+  toURLParams(params: any = {}): any {
+    if (this.isBatchSearch) {
+      params.token = this._token;
+      params.batchSearch = this.isBatchSearch;
+    } else if (this.query) params.query = this.query.trim();
+
+    return params;
   }
 
   toParams(params: any = {}): any {
     if (this.query) params.query = this.query.trim();
     if (this.isBatchSearch) params.batchSearch = this.isBatchSearch;
     return params;
+  }
+
+  private static localTokenId(token) {
+    return `intact-batch-search-${token}`;
   }
 }

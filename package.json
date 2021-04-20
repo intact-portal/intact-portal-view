@@ -38,7 +38,7 @@
     "ember-cli-cors": "0.0.2",
     "expose-loader": "^0.7.5",
     "file-saver": "^2.0.5",
-    "intact-network-viewer": "^0.9.10",
+    "intact-network-viewer": "0.9.11",
     "jquery": "^3.6.0",
     "jquery-ui-dist": "^1.12.1",
     "katex": "^0.12.0",

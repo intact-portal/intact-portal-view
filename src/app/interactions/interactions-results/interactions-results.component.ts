@@ -46,10 +46,9 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   private requestInteractionsResults() {
-    this.interactionsSearchService.getAllInteractionsAndFacetsQuery(
-      this.currentPageIndex
-    ).subscribe(interactionsSearch => {
-      this.interactionsSearch = interactionsSearch.data;
+    this.interactionsSearchService.getAllInteractionsAndFacetsQuery()
+      .subscribe(interactionsSearch => {
+      this.interactionsSearch = interactionsSearch;
       if (this.interactionsSearch.totalElements !== 0) {
         this._hasResults = true;
         this.filters.initFacets(this.interactionsSearch.facetResultPage);

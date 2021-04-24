@@ -6,16 +6,14 @@ import {Pagination} from "../../../../../home-dashboard/shared/pagination.model"
 export class InteractionsSearchResultData extends Pagination<Interaction[]> {
   private _facetResultPage: InteractionFacets;
   private _facetFields: Filter[];
+  private _totalElements: number;
 
-
-  constructor(facetResultPage: InteractionFacets,
-              filtersType: Filter[]) {
+  constructor(facetResultPage: InteractionFacets, facetFields: Filter[], totalElements: number) {
     super();
     this._facetResultPage = facetResultPage;
-    this._facetFields = filtersType;
+    this._facetFields = facetFields;
+    this._totalElements = totalElements;
   }
-
-  /** GETTERS AND SETTERS **/
 
   get facetResultPage(): InteractionFacets {
     return this._facetResultPage;
@@ -31,5 +29,13 @@ export class InteractionsSearchResultData extends Pagination<Interaction[]> {
 
   set facetFields(value: Filter[]) {
     this._facetFields = value;
+  }
+
+  get totalElements(): number {
+    return this._totalElements;
+  }
+
+  set totalElements(value: number) {
+    this._totalElements = value;
   }
 }

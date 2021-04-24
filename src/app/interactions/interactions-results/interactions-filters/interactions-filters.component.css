@@ -91,3 +91,18 @@ button.delete-button {
   padding: 10px;
 }
 
+.species-cell {
+  color: white;
+  border-radius: 100px;
+  padding: 2px 6px;
+}
+
+.discreet {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.emphasized {
+  font-weight: bolder;
+  color: white;
+}

@@ -4,10 +4,10 @@
 
 // Environment for localhost
 // TODO This should disappear, We need to create a localhost env that works with the proxy
-// const EBI_BASE_URL = 'http://localhost:4200';
+const EBI_BASE_URL = 'http://localhost:4200';
 
 // Environment for development
-const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+// const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
 const EBI_URL = 'https://www.ebi.ac.uk';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'ftp://ftp.ebi.ac.uk/pub/databases/intact';
@@ -19,7 +19,6 @@ const CONTEXT_PATH = '/intact/dev'
 export const environment = {
   production: false,
   evn: 'dev',
-
   analytics_id: '2381917528',
   ebi_base_url: EBI_BASE_URL,
   ebi_url: EBI_URL,

@@ -8,18 +8,65 @@
       Interactor Species
     </button>
     <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
+         style="visibility: visible; display: block"
          *ngIf="filterTypes.SPECIES as filter">
       <ul class="vertical menu facets margin-bottom-medium">
-        <div class="scrollbar filter" [ngStyle]="filterStyle('speciesA_B_str')">
-          <li *ngFor="let species of interactionFacets.speciesA_B_str">
-          <span class="facet"><input name="species"
-                                     [type]="filters.intraSpecies ? 'radio' : 'checkbox'"
-                                     value="{{species.value}}"
-                                     (change)="onChangeInteractorSpeciesFilter($event)"
-                                     [checked]="filters.isFilteringValue(filter,species.value)"/>
-            <label>{{species.value}} ({{species.valueCount}})</label>
-          </span>
-          </li>
+        <div class="scrollbar filter" [ngStyle]="filterStyle('combined_species')">
+
+          <table>
+            <thead>
+            <tr class="no-background">
+              <th></th>
+              <th></th>
+              <th class="no-padding">Intra</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let species of filters.facets.combined_species">
+              <td class="no-padding">
+                <input name="species"
+                       type="checkbox"
+                       value="{{species.value}}"
+                       [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
+                       (change)="onChangeInteractorSpeciesFilter($event)"
+                       [checked]="filters.isFilteringValue(filter,species.value)"/>
+                <label>
+                  {{species.value}}
+                </label>
+              </td>
+
+              <ng-template [ngIf]="!filters.intraSpecies">
+                <td style="text-align: right" class="no-padding">
+                  <span class="tag-cell species-cell emphasized"
+                        [ngStyle]="{'background-color':species.visualProperty}"
+                  >{{species.valueCount.all}}</span>
+                </td>
+
+                <td class="no-padding">
+                  <span class="tag-cell species-cell discreet"
+                        [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
+                  >{{species.valueCount.intra}}</span>
+                </td>
+
+              </ng-template>
+
+
+              <ng-template [ngIf]="filters.intraSpecies">
+                <td style="text-align: right" class="no-padding">
+                  <span class="tag-cell species-cell discreet"
+                        [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
+                  >{{species.valueCount.all}}</span>
+                </td>
+
+                <td class="no-padding">
+                  <span class="tag-cell species-cell emphasized"
+                        [ngStyle]="{'background-color':species.visualProperty}"
+                  >{{species.valueCount.intra}}</span>
+                </td>
+              </ng-template>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </ul>
 
@@ -29,13 +76,13 @@
           <i class="icon icon-functional" data-icon="d"></i>
         </button>
 
+        Intra species only
         <mat-slide-toggle color="primary"
                           (change)="onChangeInteractionIntraSpeciesFilter($event)"
-                          [disabled]="filters.isSelectedMoreThanOneSpecies()"
+                          [disabled]="filters.canFilterIntraSpecies()"
                           [checked]="filters.intraSpecies"
                           class="float-right margin-top-medium margin-bottom-medium margin-left-medium"
                           style="align-content: center">
-          Intra species only
         </mat-slide-toggle>
       </mat-dialog-actions>
     </div>
@@ -46,8 +93,8 @@
     <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
          *ngIf="filterTypes.INTERACTOR_TYPE as filter">
       <ul class="vertical menu facets">
-        <div class=" scrollbar filter" [ngStyle]="filterStyle('typeA_B_str')">
-          <li *ngFor="let molecule of interactionFacets.typeA_B_str">
+        <div class=" scrollbar filter" [ngStyle]="filterStyle('type_MI_A_B_styled')">
+          <li *ngFor="let molecule of filters.facets.type_MI_A_B_styled">
           <span class="facet"><input type="checkbox" value="{{molecule.value}}"
                                      (change)="onChangeInteractorTypeFilter($event)"
                                      [checked]="filters.isFilteringValue(filter, molecule.value)"/>
@@ -71,8 +118,8 @@
     <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
          *ngIf="filterTypes.INTERACTION_TYPE as filter">
       <ul class="vertical menu facets">
-        <div class=" scrollbar filter" [ngStyle]="filterStyle('type_str')">
-          <li *ngFor="let interactionType of interactionFacets.type_str">
+        <div class=" scrollbar filter" [ngStyle]="filterStyle('type_mi_identifier_styled')">
+          <li *ngFor="let interactionType of filters.facets.type_mi_identifier_styled">
           <span class="facet"><input type="checkbox" value="{{interactionType.value}}"
                                      (change)="onChangeInteractionTypeFilter($event)"
                                      [checked]="filters.isFilteringValue(filter, interactionType.value)"/>
@@ -95,8 +142,8 @@
     <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true" *ngIf="filterTypes.DETECTION_METHOD as filter">
       <ul class="vertical menu facets margin-bottom-medium">
-        <div class="scrollbar filter" [ngStyle]="filterStyle('detection_method_str')">
-          <li *ngFor="let detectionMethod of interactionFacets.detection_method_str">
+        <div class="scrollbar filter" [ngStyle]="filterStyle('detection_method_s')">
+          <li *ngFor="let detectionMethod of filters.facets.detection_method_s">
           <span class="facet"><input type="checkbox" value="{{detectionMethod.value}}"
                                      (change)="onChangeInteractionDetectionMethodFilter($event)"
                                      [checked]="filters.isFilteringValue(filter, detectionMethod.value)"/>
@@ -120,8 +167,8 @@
     <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true" *ngIf="filterTypes.HOST_ORGANISM as filter">
       <ul class="vertical menu facets">
-        <div class="scrollbar filter" [ngStyle]="filterStyle('host_organism_str')">
-          <li *ngFor="let hostOrganism of interactionFacets.host_organism_str">
+        <div class="scrollbar filter" [ngStyle]="filterStyle('host_organism_s')">
+          <li *ngFor="let hostOrganism of filters.facets.host_organism_s">
             <span class="facet"> <input type="checkbox" value="{{hostOrganism.value}}"
                                         (change)="onChangeInteractionHostOrganismFilter($event)"
                                         [checked]="filters.isFilteringValue(filter, hostOrganism.value)"/>

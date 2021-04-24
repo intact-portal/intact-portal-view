@@ -6,6 +6,7 @@ import {InteractionSearchResult} from "../model/interactions-results/interaction
 import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
 import {FilterService} from "./filter.service";
 import {SearchService} from "../../../home-dashboard/search/service/search.service";
+import {InteractionsSearchResultData} from "../model/interactions-results/interaction/interactions-search-data.model";
 
 const baseURL = environment.intact_portal_ws;
 
@@ -19,16 +20,10 @@ export class InteractionsSearchService {
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService, private search: SearchService, private filters: FilterService) {
   }
 
-  getAllInteractionsAndFacetsQuery(currentPageIndex = 1, pageSize = 10): Observable<InteractionSearchResult> {
-    this.page = currentPageIndex;
+  getAllInteractionsAndFacetsQuery(): Observable<InteractionsSearchResultData> {
+        let params = new HttpParams({fromObject:{...this.search.toParams(), ...this.filters.toParams()}})
 
-    currentPageIndex = currentPageIndex - 1;
-
-    let params = new HttpParams({fromObject:{...this.search.toParams(), ...this.filters.toParams()}})
-      .set('page', currentPageIndex.toString())
-      .set('pageSize', pageSize.toString());
-
-    return this.http.post<InteractionSearchResult>(`${baseURL}/interaction/findInteractionWithFacet`, params)
+    return this.http.post<InteractionSearchResult>(`${baseURL}/interaction/findInteractionFacets`, params)
       .catch(this.handleError);
   }
 

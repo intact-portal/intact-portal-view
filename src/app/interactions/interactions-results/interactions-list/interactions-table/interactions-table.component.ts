@@ -148,8 +148,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         },
         columns: [
           {
-            data: this._columns.id.key,
-            title: this._columns.id.name,
+            data: this._columns.id.data,
+            title: this._columns.id.title,
             render: function (data, type, full) {
               if (type === 'display') {
                 return `<div>
@@ -166,17 +166,17 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.moleculeA.key,
-            title: this._columns.moleculeA.name
+            data: this._columns.moleculeA.data,
+            title: this._columns.moleculeA.title
           },
           {
-            data: this._columns.moleculeB.key,
-            title: this._columns.moleculeB.name
+            data: this._columns.moleculeB.data,
+            title: this._columns.moleculeB.title
           },
           {
-            data: this._columns.identifierA.key,
+            data: this._columns.identifierA.data,
             defaultContent: '',
-            title: this._columns.identifierA.name,
+            title: this._columns.identifierA.title,
             render: (data, type) => {
               if (type === 'display' && data !== null) {
                 return this.tableFactory.identifierRender(extractId(data))
@@ -185,9 +185,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.identifierB.key,
+            data: this._columns.identifierB.data,
             defaultContent: '',
-            title: this._columns.identifierB.name,
+            title: this._columns.identifierB.title,
             render: (data, type) => {
               if (type === 'display' && data !== null) {
                 return this.tableFactory.identifierRender(extractId(data))
@@ -196,38 +196,38 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.typeA.key,
-            title: this._columns.typeA.name,
+            data: this._columns.typeA.data,
+            title: this._columns.typeA.title,
             render: this.tableFactory.cvRender('typeMIA')
           },
           {
-            data: this._columns.typeB.key,
-            title: this._columns.typeB.name,
+            data: this._columns.typeB.data,
+            title: this._columns.typeB.title,
             render: this.tableFactory.cvRender('typeMIB')
           },
           {
-            data: this._columns.speciesA.key,
-            title: this._columns.speciesA.name,
+            data: this._columns.speciesA.data,
+            title: this._columns.speciesA.title,
             render: this.tableFactory.speciesRender('taxIdA')
           },
           {
-            data: this._columns.speciesB.key,
-            title: this._columns.speciesB.name,
+            data: this._columns.speciesB.data,
+            title: this._columns.speciesB.title,
             render: this.tableFactory.speciesRender('taxIdB')
           },
           {
-            data: this._columns.hostOrganism.key,
-            title: this._columns.hostOrganism.name,
+            data: this._columns.hostOrganism.data,
+            title: this._columns.hostOrganism.title,
             render: this.tableFactory.speciesRender('hostOrganismTaxId')
           },
           {
-            data: this._columns.detectionMethod.key,
-            title: this._columns.detectionMethod.name,
+            data: this._columns.detectionMethod.data,
+            title: this._columns.detectionMethod.title,
             render: this.tableFactory.cvRender('detectionMethodMIIdentifier')
           },
           {
-            data: this._columns.publicationIdentifiers.key,
-            title: this._columns.publicationIdentifiers.name,
+            data: this._columns.publicationIdentifiers.data,
+            title: this._columns.publicationIdentifiers.title,
             render: this.tableFactory.enlistWithButtons((d) => {
               const data_s = d.split('(');
               const publicationId: string = data_s[0].trim();
@@ -249,13 +249,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }, 'alignCell', false)
           },
           {
-            data: this._columns.type.key,
-            title: this._columns.type.name,
+            data: this._columns.type.data,
+            title: this._columns.type.title,
             render: this.tableFactory.cvRender('typeMIIdentifier')
           },
           {
-            data: this._columns.ac.key,
-            title: this._columns.ac.name,
+            data: this._columns.ac.data,
+            title: this._columns.ac.title,
             render: function (data, type) {
               if (type === 'display' && data != null) {
                 return `<div>
@@ -267,12 +267,12 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.database.key,
-            title: this._columns.database.name
+            data: this._columns.database.data,
+            title: this._columns.database.title
           },
           {
-            data: this._columns.confidenceValue.key,
-            title: this._columns.confidenceValue.name,
+            data: this._columns.confidenceValue.data,
+            title: this._columns.confidenceValue.title,
             render: this.tableFactory.enlistWithButtons((d: string) => {
 
               if (!d.includes('intact-miscore')) {
@@ -335,8 +335,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }, '', false)
           },
           {
-            data: this._columns.expansionMethod.key,
-            title: this._columns.expansionMethod.name,
+            data: this._columns.expansionMethod.data,
+            title: this._columns.expansionMethod.title,
             defaultContent: ' ',
             render: function (data, type) {
               if (type === 'display' && data != null) {
@@ -350,44 +350,44 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.experimentalRoleA.key,
-            title: this._columns.experimentalRoleA.name,
+            data: this._columns.experimentalRoleA.data,
+            title: this._columns.experimentalRoleA.title,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('experimentalRoleMIIdentifierA')
           },
           {
-            data: this._columns.experimentalRoleB.key,
-            title: this._columns.experimentalRoleB.name,
+            data: this._columns.experimentalRoleB.data,
+            title: this._columns.experimentalRoleB.title,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('experimentalRoleMIIdentifierB')
           },
           {
-            data: this._columns.biologicalRoleA.key,
-            title: this._columns.biologicalRoleA.name,
+            data: this._columns.biologicalRoleA.data,
+            title: this._columns.biologicalRoleA.title,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('biologicalRoleMIIdentifierA')
           },
           {
-            data: this._columns.biologicalRoleB.key,
-            title: this._columns.biologicalRoleB.name,
+            data: this._columns.biologicalRoleB.data,
+            title: this._columns.biologicalRoleB.title,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('biologicalRoleMIIdentifierB')
           },
           {
-            data: this._columns.aliasesA.key,
-            title: this._columns.aliasesA.name,
+            data: this._columns.aliasesA.data,
+            title: this._columns.aliasesA.title,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
           },
           {
-            data: this._columns.aliasesB.key,
-            title: this._columns.aliasesB.name,
+            data: this._columns.aliasesB.data,
+            title: this._columns.aliasesB.title,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
           },
           {
-            data: this._columns.featureCount.key,
-            title: this._columns.featureCount.name,
+            data: this._columns.featureCount.data,
+            title: this._columns.featureCount.title,
             render: function (data, type) {
               if (type === 'display' && data != null) {
                 return `<div class="alignCell"><span>${data}</span></div>`;
@@ -395,8 +395,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.parameters.key,
-            title: this._columns.parameters.name,
+            data: this._columns.parameters.data,
+            title: this._columns.parameters.title,
             defaultContent: ' ',
             render: function (data, type) {
               if (type === 'display' && data != null) {
@@ -405,8 +405,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.annotationsA.key,
-            title: this._columns.annotationsA.name,
+            data: this._columns.annotationsA.data,
+            title: this._columns.annotationsA.title,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
               ['comment', {class: 'detailsCommentsCell', symbol: 'icon-comment'}],
@@ -414,8 +414,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             ]))(extractAnnotation(d)), 'annotationsList')
           },
           {
-            data: this._columns.annotationsB.key,
-            title: this._columns.annotationsB.name,
+            data: this._columns.annotationsB.data,
+            title: this._columns.annotationsB.title,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
               ['comment', {class: 'detailsCommentsCell', symbol: 'icon-comment'}],
@@ -423,8 +423,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             ]))(extractAnnotation(d)), 'annotationsList')
           },
           {
-            data: this._columns.annotations.key,
-            title: this._columns.annotations.name,
+            data: this._columns.annotations.data,
+            title: this._columns.annotations.title,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
               ['figure legend', {class: 'detailsFigureLegendCell', symbol: 'icon-image'}],

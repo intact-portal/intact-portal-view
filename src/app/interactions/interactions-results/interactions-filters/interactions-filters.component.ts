@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
 import {TableFactoryService} from "../../shared/service/table-factory.service";
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -45,7 +44,6 @@ import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
-  @Input() interactionFacets: InteractionFacets;
   options: Options;
   formats = Format.instances;
   filterTypes = Filter;
@@ -65,9 +63,10 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   filterStyle(filterKey: string): any {
-    if (this.interactionFacets[filterKey].length > 20) {
+    // console.log(filterKey, this.filters.facets[filterKey])
+    if (this.filters.facets[filterKey].length > 20) {
       return {
-        height: ['detection_method_str', 'host_organism_str'].includes(filterKey) ? '500px' : '400px',
+        height: ['detection_method_s', 'host_organism_s'].includes(filterKey) ? '500px' : '400px',
         width: '100%',
         'overflow-y': 'auto',
       };
@@ -127,12 +126,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   onChangeInteractorSpeciesFilter(event: Event) {
-    let target = event.target as HTMLInputElement;
-    if (!this.filters.intraSpecies) {
-      this.filters.updateFilter(Filter.SPECIES, target.value);
-    } else if (target.checked) {
-      this.filters.setUniqueSpecies(target.value);
-    }
+    this.filters.updateFilter(Filter.SPECIES, (event.target as HTMLInputElement).value);
   }
 
   onChangeInteractorTypeFilter(event: Event) {

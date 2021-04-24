@@ -8,6 +8,8 @@ import {InteractionFacets} from "../model/interactions-results/interaction/inter
 
 @Injectable()
 export class FilterService {
+  private _facets : InteractionFacets;
+  private intraSpeciesCounts: Map<string, number>;
   private _negative: boolean = false;
   private _mutation: boolean = false;
   private _intraSpecies: boolean = false;
@@ -34,8 +36,14 @@ export class FilterService {
   }
 
   public initFacets(facets: InteractionFacets) {
+    this._facets = facets;
+    this.initSpeciesFilter()
     this.initMIScoreFilter(facets.intact_miscore)
     this.initMutationFilter(facets.disrupted_by_mutation)
+  }
+
+  private initSpeciesFilter() {
+    this.intraSpeciesCounts = new Map(this.facets.combined_species.map(facet => [facet.value, facet.valueCount.intra] as [string, number]));
   }
 
   private initMIScoreFilter(scoreFacets: Facet[]) {
@@ -148,8 +156,11 @@ export class FilterService {
     this.updatesSubject.next(Filter.SPECIES);
   }
 
-  isSelectedMoreThanOneSpecies() {
-    return this.interactorSpecies.length > 1;
+  canFilterIntraSpecies() {
+    for (const interactorSpecies of this.interactorSpecies) {
+      if (!this.intraSpeciesCounts.get(interactorSpecies)) return false;
+    }
+    return true;
   }
 
   isFilteringScore() {
@@ -251,6 +262,10 @@ export class FilterService {
     }
   }
 
+
+  get facets(): InteractionFacets {
+    return this._facets;
+  }
 
   get mutation(): boolean {
     return this._mutation;

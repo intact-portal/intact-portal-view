@@ -50,7 +50,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
     if (localStorage.getItem(columnView) != null) {
       this.columnsSelected = JSON.parse(localStorage.getItem(this.columnView + '_columns'));
     } else {
-      this.columnsSelected = this.columns.filter(column => column.hiddenByDefault).map(column => column.name);
+      this.columnsSelected = this.columns.filter(column => column.hiddenByDefault).map(column => column.title);
     }
 
     // Hide the columns from the table that are already selected to hide

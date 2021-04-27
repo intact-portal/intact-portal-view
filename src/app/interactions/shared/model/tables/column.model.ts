@@ -1,14 +1,12 @@
-import {Table} from "./table.model";
+import {Table} from './table.model';
 
 export class Column {
-  public readonly title: string;
-  public readonly data: string;
-  public readonly hiddenByDefault: boolean;
-
-  constructor(table: Table, name: string, key: string, hiddenByDefault: boolean = false) {
+  constructor(
+    public readonly title: string,
+    public readonly data: string,
+    public readonly hiddenByDefault: boolean = false,
+    table: Table
+  ) {
     table.push(this);
-    this.title = name;
-    this.data = key;
-    this.hiddenByDefault = hiddenByDefault
   }
 }

@@ -1,19 +1,20 @@
 export class Pagination<T = any> {
-  content: T;
-  empty: boolean;
-  first: boolean;
-  last: boolean;
-  number: number;
-  numberOfElements: number;
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  sort: {
+
+  public readonly content: T;
+  public readonly empty: boolean;
+  public readonly first: boolean;
+  public readonly last: boolean;
+  public readonly number: number;
+  public readonly numberOfElements: number;
+  public readonly totalElements: number;
+  public readonly totalPages: number;
+  public readonly size: number;
+  public readonly sort: {
     empty: boolean,
     sorted: boolean,
     unsorted: boolean
-  }
-  pageable: {
+  };
+  public readonly pageable: {
     offset: number,
     pageNumber: number,
     pageSize: number,
@@ -24,5 +25,5 @@ export class Pagination<T = any> {
       sorted: boolean,
       unsorted: boolean
     }
-  }
+  };
 }

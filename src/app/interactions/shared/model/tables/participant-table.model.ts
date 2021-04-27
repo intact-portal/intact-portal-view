@@ -1,22 +1,22 @@
-import {Table} from "./table.model";
-import {Column} from "./column.model";
+import {Table} from './table.model';
+import {Column} from './column.model';
 
 export class ParticipantTable extends Table {
-  public readonly expand = new Column(this, 'Expand', 'participantName');
-  public readonly name = new Column(this, 'Name', 'shortLabel');
-  public readonly ac = new Column(this, 'AC', 'participantAc');
-  public readonly type = new Column(this, 'Type', 'type');
-  public readonly identifier = new Column(this, 'Identifier', 'participantId');
-  public readonly aliases = new Column(this, 'Aliases', 'aliases');
-  public readonly description = new Column(this, 'Description', 'description');
-  public readonly species = new Column(this, 'Species', 'species');
-  public readonly expressionSystem = new Column(this, 'Expression System', 'expressionSystem');
-  public readonly detectionMethods = new Column(this, 'Detection Methods', 'detectionMethod');
-  public readonly experimentalRole = new Column(this, 'Experimental Role', 'experimentalRole');
-  public readonly biologicalRole = new Column(this, 'Biological Role', 'biologicalRole');
-  public readonly experimentalPreparations = new Column(this, 'Experimental Preparations', 'experimentalPreparations');
-  public readonly parameters = new Column(this, 'Parameters', 'parameters');
-  public readonly confidences = new Column(this, 'Confidences', 'confidences');
-  public readonly crossReferences = new Column(this, 'Cross References', 'xrefs');
-  public readonly annotations = new Column(this, 'Annotations', 'annotations');
+  public readonly expand = new Column('Expand', 'participantName', false, this);
+  public readonly name = new Column('Name', 'shortLabel', false, this);
+  public readonly ac = new Column('AC', 'participantAc', false, this);
+  public readonly type = new Column('Type', 'type', false, this);
+  public readonly identifier = new Column('Identifier', 'participantId', false, this);
+  public readonly aliases = new Column('Aliases', 'aliases', false, this);
+  public readonly description = new Column('Description', 'description', false, this);
+  public readonly species = new Column('Species', 'species', false, this);
+  public readonly expressionSystem = new Column('Expression System', 'expressionSystem', false, this);
+  public readonly detectionMethods = new Column('Detection Methods', 'detectionMethod', false, this);
+  public readonly experimentalRole = new Column('Experimental Role', 'experimentalRole', false, this);
+  public readonly biologicalRole = new Column('Biological Role', 'biologicalRole', false, this);
+  public readonly experimentalPreparations = new Column('Experimental Preparations', 'experimentalPreparations', false, this);
+  public readonly parameters = new Column('Parameters', 'parameters', false, this);
+  public readonly confidences = new Column('Confidences', 'confidences', false, this);
+  public readonly crossReferences = new Column('Cross References', 'xrefs', false, this);
+  public readonly annotations = new Column('Annotations', 'annotations', false, this);
 }

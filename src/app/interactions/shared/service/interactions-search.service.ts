@@ -16,8 +16,8 @@ export class InteractionsSearchService {
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService, private search: SearchService, private filters: FilterService) {
   }
 
-  getAllInteractionsAndFacetsQuery(): Observable<InteractionsSearchResultData> {
-        let params = new HttpParams({fromObject:{...this.search.toParams(), ...this.filters.toParams()}})
+  queryFacets(): Observable<InteractionsSearchResultData> {
+    const params = new HttpParams({fromObject: {...this.search.toParams(), ...this.filters.toParams()}});
 
     return this.http.post<InteractionSearchResult>(`${baseURL}/interaction/findInteractionFacets`, params)
       .catch(this.handleError);

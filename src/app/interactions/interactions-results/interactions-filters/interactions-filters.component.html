@@ -241,6 +241,11 @@
                           [checked]="filters.mutation">
         </mat-slide-toggle>
         <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
+              [ngStyle]="{
+              'background-color': filters.mutation ? filters.mutationColor : 'white',
+              'color': filters.mutation ? 'white' : filters.mutationColor,
+              'border-color': filters.mutationColor
+              }"
               [ngClass]="{'discreet':!filters.mutation, 'emphasized':filters.mutation}">{{filters.nbMutation}}</span>
       </div>
     </div>

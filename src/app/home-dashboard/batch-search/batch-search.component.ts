@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
 import {SearchService} from '../search/service/search.service';
-import {Pagination} from "../shared/pagination.model";
-import {Interactor} from "../../interactions/shared/model/interactions-results/interactor/interactor.model";
-import {ResolutionEntry} from "./resolution-interactor-model";
+import {Pagination} from '../shared/pagination.model';
+import {Interactor} from '../../interactions/shared/model/interactions-results/interactor/interactor.model';
+import {ResolutionEntry} from './resolution-interactor-model';
 
 
 const baseURL = environment.intact_portal_ws;

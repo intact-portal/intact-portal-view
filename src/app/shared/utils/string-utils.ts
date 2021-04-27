@@ -1,6 +1,6 @@
-import {CvTerm} from "../../interactions/shared/model/interaction-details/cv-term.model";
-import {Annotation} from "../../interactions/shared/model/interaction-details/annotation.model";
-import {Alias} from "../../interactions/shared/model/interaction-details/alias.model";
+import {CvTerm} from '../../interactions/shared/model/interaction-details/cv-term.model';
+import {Annotation} from '../../interactions/shared/model/interaction-details/annotation.model';
+import {Alias} from '../../interactions/shared/model/interaction-details/alias.model';
 
 export function titleCase(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);

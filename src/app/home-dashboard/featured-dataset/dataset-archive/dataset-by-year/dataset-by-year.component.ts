@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {Dataset} from "../../model/dataset.model";
-import {environment} from "../../../../../environments/environment";
-import {PubmedDataset} from "../../model/pubmed-dataset.model";
+import {Dataset} from '../../model/dataset.model';
+import {environment} from '../../../../../environments/environment';
+import {PubmedDataset} from '../../model/pubmed-dataset.model';
 
 
 const intactFTP_URL = environment.intact_psi25_url;

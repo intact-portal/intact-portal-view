@@ -3,10 +3,10 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
-import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar/progress-bar.component";
-import {SearchService} from "../../home-dashboard/search/service/search.service";
-import {FilterService} from "../shared/service/filter.service";
-import {NetworkViewService} from "../shared/service/network-view.service";
+import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
+import {SearchService} from '../../home-dashboard/search/service/search.service';
+import {FilterService} from '../shared/service/filter.service';
+import {NetworkViewService} from '../shared/service/network-view.service';
 
 @Component({
   selector: 'ip-interactions-results',

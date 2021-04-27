@@ -1,12 +1,13 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
-import {TableFactoryService} from "../../shared/service/table-factory.service";
+import {TableFactoryService} from '../../shared/service/table-factory.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {NetworkViewService} from "../../shared/service/network-view.service";
-import {FoundationUtils} from "../../../shared/utils/foundation-utils";
-import {Format} from "../../shared/model/download/format.model";
-import {Filter, FilterService} from "../../shared/service/filter.service";
-import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {NetworkViewService} from '../../shared/service/network-view.service';
+import {FoundationUtils} from '../../../shared/utils/foundation-utils';
+import {Format} from '../../shared/model/download/format.model';
+import {Filter, FilterService} from '../../shared/service/filter.service';
+import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 
 
 @Component({

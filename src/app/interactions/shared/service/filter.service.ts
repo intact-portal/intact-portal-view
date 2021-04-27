@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Subject} from "rxjs";
-import {Facet} from "../model/interactions-results/facet.model";
-import {Observable} from "rxjs/Observable";
-import {ParamMap} from "@angular/router";
-import {InteractionFacets} from "../model/interactions-results/interaction/interaction-facets.model";
+import {Subject} from 'rxjs/Subject';
+import {Facet} from '../model/interactions-results/facet.model';
+import {Observable} from 'rxjs/Observable';
+import {ParamMap} from '@angular/router';
+import {InteractionFacets} from '../model/interactions-results/interaction/interaction-facets.model';
 
 
 @Injectable()
@@ -305,15 +305,16 @@ export class FilterService {
 }
 
 export enum Filter {
-  SPECIES = "interactorSpeciesFilter",
-  INTRA_SPECIES = "intraSpeciesFilter",
-  INTERACTOR_TYPE = "interactorTypesFilter",
-  INTERACTION_TYPE = "interactionTypesFilter",
-  DETECTION_METHOD = "interactionDetectionMethodsFilter",
-  HOST_ORGANISM = "interactionHostOrganismsFilter",
-  MI_SCORE = "miScore",
-  NEGATIVE = "isNegativeFilter",
-  MUTATION = "mutationFilter"
+  SPECIES = 'interactorSpeciesFilter',
+  INTRA_SPECIES = 'intraSpeciesFilter',
+  INTERACTOR_TYPE = 'interactorTypesFilter',
+  INTERACTION_TYPE = 'interactionTypesFilter',
+  DETECTION_METHOD = 'interactionDetectionMethodsFilter',
+  HOST_ORGANISM = 'interactionHostOrganismsFilter',
+  MI_SCORE = 'miScore',
+  NEGATIVE = 'isNegativeFilter',
+  MUTATION = 'mutationFilter',
+  EXPANSION = 'expansionFilter'
 }
 
 

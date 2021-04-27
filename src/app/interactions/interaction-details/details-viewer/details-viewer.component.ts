@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewEncapsulation} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
-import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
+import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
 import * as complexviewer from 'complexviewer';
-import {InteractionParticipantsService} from "../shared/service/interaction-participants.service";
-import {Participant} from "../shared/model/participant.model";
-import {Subscription} from "rxjs";
-import {NodeShape} from "../../shared/model/network-shapes/node-shape";
+import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
+import {Participant} from '../shared/model/participant.model';
+import {Subscription} from 'rxjs/Subscription';
+import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 
 export var viewer: any;
 

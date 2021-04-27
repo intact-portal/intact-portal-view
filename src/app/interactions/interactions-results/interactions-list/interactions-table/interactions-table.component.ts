@@ -2,14 +2,14 @@ import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
-import {extractAlias, extractAnnotation, extractId} from "../../../../shared/utils/string-utils";
-import {TableFactoryService} from "../../../shared/service/table-factory.service";
-import {InteractionTable} from "../../../shared/model/tables/interaction-table.model";
-import {Column} from "../../../shared/model/tables/column.model";
-import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
-import {ResultTable} from "../../../shared/model/interactions-results/result-table-interface";
-import {SearchService} from "../../../../home-dashboard/search/service/search.service";
-import {FilterService} from "../../../shared/service/filter.service";
+import {extractAlias, extractAnnotation, extractId} from '../../../../shared/utils/string-utils';
+import {TableFactoryService} from '../../../shared/service/table-factory.service';
+import {InteractionTable} from '../../../shared/model/tables/interaction-table.model';
+import {Column} from '../../../shared/model/tables/column.model';
+import {NetworkSelectionService} from '../../../shared/service/network-selection.service';
+import {ResultTable} from '../../../shared/model/interactions-results/result-table-interface';
+import {SearchService} from '../../../../home-dashboard/search/service/search.service';
+import {FilterService} from '../../../shared/service/filter.service';
 
 
 const baseURL = environment.intact_portal_ws;

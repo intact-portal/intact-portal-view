@@ -1,7 +1,8 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FeatureDatasetService} from './service/feature-dataset.service';
 import {environment} from '../../../environments/environment';
-import {FoundationUtils} from "../../shared/utils/foundation-utils";
+import {FoundationUtils} from '../../shared/utils/foundation-utils';
+import {parseString} from 'xml2js';
 
 declare const require: any;
 

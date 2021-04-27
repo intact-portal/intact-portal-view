@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {ProgressBarComponent} from "./layout/loading-indicators/progress-bar/progress-bar.component";
-import {Angulartics2GoogleAnalytics} from "angulartics2/ga";
-import {environment} from "../environments/environment";
+import {ProgressBarComponent} from './layout/loading-indicators/progress-bar/progress-bar.component';
+import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
+import {environment} from '../environments/environment';
 
 
 @Component({

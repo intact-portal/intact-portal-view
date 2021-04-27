@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Interactome} from '../interactome.model';
 import {environment} from '../../../environments/environment';
-import {SearchService} from "../../home-dashboard/search/service/search.service";
+import {SearchService} from '../../home-dashboard/search/service/search.service';
 
 @Component({
   selector: 'ip-interactome',

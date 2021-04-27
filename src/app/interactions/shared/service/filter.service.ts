@@ -28,6 +28,7 @@ export class FilterService {
 
   private _hasExpansion = false;
   private _hasMutation = false;
+  private _mutationColor: string = '#FF00A1';
 
   private _nbMutation = 0;
   private _nbNonMutation = 0;
@@ -79,6 +80,9 @@ export class FilterService {
     for (const mutationFacet of mutationFacets) {
       this._nbNonMutation += mutationFacet.valueCount;
       if (mutationFacet.value === 'true' && mutationFacet.valueCount > 0) {
+        if (mutationFacet.visualProperty) {
+          this._mutationColor = mutationFacet.visualProperty;
+        }
         this._nbMutation = mutationFacet.valueCount;
       }
     }
@@ -359,6 +363,10 @@ export class FilterService {
 
   set currentMaxMIScore(value: number) {
     this._currentMaxMIScore = value;
+  }
+
+  get mutationColor(): string {
+    return this._mutationColor;
   }
 
   get hasMutation(): boolean {

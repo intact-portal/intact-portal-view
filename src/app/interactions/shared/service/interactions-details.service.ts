@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {environment} from '../../../../environments/environment';
-import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
-import {ErrorObservable} from "rxjs/observable/ErrorObservable";
+import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 const baseURL = environment.intact_portal_graph_ws;
 

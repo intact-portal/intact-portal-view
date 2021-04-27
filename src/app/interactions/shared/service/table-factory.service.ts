@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import * as $ from "jquery";
-import {CvTerm} from "../model/interaction-details/cv-term.model";
-import {Annotation} from "../model/interaction-details/annotation.model";
-import {Organism} from "../model/interaction-details/organism.model";
-import {Alias} from "../model/interaction-details/alias.model";
-import {environment} from "../../../../environments/environment";
-import {groupBy} from "../../../shared/utils/array-utils";
+import * as $ from 'jquery';
+import {CvTerm} from '../model/interaction-details/cv-term.model';
+import {Annotation} from '../model/interaction-details/annotation.model';
+import {Organism} from '../model/interaction-details/organism.model';
+import {Alias} from '../model/interaction-details/alias.model';
+import {environment} from '../../../../environments/environment';
+import {groupBy} from '../../../shared/utils/array-utils';
 import ClickEvent = JQuery.ClickEvent;
 
 

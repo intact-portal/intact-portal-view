@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {InteractionsTableComponent} from "./interactions-table/interactions-table.component";
-import {InteractorsTableComponent} from "./interactors-table/interactors-table.component";
+import {InteractionsTableComponent} from './interactions-table/interactions-table.component';
+import {InteractorsTableComponent} from './interactors-table/interactors-table.component';
 
 @Component({
   selector: 'ip-interactions-list',

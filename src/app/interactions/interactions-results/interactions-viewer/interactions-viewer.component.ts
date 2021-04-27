@@ -1,13 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
-import {NetworkViewService} from "../../shared/service/network-view.service";
-import {NetworkLegend} from "../../shared/model/interaction-legend/network-legend";
-
-declare const require: any;
-const IntactGraph = require('expose-loader?IntactGraph!intact-network-viewer');
-
+import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
+import {NetworkViewService} from '../../shared/service/network-view.service';
+import {NetworkLegend} from '../../shared/model/interaction-legend/network-legend';
+import {GraphPort} from '../../../../../../intact-network-viewer';
 
 @Component({
   selector: 'ip-interactions-viewer',

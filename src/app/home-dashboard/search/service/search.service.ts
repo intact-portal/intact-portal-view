@@ -3,9 +3,9 @@ import {ParamMap, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {Pagination} from "../../shared/pagination.model";
-import {Interactor} from "../../../interactions/shared/model/interactions-results/interactor/interactor.model";
-import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {Pagination} from '../../shared/pagination.model';
+import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
+import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
 
 const baseURL = environment.intact_portal_ws;
 

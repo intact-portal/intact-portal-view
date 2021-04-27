@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ParamMap} from "@angular/router";
-import {GraphPort} from "../../../../../../intact-network-viewer/src/network_viewer_entry";
-import {Subject} from "rxjs";
+import {ParamMap} from '@angular/router';
+import {GraphPort} from 'intact-network-viewer'
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class NetworkViewService {

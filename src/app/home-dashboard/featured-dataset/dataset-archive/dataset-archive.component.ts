@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FeatureDatasetService} from '../service/feature-dataset.service';
 import {Dataset} from '../model/dataset.model';
-import {groupBy} from "../../../shared/utils/array-utils";
-
-declare const require: any;
-
-const parseString = require('xml2js').parseString;
+import {groupBy} from '../../../shared/utils/array-utils';
+import {parseString} from 'xml2js';
 
 @Component({
   selector: 'ip-dataset-archive',

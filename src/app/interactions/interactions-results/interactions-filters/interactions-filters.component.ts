@@ -48,6 +48,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   options: Options;
   formats = Format.instances;
   filterTypes = Filter;
+  shapes = NodeShape;
 
   constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService, public filters: FilterService) {
   }
@@ -62,24 +63,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.tableFactory.makeTableHeaderSticky(); // Enables sticky header for all tables on the page
     FoundationUtils.adjustWidth();
   }
-
-  filterStyle(filterKey: string): any {
-    // console.log(filterKey, this.filters.facets[filterKey])
-    if (this.filters.facets[filterKey].length > 20) {
-      return {
-        height: ['detection_method_s', 'host_organism_s'].includes(filterKey) ? '500px' : '400px',
-        width: '100%',
-        'overflow-y': 'auto',
-      };
-    } else {
-      return {
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'hidden',
-      };
-    }
-  }
-
 
   initSliderRange(): void {
     this.options = {
@@ -124,6 +107,20 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
         }
       }
     };
+  }
+
+  fontColor(backgroundColor: string): string {
+    const rgb = this.hexToRgb(backgroundColor.substring(1));
+    const lum = 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
+    return lum < 100 ? '#ffffff' : '#000000b0';
+  }
+
+  hexToRgb(hex: string): { r: number, g: number, b: number } {
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return {r, g, b};
   }
 
   onChangeInteractorSpeciesFilter(event: Event) {

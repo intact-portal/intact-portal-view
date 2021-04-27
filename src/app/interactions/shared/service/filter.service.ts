@@ -8,11 +8,12 @@ import {InteractionFacets} from '../model/interactions-results/interaction/inter
 
 @Injectable()
 export class FilterService {
-  private _facets : InteractionFacets;
+  private _facets: InteractionFacets;
   private intraSpeciesCounts: Map<string, number>;
-  private _negative: boolean = false;
-  private _mutation: boolean = false;
-  private _intraSpecies: boolean = false;
+  private _negative = false;
+  private _mutation = false;
+  private _expansion = false;
+  private _intraSpecies = false;
 
   private interactorSpecies: string[] = [];
   private interactorTypes: string[] = [];
@@ -20,26 +21,39 @@ export class FilterService {
   private interactionDetectionMethods: string[] = [];
   private interactionHostOrganisms: string[] = [];
 
-  private minMIScore: number = 0;
-  private _currentMinMIScore: number = 0;
-  private maxMIScore: number = 1;
-  private _currentMaxMIScore: number = 1;
+  private minMIScore = 0;
+  private _currentMinMIScore = 0;
+  private maxMIScore = 1;
+  private _currentMaxMIScore = 1;
 
+  private _hasExpansion = false;
   private _hasMutation = false;
-  private _nbMutation: number = 0;
+
+  private _nbMutation = 0;
+  private _nbNonMutation = 0;
+  private _nbExpansion = 0;
+  private _nbNonExpansion = 0;
 
   private updatesSubject: Subject<Filter | void> = new Subject<Filter | void>();
-
   public updates: Observable<Filter | void> = this.updatesSubject.asObservable();
+
+  private static updateDiscreteFilter(container: string[], updatedValue: string) {
+    if (!container.includes(updatedValue)) {
+      container.push(updatedValue);
+    } else {
+      container.splice(container.indexOf(updatedValue), 1);
+    }
+  }
 
   constructor() {
   }
 
   public initFacets(facets: InteractionFacets) {
     this._facets = facets;
-    this.initSpeciesFilter()
-    this.initMIScoreFilter(facets.intact_miscore)
-    this.initMutationFilter(facets.disrupted_by_mutation)
+    this.initSpeciesFilter();
+    this.initMIScoreFilter(facets.intact_miscore);
+    this.initMutationFilter(facets.affected_by_mutation_styled);
+    this.initExpansionFilter(facets.expansion_method_s);
   }
 
   private initSpeciesFilter() {
@@ -59,14 +73,28 @@ export class FilterService {
   }
 
   private initMutationFilter(mutationFacets: Facet[]) {
+    console.log(mutationFacets)
+    this._nbNonMutation = 0;
+    this._nbMutation = 0;
     for (const mutationFacet of mutationFacets) {
-      if (mutationFacet.value == 'true' && mutationFacet.valueCount > 0) {
+      this._nbNonMutation += mutationFacet.valueCount;
+      if (mutationFacet.value === 'true' && mutationFacet.valueCount > 0) {
         this._nbMutation = mutationFacet.valueCount;
-        return this._hasMutation = true;
       }
     }
-    this._nbMutation = 0;
-    return this._hasMutation = false;
+    this._hasMutation = this._nbMutation > 0;
+  }
+
+  private initExpansionFilter(expansionFacets: Facet[]) {
+    this._nbNonExpansion = 0;
+    this._nbExpansion = 0;
+    for (const expansionFacet of expansionFacets) {
+      this._nbNonExpansion += expansionFacet.valueCount;
+      if (expansionFacet.value === 'true' && expansionFacet.valueCount > 0) {
+        this._nbExpansion = expansionFacet.valueCount;
+      }
+    }
+    this._hasExpansion = this._nbExpansion > 0;
   }
 
   public updateFilter(filter: Filter, value: any, update: boolean = true): void {
@@ -77,6 +105,9 @@ export class FilterService {
       case Filter.MUTATION:
         this._mutation = value;
         break;
+      case Filter.EXPANSION:
+        this._expansion = value;
+        break;
       case Filter.INTRA_SPECIES:
         this._intraSpecies = value;
         break;
@@ -86,16 +117,10 @@ export class FilterService {
         break;
       default:
         FilterService.updateDiscreteFilter(this.getFilter(filter), value);
-        break
+        break;
     }
-    if (update) this.updatesSubject.next(filter);
-  }
-
-  private static updateDiscreteFilter(container: string[], updatedValue: string) {
-    if (!container.includes(updatedValue)) {
-      container.push(updatedValue);
-    } else {
-      container.splice(container.indexOf(updatedValue), 1);
+    if (update) {
+      this.updatesSubject.next(filter);
     }
   }
 
@@ -118,54 +143,77 @@ export class FilterService {
 
     this._mutation = params.get('mutationFilter') === 'true';
 
+    this._expansion = params.get('expansionFilter') === 'true';
+
     this._intraSpecies = params.get('intraSpeciesFilter') === 'true';
   }
 
   public toParams(params: any = {}, arrayTransformer: (array: string[]) => any = (a) => a.join(',')): any {
-    if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0)
+    if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0) {
       params.interactorSpeciesFilter = arrayTransformer(this.interactorSpecies);
+    }
 
-    if (this.interactorTypes !== undefined && this.interactorTypes.length !== 0)
+    if (this.interactorTypes !== undefined && this.interactorTypes.length !== 0) {
       params.interactorTypesFilter = arrayTransformer(this.interactorTypes);
+    }
 
-    if (this.interactionTypes !== undefined && this.interactionTypes.length !== 0)
+    if (this.interactionTypes !== undefined && this.interactionTypes.length !== 0) {
       params.interactionTypesFilter = arrayTransformer(this.interactionTypes);
+    }
 
-    if (this.interactionDetectionMethods !== undefined && this.interactionDetectionMethods.length !== 0)
+    if (this.interactionDetectionMethods !== undefined && this.interactionDetectionMethods.length !== 0) {
       params.interactionDetectionMethodsFilter = arrayTransformer(this.interactionDetectionMethods);
+    }
 
-    if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0)
+    if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0) {
       params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
+    }
 
-    if (this._negative !== undefined && this._negative !== false)
+    if (this._negative !== undefined && this._negative !== false) {
       params.negativeFilter = this._negative;
+    }
 
-    if (this._currentMinMIScore !== undefined && this._currentMinMIScore !== 0)
+    if (this._currentMinMIScore !== undefined && this._currentMinMIScore !== 0) {
       params.minMIScore = this._currentMinMIScore;
+    }
 
-    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore !== 1)
+    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore !== 1) {
       params.maxMIScore = this._currentMaxMIScore;
+    }
 
-    if (this.intraSpecies === true)
+    if (this.intraSpecies === true) {
       params.intraSpeciesFilter = this.intraSpecies;
+    }
 
-    if (this.mutation === true)
+    if (this.mutation === true) {
       params.mutationFilter = this.mutation;
+    }
+
+    if (this.expansion === true) {
+      params.expansionFilter = this.expansion;
+    }
 
     return params;
   }
 
-  setUniqueSpecies(species: string) {
-    this.interactorSpecies = [species];
-    this.updatesSubject.next(Filter.SPECIES);
+  canFilterIntraSpecies() {
+    if (this.interactorSpecies.length === 0) {
+      // @ts-ignore
+      for (const value of this.intraSpeciesCounts.values()) {
+        if (value > 0) {
+          return true;
+        }
+      }
+      return false;
+    }
+    for (const interactorSpecies of this.interactorSpecies) {
+      if (this.intraSpeciesCounts.get(interactorSpecies) > 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  canFilterIntraSpecies() {
-    for (const interactorSpecies of this.interactorSpecies) {
-      if (!this.intraSpeciesCounts.get(interactorSpecies)) return false;
-    }
-    return true;
-  }
 
   isFilteringScore() {
     return this._currentMinMIScore > this.minMIScore || this._currentMaxMIScore < this.maxMIScore;
@@ -179,6 +227,7 @@ export class FilterService {
       this.interactionHostOrganisms.length !== 0 ||
       this.mutation ||
       this.negative ||
+      this.expansion ||
       this.isFilteringScore();
   }
 
@@ -190,6 +239,8 @@ export class FilterService {
         return this._negative;
       case Filter.MUTATION:
         return this._mutation;
+      case Filter.EXPANSION:
+        return this._expansion;
       case Filter.INTRA_SPECIES:
         return this.intraSpecies;
       default:
@@ -205,6 +256,8 @@ export class FilterService {
         return this._negative;
       case Filter.MUTATION:
         return this._mutation;
+      case Filter.EXPANSION:
+        return this._expansion;
       case Filter.INTRA_SPECIES:
         return this.intraSpecies;
       default:
@@ -237,13 +290,18 @@ export class FilterService {
       case Filter.MUTATION:
         this._mutation = false;
         break;
+      case Filter.EXPANSION:
+        this._expansion = false;
+        break
       default:
-        let values = this.getFilter(filter);
+        const values = this.getFilter(filter);
         values.splice(0, values.length);
         break;
     }
 
-    if (update) this.updatesSubject.next(filter);
+    if (update) {
+      this.updatesSubject.next(filter);
+    }
   }
 
   private resetMISCoreFilter() {
@@ -255,6 +313,7 @@ export class FilterService {
     switch (filter) {
       case Filter.SPECIES:
         return this.interactorSpecies;
+      case Filter.EXPANSION:
       case Filter.INTERACTOR_TYPE:
         return this.interactorTypes;
       case Filter.INTERACTION_TYPE:
@@ -266,13 +325,16 @@ export class FilterService {
     }
   }
 
-
   get facets(): InteractionFacets {
     return this._facets;
   }
 
   get mutation(): boolean {
     return this._mutation;
+  }
+
+  get expansion(): boolean {
+    return this._expansion;
   }
 
   get negative(): boolean {
@@ -303,8 +365,24 @@ export class FilterService {
     return this._hasMutation;
   }
 
+  get hasExpansion(): boolean {
+    return this._hasExpansion;
+  }
+
   get nbMutation(): number {
     return this._nbMutation;
+  }
+
+  get nbExpansion(): number {
+    return this._nbExpansion;
+  }
+
+  get nbNonMutation(): number {
+    return this._nbNonMutation;
+  }
+
+  get nbNonExpansion(): number {
+    return this._nbNonExpansion;
   }
 }
 

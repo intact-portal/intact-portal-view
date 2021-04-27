@@ -13,10 +13,6 @@ const baseURL = environment.intact_portal_ws;
 @Injectable()
 export class InteractionsSearchService {
 
-  private _totalElements = 0;
-  private _page = 1;
-  private _pageSize = 20;
-
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService, private search: SearchService, private filters: FilterService) {
   }
 
@@ -25,41 +21,6 @@ export class InteractionsSearchService {
 
     return this.http.post<InteractionSearchResult>(`${baseURL}/interaction/findInteractionFacets`, params)
       .catch(this.handleError);
-  }
-
-  get totalPages() {
-    try {
-      return Math.ceil(this._totalElements / this._pageSize);
-    } catch (e) {
-      console.error(e);
-      return 0;
-    }
-  }
-
-  get page(): number {
-    return this._page;
-  }
-
-  set page(value: number) {
-    if (value !== this.page) {
-      this._page = value;
-    }
-  }
-
-  get totalElements(): number {
-    return this._totalElements;
-  }
-
-  set totalElements(value: number) {
-    this._totalElements = value;
-  }
-
-  get pageSize(): number {
-    return this._pageSize;
-  }
-
-  set pageSize(value: number) {
-    this._pageSize = value;
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {

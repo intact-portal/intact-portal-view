@@ -19,12 +19,9 @@ const baseURL = environment.intact_portal_ws;
   styleUrls: ['./interactors-table.component.css']
 })
 export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-
   @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactorTab: boolean;
 
-  private _currentPageIndex: any;
   private _interactorSelected: string;
 
   dataTable: DataTables.Api;
@@ -34,19 +31,23 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   private _columns = new InteractorTable();
 
-  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService, private search: SearchService, private filters: FilterService) {
+  constructor(
+    private route: ActivatedRoute,
+    private tableFactory: TableFactoryService,
+    private networkSelection: NetworkSelectionService,
+    private search: SearchService,
+    private filters: FilterService
+  ) {
   }
 
   ngOnInit() {
     this.table = $('#interactorsTable');
     this.route.queryParams
       .subscribe(params => {
-        this.currentPageIndex = params.page ? Number(params.page) : 1;
         if (this.dataTable !== undefined) {
           this.dataTable = this.table.DataTable().ajax.reload();
         }
       });
-
 
     this.initDataTable();
     this.networkSelection.registerSelectionListener(this.dataTable, this);
@@ -227,7 +228,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         }
       ],
       drawCallback: function () {
-        $('#interactorsTableWidthMimic').width($("#interactorsTable").width());
+        $('#interactorsTableWidthMimic').width($('#interactorsTable').width());
         $('.table-list').parent('td').css('vertical-align', 'top');
         $('.collapse-panel').hide();
       }
@@ -235,26 +236,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     this.tableFactory.enableCollapsedPanels();
   }
 
-
-  public onPageChanged(pageIndex: number): void {
-    this.pageChanged.emit(pageIndex);
-  }
-
-
   /************************* /
    /** GETTERS AND SETTERS ** /
    /*************************/
 
   get columns(): Column[] {
     return this._columns;
-  }
-
-  get currentPageIndex(): any {
-    return this._currentPageIndex;
-  }
-
-  set currentPageIndex(value: any) {
-    this._currentPageIndex = value;
   }
 
   get interactorSelected(): string {

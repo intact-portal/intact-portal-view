@@ -22,13 +22,13 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
 
   @Input() featureAc: string;
   @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
-  private _interactionData: any;
+  private interactionData: any;
 
   annotations = {
-    "MI Features": true,
-    "UniprotKB": false,
-    "Superfamily": false,
-    "Interactor": false,
+    'MI Features': true,
+    'UniprotKB': false,
+    'Superfamily': false,
+    'Interactor': false,
   };
 
   private _colorLegendGroups: { name: string, legends: ColorLegend[] }[] = [];
@@ -41,7 +41,6 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   constructor(private interactionsDetailsService: InteractionsDetailsService, private participantsService: InteractionParticipantsService) {
   }
 
-
   ngAfterViewInit() {
     this.requestInteractionViewerDetails();
     $('ip-interactions-viewer').foundation();
@@ -49,7 +48,9 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.proteinUpdateSubscription) this.proteinUpdateSubscription.unsubscribe();
+    if (this.proteinUpdateSubscription) {
+      this.proteinUpdateSubscription.unsubscribe();
+    }
   }
 
   public hasNodeShapeOf(type: string): boolean {
@@ -100,14 +101,14 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   }
 
   onChangeAnnotation(value: string) {
-    let display = !this.annotations[value];
+    const display = !this.annotations[value];
     this.annotations[value] = display;
     this.updateColorLegend(viewer.showAnnotations(value, display));
   }
 
   private updateColorLegend(legendData: { [p: string]: ColorLegend[] }) {
     this._colorLegendGroups = []
-    for (let group of Object.keys(legendData)) {
+    for (const group of Object.keys(legendData)) {
       if (group === 'Complex') {
         this._colorLegendGroups.push({
           name: 'Interaction', legends: legendData[group].map(legend => {
@@ -127,19 +128,19 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
 
   private static types = [
     {
-      set: new Set(["MI:0326", "MI:0327"]),
+      set: new Set(['MI:0326', 'MI:0327']),
       name: 'protein'
     },
     {
-      set: new Set(["MI:1100", "MI:0904", "MI:0328"]),
+      set: new Set(['MI:1100', 'MI:0904', 'MI:0328']),
       name: 'bioactive entity'
     },
     {
-      set: new Set(["MI:0319", "MI:0681", "MI:0680"]),
+      set: new Set(['MI:0319', 'MI:0681', 'MI:0680']),
       name: 'dna'
     },
     {
-      set: new Set(["MI:0320", "MI:0321", "MI:0322", "MI:0323", "MI:2190", "MI:0324", "MI:0679", "MI:0608", "MI:0611", "MI:0610", "MI:0607", "MI:0609", "MI:0325", "IA:2966", "MI:0318"]),
+      set: new Set(['MI:0320', 'MI:0321', 'MI:0322', 'MI:0323', 'MI:2190', 'MI:0324', 'MI:0679', 'MI:0608', 'MI:0611', 'MI:0610', 'MI:0607', 'MI:0609', 'MI:0325', 'IA:2966', 'MI:0318']),
       name: 'rna'
     },
     {
@@ -169,15 +170,6 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
       }
     }
   }
-
-  get interactionData(): any {
-    return this._interactionData;
-  }
-
-  set interactionData(value: any) {
-    this._interactionData = value;
-  }
-
 
   get colorLegendGroups(): { name: string; legends: ColorLegend[] }[] {
     return this._colorLegendGroups;

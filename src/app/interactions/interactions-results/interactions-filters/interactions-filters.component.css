@@ -85,6 +85,7 @@ button.delete-button {
 .species-cell {
   color: white;
   border-radius: 100px;
+  line-height: 16px;
 }
 
 .discreet {

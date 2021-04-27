@@ -27,10 +27,18 @@ export class NetworkViewService {
   }
 
   toParams(params: any = {}, arrayHandler: (array: string[]) => any = a => a.join(',')): any {
-    if (!this._expanded) params.collapsed = true;
-    if (this._affectedByMutation) params.mutationStyle = this._affectedByMutation;
-    if (this._groupBySpecies) params.groupBySpecies = this._groupBySpecies;
-    if (this._layoutName !== 'fcose') params.layout = this._layoutName;
+    if (!this._expanded) {
+      params.collapsed = true;
+    }
+    if (this._affectedByMutation) {
+      params.mutationStyle = this._affectedByMutation;
+    }
+    if (this._groupBySpecies) {
+      params.groupBySpecies = this._groupBySpecies;
+    }
+    if (this._layoutName !== 'fcose') {
+      params.layout = this._layoutName;
+    }
     return params;
   }
 
@@ -75,7 +83,9 @@ export class NetworkViewService {
   setGroupBySpecies(value: boolean, update = true) {
     this._groupBySpecies = value;
     this._mustQuery = true;
-    if (update) this.updatesSubject.next();
+    if (update) {
+      this.updatesSubject.next();
+    }
   }
 
   get layoutName(): string {

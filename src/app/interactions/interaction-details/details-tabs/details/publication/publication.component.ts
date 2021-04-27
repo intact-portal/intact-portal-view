@@ -19,18 +19,8 @@ export class PublicationComponent implements OnInit {
   ngOnInit() {
     if (this.publication.publicationDate)
       this.publication.publicationDate = this.publication.publicationDate
-        .split("-")
+        .split('-')
         .reverse()
         .join('/');
-  }
-
-  togglePublicationButton(): void {
-    if ($('#publicationPanel').is(':visible')) {
-      $('#publicationPanel').hide();
-      $('i#togglePublication').removeClass('icon-minus').addClass('icon-plus');
-    } else {
-      $('#publicationPanel').show();
-      $('i#togglePublication').removeClass('icon-plus').addClass('icon-minus');
-    }
   }
 }

@@ -4,9 +4,6 @@ import {environment} from '../../../environments/environment';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {parseString} from 'xml2js';
 
-declare const require: any;
-
-const parseString = require('xml2js').parseString;
 const baseURL = environment.ebi_base_url;
 const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
@@ -55,7 +52,7 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 
 
   pubMedUrl() {
-    return `http://europepmc.org/article/MED/${this.pubmedId}`;
+    return `https://europepmc.org/article/MED/${this.pubmedId}`;
   }
 
   searchUrl() {

@@ -62,16 +62,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   }
 
   ngAfterViewInit(): void {
-    let interactionsTable = $('#interactionsTable');
+    const interactionsTable = $('#interactionsTable');
     interactionsTable.on('change', 'input[type=\'checkbox\']', (e) => {
       const interactionSel = e.currentTarget.id;
 
       if (this.interactionSelected !== interactionSel) {
-        let previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
+        const previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
         previousCheckbox.prop('checked', false);
 
         this.interactionSelected = interactionSel;
-        let newCheckbox = $(`#${interactionSel}:checkbox`);
+        const newCheckbox = $(`#${interactionSel}:checkbox`);
         newCheckbox.prop('checked', true);
 
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
@@ -92,7 +92,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     // When table redrawn keep row selection synchronization between tables
     interactionsTable.on('draw.dt', function () {
       if (this.interactionSelected !== undefined) {
-        let previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
+        const previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
         previousCheckbox.prop('checked', true);
         previousCheckbox.closest('tr').addClass('rowSelected');
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
@@ -108,8 +108,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   }
 
   clearTableSelection() {
-    if (!this.interactionSelected) return;
-    let selectedInteraction = $(`#${this.interactionSelected}:checkbox`);
+    if (!this.interactionSelected) {
+      return;
+    }
+    const selectedInteraction = $(`#${this.interactionSelected}:checkbox`);
     if (selectedInteraction.length > 0) {
       selectedInteraction.prop('checked', false);
       this.interactionSelected = undefined;
@@ -276,8 +278,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             render: this.tableFactory.enlistWithButtons((d: string) => {
 
               if (!d.includes('intact-miscore')) {
-                let [name, value] = d.split(/[()]/);
-                let fixed = parseFloat(value).toFixed(2);
+                const [name, value] = d.split(/[()]/);
+                const fixed = parseFloat(value).toFixed(2);
                 return `<div class="tag-cell-container vertical-flex"><span class="detailsExpansionsCell tag-cell centered">${name}:${fixed}</span></div>`
               }
               const YELLOW_ORANGE_BROWN_PALETTE: string[] = [

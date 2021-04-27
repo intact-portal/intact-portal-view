@@ -65,8 +65,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   ngAfterViewInit(): void {
-    let interactorsTable = $('#interactorsTable');
-    let selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
+    const interactorsTable = $('#interactorsTable');
+    const selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
     interactorsTable.on('change', 'input[type=\'checkbox\']', (e) => {
       const table: any = interactorsTable;
       const interactorSel = e.currentTarget.id;
@@ -124,15 +124,15 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   clearTableSelection() {
-    if (!this.interactorSelected) return;
-    let selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
+    if (!this.interactorSelected) {
+      return;
+    }
+    const selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
     if (selectedInteractorCheckbox.length > 0) {
       selectedInteractorCheckbox.prop('checked', false);
       this.interactorSelected = undefined;
     }
   }
-
-  scrolling = false;
 
   private initDataTable(): void {
     const table = $('#interactorsTable');

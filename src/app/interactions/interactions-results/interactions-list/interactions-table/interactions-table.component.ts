@@ -23,7 +23,6 @@ const ebiURL = environment.ebi_url;
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
 
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactionTab: boolean;
 
 
@@ -34,7 +33,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   private _columns = new InteractionTable();
 
-  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService, private search: SearchService, private filters: FilterService) {
+  constructor(
+    private route: ActivatedRoute,
+    private tableFactory: TableFactoryService,
+    private networkSelection: NetworkSelectionService,
+    private search: SearchService,
+    private filters: FilterService
+  ) {
   }
 
   ngOnInit(): void {
@@ -437,7 +442,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         ],
         drawCallback: function () {
-          $('#interactionsTableWidthMimic').width($("#interactionsTable").width());
+          $('#interactionsTableWidthMimic').width($('#interactionsTable').width());
           $('.table-list').parent('td').css('vertical-align', 'top');
           $('.collapse-panel').css('display', 'none');
         }
@@ -449,11 +454,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   /************************* /
    /** GETTERS AND SETTERS ** /
    /*************************/
-
-  onPageChanged(pageIndex: number): void {
-    this.pageChanged.emit(pageIndex);
-  }
-
 
   get columns(): Column[] {
     return this._columns;

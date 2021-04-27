@@ -18,7 +18,8 @@ export class DatasetByYearComponent implements OnInit, AfterViewInit {
 
   @Input() datasets: Dataset[]
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
@@ -26,25 +27,24 @@ export class DatasetByYearComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     $(`#accordion-${this.year}`).foundation();
     $('.accordion-title').on('mouseup', function () {
-      var $accordionItem = $(this).parent(),
-        //is the section hidden? if the section is not yet visible, the click is to open it
+      const $accordionItem = $(this).parent(),
+        // is the section hidden? if the section is not yet visible, the click is to open it
         opening = ($accordionItem.find('.accordion-content:hidden').length === 1);
       //
       if (opening) {
-        //the accordion that has just been clicked
-        var $currentAccordion = $accordionItem.parent();
+        // the accordion that has just been clicked
+        const $currentAccordion = $accordionItem.parent();
 
-        //close all other accodions
+        // close all other accodions
         $('.accordion').each(function () {
-          var $acc = $(this);
+          const $acc = $(this);
 
-          //ignore the accordion that was just clicked
+          // ignore the accordion that was just clicked
           if ($acc[0] !== $currentAccordion[0]) {
-            //find any open sections
-            var $openSections = $acc.find('.accordion-item.is-active .accordion-content');
+            // find any open sections
+            const $openSections = $acc.find('.accordion-item.is-active .accordion-content');
             $openSections.each(function (i, section) {
-              console.log(section)
-              //close them
+              // close them
               $acc.foundation('up', $(section));
             });
           }

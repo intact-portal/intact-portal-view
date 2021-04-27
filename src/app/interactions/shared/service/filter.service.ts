@@ -47,11 +47,15 @@ export class FilterService {
   }
 
   private initMIScoreFilter(scoreFacets: Facet[]) {
-    let scores = scoreFacets.map(facet => parseFloat(facet.value));
+    const scores = scoreFacets.map(facet => parseFloat(facet.value));
     this.minMIScore = scores.length !== 0 ? Math.min(...scores) : 0;
     this.maxMIScore = scores.length !== 0 ? Math.max(...scores) : 1;
-    if (this._currentMinMIScore === 0) this._currentMinMIScore = this.minMIScore;
-    if (this._currentMaxMIScore === 1) this._currentMaxMIScore = this.maxMIScore;
+    if (this._currentMinMIScore === 0) {
+      this._currentMinMIScore = this.minMIScore;
+    }
+    if (this._currentMaxMIScore === 1) {
+      this._currentMaxMIScore = this.maxMIScore;
+    }
   }
 
   private initMutationFilter(mutationFacets: Facet[]) {
@@ -209,7 +213,7 @@ export class FilterService {
   }
 
   resetAllFilters() {
-    for (let filter of Object.keys(Filter)) {
+    for (const filter of Object.keys(Filter)) {
       this.resetFilter(Filter[filter], false);
     }
     this.updatesSubject.next();

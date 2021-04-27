@@ -37,13 +37,14 @@ export class SearchService {
 
   private manageTokens() {
     this._token = this.genToken(5);
-    let query = this._query;
-    let title = this._title
+    const query = this._query;
+    const title = this._title
     localStorage.setItem(SearchService.localTokenId(this._token), JSON.stringify({query, title}));
-    let tokens: string[] = JSON.parse(localStorage.getItem('intact-tokens') || "[]");
-    console.table(tokens);
+    const tokens: string[] = JSON.parse(localStorage.getItem('intact-tokens') || '[]');
     tokens.push(this._token);
-    if (tokens.length > 10) localStorage.removeItem(SearchService.localTokenId(tokens.shift()));
+    if (tokens.length > 10) {
+      localStorage.removeItem(SearchService.localTokenId(tokens.shift()));
+    }
     localStorage.setItem('intact-tokens', JSON.stringify(tokens))
   }
 
@@ -102,7 +103,7 @@ export class SearchService {
     if (params.has('query')) this._query = params.get('query');
     else if (params.has('token')) {
       this._token = params.get('token');
-      let mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
+      const mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
       if (mem) {
         this._query = mem.query;
         this._title = mem.title;

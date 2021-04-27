@@ -56,8 +56,8 @@ export class BatchSearchComponent {
   }
 
   splitData(data: { [term: string]: Pagination<Interactor[]> }) {
-    for (let key of Object.keys(data)) {
-      let entry: ResolutionEntry = data[key];
+    for (const key of Object.keys(data)) {
+      const entry: ResolutionEntry = data[key];
       if (entry.totalElements !== 0) {
         entry.term = key;
         entry.content.forEach(interactor => this._interactorAcs.add(interactor.interactorAc));
@@ -94,11 +94,11 @@ export class BatchSearchComponent {
   selectAll(term: string) {
     $(`input[group='${term}']:checkbox`).prop('checked', true)
       .each((i, checkBox: HTMLInputElement) => {
-        let checkbox = $(checkBox);
+        const checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {
           this._interactorAcs.add(<string>checkbox.val());
         } else {
-          let entry = this._foundEntries.find(value => value.term === term);
+          const entry = this._foundEntries.find(value => value.term === term);
           this._entriesToComplete.set(term, entry);
         }
       });
@@ -107,7 +107,7 @@ export class BatchSearchComponent {
   unselectAll(term: string) {
     $(`input[group='${term}']:checkbox`).prop('checked', false)
       .each((i, checkBox) => {
-        let checkbox = $(checkBox);
+        const checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {
           this._interactorAcs.delete(<string>checkbox.val());
         } else {
@@ -125,9 +125,9 @@ export class BatchSearchComponent {
   }
 
   onCompletionSelection(event) {
-    let term = event.target.value;
+    const term = event.target.value;
     if (event.target.checked) {
-      let entry = this._foundEntries.find(value => value.term === term);
+      const entry = this._foundEntries.find(value => value.term === term);
       this._entriesToComplete.set(term, entry);
     } else {
       this._entriesToComplete.delete(term);
@@ -144,11 +144,11 @@ export class BatchSearchComponent {
       this.collectionReset = false
       return;
     }
-    let query = entriesToComplete.map(entry => entry.term).join(', ')
+    const query = entriesToComplete.map(entry => entry.term).join(', ')
     this.search.resolveSearch(query, page, 50).subscribe(data => {
-      let nextEntriesToComplete = [];
-      for (let key of Object.keys(data)) {
-        let entry: ResolutionEntry = data[key];
+      const nextEntriesToComplete = [];
+      for (const key of Object.keys(data)) {
+        const entry: ResolutionEntry = data[key];
         entry.term = key;
         entry.content.forEach(interactor => {
           this._interactorAcs.add(interactor.interactorAc);
@@ -265,6 +265,4 @@ export class BatchSearchComponent {
   get interactorAcs(): Set<string> {
     return this._interactorAcs;
   }
-
-
 }

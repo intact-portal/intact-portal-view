@@ -8,7 +8,7 @@ import {Participant} from '../shared/model/participant.model';
 import {Subscription} from 'rxjs/Subscription';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 
-export var viewer: any;
+export let viewer: any;
 
 
 @Component({
@@ -153,14 +153,14 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   ];
 
   private collectTypes() {
-    console.log(viewer.interactors)
-    for (let datum of this.interactionData.data) {
-      console.log(datum);
-      if (datum.object !== "interaction") break;
-      for (let jsonParticipant of datum.participants) {
+    for (const datum of this.interactionData.data) {
+      if (datum.object !== 'interaction') {
+        break;
+      }
+      for (const jsonParticipant of datum.participants) {
         const intRef = jsonParticipant.interactorRef;
         const interactor = viewer.interactors.get(intRef);
-        for (let type of DetailsViewerComponent.types) {
+        for (const type of DetailsViewerComponent.types) {
           if (type.set.has(interactor.type.id)) {
             this.nodeTypes.add(type.name);
             break;

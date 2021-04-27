@@ -16,13 +16,17 @@ export class AppComponent implements OnInit, AfterViewInit {
   showFooter = true;
   title = 'IntAct';
 
+
+  private static initFoundation(): void {
+    $(document).foundation();
+    $(document).foundationExtendEBI();
+  }
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private analytics: Angulartics2GoogleAnalytics) {
   }
 
   ngOnInit() {
     AppComponent.initFoundation();
-    console.log('The component is initialized.');
-
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showCompactHeader = this.activatedRoute.firstChild.snapshot.data.showCompactHeader !== false;
@@ -34,11 +38,5 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     ga('create', environment.analytics_id, 'none');
-  }
-
-
-  private static initFoundation(): void {
-    $(document).foundation();
-    $(document).foundationExtendEBI();
   }
 }

@@ -16,6 +16,7 @@ export class SearchService {
   private _query: string;
   private _title: string;
   private _isBatchSearch = false;
+  private static localTokenId = token => `intact-batch-search-${token}`;
 
 
   constructor(private router: Router, private http: HttpClient, private reporter: GoogleAnalyticsService) {
@@ -54,7 +55,7 @@ export class SearchService {
   speciesSearch(specieName: string) {
     this._query = '*'
     this._isBatchSearch = false;
-    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpecies: specieName}});
+    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpeciesFilter: specieName}});
   }
 
   resolveSearch(query: string, page = 0, pageSize = 50): Observable<{ [term: string]: Pagination<Interactor[]> }> {
@@ -100,8 +101,9 @@ export class SearchService {
   }
 
   fromParams(params: ParamMap) {
-    if (params.has('query')) this._query = params.get('query');
-    else if (params.has('token')) {
+    if (params.has('query')) {
+      this._query = params.get('query');
+    } else if (params.has('token')) {
       this._token = params.get('token');
       const mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
       if (mem) {
@@ -111,25 +113,30 @@ export class SearchService {
         this.router.navigate([''])
       }
     }
-    if (params.has('batchSearch')) this._isBatchSearch = params.get('batchSearch') === 'true';
+    if (params.has('batchSearch')) {
+      this._isBatchSearch = params.get('batchSearch') === 'true';
+    }
   }
 
   toURLParams(params: any = {}): any {
     if (this.isBatchSearch) {
       params.token = this._token;
       params.batchSearch = this.isBatchSearch;
-    } else if (this.query) params.query = this.query.trim();
+    } else if (this.query) {
+      params.query = this.query.trim();
+    }
 
     return params;
   }
 
   toParams(params: any = {}): any {
-    if (this.query) params.query = this.query.trim();
-    if (this.isBatchSearch) params.batchSearch = this.isBatchSearch;
+    if (this.query) {
+      params.query = this.query.trim();
+    }
+    if (this.isBatchSearch) {
+      params.batchSearch = this.isBatchSearch;
+    }
     return params;
   }
 
-  private static localTokenId(token) {
-    return `intact-batch-search-${token}`;
-  }
 }

@@ -42,7 +42,7 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   private requestInteractionsResults() {
-    this.interactionsSearchService.getAllInteractionsAndFacetsQuery()
+    this.interactionsSearchService.queryFacets()
       .subscribe(interactionsSearch => {
         this.interactionsSearch = interactionsSearch;
         if (this.interactionsSearch.totalElements !== 0) {

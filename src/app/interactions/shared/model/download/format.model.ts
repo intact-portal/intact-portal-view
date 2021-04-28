@@ -1,15 +1,5 @@
 export class Format {
   private static _instances: Format[] = [];
-  public readonly extension: string;
-  public readonly name: string;
-  public readonly html: string;
-
-  private constructor(extension: string, name: string, html: string) {
-    this.extension = extension;
-    this.name = name;
-    this.html = html;
-    Format._instances.push(this);
-  }
 
   public static tab2_5 = new Format('tab', 'miTab25', 'miTab<sub>2.5</sub>');
   public static tab2_6 = new Format('tab', 'miTab26', 'miTab<sub>2.6</sub>');
@@ -20,5 +10,16 @@ export class Format {
 
   static get instances(): Format[] {
     return [...this._instances];
+  }
+
+  public readonly extension: string;
+  public readonly name: string;
+  public readonly html: string;
+
+  private constructor(extension: string, name: string, html: string) {
+    this.extension = extension;
+    this.name = name;
+    this.html = html;
+    Format._instances.push(this);
   }
 }

@@ -15,8 +15,7 @@
 
   <div *ngIf="hasResults; else noResults" style="display: contents">
     <div class="columns medium-12 sticky-bar">
-      <ip-interactions-filters *ngIf="interactionsSearch; else loadingSpinner"
-                               [interactionFacets]="interactionsSearch.facetResultPage">
+      <ip-interactions-filters *ngIf="interactionsSearch; else loadingSpinner">
 
       </ip-interactions-filters>
       <ng-template #loadingSpinner>
@@ -27,7 +26,7 @@
     <div class="columns medium-12">
       <ip-interactions-viewer></ip-interactions-viewer>
 
-      <ip-interactions-list (pageChanged)="onPageChanged($event)"></ip-interactions-list>
+      <ip-interactions-list></ip-interactions-list>
     </div>
   </div>
 

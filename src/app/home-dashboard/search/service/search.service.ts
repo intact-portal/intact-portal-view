@@ -3,9 +3,9 @@ import {ParamMap, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {Pagination} from "../../shared/pagination.model";
-import {Interactor} from "../../../interactions/shared/model/interactions-results/interactor/interactor.model";
-import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {Pagination} from '../../shared/pagination.model';
+import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
+import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -16,6 +16,7 @@ export class SearchService {
   private _query: string;
   private _title: string;
   private _isBatchSearch = false;
+  private static localTokenId = token => `intact-batch-search-${token}`;
 
 
   constructor(private router: Router, private http: HttpClient, private reporter: GoogleAnalyticsService) {
@@ -37,13 +38,14 @@ export class SearchService {
 
   private manageTokens() {
     this._token = this.genToken(5);
-    let query = this._query;
-    let title = this._title
+    const query = this._query;
+    const title = this._title
     localStorage.setItem(SearchService.localTokenId(this._token), JSON.stringify({query, title}));
-    let tokens: string[] = JSON.parse(localStorage.getItem('intact-tokens') || "[]");
-    console.table(tokens);
+    const tokens: string[] = JSON.parse(localStorage.getItem('intact-tokens') || '[]');
     tokens.push(this._token);
-    if (tokens.length > 10) localStorage.removeItem(SearchService.localTokenId(tokens.shift()));
+    if (tokens.length > 10) {
+      localStorage.removeItem(SearchService.localTokenId(tokens.shift()));
+    }
     localStorage.setItem('intact-tokens', JSON.stringify(tokens))
   }
 
@@ -53,7 +55,7 @@ export class SearchService {
   speciesSearch(specieName: string) {
     this._query = '*'
     this._isBatchSearch = false;
-    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpecies: specieName}});
+    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpeciesFilter: specieName}});
   }
 
   resolveSearch(query: string, page = 0, pageSize = 50): Observable<{ [term: string]: Pagination<Interactor[]> }> {
@@ -99,10 +101,11 @@ export class SearchService {
   }
 
   fromParams(params: ParamMap) {
-    if (params.has('query')) this._query = params.get('query');
-    else if (params.has('token')) {
+    if (params.has('query')) {
+      this._query = params.get('query');
+    } else if (params.has('token')) {
       this._token = params.get('token');
-      let mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
+      const mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
       if (mem) {
         this._query = mem.query;
         this._title = mem.title;
@@ -110,25 +113,30 @@ export class SearchService {
         this.router.navigate([''])
       }
     }
-    if (params.has('batchSearch')) this._isBatchSearch = params.get('batchSearch') === 'true';
+    if (params.has('batchSearch')) {
+      this._isBatchSearch = params.get('batchSearch') === 'true';
+    }
   }
 
   toURLParams(params: any = {}): any {
     if (this.isBatchSearch) {
       params.token = this._token;
       params.batchSearch = this.isBatchSearch;
-    } else if (this.query) params.query = this.query.trim();
+    } else if (this.query) {
+      params.query = this.query.trim();
+    }
 
     return params;
   }
 
   toParams(params: any = {}): any {
-    if (this.query) params.query = this.query.trim();
-    if (this.isBatchSearch) params.batchSearch = this.isBatchSearch;
+    if (this.query) {
+      params.query = this.query.trim();
+    }
+    if (this.isBatchSearch) {
+      params.batchSearch = this.isBatchSearch;
+    }
     return params;
   }
 
-  private static localTokenId(token) {
-    return `intact-batch-search-${token}`;
-  }
 }

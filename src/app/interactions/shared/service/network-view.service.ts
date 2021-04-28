@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ParamMap} from "@angular/router";
-import {GraphPort} from "../../../../../../intact-network-viewer/src/network_viewer_entry";
-import {Subject} from "rxjs";
+import {ParamMap} from '@angular/router';
+import {GraphPort} from 'intact-network-viewer'
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class NetworkViewService {
@@ -27,10 +27,18 @@ export class NetworkViewService {
   }
 
   toParams(params: any = {}, arrayHandler: (array: string[]) => any = a => a.join(',')): any {
-    if (!this._expanded) params.collapsed = true;
-    if (this._affectedByMutation) params.mutationStyle = this._affectedByMutation;
-    if (this._groupBySpecies) params.groupBySpecies = this._groupBySpecies;
-    if (this._layoutName !== 'fcose') params.layout = this._layoutName;
+    if (!this._expanded) {
+      params.collapsed = true;
+    }
+    if (this._affectedByMutation) {
+      params.mutationStyle = this._affectedByMutation;
+    }
+    if (this._groupBySpecies) {
+      params.groupBySpecies = this._groupBySpecies;
+    }
+    if (this._layoutName !== 'fcose') {
+      params.layout = this._layoutName;
+    }
     return params;
   }
 
@@ -48,8 +56,8 @@ export class NetworkViewService {
 
   setExpanded(value: boolean, update = true) {
     this._expanded = value;
-    this._mustQuery = false;
     if (update) {
+      this._mustQuery = false;
       this.updatesSubject.next();
       this.viewer.expandEdges(this.expanded, this.affectedByMutation)
     }
@@ -61,8 +69,8 @@ export class NetworkViewService {
 
   setAffectedByMutation(value: boolean, update = true) {
     this._affectedByMutation = value;
-    this._mustQuery = false;
     if (update) {
+      this._mustQuery = false;
       this.updatesSubject.next();
       this.viewer.expandEdges(this.expanded, this.affectedByMutation)
     }
@@ -75,7 +83,9 @@ export class NetworkViewService {
   setGroupBySpecies(value: boolean, update = true) {
     this._groupBySpecies = value;
     this._mustQuery = true;
-    if (update) this.updatesSubject.next();
+    if (update) {
+      this.updatesSubject.next();
+    }
   }
 
   get layoutName(): string {
@@ -84,8 +94,8 @@ export class NetworkViewService {
 
   setLayoutName(value: string, update = true) {
     this._layoutName = value;
-    this._mustQuery = false;
     if (update) {
+      this._mustQuery = false;
       this.updatesSubject.next();
       this.viewer.applyLayout(value);
     }

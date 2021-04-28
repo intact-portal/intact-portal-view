@@ -2,14 +2,14 @@ import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
-import {extractAlias, extractId} from "../../../../shared/utils/string-utils";
-import {TableFactoryService} from "../../../shared/service/table-factory.service";
-import {InteractorTable} from "../../../shared/model/tables/interactor-table.model";
-import {Column} from "../../../shared/model/tables/column.model";
-import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
-import {ResultTable} from "../../../shared/model/interactions-results/result-table-interface";
-import {SearchService} from "../../../../home-dashboard/search/service/search.service";
-import {FilterService} from "../../../shared/service/filter.service";
+import {extractAlias, extractId} from '../../../../shared/utils/string-utils';
+import {TableFactoryService} from '../../../shared/service/table-factory.service';
+import {InteractorTable} from '../../../shared/model/tables/interactor-table.model';
+import {Column} from '../../../shared/model/tables/column.model';
+import {NetworkSelectionService} from '../../../shared/service/network-selection.service';
+import {ResultTable} from '../../../shared/model/interactions-results/result-table-interface';
+import {SearchService} from '../../../../home-dashboard/search/service/search.service';
+import {FilterService} from '../../../shared/service/filter.service';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -19,12 +19,9 @@ const baseURL = environment.intact_portal_ws;
   styleUrls: ['./interactors-table.component.css']
 })
 export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-
   @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() interactorTab: boolean;
 
-  private _currentPageIndex: any;
   private _interactorSelected: string;
 
   dataTable: DataTables.Api;
@@ -34,19 +31,23 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   private _columns = new InteractorTable();
 
-  constructor(private route: ActivatedRoute, private tableFactory: TableFactoryService, private networkSelection: NetworkSelectionService, private search: SearchService, private filters: FilterService) {
+  constructor(
+    private route: ActivatedRoute,
+    private tableFactory: TableFactoryService,
+    private networkSelection: NetworkSelectionService,
+    private search: SearchService,
+    private filters: FilterService
+  ) {
   }
 
   ngOnInit() {
     this.table = $('#interactorsTable');
     this.route.queryParams
       .subscribe(params => {
-        this.currentPageIndex = params.page ? Number(params.page) : 1;
         if (this.dataTable !== undefined) {
           this.dataTable = this.table.DataTable().ajax.reload();
         }
       });
-
 
     this.initDataTable();
     this.networkSelection.registerSelectionListener(this.dataTable, this);
@@ -65,8 +66,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   ngAfterViewInit(): void {
-    let interactorsTable = $('#interactorsTable');
-    let selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
+    const interactorsTable = $('#interactorsTable');
+    const selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
     interactorsTable.on('change', 'input[type=\'checkbox\']', (e) => {
       const table: any = interactorsTable;
       const interactorSel = e.currentTarget.id;
@@ -124,15 +125,15 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   clearTableSelection() {
-    if (!this.interactorSelected) return;
-    let selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
+    if (!this.interactorSelected) {
+      return;
+    }
+    const selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
     if (selectedInteractorCheckbox.length > 0) {
       selectedInteractorCheckbox.prop('checked', false);
       this.interactorSelected = undefined;
     }
   }
-
-  scrolling = false;
 
   private initDataTable(): void {
     const table = $('#interactorsTable');
@@ -161,8 +162,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       },
       columns: [
         {
-          data: this._columns.select.key,
-          title: this._columns.select.name,
+          data: this._columns.select.data,
+          title: this._columns.select.title,
           render: function (data, type, full) {
             if (type === 'display') {
               return `<div class="margin-left-large">
@@ -173,16 +174,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.accession.key,
-          title: this._columns.accession.name
+          data: this._columns.accession.data,
+          title: this._columns.accession.title
         },
         {
-          data: this._columns.name.key,
-          title: this._columns.name.name
+          data: this._columns.name.data,
+          title: this._columns.name.title
         },
         {
-          data: this._columns.preferredId.key,
-          title: this._columns.preferredId.name,
+          data: this._columns.preferredId.data,
+          title: this._columns.preferredId.title,
           render: (data, type) => {
             if (type === 'display' && data !== null) {
               return this.tableFactory.identifierRender(extractId(data))
@@ -191,43 +192,43 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.type.key,
-          title: this._columns.type.name,
+          data: this._columns.type.data,
+          title: this._columns.type.title,
           render: this.tableFactory.cvRender('interactorTypeMIIdentifier')
         },
         {
-          data: this._columns.species.key,
-          title: this._columns.species.name,
+          data: this._columns.species.data,
+          title: this._columns.species.title,
           render: this.tableFactory.speciesRender('interactorTaxId')
         },
         {
-          data: this._columns.description.key,
-          title: this._columns.description.name
+          data: this._columns.description.data,
+          title: this._columns.description.title
         },
         {
-          data: this._columns.alias.key,
-          title: this._columns.alias.name,
+          data: this._columns.alias.data,
+          title: this._columns.alias.title,
           render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
         },
         {
-          data: this._columns.alternativeIds.key,
-          title: this._columns.alternativeIds.name,
+          data: this._columns.alternativeIds.data,
+          title: this._columns.alternativeIds.title,
           render: this.tableFactory.groupBy<string, string>(
             (d) => extractId(d).database,
             this.tableFactory.enlist((d) => this.tableFactory.identifierLink(extractId(d))),
             this.tableFactory.databaseTag)
         },
         {
-          data: this._columns.interactionSearchCount.key,
-          title: this._columns.interactionSearchCount.name,
+          data: this._columns.interactionSearchCount.data,
+          title: this._columns.interactionSearchCount.title,
         },
         {
-          data: this._columns.interactionCount.key,
-          title: this._columns.interactionCount.name
+          data: this._columns.interactionCount.data,
+          title: this._columns.interactionCount.title
         }
       ],
       drawCallback: function () {
-        $('#interactorsTableWidthMimic').width($("#interactorsTable").width());
+        $('#interactorsTableWidthMimic').width($('#interactorsTable').width());
         $('.table-list').parent('td').css('vertical-align', 'top');
         $('.collapse-panel').hide();
       }
@@ -235,26 +236,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     this.tableFactory.enableCollapsedPanels();
   }
 
-
-  public onPageChanged(pageIndex: number): void {
-    this.pageChanged.emit(pageIndex);
-  }
-
-
   /************************* /
    /** GETTERS AND SETTERS ** /
    /*************************/
 
   get columns(): Column[] {
     return this._columns;
-  }
-
-  get currentPageIndex(): any {
-    return this._currentPageIndex;
-  }
-
-  set currentPageIndex(value: any) {
-    this._currentPageIndex = value;
   }
 
   get interactorSelected(): string {

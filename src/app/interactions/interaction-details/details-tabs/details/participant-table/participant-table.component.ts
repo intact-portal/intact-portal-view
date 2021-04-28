@@ -78,9 +78,9 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
       },
       columns: [
         {
-          data: this._columns.expand.key,
+          data: this._columns.expand.data,
           defaultContent: ' ',
-          title: this._columns.expand.name,
+          title: this._columns.expand.title,
           render: (data, type, full) => {
             if (type === 'display') {
               let id = full.participantId.identifier;
@@ -94,32 +94,32 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
           }
         },
         {
-          data: this._columns.name.key,
-          title: this._columns.name.name,
+          data: this._columns.name.data,
+          title: this._columns.name.title,
           defaultContent: ' ',
           render: (data, type, row) => {
             return data;
           }
         },
         {
-          data: this._columns.ac.key,
-          title: this._columns.ac.name
+          data: this._columns.ac.data,
+          title: this._columns.ac.title
         },
         {
-          data: this._columns.type.key,
-          title: this._columns.type.name,
+          data: this._columns.type.data,
+          title: this._columns.type.title,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.identifier.key,
-          title: this._columns.identifier.name,
+          data: this._columns.identifier.data,
+          title: this._columns.identifier.title,
           defaultContent: '',
           render: this.tableFactory.identifierRender
         },
         {
-          data: this._columns.aliases.key,
-          title: this._columns.aliases.name,
+          data: this._columns.aliases.data,
+          title: this._columns.aliases.title,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -130,49 +130,49 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
           }
         },
         {
-          data: this._columns.description.key,
-          title: this._columns.description.name,
+          data: this._columns.description.data,
+          title: this._columns.description.title,
           defaultContent: ''
         },
         {
-          data: this._columns.species.key,
-          title: this._columns.species.name,
+          data: this._columns.species.data,
+          title: this._columns.species.title,
           defaultContent: '',
           render: this.tableFactory.speciesRenderStructured
         },
         {
-          data: this._columns.expressionSystem.key,
-          title: this._columns.expressionSystem.name,
+          data: this._columns.expressionSystem.data,
+          title: this._columns.expressionSystem.title,
           defaultContent: '',
           render: this.tableFactory.speciesRenderStructured
         },
         {
-          data: this._columns.detectionMethods.key,
-          title: this._columns.detectionMethods.name,
+          data: this._columns.detectionMethods.data,
+          title: this._columns.detectionMethods.title,
           defaultContent: '',
           render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
         },
         {
-          data: this._columns.experimentalRole.key,
-          title: this._columns.experimentalRole.name,
+          data: this._columns.experimentalRole.data,
+          title: this._columns.experimentalRole.title,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.biologicalRole.key,
-          title: this._columns.biologicalRole.name,
+          data: this._columns.biologicalRole.data,
+          title: this._columns.biologicalRole.title,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.experimentalPreparations.key,
-          title: this._columns.experimentalPreparations.name,
+          data: this._columns.experimentalPreparations.data,
+          title: this._columns.experimentalPreparations.title,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.parameters.key,
-          title: this._columns.parameters.name,
+          data: this._columns.parameters.data,
+          title: this._columns.parameters.title,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -190,8 +190,8 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
           }
         },
         {
-          data: this._columns.confidences.key,
-          title: this._columns.confidences.name,
+          data: this._columns.confidences.data,
+          title: this._columns.confidences.title,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -204,8 +204,8 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
           }
         },
         {
-          data: this._columns.crossReferences.key,
-          title: this._columns.crossReferences.name,
+          data: this._columns.crossReferences.data,
+          title: this._columns.crossReferences.title,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -224,8 +224,8 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
           }
         },
         {
-          data: this._columns.annotations.key,
-          title: this._columns.annotations.name,
+          data: this._columns.annotations.data,
+          title: this._columns.annotations.title,
           defaultContent: '',
           render: this.tableFactory.enlistWithButtons(this.tableFactory.annotationRender())
         }

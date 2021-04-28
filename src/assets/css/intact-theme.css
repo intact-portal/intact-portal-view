@@ -238,6 +238,14 @@ a.intact-background,
   opacity: 1;
 }
 
+input:disabled + label,
+.disabled-elt,
+.disabled-row span,
+.disabled-row a {
+  opacity: 0.2;
+}
+
+
 .dropdown-pane.rounded:focus, .dropdown-pane.rounded:active {
   box-shadow: none;
 }
@@ -589,6 +597,7 @@ table.dataTable tr, th {
   background: #68297c !important;
   border: 1px solid #ffffff00 !important;
 }
+
 .dataTables_wrapper .dataTables_paginate a.paginate_button.current:hover,
 .dataTables_wrapper .dataTables_paginate a.paginate_button:hover,
 .dataTables_wrapper .dataTables_paginate a.paginate_button:active,

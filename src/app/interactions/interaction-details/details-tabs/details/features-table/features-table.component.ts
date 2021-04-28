@@ -70,53 +70,53 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
       },
       columns: [
         {
-          data: this._columns.ac.key,
-          title: this._columns.ac.name
+          data: this._columns.ac.data,
+          title: this._columns.ac.title
         },
         {
-          data: this._columns.name.key,
-          title: this._columns.name.name
+          data: this._columns.name.data,
+          title: this._columns.name.title
         },
         {
-          data: this._columns.type.key,
-          title: this._columns.type.name,
+          data: this._columns.type.data,
+          title: this._columns.type.title,
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.role.key,
-          title: this._columns.role.name
+          data: this._columns.role.data,
+          title: this._columns.role.title
         },
         {
-          data: this._columns.rangePositions.key,
-          title: this._columns.rangePositions.name,
-          render: '[, ]'
+          data: this._columns.rangePositions.data,
+          title: this._columns.rangePositions.title,
+          render: '[, ]',
         },
         {
-          data: this._columns.linkedFeatures.key,
-          title: this._columns.linkedFeatures.name,
+          data: this._columns.linkedFeatures.data,
+          title: this._columns.linkedFeatures.title,
           render: this.tableFactory.enlistWithButtons((d) => `${d.shortName} (${d.ac})`)
         },
         {
-          data: this._columns.participantName.key,
-          title: this._columns.participantName.name,
+          data: this._columns.participantName.data,
+          title: this._columns.participantName.title,
         },
         {
-          data: this._columns.participantIdentifier.key,
-          title: this._columns.participantIdentifier.name,
+          data: this._columns.participantIdentifier.data,
+          title: this._columns.participantIdentifier.title,
           render: this.tableFactory.identifierRender
         },
         {
-          data: this._columns.participantAc.key,
-          title: this._columns.participantAc.name,
+          data: this._columns.participantAc.data,
+          title: this._columns.participantAc.title,
         },
         {
-          data: this._columns.detectionMethods.key,
-          title: this._columns.detectionMethods.name,
+          data: this._columns.detectionMethods.data,
+          title: this._columns.detectionMethods.title,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
         },
         {
-          data: this._columns.parameters.key,
-          title: this._columns.parameters.name,
+          data: this._columns.parameters.data,
+          title: this._columns.parameters.title,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -128,18 +128,18 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
           }
         },
         {
-          data: this._columns.identifiers.key,
-          title: this._columns.identifiers.name,
+          data: this._columns.identifiers.data,
+          title: this._columns.identifiers.title,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.identifierRender)
         },
         {
-          data: this._columns.crossReferences.key,
-          title: this._columns.crossReferences.name,
+          data: this._columns.crossReferences.data,
+          title: this._columns.crossReferences.title,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.identifierRender)
         },
         {
-          data: this._columns.annotations.key,
-          title: this._columns.annotations.name,
+          data: this._columns.annotations.data,
+          title: this._columns.annotations.title,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.annotationRender())
         }
       ],

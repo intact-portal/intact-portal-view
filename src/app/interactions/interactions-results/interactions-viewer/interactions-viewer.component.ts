@@ -4,7 +4,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {NetworkViewService} from '../../shared/service/network-view.service';
 import {NetworkLegend} from '../../shared/model/interaction-legend/network-legend';
-import {GraphPort} from '../../../../../../intact-network-viewer';
+import {GraphPort} from 'intact-network-viewer';
 
 @Component({
   selector: 'ip-interactions-viewer',

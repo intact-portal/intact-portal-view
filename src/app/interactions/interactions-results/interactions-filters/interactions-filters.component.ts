@@ -50,7 +50,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   filterTypes = Filter;
   shapes = NodeShape;
 
-  constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService, public filters: FilterService) {
+  constructor(private tableFactory: TableFactoryService, public view: NetworkViewService, public filters: FilterService) {
   }
 
   ngOnInit() {

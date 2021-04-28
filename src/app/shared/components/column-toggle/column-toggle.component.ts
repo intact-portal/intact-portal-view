@@ -10,8 +10,8 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import {Column} from "../../../interactions/shared/model/tables/column.model";
-import {FoundationUtils} from "../../utils/foundation-utils";
+import {Column} from '../../../interactions/shared/model/tables/column.model';
+import {FoundationUtils} from '../../utils/foundation-utils';
 
 
 @Component({
@@ -49,14 +49,16 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
     // Initialize columns that are already selected to view
     if (localStorage.getItem(columnView) != null) {
       this.columnsSelected = JSON.parse(localStorage.getItem(this.columnView + '_columns'));
+      console.log('local', this.columnsSelected);
     } else {
-      this.columnsSelected = this.columns.filter(column => column.hiddenByDefault).map(column => column.title);
+      this.columnsSelected = [...this.columns].filter(column => column.hiddenByDefault).map(column => column.title);
+      console.log('default', this.columnsSelected);
     }
 
     // Hide the columns from the table that are already selected to hide
-    let columnsToHide = this.columnsSelected;
+    const columnsToHide = this.columnsSelected;
     this.dataTable.columns().every(function () {
-        let title = $(this.header()).text();
+        const title = $(this.header()).text();
         this.visible(columnsToHide.indexOf(title) < 0);
       }
     );
@@ -67,7 +69,7 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
     this.cdRef.detectChanges();
     this.showHideColumns();
     FoundationUtils.adjustWidth();
-    let container = $('.column-toggle-container');
+    const container = $('.column-toggle-container');
     container.foundation();
     container.foundationExtendEBI();
   }

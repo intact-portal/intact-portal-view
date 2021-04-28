@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {environment} from "../../../../../environments/environment";
-import {Format} from "../../../shared/model/download/format.model";
-import {Filter, FilterService} from "../../../shared/service/filter.service";
-import {SearchService} from "../../../../home-dashboard/search/service/search.service";
-import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
+import {environment} from '../../../../../environments/environment';
+import {Format} from '../../../shared/model/download/format.model';
+import {Filter, FilterService} from '../../../shared/service/filter.service';
+import {SearchService} from '../../../../home-dashboard/search/service/search.service';
+import {NetworkSelectionService} from '../../../shared/service/network-selection.service';
 
 const baseURL = environment.intact_portal_ws;
 

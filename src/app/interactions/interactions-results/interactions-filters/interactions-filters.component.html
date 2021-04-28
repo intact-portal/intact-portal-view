@@ -41,8 +41,7 @@
                      [checked]="filters.isFilteringValue(filter,species.value)"/>
             </td>
             <td class="no-padding">
-              <a [href]="'https://www.uniprot.org/taxonomy/' + species.termId" target="_blank"
-                 class="term-id no-padding no-underline float-right">{{species.termId}}</a>
+              <span class="term-id no-padding no-underline float-right">{{species.termId}}</span>
             </td>
             <td class="no-padding">
               <span class="vertically-centered">{{species.value}}</span>

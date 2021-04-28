@@ -696,6 +696,7 @@ div.dataTables_scroll {
 
 .detailsConfidencesCell {
   padding: 0 3px;
+  line-height: 18px;
   font-size: small;
   background-color: #68297c44;
   color: #68297c;

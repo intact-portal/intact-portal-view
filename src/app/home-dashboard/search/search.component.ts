@@ -36,9 +36,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     if (typeOfButton === 'enter' || typeOfButton === 'button') {
       this.searchService.title = query;
     }
-
-    localStorage.removeItem('participants_columnView_columns');
-    localStorage.removeItem('features_columnView_columns');
   }
 
   private bloodhound: Bloodhound<Interactor>;

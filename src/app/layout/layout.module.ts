@@ -5,8 +5,9 @@ import {ExpandedHeaderComponent} from './header/expanded-header/expanded-header.
 import {LocalFooterComponent} from './local-footer/local-footer.component';
 import {ContributorsComponent} from './contributors/contributors.component';
 import {RouterModule} from '@angular/router';
-import {ProgressBarComponent} from "./loading-indicators/progress-bar/progress-bar.component";
+import {ProgressBarComponent} from './loading-indicators/progress-bar/progress-bar.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {LocalSearchComponent} from '../home-dashboard/search/local-search/local-search.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatProgressBarModule
   ],
   declarations: [
+    LocalSearchComponent,
     ProgressBarComponent,
     CompactHeaderComponent,
     ExpandedHeaderComponent,

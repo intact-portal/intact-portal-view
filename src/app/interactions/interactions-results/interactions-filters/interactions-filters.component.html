@@ -301,14 +301,14 @@
       <i class="icon icon-functional icon-spacer icon-share"></i> Export
     </div>
 
-    <button class="button lighter adjust-width" type="button" data-toggle="export-network" *ngIf="viewerService.viewer">
+    <button class="button lighter adjust-width" type="button" data-toggle="export-network" *ngIf="view.visible">
       Network
     </button>
     <div class="dropdown-pane no-padding no-border" id="export-network" data-dropdown data-hover="true"
          data-hover-pane="true">
       <ul class="no-bullet no-margin">
-        <li><a class="button lightest expanded" (click)="viewerService.viewer.exportAs('png')">PNG</a></li>
-        <li><a class="button lightest expanded no-margin" (click)="viewerService.viewer.exportAs('graphml')">GraphML</a>
+        <li><a class="button lightest expanded" (click)="view.viewer.exportAs('png')">PNG</a></li>
+        <li><a class="button lightest expanded no-margin" (click)="view.viewer.exportAs('graphml')">GraphML</a>
         </li>
       </ul>
     </div>

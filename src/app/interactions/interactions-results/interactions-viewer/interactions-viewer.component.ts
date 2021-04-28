@@ -16,7 +16,6 @@ export class InteractionsViewerComponent implements AfterViewInit {
   private _hasMutation: boolean = false;
   private _interactionsJSON: any = {};
   legend: NetworkLegend = undefined;
-  visible = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -45,13 +44,13 @@ export class InteractionsViewerComponent implements AfterViewInit {
       }
       if (json.data.length > 0) {
         this.view.viewer.initializeWithData(this.interactionsJSON, this.view.expanded, this.view.affectedByMutation, this.view.layoutName);
-        this.visible = true;
+        this.view.visible = true;
       } else {
-        this.visible = false;
+        this.view.visible = false;
         ProgressBarComponent.hideWithoutDelay();
       }
     }, () => {
-      this.visible = false;
+      this.view.visible = false;
       ProgressBarComponent.hideWithoutDelay();
     })
   }

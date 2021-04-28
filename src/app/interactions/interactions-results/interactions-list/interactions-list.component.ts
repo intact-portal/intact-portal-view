@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {InteractionsTableComponent} from "./interactions-table/interactions-table.component";
-import {InteractorsTableComponent} from "./interactors-table/interactors-table.component";
+import {InteractionsTableComponent} from './interactions-table/interactions-table.component';
+import {InteractorsTableComponent} from './interactors-table/interactors-table.component';
 
 @Component({
   selector: 'ip-interactions-list',
@@ -11,7 +11,6 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
   private _isTabInteractionActive = false;
   private _isTabInteractorActive = false;
@@ -21,7 +20,6 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(InteractorsTableComponent)
   interactorsTable: InteractorsTableComponent;
-
 
   constructor() {
   }
@@ -56,20 +54,10 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     this.interactionChanged.emit(interaction);
   }
 
-  public onPageChanged(pageIndex: number): void {
-    this.pageChanged.emit(pageIndex);
-  }
-
-  public resetPage(): void {
-    this.pageChanged.emit(1);
-  }
-
   public interactorsTabSelected(): void {
     if (!this.isTabInteractorActive) {
       this.isTabInteractorActive = true;
       this.isTabInteractionActive = false;
-
-      this.resetPage();
     }
   }
 
@@ -77,8 +65,6 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     if (!this.isTabInteractionActive) {
       this.isTabInteractionActive = true;
       this.isTabInteractorActive = false;
-
-      this.resetPage();
     }
   }
 

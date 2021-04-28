@@ -3,10 +3,10 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
-import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar/progress-bar.component";
-import {SearchService} from "../../home-dashboard/search/service/search.service";
-import {FilterService} from "../shared/service/filter.service";
-import {NetworkViewService} from "../shared/service/network-view.service";
+import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
+import {SearchService} from '../../home-dashboard/search/service/search.service';
+import {FilterService} from '../shared/service/filter.service';
+import {NetworkViewService} from '../shared/service/network-view.service';
 
 @Component({
   selector: 'ip-interactions-results',
@@ -15,10 +15,7 @@ import {NetworkViewService} from "../shared/service/network-view.service";
 })
 export class InteractionsResultsComponent implements OnInit {
 
-  private _currentPageIndex: number;
-
   private _interactionsSearch: InteractionsSearchResultData;
-
   private _hasResults = true;
 
   constructor(private titleService: Title,
@@ -34,7 +31,6 @@ export class InteractionsResultsComponent implements OnInit {
     this.titleService.setTitle('IntAct - Search Results');
 
     this.route.queryParamMap.subscribe(paramMap => {
-      this.currentPageIndex = paramMap.has('page') ? Number(paramMap.get('page')) : 1
       this.search.fromParams(paramMap);
       this.filters.fromParams(paramMap);
       this.requestInteractionsResults();
@@ -46,25 +42,17 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   private requestInteractionsResults() {
-    this.interactionsSearchService.getAllInteractionsAndFacetsQuery(
-      this.currentPageIndex
-    ).subscribe(interactionsSearch => {
-      this.interactionsSearch = interactionsSearch.data;
-      if (this.interactionsSearch.totalElements !== 0) {
-        this._hasResults = true;
-        this.filters.initFacets(this.interactionsSearch.facetResultPage);
-        this.interactionsSearchService.totalElements = this.interactionsSearch.totalElements;
-      } else {
-        this._hasResults = false;
-      }
-      ProgressBarComponent.hideWithoutDelay();
-    })
-  }
-
-
-  public onPageChanged(pageIndex: number): void {
-    this.currentPageIndex = pageIndex;
-    this.updateURLParams();
+    this.interactionsSearchService.queryFacets()
+      .subscribe(interactionsSearch => {
+        this.interactionsSearch = interactionsSearch;
+        if (this.interactionsSearch.totalElements !== 0) {
+          this._hasResults = true;
+          this.filters.initFacets(this.interactionsSearch.facetResultPage);
+        } else {
+          this._hasResults = false;
+        }
+        ProgressBarComponent.hideWithoutDelay();
+      });
   }
 
   /** END OF EVENT EMITTERS **/
@@ -72,8 +60,7 @@ export class InteractionsResultsComponent implements OnInit {
   private updateURLParams(): void {
     this.router.navigate([], {
       queryParams: {
-        ...this.search.toURLParams(), ...this.filters.toParams(), ...this.view.toParams(),
-        page: this.currentPageIndex
+        ...this.search.toURLParams(), ...this.filters.toParams(), ...this.view.toParams()
       }
     });
   }
@@ -92,7 +79,7 @@ export class InteractionsResultsComponent implements OnInit {
     if (!this.isLongTitle) {
       return this.title;
     } else {
-      let terms = this.title.split(/\s/);
+      const terms = this.title.split(/\s/);
       let last = terms.pop();
       while (last.length === 0 || !last.trim()) {
         last = terms.pop();
@@ -103,14 +90,6 @@ export class InteractionsResultsComponent implements OnInit {
 
   get hasResults(): boolean {
     return this._hasResults;
-  }
-
-  get currentPageIndex(): number {
-    return this._currentPageIndex;
-  }
-
-  set currentPageIndex(value: number) {
-    this._currentPageIndex = value;
   }
 
   get interactionsSearch(): InteractionsSearchResultData {

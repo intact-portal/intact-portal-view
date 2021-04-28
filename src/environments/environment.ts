@@ -19,7 +19,6 @@ const CONTEXT_PATH = '/intact/dev'
 export const environment = {
   production: false,
   evn: 'dev',
-
   analytics_id: '2381917528',
   ebi_base_url: EBI_BASE_URL,
   ebi_url: EBI_URL,

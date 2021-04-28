@@ -1,13 +1,10 @@
-import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {ProgressBarComponent} from "../../../layout/loading-indicators/progress-bar/progress-bar.component";
-import {NetworkViewService} from "../../shared/service/network-view.service";
-import {NetworkLegend} from "../../shared/model/interaction-legend/network-legend";
-
-declare const require: any;
-const IntactGraph = require('expose-loader?IntactGraph!intact-network-viewer');
-
+import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
+import {NetworkViewService} from '../../shared/service/network-view.service';
+import {NetworkLegend} from '../../shared/model/interaction-legend/network-legend';
+import {GraphPort} from '../../../../../../intact-network-viewer';
 
 @Component({
   selector: 'ip-interactions-viewer',
@@ -30,7 +27,7 @@ export class InteractionsViewerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     $('ip-interactions-viewer').foundation();
-    this.view.viewer = new IntactGraph.GraphPort('for-canvas-graph', 'legend', 'nodeL');
+    this.view.viewer = new GraphPort('for-canvas-graph', 'nodeL');
     this.route.queryParamMap.subscribe((paramMap: ParamMap) => {
       this.view.fromParams(paramMap);
       if (this.view.mustQuery) this.requestIntactNetworkDetails()

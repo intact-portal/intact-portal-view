@@ -1,18 +1,4 @@
 /* Facets customization */
-.facet > [type="radio"] {
-  font-size: 13px;
-}
-
-.facet {
-  white-space: nowrap;
-  padding: 5px;
-}
-
-.facet > label {
-  font-size: 13px;
-  margin-left: 0;
-}
-
 .dropdown-pane {
   width: max-content;
   padding: 1rem 1rem 0.5rem 1rem;
@@ -25,9 +11,14 @@
 
 .scrollbar.filter {
   background: white;
+  width: 100%;
+  max-height: 500px;
+  overflow: auto;
 }
 
-
+.no-overflow {
+  overflow-y: unset;
+}
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
   background-image: url('../../../../assets/images/results/mi-score-slider-image.svg') !important;
@@ -88,6 +79,86 @@ div.reset-button {
 button.delete-button {
   background-color: #68297C;
   color: white;
-  padding: 10px;
+  padding: 5px;
 }
 
+.species-cell {
+  color: white;
+  border-radius: 100px;
+  line-height: 16px;
+}
+
+.discreet {
+  border-width: 1px;
+  border-style: solid;
+  color: #cdaae0;
+  border-color: #cdaae0;
+  background-color: white;
+  padding: 1px 5px;
+}
+
+.emphasized {
+  font-weight: bolder;
+  color: white;
+  background-color: #cdaae0;
+  padding: 2px 6px;
+}
+
+.dashed {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: #68297C;
+  color: #68297C;
+  padding: 1px 5px;
+}
+
+.dashed.emphasized {
+  color: white;
+}
+
+.table-scroll {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  margin: auto;
+  overflow: auto;
+  border-collapse: separate;
+  border: none;
+  border-spacing: 0;
+}
+
+.table-scroll thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 4;
+}
+
+.term-id {
+  font-weight: bolder;
+  display: inline-block;
+  margin-right: 0.2rem;
+}
+
+em {
+  font-size: 11pt;
+  font-weight: normal;
+}
+
+.centered-switch-wrap {
+  display: flex;
+  justify-content: center;
+  padding-right: 13px;
+}
+
+.vertically-centered {
+  margin: auto;
+  display: inline-block;
+  /*vertical-align: middle;*/
+}
+
+input.vertically-centered {
+  margin-left: 4px;
+  margin-right: 4px;
+}

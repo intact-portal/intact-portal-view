@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {InteractionFacets} from '../../shared/model/interactions-results/interaction/interaction-facets.model';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ChangeContext, LabelType, Options} from 'ng5-slider';
-import {TableFactoryService} from "../../shared/service/table-factory.service";
+import {TableFactoryService} from '../../shared/service/table-factory.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {NetworkViewService} from "../../shared/service/network-view.service";
-import {FoundationUtils} from "../../../shared/utils/foundation-utils";
-import {Format} from "../../shared/model/download/format.model";
-import {Filter, FilterService} from "../../shared/service/filter.service";
-import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {NetworkViewService} from '../../shared/service/network-view.service';
+import {FoundationUtils} from '../../../shared/utils/foundation-utils';
+import {Format} from '../../shared/model/download/format.model';
+import {Filter, FilterService} from '../../shared/service/filter.service';
+import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 
 
 @Component({
@@ -45,10 +45,10 @@ import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
-  @Input() interactionFacets: InteractionFacets;
   options: Options;
   formats = Format.instances;
   filterTypes = Filter;
+  shapes = NodeShape;
 
   constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService, public filters: FilterService) {
   }
@@ -63,23 +63,6 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.tableFactory.makeTableHeaderSticky(); // Enables sticky header for all tables on the page
     FoundationUtils.adjustWidth();
   }
-
-  filterStyle(filterKey: string): any {
-    if (this.interactionFacets[filterKey].length > 20) {
-      return {
-        height: ['detection_method_str', 'host_organism_str'].includes(filterKey) ? '500px' : '400px',
-        width: '100%',
-        'overflow-y': 'auto',
-      };
-    } else {
-      return {
-        width: '100%',
-        'overflow-x': 'auto',
-        'overflow-y': 'hidden',
-      };
-    }
-  }
-
 
   initSliderRange(): void {
     this.options = {
@@ -126,13 +109,22 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     };
   }
 
+  fontColor(backgroundColor: string): string {
+    const rgb = this.hexToRgb(backgroundColor.substring(1));
+    const lum = 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
+    return lum < 100 ? '#ffffff' : '#000000b0';
+  }
+
+  hexToRgb(hex: string): { r: number, g: number, b: number } {
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return {r, g, b};
+  }
+
   onChangeInteractorSpeciesFilter(event: Event) {
-    let target = event.target as HTMLInputElement;
-    if (!this.filters.intraSpecies) {
-      this.filters.updateFilter(Filter.SPECIES, target.value);
-    } else if (target.checked) {
-      this.filters.setUniqueSpecies(target.value);
-    }
+    this.filters.updateFilter(Filter.SPECIES, (event.target as HTMLInputElement).value);
   }
 
   onChangeInteractorTypeFilter(event: Event) {

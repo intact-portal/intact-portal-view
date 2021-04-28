@@ -150,6 +150,7 @@ em {
   display: flex;
   justify-content: center;
   padding-right: 13px;
+  font-weight: bold;
 }
 
 .vertically-centered {

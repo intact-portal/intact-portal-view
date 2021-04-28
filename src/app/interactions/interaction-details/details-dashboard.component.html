@@ -27,8 +27,7 @@
 
           <li *ngFor="let format of formatTypes; let last = last;">
             <a class="button lightest expanded" [ngClass]="{'no-margin':last}"
-               [download]="interactionAc + '.' + format.extension"
-               [href]="downloadURL(format)" [innerHTML]="format.html"></a>
+            download [href]="downloadURL(format)" [innerHTML]="format.html"></a>
           </li>
         </ul>
       </div>

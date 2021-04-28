@@ -74,7 +74,6 @@ export class FilterService {
   }
 
   private initMutationFilter(mutationFacets: Facet[]) {
-    console.log(mutationFacets)
     this._nbNonMutation = 0;
     this._nbMutation = 0;
     for (const mutationFacet of mutationFacets) {

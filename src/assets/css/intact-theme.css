@@ -195,6 +195,10 @@ a.intact-background,
   opacity: 1;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 .button.disabled,
 .button.disabled:hover,
 .button.disabled:focus,
@@ -691,7 +695,7 @@ div.dataTables_scroll {
 }
 
 .detailsConfidencesCell {
-  padding: 3px 4px;
+  padding: 0 3px;
   font-size: small;
   background-color: #68297c44;
   color: #68297c;

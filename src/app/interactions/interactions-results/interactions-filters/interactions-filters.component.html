@@ -80,10 +80,12 @@
           </tbody>
         </table>
       </div>
-      <button class="centered delete-button margin-top-medium" (click)="filters.resetFilter(filter)"
-              *ngIf="filters.isFiltering(filter)" matTooltip="Remove filter" matTooltipPosition="below">
-        <i class="icon icon-functional" data-icon="d"></i>
-      </button>
+      <div class="reset-button no-margin" *ngIf="filters.isFiltering(filter)">
+        <button class="centered delete-button margin-top-medium" (click)="filters.resetFilter(filter)"
+                matTooltip="Remove filter" matTooltipPosition="below">
+          <i class="icon icon-functional" data-icon="d"></i>
+        </button>
+      </div>
     </div>
 
     <button class="button lighter" type="button" data-toggle="interactor-type-dropdown">

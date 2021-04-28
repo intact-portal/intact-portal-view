@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "put-to-github-pages": "rm -rf dist; ng build --output-path=dist --dev --build-optimizer=false --base-href \"https://intact-portal.github.io/intact-portal-view/\";sudo ngh",
+    "publish-gh-pages": "rm -rf dist; ng build --output-path=dist --dev --build-optimizer=false --base-href \"https://intact-portal.github.io/intact-portal-view/\"; sudo ngh",
     "proxy": "ng serve --base-href \"/intact/dev/\"  --proxy-config proxy.conf.json",
     "update-types": "npm install; for toCopy in \"datatables.net-fixedheader\" \"typeahead.js\" \"google.analytics\"; do rm -rf src/types/$toCopy; cp -rf node_modules/@types/${toCopy} src/types/; done;"
   },
@@ -37,7 +37,7 @@
     "ebi-framework": "1.3.8",
     "ember-cli-cors": "0.0.2",
     "file-saver": "^2.0.5",
-    "intact-network-viewer": "^0.9.16",
+    "intact-network-viewer": "0.9.16",
     "jquery": "^3.6.0",
     "jquery-ui-dist": "^1.12.1",
     "katex": "^0.12.0",
@@ -62,12 +62,12 @@
     "@types/jasmine": "2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/jquery": "^3.5.5",
-    "@types/node": "~14.0.1",
+    "@types/markdown-it": "^12.0.1",
+    "@types/node": "12.12.27",
     "@types/typeahead.js": "0.11.0",
     "@types/xml2js": "^0.4.8",
-    "@types/markdown-it": "^12.0.1",
-    "codelyzer": "^4.2.1",
     "angular-cli-ghpages": "^0.6.2",
+    "codelyzer": "^4.2.1",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
@@ -79,6 +79,6 @@
     "protractor": "^5.1.2",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
-    "typescript": "2.8.4"
+    "typescript": "2.6.2"
   }
 }

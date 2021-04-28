@@ -15,6 +15,7 @@ const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intac
 // TODO inject the context path programmatically.
 // No trailing bar
 const CONTEXT_PATH = '/intact/dev'
+// const CONTEXT_PATH = '/intact-portal-view'
 
 export const environment = {
   production: false,
@@ -36,4 +37,3 @@ export const environment = {
   intact_portal_graph_ws: EBI_BASE_URL + '/intact/ws',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };
-

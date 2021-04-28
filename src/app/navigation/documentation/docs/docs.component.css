@@ -1,20 +1,20 @@
 /* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/
-markdown ::ng-deep h1 {
+ip-markdown ::ng-deep h1 {
   font-size: xx-large;
 }
-markdown ::ng-deep h2 {
+ip-markdown ::ng-deep h2 {
   font-size: x-large;
 }
-markdown ::ng-deep h3 {
+ip-markdown ::ng-deep h3 {
   font-size: large;
 }
 
-markdown ::ng-deep img {
+ip-markdown ::ng-deep img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-markdown ::ng-deep img[alt="MI Score Sources"] {
+ip-markdown ::ng-deep img[alt="MI Score Sources"] {
   max-width: 50%;
 }

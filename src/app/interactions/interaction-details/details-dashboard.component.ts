@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {HttpErrorResponse} from "@angular/common/http";
-import {ProgressBarComponent} from "../../layout/loading-indicators/progress-bar/progress-bar.component";
-import {viewer} from "./details-viewer/details-viewer.component";
-import {FoundationUtils} from "../../shared/utils/foundation-utils";
-import {Format} from "../shared/model/download/format.model";
-import {environment} from "../../../environments/environment";
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
+import {viewer} from './details-viewer/details-viewer.component';
+import {FoundationUtils} from '../../shared/utils/foundation-utils';
+import {Format} from '../shared/model/download/format.model';
+import {environment} from '../../../environments/environment';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -66,23 +66,23 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
 
   exportSVG() {
     const svgXML = viewer.getSVG();
-    this.download(svgXML, "application/svg", `${this.interactionAc}.svg`);
+    this.download(svgXML, 'application/svg', `${this.interactionAc}.svg`);
   }
 
   download(content, contentType, fileName) {
-    var oldToNewTypes = {
-      "application/svg": "image/svg+xml;charset=utf-8",
-      "plain/text": "plain/text;charset=utf-8",
+    const oldToNewTypes = {
+      'application/svg': 'image/svg+xml;charset=utf-8',
+      'plain/text': 'plain/text;charset=utf-8',
     };
-    var newContentType = oldToNewTypes[contentType] || contentType;
+    const newContentType = oldToNewTypes[contentType] || contentType;
 
     function dataURItoBlob(binary) {
-      var array = [];
-      var te;
+      let array = [];
+      let te;
 
       try {
         // @ts-ignore
-        te = new TextEncoder("utf-8");
+        te = new TextEncoder('utf-8');
       } catch (e) {
         te = undefined;
       }
@@ -102,9 +102,7 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
             array.push(0xe0 | (charcode >> 12),
               0x80 | ((charcode >> 6) & 0x3f),
               0x80 | (charcode & 0x3f));
-          }
-          // surrogate pair
-          else {
+          } else {
             i++;
             // UTF-16 encodes 0x10000-0x10FFFF by
             // subtracting 0x10000 and splitting the
@@ -129,11 +127,11 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
     if (navigator.msSaveOrOpenBlob) {
       navigator.msSaveOrOpenBlob(blob, fileName);
     } else {
-      let a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = window.URL.createObjectURL(blob);
       // Give filename you wish to download
       a.download = fileName;
-      a.style.display = "none";
+      a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

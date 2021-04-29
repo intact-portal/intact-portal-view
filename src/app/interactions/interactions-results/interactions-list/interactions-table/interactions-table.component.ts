@@ -332,7 +332,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               // noinspection CssInvalidPropertyValue
               return `<div class="tag-cell-container vertical-flex">
                           <a class="detailsConfidencesCell tag-cell centered" target="_blank"
-                          href="${environment.ebi_base_url}${environment.context_path}/documentation/docs#interaction_scoring"
+                          href="${environment.context_path}/documentation/docs#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
                                  border:1px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
                                  color: ${YELLOW_ORANGE_BROWN_PALETTE_TEXT[paletteIndex]}">
@@ -349,7 +349,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               if (type === 'display' && data != null) {
                 return `<div style="display: flex">
                         <a target="_blank" class="tag-cell detailsExpansionsCell"
-                           href="${environment.ebi_base_url}${environment.context_path}/documentation/docs#expansion_method" >
+                           href="${environment.context_path}/documentation/docs#expansion_method" >
                             ${data}
                         </a>
                       </div>`;

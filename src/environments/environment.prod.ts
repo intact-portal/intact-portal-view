@@ -13,7 +13,6 @@ export const environment = {
   production: true,
   evn: 'prod',
   analytics_id: 'UA-XXXXXX-XX',
-  ebi_base_url: EBI_BASE_URL,
   ebi_url: EBI_URL,
   context_path: '',
   license_url: LICENSE_URL,
@@ -28,5 +27,4 @@ export const environment = {
   // todo remove it when all the ws are mapped to www.ebi.ac.uk/intact/ws
   intact_portal_graph_ws: EBI_URL + '/intact/ws',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
-
 };

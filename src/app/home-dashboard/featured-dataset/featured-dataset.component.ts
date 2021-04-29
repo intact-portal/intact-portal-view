@@ -3,8 +3,9 @@ import {FeatureDatasetService} from './service/feature-dataset.service';
 import {environment} from '../../../environments/environment';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {parseString} from 'xml2js';
+import {Router} from '@angular/router';
+import {SearchService} from '../search/service/search.service';
 
-const baseURL = environment.ebi_base_url;
 const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
 
@@ -20,7 +21,7 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
   private _pubmedAuthor: any;
   private _pubmedYear: any;
 
-  constructor(private featureDatasetService: FeatureDatasetService) {
+  constructor(private featureDatasetService: FeatureDatasetService, public router: Router, private search: SearchService) {
   }
 
   ngOnInit() {
@@ -45,6 +46,10 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
       });
   }
 
+  onIntActSearch() {
+    this.search.search(this.pubmedId);
+  }
+
   ngAfterViewInit(): void {
     $('#dataset-group').foundation();
     FoundationUtils.adjustWidth();
@@ -53,10 +58,6 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 
   pubMedUrl() {
     return `https://europepmc.org/article/MED/${this.pubmedId}`;
-  }
-
-  searchUrl() {
-    return `${baseURL}/intact/query/pubid:${this.pubmedId}`;
   }
 
   miXmlUrl() {

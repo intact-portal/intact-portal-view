@@ -827,6 +827,15 @@ button.showMore, button.showLess {
   border-radius: 18px;
 }
 
+.icon::before {
+  vertical-align: bottom;
+}
+
+.button-group .icon {
+  line-height: 14px;
+  vertical-align: middle;
+}
+
 /**************************************************************/
 /********* END DATATABLES ROW STYLES ********************/
 /**************************************************************/

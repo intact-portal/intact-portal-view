@@ -254,14 +254,14 @@
 
       <em>Non-expanded interactions only</em>
       <div class="centered-switch-wrap">
-        <span class="tag-cell species-cell margin-right-small"
+        <span class="tag-cell species-cell dashed margin-right-small"
               [ngClass]="{'discreet':filters.expansion, 'emphasized':!filters.expansion}">{{filters.nbNonExpansion}}</span>
         <mat-slide-toggle color="primary"
                           (change)="filters.updateFilter(filter, $event.checked)"
                           [disabled]="!filters.hasExpansion"
                           [checked]="filters.expansion">
         </mat-slide-toggle>
-        <span class="tag-cell species-cell emphasized dashed" style="margin-left: 4px;"
+        <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
               [ngClass]="{'discreet':!filters.expansion, 'emphasized':filters.expansion}">{{filters.nbExpansion}}</span>
       </div>
     </div>

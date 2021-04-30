@@ -9,22 +9,26 @@
     </button>
     <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
          *ngIf="filterTypes.SPECIES as filter">
-
-      <span class="centered-switch-wrap margin-right-medium"><em>Filter out cross-species interactions</em></span>
-
-      <div class="centered-switch-wrap">
-        <span class="label margin-right-medium">Cross</span>
-        <mat-slide-toggle color="primary"
-                          (change)="onChangeInteractionIntraSpeciesFilter($event)"
-                          [disabled]="!filters.canFilterIntraSpecies()"
-                          [checked]="filters.intraSpecies">
-        </mat-slide-toggle>
-        <span class="label margin-left-medium">Intra</span>
-      </div>
-
-
-      <div class="scrollbar filter">
-        <table class="table-scroll">
+      <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+        <table class="no-margin table-scroll">
+          <thead>
+          <tr class="no-background">
+            <th colspan="3" class="no-horizontal-padding padding-vertical-small">
+              <span class="float-right margin-right-medium"><em>Filter out cross-species interactions</em></span>
+            </th>
+            <th colspan="2" class="no-padding">
+              <div class="centered-switch-wrap">
+                <span class="label margin-right-medium">Cross</span>
+                <mat-slide-toggle color="primary"
+                                  (change)="onChangeInteractionIntraSpeciesFilter($event)"
+                                  [disabled]="!filters.canFilterIntraSpecies()"
+                                  [checked]="filters.intraSpecies">
+                </mat-slide-toggle>
+                <span class="label margin-left-medium">Intra</span>
+              </div>
+            </th>
+          </tr>
+          </thead>
           <tbody>
           <tr *ngFor="let species of filters.facets.combined_species"
               (click)="$event.target !== checkbox ? checkbox.click() : null"

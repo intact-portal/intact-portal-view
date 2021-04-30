@@ -123,6 +123,15 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     return {r, g, b};
   }
 
+  /**
+   * Use this function to avoid horizontal scrollbar in firefox
+   */
+  scrollStyle(filter: Filter) {
+    return this.filters.getFacets(filter).length > 20 ?
+      {'overflow-y': 'scroll', 'height': '39vh'} :
+      {'overflow-y': 'hidden', 'height': 'auto'};
+  }
+
   onChangeInteractorSpeciesFilter(event: Event) {
     this.filters.updateFilter(Filter.SPECIES, (event.target as HTMLInputElement).value);
   }

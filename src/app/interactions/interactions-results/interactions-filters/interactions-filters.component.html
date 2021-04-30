@@ -127,7 +127,7 @@
     </button>
     <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
          *ngIf="filterTypes.INTERACTION_TYPE as filter">
-      <div class="scrollbar filter">
+      <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
         <table class="no-margin table-scroll">
           <tbody>
           <tr *ngFor="let molecule of filters.facets.type_mi_identifier_styled"
@@ -161,7 +161,7 @@
     </button>
     <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true" *ngIf="filterTypes.DETECTION_METHOD as filter">
-      <div class="scrollbar filter">
+      <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
         <table class="no-margin table-scroll">
           <tbody>
           <tr *ngFor="let molecule of filters.facets.detection_method_s"
@@ -195,7 +195,7 @@
     </button>
     <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
          data-hover-pane="true" *ngIf="filterTypes.HOST_ORGANISM as filter">
-      <div class="scrollbar filter">
+      <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
         <table class="no-margin table-scroll">
           <tbody>
           <tr *ngFor="let molecule of filters.facets.host_organism_taxId_styled"

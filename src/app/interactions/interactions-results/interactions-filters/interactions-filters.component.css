@@ -12,8 +12,8 @@
 .scrollbar.filter {
   background: white;
   width: 100%;
-  max-height: 500px;
-  overflow: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
 }
 
 .no-overflow {
@@ -82,10 +82,15 @@ button.delete-button {
   padding: 5px;
 }
 
+button.delete-button > i {
+  line-height: 18px;
+}
+
 .species-cell {
   color: white;
   border-radius: 100px;
   line-height: 16px;
+  /*padding: 2px 6px 0;*/
 }
 
 .discreet {
@@ -94,14 +99,14 @@ button.delete-button {
   color: #cdaae0;
   border-color: #cdaae0;
   background-color: white;
-  padding: 1px 5px;
+  padding: 2px 5px;
 }
 
 .emphasized {
   font-weight: bolder;
   color: white;
   background-color: #cdaae0;
-  padding: 2px 6px;
+  padding: 3px 6px;
 }
 
 .dashed {
@@ -109,11 +114,23 @@ button.delete-button {
   border-width: 1px;
   border-color: #68297C;
   color: #68297C;
-  padding: 1px 5px;
+  padding: 2px 5px;
 }
 
 .dashed.emphasized {
   color: white;
+}
+
+@supports ( -moz-appearance:none ) {
+  /* Add non-firefox CSS code here */
+  .discreet,
+  .dashed {
+    padding: 2px 5px 0;
+  }
+
+  .emphasized {
+    padding: 3px 6px 1px;
+  }
 }
 
 .table-scroll {

@@ -316,7 +316,6 @@ export class FilterService {
     switch (filter) {
       case Filter.SPECIES:
         return this.interactorSpecies;
-      case Filter.EXPANSION:
       case Filter.INTERACTOR_TYPE:
         return this.interactorTypes;
       case Filter.INTERACTION_TYPE:
@@ -325,6 +324,25 @@ export class FilterService {
         return this.interactionDetectionMethods;
       case Filter.HOST_ORGANISM:
         return this.interactionHostOrganisms;
+    }
+  }
+
+  getFacets(filter: Filter): Facet<any>[] {
+    switch (filter) {
+      case Filter.SPECIES:
+        return this.facets.combined_species;
+      case Filter.EXPANSION:
+        return this.facets.expansion_method_s;
+      case Filter.INTERACTOR_TYPE:
+        return this.facets.type_MI_A_B_styled;
+      case Filter.INTERACTION_TYPE:
+        return this.facets.type_mi_identifier_styled;
+      case Filter.DETECTION_METHOD:
+        return this.facets.detection_method_s;
+      case Filter.HOST_ORGANISM:
+        return this.facets.detection_method_s;
+      case Filter.MUTATION:
+        return this.facets.affected_by_mutation_styled;
     }
   }
 

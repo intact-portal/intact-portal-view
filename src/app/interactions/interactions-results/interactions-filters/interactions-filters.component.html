@@ -89,8 +89,7 @@
     </button>
     <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
          *ngIf="filterTypes.INTERACTOR_TYPE as filter">
-
-      <div class="scrollbar filter">
+      <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
         <table class="no-margin table-scroll">
           <tbody>
           <tr *ngFor="let molecule of filters.facets.type_MI_A_B_styled"
@@ -106,7 +105,7 @@
             </td>
             <td class="no-padding">
               <ip-node-diagram [shape]="shapes[molecule.visualProperty]" color="#cdaae0" class="margin-left-small"
-                               height="18" style="padding-right: 3px"></ip-node-diagram>
+                               height="16pt" style="padding-right: 3px"></ip-node-diagram>
             </td>
           </tr>
           </tbody>

@@ -32,10 +32,10 @@ export class NetworkSelectionService {
     this.resultTables.push(resultTable)
   }
 
-  resetSelection() {
+  resetSelection(updateTables = true) {
     this._binaryInteractionIds = [];
-    this._interactorAcs = []
-    this.triggerDataTables();
+    this._interactorAcs = [];
+    if (updateTables) this.triggerDataTables();
   }
 
   private triggerDataTables() {

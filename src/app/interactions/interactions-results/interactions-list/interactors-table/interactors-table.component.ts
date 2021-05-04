@@ -57,7 +57,6 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.interactorTab.currentValue) {
-
       // This fixes the alignment between the th and td when we have activated scrollX:true
       this.table = $('#interactorsTable');
       this.dataTable = this.table.DataTable().columns.adjust().draw();
@@ -66,18 +65,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   ngAfterViewInit(): void {
     const interactorsTable = $('#interactorsTable');
-    const selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
     interactorsTable.on('change', 'input[type=\'checkbox\']', (e) => {
-      const table: any = interactorsTable;
       const interactorSel = e.currentTarget.id;
 
       if (this.interactorSelected !== interactorSel) {
-        selectedInteractorCheckbox.prop('checked', false);
-        selectedInteractorCheckbox.closest('tr').removeClass('rowSelected');
+        const previousInput = $(`#${this.interactorSelected}:checkbox`);
+        previousInput.prop('checked', false);
 
         this.interactorSelected = interactorSel;
-        selectedInteractorCheckbox.prop('checked', true);
-        selectedInteractorCheckbox.closest('tr').addClass('rowSelected');
+        const currentInput = $(`#${this.interactorSelected}:checkbox`);
+        currentInput.prop('checked', true);
 
         const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
           bubbles: true,
@@ -90,12 +87,6 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       } else {
         // None is selected, remove class
         this.interactorSelected = undefined;
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each(function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
-
         const tableUnselectedEvent = new CustomEvent('tableUnselected', {
           bubbles: true
         });
@@ -104,11 +95,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     });
 
     // When table redrawn keep row selection synchronization between tables
-    interactorsTable.on('draw.dt', function () {
+    interactorsTable.on('draw.dt', () => {
       if (this.interactorSelected !== undefined) {
-        const selector = selectedInteractorCheckbox;
+        const selector = $(`#${this.interactorSelected}:checkbox`);
         selector.prop('checked', true);
-        selector.closest('tr').addClass('rowSelected');
 
         const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
           bubbles: true,
@@ -118,7 +108,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         });
         document.dispatchEvent(interactorSelectedEvent);
       }
-    }.bind(this));
+    });
 
     interactorsTable.on('resize', () => $('#interactorsTableWidthMimic').width(interactorsTable.width()))
   }

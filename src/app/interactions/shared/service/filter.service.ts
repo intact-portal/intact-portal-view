@@ -343,7 +343,7 @@ export class FilterService {
       case Filter.DETECTION_METHOD:
         return this.facets.detection_method_s;
       case Filter.HOST_ORGANISM:
-        return this.facets.detection_method_s;
+        return this.facets.host_organism_taxId_styled;
       case Filter.MUTATION:
         return this.facets.affected_by_mutation_styled;
     }

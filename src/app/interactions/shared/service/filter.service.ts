@@ -67,10 +67,10 @@ export class FilterService {
     const scores = scoreFacets.map(facet => parseFloat(facet.value));
     this.minMIScore = scores.length !== 0 ? Math.min(...scores) : 0;
     this.maxMIScore = scores.length !== 0 ? Math.max(...scores) : 1;
-    if (this._currentMinMIScore === 0) {
+    if (this._currentMinMIScore < this.minMIScore) {
       this._currentMinMIScore = this.minMIScore;
     }
-    if (this._currentMaxMIScore === 1) {
+    if (this._currentMaxMIScore > this.maxMIScore) {
       this._currentMaxMIScore = this.maxMIScore;
     }
   }
@@ -311,8 +311,8 @@ export class FilterService {
   }
 
   private resetMISCoreFilter() {
-    this._currentMinMIScore = 0;
-    this._currentMaxMIScore = 1;
+    this._currentMinMIScore = this.minMIScore;
+    this._currentMaxMIScore = this.maxMIScore;
   }
 
   getFilter(filter: Filter): string[] {

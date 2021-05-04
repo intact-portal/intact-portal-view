@@ -42,7 +42,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   ngOnInit() {
     this.table = $('#interactorsTable');
     this.route.queryParams
-      .subscribe(params => {
+      .subscribe(() => {
         if (this.dataTable !== undefined) {
           this.dataTable = this.table.DataTable().ajax.reload();
         }
@@ -74,7 +74,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
         previousInput.prop('checked', false);
 
         this.interactorSelected = interactorSel;
-        const currentInput = $(`#${this.interactorSelected}:checkbox`);
+        const currentInput = $(`#${interactorSel}:checkbox`);
         currentInput.prop('checked', true);
 
         const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {

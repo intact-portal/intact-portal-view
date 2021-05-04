@@ -4,6 +4,8 @@ import {Facet} from '../model/interactions-results/facet.model';
 import {Observable} from 'rxjs/Observable';
 import {ParamMap} from '@angular/router';
 import {InteractionFacets} from '../model/interactions-results/interaction/interaction-facets.model';
+import {NetworkViewService} from './network-view.service';
+import {NetworkSelectionService} from './network-selection.service';
 
 
 @Injectable()
@@ -46,7 +48,7 @@ export class FilterService {
     }
   }
 
-  constructor() {
+  constructor(private selection: NetworkSelectionService) {
   }
 
   public initFacets(facets: InteractionFacets) {
@@ -123,6 +125,7 @@ export class FilterService {
         break;
     }
     if (update) {
+      this.selection.resetSelection();
       this.updatesSubject.next(filter);
     }
   }

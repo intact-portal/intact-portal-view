@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {ResultTable} from "../model/interactions-results/result-table-interface";
-import {ParamMap} from "@angular/router";
+import {ResultTable} from '../model/interactions-results/result-table-interface';
+import {ParamMap} from '@angular/router';
 
 @Injectable()
 export class NetworkSelectionService {
@@ -32,6 +32,12 @@ export class NetworkSelectionService {
     this.resultTables.push(resultTable)
   }
 
+  resetSelection() {
+    this._binaryInteractionIds = [];
+    this._interactorAcs = []
+    this.triggerDataTables();
+  }
+
   private triggerDataTables() {
     this.dataTables.forEach(dataTable => dataTable.ajax.reload());
     this.resultTables.forEach(resultTable => resultTable.clearTableSelection());
@@ -51,8 +57,12 @@ export class NetworkSelectionService {
   }
 
   toParams(params: any = {}, arrayHandler: (array: any[]) => any = array => array.join(',')) {
-    if (this.interactorAcs.length > 0) params.interactorAcs = arrayHandler(this.interactorAcs);
-    if (this.binaryInteractionIds.length > 0) params.binaryInteractionIds = arrayHandler(this.binaryInteractionIds);
+    if (this.interactorAcs.length > 0) {
+      params.interactorAcs = arrayHandler(this.interactorAcs);
+    }
+    if (this.binaryInteractionIds.length > 0) {
+      params.binaryInteractionIds = arrayHandler(this.binaryInteractionIds);
+    }
     return params;
   }
 }

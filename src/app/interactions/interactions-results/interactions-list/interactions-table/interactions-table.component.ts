@@ -64,6 +64,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     }
   }
 
+  private readonly tableUnselectedEvent = new CustomEvent('tableUnselected', {bubbles: true});
+
   ngAfterViewInit(): void {
     const interactionsTable = $('#interactionsTable');
     interactionsTable.on('change', 'input[type=\'checkbox\']', (e) => {
@@ -85,10 +87,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         });
         document.dispatchEvent(interactionSelectedEvent);
       } else {
-        const tableUnselectEvent = new CustomEvent('tableUnselected', {
-          bubbles: true,
-        });
-        document.dispatchEvent(tableUnselectEvent);
+        // Unselected
+        this.interactionSelected = undefined;
+        document.dispatchEvent(this.tableUnselectedEvent);
       }
     });
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -21,8 +21,6 @@ const ebiURL = environment.ebi_url;
   styleUrls: ['./interactions-table.component.css']
 })
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-
-  @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Input() interactionTab: boolean;
 
 

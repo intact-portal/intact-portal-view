@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -19,7 +19,6 @@ const baseURL = environment.intact_portal_ws;
   styleUrls: ['./interactors-table.component.css']
 })
 export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-  @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Input() interactorTab: boolean;
 
   private _interactorSelected: string;

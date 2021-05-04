@@ -93,11 +93,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     });
 
     // When table redrawn keep row selection synchronization between tables
-    interactionsTable.on('draw.dt', function () {
+    interactionsTable.on('draw.dt', () => {
       if (this.interactionSelected !== undefined) {
         const previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
         previousCheckbox.prop('checked', true);
-        previousCheckbox.closest('tr').addClass('rowSelected');
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
           bubbles: true,
           detail: {
@@ -107,7 +106,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
         document.dispatchEvent(interactionSelectedEvent);
       }
-    }.bind(this));
+    });
   }
 
   clearTableSelection() {

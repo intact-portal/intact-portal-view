@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 
 import {environment} from '../../../../../../environments/environment';
-import {FeatureTable} from "../../../../shared/model/tables/feature-table.model";
-import {Column} from "../../../../shared/model/tables/column.model";
-import {TableFactoryService} from "../../../../shared/service/table-factory.service";
+import {FeatureTable} from '../../../../shared/model/tables/feature-table.model';
+import {Column} from '../../../../shared/model/tables/column.model';
+import {TableFactoryService} from '../../../../shared/service/table-factory.service';
 
 const baseURL = environment.intact_portal_graph_ws;
 
@@ -142,12 +142,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
           title: this._columns.annotations.title,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.annotationRender())
         }
-      ],
-      select: {
-        style: 'os',
-        className: 'rowSelected',
-        selector: 'td:first-child'
-      }
+      ]
     });
 
     table.on('change', 'input[type=\'checkbox\']', (e) => {
@@ -157,26 +152,12 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
       if (this.featureSelected !== featureSel) {
         $('#' + this.featureSelected + ':checkbox').prop('checked', false);
 
-        // TODO: To find another way to do the highlighting
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each(function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
-
         this.featureSelected = featureSel;
-        $(e.target.parentNode.parentNode).addClass('rowSelected');
-
         this.featureChanged.emit(this.featureSelected);
 
       } else {
         // None is selected, remove class
         this.featureSelected = undefined;
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each(function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
         this.featureChanged.emit(this.featureSelected);
       }
     });

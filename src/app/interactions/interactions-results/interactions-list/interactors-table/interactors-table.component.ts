@@ -63,11 +63,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     }
   }
 
+  private readonly tableUnselected = new CustomEvent('tableUnselected', {bubbles: true});
+
   ngAfterViewInit(): void {
     const interactorsTable = $('#interactorsTable');
     interactorsTable.on('change', 'input[type=\'checkbox\']', (e) => {
       const interactorSel = e.currentTarget.id;
-
       if (this.interactorSelected !== interactorSel) {
         const previousInput = $(`#${this.interactorSelected}:checkbox`);
         previousInput.prop('checked', false);
@@ -83,14 +84,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         });
         document.dispatchEvent(interactorSelectedEvent);
-
       } else {
-        // None is selected, remove class
+        // Unselected
         this.interactorSelected = undefined;
-        const tableUnselectedEvent = new CustomEvent('tableUnselected', {
-          bubbles: true
-        });
-        document.dispatchEvent(tableUnselectedEvent);
+        document.dispatchEvent(this.tableUnselected);
       }
     });
 
@@ -107,6 +104,8 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         });
         document.dispatchEvent(interactorSelectedEvent);
+      } else {
+        document.dispatchEvent(this.tableUnselected);
       }
     });
 

@@ -23,6 +23,28 @@
                        class="button icon icon-functional">
               </div>
             </div>
+            <div class="columns margin-top-large">
+              <h5><i class="icon icon-generic padding-right-medium" data-icon="?"></i>Examples:</h5>
+              <div class="columns medium-4">
+                <ul>
+                  <li>Gene name(s): <a (click)="search('Ndc80', 'example')">Ndc80</a></li>
+                  <li>UniProt AC(s): <a (click)="search('Q05471', 'example')">Q05471</a></li>
+                </ul>
+              </div>
+              <div class="columns medium-4">
+                <ul>
+                  <li>Interaction AC: <a (click)="search('EBI-25503639', 'example')">EBI-25503639</a></li>
+                  <li>Publication id: <a (click)="search('32353859', 'example')">32353859</a></li>
+                </ul>
+              </div>
+              <div class="columns medium-4">
+                <ul>
+                  <li>GO term(s): <a (click)="search('GO:0016491', 'example')">GO:0016491</a></li>
+                  <li>List of ACs: <a (click)="search('Q15554, P54274, Q96AP0', 'example')">Q15554, P54274, Q96AP0</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </fieldset>
         </div>
       </div>

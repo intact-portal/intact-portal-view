@@ -12,16 +12,13 @@ const intactFTPMiTab_URL = environment.intact_psimitab_url;
   templateUrl: './dataset-by-year.component.html',
   styleUrls: ['./dataset-by-year.component.css']
 })
-export class DatasetByYearComponent implements OnInit, AfterViewInit {
+export class DatasetByYearComponent implements AfterViewInit {
 
   @Input() year: string;
 
   @Input() datasets: Dataset[]
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
   ngAfterViewInit(): void {

@@ -2,9 +2,9 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FeatureDatasetService} from './service/feature-dataset.service';
 import {environment} from '../../../environments/environment';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';
-import {parseString} from 'xml2js';
 import {Router} from '@angular/router';
 import {SearchService} from '../search/service/search.service';
+import {Dataset} from './model/dataset.model';
 
 const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
@@ -16,10 +16,7 @@ const intactFTPMiTab_URL = environment.intact_psimitab_url;
 })
 export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 
-  private _title: string;
-  private _pubmedId: any;
-  private _pubmedAuthor: any;
-  private _pubmedYear: any;
+  dataset: Dataset;
 
   constructor(private featureDatasetService: FeatureDatasetService, public router: Router, private search: SearchService) {
   }
@@ -31,23 +28,12 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
   requestDOTM() {
     this.featureDatasetService.getFeaturedDataset().subscribe(
       response => {
-        let t, pId, pA, pY;
-        parseString(response, function (err, result) {
-          t = result.datasets.dataset[0].$.title;
-          pId = result.datasets.dataset[0].pubmed[0].id;
-          pA = result.datasets.dataset[0].pubmed[0].author;
-          pY = result.datasets.dataset[0].pubmed[0].year;
-        });
-
-        this.title = t;
-        this.pubmedId = pId;
-        this.pubmedAuthor = pA;
-        this.pubmedYear = pY;
+        this.dataset = response.datasets[0];
       });
   }
 
   onIntActSearch() {
-    this.search.search(this.pubmedId);
+    this.search.search(this.firstPubmed.id);
   }
 
   ngAfterViewInit(): void {
@@ -55,52 +41,23 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
     FoundationUtils.adjustWidth();
   }
 
+  get firstPubmed() {
+    return this.dataset.pubmeds[0];
+  }
 
   pubMedUrl() {
-    return `https://europepmc.org/article/MED/${this.pubmedId}`;
+    return `https://europepmc.org/article/MED/${this.firstPubmed.id}`;
   }
 
   miXmlUrl() {
-    return `${intactFTP_URL}/pmid/${this.pubmedYear}/${this.pubmedId}.zip`;
+    return `${intactFTP_URL}/pmid/${this.firstPubmed.year}/${this.firstPubmed.id}.zip`;
   }
 
   miTabUrl() {
-    return `${intactFTPMiTab_URL}/${this.pubmedYear}/${this.pubmedId}.txt`;
+    return `${intactFTPMiTab_URL}/${this.firstPubmed.year}/${this.firstPubmed.id}.txt`;
   }
 
   archiveUrl() {
     return '/featured-dataset/archive';
-  }
-
-  get title(): string {
-    return this._title;
-  }
-
-  set title(value: string) {
-    this._title = value;
-  }
-
-  get pubmedId(): any {
-    return this._pubmedId;
-  }
-
-  set pubmedId(value: any) {
-    this._pubmedId = value;
-  }
-
-  get pubmedAuthor(): any {
-    return this._pubmedAuthor;
-  }
-
-  set pubmedAuthor(value: any) {
-    this._pubmedAuthor = value;
-  }
-
-  get pubmedYear(): any {
-    return this._pubmedYear;
-  }
-
-  set pubmedYear(value: any) {
-    this._pubmedYear = value;
   }
 }

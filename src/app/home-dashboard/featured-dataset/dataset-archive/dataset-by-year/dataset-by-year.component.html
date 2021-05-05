@@ -5,28 +5,28 @@
       data-allow-all-closed="true" id="accordion-{{year}}" data-deep-link-smudge="true">
     <li class="accordion-item" data-accordion-item *ngFor="let dataset of datasets">
 
-      <a href="featured-dataset/archive#{{dataset.$.month}}-{{dataset.$.year}}" class="accordion-title">
-        <span class="month">{{dataset.$.month}} - </span>
-        {{dataset.$.title}}
+      <a href="featured-dataset/archive#{{dataset.month}}-{{dataset.year}}" class="accordion-title">
+        <span class="month">{{dataset.month}} - </span>
+        {{dataset.title}}
       </a>
 
-      <div class="accordion-content" data-tab-content id="{{dataset.$.month}}-{{dataset.$.year}}">
+      <div class="accordion-content" data-tab-content id="{{dataset.month}}-{{dataset.year}}">
         <table>
           <tbody>
-          <tr *ngFor="let pubmed of dataset.pubmed">
+          <tr *ngFor="let pubmed of dataset.pubmeds">
             <td *ngIf="hasPubMedId(pubmed); else noID">
               <a href="https://europepmc.org/article/MED/{{pubmed.id}}?singleResult=true" target="_blank">
-                <b>{{pubmed.author}} ({{pubmed.year}})</b>
+                <b>{{pubmed.author}} ({{pubmed.year || dataset.year}})</b>
               </a>
             </td>
             <ng-template #noID>
               <td><b class="tool-tip">{{pubmed.author}} ({{pubmed.year}})<span class="tool-tip-text">Article only available as a preprint</span></b></td>
             </ng-template>
             <td style="text-align: right">
-              <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed.year, pubmed.id)">
+              <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed.year || dataset.year, pubmed.id)">
                 <i class="icon icon-common icon-download"></i> PSI-MI XML 2.5
               </button>
-              <button mat-raised-button color="accent" (click)="goPSIMITABFTP(pubmed.year, pubmed.id)">
+              <button mat-raised-button color="accent" (click)="goPSIMITABFTP(pubmed.year || dataset.year, pubmed.id)">
                 <i class="icon icon-common icon-download"></i> PSI-MI TAB 2.7
               </button>
             </td>

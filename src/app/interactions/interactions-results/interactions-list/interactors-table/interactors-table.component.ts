@@ -104,8 +104,6 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         });
         document.dispatchEvent(interactorSelectedEvent);
-      } else {
-        document.dispatchEvent(this.tableUnselected);
       }
     });
 

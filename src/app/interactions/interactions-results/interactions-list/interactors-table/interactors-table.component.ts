@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -19,7 +19,6 @@ const baseURL = environment.intact_portal_ws;
   styleUrls: ['./interactors-table.component.css']
 })
 export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-  @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
   @Input() interactorTab: boolean;
 
   private _interactorSelected: string;
@@ -43,7 +42,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   ngOnInit() {
     this.table = $('#interactorsTable');
     this.route.queryParams
-      .subscribe(params => {
+      .subscribe(() => {
         if (this.dataTable !== undefined) {
           this.dataTable = this.table.DataTable().ajax.reload();
         }
@@ -58,27 +57,25 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.interactorTab.currentValue) {
-
       // This fixes the alignment between the th and td when we have activated scrollX:true
       this.table = $('#interactorsTable');
       this.dataTable = this.table.DataTable().columns.adjust().draw();
     }
   }
 
+  private readonly tableUnselected = new CustomEvent('tableUnselected', {bubbles: true});
+
   ngAfterViewInit(): void {
     const interactorsTable = $('#interactorsTable');
-    const selectedInteractorCheckbox = $(`#${this.interactorSelected}:checkbox`);
     interactorsTable.on('change', 'input[type=\'checkbox\']', (e) => {
-      const table: any = interactorsTable;
       const interactorSel = e.currentTarget.id;
-
       if (this.interactorSelected !== interactorSel) {
-        selectedInteractorCheckbox.prop('checked', false);
-        selectedInteractorCheckbox.closest('tr').removeClass('rowSelected');
+        const previousInput = $(`#${this.interactorSelected}:checkbox`);
+        previousInput.prop('checked', false);
 
         this.interactorSelected = interactorSel;
-        selectedInteractorCheckbox.prop('checked', true);
-        selectedInteractorCheckbox.closest('tr').addClass('rowSelected');
+        const currentInput = $(`#${interactorSel}:checkbox`);
+        currentInput.prop('checked', true);
 
         const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
           bubbles: true,
@@ -87,29 +84,18 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         });
         document.dispatchEvent(interactorSelectedEvent);
-
       } else {
-        // None is selected, remove class
+        // Unselected
         this.interactorSelected = undefined;
-        $(table.dataTableSettings).each(function () {
-          $(this.aoData).each(function () {
-            $(this.nTr).removeClass('rowSelected');
-          })
-        });
-
-        const tableUnselectedEvent = new CustomEvent('tableUnselected', {
-          bubbles: true
-        });
-        document.dispatchEvent(tableUnselectedEvent);
+        document.dispatchEvent(this.tableUnselected);
       }
     });
 
     // When table redrawn keep row selection synchronization between tables
-    interactorsTable.on('draw.dt', function () {
+    interactorsTable.on('draw.dt', () => {
       if (this.interactorSelected !== undefined) {
-        const selector = selectedInteractorCheckbox;
+        const selector = $(`#${this.interactorSelected}:checkbox`);
         selector.prop('checked', true);
-        selector.closest('tr').addClass('rowSelected');
 
         const interactorSelectedEvent = new CustomEvent('tableInteractorSelected', {
           bubbles: true,
@@ -118,8 +104,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         });
         document.dispatchEvent(interactorSelectedEvent);
+      } else {
+        document.dispatchEvent(this.tableUnselected);
       }
-    }.bind(this));
+    });
 
     interactorsTable.on('resize', () => $('#interactorsTableWidthMimic').width(interactorsTable.width()))
   }

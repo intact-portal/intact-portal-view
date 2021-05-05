@@ -1,12 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {InteractionsFiltersComponent} from './interactions-filters.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {TableFactoryService} from "../../shared/service/table-factory.service";
-import {NetworkViewService} from "../../shared/service/network-view.service";
-import {InteractionFacets} from "../../shared/model/interactions-results/interaction/interaction-facets.model";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FilterService} from "../../shared/service/filter.service";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TableFactoryService} from '../../shared/service/table-factory.service';
+import {NetworkViewService} from '../../shared/service/network-view.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FilterService} from '../../shared/service/filter.service';
 
 describe('InteractionsFiltersComponent', () => {
   let component: InteractionsFiltersComponent;
@@ -24,10 +23,6 @@ describe('InteractionsFiltersComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(InteractionsFiltersComponent);
-
-    component = fixture.componentInstance;
-    component.interactionFacets = new InteractionFacets([], [], [], [], [], [], [], []);
-
     fixture.detectChanges();
   });
 

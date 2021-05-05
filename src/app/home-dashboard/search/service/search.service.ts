@@ -6,6 +6,7 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Pagination} from '../../shared/pagination.model';
 import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
 import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
+import {Interactome} from '../../../interactomes/interactome.model';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -52,10 +53,11 @@ export class SearchService {
   private rand = () => Math.random().toString(36).substr(2);
   private genToken = (length) => (this.rand() + this.rand() + this.rand() + this.rand()).substr(0, length);
 
-  speciesSearch(specieName: string) {
-    this._query = '*'
+  speciesSearch(interactome: Interactome) {
+    this._query = interactome.taxid.toString();
+    this._title = `${interactome.name}`;
     this._isBatchSearch = false;
-    this.router.navigate(['search'], {queryParams: {query: '*', interactorSpeciesFilter: specieName}});
+    this.router.navigate(['search'], {queryParams: {query: this._query, interactorSpeciesFilter: interactome.name}});
   }
 
   resolveSearch(query: string, page = 0, pageSize = 50): Observable<{ [term: string]: Pagination<Interactor[]> }> {

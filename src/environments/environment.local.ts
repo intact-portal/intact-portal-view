@@ -2,12 +2,8 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-// Environment for localhost
-// TODO This should disappear, We need to create a localhost env that works with the proxy
-// const EBI_BASE_URL = 'http://localhost:4200';
-
 // Environment for development
-const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+const EBI_BASE_URL = 'http://localhost:4200';
 const EBI_URL = 'https://www.ebi.ac.uk';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'https://ftp.ebi.ac.uk/pub/databases/intact';
@@ -15,8 +11,8 @@ const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intac
 
 export const environment = {
   production: false,
-  evn: 'dev',
-  analytics_id: 'UA-672146-15',
+  evn: 'local',
+  analytics_id: 'UA-XXXXXX-XX',
   ebi_url: EBI_URL,
   context_path: '',
   license_url: LICENSE_URL,

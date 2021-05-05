@@ -50,7 +50,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   filterTypes = Filter;
   shapes = NodeShape;
 
-  constructor(private tableFactory: TableFactoryService, public viewerService: NetworkViewService, public filters: FilterService) {
+  constructor(private tableFactory: TableFactoryService, public view: NetworkViewService, public filters: FilterService) {
   }
 
   ngOnInit() {
@@ -121,6 +121,15 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     const g = (bigint >> 8) & 255;
     const b = bigint & 255;
     return {r, g, b};
+  }
+
+  /**
+   * Use this function to avoid horizontal scrollbar in firefox
+   */
+  scrollStyle(filter: Filter) {
+    return this.filters.getFacets(filter).length > 20 ?
+      {'overflow-y': 'scroll', 'height': '39vh'} :
+      {'overflow-y': 'hidden', 'height': 'auto'};
   }
 
   onChangeInteractorSpeciesFilter(event: Event) {

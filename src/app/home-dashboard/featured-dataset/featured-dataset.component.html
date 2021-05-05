@@ -15,7 +15,7 @@
       <div class="dropdown-pane no-padding no-border" id="access" data-dropdown data-hover="true"
            data-hover-pane="true">
         <ul class="no-bullet no-margin">
-          <li><a class="button lightest expanded no-margin" [href]="searchUrl()">IntAct</a></li>
+          <li><a class="button lightest expanded no-margin" (click)="onIntActSearch()">IntAct</a></li>
           <li><a class="button lightest expanded no-margin" [href]="pubMedUrl()">Europe PMC</a></li>
         </ul>
       </div>
@@ -27,11 +27,11 @@
            data-hover-pane="true">
         <ul class="no-bullet no-margin">
           <li>
-            <a class="button lightest expanded no-margin" [download]="pubmedId + '.tab'"
+            <a class="button lightest expanded no-margin" download target="_blank"
                [href]="miTabUrl()">miTab<sub>2.7</sub></a>
           </li>
           <li>
-            <a class="button lightest expanded no-margin" [download]="pubmedId + '.xml'"
+            <a class="button lightest expanded no-margin" download target="_blank"
                [href]="miXmlUrl()">miXML<sub>2.5</sub></a>
           </li>
         </ul>
@@ -39,7 +39,7 @@
 
     </div>
     <div class="archive">
-      <a class="button outlined expanded no-margin" [href]="archiveUrl()">
+      <a class="button outlined expanded no-margin" [routerLink]="archiveUrl()">
         <i class="icon icon-generic" data-icon=";"></i>
         Archive
       </a>

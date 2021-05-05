@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {InteractionsTableComponent} from './interactions-table/interactions-table.component';
 import {InteractorsTableComponent} from './interactors-table/interactors-table.component';
 
@@ -8,10 +8,6 @@ import {InteractorsTableComponent} from './interactors-table/interactors-table.c
   styleUrls: ['./interactions-list.component.css']
 })
 export class InteractionsListComponent implements OnInit, AfterViewInit {
-
-  @Output() interactorChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
-
   private _isTabInteractionActive = false;
   private _isTabInteractorActive = false;
 
@@ -45,14 +41,6 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   }
 
   /** EVENT EMITTERS **/
-
-  public onInteractorSelectedChanged(interactor: string): void {
-    this.interactorChanged.emit(interactor);
-  }
-
-  public onInteractionsSelectedChanged(interaction: string): void {
-    this.interactionChanged.emit(interaction);
-  }
 
   public interactorsTabSelected(): void {
     if (!this.isTabInteractorActive) {

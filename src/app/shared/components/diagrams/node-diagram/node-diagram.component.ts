@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {NodeShape} from "../../../../interactions/shared/model/network-shapes/node-shape";
+import {NodeShape} from '../../../../interactions/shared/model/network-shapes/node-shape';
 
 @Component({
   selector: 'ip-node-diagram',
@@ -12,9 +12,9 @@ export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() borderColor: string;
   @Input() label: string;
   @Input() height: string;
-  @ViewChild("labelElt") labelElt: ElementRef;
-  @ViewChild("svg") svgElt: ElementRef;
-  @ViewChild("shapeGroup") shapeGroupElt: ElementRef;
+  @ViewChild('labelElt') labelElt: ElementRef;
+  @ViewChild('svg') svgElt: ElementRef;
+  @ViewChild('shapeGroup') shapeGroupElt: ElementRef;
   NodeShape = NodeShape;
 
   constructor() {
@@ -22,8 +22,8 @@ export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     if (!this.shape) this.shape = NodeShape.ELLIPSE;
-    if (!this.color) this.color = "#d6d6d6";
-    if (!this.height) this.height = "20pt"
+    if (!this.color) this.color = '#d6d6d6';
+    if (!this.height) this.height = '20pt'
   }
 
   ngAfterViewInit(): void {
@@ -35,15 +35,15 @@ export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private init() {
-    let shapeElt = this.shapeGroupElt.nativeElement.firstElementChild;
+    const shapeElt = this.shapeGroupElt.nativeElement.firstElementChild;
     if (shapeElt) {
-      shapeElt.setAttribute("fill", this.color);
-      shapeElt.setAttribute("stroke-width", "6");
-      shapeElt.setAttribute("stroke", this.borderColor ? this.borderColor : this.color);
+      shapeElt.setAttribute('fill', this.color);
+      shapeElt.setAttribute('stroke-width', '6');
+      shapeElt.setAttribute('stroke', this.borderColor ? this.borderColor : this.color);
 
       if (this.label) {
-        let labelElt = this.labelElt.nativeElement;
-        let box = labelElt.getBBox();
+        const labelElt = this.labelElt.nativeElement;
+        const box = labelElt.getBBox();
         if (box.width >= 100) {
           $(this.svgElt.nativeElement).attr('viewBox', `0 0 ${box.width + 5} 100`);
           if (this.shape !== NodeShape.ELLIPSE) shapeElt.setAttribute('transform', `translate(${box.width / 2 - 49})`)

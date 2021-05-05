@@ -22,13 +22,11 @@
 
   <div class="tabs-content" data-tabs-content="search-results-tabs" data-deep-link="true" data-update-history="false">
     <div class="tabs-panel table-tab is-active" id="interactions">
-      <ip-interactions-table [interactionTab]="isTabInteractionActive"
-                             (interactionChanged)="onInteractionsSelectedChanged($event)"></ip-interactions-table>
+      <ip-interactions-table [interactionTab]="isTabInteractionActive"></ip-interactions-table>
     </div>
 
     <div class="tabs-panel table-tab" id="interactor">
-      <ip-interactors-table [interactorTab]="isTabInteractorActive"
-                            (interactorChanged)="onInteractorSelectedChanged($event)"></ip-interactors-table>
+      <ip-interactors-table [interactorTab]="isTabInteractorActive"></ip-interactors-table>
     </div>
   </div>
 </div>

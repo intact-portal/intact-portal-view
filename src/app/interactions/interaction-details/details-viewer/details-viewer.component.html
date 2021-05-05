@@ -46,7 +46,7 @@
             </td>
           </tr>
           <tr *ngIf="hasNodeShapeOf('bioactive entity')">
-            <td class="no-padding">
+            <td class="centered">
               <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
                                [shape]="NodeShape.TRIANGLE" height="13pt">
               </ip-node-diagram>
@@ -55,7 +55,7 @@
           </tr>
 
           <tr *ngIf="hasNodeShapeOf('complex')">
-            <td class="no-padding">
+            <td class="centered">
               <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
                                [shape]="NodeShape.HEXAGON">
               </ip-node-diagram>
@@ -64,7 +64,7 @@
           </tr>
 
           <tr *ngIf="hasNodeShapeOf('gene')">
-            <td class="no-padding">
+            <td class="centered">
               <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
                                [shape]="NodeShape.ROUNDED_RECTANGLE">
               </ip-node-diagram>
@@ -73,7 +73,7 @@
           </tr>
 
           <tr *ngIf="hasNodeShapeOf('dna')">
-            <td class="no-padding">
+            <td class="centered">
               <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
                                [shape]="NodeShape.VEE">
               </ip-node-diagram>
@@ -82,7 +82,7 @@
           </tr>
 
           <tr *ngIf="hasNodeShapeOf('rna')">
-            <td class="no-padding">
+            <td class="centered">
               <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
                                [shape]="NodeShape.DIAMOND">
               </ip-node-diagram>
@@ -91,7 +91,7 @@
           </tr>
 
           <tr *ngIf="hasNodeShapeOf('protein')">
-            <td class="no-padding">
+            <td class="centered">
               <svg viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" id="protein-svg">
                 <rect id="rect-to-circle" x="1" y="6" width="98" height="18"/>
                 <rect id="rect-tick" x="48" y="17" width="2" height="8"/>

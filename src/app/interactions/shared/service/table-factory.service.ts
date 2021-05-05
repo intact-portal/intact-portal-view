@@ -106,7 +106,9 @@ export class TableFactoryService {
   ]);
 
   private static getCvURL(miId: string) {
-    if (miId === undefined) return null;
+    if (miId === undefined) {
+      return null;
+    }
     const id = miId.replace(':', '_');
     return `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
   }
@@ -146,7 +148,9 @@ export class TableFactoryService {
 
   static toggleCollapsedPanels = (event: ClickEvent) => {
     let panel = $(event.target).next('.collapse-panel');
-    if (panel.length === 0) panel = $(event.target).parent().next('.collapse-panel');
+    if (panel.length === 0) {
+      panel = $(event.target).parent().next('.collapse-panel');
+    }
     panel.slideToggle({duration: panel.height(), easing: 'linear'});
     panel.prev('.collapse-header').toggleClass('collapsed')
   }
@@ -156,17 +160,23 @@ export class TableFactoryService {
 
   enlist<T>(elementRenderer: (T) => string) {
     return (data: T[], type, row, meta) => {
-      if (data == null || type !== 'display') return null;
+      if (data == null || type !== 'display') {
+        return null;
+      }
       return `<ul class="elementList table-list">${data.map(elementRenderer).map((render) => `<li>${render}</li>`).join('')}</ul>`;
     }
   }
 
   enlistWithButtons = (renderer: (data: any, i?: number) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
-    if (data == null || type !== 'display') return data;
+    if (data == null || type !== 'display') {
+      return data;
+    }
     let html = '<div class="show-more-content">'
     let displayed = 0;
     for (let i = 0; i < data.length; i++) {
-      if (i === 2) html += '<div class="to-hide" style="display: none">';
+      if (i === 2) {
+        html += '<div class="to-hide" style="display: none">';
+      }
       const render = renderer(data[i], i);
       if (render) {
         html += render;
@@ -175,7 +185,9 @@ export class TableFactoryService {
     }
     if (displayed > 2) {
       html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${data.length - 2})</button>`;
-    } else html += '</div>';
+    } else {
+      html += '</div>';
+    }
     return `<div class="${containerClass} ${alignTop ? 'table-list' : ''}">${html}</div>`;
   }
 
@@ -183,7 +195,9 @@ export class TableFactoryService {
                 groupRenderer: (data: T[], type?, row?, meta?) => string,
                 headerRenderer: (K) => string = group => ' ' + group) {
     return (data: T[], type, row, meta) => {
-      if (data == null) return;
+      if (data == null) {
+        return;
+      }
       let html = '<div class="table-list">';
       const groups = groupBy(data, grouper);
       groups.forEach(group => {
@@ -207,7 +221,9 @@ export class TableFactoryService {
   }
 
   speciesRenderStructured = (species: Organism) => {
-    if (species == null) return;
+    if (species == null) {
+      return;
+    }
     if (species.taxId != null && species.taxId > 0) {
       const url = `https://www.uniprot.org/taxonomy/${species.taxId}`;
       return `<a href="${url}" class="cv-term species" target="_blank">${species.scientificName}</a>`;
@@ -220,14 +236,20 @@ export class TableFactoryService {
     const miId = row[identifierColumn];
     if (miId) {
       return `<a href="${TableFactoryService.getCvURL(miId)}" class="cv-term" target="_blank">${data}</a>`
-    } else return data;
+    } else {
+      return data;
+    }
   }
 
   cvRenderStructured = (data: CvTerm, type?) => {
-    if (type !== undefined && type !== 'display') return;
+    if (type !== undefined && type !== 'display') {
+      return;
+    }
     if (data.identifier) {
       return `<a href="${TableFactoryService.getCvURL(data.identifier)}" class="cv-term" target="_blank">${data.shortName}</a>`
-    } else return data.shortName;
+    } else {
+      return data.shortName;
+    }
   }
 
   annotationRender = (tagStyleMap?: Map<string, { class: string, symbol: string }>) => (annotation: Annotation) => {
@@ -253,7 +275,9 @@ export class TableFactoryService {
   }
 
   aliasRender = (alias: Alias, type?) => {
-    if (type !== undefined && type !== 'display') return;
+    if (type !== undefined && type !== 'display') {
+      return;
+    }
     return `<div class="aliasesCell tag-cell-container">
               <a class="detailsAliasesCell tag-cell" target="_blank"
                  href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
@@ -263,7 +287,9 @@ export class TableFactoryService {
   }
 
   identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
-    if (id === null) return;
+    if (id === null) {
+      return;
+    }
     const db = TableFactoryService.processDatabase(id.database);
     const url = db.access ? db.access.getURL(id.identifier) : null;
     return `<div class="tag-cell-container identifier-cell-container">
@@ -282,7 +308,9 @@ export class TableFactoryService {
   }
 
   identifierLink(id: { identifier: string, database: string | any, qualifier?: any }) {
-    if (id === null) return;
+    if (id === null) {
+      return;
+    }
     const db = TableFactoryService.processDatabase(id.database);
     const url = db.access ? db.access.getURL(id.identifier) : null;
     return `<div class="detailsCell identifierCellWidth">
@@ -300,7 +328,7 @@ export class TableFactoryService {
     headScroll.addClass('scrollbar');
 
     let scrolling = false;
-    headScroll.scroll(() => {
+    headScroll.on('scroll', () => {
       if (!scrolling) {
         scrolling = true;
         bodyScroll.scrollLeft(headScroll.scrollLeft())
@@ -309,8 +337,8 @@ export class TableFactoryService {
       }
     });
 
-    bodyScroll.unbind('scroll');
-    bodyScroll.scroll(() => {
+    bodyScroll.off('scroll');
+    bodyScroll.on('scroll', () => {
       if (!scrolling) {
         scrolling = true;
         headScroll.scrollLeft(bodyScroll.scrollLeft())
@@ -342,10 +370,14 @@ export class TableFactoryService {
     table.parent('.dataTables_scrollBody').scroll((e) => {
       if (e.target.scrollLeft <= 10) {
         $('.shadow-left').hide();
-      } else $('.shadow-left').show();
+      } else {
+        $('.shadow-left').show();
+      }
       if (e.target.scrollWidth - (e.target.clientWidth + e.target.scrollLeft) <= 10) {
         $('.shadow-right').hide();
-      } else $('.shadow-right').show();
+      } else {
+        $('.shadow-right').show();
+      }
     })
   }
 

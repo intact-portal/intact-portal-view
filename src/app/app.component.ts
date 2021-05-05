@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {ProgressBarComponent} from './layout/loading-indicators/progress-bar/progress-bar.component';
 import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
 import {environment} from '../environments/environment';
+import {APP_BASE_HREF} from '@angular/common';
 
 
 @Component({
@@ -22,10 +23,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     $(document).foundationExtendEBI();
   }
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private analytics: Angulartics2GoogleAnalytics) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private analytics: Angulartics2GoogleAnalytics,
+    @Inject(APP_BASE_HREF) private baseHref: string) {
   }
 
   ngOnInit() {
+    environment.context_path = /\/$/.test(this.baseHref) ? this.baseHref.substring(0, this.baseHref.length - 1) : this.baseHref;
     AppComponent.initFoundation();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

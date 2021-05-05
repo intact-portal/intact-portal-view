@@ -794,19 +794,6 @@ div.dataTables_scroll {
   /*padding: 2px 5px;*/
 }
 
-.rowSelected {
-  /*font-weight: bold;*/
-  background-color: #305b7d66 !important;
-  /*text-shadow: 1px 1px 0px #EEE;*/
-  color: black;
-}
-
-.rowUnSelected {
-  /*font-weight: bold;*/
-  background-color: #305b7d66 !important;
-  /*text-shadow: 1px 1px 0px #EEE;*/
-  color: black;
-}
 
 button.showMore, button.showLess {
   background-color: #67297cd6;
@@ -825,6 +812,15 @@ button.showMore, button.showLess {
   padding: 3px 5px 3px 4px;
   text-align: center;
   border-radius: 18px;
+}
+
+.icon::before {
+  vertical-align: bottom;
+}
+
+.button-group .icon {
+  line-height: 14px;
+  vertical-align: middle;
 }
 
 /**************************************************************/

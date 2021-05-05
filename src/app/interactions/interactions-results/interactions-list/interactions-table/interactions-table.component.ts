@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -21,8 +21,6 @@ const ebiURL = environment.ebi_url;
   styleUrls: ['./interactions-table.component.css']
 })
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-
-  @Output() interactionChanged: EventEmitter<string> = new EventEmitter<string>();
   @Input() interactionTab: boolean;
 
 
@@ -66,6 +64,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
     }
   }
 
+  private readonly tableUnselectedEvent = new CustomEvent('tableUnselected', {bubbles: true});
+
   ngAfterViewInit(): void {
     const interactionsTable = $('#interactionsTable');
     interactionsTable.on('change', 'input[type=\'checkbox\']', (e) => {
@@ -87,29 +87,28 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         });
         document.dispatchEvent(interactionSelectedEvent);
       } else {
-        const tableUnselectEvent = new CustomEvent('tableUnselected', {
-          bubbles: true,
-        });
-        document.dispatchEvent(tableUnselectEvent);
+        // Unselected
+        this.interactionSelected = undefined;
+        document.dispatchEvent(this.tableUnselectedEvent);
       }
     });
 
     // When table redrawn keep row selection synchronization between tables
-    interactionsTable.on('draw.dt', function () {
+    interactionsTable.on('draw.dt', () => {
       if (this.interactionSelected !== undefined) {
         const previousCheckbox = $(`#${this.interactionSelected}:checkbox`);
         previousCheckbox.prop('checked', true);
-        previousCheckbox.closest('tr').addClass('rowSelected');
         const interactionSelectedEvent = new CustomEvent('tableInteractionSelected', {
           bubbles: true,
           detail: {
             interactionId: this.interactionSelected
           }
         });
-
         document.dispatchEvent(interactionSelectedEvent);
+      } else {
+        document.dispatchEvent(this.tableUnselectedEvent);
       }
-    }.bind(this));
+    });
   }
 
   clearTableSelection() {
@@ -332,7 +331,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               // noinspection CssInvalidPropertyValue
               return `<div class="tag-cell-container vertical-flex">
                           <a class="detailsConfidencesCell tag-cell centered" target="_blank"
-                          href="${environment.ebi_base_url}${environment.context_path}/documentation/docs#interaction_scoring"
+                          href="${environment.context_path}/documentation/docs#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
                                  border:1px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
                                  color: ${YELLOW_ORANGE_BROWN_PALETTE_TEXT[paletteIndex]}">
@@ -349,7 +348,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               if (type === 'display' && data != null) {
                 return `<div style="display: flex">
                         <a target="_blank" class="tag-cell detailsExpansionsCell"
-                           href="${environment.ebi_base_url}${environment.context_path}/documentation/docs#expansion_method" >
+                           href="${environment.context_path}/documentation/docs#expansion_method" >
                             ${data}
                         </a>
                       </div>`;

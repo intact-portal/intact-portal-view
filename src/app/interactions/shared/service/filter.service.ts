@@ -4,6 +4,8 @@ import {Facet} from '../model/interactions-results/facet.model';
 import {Observable} from 'rxjs/Observable';
 import {ParamMap} from '@angular/router';
 import {InteractionFacets} from '../model/interactions-results/interaction/interaction-facets.model';
+import {NetworkViewService} from './network-view.service';
+import {NetworkSelectionService} from './network-selection.service';
 
 
 @Injectable()
@@ -46,7 +48,7 @@ export class FilterService {
     }
   }
 
-  constructor() {
+  constructor(private selection: NetworkSelectionService) {
   }
 
   public initFacets(facets: InteractionFacets) {
@@ -65,10 +67,10 @@ export class FilterService {
     const scores = scoreFacets.map(facet => parseFloat(facet.value));
     this.minMIScore = scores.length !== 0 ? Math.min(...scores) : 0;
     this.maxMIScore = scores.length !== 0 ? Math.max(...scores) : 1;
-    if (this._currentMinMIScore === 0) {
+    if (this._currentMinMIScore < this.minMIScore) {
       this._currentMinMIScore = this.minMIScore;
     }
-    if (this._currentMaxMIScore === 1) {
+    if (this._currentMaxMIScore > this.maxMIScore) {
       this._currentMaxMIScore = this.maxMIScore;
     }
   }
@@ -123,6 +125,7 @@ export class FilterService {
         break;
     }
     if (update) {
+      this.selection.resetSelection();
       this.updatesSubject.next(filter);
     }
   }
@@ -308,15 +311,14 @@ export class FilterService {
   }
 
   private resetMISCoreFilter() {
-    this._currentMinMIScore = 0;
-    this._currentMaxMIScore = 1;
+    this._currentMinMIScore = this.minMIScore;
+    this._currentMaxMIScore = this.maxMIScore;
   }
 
   getFilter(filter: Filter): string[] {
     switch (filter) {
       case Filter.SPECIES:
         return this.interactorSpecies;
-      case Filter.EXPANSION:
       case Filter.INTERACTOR_TYPE:
         return this.interactorTypes;
       case Filter.INTERACTION_TYPE:
@@ -325,6 +327,25 @@ export class FilterService {
         return this.interactionDetectionMethods;
       case Filter.HOST_ORGANISM:
         return this.interactionHostOrganisms;
+    }
+  }
+
+  getFacets(filter: Filter): Facet<any>[] {
+    switch (filter) {
+      case Filter.SPECIES:
+        return this.facets.combined_species;
+      case Filter.EXPANSION:
+        return this.facets.expansion_method_s;
+      case Filter.INTERACTOR_TYPE:
+        return this.facets.type_MI_A_B_styled;
+      case Filter.INTERACTION_TYPE:
+        return this.facets.type_mi_identifier_styled;
+      case Filter.DETECTION_METHOD:
+        return this.facets.detection_method_s;
+      case Filter.HOST_ORGANISM:
+        return this.facets.host_organism_taxId_styled;
+      case Filter.MUTATION:
+        return this.facets.affected_by_mutation_styled;
     }
   }
 

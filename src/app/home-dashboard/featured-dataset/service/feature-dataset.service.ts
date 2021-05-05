@@ -17,7 +17,7 @@ export class FeatureDatasetService {
   public readonly API_URL = 'assets/data/dotm-1.1.xml';
 
   getFeaturedDataset(): Observable<any> {
-    //TODO Replace when in wwwdev production
+    // TODO Replace when in wwwdev production
     // return this.http.get(`${intactDotmURL}`, {responseType: 'text'})
     //   .catch(this.handleError);
     return this.http.get(this.API_URL, {responseType: 'text'})

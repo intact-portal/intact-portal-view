@@ -6,6 +6,7 @@ import {Subject} from 'rxjs/Subject';
 @Injectable()
 export class NetworkViewService {
 
+  private _visible: boolean = false;
   private _viewer: GraphPort;
   private _expanded: boolean = true;
   private _affectedByMutation: boolean = false;
@@ -99,6 +100,14 @@ export class NetworkViewService {
       this.updatesSubject.next();
       this.viewer.applyLayout(value);
     }
+  }
+
+  get visible(): boolean {
+    return this._visible;
+  }
+
+  set visible(value: boolean) {
+    this._visible = value;
   }
 
   get mustQuery(): boolean {

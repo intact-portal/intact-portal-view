@@ -30,6 +30,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angulartics2Module} from 'angulartics2';
 import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
 import {GoogleAnalyticsService} from './shared/service/google-analytics/google-analytics.service';
+import {APP_BASE_HREF, PlatformLocation} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import {GoogleAnalyticsService} from './shared/service/google-analytics/google-a
     NetworkSearchService,
     NetworkViewService,
     GoogleAnalyticsService,
+    {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]}
   ],
   bootstrap: [AppComponent]
 })

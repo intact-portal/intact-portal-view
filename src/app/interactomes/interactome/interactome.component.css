@@ -1,6 +1,7 @@
 .icon {
   font-size: 100px;
   color: #80727f;
+  line-height: 100px;
 }
 
 a {
@@ -28,7 +29,7 @@ div.actions {
 .species-button {
   padding: 1em;
   color: #68297c;
-  border-radius: 50%;
+  border-radius: 200em;
   margin: 1em;
   border: none;
   cursor: pointer;

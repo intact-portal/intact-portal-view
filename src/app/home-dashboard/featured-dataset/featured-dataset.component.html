@@ -3,7 +3,7 @@
     <i class="icon icon-generic" data-icon="D"></i> Featured Dataset
   </h4>
 
-  <div>
+  <div *ngIf="dataset">
     <div class="text-justify margin-bottom-large">{{dataset.title}} - <b>{{firstPubmed.author}}</b></div>
 
     <div class="expanded no-margin button-group stacked-for-medium" id="dataset-group">

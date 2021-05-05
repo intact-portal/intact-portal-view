@@ -12,6 +12,7 @@
     "e2e": "ng e2e",
     "publish-gh-pages": "rm -rf dist; ng build --output-path=dist --env=dev --build-optimizer=false --base-href \"https://intact-portal.github.io/intact-portal-view/\"; sudo ngh",
     "proxy": "ng serve --env=local --base-href \"/intact/local/\" --proxy-config proxy.conf.json",
+    "dev": "ng serve --env=dev --base-href \"/intact/dev/\"",
     "update-types": "npm install; for toCopy in \"datatables.net-fixedheader\" \"typeahead.js\" \"google.analytics\"; do rm -rf src/types/$toCopy; cp -rf node_modules/@types/${toCopy} src/types/; done;"
   },
   "private": true,

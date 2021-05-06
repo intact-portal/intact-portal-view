@@ -1,12 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SearchComponent} from './search.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {SearchService} from "./service/search.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ActivatedRouteStub} from "../../../testing/activated-route-stub";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {GoogleAnalyticsService} from "../../shared/service/google-analytics/google-analytics.service";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {SearchService} from './service/search.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub} from '../../../testing/activated-route-stub';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {GoogleAnalyticsService} from '../../shared/service/google-analytics/google-analytics.service';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -19,7 +19,7 @@ describe('SearchComponent', () => {
       providers: [
         SearchService,
         {provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate'])},
-        {provide: ActivatedRoute, useValue: new ActivatedRouteStub({query:'stat3'})},
+        {provide: ActivatedRoute, useValue: new ActivatedRouteStub({query: 'stat3'})},
         {provide: GoogleAnalyticsService, useValue: reporter}
       ],
       imports: [HttpClientTestingModule],

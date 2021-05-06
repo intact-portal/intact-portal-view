@@ -104,6 +104,10 @@ a.intact-background,
   background: #68297c;
 }
 
+.intact-color {
+  color: #68297c;
+}
+
 .button {
   color: #ffffff !important;
   background: #68297c;

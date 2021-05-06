@@ -147,7 +147,7 @@ export class SearchService {
   }
 
   searchSuggestions(): void {
-
+    let suggestionQuery;
     this.bloodhound = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -155,7 +155,7 @@ export class SearchService {
         url: `${baseURL}/interactor/findInteractor/%QUERY?page=0&pageSize=10`,
         prepare: (query, settings) => {
           if (!this.ignoreChange) {
-            this.query = query;
+            suggestionQuery = query;
             settings.url = settings.url.replace('%QUERY', query);
             settings.url = settings.url.replace('page=0', `page=${this.currentPage}`)
           }

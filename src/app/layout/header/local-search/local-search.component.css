@@ -1,0 +1,19 @@
+.frosty-glass {
+  background: rgba(255, 255, 255, 0.3);
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  color: #FFFFFF;
+}
+
+#local-searchbox::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #FFFFFF;
+  opacity: 1; /* Firefox */
+}
+
+#local-searchbox::-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #FFFFFF;
+}
+
+#local-searchbox::-ms-input-placeholder { /* Microsoft Edge */
+  color: #FFFFFF;
+}

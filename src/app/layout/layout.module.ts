@@ -29,7 +29,8 @@ import {LocalSearchComponent} from './header/local-search/local-search.component
     CompactHeaderComponent,
     ExpandedHeaderComponent,
     LocalFooterComponent,
-    ContributorsComponent
+    ContributorsComponent,
+    LocalSearchComponent
 
   ]
 })

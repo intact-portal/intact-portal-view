@@ -105,8 +105,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           }
         });
         document.dispatchEvent(interactionSelectedEvent);
-      } else {
-        document.dispatchEvent(this.tableUnselectedEvent);
       }
     });
   }

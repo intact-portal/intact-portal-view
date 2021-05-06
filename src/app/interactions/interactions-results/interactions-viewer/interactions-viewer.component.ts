@@ -25,13 +25,17 @@ export class InteractionsViewerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    $('ip-interactions-viewer').foundation();
-    this.view.viewer = new GraphPort('for-canvas-graph', 'nodeL');
-    this.route.queryParamMap.subscribe((paramMap: ParamMap) => {
-      this.view.fromParams(paramMap);
-      if (this.view.mustQuery) this.requestIntactNetworkDetails()
-      this.view.mustQuery = true;
-    });
+    setTimeout(() => {
+      $('ip-interactions-viewer').foundation();
+      this.view.viewer = new GraphPort('for-canvas-graph', 'nodeL');
+      this.route.queryParamMap.subscribe((paramMap: ParamMap) => {
+        this.view.fromParams(paramMap);
+        if (this.view.mustQuery) {
+          this.requestIntactNetworkDetails()
+        }
+        this.view.mustQuery = true;
+      });
+    })
   }
 
   private requestIntactNetworkDetails() {
@@ -40,7 +44,9 @@ export class InteractionsViewerComponent implements AfterViewInit {
       if (json.legend) {
         this.legend = json.legend;
         this._hasMutation = json.legend.edge_legend.mutation_color.true !== undefined;
-        if (!this._hasMutation) this.view.setAffectedByMutation(false, false);
+        if (!this._hasMutation) {
+          this.view.setAffectedByMutation(false, false);
+        }
       }
       if (json.data.length > 0) {
         this.view.viewer.initializeWithData(this.interactionsJSON, this.view.expanded, this.view.affectedByMutation, this.view.layoutName);
@@ -55,8 +61,10 @@ export class InteractionsViewerComponent implements AfterViewInit {
     })
   }
 
-  onChangeLayout(value) {
-    this.view.setLayoutName(value);
+  onChangeLayout(event: Event, value) {
+    if ((event.target as HTMLInputElement).checked) {
+      this.view.setLayoutName(value);
+    }
   }
 
   onChangeExpand(expandCheckBoxValue, affectedByMutationCheckBox) {

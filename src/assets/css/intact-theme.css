@@ -93,6 +93,11 @@ a.tag:hover {
   background-image: linear-gradient(#000000, #68297c);
 }
 
+.masthead-inner nav i {
+  font-size: medium;
+  /*line-height: 1em;*/
+  margin-top: 0;
+}
 /* end */
 
 /*IntAct tiles and buttons styling*/

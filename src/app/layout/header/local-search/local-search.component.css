@@ -1,8 +1,34 @@
 .frosty-glass {
   background: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+.white-border {
   border-left: 1px solid white;
   border-right: 1px solid white;
-  color: #FFFFFF;
+  border-bottom: 0;
+}
+
+#searchBox {
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+  justify-items: flex-end;
+}
+
+#local-search-button {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0.85em;
+  margin: 0;
+  font-size: 0.8em;
+}
+
+#local-searchbox {
+  font-size: medium;
+  flex: 1;
+  height: 2.4em;
+  padding-left: 0;
+  border-bottom: 0;
 }
 
 #local-searchbox::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

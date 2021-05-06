@@ -29,10 +29,11 @@ export class LocalSearchComponent implements OnInit, AfterViewInit {
   }
 
   search(query: string, typeOfButton: string) {
-    this.searchService.search(query);
-
-    if (typeOfButton === 'enter' || typeOfButton === 'button') {
-      this.searchService.title = query;
+    if (query) {
+      this.searchService.search(query);
+      if (typeOfButton === 'enter' || typeOfButton === 'button') {
+        this.searchService.title = query;
+      }
     }
   }
 

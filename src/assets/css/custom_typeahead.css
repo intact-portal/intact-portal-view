@@ -12,8 +12,8 @@
 .tt-hint {
   background-color: #fff;
   width: 100%;
-  font-size: 18px;
-  line-height: 30px;
+  font-size: 15px;
+  /*line-height: 16px;*/
 }
 
 .typeahead {
@@ -33,6 +33,7 @@
 .tt-menu {
   width: 100%;
   /*margin: 12px 0;*/
+  color: black;
   padding: 8px 0;
   background-color: #fbfbfb;/*#f4fbff;*/
   border: 1px solid #ccc;

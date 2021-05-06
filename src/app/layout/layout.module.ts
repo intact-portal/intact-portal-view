@@ -7,7 +7,7 @@ import {ContributorsComponent} from './contributors/contributors.component';
 import {RouterModule} from '@angular/router';
 import {ProgressBarComponent} from './loading-indicators/progress-bar/progress-bar.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {LocalSearchComponent} from '../home-dashboard/search/local-search/local-search.component';
+import {LocalSearchComponent} from './header/local-search/local-search.component';
 
 
 @NgModule({

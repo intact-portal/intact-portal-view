@@ -179,11 +179,11 @@ export class FilterService {
       params.negativeFilter = this._negative;
     }
 
-    if (this._currentMinMIScore !== undefined && this._currentMinMIScore !== 0) {
+    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > this.minMIScore) {
       params.minMIScore = this._currentMinMIScore;
     }
 
-    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore !== 1) {
+    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < this.maxMIScore) {
       params.maxMIScore = this._currentMaxMIScore;
     }
 

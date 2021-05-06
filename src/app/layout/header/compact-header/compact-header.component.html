@@ -1,7 +1,7 @@
 <header id="masthead" class="masthead compact-for-data">
   <div class="masthead-inner row expanded collapse">
     <!-- local-title -->
-    <div class="float-left">
+    <div>
       <a routerLink="/home" title="Back to IntAct homepage">
         <div class="media-object" id="local-title">
           <div class="media-object-section">
@@ -13,8 +13,10 @@
     </div>
     <!-- /local-title -->
 
+    <ip-local-search style="flex: 1"></ip-local-search>
+
     <!-- local-nav -->
-    <nav class="float-right">
+    <nav>
       <ul id="local-nav" class="dropdown menu float-left" data-dropdown-menu="true" data-description="navigational">
         <li routerLinkActive="active"><a routerLink="/home" routerLinkActive="active">Home</a></li>
         <li routerLinkActive="active"><a routerLink="/download" routerLinkActive="active">Download</a></li>
@@ -35,6 +37,5 @@
     </nav>
     <!-- /local-nav -->
   </div>
-  <ip-local-search></ip-local-search>
   <ip-progress-bar></ip-progress-bar>
 </header>

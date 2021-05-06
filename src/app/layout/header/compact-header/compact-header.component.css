@@ -1,7 +1,7 @@
 /* NAVIGATION SUBMENU OVERRIDE EBI-GLOBAL TO REMOVE A WHITE RIGHT LINE */
 
 .no-border-submenu {
-  border-right: 0 !important ;
+  border-right: 0 !important;
 }
 
 /* COMPACT HEADER */
@@ -31,4 +31,10 @@
 .masthead.compact-for-data.compact-disabled .masthead-inner > nav.column {
   width: 100%;
   left: 0;
+}
+
+.masthead-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
 }

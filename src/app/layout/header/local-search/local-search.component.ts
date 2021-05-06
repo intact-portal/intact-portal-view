@@ -25,10 +25,7 @@ export class LocalSearchComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // setTimeout(() => {
-      console.log('local search');
-      this.searchService.searchSuggestions($('#localSearchBox .typeahead'));
-    // })
+    this.searchService.searchSuggestions($('#localSearchBox .typeahead'));
   }
 
   search(query: string, typeOfButton: string) {

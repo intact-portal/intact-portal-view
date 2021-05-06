@@ -22,7 +22,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('ip-search').foundation();
-    console.log('search for home')
     this.searchService.searchSuggestions($('#searchBox .typeahead'));
   }
 

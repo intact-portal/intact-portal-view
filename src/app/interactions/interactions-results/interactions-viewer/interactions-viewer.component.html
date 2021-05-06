@@ -14,16 +14,16 @@
       <div class="margin-bottom-large" style="background-color: #fbfbfb">
         <li>
           <span class="margin-left-small">
-          <input #forcedirected type="radio" name="layout" (change)="onChangeLayout(forcedirected.value)"
+          <input #forcedirected type="radio" name="layout" (change)="onChangeLayout($event, forcedirected.value)"
                  value="fcose" [checked]="view.layoutName === forcedirected.value" id="force-directed"/>
               <label for="force-directed">Force directed</label>
           </span>
         </li>
         <li>
           <span class="margin-left-small">
-          <input #circular type="radio" name="layout" (change)="onChangeLayout(circular.value)" value="avsdf"
-                 id="circular" [checked]="view.layoutName === circular.value"/>
-                <label for="circular">Circular</label>
+          <input #circular type="radio" name="layout" (change)="onChangeLayout($event, circular.value)" value="cise"
+                 id="circular" [checked]="view.layoutName === circular.value" [disabled]="groupby.checked"/>
+                <label for="circular">Balloons</label>
           </span>
         </li>
       </div>
@@ -53,7 +53,7 @@
         <li>
           <span class="margin-left-small">
           <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"
-                 [checked]="view.groupBySpecies" id="group-by"/>
+                 [checked]="view.groupBySpecies" id="group-by" [disabled]="circular.checked"/>
             <label for="group-by">Species</label>
           </span>
         </li>

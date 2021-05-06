@@ -61,8 +61,16 @@ export class BatchSearchComponent {
       if (entry.totalElements !== 0) {
         entry.term = key;
         entry.content.forEach(interactor => this._interactorAcs.add(interactor.interactorAc));
-        if (!entry.last) this._entriesToComplete.set(key, entry);
-        this._foundEntries.push(entry);
+        if (!entry.last) {
+          this._entriesToComplete.set(key, entry);
+        }
+        let i = 0;
+        for (i; i < this._foundEntries.length; i++) {
+          if (this._foundEntries[i].totalElements < entry.totalElements) {
+            break;
+          }
+        }
+        this._foundEntries.splice(i, 0, entry)
       } else {
         this._notFoundEntries.push(key);
       }

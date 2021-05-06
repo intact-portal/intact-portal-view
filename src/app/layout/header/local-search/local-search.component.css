@@ -9,7 +9,7 @@
   border-bottom: 0;
 }
 
-#searchBox {
+#localSearchBox {
   display: inline-flex;
   flex-direction: row;
   width: 100%;

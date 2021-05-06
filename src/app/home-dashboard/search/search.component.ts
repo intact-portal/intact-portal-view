@@ -22,14 +22,17 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('ip-search').foundation();
-    this.searchService.searchSuggestions();
+    console.log('search for home')
+    this.searchService.searchSuggestions($('#searchBox .typeahead'));
   }
 
   search(query: string, typeOfButton: string) {
-    this.searchService.search(query);
+    if (query) {
+      this.searchService.search(query);
 
-    if (typeOfButton === 'enter' || typeOfButton === 'button') {
-      this.searchService.title = query;
+      if (typeOfButton === 'enter' || typeOfButton === 'button') {
+        this.searchService.title = query;
+      }
     }
   }
 }

@@ -34,6 +34,7 @@ export abstract class InteractomesConstants {
     new Interactome('Helicobacter pylori', 'L', 'helpy', 'helpy', 85962),
     new Interactome('Schizosaccharomyces pombe (strain ATCC 38366 / 972)', 'Y', 'schpo', 'schpo', 284812),
     new Interactome('Bacillus subtilis', 'L', 'bacsu', 'bacsu', 224308),
-    new Interactome('Desulfovibrio vulgaris (strain Hildenborough / ATCC 29579 / NCIMB 8303)', 'L', 'desvh', 'desvh', 882),
+    new Interactome('SARS-CoV-2', 'v', 'SARS-CoV-2', 'SARS-CoV-2', 2697049),
+    // new Interactome('Desulfovibrio vulgaris (strain Hildenborough / ATCC 29579 / NCIMB 8303)', 'L', 'desvh', 'desvh', 882),
   ];
 }

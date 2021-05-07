@@ -2,8 +2,7 @@
   <div id="details-viewer" class="row expanded">
     <div id="interaction-viewer" class="columns medium-9">
       <h4>Interaction Viewer</h4>
-      <div id="interaction-viewer-container"></div>
-      <div class="row expanded button-bar">
+      <div class="row expanded button-bar no-padding">
         <div class="button-group expanded columns large-8 medium-12 no-pad-left no-pad-right no-margin">
           <button class="button" (click)="onChangeAnnotation('MI Features')"
                   [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['MI Features'],
@@ -27,12 +26,15 @@
           </button>
         </div>
 
+
         <div class="button-group expanded columns large-4 medium-12 no-pad-left no-pad-right no-margin">
           <button class="button lighter" (click)="expandAll()">Expand <span class="show-for-large">all</span></button>
           <button class="button lighter" (click)="collapseAll()">Collapse <span class="show-for-large">all</span>
           </button>
         </div>
       </div>
+      <div id="interaction-viewer-container"></div>
+
     </div>
 
     <div id="viewer-legend" class="columns medium-3">

@@ -216,7 +216,7 @@ export class SearchService {
       } else {
         id = item.interactorAc;
       }
-      this.title = `${this.query} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`;
+      this.title = `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`;
       this.search(id);
     });
    const updateAutosuggestion = () => {

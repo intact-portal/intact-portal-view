@@ -149,7 +149,9 @@ export class BatchSearchComponent {
   collectNextPagesInteractors(entriesToComplete?: ResolutionEntry[], page = 1) {
     if (page === 1) {
       entriesToComplete = Array.from(this._entriesToComplete.values());
-      if (entriesToComplete.length === 0) return this.batchSearch();
+      if (entriesToComplete.length === 0) {
+        return this.batchSearch();
+      }
       this._totalInteractorsToQuery = entriesToComplete.reduce((total, entry) => total + entry.totalElements - 50, 0);
     }
     if (this.collectionReset) {
@@ -167,10 +169,15 @@ export class BatchSearchComponent {
           this._interactorsQueried++;
           this._acCollectionProgress = (this._interactorsQueried / this._totalInteractorsToQuery) * 100;
         });
-        if (!entry.last) nextEntriesToComplete.push(entry);
+        if (!entry.last) {
+          nextEntriesToComplete.push(entry);
+        }
       }
-      if (nextEntriesToComplete.length !== 0) this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
-      else this.batchSearch();
+      if (nextEntriesToComplete.length !== 0) {
+        this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
+      } else {
+        this.batchSearch();
+      }
     })
   }
 

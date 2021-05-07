@@ -151,13 +151,19 @@ td.legend-label {
   stroke: black;
   paint-order: markers fill stroke;
   fill: none;
+}
+
+#rect-to-circle[can-animate='true'] {
   animation: rect-to-circle-morph 5s ease infinite;
 }
 
 #rect-tick {
-  animation: rect-tick-morph 5s ease infinite;
   stroke-width: 0;
   fill: black;
+}
+
+#rect-tick[can-animate='true'] {
+  animation: rect-tick-morph 5s ease infinite;
 }
 
 #protein-svg {

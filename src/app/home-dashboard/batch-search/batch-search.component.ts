@@ -99,8 +99,10 @@ export class BatchSearchComponent {
     console.log('FileSelected');
   }
 
-  selectAll(term: string) {
-    $(`input[group='${term}']:checkbox`).prop('checked', true)
+  selectAll(term?: string) {
+    const inputs = term ? $(`input[group='${term}']:checkbox`) : $(`input:checkbox`);
+    inputs
+      .prop('checked', true)
       .each((i, checkBox: HTMLInputElement) => {
         const checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {
@@ -112,8 +114,10 @@ export class BatchSearchComponent {
       });
   }
 
-  unselectAll(term: string) {
-    $(`input[group='${term}']:checkbox`).prop('checked', false)
+  unselectAll(term?: string) {
+    const inputs = term ? $(`input[group='${term}']:checkbox`) : $(`input:checkbox`);
+    inputs
+      .prop('checked', false)
       .each((i, checkBox) => {
         const checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {

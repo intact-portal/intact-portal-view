@@ -93,6 +93,11 @@ a.tag:hover {
   background-image: linear-gradient(#000000, #68297c);
 }
 
+.masthead-inner nav i {
+  font-size: medium;
+  /*line-height: 1em;*/
+  margin-top: 0;
+}
 /* end */
 
 /*IntAct tiles and buttons styling*/
@@ -102,6 +107,10 @@ a.intact-background,
 .intact-background.button:hover,
 .intact-background.tag {
   background: #68297c;
+}
+
+.intact-color {
+  color: #68297c;
 }
 
 .button {
@@ -794,19 +803,6 @@ div.dataTables_scroll {
   /*padding: 2px 5px;*/
 }
 
-.rowSelected {
-  /*font-weight: bold;*/
-  background-color: #305b7d66 !important;
-  /*text-shadow: 1px 1px 0px #EEE;*/
-  color: black;
-}
-
-.rowUnSelected {
-  /*font-weight: bold;*/
-  background-color: #305b7d66 !important;
-  /*text-shadow: 1px 1px 0px #EEE;*/
-  color: black;
-}
 
 button.showMore, button.showLess {
   background-color: #67297cd6;

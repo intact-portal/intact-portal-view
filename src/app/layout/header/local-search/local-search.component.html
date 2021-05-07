@@ -1,13 +1,12 @@
 <div [ngStyle]="{'visibility':!hasRoute('home') ? 'visible': 'hidden'}" id="intact-local-search">
   <div id="localSearchBox" class="no-margin white-border">
-    <button id="local-search-button" class="button"
+    <input #query class="typeahead frosty-glass" type="text" name="first" id="local-searchbox"
+           (keydown.enter)="search(query.value, 'enter')"
+           placeholder="Search by gene names, UniProt ACs, Pubmed, protein names, Complex ACs"/>
+    <button id="local-search-button-2" class="button"
             (click)="search(query.value, 'button')">
       <i class="icon icon-common icon-search"></i>
     </button>
-
-    <input #query class="typeahead frosty-glass" type="text" name="first" id="local-searchbox"
-           (keydown.enter)="search(query.value, 'enter')"
-           placeholder="Gene name(s), UniProt AC(s), Pubmed, Protein name(s), Complex Ac"/>
 
   </div>
 </div>

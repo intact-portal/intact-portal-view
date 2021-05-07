@@ -13,7 +13,7 @@
           <div class="row margin-top-large">
             <div id="searchBox3" class="columns small-12">
               <textarea #query id="term-list" placeholder="Search..." rows="5"></textarea>
-              <button class="button" type="button" (click)="validateSearchBox(query.value)" awNextStep>
+              <button class="button float-right" type="button" (click)="validateSearchBox(query.value)" awNextStep>
                 <i class="icon icon-common icon-cogs"></i> Next Step
               </button>
             </div>
@@ -180,13 +180,21 @@
       </ng-template>
     </div>
 
-    <div class="button-group">
-      <button class="button" type="button" awPreviousStep (click)="resetSecondStep()">Previous Step</button>
-      <button class="button" type="button" awNextStep [disabled]="!dataReceived"
-              (click)="collectNextPagesInteractors()">
-        <i class="icon icon-common icon-cogs"></i> Search
-      </button>
+    <div class="button-bar">
+      <div class="button-group">
+        <button class="button" type="button" (click)="selectAll()">Select all</button>
+        <button class="button" type="button" (click)="unselectAll()">Unselect all</button>
+      </div>
+
+      <div class="button-group float-right">
+        <button class="button" type="button" awPreviousStep (click)="resetSecondStep()">Previous Step</button>
+        <button class="button" type="button" awNextStep [disabled]="!dataReceived"
+                (click)="collectNextPagesInteractors()">
+          <i class="icon icon-common icon-cogs"></i> Search
+        </button>
+      </div>
     </div>
+
   </aw-wizard-step>
   <aw-wizard-step stepTitle="Collect interactors" [navigationSymbol]="{ symbol: '&#xf002;', fontFamily: 'EBI-Common'}">
     <div class="small-5 small-centered columns" *ngIf="entriesToComplete.size > 0">
@@ -198,7 +206,7 @@
       </div>
     </div>
 
-    <div class="button-group">
+    <div class="button-group float-right">
       <button class="button" type="button" (click)="resetThirdStep()" awPreviousStep>Previous Step</button>
     </div>
   </aw-wizard-step>

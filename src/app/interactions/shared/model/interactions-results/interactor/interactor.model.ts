@@ -10,8 +10,8 @@ export class Interactor {
     public readonly interactorType: string,
     public readonly interactorSpecies: string,
     public readonly interactionCount: number,
-    public readonly color: string,
-    public readonly shape: NodeShape
+    public readonly interactorColor: string,
+    public readonly interactorShape: NodeShape
   ) {
   }
 }

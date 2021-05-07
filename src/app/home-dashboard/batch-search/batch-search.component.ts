@@ -64,13 +64,14 @@ export class BatchSearchComponent {
         if (!entry.last) {
           this._entriesToComplete.set(key, entry);
         }
-        let i = 0;
-        for (i; i < this._foundEntries.length; i++) {
-          if (this._foundEntries[i].totalElements < entry.totalElements) {
-            break;
-          }
-        }
-        this._foundEntries.splice(i, 0, entry)
+        // let i = 0;
+        // for (i; i < this._foundEntries.length; i++) {
+        //   if (this._foundEntries[i].totalElements < entry.totalElements) {
+        //     break;
+        //   }
+        // }
+        // this._foundEntries.splice(i, 0, entry)
+        this._foundEntries.push(entry);
       } else {
         this._notFoundEntries.push(key);
       }

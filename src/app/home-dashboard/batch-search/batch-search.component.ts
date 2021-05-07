@@ -5,6 +5,7 @@ import {SearchService} from '../search/service/search.service';
 import {Pagination} from '../shared/pagination.model';
 import {Interactor} from '../../interactions/shared/model/interactions-results/interactor/interactor.model';
 import {ResolutionEntry} from './resolution-interactor-model';
+import {NodeShape} from '../../interactions/shared/model/network-shapes/node-shape';
 
 
 const baseURL = environment.intact_portal_ws;
@@ -31,6 +32,7 @@ export class BatchSearchComponent {
   private _interactorsQueried = 0;
   private _acCollectionProgress = 0;
   private collectionReset = false;
+  nodeShape = NodeShape;
 
   constructor(private search: SearchService) {
     this.uploader = new FileUploader({

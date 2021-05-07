@@ -23,7 +23,7 @@ export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
     if (!this.shape) this.shape = NodeShape.ELLIPSE;
     if (!this.color) this.color = '#d6d6d6';
-    if (!this.height) this.height = '20pt'
+    if (!this.height) this.height = '18pt'
   }
 
   ngAfterViewInit(): void {

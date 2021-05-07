@@ -138,7 +138,7 @@
                 </div>
               </td>
               <td>
-                <ip-node-diagram [color]="interactor.interactorColor" [shape]="interactor.interactorShape"
+                <ip-node-diagram [color]="interactor.interactorColor" [shape]="nodeShape[interactor.interactorShape]"
                                  [label]="interactor.interactorName" [height]="'35pt'"></ip-node-diagram>
               </td>
               <td>{{ interactor.interactorPreferredIdentifier }}</td>
@@ -211,4 +211,3 @@
     </div>
   </aw-wizard-step>
 </aw-wizard>
-

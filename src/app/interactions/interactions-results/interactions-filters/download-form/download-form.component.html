@@ -1,7 +1,7 @@
 <form ngNoForm [action]="URL" method="post">
   <label>
     <input class="hidden" type="text" name="format" [value]="format.name">
-    <input class="hidden" type="text" name="query" [value]="search.query">
+    <input class="hidden" type="text" name="query" [value]="search.spacedQuery">
 
     <input class="hidden" type="checkbox" name="batchSearch" [checked]="search.isBatchSearch">
     <input class="hidden" type="checkbox" name="negativeFilter" [checked]="filters.negative">

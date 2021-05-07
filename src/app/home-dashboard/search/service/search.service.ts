@@ -40,7 +40,7 @@ export class SearchService {
   private manageTokens() {
     this._token = this.genToken(5);
     const query = this._query;
-    const title = this._title
+    const title = this._title;
     localStorage.setItem(SearchService.localTokenId(this._token), JSON.stringify({query, title}));
     const tokens: string[] = JSON.parse(localStorage.getItem('intact-tokens') || '[]');
     tokens.push(this._token);
@@ -84,6 +84,10 @@ export class SearchService {
 
   get query(): string {
     return this._query;
+  }
+
+  get spacedQuery(): string {
+    return this._query.replace(/\n/g, ' ')
   }
 
   set query(value: string) {
@@ -219,7 +223,7 @@ export class SearchService {
       this.title = `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`;
       this.search(id);
     });
-   const updateAutosuggestion = () => {
+    const updateAutosuggestion = () => {
       updatingPages = true;
       const val = searchBox.typeahead('val');
       ignoreChange = true;

@@ -2,11 +2,14 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
-import {FaqComponent} from "./navigation/faq/faq.component";
-import {AboutComponent} from "./navigation/about/about.component";
+import {FaqComponent} from './navigation/faq/faq.component';
+import {AboutComponent} from './navigation/about/about.component';
 
 const routes: Routes = [
-  {path: 'home', loadChildren: 'app/home-dashboard/home-dashboard.module#HomeDashboardModule'},
+  {
+    path: 'home',
+    loadChildren: 'app/home-dashboard/home-dashboard.module#HomeDashboardModule'
+  },
   {
     path: 'search',
     loadChildren: 'app/interactions/interactions-results/interactions-results.module#InteractionsResultsModule'

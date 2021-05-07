@@ -5,7 +5,7 @@ import {TechnicalCornerComponent} from './technical-corner/technical-corner.comp
 import {DocsComponent} from './docs/docs.component';
 import {DataSubmissionComponent} from './data-submission/data-submission.component';
 import {DatasetsComponent} from './datasets/datasets.component';
-import {UserGuideComponent} from "./user-guide/user-guide.component";
+import {UserGuideComponent} from './user-guide/user-guide.component';
 
 const documentationRoutes: Routes = [
   {

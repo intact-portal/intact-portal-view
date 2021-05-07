@@ -21,13 +21,13 @@
   padding: 0.85em;
   margin: 0;
   font-size: 0.8em;
+  border-left: 1px solid white;
 }
 
 #local-searchbox {
   font-size: medium;
   flex: 1;
   height: 2.4em;
-  padding-left: 0;
   border-bottom: 0;
 }
 

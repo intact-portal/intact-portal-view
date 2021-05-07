@@ -53,6 +53,11 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  public canAnimate(): boolean {
+    // @ts-ignore
+    return !!window.chrome;
+  }
+
   public hasNodeShapeOf(type: string): boolean {
     return this.nodeTypes ? this.nodeTypes.has(type) : false;
   }

@@ -21,9 +21,16 @@
         </li>
         <li>
           <span class="margin-left-small">
-          <input #circular type="radio" name="layout" (change)="onChangeLayout($event, circular.value)" value="cise"
-                 id="circular" [checked]="view.layoutName === circular.value" [disabled]="groupby.checked"/>
-                <label for="circular">Balloons</label>
+          <input #avsdf type="radio" name="layout" (change)="onChangeLayout($event, avsdf.value)" value="avsdf"
+                 id="avsdf" [checked]="view.layoutName === avsdf.value"/>
+                <label for="avsdf">Circular</label>
+          </span>
+        </li>
+        <li>
+          <span class="margin-left-small">
+          <input #cise type="radio" name="layout" (change)="onChangeLayout($event, cise.value)" value="cise"
+                 id="cise" [checked]="view.layoutName === cise.value" [disabled]="groupby.checked"/>
+                <label for="cise">Bubbles</label>
           </span>
         </li>
       </div>
@@ -53,7 +60,7 @@
         <li>
           <span class="margin-left-small">
           <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"
-                 [checked]="view.groupBySpecies" id="group-by" [disabled]="circular.checked"/>
+                 [checked]="view.groupBySpecies" id="group-by" [disabled]="cise.checked"/>
             <label for="group-by">Species</label>
           </span>
         </li>

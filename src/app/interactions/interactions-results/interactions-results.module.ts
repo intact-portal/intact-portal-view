@@ -9,19 +9,19 @@ import {InteractorsTableComponent} from './interactions-list/interactors-table/i
 import {InteractionsTableComponent} from './interactions-list/interactions-table/interactions-table.component';
 import {InteractionDetailsModule} from '../interaction-details/interaction-details.module';
 import {Ng5SliderModule} from 'ng5-slider';
-import {ProgressSpinnerModule} from "../../layout/loading-indicators/progress-spinner/progress-spinner.module";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {TableFactoryService} from "../shared/service/table-factory.service";
-import {NetworkSelectionService} from "../shared/service/network-selection.service";
+import {ProgressSpinnerModule} from '../../layout/loading-indicators/progress-spinner/progress-spinner.module';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {TableFactoryService} from '../shared/service/table-factory.service';
+import {NetworkSelectionService} from '../shared/service/network-selection.service';
 import {InteractionsLegendComponent} from './interactions-viewer/interactions-legend/interactions-legend.component';
-import {ComponentsModule} from "../../shared/components/components.module";
+import {ComponentsModule} from '../../shared/components/components.module';
 import {DownloadFormComponent} from './interactions-filters/download-form/download-form.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [

@@ -17,8 +17,8 @@ export class SearchService {
   private _query: string;
   private _title: string;
   private _isBatchSearch = false;
-  private static localTokenId = token => `intact-batch-search-${token}`;
 
+  private static localTokenId = token => `intact-batch-search-${token}`;
 
   constructor(private router: Router, private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
@@ -141,4 +141,103 @@ export class SearchService {
     return params;
   }
 
+  searchSuggestions(searchBox: JQuery): void {
+    let updatingPages = false;
+    let ignoreChange = false;
+    let currentPage = 0;
+    let data: Pagination<any[]>;
+    let bloodhound: Bloodhound<Interactor>;
+    let suggestionQuery;
+    bloodhound = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        url: `${baseURL}/interactor/findInteractor/%QUERY?page=0&pageSize=10`,
+        prepare: (query, settings) => {
+          if (!ignoreChange) {
+            suggestionQuery = query;
+            settings.url = settings.url.replace('%QUERY', query);
+            settings.url = settings.url.replace('page=0', `page=${currentPage}`)
+          }
+          return settings;
+        },
+        transform: (response: any) => {
+          data = response;
+          return data.content;
+        }
+      }
+    });
+
+    bloodhound.initialize();
+
+    const limit = 20;
+    searchBox.typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 3
+      },
+      {
+        name: 'interactors',
+        limit: limit,
+        source: bloodhound,
+        display: function (item: Interactor) {
+          return item.interactorAc;
+        },
+        templates: {
+          header: () => `<h4 class="category-name">Interactors (${data.totalElements} found)</h4>`,
+          footer: () => {
+            if (data.totalPages > 1) {
+              return `<div class="alignCell">
+                        <button class="button" id="prev" ${data.first ? 'disabled' : ''}><i class="icon icon-common icon-previous-page"></i></button>
+                        <button class="button" id="next" ${data.last ? 'disabled' : ''}><i class="icon icon-common icon-next-page"></i></button>
+                      </div>`;
+            }
+          },
+          notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
+          suggestion: (item: Interactor) =>
+            `<div class="row expanded">
+               <div class="columns small-2">${item.interactorAc}</div>
+               <div class="columns small-2">
+                ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}
+               </div>
+               <div class="columns small-2"><i>"${item.interactorDescription}"</i> </div>
+               <div class="columns small-2">${item.interactorSpecies}</div>
+               <div class="columns small-2"><span class="labelWrapper">${item.interactorType}</span></div>
+               <div class="columns small-2"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
+             </div>`,
+        }
+      }
+    ).on('typeahead:selected', (ev, item) => {
+      // Noe: So far I can't find in the documentation a way to know the dataset of the item selected. This code should improve with that information
+      let id;
+      if (item.interactorAc === undefined) {
+        // We assume is an interaction
+        id = item.ac;
+      } else {
+        id = item.interactorAc;
+      }
+      this.title = `${this.query} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`;
+      this.search(id);
+    });
+   const updateAutosuggestion = () => {
+      updatingPages = true;
+      const val = searchBox.typeahead('val');
+      ignoreChange = true;
+      searchBox.typeahead('val', val + ' ');
+      ignoreChange = false;
+      searchBox.typeahead('val', val);
+      updatingPages = false;
+    }
+    $(document).on('click', '#prev', () => {
+      currentPage--;
+      updateAutosuggestion();
+    })
+    $(document).on('click', '#next', () => {
+      currentPage++;
+      updateAutosuggestion();
+    });
+    searchBox.on('input', () => {
+      currentPage = 0;
+    })
+  }
 }

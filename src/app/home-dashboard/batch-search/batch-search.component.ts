@@ -61,8 +61,16 @@ export class BatchSearchComponent {
       if (entry.totalElements !== 0) {
         entry.term = key;
         entry.content.forEach(interactor => this._interactorAcs.add(interactor.interactorAc));
-        if (!entry.last) this._entriesToComplete.set(key, entry);
-        this._foundEntries.push(entry);
+        if (!entry.last) {
+          this._entriesToComplete.set(key, entry);
+        }
+        let i = 0;
+        for (i; i < this._foundEntries.length; i++) {
+          if (this._foundEntries[i].totalElements < entry.totalElements) {
+            break;
+          }
+        }
+        this._foundEntries.splice(i, 0, entry)
       } else {
         this._notFoundEntries.push(key);
       }
@@ -91,8 +99,10 @@ export class BatchSearchComponent {
     console.log('FileSelected');
   }
 
-  selectAll(term: string) {
-    $(`input[group='${term}']:checkbox`).prop('checked', true)
+  selectAll(term?: string) {
+    const inputs = term ? $(`input[group='${term}']:checkbox`) : $(`input:checkbox`);
+    inputs
+      .prop('checked', true)
       .each((i, checkBox: HTMLInputElement) => {
         const checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {
@@ -104,8 +114,10 @@ export class BatchSearchComponent {
       });
   }
 
-  unselectAll(term: string) {
-    $(`input[group='${term}']:checkbox`).prop('checked', false)
+  unselectAll(term?: string) {
+    const inputs = term ? $(`input[group='${term}']:checkbox`) : $(`input:checkbox`);
+    inputs
+      .prop('checked', false)
       .each((i, checkBox) => {
         const checkbox = $(checkBox);
         if (checkbox.attr('name') === 'interactor') {
@@ -137,7 +149,9 @@ export class BatchSearchComponent {
   collectNextPagesInteractors(entriesToComplete?: ResolutionEntry[], page = 1) {
     if (page === 1) {
       entriesToComplete = Array.from(this._entriesToComplete.values());
-      if (entriesToComplete.length === 0) return this.batchSearch();
+      if (entriesToComplete.length === 0) {
+        return this.batchSearch();
+      }
       this._totalInteractorsToQuery = entriesToComplete.reduce((total, entry) => total + entry.totalElements - 50, 0);
     }
     if (this.collectionReset) {
@@ -155,10 +169,15 @@ export class BatchSearchComponent {
           this._interactorsQueried++;
           this._acCollectionProgress = (this._interactorsQueried / this._totalInteractorsToQuery) * 100;
         });
-        if (!entry.last) nextEntriesToComplete.push(entry);
+        if (!entry.last) {
+          nextEntriesToComplete.push(entry);
+        }
       }
-      if (nextEntriesToComplete.length !== 0) this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
-      else this.batchSearch();
+      if (nextEntriesToComplete.length !== 0) {
+        this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
+      } else {
+        this.batchSearch();
+      }
     })
   }
 

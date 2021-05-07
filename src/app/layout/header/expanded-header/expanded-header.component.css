@@ -3,3 +3,13 @@
 .no-border-submenu {
   border-right: 0 !important ;
 }
+
+.bar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.masthead nav ul li.active a {
+  background-color: white;
+}

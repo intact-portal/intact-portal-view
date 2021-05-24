@@ -2,10 +2,6 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-// Environment for localhost
-// TODO This should disappear, We need to create a localhost env that works with the proxy
-// const EBI_BASE_URL = 'http://localhost:4200';
-
 // Environment for development
 const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
 const EBI_URL = 'https://www.ebi.ac.uk';

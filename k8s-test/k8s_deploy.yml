@@ -1,0 +1,48 @@
+# Specifies what version of K8s you want to use
+apiVersion: v1
+# A service is used to expose your Deployment to the external access
+kind: Service
+metadata:
+  labels:
+    service-label-key: intact-portal-view
+  name: intact-portal-view-service
+spec:
+  type: NodePort
+  ports:
+    - port: 31240
+      protocol: TCP
+      # The port which will be externally exposed. Must be in the range [30000, 32767].
+      nodePort: 31240
+      # The port on your Deployment which it will expose
+      targetPort: 4200
+      #Trying
+  selector:
+    # Selects intact-portal-view Deployment to attach the Service to
+    app: intact-portal-view
+    # Tell K8s this wants to expose an external port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intact-portal-view-deployment
+spec:
+  selector:
+    matchLabels:
+      app: intact-portal-view
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: intact-portal-view
+    spec:
+      containers:
+        - name: intact-portal-view
+          # Pull the latest image which contains the angular application from EBI's dockerhub
+          image: dockerhub.ebi.ac.uk/intact-ci/intact-portal-view:latest
+          # image: ntoro/spa-demo:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4200
+      imagePullSecrets:
+        # Provided by GitLab, this allows K8s to connect to dockerhub.ebi.ac.uk
+        - name: gitlab-registry

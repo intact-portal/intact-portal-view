@@ -21,7 +21,7 @@ variables:
 
 init:
   stage: init
-  image: trion/ng-cli:${CLI_VERSION}
+  image: trion/ng-cli
   script: ['']
   cache:
     policy: push
@@ -81,9 +81,9 @@ init:
 
 build:
   stage: build
-  image: trion/ng-cli:${CLI_VERSION}
+  image: trion/ng-cli
   script:
-    - ng build --prod --build-optimizer=false --base-href "/intact/beta/"
+    - ng build --env=prod --build-optimizer=false --base-href "/intact/beta/"
   artifacts:
     expire_in: 1 day
     paths:

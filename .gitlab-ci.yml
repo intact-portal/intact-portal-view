@@ -17,11 +17,11 @@ default:
 
 variables:
   DIST_DIR: dist/intact-portal-view
-  CLI_VERSION: 1.7.4
+  CLI_VERSION: latest
 
 init:
   stage: init
-  image: trion/ng-cli
+  image: trion/ng-cli:${CLI_VERSION}
   script: ['']
   cache:
     policy: push
@@ -81,7 +81,7 @@ init:
 
 build:
   stage: build
-  image: trion/ng-cli
+  image: trion/ng-cli:${CLI_VERSION}
   script:
     - ng build --env=prod --build-optimizer=false --base-href "/intact/beta/"
   artifacts:

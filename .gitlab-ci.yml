@@ -172,7 +172,7 @@ hx-test-deploy:
     - mv ./kubectl /usr/local/bin/kubectl
     - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN_HX}@gitlab.ebi.ac.uk/anjali/k8s-config-hx
     - mkdir ~/.kube
-    - cp k8s-config-test/config ~/.kube/
+    - cp k8s-config-hx/config ~/.kube/
     - kubectl config get-contexts
     - kubectl config use-context team-admin-hx-wp-webadmin-24
     - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'

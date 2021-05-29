@@ -5,7 +5,7 @@ import {Filter, FilterService} from '../../../shared/service/filter.service';
 import {SearchService} from '../../../../home-dashboard/search/service/search.service';
 import {NetworkSelectionService} from '../../../shared/service/network-selection.service';
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
   selector: 'ip-download-form',

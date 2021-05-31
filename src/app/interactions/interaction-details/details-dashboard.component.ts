@@ -8,7 +8,7 @@ import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {Format} from '../shared/model/download/format.model';
 import {environment} from '../../../environments/environment';
 
-const baseURL = environment.intact_portal_ws;
+const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
   selector: 'ip-details-dashboard',

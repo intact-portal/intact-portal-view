@@ -4,7 +4,6 @@ import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {FaqComponent} from './navigation/faq/faq.component';
 import {AboutComponent} from './navigation/about/about.component';
-import {InteractionsRedirectComponent} from './navigation/redirections/interactions-redirect/interactions-redirect.component';
 
 const routes: Routes = [
   {
@@ -21,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'pages/interactions/interactions.xhtml',
-    component: InteractionsRedirectComponent
+    redirectTo: 'search',
   },
   {
     path: 'download',

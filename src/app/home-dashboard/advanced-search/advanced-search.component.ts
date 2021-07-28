@@ -15,20 +15,20 @@ export class AdvancedSearchComponent implements OnInit {
   public query = {
     condition: 'and',
     rules: [
-      {field: 'idA', operator: '=', entity: 'participantA'},
+      {field: 'idA', operator: '=', entity: 'interactorA'},
     ]
   };
 
   public config: QueryBuilderConfig = {
     entities: {
-      participant: {
-        name: 'Participant (A or B)'
+      interactor: {
+        name: 'Interactor (A or B)'
       },
-      participantA: {
-        name: 'Participant A'
+      interactorA: {
+        name: 'Interactor A'
       },
-      participantB: {
-        name: 'Participant B'
+      interactorB: {
+        name: 'Interactor B'
       },
       interaction: {
         name: 'Interaction'
@@ -47,47 +47,47 @@ export class AdvancedSearchComponent implements OnInit {
       idA: {
         name: 'Identifier',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       idB: {
         name: 'Identifier',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       altidA: {
         name: 'Alternative Id.',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       altidB: {
         name: 'Alternative Id.',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       id: {
         name: 'Identifiers',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       aliasA: {
         name: 'Alias',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       aliasB: {
         name: 'Alias',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       alias: {
         name: 'Alias',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       identifier: {
         name: 'Identifiers, Alternatives, Aliases',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       pubauth: {
         name: 'Publication 1st author(s)',
@@ -102,12 +102,12 @@ export class AdvancedSearchComponent implements OnInit {
       taxidA: {
         name: 'Tax Id. interactor',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       taxidB: {
         name: 'Tax Id. interactor',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       taxidHost: {
         name: 'Tax Id. Host organism',
@@ -117,7 +117,7 @@ export class AdvancedSearchComponent implements OnInit {
       species: {
         name: 'Tax Id. interactors',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       type: {
         name: 'Interaction type(s)',
@@ -137,57 +137,57 @@ export class AdvancedSearchComponent implements OnInit {
       pbioroleA: {
         name: 'Biological role',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       pbioroleB: {
         name: 'Biological role',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       pbiorole: {
         name: 'Biological role',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       pexproleA: {
         name: 'Experimental Role',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       pexproleB: {
         name: 'Experimental Role',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       ptypeA: {
         name: 'Interactor type',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       ptypeB: {
         name: 'Interactor type',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       ptype: {
         name: 'Interactor type',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       pxrefA: {
         name: 'Interactor xrefs.',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       pxrefB: {
         name: 'Interactor xrefs.',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       pxref: {
         name: 'Interactor xrefs.',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       xref: {
         name: 'Interaction xrefs.',
@@ -197,12 +197,12 @@ export class AdvancedSearchComponent implements OnInit {
       annotA: {
         name: 'Interactor annotations',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       annotB: {
         name: 'Interactor annotations',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       annot: {
         name: 'Interaction annotations',
@@ -250,47 +250,47 @@ export class AdvancedSearchComponent implements OnInit {
       ftypeA: {
         name: 'Feature type',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       ftypeB: {
         name: 'Feature type',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       ftype: {
         name: 'Feature type',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       pmethodA: {
-        name: 'Participant identification method',
+        name: 'interactor identification method',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       pmethodB: {
-        name: 'Participant identification method',
+        name: 'interactor identification method',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       pmethod: {
-        name: 'Participant identification method',
+        name: 'interactor identification method',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       stcA: {
         name: 'Stoichiometry',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       stcB: {
         name: 'Stoichiometry',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       stc: {
         name: 'Stoichiometry',
         type: 'boolean',
-        entity: 'participant'
+        entity: 'interactor'
       },
       param: {
         name: 'Interaction parameters',
@@ -305,17 +305,17 @@ export class AdvancedSearchComponent implements OnInit {
       bioeffectA: {
         name: 'Biological effect',
         type: 'string',
-        entity: 'participantA'
+        entity: 'interactorA'
       },
       bioeffectB: {
         name: 'Biological effect',
         type: 'string',
-        entity: 'participantB'
+        entity: 'interactorB'
       },
       bioeffect: {
         name: 'Biological effect',
         type: 'string',
-        entity: 'participant'
+        entity: 'interactor'
       },
       causalmechanism: {
         name: 'Causal regulatory mechanism',

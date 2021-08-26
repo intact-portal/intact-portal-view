@@ -17,32 +17,34 @@ import {QueryBuilderModule} from 'angular2-query-builder';
 import {BatchSearchComponent} from './batch-search/batch-search.component';
 import {ArchwizardModule} from 'angular-archwizard';
 import {KeyvaluemapPipe} from './shared/keyvaluemap.pipe';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatButtonModule} from "@angular/material/button";
-import {MatCardModule} from "@angular/material/card";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 import {DatasetByYearComponent} from './featured-dataset/dataset-archive/dataset-by-year/dataset-by-year.component';
-import {ProgressSpinnerModule} from "../layout/loading-indicators/progress-spinner/progress-spinner.module";
-import {ComponentsModule} from "../shared/components/components.module";
+import {ProgressSpinnerModule} from '../layout/loading-indicators/progress-spinner/progress-spinner.module';
+import {ComponentsModule} from '../shared/components/components.module';
+import {MIQLPipe} from './advanced-search/MIQL.pipe';
+import {ColorMIQLPipe} from './advanced-search/colorMIQL.pipe';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        QueryBuilderModule,
-        HomeDashboardRoutingModule,
-        FileUploadModule,
-        ArchwizardModule,
-        MatProgressSpinnerModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        MatButtonModule,
-        MatCardModule,
-        ProgressSpinnerModule,
-        ComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    QueryBuilderModule,
+    HomeDashboardRoutingModule,
+    FileUploadModule,
+    ArchwizardModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatCardModule,
+    ProgressSpinnerModule,
+    ComponentsModule
+  ],
   exports: [
     KeyvaluemapPipe
   ],
@@ -59,7 +61,9 @@ import {ComponentsModule} from "../shared/components/components.module";
     AdvancedSearchComponent,
     BatchSearchComponent,
     KeyvaluemapPipe,
-    DatasetByYearComponent
+    DatasetByYearComponent,
+    MIQLPipe,
+    ColorMIQLPipe
   ]
 })
 export class HomeDashboardModule {

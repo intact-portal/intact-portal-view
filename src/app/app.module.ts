@@ -31,7 +31,7 @@ import {Angulartics2Module} from 'angulartics2';
 import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
 import {GoogleAnalyticsService} from './shared/service/google-analytics/google-analytics.service';
 import {APP_BASE_HREF, PlatformLocation} from '@angular/common';
-
+import { RedirectComponent } from './navigation/redirect/redirect.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +39,8 @@ import {APP_BASE_HREF, PlatformLocation} from '@angular/common';
     InteractomesComponent,
     InteractomeComponent,
     AboutComponent,
-    FaqComponent
+    FaqComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import {Pagination} from '../../shared/pagination.model';
 import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
 import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
 import {Interactome} from '../../../interactomes/interactome.model';
+import {ColorMIQLPipe} from '../../advanced-search/colorMIQL.pipe';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -23,10 +24,22 @@ export class SearchService {
   constructor(private router: Router, private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
+  isAdvancedQuery(query: string): boolean {
+    const isMIQL = ColorMIQLPipe.isMIQL(query);
+    if (isMIQL) {
+      window.open('query/' + query);
+    }
+    return isMIQL;
+  }
+
   search(query: string) {
     this._query = query;
     this._isBatchSearch = false;
-    this.router.navigate(['search'], {queryParams: {query}});
+    const b = !this.isAdvancedQuery(query);
+    console.log(b, query)
+    if (b) {
+      this.router.navigate(['search'], {queryParams: {query}});
+    }
   }
 
   batchSearch(query: string) {

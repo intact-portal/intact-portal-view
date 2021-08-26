@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {Title} from '@angular/platform-browser';
-
 
 @Component({
   selector: 'ip-technical-corner',
@@ -14,7 +13,8 @@ export class TechnicalCornerComponent implements OnInit {
   source_code = environment.intact_portal_documentation_url + 'technical-corner/source-code.md';
   tools = environment.intact_portal_documentation_url + 'technical-corner/tools.md';
 
-  constructor(private titleService: Title) { }
+  constructor(private titleService: Title) {
+  }
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Technical Corner');

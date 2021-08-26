@@ -4,6 +4,8 @@ import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {FaqComponent} from './navigation/faq/faq.component';
 import {AboutComponent} from './navigation/about/about.component';
+import {environment} from '../environments/environment';
+import {RedirectComponent} from './navigation/redirect/redirect.component';
 
 const routes: Routes = [
   {
@@ -17,10 +19,6 @@ const routes: Routes = [
   {
     path: 'details',
     loadChildren: 'app/interactions/interaction-details/interaction-details.module#InteractionDetailsModule'
-  },
-  {
-    path: 'pages/interactions/interactions.xhtml',
-    redirectTo: 'search',
   },
   {
     path: 'download',
@@ -41,6 +39,30 @@ const routes: Routes = [
     path: 'about',
     component: AboutComponent,
     data: {showCompactHeader: false, showFooter: true}
+  },
+  {
+    path: 'interaction/:interactionAc',
+    redirectTo: 'details/interaction/:interactionAc'
+  },
+  {
+    path: 'query/:advanced_query',
+    component: RedirectComponent,
+    data: {externalUrl: environment.former_intact_url + 'query/:advanced_query'}
+  },
+  {
+    path: 'interactors/:query',
+    component: RedirectComponent,
+    data: {externalUrl: environment.former_intact_url + 'interactors/:query'}
+  },
+  {
+    path: 'pages/list/list.xhtml',
+    component: RedirectComponent,
+    data: {externalUrl: environment.former_intact_url + 'pages/list/list.xhtml'}
+  },
+  {
+    path: 'pages/interactions/interactions.xhtml',
+    component: RedirectComponent,
+    data: {externalUrl: environment.former_intact_url + 'pages/interactions/interactions.xhtml'}
   },
   {
     path: '**',

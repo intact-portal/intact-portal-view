@@ -31,7 +31,7 @@
     "@angular/router": "^5.2.8",
     "@iktakahiro/markdown-it-katex": "^4.0.0",
     "angular-archwizard": "5.0.1",
-    "angular2-query-builder": "^0.4.0",
+    "angular2-query-builder": "^0.6.2",
     "angulartics2": "3.6.0",
     "complexviewer": "2.1.7",
     "core-js": "^2.4.1",

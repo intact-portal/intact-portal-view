@@ -171,11 +171,11 @@ function removeSuperiorRules(value: string, start: number, end: number, stackLev
 }
 
 function fillRuleSet(ruleSet: RuleSet, value: string) {
-  ruleSet.condition = value.includes(' OR ') ? 'or' : 'and';
+  ruleSet.condition = /[ \u00a0]OR[ \u00a0]/ig.test(value) ? 'or' : 'and';
   const superiorRuleSets = ruleSet.rules;
   let i = 0;
   ruleSet.rules = [];
-  value.split(/ AND | OR /ig)
+  value.split(/[ \u00a0]AND[ \u00a0]|[ \u00a0]OR[ \u00a0]/ig)
     .map(ruleStr => ruleStr.trim())
     .filter(ruleStr => ruleStr.length > 0)
     .forEach(ruleStr => {

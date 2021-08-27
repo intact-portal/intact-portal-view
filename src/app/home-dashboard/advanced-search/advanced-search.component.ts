@@ -209,7 +209,7 @@ function fillRuleSet(ruleSet: RuleSet, value: string) {
         ruleStr = ruleStr.trim();
         const different = ruleStr.startsWith('NOT ') || ruleStr.startsWith('not ');
         const ruleOperator = different ? '≠' : '=';
-        const indexOfColon = ruleStr.indexOf(':');
+        const indexOfColon = ruleStr.indexOf(':') || ruleStr.length;
         const ruleFieldKeyword = ruleStr.substring(different ? 4 : 0, indexOfColon);
         const ruleField = AdvancedQueryHelper.toField(ruleFieldKeyword);
         const ruleValue = ruleStr.substring(indexOfColon + 1, ruleStr.length);

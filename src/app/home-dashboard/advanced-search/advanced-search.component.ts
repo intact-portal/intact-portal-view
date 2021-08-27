@@ -1,8 +1,9 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
 import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper} from './advanced-search.config';
+import {ColorMIQLPipe} from './colorMIQL.pipe';
 
 export interface ColorCode {
   regex: RegExp,
@@ -25,27 +26,15 @@ export class AdvancedSearchComponent implements AfterViewInit {
     rules: []
   };
 
+  @ViewChild(QueryBuilderComponent)
+  builder: QueryBuilderComponent;
+
+  @ViewChild('editor')
+  editor: ElementRef;
+
   constructor() {
     this.queryCtrl = new FormControl(this.query);
     this.currentConfig = ADVANCED_SEARCH_CONFIG;
-  }
-
-  ngAfterViewInit(): void {
-  }
-
-  onInput(event: Event) {
-    // TODO: Fix color cursor issue and uncomment this line
-    // const editor = <HTMLElement>event.srcElement;
-    // event.srcElement.innerHTML = ColorPipe.transform(editor.innerText);
-    //
-    // const sel = window.getSelection();
-    // const range = document.createRange();
-    //
-    // range.setStart(editor, editor.childNodes.length);
-    // range.collapse(true)
-    // sel.removeAllRanges();
-    // sel.addRange(range);
-    // editor.focus();
   }
 
   public classNames: QueryBuilderClassNames = {
@@ -68,21 +57,6 @@ export class AdvancedSearchComponent implements AfterViewInit {
     invalidRuleSet: 'ad-q-row invalid-rule-set'
   }
 
-  search(miql: string) {
-    window.open('query/' + miql);
-  }
-
-
-  builderToInput(builder: QueryBuilderComponent, editor: HTMLDivElement) {
-    // TODO: Fix color cursor issue and uncomment this line
-    // editor.innerHTML = ColorPipe.transform(MIQLPipe.transform(builder.value));
-    editor.innerHTML = MIQLPipe.transform(builder.value);
-  }
-
-  inputToBuilder(builder: QueryBuilderComponent, miql: string) {
-    builder.value = parseMIQL(miql);
-  }
-
   updateCondition(ruleSet: RuleSet, e: MouseEvent) {
     const target = $(e.target);
     const parent = target.parents('.button-group')
@@ -95,6 +69,56 @@ export class AdvancedSearchComponent implements AfterViewInit {
         $(this).prop('checked', false)
       }
     });
+    this.onBuilderUpdate()
+  }
+
+  ngAfterViewInit(): void {
+  }
+
+  search(miql: string) {
+    window.open('query/' + miql);
+  }
+
+  private doUpdate = true;
+
+  builderToInput(builder: QueryBuilderComponent, editor: HTMLDivElement) {
+    if (this.doUpdate) {
+      this.doUpdate = false;
+      editor.innerHTML = ColorMIQLPipe.transform(MIQLPipe.transform(builder.value));
+    }
+    this.doUpdate = true
+  }
+
+  inputToBuilder(builder: QueryBuilderComponent, miql: string) {
+    if (this.doUpdate) {
+      this.doUpdate = false;
+      builder.value = parseMIQL(miql);
+    }
+    this.doUpdate = true
+  }
+
+  onInput() {
+    const sel = window.getSelection();
+    const caretPosition = sel.getRangeAt(0).getBoundingClientRect();
+
+    const miql = this.editor.nativeElement.innerText;
+    this.editor.nativeElement.innerHTML = ColorMIQLPipe.transform(miql);
+    let range: Range;
+    if (caretPosition.left === 0 && caretPosition.top === 0) {
+      range = document.createRange();
+      range.setStart(this.editor.nativeElement, 0);
+    } else {
+      range = document.caretRangeFromPoint(caretPosition.left, caretPosition.top);
+    }
+    range.collapse(true)
+    sel.removeAllRanges();
+    sel.addRange(range);
+    this.editor.nativeElement.focus();
+    this.inputToBuilder(this.builder, miql);
+  }
+
+  onBuilderUpdate() {
+    this.builderToInput(this.builder, this.editor.nativeElement)
   }
 }
 

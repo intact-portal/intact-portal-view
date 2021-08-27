@@ -5,20 +5,12 @@
 </div>
 
 <div class="input-group">
-  <div #editor id="editor" class="row output input-group-field" contenteditable="true" (input)="onInput($event)">
+  <div #editor id="editor" class="row output input-group-field" contenteditable="true" (input)="onInput()">
   </div>
   <div class="input-group-button">
     <input id="ad-search-button" type="button" name="submit" value="1"
            (click)="search(editor.innerText)" class="button icon icon-functional">
   </div>
-</div>
-
-<div class="button-group" id="arrow-panel">
-  <button data-tooltip data-disable-hover="false" title="Copy query to builder" aria-haspopup="true"
-          (click)="inputToBuilder(builder, editor.innerText)"
-          class="button outlined icon icon-common icon-arrow-alt-circle-down"></button>
-  <button title="Copy builder to query" (click)="builderToInput(builder, editor)"
-          class="button outlined icon icon-common icon-arrow-alt-circle-up"></button>
 </div>
 
 <ul class="accordion" data-accordion>
@@ -27,7 +19,7 @@
     <div class="accordion-content" data-tab-content>
       <div class="margin-top-large margin-bottom-large">
         <query-builder #builder id="builder" [formControl]='queryCtrl' [config]='currentConfig'
-                       [classNames]="classNames">
+                       [classNames]="classNames" (ngModelChange)="onBuilderUpdate()">
 
           <ng-container *querySwitchGroup="let ruleSet">
             <div class="button-group margin-bottom-none">

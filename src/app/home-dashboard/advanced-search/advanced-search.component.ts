@@ -160,7 +160,10 @@ function parseMIQL(miql: string): RuleSet {
 }
 
 function extractSetRule(miql: string, start: number, value: string) {
-  const previousSpaceIndex = miql.lastIndexOf(' ', start - 2);
+  let previousSpaceIndex = miql.lastIndexOf(' ', start - 2);
+  if (miql.substring(previousSpaceIndex + 1, previousSpaceIndex + 2) === '(') {
+    previousSpaceIndex++; // Avoid hitting the start parenthesis if the field is the first in a rule set
+  }
   const potentialNot = miql.substring(previousSpaceIndex - 3, previousSpaceIndex);
   const operator = potentialNot === 'NOT' || potentialNot === 'not' ? 'not in' : 'in';
   const field = miql.substring(previousSpaceIndex + 1, start - 1);
@@ -212,11 +215,15 @@ function fillRuleSet(ruleSet: RuleSet, value: string) {
         const indexOfColon = ruleStr.indexOf(':') || ruleStr.length;
         const ruleFieldKeyword = ruleStr.substring(different ? 4 : 0, indexOfColon);
         const ruleField = AdvancedQueryHelper.toField(ruleFieldKeyword);
-        const ruleValue = ruleStr.substring(indexOfColon + 1, ruleStr.length);
-        if (ruleValue === 'undefined') {
-          ruleSet.rules.push({field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity})
-        } else {
-          ruleSet.rules.push({field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity, value: ruleValue})
+        if (ruleField !== undefined) {
+          const ruleValue = ruleStr.substring(indexOfColon + 1, ruleStr.length);
+          if (ruleValue.startsWith('(')) {
+            ruleSet.rules.push(superiorRuleSets.pop());
+          } else if (ruleValue === 'undefined') {
+            ruleSet.rules.push({field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity})
+          } else {
+            ruleSet.rules.push({field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity, value: ruleValue})
+          }
         }
       }
     });

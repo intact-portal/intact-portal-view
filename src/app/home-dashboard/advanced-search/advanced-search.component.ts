@@ -145,10 +145,10 @@ function parseMIQL(miql: string): RuleSet {
           rule = extractSetRule(miql, start, value);
         } else { // Is a rule set
           stackLevel = stack.length;
-          const range = {start: start + 1, end: end};
+          const range = {start: start, end: end - 1};
           setupLevelMap(levelMap, stackLevel, range);
-          value = removeSuperiorRules(value, start, end, stackLevel, levelMap);
-          fillRuleSet(ruleSet, value);
+          const trimmedValue = removeSuperiorRules(value, start, end, stackLevel, levelMap);
+          fillRuleSet(ruleSet, trimmedValue);
         }
         if (stack.length > 0) {
           stack[stack.length - 1].ruleSet.rules.push(rule)

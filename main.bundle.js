@@ -41,12 +41,16 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interactomes_interactomes_component__ = __webpack_require__("./src/app/interactomes/interactomes.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__navigation_faq_faq_component__ = __webpack_require__("./src/app/navigation/faq/faq.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__navigation_about_about_component__ = __webpack_require__("./src/app/navigation/about/about.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__ = __webpack_require__("./src/app/navigation/redirect/redirect.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -85,6 +89,30 @@ const routes = [
         path: 'about',
         component: __WEBPACK_IMPORTED_MODULE_5__navigation_about_about_component__["a" /* AboutComponent */],
         data: { showCompactHeader: false, showFooter: true }
+    },
+    {
+        path: 'interaction/:interactionAc',
+        redirectTo: 'details/interaction/:interactionAc'
+    },
+    {
+        path: 'query/:advanced_query',
+        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'query/:advanced_query' }
+    },
+    {
+        path: 'interactors/:query',
+        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'interactors/:query' }
+    },
+    {
+        path: 'pages/list/list.xhtml',
+        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'pages/list/list.xhtml' }
+    },
+    {
+        path: 'pages/interactions/interactions.xhtml',
+        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'pages/interactions/interactions.xhtml' }
     },
     {
         path: '**',
@@ -230,12 +258,14 @@ var AppComponent_1;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28_angulartics2_ga__ = __webpack_require__("./node_modules/angulartics2/ga/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__shared_service_google_analytics_google_analytics_service__ = __webpack_require__("./src/app/shared/service/google-analytics/google-analytics.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__navigation_redirect_redirect_component__ = __webpack_require__("./src/app/navigation/redirect/redirect.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -277,7 +307,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_16__interactomes_interactomes_component__["a" /* InteractomesComponent */],
             __WEBPACK_IMPORTED_MODULE_18__interactomes_interactome_interactome_component__["a" /* InteractomeComponent */],
             __WEBPACK_IMPORTED_MODULE_24__navigation_about_about_component__["a" /* AboutComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__navigation_faq_faq_component__["a" /* FaqComponent */]
+            __WEBPACK_IMPORTED_MODULE_25__navigation_faq_faq_component__["a" /* FaqComponent */],
+            __WEBPACK_IMPORTED_MODULE_31__navigation_redirect_redirect_component__["a" /* RedirectComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -314,17 +345,70 @@ AppModule = __decorate([
 
 /***/ }),
 
+/***/ "./src/app/home-dashboard/advanced-search/MIQL.pipe.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MIQLPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+let MIQLPipe = MIQLPipe_1 = class MIQLPipe {
+    transform(ruleSet) {
+        return MIQLPipe_1.transform(ruleSet);
+    }
+    static transform(ruleSet) {
+        return ruleSet.rules.map(rule => {
+            if (this.isRuleSet(rule)) {
+                return `(${this.transform(rule)})`;
+            }
+            else {
+                switch (rule.operator) {
+                    default:
+                    case '=':
+                        return `${rule.field}:${rule.value}`;
+                    case '≠':
+                        return `NOT ${rule.field}:${rule.value}`;
+                    case 'in':
+                        return `${rule.field}:(${rule.value})`;
+                    case 'not in':
+                        return `NOT ${rule.field}:(${rule.value})`;
+                }
+            }
+        }).join(` ${ruleSet.condition.toUpperCase()} `);
+    }
+    static isRuleSet(rule) {
+        return rule.rules !== undefined;
+    }
+};
+MIQLPipe = MIQLPipe_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Pipe */])({
+        name: 'MIQL',
+        pure: false
+    })
+], MIQLPipe);
+
+var MIQLPipe_1;
+
+
+/***/ }),
+
 /***/ "./src/app/home-dashboard/advanced-search/advanced-search.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "/*/deep/ html {\n  font: 14px sans-serif;\n  margin: 30px;\n}*/\n\n.text-input {\n  padding: 4px 8px;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n}\n\n.text-area {\n  width: 300px;\n  height: 100px;\n}\n\n.output {\n  width: 100%;\n  height: 300px;\n  border: 1px solid #CCC;\n}\n"
+module.exports = "/*/deep/ html {\n  font: 14px sans-serif;\n  margin: 30px;\n}*/\n\n.text-input {\n  padding: 4px 8px;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n}\n\n.input-group {\n  height: 21px!important;\n  padding: 0;\n}\n\n#editor {\n  width: 100%;\n  height: 21px!important;\n  padding: 8px;\n  border: 1px solid #CCC;\n  font-family: monospace;\n  font-weight: bold;\n  white-space: normal;\n}\n\n.button-group .button.icon {\n  font-size: xxx-large;\n  border: none;\n  padding: 15px;\n}\n\n#arrow-panel {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n\n#ad-search-button {\n  padding: calc(50% - 0.85em) 15px calc(50% - 0.85em) 15px!important;\n  height: 100%;\n}\n\n\n"
 
 /***/ }),
 
 /***/ "./src/app/home-dashboard/advanced-search/advanced-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"margin-top-large margin-bottom-large\">\n  <query-builder id=\"builder\" [formControl] ='queryCtrl' [config]='config'></query-builder>\n</div>\n\n<div class=\"row margin-top-large\">\n  <label>Output query:</label>\n  <textarea class=\"output\" rows=\"10\">{{query | json}}</textarea>\n</div>\n"
+module.exports = "<div class=\"alert-panel margin-bottom-large\">\n  <h3><i class=\"icon icon-common icon-exclamation-triangle\"></i> Not Supported</h3>\n  Advanced search is not yet supported in this new website, you will therefore be redirected to the former\n  IntAct website upon clicking on the search button\n</div>\n\n<div class=\"input-group\">\n  <div #editor id=\"editor\" class=\"row output input-group-field\" contenteditable=\"true\" (input)=\"onInput()\">\n  </div>\n  <div class=\"input-group-button\">\n    <input id=\"ad-search-button\" type=\"button\" name=\"submit\" value=\"1\"\n           (click)=\"search(editor.innerText)\" class=\"button icon icon-functional\">\n  </div>\n</div>\n\n<ul class=\"accordion\" data-accordion>\n  <li class=\"accordion-item is-active\" data-accordion-item>\n    <a class=\"accordion-title\">MIQL Query Builder</a>\n    <div class=\"accordion-content\" data-tab-content>\n      <div class=\"margin-top-large margin-bottom-large\">\n        <query-builder #builder id=\"builder\" [formControl]='queryCtrl' [config]='currentConfig'\n                       [classNames]=\"classNames\" (ngModelChange)=\"onBuilderUpdate()\">\n\n          <ng-container *querySwitchGroup=\"let ruleSet\">\n            <div class=\"button-group margin-bottom-none\">\n              <div class=\"display-contents ad-q-switch-control\">\n                <input type=\"radio\" value=\"and\" [checked]=\"ruleSet.condition === 'and'\"\n                       class=\"ad-q-switch-radio no-margin checked ng-untouched ng-pristine ng-valid\">\n                <label class=\"button margin-bottom-none\" (click)=\"updateCondition(ruleSet, $event)\">AND</label>\n              </div>\n              <div class=\"display-contents ad-q-switch-control\">\n                <input type=\"radio\" value=\"or\" [checked]=\"ruleSet.condition === 'or'\"\n                       class=\"ad-q-switch-radio no-margin ng-untouched ng-pristine ng-valid\">\n                <label class=\"button margin-bottom-none\" (click)=\"updateCondition(ruleSet, $event)\">OR</label>\n              </div>\n            </div>\n          </ng-container>\n\n        </query-builder>\n      </div>\n    </div>\n  </li>\n</ul>\n\n\n\n"
 
 /***/ }),
 
@@ -335,6 +419,10 @@ module.exports = "<div class=\"margin-top-large margin-bottom-large\">\n  <query
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdvancedSearchComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm2015/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_query_builder__ = __webpack_require__("./node_modules/angular2-query-builder/dist/angular2-query-builder/esm5/angular2-query-builder.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MIQL_pipe__ = __webpack_require__("./src/app/home-dashboard/advanced-search/MIQL.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__advanced_search_config__ = __webpack_require__("./src/app/home-dashboard/advanced-search/advanced-search.config.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__colorMIQL_pipe__ = __webpack_require__("./src/app/home-dashboard/advanced-search/colorMIQL.pipe.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -346,330 +434,104 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
 let AdvancedSearchComponent = class AdvancedSearchComponent {
     constructor() {
         this.query = {
             condition: 'and',
-            rules: [
-                { field: 'idA', operator: '=', entity: 'participantA' },
-            ]
+            rules: []
         };
-        this.config = {
-            entities: {
-                participant: {
-                    name: 'Participant (A or B)'
-                },
-                participantA: {
-                    name: 'Participant A'
-                },
-                participantB: {
-                    name: 'Participant B'
-                },
-                interaction: {
-                    name: 'Interaction'
-                },
-                publication: {
-                    name: 'Publication'
-                },
-                causalInteraction: {
-                    name: 'Causal Interaction'
-                },
-                curationMetadata: {
-                    name: 'Curation Metadata'
-                }
-            },
-            fields: {
-                idA: {
-                    name: 'Identifier',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                idB: {
-                    name: 'Identifier',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                altidA: {
-                    name: 'Alternative Id.',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                altidB: {
-                    name: 'Alternative Id.',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                id: {
-                    name: 'Identifiers',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                aliasA: {
-                    name: 'Alias',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                aliasB: {
-                    name: 'Alias',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                alias: {
-                    name: 'Alias',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                identifier: {
-                    name: 'Identifiers, Alternatives, Aliases',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                pubauth: {
-                    name: 'Publication 1st author(s)',
-                    type: 'string',
-                    entity: 'publication'
-                },
-                pubid: {
-                    name: 'Publication Identifier(s)',
-                    type: 'string',
-                    entity: 'publication'
-                },
-                taxidA: {
-                    name: 'Tax Id. interactor',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                taxidB: {
-                    name: 'Tax Id. interactor',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                taxidHost: {
-                    name: 'Tax Id. Host organism',
-                    type: 'string',
-                    entity: 'interaction'
-                },
-                species: {
-                    name: 'Tax Id. interactors',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                type: {
-                    name: 'Interaction type(s)',
-                    type: 'string',
-                    entity: 'interaction'
-                },
-                detmethod: {
-                    name: 'Interaction Detection method(s)',
-                    type: 'string',
-                    entity: 'interaction'
-                },
-                interaction_id: {
-                    name: 'Interaction identifier(s)',
-                    type: 'string',
-                    entity: 'interaction'
-                },
-                pbioroleA: {
-                    name: 'Biological role',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                pbioroleB: {
-                    name: 'Biological role',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                pbiorole: {
-                    name: 'Biological role',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                pexproleA: {
-                    name: 'Experimental Role',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                pexproleB: {
-                    name: 'Experimental Role',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                ptypeA: {
-                    name: 'Interactor type',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                ptypeB: {
-                    name: 'Interactor type',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                ptype: {
-                    name: 'Interactor type',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                pxrefA: {
-                    name: 'Interactor xrefs.',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                pxrefB: {
-                    name: 'Interactor xrefs.',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                pxref: {
-                    name: 'Interactor xrefs.',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                xref: {
-                    name: 'Interaction xrefs.',
-                    type: 'string',
-                    entity: 'interaction'
-                },
-                annotA: {
-                    name: 'Interactor annotations',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                annotB: {
-                    name: 'Interactor annotations',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                annot: {
-                    name: 'Interaction annotations',
-                    type: '',
-                    entity: 'interaction'
-                },
-                cdate: {
-                    name: 'Creation date',
-                    type: 'date',
-                    entity: 'curationMetadata'
-                },
-                udate: {
-                    name: 'Update date',
-                    type: 'date',
-                    entity: 'curationMetadata'
-                },
-                negative: {
-                    name: 'Negative interaction',
-                    type: 'boolean',
-                    entity: 'interaction'
-                },
-                complex: {
-                    name: 'Complex expansion',
-                    type: 'category',
-                    entity: 'interaction',
-                    options: [
-                        {
-                            name: 'Bipartite expansion',
-                            value: 'MI:1062'
-                        },
-                        {
-                            name: 'Matrix expansion',
-                            value: 'MI:1061'
-                        },
-                        {
-                            name: 'Spoke expansion',
-                            value: 'MI:1060'
-                        },
-                        {
-                            name: 'Non-expanded',
-                            value: '-'
-                        }
-                    ]
-                },
-                ftypeA: {
-                    name: 'Feature type',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                ftypeB: {
-                    name: 'Feature type',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                ftype: {
-                    name: 'Feature type',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                pmethodA: {
-                    name: 'Participant identification method',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                pmethodB: {
-                    name: 'Participant identification method',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                pmethod: {
-                    name: 'Participant identification method',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                stcA: {
-                    name: 'Stoichiometry',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                stcB: {
-                    name: 'Stoichiometry',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                stc: {
-                    name: 'Stoichiometry',
-                    type: 'boolean',
-                    entity: 'participant'
-                },
-                param: {
-                    name: 'Interaction parameters',
-                    type: 'boolean',
-                    entity: 'interaction'
-                },
-                source: {
-                    name: 'Data source',
-                    type: 'string',
-                    entity: 'curationMetadata'
-                },
-                bioeffectA: {
-                    name: 'Biological effect',
-                    type: 'string',
-                    entity: 'participantA'
-                },
-                bioeffectB: {
-                    name: 'Biological effect',
-                    type: 'string',
-                    entity: 'participantB'
-                },
-                bioeffect: {
-                    name: 'Biological effect',
-                    type: 'string',
-                    entity: 'participant'
-                },
-                causalmechanism: {
-                    name: 'Causal regulatory mechanism',
-                    type: 'string',
-                    entity: 'causalInteraction'
-                },
-                causalstatement: {
-                    name: 'Causal statement',
-                    type: 'string',
-                    entity: 'causalInteraction'
-                }
-            }
+        this.classNames = {
+            switchGroup: 'button-group',
+            switchControl: 'display-contents ad-q-switch-control',
+            switchRadio: 'ad-q-switch-radio no-margin',
+            switchLabel: 'button margin-bottom-none',
+            inputControl: 'no-margin',
+            entityControl: 'no-margin',
+            operatorControl: 'no-margin',
+            fieldControl: 'no-margin',
+            buttonGroup: 'button-group no-margin',
+            button: 'button margin-bottom-none',
+            addIcon: 'icon icon-common icon-plus centered-icon',
+            removeIcon: 'icon icon-common icon-times centered-icon',
+            removeButton: 'button',
+            transition: 'margin-bottom-none',
+            connector: 'ad-q-connector',
+            row: 'ad-q-row',
+            invalidRuleSet: 'ad-q-row invalid-rule-set'
         };
+        this.doUpdate = true;
         this.queryCtrl = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormControl */](this.query);
-        this.currentConfig = this.config;
+        this.currentConfig = __WEBPACK_IMPORTED_MODULE_4__advanced_search_config__["a" /* ADVANCED_SEARCH_CONFIG */];
     }
-    ngOnInit() {
+    updateCondition(ruleSet, e) {
+        const target = $(e.target);
+        const parent = target.parents('.button-group');
+        parent.find('.ad-q-switch-radio').each(function () {
+            $(this).toggleClass('checked');
+            if ($(this).hasClass('checked')) {
+                $(this).prop('checked', true);
+                ruleSet.condition = $(this).val();
+            }
+            else {
+                $(this).prop('checked', false);
+            }
+        });
+        this.onBuilderUpdate();
+    }
+    ngAfterViewInit() {
+    }
+    search(miql) {
+        window.open('query/' + miql);
+    }
+    builderToInput(builder, editor) {
+        if (this.doUpdate) {
+            this.doUpdate = false;
+            editor.innerHTML = __WEBPACK_IMPORTED_MODULE_5__colorMIQL_pipe__["a" /* ColorMIQLPipe */].transform(__WEBPACK_IMPORTED_MODULE_3__MIQL_pipe__["a" /* MIQLPipe */].transform(builder.value));
+        }
+        this.doUpdate = true;
+    }
+    inputToBuilder(builder, miql) {
+        if (this.doUpdate) {
+            this.doUpdate = false;
+            builder.value = parseMIQL(miql);
+        }
+        this.doUpdate = true;
+    }
+    onInput() {
+        const sel = window.getSelection();
+        const caretPosition = sel.getRangeAt(0).getBoundingClientRect();
+        const miql = this.editor.nativeElement.innerText;
+        this.editor.nativeElement.innerHTML = __WEBPACK_IMPORTED_MODULE_5__colorMIQL_pipe__["a" /* ColorMIQLPipe */].transform(miql);
+        let range;
+        if (caretPosition.left === 0 && caretPosition.top === 0) {
+            range = document.createRange();
+            range.setStart(this.editor.nativeElement, 0);
+        }
+        else {
+            range = document.caretRangeFromPoint(caretPosition.left, caretPosition.top);
+        }
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        this.editor.nativeElement.focus();
+        this.inputToBuilder(this.builder, miql);
+    }
+    onBuilderUpdate() {
+        this.builderToInput(this.builder, this.editor.nativeElement);
     }
 };
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_2_angular2_query_builder__["a" /* QueryBuilderComponent */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_angular2_query_builder__["a" /* QueryBuilderComponent */])
+], AdvancedSearchComponent.prototype, "builder", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* ViewChild */])('editor'),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+], AdvancedSearchComponent.prototype, "editor", void 0);
 AdvancedSearchComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'ip-advanced-search',
@@ -679,6 +541,521 @@ AdvancedSearchComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], AdvancedSearchComponent);
 
+function parseMIQL(miql) {
+    miql = `(${miql})`;
+    let out;
+    const stack = [];
+    let end, stackLevel = 0, value;
+    const levelMap = new Map();
+    miql.split('').forEach((char, index, array) => {
+        switch (char) {
+            case '(':
+                stack.push({ start: index, ruleSet: { condition: 'and', rules: [] } });
+                break;
+            case ')':
+                const { start, ruleSet } = stack.pop();
+                out = ruleSet;
+                let rule = ruleSet;
+                end = index;
+                value = miql.substring(start + 1, end);
+                if (array[start - 1] === ':') {
+                    rule = extractSetRule(miql, start, value);
+                }
+                else {
+                    stackLevel = stack.length;
+                    const range = { start: start, end: end - 1 };
+                    setupLevelMap(levelMap, stackLevel, range);
+                    const trimmedValue = removeSuperiorRules(value, start, end, stackLevel, levelMap);
+                    fillRuleSet(ruleSet, trimmedValue);
+                }
+                if (stack.length > 0) {
+                    stack[stack.length - 1].ruleSet.rules.push(rule);
+                }
+                break;
+        }
+    });
+    return out;
+}
+function extractSetRule(miql, start, value) {
+    let previousSpaceIndex = miql.lastIndexOf(' ', start - 2);
+    if (miql.substring(previousSpaceIndex + 1, previousSpaceIndex + 2) === '(') {
+        previousSpaceIndex++; // Avoid hitting the start parenthesis if the field is the first in a rule set
+    }
+    const potentialNot = miql.substring(previousSpaceIndex - 3, previousSpaceIndex);
+    const operator = potentialNot === 'NOT' || potentialNot === 'not' ? 'not in' : 'in';
+    const field = miql.substring(previousSpaceIndex + 1, start - 1);
+    const entity = __WEBPACK_IMPORTED_MODULE_4__advanced_search_config__["b" /* AdvancedQueryHelper */].toField(field).entity;
+    if (value === 'undefined') {
+        return { field, operator, entity };
+    }
+    else {
+        return { field, operator, entity, value };
+    }
+}
+function setupLevelMap(levelMap, stackLevel, range) {
+    if (levelMap.get(stackLevel) === undefined) {
+        levelMap.set(stackLevel, [range]);
+    }
+    else {
+        levelMap.get(stackLevel).push(range);
+    }
+}
+function removeSuperiorRules(value, start, end, stackLevel, levelMap) {
+    let deleted = start;
+    const superiorRanges = levelMap.get(stackLevel + 1);
+    if (superiorRanges !== undefined) {
+        for (const superiorRange of superiorRanges) {
+            if (superiorRange.start > start && superiorRange.end < end) {
+                value = value.substring(0, superiorRange.start - deleted) + value.substring(superiorRange.end - deleted, value.length);
+                deleted += superiorRange.end - superiorRange.start;
+            }
+        }
+    }
+    return value;
+}
+function fillRuleSet(ruleSet, value) {
+    ruleSet.condition = /[ \u00a0]OR[ \u00a0]/ig.test(value) ? 'or' : 'and';
+    const superiorRuleSets = ruleSet.rules;
+    let i = 0;
+    ruleSet.rules = [];
+    value.split(/[ \u00a0]AND[ \u00a0]|[ \u00a0]OR[ \u00a0]/ig)
+        .map(ruleStr => ruleStr.trim())
+        .filter(ruleStr => ruleStr.length > 0)
+        .forEach(ruleStr => {
+        if (ruleStr === '()') {
+            ruleSet.rules.push(superiorRuleSets[i++]);
+        }
+        else {
+            ruleStr = ruleStr.trim();
+            const different = ruleStr.startsWith('NOT ') || ruleStr.startsWith('not ');
+            const ruleOperator = different ? '≠' : '=';
+            const indexOfColon = ruleStr.indexOf(':') || ruleStr.length;
+            const ruleFieldKeyword = ruleStr.substring(different ? 4 : 0, indexOfColon);
+            const ruleField = __WEBPACK_IMPORTED_MODULE_4__advanced_search_config__["b" /* AdvancedQueryHelper */].toField(ruleFieldKeyword);
+            if (ruleField !== undefined) {
+                const ruleValue = ruleStr.substring(indexOfColon + 1, ruleStr.length);
+                if (ruleValue.startsWith('(')) {
+                    ruleSet.rules.push(superiorRuleSets.pop());
+                }
+                else if (ruleValue === 'undefined') {
+                    ruleSet.rules.push({ field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity });
+                }
+                else {
+                    ruleSet.rules.push({ field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity, value: ruleValue });
+                }
+            }
+        }
+    });
+}
+
+
+/***/ }),
+
+/***/ "./src/app/home-dashboard/advanced-search/advanced-search.config.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const fields = {
+    idA: {
+        name: 'Identifier',
+        type: 'string',
+        entity: 'participantA',
+    },
+    idB: {
+        name: 'Identifier',
+        type: 'string',
+        entity: 'participantB'
+    },
+    altidA: {
+        name: 'Alternative Id.',
+        type: 'string',
+        entity: 'participantA'
+    },
+    altidB: {
+        name: 'Alternative Id.',
+        type: 'string',
+        entity: 'participantB'
+    },
+    id: {
+        name: 'Identifiers',
+        type: 'string',
+        entity: 'participant'
+    },
+    aliasA: {
+        name: 'Alias',
+        type: 'string',
+        entity: 'participantA'
+    },
+    aliasB: {
+        name: 'Alias',
+        type: 'string',
+        entity: 'participantB'
+    },
+    alias: {
+        name: 'Alias',
+        type: 'string',
+        entity: 'participant'
+    },
+    identifier: {
+        name: 'Identifiers, Alternatives, Aliases',
+        type: 'string',
+        entity: 'participant'
+    },
+    pubauth: {
+        name: 'Publication 1st author(s)',
+        type: 'string',
+        entity: 'publication'
+    },
+    pubid: {
+        name: 'Publication Identifier(s)',
+        type: 'string',
+        entity: 'publication'
+    },
+    taxidA: {
+        name: 'Tax Id. interactor',
+        type: 'string',
+        entity: 'participantA'
+    },
+    taxidB: {
+        name: 'Tax Id. interactor',
+        type: 'string',
+        entity: 'participantB'
+    },
+    taxidHost: {
+        name: 'Tax Id. Host organism',
+        type: 'string',
+        entity: 'interaction'
+    },
+    species: {
+        name: 'Tax Id. interactors',
+        type: 'string',
+        entity: 'participant'
+    },
+    type: {
+        name: 'Interaction type(s)',
+        type: 'string',
+        entity: 'interaction'
+    },
+    detmethod: {
+        name: 'Interaction Detection method(s)',
+        type: 'string',
+        entity: 'interaction'
+    },
+    interaction_id: {
+        name: 'Interaction identifier(s)',
+        type: 'string',
+        entity: 'interaction'
+    },
+    pbioroleA: {
+        name: 'Biological role',
+        type: 'string',
+        entity: 'participantA'
+    },
+    pbioroleB: {
+        name: 'Biological role',
+        type: 'string',
+        entity: 'participantB'
+    },
+    pbiorole: {
+        name: 'Biological role',
+        type: 'string',
+        entity: 'participant'
+    },
+    pexproleA: {
+        name: 'Experimental Role',
+        type: 'string',
+        entity: 'participantA'
+    },
+    pexproleB: {
+        name: 'Experimental Role',
+        type: 'string',
+        entity: 'participantB'
+    },
+    ptypeA: {
+        name: 'Interactor type',
+        type: 'string',
+        entity: 'participantA'
+    },
+    ptypeB: {
+        name: 'Interactor type',
+        type: 'string',
+        entity: 'participantB'
+    },
+    ptype: {
+        name: 'Interactor type',
+        type: 'string',
+        entity: 'participant'
+    },
+    pxrefA: {
+        name: 'Interactor xrefs.',
+        type: 'string',
+        entity: 'participantA'
+    },
+    pxrefB: {
+        name: 'Interactor xrefs.',
+        type: 'string',
+        entity: 'participantB'
+    },
+    pxref: {
+        name: 'Interactor xrefs.',
+        type: 'string',
+        entity: 'participant',
+    },
+    'intact-miscore': {
+        name: 'IntAct MI Score',
+        defaultValue: '[0 TO 1]',
+        type: 'string',
+        entity: 'interaction',
+        operators: ['=', '≠']
+    },
+    geneName: {
+        name: 'Gene name for Interactor A or B',
+        type: 'string',
+        entity: 'participant'
+    },
+    xref: {
+        name: 'Interaction xrefs.',
+        type: 'string',
+        entity: 'interaction'
+    },
+    annotA: {
+        name: 'Interactor annotations',
+        type: 'string',
+        entity: 'participantA'
+    },
+    annotB: {
+        name: 'Interactor annotations',
+        type: 'string',
+        entity: 'participantB'
+    },
+    annot: {
+        name: 'Interaction annotations',
+        type: '',
+        entity: 'interaction'
+    },
+    cdate: {
+        name: 'Creation date',
+        type: 'date',
+        entity: 'curationMetadata'
+    },
+    udate: {
+        name: 'Update date',
+        type: 'date',
+        entity: 'curationMetadata'
+    },
+    negative: {
+        name: 'Negative interaction',
+        type: 'boolean',
+        entity: 'interaction'
+    },
+    complex: {
+        name: 'Complex expansion',
+        type: 'category',
+        entity: 'interaction',
+        options: [
+            {
+                name: 'Bipartite expansion',
+                value: 'MI:1062'
+            },
+            {
+                name: 'Matrix expansion',
+                value: 'MI:1061'
+            },
+            {
+                name: 'Spoke expansion',
+                value: 'MI:1060'
+            },
+            {
+                name: 'Non-expanded',
+                value: '-'
+            }
+        ]
+    },
+    ftypeA: {
+        name: 'Feature type',
+        type: 'string',
+        entity: 'participantA'
+    },
+    ftypeB: {
+        name: 'Feature type',
+        type: 'string',
+        entity: 'participantB'
+    },
+    ftype: {
+        name: 'Feature type',
+        type: 'string',
+        entity: 'participant'
+    },
+    pmethodA: {
+        name: 'Participant identification method',
+        type: 'string',
+        entity: 'participantA'
+    },
+    pmethodB: {
+        name: 'Participant identification method',
+        type: 'string',
+        entity: 'participantB'
+    },
+    pmethod: {
+        name: 'Participant identification method',
+        type: 'string',
+        entity: 'participant'
+    },
+    stcA: {
+        name: 'Stoichiometry',
+        type: 'string',
+        entity: 'participantA'
+    },
+    stcB: {
+        name: 'Stoichiometry',
+        type: 'string',
+        entity: 'participantB'
+    },
+    stc: {
+        name: 'Stoichiometry',
+        type: 'boolean',
+        entity: 'participant'
+    },
+    param: {
+        name: 'Interaction parameters',
+        type: 'boolean',
+        entity: 'interaction'
+    },
+    source: {
+        name: 'Source database(s)',
+        type: 'string',
+        entity: 'curationMetadata'
+    },
+    bioeffectA: {
+        name: 'Biological effect',
+        type: 'string',
+        entity: 'participantA'
+    },
+    bioeffectB: {
+        name: 'Biological effect',
+        type: 'string',
+        entity: 'participantB'
+    },
+    bioeffect: {
+        name: 'Biological effect',
+        type: 'string',
+        entity: 'participant'
+    },
+    causalmechanism: {
+        name: 'Causal regulatory mechanism',
+        type: 'string',
+        entity: 'causalInteraction'
+    },
+    causalstatement: {
+        name: 'Causal statement',
+        type: 'string',
+        entity: 'causalInteraction'
+    }
+};
+const ADVANCED_SEARCH_CONFIG = {
+    getOperators() {
+        return ['=', '≠', 'in', 'not in'];
+    },
+    fields,
+    entities: {
+        participant: {
+            name: 'Participant (A or B)',
+            defaultField: fields.id
+        },
+        participantA: {
+            name: 'Participant A',
+            defaultField: fields.idA
+        },
+        participantB: {
+            name: 'Participant B',
+            defaultField: fields.idB
+        },
+        interaction: {
+            name: 'Interaction',
+            defaultField: fields['intact-miscore']
+        },
+        publication: {
+            name: 'Publication',
+            defaultField: fields.pubid
+        },
+        causalInteraction: {
+            name: 'Causal Interaction',
+            defaultField: fields.causalstatement
+        },
+        curationMetadata: {
+            name: 'Curation Metadata',
+            defaultField: fields.source
+        }
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = ADVANCED_SEARCH_CONFIG;
+
+class AdvancedQueryHelper {
+    static toField(keyword) {
+        return AdvancedQueryHelper.keywordToFieldMap.get(keyword);
+    }
+    static toKey(field) {
+        return this.fieldToKeyMap.get(field);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["b"] = AdvancedQueryHelper;
+
+AdvancedQueryHelper.keywordToFieldMap = new Map();
+AdvancedQueryHelper.fieldToKeyMap = new Map();
+AdvancedQueryHelper.keywords = [];
+for (const key of Object.keys(fields)) {
+    const field = ADVANCED_SEARCH_CONFIG.fields[key];
+    AdvancedQueryHelper.keywords.push(key);
+    AdvancedQueryHelper.keywordToFieldMap.set(key, field);
+    AdvancedQueryHelper.fieldToKeyMap.set(field, key);
+}
+
+
+/***/ }),
+
+/***/ "./src/app/home-dashboard/advanced-search/colorMIQL.pipe.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ColorMIQLPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__advanced_search_config__ = __webpack_require__("./src/app/home-dashboard/advanced-search/advanced-search.config.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+let ColorMIQLPipe = ColorMIQLPipe_1 = class ColorMIQLPipe {
+    transform(miql) {
+        return ColorMIQLPipe_1.transform(miql);
+    }
+    static transform(miql) {
+        return ColorMIQLPipe_1.colorCodes.reduce((html, colorCode) => html.replace(colorCode.regex, `<span class="miql ${colorCode.class}">$1</span>`), miql);
+    }
+    static isMIQL(str) {
+        const regex = ColorMIQLPipe_1.colorCodes[1].regex;
+        const isMIQL = regex.test(str);
+        regex.lastIndex = 0; // Reinitialise search for next call
+        return isMIQL;
+    }
+};
+ColorMIQLPipe.colorCodes = [
+    { regex: /(".+")/g, class: 'miql-string' },
+    { regex: RegExp(`(${__WEBPACK_IMPORTED_MODULE_1__advanced_search_config__["b" /* AdvancedQueryHelper */].keywords.map(keyword => keyword.replace('-', '\-')).join('|')})`, 'g'), class: 'miql-field' },
+    { regex: /(AND[ \u00a0]|NOT[ \u00a0]|OR[ \u00a0]|TO[ \u00a0])/ig, class: 'miql-operator' },
+    { regex: /([()+-,:\[\]*?])/g, class: 'miql-symbol' },
+];
+ColorMIQLPipe = ColorMIQLPipe_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Pipe */])({
+        name: 'colorMIQL',
+        pure: true
+    })
+], ColorMIQLPipe);
+
+var ColorMIQLPipe_1;
 
 
 /***/ }),
@@ -1392,7 +1769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__advanced_search_advanced_search_component__ = __webpack_require__("./src/app/home-dashboard/advanced-search/advanced-search.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm2015/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_ng2_file_upload__ = __webpack_require__("./node_modules/ng2-file-upload/fesm2015/ng2-file-upload.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_query_builder__ = __webpack_require__("./node_modules/angular2-query-builder/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_query_builder__ = __webpack_require__("./node_modules/angular2-query-builder/dist/angular2-query-builder/esm5/angular2-query-builder.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__batch_search_batch_search_component__ = __webpack_require__("./src/app/home-dashboard/batch-search/batch-search.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_angular_archwizard__ = __webpack_require__("./node_modules/angular-archwizard/fesm2015/angular-archwizard.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__shared_keyvaluemap_pipe__ = __webpack_require__("./src/app/home-dashboard/shared/keyvaluemap.pipe.ts");
@@ -1404,12 +1781,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__featured_dataset_dataset_archive_dataset_by_year_dataset_by_year_component__ = __webpack_require__("./src/app/home-dashboard/featured-dataset/dataset-archive/dataset-by-year/dataset-by-year.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__layout_loading_indicators_progress_spinner_progress_spinner_module__ = __webpack_require__("./src/app/layout/loading-indicators/progress-spinner/progress-spinner.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__shared_components_components_module__ = __webpack_require__("./src/app/shared/components/components.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__advanced_search_MIQL_pipe__ = __webpack_require__("./src/app/home-dashboard/advanced-search/MIQL.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__advanced_search_colorMIQL_pipe__ = __webpack_require__("./src/app/home-dashboard/advanced-search/colorMIQL.pipe.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -1445,7 +1826,7 @@ HomeDashboardModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_13__angular_forms__["d" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_13__angular_forms__["i" /* ReactiveFormsModule */],
-            __WEBPACK_IMPORTED_MODULE_15_angular2_query_builder__["a" /* QueryBuilderModule */],
+            __WEBPACK_IMPORTED_MODULE_15_angular2_query_builder__["b" /* QueryBuilderModule */],
             __WEBPACK_IMPORTED_MODULE_6__home_dashboard_routing_module__["a" /* HomeDashboardRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_14_ng2_file_upload__["a" /* FileUploadModule */],
             __WEBPACK_IMPORTED_MODULE_17_angular_archwizard__["a" /* ArchwizardModule */],
@@ -1473,7 +1854,9 @@ HomeDashboardModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_12__advanced_search_advanced_search_component__["a" /* AdvancedSearchComponent */],
             __WEBPACK_IMPORTED_MODULE_16__batch_search_batch_search_component__["a" /* BatchSearchComponent */],
             __WEBPACK_IMPORTED_MODULE_18__shared_keyvaluemap_pipe__["a" /* KeyvaluemapPipe */],
-            __WEBPACK_IMPORTED_MODULE_24__featured_dataset_dataset_archive_dataset_by_year_dataset_by_year_component__["a" /* DatasetByYearComponent */]
+            __WEBPACK_IMPORTED_MODULE_24__featured_dataset_dataset_archive_dataset_by_year_dataset_by_year_component__["a" /* DatasetByYearComponent */],
+            __WEBPACK_IMPORTED_MODULE_27__advanced_search_MIQL_pipe__["a" /* MIQLPipe */],
+            __WEBPACK_IMPORTED_MODULE_28__advanced_search_colorMIQL_pipe__["a" /* ColorMIQLPipe */]
         ]
     })
 ], HomeDashboardModule);
@@ -1643,7 +2026,7 @@ module.exports = "/************** SEARCH SECTION *******************************
 /***/ "./src/app/home-dashboard/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"search\" class=\"row\">\n\n    <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"search-tabs\">\n      <li class=\"tabs-title is-active\"><a href=\"home#quick-search\" aria-selected=\"true\">Quick Search</a></li>\n      <li class=\"tabs-title\"><a href=\"home#batch-search\">Batch Search</a></li>\n      <!-- We disable the advance search for now until we are able to provide it to the users-->\n      <!-- <li class=\"tabs-title\"><a href=\"home#advanced-search\">Advanced Search</a></li>-->\n    </ul>\n\n    <div class=\"tabs-content\" data-tabs-content=\"search-tabs\">\n\n      <!--TAB MAIN SEARCH SECTION-->\n      <div id=\"div-quick-search\">\n        <div class=\"tabs-panel is-active\" id=\"quick-search\">\n          <fieldset>\n            <div id=\"searchBox\" class=\"input-group margin-bottom-none\">\n              <input #query class=\"typeahead input-group-field\" type=\"text\" id=\"query\"\n                     (keydown.enter)=\"search(query.value, 'enter')\"\n                     placeholder=\"Search by gene names, UniProt ACs, Pubmed, protein names, Complex ACs\"/>\n              <div class=\"input-group-button\">\n                <input id=\"home-search-button\" type=\"button\" name=\"submit\" value=\"1\"\n                       (click)=\"search(query.value, 'button')\"\n                       class=\"button icon icon-functional\">\n              </div>\n            </div>\n            <div class=\"columns margin-top-large\">\n              <h5><i class=\"icon icon-generic padding-right-medium intact-color\" data-icon=\"?\"></i>Examples:</h5>\n              <div class=\"columns medium-4\">\n                <ul class=\"no-margin no-padding\">\n                  <li>Gene names: <a (click)=\"search('Ndc80', 'example')\">Ndc80</a></li>\n                  <li>UniProt ACs: <a (click)=\"search('Q05471', 'example')\">Q05471</a></li>\n                </ul>\n              </div>\n              <div class=\"columns medium-4\">\n                <ul class=\"no-margin no-padding\">\n                  <li>Taxon IDs: <a (click)=\"search('9606', 'example')\">9606</a></li>\n                  <li>Publication IDs: <a (click)=\"search('32353859', 'example')\">32353859</a></li>\n                </ul>\n              </div>\n              <div class=\"columns medium-4\">\n                <ul class=\"no-margin no-padding\">\n                  <li>Complex ACs:  <a (click)=\"search('CPX-5742', 'example')\">CPX-5742</a></li>\n                  <li>GO terms: <a (click)=\"search('GO:0016491', 'example')\">GO:0016491</a></li>\n                </ul>\n              </div>\n            </div>\n          </fieldset>\n        </div>\n      </div>\n\n      <!--TAB BATCH SEARCH SECTION-->\n      <div class=\"tabs-panel\" id=\"batch-search\">\n        <ip-batch-search></ip-batch-search>\n      </div>\n\n      <!--TAB ADVANCED SECTION-->\n      <div class=\"tabs-panel\" id=\"advanced-search\">\n        <div class=\"row margin-top-large\">\n          <div class=\"columns medium-12 callout-advanced\">\n            <ip-advanced-search></ip-advanced-search>\n          </div>\n        </div>\n      </div>\n\n    </div>\n</div>\n"
+module.exports = "<div id=\"search\" class=\"row\">\n\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"search-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"home#quick-search\" aria-selected=\"true\">Quick Search</a></li>\n    <li class=\"tabs-title\"><a href=\"home#batch-search\">Batch Search</a></li>\n    <!-- We disable the advance search for now until we are able to provide it to the users-->\n    <li class=\"tabs-title\"><a href=\"home#advanced-search\">Advanced Search</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"search-tabs\">\n\n    <!--TAB MAIN SEARCH SECTION-->\n    <div id=\"div-quick-search\">\n      <div class=\"tabs-panel is-active\" id=\"quick-search\">\n        <fieldset>\n          <div id=\"searchBox\" class=\"input-group margin-bottom-none\">\n            <input #query class=\"typeahead input-group-field\" type=\"text\" id=\"query\"\n                   (keydown.enter)=\"search(query.value, 'enter')\"\n                   placeholder=\"Search by gene names, UniProt ACs, Pubmed, protein names, Complex ACs\"/>\n            <div class=\"input-group-button\">\n              <input id=\"home-search-button\" type=\"button\" name=\"submit\" value=\"1\"\n                     (click)=\"search(query.value, 'button')\"\n                     class=\"button icon icon-functional\">\n            </div>\n          </div>\n          <div class=\"columns margin-top-large\">\n            <h5><i class=\"icon icon-generic padding-right-medium intact-color\" data-icon=\"?\"></i>Examples:</h5>\n            <div class=\"columns medium-4\">\n              <ul class=\"no-margin no-padding\">\n                <li>Gene names: <a (click)=\"search('Ndc80', 'example')\">Ndc80</a></li>\n                <li>UniProt ACs: <a (click)=\"search('Q05471', 'example')\">Q05471</a></li>\n              </ul>\n            </div>\n            <div class=\"columns medium-4\">\n              <ul class=\"no-margin no-padding\">\n                <li>Taxon IDs: <a (click)=\"search('9606', 'example')\">9606</a></li>\n                <li>Publication IDs: <a (click)=\"search('32353859', 'example')\">32353859</a></li>\n              </ul>\n            </div>\n            <div class=\"columns medium-4\">\n              <ul class=\"no-margin no-padding\">\n                <li>Complex ACs: <a (click)=\"search('CPX-5742', 'example')\">CPX-5742</a></li>\n                <li>GO terms: <a (click)=\"search('GO:0016491', 'example')\">GO:0016491</a></li>\n              </ul>\n            </div>\n          </div>\n        </fieldset>\n      </div>\n    </div>\n\n    <!--TAB BATCH SEARCH SECTION-->\n    <div class=\"tabs-panel\" id=\"batch-search\">\n      <ip-batch-search></ip-batch-search>\n    </div>\n\n    <!--TAB ADVANCED SECTION-->\n    <div class=\"tabs-panel\" id=\"advanced-search\">\n      <ip-advanced-search></ip-advanced-search>\n    </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1711,6 +2094,7 @@ SearchComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm2015/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_service_google_analytics_google_analytics_service__ = __webpack_require__("./src/app/shared/service/google-analytics/google-analytics.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__advanced_search_colorMIQL_pipe__ = __webpack_require__("./src/app/home-dashboard/advanced-search/colorMIQL.pipe.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1720,6 +2104,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1736,10 +2121,21 @@ let SearchService = SearchService_1 = class SearchService {
         this.rand = () => Math.random().toString(36).substr(2);
         this.genToken = (length) => (this.rand() + this.rand() + this.rand() + this.rand()).substr(0, length);
     }
+    isAdvancedQuery(query) {
+        const isMIQL = __WEBPACK_IMPORTED_MODULE_6__advanced_search_colorMIQL_pipe__["a" /* ColorMIQLPipe */].isMIQL(query);
+        if (isMIQL) {
+            window.open('query/' + query);
+        }
+        return isMIQL;
+    }
     search(query) {
         this._query = query;
         this._isBatchSearch = false;
-        this.router.navigate(['search'], { queryParams: { query } });
+        const b = !this.isAdvancedQuery(query);
+        console.log(b, query);
+        if (b) {
+            this.router.navigate(['search'], { queryParams: { query } });
+        }
     }
     batchSearch(query) {
         this._query = query;
@@ -1988,7 +2384,7 @@ module.exports = "/*This avoids the purple coming from the main theme*/\n.indust
 /***/ "./src/app/home-dashboard/tile-menu/tile-menu.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row button-grid\" data-equalizer data-equalize-on=\"medium\" id=\"large-button-grid\">\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/interactomes\">\n      <h3 class=\"icon icon-species white-color\" data-icon=\"M\"></h3>\n      <h5 class=\"white-color\">Interactomes</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/documentation/datasets/\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\";\"></h3>\n      <h5 class=\"white-color\">Datasets</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/documentation/datasets/\"\n       fragment=\"mutations\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\"d\"></h3>\n      <h5 class=\"white-color\">Mutations</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/download/\" fragment=\"ftp\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf019;\"></h3>\n      <h5 class=\"white-color\">FTP</h5></a>\n  </div>\n\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns industry-background\" data-equalizer-watch\n       routerLink=\"/documentation/data_submission\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf093;\"></h3>\n      <h5 class=\"white-color\">Data Submission</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns industry-background\" data-equalizer-watch data-open=\"citationModal\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\"P\"></h3>\n      <h5 class=\"white-color\">How To Cite Us</h5></a>\n  </div>\n  <div class=\"reveal\" id=\"citationModal\" data-reveal>\n    <h3>Citing IntAct</h3>\n    <span\n      class=\"lead\">The MIntAct project--IntAct as a common curation platform for 11 molecular interaction databases.</span>\n    1035670 <p>Orchard S et al [PMID: 24234451]</p>\n    <p><i>Nucl. Acids Res. (2013) doi: 10.1093/nar/gkt1115</i></p>\n    <a class=\"button readmore\" href=\"//europepmc.org/article/MED/24234451\" target=\"_blank\">Abstract</a>\n    <a class=\"button readmore\" href=\"//academic.oup.com/nar/article/42/D1/D358/1051282\" target=\"_blank\">Full text</a>\n\n    <button class=\"close-button\" data-close aria-label=\"Close modal\" type=\"button\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns industry-background\" data-equalizer-watch routerLink=\"/documentation\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf283;\"></h3>\n      <h5 class=\"white-color\">Documentation</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns training-background\" data-equalizer-watch href=\"//www.ebi.ac.uk/training\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\"t\"></h3>\n      <h5 class=\"white-color\">Training</h5></a>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row button-grid\" data-equalizer data-equalize-on=\"medium\" id=\"large-button-grid\">\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/interactomes\">\n      <h3 class=\"icon icon-species white-color\" data-icon=\"M\"></h3>\n      <h5 class=\"white-color\">Interactomes</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/documentation/datasets/\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\";\"></h3>\n      <h5 class=\"white-color\">Datasets</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/documentation/datasets/\"\n       fragment=\"mutations\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\"d\"></h3>\n      <h5 class=\"white-color\">Mutations</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"/download/\" fragment=\"ftp\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf019;\"></h3>\n      <h5 class=\"white-color\">FTP</h5></a>\n  </div>\n\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns industry-background\" data-equalizer-watch\n       routerLink=\"/documentation/data_submission\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf093;\"></h3>\n      <h5 class=\"white-color\">Data Submission</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns industry-background\" data-equalizer-watch data-open=\"citationModal\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\"P\"></h3>\n      <h5 class=\"white-color\">How To Cite Us</h5></a>\n  </div>\n  <div class=\"reveal\" id=\"citationModal\" data-reveal>\n    <h3>Citing IntAct</h3>\n    <span\n      class=\"lead\">The MIntAct project--IntAct as a common curation platform for 11 molecular interaction databases.</span>\n    1035670 <p>Orchard S et al [PMID: 24234451]</p>\n    <p><i>Nucl. Acids Res. (2013) doi: 10.1093/nar/gkt1115</i></p>\n    <a class=\"button readmore\" href=\"//europepmc.org/article/MED/24234451\" target=\"_blank\">Abstract</a>\n    <a class=\"button readmore\" href=\"//academic.oup.com/nar/article/42/D1/D358/1051282\" target=\"_blank\">Full text</a>\n\n    <button class=\"close-button\" data-close aria-label=\"Close modal\" type=\"button\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns industry-background\" data-equalizer-watch routerLink=\"/documentation\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf283;\"></h3>\n      <h5 class=\"white-color\">Documentation</h5></a>\n  </div>\n  <div class=\"columns large-3 medium-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns training-background\" data-equalizer-watch href=\"//www.ebi.ac.uk/training/search-results?query=intact&domain=ebiweb_training&page=1&facets=\">\n      <h3 class=\"icon icon-generic white-color\" data-icon=\"t\"></h3>\n      <h5 class=\"white-color\">Training</h5></a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -4018,7 +4414,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-const baseURL = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_ws;
+const baseURL = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_graph_ws;
 let DownloadFormComponent = class DownloadFormComponent {
     constructor(filters, search, selection) {
         this.filters = filters;
@@ -8681,6 +9077,66 @@ FaqComponent = __decorate([
 
 /***/ }),
 
+/***/ "./src/app/navigation/redirect/redirect.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h1>Redirection</h1>\n\nYou are being redirected to <a [href]=\"href\">{{href}}</a><br>\nPlease wait till <a [href]=\"href\">{{href}}</a>  is ready.\n"
+
+/***/ }),
+
+/***/ "./src/app/navigation/redirect/redirect.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RedirectComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm2015/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+let RedirectComponent = class RedirectComponent {
+    constructor(route) {
+        this.route = route;
+    }
+    ngOnInit() {
+        this.route.data.subscribe(data => {
+            this.href = data.externalUrl;
+            this.route.params.subscribe((params) => {
+                for (const param of Object.keys(params)) {
+                    this.href = this.href.replace(':' + param, params[param]);
+                }
+                this.route.queryParams.subscribe(queryParams => {
+                    const paramList = Object.keys(queryParams);
+                    if (paramList.length > 0) {
+                        this.href += `?${paramList.map(param => `${param}=${queryParams[param]}`).join('&')}`;
+                    }
+                    window.location.href = this.href;
+                });
+            });
+        });
+    }
+};
+RedirectComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'ip-redirect',
+        template: __webpack_require__("./src/app/navigation/redirect/redirect.component.html"),
+        styles: []
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
+], RedirectComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/components/column-toggle/column-toggle.component.css":
 /***/ (function(module, exports) {
 
@@ -9452,6 +9908,7 @@ function extractAnnotation(rawData) {
 // Environment for development
 const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
 const EBI_URL = 'https://www.ebi.ac.uk';
+const FORMER_INTACT_URL = 'https://www.ebi.ac.uk/intact/';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'https://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
@@ -9460,6 +9917,7 @@ const environment = {
     evn: 'dev',
     analytics_id: 'UA-672146-15',
     ebi_url: EBI_URL,
+    former_intact_url: FORMER_INTACT_URL,
     context_path: '',
     license_url: LICENSE_URL,
     intact_psi25_url: INTACT_FTP_BASE_URL + '/current/psi25',

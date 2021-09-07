@@ -6,7 +6,6 @@
   height: 20pt;
 }
 
-
 .node-diagram text {
   font-size: xx-large;
   font-weight: bold;
@@ -98,6 +97,7 @@ a.tag:hover {
   /*line-height: 1em;*/
   margin-top: 0;
 }
+
 /* end */
 
 /*IntAct tiles and buttons styling*/
@@ -243,6 +243,10 @@ a.intact-background,
 
 .button-group.rounded > .button.hover:last-of-type {
   border-radius: 0 1.4em 0 0;
+}
+
+.button-group .button.outlined {
+  margin-right: -1px;
 }
 
 .on-top {
@@ -406,57 +410,153 @@ a:visited {
 /**************************************************************/
 /********* ADVANCED QUERY BUILDER RE-STYLE ********************/
 /**************************************************************/
+.miql {
 
-
-[_nghost-c11] .q-switch-label[_ngcontent-c11], [_nghost-c11] .q-button[_ngcontent-c11] {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-bottom: 0 !important;
 }
 
-[_nghost-c11] .q-button[_ngcontent-c11] {
-  margin-left: 8px;
-  padding: 0 8px;
-  background-color: #f6f4f6 !important;
-  border: none !important;
+.miql-field {
+  color: #b050d0;
 }
 
-[_nghost-c11] .q-button[_ngcontent-c11]:focus {
-  outline: 0;
-  box-shadow: inset 0 0 0px 0.2rem rgba(0, 123, 255, .25);
+.miql-operator {
+  color: #e9b401;
 }
 
-[_nghost-c11] .q-remove-button[_ngcontent-c11] {
-  color: #B3415D;
-  width: 31px;
-  background-color: transparent !important;
+.miql-symbol {
+  color: #0086b4;
 }
 
-[_nghost-c11] .q-tree[_ngcontent-c11] {
-  margin-left: 3.25rem !important;
+.miql-string {
+  color: #6dab49;
 }
 
-[_nghost-c11] .q-connector[_ngcontent-c11]::before, [_nghost-c11] .q-connector[_ngcontent-c11]::after {
-  content: '';
+.ad-q-switch-label, .ad-q-switch-radio {
+  line-height: 1;
+  display: contents;
+}
+
+.ad-q-switch-radio ~ .button {
+  position: relative;
+  z-index: 10;
+}
+
+.ad-q-switch-radio ~ .button:focus,
+.ad-q-switch-radio ~ .button:hover,
+.ad-q-switch-radio ~ .button.hover {
+  background-color: rgb(119, 62, 137);
+  opacity: 1;
+}
+
+.ad-q-switch-radio:not(:checked) ~ .button {
+  background: white;
+  color: #68297c !important;
+  border: 2px solid #68297c;
+  padding: calc(0.85em - 1px) calc(1em - 1px);
+}
+
+.ad-q-switch-radio:not(:checked) ~ .button:focus,
+.ad-q-switch-radio:not(:checked) ~ .button:hover,
+.ad-q-switch-radio:not(:checked) ~ .button.hover {
+  background: white;
+  color: rgb(119, 62, 137) !important;
+  border: 2px solid rgb(119, 62, 137);
+}
+
+.centered-icon {
+  line-height: 1;
+}
+
+.q-tree {
+  position: relative;
+}
+
+.ad-q-row {
+  margin-top: -1px;
+  margin-left: 0.75em;
+  padding: 0.5em;
+}
+
+.invalid-rule-set {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.display-contents {
+  display: contents;
+}
+
+.ad-q-connector {
+  position: relative;
+}
+
+#builder .button-group .button {
+  margin-bottom: 0;
+
+}
+
+.q-right-align.button-group .button .icon {
+  line-height: 12px;
+}
+
+.ad-q-connector:first-child::before {
+  top: -12px !important;
+  height: 40px !important;
+}
+
+.ad-q-connector::before {
+  top: -4px !important;
+  border-width: 0 0 2px 2px !important;
+}
+
+.ad-q-connector:not(:last-child)::after {
+  top: 0;
+  height: 100%;
+  border-width: 0 0 0 2px !important;
+}
+
+.ad-q-connector.q-ruleset {
+  border-left: none !important;
+}
+
+.ad-q-connector.q-ruleset::after, .ad-q-connector.q-ruleset::before {
   left: -12px;
-  border: solid #CCC;
-  width: 9px;
-  height: calc(50% + 6px);
+  width: 12px;
+}
+
+.ad-q-connector.q-ruleset::before {
+  width: 26px;
+}
+
+.ad-q-connector::after, .ad-q-connector::before {
+  content: '';
   position: absolute;
+  left: -13px;
+  width: 13px;
+  height: 32px;
+  border: 0 solid #68297c;
 }
 
-[_nghost-c11] .q-connector[_ngcontent-c11]::before {
-  top: -5px;
-  border-width: 0 0 2px 2px;
-}
+/*.ad-q-connector::before {*/
+/*  content: '';*/
+/*  left: -10px;*/
+/*  border: solid #68297c;*/
+/*  position: absolute;*/
+/*  !*width: 22px;*!*/
+/*  !*height: 8px;*!*/
+/*  !*top: -6px;*!*/
+/*  !*border-width: 0 0 2px 2px;*!*/
+/*  width: 24px;*/
+/*  height: 33px;*/
+/*  top: -28px;*/
+/*  border-width: 2px 2px 0px 0px;*/
+/*}*/
 
-[_nghost-c11] .q-control-size[_ngcontent-c11] {
-  display: inline-block;
-  vertical-align: top;
-  padding-right: 10px;
-  margin-top: 8px;
-  margin-bottom: -3px;
-}
+/*[_nghost-c11] .q-control-size[_ngcontent-c11] {*/
+/*  display: inline-block;*/
+/*  vertical-align: top;*/
+/*  padding-right: 10px;*/
+/*  margin-top: 8px;*/
+/*  margin-bottom: -3px;*/
+/*}*/
 
 /**************************************************************/
 /************** END ADVANCED QUERY BUILDER ********************/

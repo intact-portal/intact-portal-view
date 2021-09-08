@@ -9,7 +9,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 31245
+    - port: 31240
       protocol: TCP
       # The port which will be externally exposed. Must be in the range [30000, 32767].
       nodePort: 31245

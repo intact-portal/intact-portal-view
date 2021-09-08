@@ -1,19 +1,19 @@
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// `ng build --env=test` then `environment.test.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-// Environment for development
-const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
+// Environment for production
+const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk/';
 const EBI_URL = 'https://www.ebi.ac.uk';
 const FORMER_INTACT_URL = 'https://www.ebi.ac.uk/legacy-intact/';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'https://ftp.ebi.ac.uk/pub/databases/intact';
-
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
+
 export const environment = {
-  production: false,
-  evn: 'dev',
-  analytics_id: 'UA-672146-15',
+  production: true,
+  evn: 'prod',
+  analytics_id: 'UA-XXXXXX-XX',
   ebi_url: EBI_URL,
   former_intact_url: FORMER_INTACT_URL,
   context_path: '',
@@ -25,8 +25,8 @@ export const environment = {
   intact_portal_url: EBI_BASE_URL + '/intact',
   intact_portal_support_url: EBI_BASE_URL + 'support/intact',
   intact_training_url: EBI_BASE_URL + 'intact/resources/training',
-  // todo remove it when all the ws are mapped to wwwdev.ebi.ac.uk/intact/ws
-  intact_portal_ws: EBI_BASE_URL + '/intact/ws',
-  intact_portal_graph_ws: EBI_BASE_URL + '/intact/ws',
+  intact_portal_ws: EBI_BASE_URL + 'intact/test/ws',
+  // todo remove it when all the ws are mapped to www.ebi.ac.uk/intact/ws
+  intact_portal_graph_ws: EBI_URL + '/intact/ws',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
 };

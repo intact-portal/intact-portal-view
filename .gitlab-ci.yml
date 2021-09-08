@@ -125,9 +125,9 @@ build-image:
     - docker logout "$CI_REGISTRY"
   tags:
     - dind
-  only:
-    refs:
-      - master
+#  only:
+#    refs:
+#      - master
 
 hh-production-deploy:
   stage: deploy
@@ -148,9 +148,9 @@ hh-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  only:
-    refs:
-      - master
+#  only:
+#    refs:
+#      - master
 
 hx-production-deploy:
   stage: deploy
@@ -171,9 +171,9 @@ hx-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  only:
-    refs:
-      - master
+#  only:
+#    refs:
+#      - master
 
 hx-test-deploy:
   stage: deploy

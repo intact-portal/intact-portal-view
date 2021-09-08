@@ -79,17 +79,31 @@ init:
   tags:
     - docker
 
-build:
+build-test:
   stage: build
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - ng build --env=prod --build-optimizer=false --base-href "/intact/beta/"
+    - ng build --env=test --build-optimizer=false --base-href "/intact/beta/"
   artifacts:
     expire_in: 1 day
     paths:
       - $DIST_DIR
   tags:
     - docker
+  when: manual
+
+build-prod:
+  stage: build
+  image: trion/ng-cli:${CLI_VERSION}
+  script:
+    - ng build --env=prod --build-optimizer=false --base-href "/intact/"
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - $DIST_DIR
+  tags:
+    - docker
+  when: manual
 
 build-image:
   stage: build-image

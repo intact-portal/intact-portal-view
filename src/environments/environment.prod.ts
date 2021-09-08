@@ -3,8 +3,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 // Environment for production
-const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk/';
+const EBI_BASE_URL = 'https://www.ebi.ac.uk/';
 const EBI_URL = 'https://www.ebi.ac.uk';
+const FORMER_INTACT_URL = 'https://www.ebi.ac.uk/legacy-intact/';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'https://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
@@ -14,6 +15,7 @@ export const environment = {
   evn: 'prod',
   analytics_id: 'UA-XXXXXX-XX',
   ebi_url: EBI_URL,
+  former_intact_url: FORMER_INTACT_URL,
   context_path: '',
   license_url: LICENSE_URL,
   intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25',
@@ -23,7 +25,7 @@ export const environment = {
   intact_portal_url: EBI_BASE_URL + '/intact',
   intact_portal_support_url: EBI_BASE_URL + 'support/intact',
   intact_training_url: EBI_BASE_URL + 'intact/resources/training',
-  intact_portal_ws: EBI_BASE_URL + 'intact/test/ws',
+  intact_portal_ws: EBI_BASE_URL + 'intact/ws',
   // todo remove it when all the ws are mapped to www.ebi.ac.uk/intact/ws
   intact_portal_graph_ws: EBI_URL + '/intact/ws',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL

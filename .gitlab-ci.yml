@@ -149,7 +149,7 @@ hh-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [build-prod]
+  needs: [build-prod,build-image]
 #  only:
 #    refs:
 #      - master
@@ -173,7 +173,7 @@ hx-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [build-prod]
+  needs: [build-prod,build-image]
 #  only:
 #    refs:
 #      - master
@@ -198,7 +198,7 @@ hx-test-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [build-test]
+  needs: [build-test,build-image]
   only:
     refs:
       - master

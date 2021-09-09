@@ -90,7 +90,6 @@ build-test:
       - $DIST_DIR
   tags:
     - docker
-  allow_failure: false
   when: manual
 
 build-prod:
@@ -104,7 +103,6 @@ build-prod:
       - $DIST_DIR
   tags:
     - docker
-  allow_failure: false
   when: manual
 
 build-image:
@@ -127,6 +125,7 @@ build-image:
     - docker logout "$CI_REGISTRY"
   tags:
     - dind
+  when: manual
 #  only:
 #    refs:
 #      - master
@@ -150,6 +149,7 @@ hh-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
+  needs: [build-prod]
 #  only:
 #    refs:
 #      - master
@@ -173,6 +173,7 @@ hx-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
+  needs: [build-prod]
 #  only:
 #    refs:
 #      - master
@@ -197,6 +198,7 @@ hx-test-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
+  needs: [build-test]
   only:
     refs:
       - master

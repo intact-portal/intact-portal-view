@@ -90,6 +90,8 @@ build-test:
       - $DIST_DIR
   tags:
     - docker
+  rules:
+    allow_failure: false
   when: manual
 
 build-prod:
@@ -103,6 +105,8 @@ build-prod:
       - $DIST_DIR
   tags:
     - docker
+  rules:
+    allow_failure: false
   when: manual
 
 build-image:

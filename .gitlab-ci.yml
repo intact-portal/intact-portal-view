@@ -90,6 +90,7 @@ build-test:
       - $DIST_DIR
   tags:
     - docker
+  allow_failure: false
   when: manual
 
 build-prod:
@@ -103,6 +104,7 @@ build-prod:
       - $DIST_DIR
   tags:
     - docker
+  allow_failure: false
   when: manual
 
 build-image:
@@ -123,7 +125,6 @@ build-image:
     - docker push ${CONTAINER_IMAGE}
     - docker rmi ${CONTAINER_IMAGE}
     - docker logout "$CI_REGISTRY"
-  needs: [build]
   tags:
     - dind
 #  only:

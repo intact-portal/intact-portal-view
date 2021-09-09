@@ -8,3 +8,8 @@ ip-markdown ::ng-deep h2 {
 ip-markdown ::ng-deep h3 {
   font-size: large;
 }
+
+#user-guide-tabs>li>a {
+  padding-right:12px;
+  padding-left:12px;
+}

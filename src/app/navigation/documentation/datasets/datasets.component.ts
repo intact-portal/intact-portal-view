@@ -10,7 +10,7 @@ import {Title} from '@angular/platform-browser';
 })
 export class DatasetsComponent implements OnInit {
 
-  dataset = environment.intact_portal_documentation_url + 'dataset-descriptions/datasets.md';
+  dataset = environment.intact_portal_documentation_url + 'documentation/datasets.md';
 
   constructor(private titleService: Title) { }
 

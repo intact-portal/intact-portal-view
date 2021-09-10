@@ -15,9 +15,9 @@ import {InteractionsSearchService} from './interactions/shared/service/interacti
 import {InteractionDetailsModule} from './interactions/interaction-details/interaction-details.module';
 import {InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
 import {NetworkSearchService} from './interactions/shared/service/network-search.service';
-import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {DocumentationModule} from './navigation/documentation/documentation.module';
+import {DownloadModule} from './navigation/download/download.module';
 import {InteractomeComponent} from './interactomes/interactome/interactome.component';
 import {LayoutModule} from './layout/layout.module';
 import {NetworkViewService} from './interactions/shared/service/network-view.service';
@@ -35,11 +35,9 @@ import { RedirectComponent } from './navigation/redirect/redirect.component';
 @NgModule({
   declarations: [
     AppComponent,
-    DownloadComponent,
     InteractomesComponent,
     InteractomeComponent,
     AboutComponent,
-    FaqComponent,
     RedirectComponent
   ],
   imports: [
@@ -53,6 +51,7 @@ import { RedirectComponent } from './navigation/redirect/redirect.component';
     InteractionsResultsModule,
     InteractionDetailsModule,
     DocumentationModule,
+    DownloadModule,
     AppRoutingModule,
     MarkdownModule,
     MatButtonModule,

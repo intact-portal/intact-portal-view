@@ -25,7 +25,6 @@ import {MarkdownModule} from './navigation/documentation/shared/markdown/markdow
 import {MatButtonModule} from '@angular/material/button';
 import {FilterService} from './interactions/shared/service/filter.service';
 import {AboutComponent} from './navigation/about/about.component';
-import {FaqComponent} from './navigation/faq/faq.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angulartics2Module} from 'angulartics2';
 import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';

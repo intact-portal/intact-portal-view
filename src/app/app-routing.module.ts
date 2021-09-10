@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
-import {FaqComponent} from './navigation/faq/faq.component';
 import {AboutComponent} from './navigation/about/about.component';
 import {environment} from '../environments/environment';
 import {RedirectComponent} from './navigation/redirect/redirect.component';
@@ -28,11 +27,6 @@ const routes: Routes = [
   {
     path: 'interactomes',
     component: InteractomesComponent,
-    data: {showCompactHeader: false, showFooter: true}
-  },
-  {
-    path: 'faq',
-    component: FaqComponent,
     data: {showCompactHeader: false, showFooter: true}
   },
   {

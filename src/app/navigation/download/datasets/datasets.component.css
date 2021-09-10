@@ -1,0 +1,16 @@
+/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/
+ip-markdown ::ng-deep h1 {
+  font-size: xx-large;
+}
+ip-markdown ::ng-deep h2 {
+  font-size: x-large;
+}
+ip-markdown ::ng-deep h3 {
+  font-size: large;
+}
+ip-markdown ::ng-deep table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-size: small;
+}

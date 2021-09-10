@@ -9,9 +9,9 @@ import {Title} from '@angular/platform-browser';
 })
 export class TechnicalCornerComponent implements OnInit {
 
-  apis = environment.intact_portal_documentation_url + 'technical-corner/apis.md';
-  source_code = environment.intact_portal_documentation_url + 'technical-corner/source-code.md';
-  tools = environment.intact_portal_documentation_url + 'technical-corner/tools.md';
+  apis = environment.intact_portal_documentation_url + 'documentation/technical-corner/apis.md';
+  source_code = environment.intact_portal_documentation_url + 'documentation/technical-corner/source-code.md';
+  tools = environment.intact_portal_documentation_url + 'documentation/technical-corner/tools.md';
 
   constructor(private titleService: Title) {
   }

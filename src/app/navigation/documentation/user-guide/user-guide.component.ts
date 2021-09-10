@@ -10,14 +10,14 @@ import {environment} from '../../../../environments/environment';
 })
 export class UserGuideComponent implements OnInit {
 
-  data_sources = environment.intact_portal_documentation_url + 'help/user-guide/data-sources-and-annotation-practices.md';
-  usage = environment.intact_portal_documentation_url + 'help/user-guide/searching-intact.md';
-  expansion_method = environment.intact_portal_documentation_url + 'help/user-guide/expansion-method.md';
-  interaction_scoring = environment.intact_portal_documentation_url + 'help/user-guide/interaction-scoring.md';
-  definitions_formats = environment.intact_portal_documentation_url + 'help/user-guide/definitions-and-formats.md';
-  data_export = environment.intact_portal_documentation_url + 'help/user-guide/data-export.md';
-  access_intact = environment.intact_portal_documentation_url + 'help/user-guide/access-intact.md';
-  curation_manual = environment.intact_portal_documentation_url + 'help/user-guide/curation-manual.md';
+  data_sources = environment.intact_portal_documentation_url + 'documentation/user-guide/data-sources-and-annotation-practices.md';
+  usage = environment.intact_portal_documentation_url + 'documentation/user-guide/searching-intact.md';
+  expansion_method = environment.intact_portal_documentation_url + 'documentation/user-guide/expansion-method.md';
+  interaction_scoring = environment.intact_portal_documentation_url + 'documentation/user-guide/interaction-scoring.md';
+  definitions_formats = environment.intact_portal_documentation_url + 'documentation/user-guide/definitions-and-formats.md';
+  data_export = environment.intact_portal_documentation_url + 'documentation/user-guide/data-export.md';
+  access_intact = environment.intact_portal_documentation_url + 'documentation/user-guide/access-intact.md';
+  curation_manual = environment.intact_portal_documentation_url + 'documentation/user-guide/curation-manual.md';
 
 
   constructor(private titleService: Title) {

@@ -39,17 +39,15 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm2015/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__navigation_download_download_component__ = __webpack_require__("./src/app/navigation/download/download.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interactomes_interactomes_component__ = __webpack_require__("./src/app/interactomes/interactomes.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__navigation_faq_faq_component__ = __webpack_require__("./src/app/navigation/faq/faq.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__navigation_about_about_component__ = __webpack_require__("./src/app/navigation/about/about.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__ = __webpack_require__("./src/app/navigation/redirect/redirect.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__navigation_about_about_component__ = __webpack_require__("./src/app/navigation/about/about.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__navigation_redirect_redirect_component__ = __webpack_require__("./src/app/navigation/redirect/redirect.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -81,13 +79,8 @@ const routes = [
         data: { showCompactHeader: false, showFooter: true }
     },
     {
-        path: 'faq',
-        component: __WEBPACK_IMPORTED_MODULE_4__navigation_faq_faq_component__["a" /* FaqComponent */],
-        data: { showCompactHeader: false, showFooter: true }
-    },
-    {
         path: 'about',
-        component: __WEBPACK_IMPORTED_MODULE_5__navigation_about_about_component__["a" /* AboutComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_4__navigation_about_about_component__["a" /* AboutComponent */],
         data: { showCompactHeader: false, showFooter: true }
     },
     {
@@ -96,23 +89,23 @@ const routes = [
     },
     {
         path: 'query/:advanced_query',
-        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
-        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'query/:advanced_query' }
+        component: __WEBPACK_IMPORTED_MODULE_6__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].former_intact_url + 'query/:advanced_query' }
     },
     {
         path: 'interactors/:query',
-        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
-        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'interactors/:query' }
+        component: __WEBPACK_IMPORTED_MODULE_6__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].former_intact_url + 'interactors/:query' }
     },
     {
         path: 'pages/list/list.xhtml',
-        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
-        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'pages/list/list.xhtml' }
+        component: __WEBPACK_IMPORTED_MODULE_6__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].former_intact_url + 'pages/list/list.xhtml' }
     },
     {
         path: 'pages/interactions/interactions.xhtml',
-        component: __WEBPACK_IMPORTED_MODULE_7__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
-        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_6__environments_environment__["a" /* environment */].former_intact_url + 'pages/interactions/interactions.xhtml' }
+        component: __WEBPACK_IMPORTED_MODULE_6__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].former_intact_url + 'pages/interactions/interactions.xhtml' }
     },
     {
         path: '**',
@@ -242,9 +235,9 @@ var AppComponent_1;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__interactions_interaction_details_interaction_details_module__ = __webpack_require__("./src/app/interactions/interaction-details/interaction-details.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__interactions_shared_service_interactions_details_service__ = __webpack_require__("./src/app/interactions/shared/service/interactions-details.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__interactions_shared_service_network_search_service__ = __webpack_require__("./src/app/interactions/shared/service/network-search.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__navigation_download_download_component__ = __webpack_require__("./src/app/navigation/download/download.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__interactomes_interactomes_component__ = __webpack_require__("./src/app/interactomes/interactomes.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__navigation_documentation_documentation_module__ = __webpack_require__("./src/app/navigation/documentation/documentation.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__interactomes_interactomes_component__ = __webpack_require__("./src/app/interactomes/interactomes.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__navigation_documentation_documentation_module__ = __webpack_require__("./src/app/navigation/documentation/documentation.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__navigation_download_download_module__ = __webpack_require__("./src/app/navigation/download/download.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__interactomes_interactome_interactome_component__ = __webpack_require__("./src/app/interactomes/interactome/interactome.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__layout_layout_module__ = __webpack_require__("./src/app/layout/layout.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__interactions_shared_service_network_view_service__ = __webpack_require__("./src/app/interactions/shared/service/network-view.service.ts");
@@ -252,13 +245,12 @@ var AppComponent_1;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__angular_material_button__ = __webpack_require__("./node_modules/@angular/material/esm2015/button.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__interactions_shared_service_filter_service__ = __webpack_require__("./src/app/interactions/shared/service/filter.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__navigation_about_about_component__ = __webpack_require__("./src/app/navigation/about/about.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__navigation_faq_faq_component__ = __webpack_require__("./src/app/navigation/faq/faq.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__angular_platform_browser_animations__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/animations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27_angulartics2__ = __webpack_require__("./node_modules/angulartics2/es2015/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28_angulartics2_ga__ = __webpack_require__("./node_modules/angulartics2/ga/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__shared_service_google_analytics_google_analytics_service__ = __webpack_require__("./src/app/shared/service/google-analytics/google-analytics.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__navigation_redirect_redirect_component__ = __webpack_require__("./src/app/navigation/redirect/redirect.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__angular_platform_browser_animations__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/animations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_angulartics2__ = __webpack_require__("./node_modules/angulartics2/es2015/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27_angulartics2_ga__ = __webpack_require__("./node_modules/angulartics2/ga/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__shared_service_google_analytics_google_analytics_service__ = __webpack_require__("./src/app/shared/service/google-analytics/google-analytics.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__navigation_redirect_redirect_component__ = __webpack_require__("./src/app/navigation/redirect/redirect.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -296,23 +288,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["J" /* NgModule */])({
         declarations: [
             __WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__navigation_download_download_component__["a" /* DownloadComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__interactomes_interactomes_component__["a" /* InteractomesComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__interactomes_interactomes_component__["a" /* InteractomesComponent */],
             __WEBPACK_IMPORTED_MODULE_18__interactomes_interactome_interactome_component__["a" /* InteractomeComponent */],
             __WEBPACK_IMPORTED_MODULE_24__navigation_about_about_component__["a" /* AboutComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__navigation_faq_faq_component__["a" /* FaqComponent */],
-            __WEBPACK_IMPORTED_MODULE_31__navigation_redirect_redirect_component__["a" /* RedirectComponent */]
+            __WEBPACK_IMPORTED_MODULE_30__navigation_redirect_redirect_component__["a" /* RedirectComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_26__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+            __WEBPACK_IMPORTED_MODULE_25__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* RouterModule */].forRoot([]),
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["d" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["b" /* HttpClientModule */],
@@ -320,11 +309,12 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_7__home_dashboard_home_dashboard_module__["HomeDashboardModule"],
             __WEBPACK_IMPORTED_MODULE_9__interactions_interactions_results_interactions_results_module__["InteractionsResultsModule"],
             __WEBPACK_IMPORTED_MODULE_12__interactions_interaction_details_interaction_details_module__["InteractionDetailsModule"],
-            __WEBPACK_IMPORTED_MODULE_17__navigation_documentation_documentation_module__["a" /* DocumentationModule */],
+            __WEBPACK_IMPORTED_MODULE_16__navigation_documentation_documentation_module__["a" /* DocumentationModule */],
+            __WEBPACK_IMPORTED_MODULE_17__navigation_download_download_module__["a" /* DownloadModule */],
             __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_21__navigation_documentation_shared_markdown_markdown_module__["a" /* MarkdownModule */],
             __WEBPACK_IMPORTED_MODULE_22__angular_material_button__["a" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_27_angulartics2__["b" /* Angulartics2Module */].forRoot([__WEBPACK_IMPORTED_MODULE_28_angulartics2_ga__["a" /* Angulartics2GoogleAnalytics */]])
+            __WEBPACK_IMPORTED_MODULE_26_angulartics2__["b" /* Angulartics2Module */].forRoot([__WEBPACK_IMPORTED_MODULE_27_angulartics2_ga__["a" /* Angulartics2GoogleAnalytics */]])
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_8__home_dashboard_featured_dataset_service_feature_dataset_service__["a" /* FeatureDatasetService */],
@@ -334,8 +324,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_23__interactions_shared_service_filter_service__["b" /* FilterService */],
             __WEBPACK_IMPORTED_MODULE_14__interactions_shared_service_network_search_service__["a" /* NetworkSearchService */],
             __WEBPACK_IMPORTED_MODULE_20__interactions_shared_service_network_view_service__["a" /* NetworkViewService */],
-            __WEBPACK_IMPORTED_MODULE_29__shared_service_google_analytics_google_analytics_service__["a" /* GoogleAnalyticsService */],
-            { provide: __WEBPACK_IMPORTED_MODULE_30__angular_common__["a" /* APP_BASE_HREF */], useFactory: (s) => s.getBaseHrefFromDOM(), deps: [__WEBPACK_IMPORTED_MODULE_30__angular_common__["i" /* PlatformLocation */]] }
+            __WEBPACK_IMPORTED_MODULE_28__shared_service_google_analytics_google_analytics_service__["a" /* GoogleAnalyticsService */],
+            { provide: __WEBPACK_IMPORTED_MODULE_29__angular_common__["a" /* APP_BASE_HREF */], useFactory: (s) => s.getBaseHrefFromDOM(), deps: [__WEBPACK_IMPORTED_MODULE_29__angular_common__["i" /* PlatformLocation */]] }
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
     })
@@ -7774,7 +7764,7 @@ module.exports = "/* NAVIGATION SUBMENU OVERRIDE EBI-GLOBAL TO REMOVE A WHITE RI
 /***/ "./src/app/layout/header/compact-header/compact-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header id=\"masthead\" class=\"masthead compact-for-data\">\n  <div class=\"masthead-inner row expanded collapse\">\n    <!-- local-title -->\n    <div>\n      <a routerLink=\"/home\" title=\"Back to IntAct homepage\">\n        <div class=\"media-object\" id=\"local-title\">\n          <div class=\"media-object-section\">\n            <img class=\"padding-bottom-small\" src=\"assets/images/logo/intact_logo.svg\" alt=\"IntAct logo\"\n                 style=\"height: 3rem;\">\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- /local-title -->\n\n    <ip-local-search style=\"flex: 1\"></ip-local-search>\n\n    <!-- local-nav -->\n    <nav>\n      <ul id=\"local-nav\" class=\"dropdown menu float-left\" data-dropdown-menu=\"true\" data-description=\"navigational\">\n        <li routerLinkActive=\"active\"><a routerLink=\"/home\" routerLinkActive=\"active\">Home</a></li>\n        <li routerLinkActive=\"active\"><a routerLink=\"/download\" routerLinkActive=\"active\">Download</a></li>\n        <li routerLinkActive=\"active\"><a routerLink=\"/faq\" routerLinkActive=\"active\">FAQ</a></li>\n        <li routerLinkActive=\"active\"><a routerLink=\"/about\" routerLinkActive=\"active\">About</a></li>\n        <li class=\"extra-items-menu is-dropdown-submenu-parent opens-right\">\n          <a routerLinkActive=\"active\" routerLink=\"/documentation\">Documentation</a>\n          <ul class=\"menu submenu is-dropdown-submenu first-sub vertical\" role=\"menu\">\n            <li class=\"no-border-submenu\" routerLinkActive=\"active\"><a routerLink=\"/documentation/user-guide\">User guide</a></li>\n            <li class=\"no-border-submenu\" routerLinkActive=\"active\"><a routerLink=\"/documentation/docs\">Docs</a></li>\n            <li routerLinkActive=\"active\"><a routerLink=\"/documentation/technical_corner\">Technical corner</a></li>\n          </ul>\n        </li>\n        <!--  TODO replace back with Support and remove hard code styling after the beta finish-->\n        <li routerLinkActive=\"active\"><a style=\"background: crimson\" href=\"//www.ebi.ac.uk/support/intact\">Feedback <i class=\"icon icon-generic\"\n                                                                                          data-icon=\"x\"></i></a></li>\n      </ul>\n    </nav>\n    <!-- /local-nav -->\n  </div>\n  <ip-progress-bar></ip-progress-bar>\n</header>\n"
+module.exports = "<header id=\"masthead\" class=\"masthead compact-for-data\">\n  <div class=\"masthead-inner row expanded collapse\">\n    <!-- local-title -->\n    <div>\n      <a routerLink=\"/home\" title=\"Back to IntAct homepage\">\n        <div class=\"media-object\" id=\"local-title\">\n          <div class=\"media-object-section\">\n            <img class=\"padding-bottom-small\" src=\"assets/images/logo/intact_logo.svg\" alt=\"IntAct logo\"\n                 style=\"height: 3rem;\">\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- /local-title -->\n\n    <ip-local-search style=\"flex: 1\"></ip-local-search>\n\n    <!-- local-nav -->\n    <nav>\n      <ul id=\"local-nav\" class=\"dropdown menu float-left\" data-dropdown-menu=\"true\" data-description=\"navigational\">\n        <li routerLinkActive=\"active\"><a routerLink=\"/home\" routerLinkActive=\"active\">Home</a></li>\n        <li routerLinkActive=\"active\"><a routerLink=\"/download\" routerLinkActive=\"active\">Download</a></li>\n        <li routerLinkActive=\"active\"><a routerLink=\"/about\" routerLinkActive=\"active\">About</a></li>\n        <li routerLinkActive=\"active\"><a routerLink=\"/documentation\" routerLinkActive=\"active\">Documentation</a></li>\n        <!--  TODO replace back with Support and remove hard code styling after the beta finish-->\n        <li routerLinkActive=\"active\"><a style=\"background: crimson\" href=\"//www.ebi.ac.uk/support/intact\">Feedback <i class=\"icon icon-generic\"\n                                                                                          data-icon=\"x\"></i></a></li>\n      </ul>\n    </nav>\n    <!-- /local-nav -->\n  </div>\n  <ip-progress-bar></ip-progress-bar>\n</header>\n"
 
 /***/ }),
 
@@ -7823,7 +7813,7 @@ module.exports = "/* NAVIGATION SUBMENU OVERRIDE EBI-GLOBAL TO REMOVE A WHITE RI
 /***/ "./src/app/layout/header/expanded-header/expanded-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header id=\"masthead\" class=\"masthead\">\n  <div class=\"masthead-inner row expanded\"> <!-- expanded -->\n    <!-- local-title -->\n    <div class=\"columns\">\n      <a routerLink=\"/home\" title=\"Back to Intact homepage\">\n        <div class=\"media-object\" id=\"local-title\">\n          <div class=\"media-object-section\" >\n            <img src=\"assets/images/logo/intact_logo.svg\" alt=\"IntAct logo\" class=\"padding-left-large\" style=\"height:5em; width:21em;\">\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- /local-title -->\n\n    <!-- local-nav -->\n    <div class=\"row expanded no-padding\">\n      <nav class=\"bar column medium-6 small-12 no-padding\">\n        <ul id=\"local-nav\" class=\"dropdown menu\" data-dropdown-menu=\"true\" data-description=\"navigational\">\n          <li routerLinkActive=\"active\"><a routerLink=\"/home\" routerLinkActive=\"active\">Home</a></li>\n          <li routerLinkActive=\"active\"><a routerLink=\"/download\" routerLinkActive=\"active\">Download</a></li>\n          <li routerLinkActive=\"active\"><a routerLink=\"/faq\" routerLinkActive=\"active\">FAQ</a></li>\n          <li routerLinkActive=\"active\"><a routerLink=\"/about\" routerLinkActive=\"active\">About</a></li>\n          <li class=\"extra-items-menu is-dropdown-submenu-parent opens-right\">\n            <a routerLinkActive=\"active\" routerLink=\"/documentation\">Documentation</a>\n            <ul class=\"menu submenu is-dropdown-submenu first-sub verztical\" role=\"menu\" >\n              <li class=\"no-border-submenu\" routerLinkActive=\"active\"><a routerLink=\"/documentation/user-guide\">User guide</a></li>\n              <li class=\"no-border-submenu\" routerLinkActive=\"active\"><a routerLink=\"/documentation/docs\">Docs</a></li>\n              <li routerLinkActive=\"active\"><a routerLink=\"/documentation/technical_corner\">Technical corner</a></li>\n            </ul>\n          </li>\n          <li routerLinkActive=\"active\"><a style=\"background: crimson\" href=\"//www.ebi.ac.uk/support/intact\">Feedback <i class=\"icon icon-generic\" data-icon=\"x\"></i></a></li>\n        </ul>\n      </nav>\n\n      <ip-local-search class=\"column medium-5 small-12 no-padding\"></ip-local-search>\n    </div>\n\n    <!-- /local-nav -->\n  </div>\n</header>\n"
+module.exports = "<header id=\"masthead\" class=\"masthead\">\n  <div class=\"masthead-inner row expanded\"> <!-- expanded -->\n    <!-- local-title -->\n    <div class=\"columns\">\n      <a routerLink=\"/home\" title=\"Back to Intact homepage\">\n        <div class=\"media-object\" id=\"local-title\">\n          <div class=\"media-object-section\" >\n            <img src=\"assets/images/logo/intact_logo.svg\" alt=\"IntAct logo\" class=\"padding-left-large\" style=\"height:5em; width:21em;\">\n          </div>\n        </div>\n      </a>\n    </div>\n    <!-- /local-title -->\n\n    <!-- local-nav -->\n    <div class=\"row expanded no-padding\">\n      <nav class=\"bar column medium-6 small-12 no-padding\">\n        <ul id=\"local-nav\" class=\"dropdown menu\" data-dropdown-menu=\"true\" data-description=\"navigational\">\n          <li routerLinkActive=\"active\"><a routerLink=\"/home\" routerLinkActive=\"active\">Home</a></li>\n          <li routerLinkActive=\"active\"><a routerLink=\"/download\" routerLinkActive=\"active\">Download</a></li>\n          <li routerLinkActive=\"active\"><a routerLink=\"/about\" routerLinkActive=\"active\">About</a></li>\n          <li routerLinkActive=\"active\"><a routerLink=\"/documentation\" routerLinkActive=\"active\">Documentation</a></li>\n          <li routerLinkActive=\"active\"><a style=\"background: crimson\" href=\"//www.ebi.ac.uk/support/intact\">Feedback <i class=\"icon icon-generic\" data-icon=\"x\"></i></a></li>\n        </ul>\n      </nav>\n\n      <ip-local-search class=\"column medium-5 small-12 no-padding\"></ip-local-search>\n    </div>\n\n    <!-- /local-nav -->\n  </div>\n</header>\n"
 
 /***/ }),
 
@@ -8396,7 +8386,7 @@ module.exports = "/* See this issue to understand why we need ng-deep https://gi
 /***/ "./src/app/navigation/documentation/datasets/datasets.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>Datasets</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"datasets-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"documentation/datasets#curated\" aria-selected=\"true\">Curated</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/datasets#computationally\">Computationally maintained</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/datasets#species\">Species-based</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/datasets#mutations\">Mutations</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"datasets-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"curated\">\n      <ip-markdown [src]=curated></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"computationally\">\n      <ip-markdown [src]=computationally></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"species\">\n      <ip-markdown [src]=species></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"mutations\">\n      <ip-markdown [src]=mutations></ip-markdown>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>Datasets</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"datasets-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"documentation/datasets#dataset\" aria-selected=\"true\">Datasets</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"datasets-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"dataset\">\n      <ip-markdown [src]=dataset></ip-markdown>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -8423,10 +8413,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 let DatasetsComponent = class DatasetsComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.curated = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'dataset-descriptions/curated-datasets.md';
-        this.computationally = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'dataset-descriptions/computational-datasets.md';
-        this.species = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'dataset-descriptions/species-based-datasets.md';
-        this.mutations = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'dataset-descriptions/mutations.md';
+        this.dataset = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'dataset-descriptions/datasets.md';
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - Datasets');
@@ -8446,66 +8433,6 @@ DatasetsComponent = __decorate([
 
 /***/ }),
 
-/***/ "./src/app/navigation/documentation/docs/docs.component.css":
-/***/ (function(module, exports) {
-
-module.exports = "/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/\nip-markdown ::ng-deep h1 {\n  font-size: xx-large;\n}\nip-markdown ::ng-deep h2 {\n  font-size: x-large;\n}\nip-markdown ::ng-deep h3 {\n  font-size: large;\n}\nip-markdown ::ng-deep img {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\nip-markdown ::ng-deep img[alt=\"MI Score Sources\"] {\n  max-width: 50%;\n}\n"
-
-/***/ }),
-
-/***/ "./src/app/navigation/documentation/docs/docs.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>Docs</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"docs-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"documentation/docs#curation_manual\" aria-selected=\"true\">Curation Manual</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/docs#interaction_scoring\">Interaction Scoring</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/docs#expansion_method\">Expansion Method</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/docs#definitions_formats\">Definitions and Formats</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"docs-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"curation_manual\">\n      <ip-markdown [src]=curation_manual></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"interaction_scoring\">\n      <ip-markdown [src]=interaction_scoring></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"expansion_method\">\n      <ip-markdown [src]=expansion_method></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"definitions_formats\">\n      <ip-markdown [src]=definitions_formats></ip-markdown>\n    </div>\n  </div>\n</div>\n"
-
-/***/ }),
-
-/***/ "./src/app/navigation/documentation/docs/docs.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DocsComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-let DocsComponent = class DocsComponent {
-    constructor(titleService) {
-        this.titleService = titleService;
-        this.curation_manual = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'docs/curation-manual/README.md';
-        this.interaction_scoring = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'docs/interaction-scoring.md';
-        this.expansion_method = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'docs/expansion-method.md';
-        this.definitions_formats = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'docs/definitions-and-formats/README.md';
-    }
-    ngOnInit() {
-        this.titleService.setTitle('IntAct - Docs');
-        $('ip-docs').foundation();
-    }
-};
-DocsComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'ip-docs',
-        template: __webpack_require__("./src/app/navigation/documentation/docs/docs.component.html"),
-        styles: [__webpack_require__("./src/app/navigation/documentation/docs/docs.component.css")]
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["g" /* Title */]])
-], DocsComponent);
-
-
-
-/***/ }),
-
 /***/ "./src/app/navigation/documentation/documentation-routing.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8515,17 +8442,15 @@ DocsComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm2015/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__documentation_component__ = __webpack_require__("./src/app/navigation/documentation/documentation.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__technical_corner_technical_corner_component__ = __webpack_require__("./src/app/navigation/documentation/technical-corner/technical-corner.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__docs_docs_component__ = __webpack_require__("./src/app/navigation/documentation/docs/docs.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__data_submission_data_submission_component__ = __webpack_require__("./src/app/navigation/documentation/data-submission/data-submission.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__datasets_datasets_component__ = __webpack_require__("./src/app/navigation/documentation/datasets/datasets.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__user_guide_user_guide_component__ = __webpack_require__("./src/app/navigation/documentation/user-guide/user-guide.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_submission_data_submission_component__ = __webpack_require__("./src/app/navigation/documentation/data-submission/data-submission.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__datasets_datasets_component__ = __webpack_require__("./src/app/navigation/documentation/datasets/datasets.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__user_guide_user_guide_component__ = __webpack_require__("./src/app/navigation/documentation/user-guide/user-guide.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -8540,18 +8465,13 @@ const documentationRoutes = [
         data: { showCompactHeader: false, showFooter: true }
     },
     {
-        path: 'documentation/docs',
-        component: __WEBPACK_IMPORTED_MODULE_4__docs_docs_component__["a" /* DocsComponent */],
-        data: { showCompactHeader: false, showFooter: true }
-    },
-    {
         path: 'documentation/data_submission',
-        component: __WEBPACK_IMPORTED_MODULE_5__data_submission_data_submission_component__["a" /* DataSubmissionComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_4__data_submission_data_submission_component__["a" /* DataSubmissionComponent */],
         data: { showCompactHeader: false, showFooter: true }
     },
     {
         path: 'documentation/user-guide',
-        component: __WEBPACK_IMPORTED_MODULE_7__user_guide_user_guide_component__["a" /* UserGuideComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_6__user_guide_user_guide_component__["a" /* UserGuideComponent */],
         data: { showCompactHeader: false, showFooter: true }
     },
     {
@@ -8561,7 +8481,7 @@ const documentationRoutes = [
     },
     {
         path: 'documentation/datasets',
-        component: __WEBPACK_IMPORTED_MODULE_6__datasets_datasets_component__["a" /* DatasetsComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_5__datasets_datasets_component__["a" /* DatasetsComponent */],
         data: { showCompactHeader: false, showFooter: true }
     },
 ];
@@ -8588,7 +8508,7 @@ module.exports = ""
 /***/ "./src/app/navigation/documentation/documentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row button-grid\" data-equalizer data-equalize-on=\"large\" id=\"doc-button-grid\">\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./user-guide\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf129;\"></h3>\n      <h5 class=\"white-color\">User guide</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./docs\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf283;\"></h3>\n      <h5 class=\"white-color\">Docs</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./data_submission\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf093;\"></h3>\n      <h5 class=\"white-color\">Data Submission</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./technical_corner\">\n      <h3 class=\"icon icon-common white-color \"data-icon=\"&#xf11c;\"></h3>\n      <h5 class=\"white-color\">Technical Corner</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large small-centered\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./datasets\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf187;\"></h3>\n      <h5 class=\"white-color\">Datasets</h5></a>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row button-grid\" data-equalizer data-equalize-on=\"large\" id=\"doc-button-grid\">\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./user-guide\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf129;\"></h3>\n      <h5 class=\"white-color\">User guide</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./technical_corner\">\n      <h3 class=\"icon icon-common white-color \"data-icon=\"&#xf11c;\"></h3>\n      <h5 class=\"white-color\">Technical Corner</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./datasets\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf187;\"></h3>\n      <h5 class=\"white-color\">Datasets</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./data_submission\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf093;\"></h3>\n      <h5 class=\"white-color\">Data Submission</h5></a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -8641,19 +8561,17 @@ DocumentationComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__documentation_component__ = __webpack_require__("./src/app/navigation/documentation/documentation.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__documentation_routing_module__ = __webpack_require__("./src/app/navigation/documentation/documentation-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__docs_docs_component__ = __webpack_require__("./src/app/navigation/documentation/docs/docs.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__technical_corner_technical_corner_component__ = __webpack_require__("./src/app/navigation/documentation/technical-corner/technical-corner.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__data_submission_data_submission_component__ = __webpack_require__("./src/app/navigation/documentation/data-submission/data-submission.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__datasets_datasets_component__ = __webpack_require__("./src/app/navigation/documentation/datasets/datasets.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_markdown_markdown_module__ = __webpack_require__("./src/app/navigation/documentation/shared/markdown/markdown.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__user_guide_user_guide_component__ = __webpack_require__("./src/app/navigation/documentation/user-guide/user-guide.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__technical_corner_technical_corner_component__ = __webpack_require__("./src/app/navigation/documentation/technical-corner/technical-corner.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__data_submission_data_submission_component__ = __webpack_require__("./src/app/navigation/documentation/data-submission/data-submission.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__datasets_datasets_component__ = __webpack_require__("./src/app/navigation/documentation/datasets/datasets.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__shared_markdown_markdown_module__ = __webpack_require__("./src/app/navigation/documentation/shared/markdown/markdown.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__user_guide_user_guide_component__ = __webpack_require__("./src/app/navigation/documentation/user-guide/user-guide.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -8670,15 +8588,14 @@ DocumentationModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_3__documentation_routing_module__["a" /* DocumentationRoutingModule */],
-            __WEBPACK_IMPORTED_MODULE_8__shared_markdown_markdown_module__["a" /* MarkdownModule */],
+            __WEBPACK_IMPORTED_MODULE_7__shared_markdown_markdown_module__["a" /* MarkdownModule */],
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_2__documentation_component__["a" /* DocumentationComponent */],
-            __WEBPACK_IMPORTED_MODULE_4__docs_docs_component__["a" /* DocsComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__user_guide_user_guide_component__["a" /* UserGuideComponent */],
-            __WEBPACK_IMPORTED_MODULE_6__data_submission_data_submission_component__["a" /* DataSubmissionComponent */],
-            __WEBPACK_IMPORTED_MODULE_5__technical_corner_technical_corner_component__["a" /* TechnicalCornerComponent */],
-            __WEBPACK_IMPORTED_MODULE_7__datasets_datasets_component__["a" /* DatasetsComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__user_guide_user_guide_component__["a" /* UserGuideComponent */],
+            __WEBPACK_IMPORTED_MODULE_5__data_submission_data_submission_component__["a" /* DataSubmissionComponent */],
+            __WEBPACK_IMPORTED_MODULE_4__technical_corner_technical_corner_component__["a" /* TechnicalCornerComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__datasets_datasets_component__["a" /* DatasetsComponent */]
         ]
     })
 ], DocumentationModule);
@@ -8851,7 +8768,7 @@ module.exports = "/* See this issue to understand why we need ng-deep https://gi
 /***/ "./src/app/navigation/documentation/technical-corner/technical-corner.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>Technical Corner</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"technical-corner-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"documentation/technical_corner#apis\" aria-selected=\"true\">APIs</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/technical_corner#source_code\">Source Code</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/technical_corner#tools\">Tools</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"technical-corner-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"apis\">\n      <ip-markdown [src]=apis></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"source_code\">\n      <ip-markdown [src]=source_code></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"tools\">\n      <ip-markdown [src]=tools></ip-markdown>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>Technical Corner</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"technical-corner-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"documentation/technical_corner#apis\" aria-selected=\"true\">APIs</a></li>\n    <!--li class=\"tabs-title\"><a href=\"documentation/technical_corner#source_code\">Source Code</a></li-->\n    <li class=\"tabs-title\"><a href=\"documentation/technical_corner#tools\">Tools</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"technical-corner-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"apis\">\n      <ip-markdown [src]=apis></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"source_code\">\n      <ip-markdown [src]=source_code></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"tools\">\n      <ip-markdown [src]=tools></ip-markdown>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -8903,14 +8820,14 @@ TechnicalCornerComponent = __decorate([
 /***/ "./src/app/navigation/documentation/user-guide/user-guide.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/\nip-markdown ::ng-deep h1 {\n  font-size: xx-large;\n}\nip-markdown ::ng-deep h2 {\n  font-size: x-large;\n}\nip-markdown ::ng-deep h3 {\n  font-size: large;\n}\n"
+module.exports = "/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/\nip-markdown ::ng-deep h1 {\n  font-size: xx-large;\n}\nip-markdown ::ng-deep h2 {\n  font-size: x-large;\n}\nip-markdown ::ng-deep h3 {\n  font-size: large;\n}\n#user-guide-tabs>li>a {\n  padding-right:12px;\n  padding-left:12px;\n}\n"
 
 /***/ }),
 
 /***/ "./src/app/navigation/documentation/user-guide/user-guide.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>User Guide</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"user-guide-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"documentation/user-guide\" aria-selected=\"true\">User Guide</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"user-guide-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"user_guide\">\n      <ip-markdown [src]=user_guide></ip-markdown>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>User Guide</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"user-guide-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"documentation/user-guide#data_sources\" aria-selected=\"true\">Data Sources & Annotation Practices</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/user-guide#usage\">Searching IntAct</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/user-guide#expansion_method\">Expansion Method</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/user-guide#interaction_scoring\">Interaction Scoring</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/user-guide#definitions_formats\">Definitions and Formats</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/user-guide#data_export\">Data Export</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/user-guide#access_intact\">Access IntAct</a></li>\n    <li class=\"tabs-title\"><a href=\"documentation/user-guide#curation_manual\">Curation Manual</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"user-guide-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"data_sources\">\n      <ip-markdown [src]=data_sources></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"usage\">\n      <ip-markdown [src]=usage></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"expansion_method\">\n      <ip-markdown [src]=expansion_method></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"interaction_scoring\">\n      <ip-markdown [src]=interaction_scoring></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"definitions_formats\">\n      <ip-markdown [src]=definitions_formats></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"data_export\">\n      <ip-markdown [src]=data_export></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"access_intact\">\n      <ip-markdown [src]=access_intact></ip-markdown>\n    </div>\n    <div class=\"tabs-panel is-active\" id=\"curation_manual\">\n      <ip-markdown [src]=curation_manual></ip-markdown>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -8937,7 +8854,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 let UserGuideComponent = class UserGuideComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.user_guide = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/README.md';
+        this.data_sources = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/data-sources-and-annotation-practices.md';
+        this.usage = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/searching-intact.md';
+        this.expansion_method = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/expansion-method.md';
+        this.interaction_scoring = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/interaction-scoring.md';
+        this.definitions_formats = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/definitions-and-formats.md';
+        this.data_export = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/data-export.md';
+        this.access_intact = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/access-intact.md';
+        this.curation_manual = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/curation-manual.md';
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - User Guide');
@@ -8957,28 +8881,28 @@ UserGuideComponent = __decorate([
 
 /***/ }),
 
-/***/ "./src/app/navigation/download/download.component.css":
+/***/ "./src/app/navigation/download/datasets/datasets.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/\nip-markdown ::ng-deep h1 {\n  font-size: xx-large;\n}\nip-markdown ::ng-deep h2 {\n  font-size: x-large;\n}\n"
+module.exports = "/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/\nip-markdown ::ng-deep h1 {\n  font-size: xx-large;\n}\nip-markdown ::ng-deep h2 {\n  font-size: x-large;\n}\nip-markdown ::ng-deep h3 {\n  font-size: large;\n}\nip-markdown ::ng-deep table {\n  display: block;\n  overflow-x: auto;\n  white-space: nowrap;\n  font-size: small;\n}\n"
 
 /***/ }),
 
-/***/ "./src/app/navigation/download/download.component.html":
+/***/ "./src/app/navigation/download/datasets/datasets.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>Download</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"download-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"download#ftp\" aria-selected=\"true\">FTP</a></li>\n    <li class=\"tabs-title\"><a href=\"download#dataset_files\">Dataset Files</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"download-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"ftp\">\n      <ip-markdown [src]=ftp></ip-markdown>\n    </div>\n\n    <div class=\"tabs-panel\" id=\"dataset_files\">\n      <ip-markdown [src]=curated_datasets></ip-markdown>\n      <ip-markdown [src]=species_based_datasets></ip-markdown>\n      <ip-markdown [src]=mutations></ip-markdown>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>Datasets</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"datasets-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"download/datasets#curated\" aria-selected=\"true\">Curated datasets</a></li>\n    <li class=\"tabs-title\"><a href=\"download/datasets#computationally\">Computational datasets</a></li>\n    <li class=\"tabs-title\"><a href=\"download/datasets#species\">Species-specific datasets</a></li>\n    <li class=\"tabs-title\"><a href=\"download/datasets#mutations\">Mutations dataset</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"datasets-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"curated\">\n      <ip-markdown [src]=curated></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"computationally\">\n      <ip-markdown [src]=computationally></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"species\">\n      <ip-markdown [src]=species></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"mutations\">\n      <ip-markdown [src]=mutations></ip-markdown>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
-/***/ "./src/app/navigation/download/download.component.ts":
+/***/ "./src/app/navigation/download/datasets/datasets.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DownloadComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DatasetsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8991,13 +8915,118 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+let DatasetsComponent = class DatasetsComponent {
+    constructor(titleService) {
+        this.titleService = titleService;
+        this.curated = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/curated-datasets.md';
+        this.computationally = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/computational-datasets.md';
+        this.species = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/species-based-datasets.md';
+        this.mutations = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/mutations.md';
+    }
+    ngOnInit() {
+        this.titleService.setTitle('IntAct - Datasets');
+        $('ip-datasets').foundation();
+    }
+};
+DatasetsComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'ip-datasets',
+        template: __webpack_require__("./src/app/navigation/download/datasets/datasets.component.html"),
+        styles: [__webpack_require__("./src/app/navigation/download/datasets/datasets.component.css")]
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["g" /* Title */]])
+], DatasetsComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/download-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DownloadRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm2015/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__download_component__ = __webpack_require__("./src/app/navigation/download/download.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ftp_ftp_component__ = __webpack_require__("./src/app/navigation/download/ftp/ftp.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__datasets_datasets_component__ = __webpack_require__("./src/app/navigation/download/datasets/datasets.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+const downloadRoutes = [
+    {
+        path: 'download',
+        component: __WEBPACK_IMPORTED_MODULE_2__download_component__["a" /* DownloadComponent */],
+        data: { showCompactHeader: false, showFooter: true }
+    },
+    {
+        path: 'download/ftp',
+        component: __WEBPACK_IMPORTED_MODULE_3__ftp_ftp_component__["a" /* FTPComponent */],
+        data: { showCompactHeader: false, showFooter: true }
+    },
+    {
+        path: 'download/datasets',
+        component: __WEBPACK_IMPORTED_MODULE_4__datasets_datasets_component__["a" /* DatasetsComponent */],
+        data: { showCompactHeader: false, showFooter: true }
+    },
+];
+let DownloadRoutingModule = class DownloadRoutingModule {
+};
+DownloadRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]],
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forChild(downloadRoutes)],
+    })
+], DownloadRoutingModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/download.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/download.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row button-grid\" data-equalizer data-equalize-on=\"large\" id=\"doc-button-grid\">\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./ftp\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf129;\"></h3>\n      <h5 class=\"white-color\">FTP</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./datasets\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf187;\"></h3>\n      <h5 class=\"white-color\">Datasets</h5></a>\n  </div>\n\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/download.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DownloadComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 let DownloadComponent = class DownloadComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.ftp = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/ftp.md';
-        this.curated_datasets = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/dataset-files/curated-datasets.md';
-        this.species_based_datasets = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/dataset-files/species-based-datasets.md';
-        this.mutations = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/dataset-files/mutations.md';
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - Download');
@@ -9017,28 +9046,74 @@ DownloadComponent = __decorate([
 
 /***/ }),
 
-/***/ "./src/app/navigation/faq/faq.component.css":
-/***/ (function(module, exports) {
-
-module.exports = "/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/\nip-markdown ::ng-deep h1 {\n  font-size: xx-large;\n}\nip-markdown ::ng-deep h2 {\n  font-size: x-large;\n}\nip-markdown ::ng-deep h3 {\n  font-size: large;\n}\nip-markdown ::ng-deep img {\n  display:block;\n  margin: 0 auto;\n  text-align: center;\n}\n"
-
-/***/ }),
-
-/***/ "./src/app/navigation/faq/faq.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>FAQ</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"faq-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"faq#data_sources\" aria-selected=\"true\">Data Sources & Annotation Practices</a></li>\n    <li class=\"tabs-title\"><a href=\"faq#usage\">Usage</a></li>\n    <li class=\"tabs-title\"><a href=\"faq#scoring\">Scoring</a></li>\n    <li class=\"tabs-title\"><a href=\"faq#data_export\">Data Export</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"faq-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"data_sources\">\n      <ip-markdown [src]=data_sources></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"usage\">\n      <ip-markdown [src]=usage></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"scoring\">\n      <ip-markdown [src]=scoring></ip-markdown>\n    </div>\n    <div class=\"tabs-panel\" id=\"data_export\">\n      <ip-markdown [src]=data_export></ip-markdown>\n    </div>\n  </div>\n</div>\n"
-
-/***/ }),
-
-/***/ "./src/app/navigation/faq/faq.component.ts":
+/***/ "./src/app/navigation/download/download.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FaqComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DownloadModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__download_component__ = __webpack_require__("./src/app/navigation/download/download.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__download_routing_module__ = __webpack_require__("./src/app/navigation/download/download-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ftp_ftp_component__ = __webpack_require__("./src/app/navigation/download/ftp/ftp.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__datasets_datasets_component__ = __webpack_require__("./src/app/navigation/download/datasets/datasets.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_markdown_markdown_module__ = __webpack_require__("./src/app/navigation/download/shared/markdown/markdown.module.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+let DownloadModule = class DownloadModule {
+};
+DownloadModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_3__download_routing_module__["a" /* DownloadRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_6__shared_markdown_markdown_module__["a" /* MarkdownModule */],
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_2__download_component__["a" /* DownloadComponent */],
+            __WEBPACK_IMPORTED_MODULE_4__ftp_ftp_component__["a" /* FTPComponent */],
+            __WEBPACK_IMPORTED_MODULE_5__datasets_datasets_component__["a" /* DatasetsComponent */]
+        ]
+    })
+], DownloadModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/ftp/ftp.component.css":
+/***/ (function(module, exports) {
+
+module.exports = "/* See this issue to understand why we need ng-deep https://github.com/jfcere/ngx-markdown/issues/56*/\nip-markdown ::ng-deep h1 {\n  font-size: xx-large;\n}\nip-markdown ::ng-deep h2 {\n  font-size: x-large;\n}\n"
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/ftp/ftp.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"margin-top-large margin-bottom-large row\">\n  <h1>FTP</h1>\n  <ul class=\"tabs\" data-tabs data-deep-link=\"true\" data-update-history=\"false\" id=\"download-tabs\">\n    <li class=\"tabs-title is-active\"><a href=\"download#ftp\" aria-selected=\"true\">FTP</a></li>\n  </ul>\n\n  <div class=\"tabs-content\" data-tabs-content=\"download-tabs\">\n    <div class=\"tabs-panel is-active\" id=\"ftp\">\n      <ip-markdown [src]=ftp></ip-markdown>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/ftp/ftp.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FTPComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9051,27 +9126,178 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-let FaqComponent = class FaqComponent {
+let FTPComponent = class FTPComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.data_sources = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/faq/data-sources-and-annotation-practices.md';
-        this.usage = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/faq/usage.md';
-        this.scoring = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/faq/scoring.md';
-        this.data_export = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/faq/data-export.md';
+        this.ftp = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'download/ftp.md';
     }
     ngOnInit() {
-        this.titleService.setTitle('IntAct - FAQ');
-        $('ip-faq').foundation();
+        this.titleService.setTitle('IntAct - Download');
+        $('ip-download').foundation();
     }
 };
-FaqComponent = __decorate([
+FTPComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'ip-faq',
-        template: __webpack_require__("./src/app/navigation/faq/faq.component.html"),
-        styles: [__webpack_require__("./src/app/navigation/faq/faq.component.css")]
+        selector: 'ip-download',
+        template: __webpack_require__("./src/app/navigation/download/ftp/ftp.component.html"),
+        styles: [__webpack_require__("./src/app/navigation/download/ftp/ftp.component.css")]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["g" /* Title */]])
-], FaqComponent);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["g" /* Title */]])
+], FTPComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/shared/markdown/markdown.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/shared/markdown/markdown.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div [innerHTML]=\"output\"></div>\n"
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/shared/markdown/markdown.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MarkdownComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_markdown_renderer_service__ = __webpack_require__("./src/app/navigation/download/shared/markdown/service/markdown-renderer.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+let MarkdownComponent = class MarkdownComponent {
+    constructor(md, sanitizer) {
+        this.md = md;
+        this.sanitizer = sanitizer;
+    }
+    ngOnInit() {
+        if (this.data) {
+            this.output = this.sanitizer.bypassSecurityTrustHtml(this.md.render(this.data));
+        }
+        else if (this.src) {
+            fetch(this.src)
+                .then(src => src.text())
+                .then(content => this.md.render(content.replace(/(..\/)?\.gitbook\/assets\//g, `assets/images/gitbook/`)))
+                .then(value => this.output = this.sanitizer.bypassSecurityTrustHtml(value));
+        }
+    }
+};
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", String)
+], MarkdownComponent.prototype, "src", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", String)
+], MarkdownComponent.prototype, "data", void 0);
+MarkdownComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'ip-markdown',
+        template: __webpack_require__("./src/app/navigation/download/shared/markdown/markdown.component.html"),
+        styles: [__webpack_require__("./src/app/navigation/download/shared/markdown/markdown.component.css")]
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__service_markdown_renderer_service__["a" /* MarkdownRendererService */], __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]])
+], MarkdownComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/shared/markdown/markdown.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MarkdownModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__markdown_component__ = __webpack_require__("./src/app/navigation/download/shared/markdown/markdown.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__service_markdown_renderer_service__ = __webpack_require__("./src/app/navigation/download/shared/markdown/service/markdown-renderer.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+let MarkdownModule = class MarkdownModule {
+};
+MarkdownModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_2__markdown_component__["a" /* MarkdownComponent */]
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_2__markdown_component__["a" /* MarkdownComponent */]
+        ],
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_3__service_markdown_renderer_service__["a" /* MarkdownRendererService */]
+        ]
+    })
+], MarkdownModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/navigation/download/shared/markdown/service/markdown-renderer.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MarkdownRendererService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_markdown_it__ = __webpack_require__("./node_modules/markdown-it/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_markdown_it___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_markdown_it__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex__ = __webpack_require__("./node_modules/@iktakahiro/markdown-it-katex/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+let MarkdownRendererService = class MarkdownRendererService {
+    constructor() {
+        this.md = new __WEBPACK_IMPORTED_MODULE_1_markdown_it__();
+        this.md.use(__WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex__);
+    }
+    render(markdown) {
+        return this.md.render(markdown);
+    }
+};
+MarkdownRendererService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], MarkdownRendererService);
 
 
 
@@ -9908,7 +10134,7 @@ function extractAnnotation(rawData) {
 // Environment for development
 const EBI_BASE_URL = 'https://wwwdev.ebi.ac.uk';
 const EBI_URL = 'https://www.ebi.ac.uk';
-const FORMER_INTACT_URL = 'https://www.ebi.ac.uk/intact/';
+const FORMER_INTACT_URL = 'https://www.ebi.ac.uk/legacy-intact/';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
 const INTACT_FTP_BASE_URL = 'https://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';

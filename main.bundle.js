@@ -8356,7 +8356,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 let DataSubmissionComponent = class DataSubmissionComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.how_to_submit = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'data-submission/how-to-submit.md';
+        this.how_to_submit = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/how-to-submit.md';
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - Data Submission');
@@ -8413,7 +8413,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 let DatasetsComponent = class DatasetsComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.dataset = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'dataset-descriptions/datasets.md';
+        this.dataset = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/datasets.md';
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - Datasets');
@@ -8508,7 +8508,7 @@ module.exports = ""
 /***/ "./src/app/navigation/documentation/documentation.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row button-grid\" data-equalizer data-equalize-on=\"large\" id=\"doc-button-grid\">\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./user-guide\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf129;\"></h3>\n      <h5 class=\"white-color\">User guide</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./technical_corner\">\n      <h3 class=\"icon icon-common white-color \"data-icon=\"&#xf11c;\"></h3>\n      <h5 class=\"white-color\">Technical Corner</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./datasets\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf187;\"></h3>\n      <h5 class=\"white-color\">Datasets</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./data_submission\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf093;\"></h3>\n      <h5 class=\"white-color\">Data Submission</h5></a>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row button-grid\" data-equalizer data-equalize-on=\"large\" id=\"doc-button-grid\">\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./user-guide\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf129;\"></h3>\n      <h5 class=\"white-color\">User Guide</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./technical_corner\">\n      <h3 class=\"icon icon-common white-color \"data-icon=\"&#xf11c;\"></h3>\n      <h5 class=\"white-color\">Technical Corner</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./datasets\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf187;\"></h3>\n      <h5 class=\"white-color\">Datasets</h5></a>\n  </div>\n  <div class=\"columns medium-6 small-6 text-center padding-bottom-large\">\n    <a class=\"button medium-12 columns intact-background\" data-equalizer-watch routerLink=\"./data_submission\">\n      <h3 class=\"icon icon-common white-color\" data-icon=\"&#xf093;\"></h3>\n      <h5 class=\"white-color\">Data Submission</h5></a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -8795,9 +8795,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 let TechnicalCornerComponent = class TechnicalCornerComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.apis = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'technical-corner/apis.md';
-        this.source_code = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'technical-corner/source-code.md';
-        this.tools = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'technical-corner/tools.md';
+        this.apis = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/technical-corner/apis.md';
+        this.source_code = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/technical-corner/source-code.md';
+        this.tools = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/technical-corner/tools.md';
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - Technical Corner');
@@ -8854,14 +8854,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 let UserGuideComponent = class UserGuideComponent {
     constructor(titleService) {
         this.titleService = titleService;
-        this.data_sources = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/data-sources-and-annotation-practices.md';
-        this.usage = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/searching-intact.md';
-        this.expansion_method = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/expansion-method.md';
-        this.interaction_scoring = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/interaction-scoring.md';
-        this.definitions_formats = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/definitions-and-formats.md';
-        this.data_export = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/data-export.md';
-        this.access_intact = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/access-intact.md';
-        this.curation_manual = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'help/user-guide/curation-manual.md';
+        this.data_sources = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/data-sources-and-annotation-practices.md';
+        this.usage = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/searching-intact.md';
+        this.expansion_method = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/expansion-method.md';
+        this.interaction_scoring = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/interaction-scoring.md';
+        this.definitions_formats = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/definitions-and-formats.md';
+        this.data_export = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/data-export.md';
+        this.access_intact = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/access-intact.md';
+        this.curation_manual = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_documentation_url + 'documentation/user-guide/curation-manual.md';
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - User Guide');

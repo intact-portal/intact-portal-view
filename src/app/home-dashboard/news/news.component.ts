@@ -10,8 +10,8 @@ export class NewsComponent implements OnInit {
   environmentName = 'dev';
   releaseDate = 'September 2021';
   publications = '22496';
-  interactors = '122612';
-  interactions = '1144256';
+  interactors = '117664';
+  interactions = '1144360';
 
   constructor() { }
 

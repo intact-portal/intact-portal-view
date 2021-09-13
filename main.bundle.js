@@ -108,6 +108,11 @@ const routes = [
         data: { externalUrl: __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].former_intact_url + 'pages/interactions/interactions.xhtml' }
     },
     {
+        path: 'pages/details/details.xhtml',
+        component: __WEBPACK_IMPORTED_MODULE_6__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
+        data: { externalUrl: __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].former_intact_url + 'pages/details/details.xhtml' }
+    },
+    {
         path: '**',
         redirectTo: 'home'
     }
@@ -1501,7 +1506,7 @@ module.exports = "h4 {\n  border-bottom-style: solid;\n  border-color:#5ca23561;
 /***/ "./src/app/home-dashboard/featured-dataset/featured-dataset.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"dataset\" class=\"margin-top-large\">\n  <h4 class=\"margin-bottom-large\">\n    <i class=\"icon icon-generic\" data-icon=\"D\"></i> Featured Dataset\n  </h4>\n\n  <div *ngIf=\"dataset\">\n    <div class=\"text-justify margin-bottom-large\">{{dataset.title}} - <b>{{firstPubmed.author}}</b></div>\n\n    <div class=\"expanded no-margin button-group stacked-for-medium\" id=\"dataset-group\">\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"access\">\n        <i class=\"icon icon-common icon-search\"></i>\n        Access\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"access\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li><a class=\"button lightest expanded no-margin\" (click)=\"onIntActSearch()\">IntAct</a></li>\n          <li><a class=\"button lightest expanded no-margin\" [href]=\"pubMedUrl()\">Europe PMC</a></li>\n        </ul>\n      </div>\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"download\">\n        <i class=\"icon icon-functional icon-download\"></i> Download\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"download\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miTabUrl()\">miTab<sub>2.7</sub></a>\n          </li>\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miXmlUrl()\">miXML<sub>2.5</sub></a>\n          </li>\n        </ul>\n      </div>\n\n    </div>\n    <div class=\"archive\">\n      <a class=\"button outlined expanded no-margin\" [routerLink]=\"archiveUrl()\">\n        <i class=\"icon icon-generic\" data-icon=\";\"></i>\n        Archive\n      </a>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div id=\"dataset\" class=\"margin-top-large\">\n  <h4 class=\"margin-bottom-large\">\n    <i class=\"icon icon-generic\" data-icon=\"D\"></i> Featured Dataset\n  </h4>\n\n  <div>\n    <div class=\"text-justify margin-bottom-large\">{{dataset.title}} - <b>{{firstPubmed.author}}</b></div>\n\n    <div class=\"expanded no-margin button-group stacked-for-medium\" id=\"dataset-group\">\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"access\">\n        <i class=\"icon icon-common icon-search\"></i>\n        Access\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"access\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li><a class=\"button lightest expanded no-margin\" (click)=\"onIntActSearch()\">IntAct</a></li>\n          <li><a class=\"button lightest expanded no-margin\" [href]=\"pubMedUrl()\">Europe PMC</a></li>\n        </ul>\n      </div>\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"download\">\n        <i class=\"icon icon-functional icon-download\"></i> Download\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"download\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miTabUrl()\">miTab<sub>2.7</sub></a>\n          </li>\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miXmlUrl()\">miXML<sub>2.5</sub></a>\n          </li>\n        </ul>\n      </div>\n\n    </div>\n    <div class=\"archive\">\n      <a class=\"button outlined expanded no-margin\" [routerLink]=\"archiveUrl()\">\n        <i class=\"icon icon-generic\" data-icon=\";\"></i>\n        Archive\n      </a>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1935,12 +1940,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 let NewsComponent = class NewsComponent {
     constructor() {
-        this.version = '0.4.0';
+        this.version = '1.0.0';
         this.environmentName = 'dev';
-        this.releaseDate = 'January 2020';
-        this.publications = '21933';
-        this.interactors = '118713';
-        this.interactions = '1123041';
+        this.releaseDate = 'September 2021';
+        this.publications = '22496';
+        this.interactors = '117664';
+        this.interactions = '1144360';
     }
     ngOnInit() {
     }

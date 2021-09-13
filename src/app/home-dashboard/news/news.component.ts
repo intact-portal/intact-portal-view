@@ -6,12 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./news.component.css', '../../app.component.css']
 })
 export class NewsComponent implements OnInit {
-  version = '0.4.0';
+  version = '1.0.0';
   environmentName = 'dev';
-  releaseDate = 'January 2020';
-  publications = '21933';
-  interactors = '118713';
-  interactions = '1123041';
+  releaseDate = 'September 2021';
+  publications = '22496';
+  interactors = '122612';
+  interactions = '1144256';
 
   constructor() { }
 

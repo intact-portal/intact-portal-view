@@ -1,6 +1,14 @@
 <datasets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://www.ebi.ac.uk/~intact/site/dotm/dotm-1_1.xsd">
 
+  <dataset month="May" year="2021" title="A map of binary SARS-CoV-2 protein interactions implicates host immune regulation and ubiquitination">
+    <pubmed>
+      <id>unassigned2933</id>
+      <author>Kim et al.</author>
+      <year>2021</year>
+    </pubmed>
+  </dataset>
+
   <dataset month="December" year="2020" title="Comprehensive mapping of the human cytokine gene regulatory network">
     <pubmed>
       <id>33179750</id>

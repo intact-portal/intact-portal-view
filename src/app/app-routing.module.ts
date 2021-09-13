@@ -59,6 +59,11 @@ const routes: Routes = [
     data: {externalUrl: environment.former_intact_url + 'pages/interactions/interactions.xhtml'}
   },
   {
+    path: 'pages/details/details.xhtml',
+    component: RedirectComponent,
+    data: {externalUrl: environment.former_intact_url + 'pages/details/details.xhtml'}
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

@@ -199,6 +199,6 @@ hx-test-deploy:
     - kubectl get nodes
   when: manual
   needs: [build-test,build-image]
-  only:
-    refs:
-      - master
+#  only:
+#    refs:
+#      - master

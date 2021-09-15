@@ -110,7 +110,8 @@
             <tr>
               <th>Input Term</th>
               <th>Include</th>
-              <th>Preview</th>
+              <!--<th>Preview</th>-->
+              <th>Name</th>
               <th>ID</th>
               <th>Description</th>
               <th>Species</th>
@@ -137,10 +138,11 @@
                          [value]="interactor.interactorAc" (change)="onInteractorSelection($event)">
                 </div>
               </td>
-              <td>
+             <!-- <td>
                 <ip-node-diagram [color]="interactor.interactorColor" [shape]="nodeShape[interactor.interactorShape]"
                                  [label]="interactor.interactorName" [height]="'35pt'"></ip-node-diagram>
-              </td>
+              </td>-->
+              <td>{{ interactor.interactorName }}</td>
               <td>{{ interactor.interactorPreferredIdentifier }}</td>
               <td>{{ interactor.interactorDescription }}</td>
               <td>{{ interactor.interactorSpecies}}</td>

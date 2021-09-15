@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     if (query) {
       this.searchService.search(query);
 
-      if (typeOfButton === 'enter' || typeOfButton === 'button') {
+      if (typeOfButton === 'enter' || typeOfButton === 'button' || typeOfButton === 'example') {
         this.searchService.title = query;
       }
     }

@@ -6,6 +6,7 @@ import {Pagination} from '../shared/pagination.model';
 import {Interactor} from '../../interactions/shared/model/interactions-results/interactor/interactor.model';
 import {ResolutionEntry} from './resolution-interactor-model';
 import {NodeShape} from '../../interactions/shared/model/network-shapes/node-shape';
+import {SubscriberComponent} from '../../shared/utils/observer-utils';
 
 
 const baseURL = environment.intact_portal_ws;
@@ -15,7 +16,7 @@ const baseURL = environment.intact_portal_ws;
   templateUrl: './batch-search.component.html',
   styleUrls: ['./batch-search.component.css']
 })
-export class BatchSearchComponent {
+export class BatchSearchComponent extends SubscriberComponent {
   private _query: string;
 
   private _uploader: FileUploader;
@@ -35,6 +36,7 @@ export class BatchSearchComponent {
   nodeShape = NodeShape;
 
   constructor(private search: SearchService) {
+    super()
     this.uploader = new FileUploader({
       url: `${baseURL}/interactor/uploadFile/`,
       disableMultipart: false
@@ -51,10 +53,7 @@ export class BatchSearchComponent {
   }
 
   resolveSearch() {
-    this.search.resolveSearch(this.query)
-      .subscribe(data => {
-        this.splitData(data)
-      });
+    this.subscribe(this.search.resolveSearch(this.query), this.splitData)
   }
 
   splitData(data: { [term: string]: Pagination<Interactor[]> }) {
@@ -161,8 +160,8 @@ export class BatchSearchComponent {
       this.collectionReset = false
       return;
     }
-    const query = entriesToComplete.map(entry => entry.term).join(', ')
-    this.search.resolveSearch(query, page, 50).subscribe(data => {
+    const query = entriesToComplete.map(entry => entry.term).join(', ');
+    this.subscribe(this.search.resolveSearch(query, page, 50), (data) => {
       const nextEntriesToComplete = [];
       for (const key of Object.keys(data)) {
         const entry: ResolutionEntry = data[key];

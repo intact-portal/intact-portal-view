@@ -10,6 +10,7 @@ import {NetworkSelectionService} from '../../../shared/service/network-selection
 import {ResultTable} from '../../../shared/model/interactions-results/result-table-interface';
 import {SearchService} from '../../../../home-dashboard/search/service/search.service';
 import {FilterService} from '../../../shared/service/filter.service';
+import {SubscriberComponent} from '../../../../shared/utils/observer-utils';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -18,7 +19,7 @@ const baseURL = environment.intact_portal_ws;
   templateUrl: './interactors-table.component.html',
   styleUrls: ['./interactors-table.component.css']
 })
-export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
+export class InteractorsTableComponent extends SubscriberComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
   @Input() interactorTab: boolean;
 
   private _interactorSelected: string;
@@ -37,16 +38,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     private search: SearchService,
     private filters: FilterService
   ) {
+    super()
   }
 
   ngOnInit() {
     this.table = $('#interactorsTable');
-    this.route.queryParams
-      .subscribe(() => {
-        if (this.dataTable !== undefined) {
-          this.dataTable = this.table.DataTable().ajax.reload();
-        }
-      });
+    this.subscribe(this.route.queryParams, () => {
+      if (this.dataTable !== undefined) {
+        this.dataTable = this.table.DataTable().ajax.reload();
+      }
+    })
 
     this.initDataTable();
     this.networkSelection.registerSelectionListener(this.dataTable, this);

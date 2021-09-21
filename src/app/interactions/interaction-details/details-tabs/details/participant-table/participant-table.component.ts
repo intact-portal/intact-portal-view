@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 import {environment} from '../../../../../../environments/environment';
-import {Column} from "../../../../shared/model/tables/column.model";
-import {ParticipantTable} from "../../../../shared/model/tables/participant-table.model";
-import {TableFactoryService} from "../../../../shared/service/table-factory.service";
-import {InteractionParticipantsService, Status} from "../../../shared/service/interaction-participants.service";
-import {Subscription} from "rxjs";
+import {Column} from '../../../../shared/model/tables/column.model';
+import {ParticipantTable} from '../../../../shared/model/tables/participant-table.model';
+import {TableFactoryService} from '../../../../shared/service/table-factory.service';
+import {InteractionParticipantsService, Status} from '../../../shared/service/interaction-participants.service';
+import {SubscriberComponent} from '../../../../../shared/utils/observer-utils';
 
 const baseURL = environment.intact_portal_graph_ws;
 
@@ -14,7 +14,7 @@ const baseURL = environment.intact_portal_graph_ws;
   templateUrl: './participant-table.component.html',
   styleUrls: ['./participant-table.component.css']
 })
-export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class ParticipantTableComponent extends SubscriberComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
@@ -27,9 +27,8 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
 
   private fillParticipants = true;
 
-  private proteinExpansionSubscription: Subscription;
-
   constructor(private tableFactory: TableFactoryService, private participantsService: InteractionParticipantsService) {
+    super();
   }
 
   ngOnInit(): void {
@@ -83,9 +82,9 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
           title: this._columns.expand.title,
           render: (data, type, full) => {
             if (type === 'display') {
-              let id = full.participantId.identifier;
+              const id = full.participantId.identifier;
               if (full.type.shortName === 'protein') {
-                let expanded = this.participantsService.getParticipantAndStatusById(id).status === Status.EXPANDED;
+                const expanded = this.participantsService.getParticipantAndStatusById(id).status === Status.EXPANDED;
                 return `<input type="checkbox" id="${id}" name="check" value="${data}" ${expanded ? 'checked' : ''}/>`;
                 // TODO Switch to participants AC for correct interaction
               }
@@ -178,14 +177,15 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
             if (type === 'display') {
               return $.map(data, function (d, i) {
                 if (d.unit !== null) {
-                return '<div class="margin-bottom-medium">' +
-                  '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +
-                  '</div>';
-              } else {
-                return '<div class="margin-bottom-medium">' +
-                  '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '</span>' +
-                  '</div>';
-              }}).join('');
+                  return '<div class="margin-bottom-medium">' +
+                    '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '(' + d.unit.shortName + ') </span>' +
+                    '</div>';
+                } else {
+                  return '<div class="margin-bottom-medium">' +
+                    '<span class="detailsCell">' + d.type.shortName + ':' + d.value + '</span>' +
+                    '</div>';
+                }
+              }).join('');
             }
           }
         },
@@ -232,14 +232,14 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
       ],
     });
 
-    this.proteinExpansionSubscription = this.participantsService.proteinSetsUpdated.subscribe(proteins => {
+    this.subscribe(this.participantsService.proteinSetsUpdated, proteins => {
       proteins.expanded.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', true));
       proteins.collapsed.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', false));
     });
 
     table.on('change', 'input[name=\'check\']', (e) => {
         const id = e.currentTarget.id;
-        let protein = this.participantsService.getParticipantAndStatusById(id).participant;
+        const protein = this.participantsService.getParticipantAndStatusById(id).participant;
         if ($(`#${id}:checkbox`).prop('checked')) {
           this.participantsService.setProteinStatus(protein, Status.EXPANDED);
         } else {
@@ -253,10 +253,4 @@ export class ParticipantTableComponent implements OnInit, OnChanges, OnDestroy, 
   get columns(): Column[] {
     return this._columns;
   }
-
-  ngOnDestroy(): void {
-    if (this.proteinExpansionSubscription) this.proteinExpansionSubscription.unsubscribe();
-  }
-
-
 }

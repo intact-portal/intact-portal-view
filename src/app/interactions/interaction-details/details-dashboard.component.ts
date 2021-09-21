@@ -7,6 +7,7 @@ import {viewer} from './details-viewer/details-viewer.component';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {Format} from '../shared/model/download/format.model';
 import {environment} from '../../../environments/environment';
+import {SubscriberComponent} from '../../shared/utils/observer-utils';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -15,7 +16,7 @@ const baseURL = environment.intact_portal_ws;
   templateUrl: './details-dashboard.component.html',
   styleUrls: ['./details-dashboard.component.css']
 })
-export class DetailsDashboardComponent implements OnInit, AfterViewInit {
+export class DetailsDashboardComponent extends SubscriberComponent implements OnInit, AfterViewInit {
   private _interactionAc: string;
   @Input() featureSelected: string;
   private _error: HttpErrorResponse;
@@ -24,6 +25,7 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) {
+    super()
   }
 
   downloadURL(format: Format): string {
@@ -31,11 +33,10 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.route.params
-      .subscribe(params => {
-        this.interactionAc = params['id'];
-        this.titleService.setTitle('Interaction - ' + this.interactionAc);
-      })
+    this.subscribe(this.route.params, (params) => {
+      this.interactionAc = params['id'];
+      this.titleService.setTitle('Interaction - ' + this.interactionAc);
+    });
   }
 
   ngAfterViewInit(): void {
@@ -94,8 +95,9 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
         // fixes unicode bug
         for (let i = 0; i < binary.length; i++) {
           let charcode = binary.charCodeAt(i);
-          if (charcode < 0x80) array.push(charcode);
-          else if (charcode < 0x800) {
+          if (charcode < 0x80) {
+            array.push(charcode);
+          } else if (charcode < 0x800) {
             array.push(0xc0 | (charcode >> 6),
               0x80 | (charcode & 0x3f));
           } else if (charcode < 0xd800 || charcode >= 0xe000) {

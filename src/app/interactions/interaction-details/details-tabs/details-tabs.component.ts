@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {InteractionDetails} from '../../shared/model/interaction-details/interaction-details.model';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
-import {ParticipantTableComponent} from "./details/participant-table/participant-table.component";
-import {FeaturesTableComponent} from "./details/features-table/features-table.component";
+import {ParticipantTableComponent} from './details/participant-table/participant-table.component';
+import {FeaturesTableComponent} from './details/features-table/features-table.component';
+import {SubscriberComponent} from '../../../shared/utils/observer-utils';
 
 
 @Component({
@@ -10,7 +11,7 @@ import {FeaturesTableComponent} from "./details/features-table/features-table.co
   templateUrl: './details-tabs.component.html',
   styleUrls: ['./details-tabs.component.css']
 })
-export class DetailsTabsComponent implements OnInit, AfterViewInit {
+export class DetailsTabsComponent extends SubscriberComponent implements OnInit, AfterViewInit {
 
   @Input() interactionAc: string;
   @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -30,6 +31,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   featureTable: FeaturesTableComponent;
 
   constructor(private interactionsDetailsService: InteractionsDetailsService) {
+    super()
   }
 
   ngOnInit() {
@@ -54,10 +56,8 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
 
   private requestInteractionDetails() {
-    this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
-      .subscribe(interactionDetails => {
-        this.interactionDetails = interactionDetails;
-      })
+    this.subscribe(
+      this.interactionsDetailsService.getInteractionDetails(this.interactionAc), interactionDetails => this.interactionDetails = interactionDetails)
   }
 
   get interactionDetails(): InteractionDetails {

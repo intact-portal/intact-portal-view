@@ -1,12 +1,12 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
 import * as complexviewer from 'complexviewer';
 import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
 import {Participant} from '../shared/model/participant.model';
-import {Subscription} from 'rxjs/Subscription';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
+import {SubscriberComponent} from '../../../shared/utils/observer-utils';
 
 export let viewer: any;
 
@@ -17,7 +17,7 @@ export let viewer: any;
   styleUrls: ['./details-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
+export class DetailsViewerComponent extends SubscriberComponent implements AfterViewInit {
   @Input() interactionAc: string;
 
   @Input() featureAc: string;
@@ -32,25 +32,19 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   };
 
   private _colorLegendGroups: { name: string, legends: ColorLegend[] }[] = [];
-  private proteinUpdateSubscription: Subscription;
   private notifyViewerOfUpdates = true;
   NodeShape = NodeShape;
 
   private nodeTypes: Set<string> = new Set<string>();
 
   constructor(private interactionsDetailsService: InteractionsDetailsService, private participantsService: InteractionParticipantsService) {
+    super()
   }
 
   ngAfterViewInit() {
     this.requestInteractionViewerDetails();
     $('ip-interactions-viewer').foundation();
     $('.button-group.expanded').foundation();
-  }
-
-  ngOnDestroy(): void {
-    if (this.proteinUpdateSubscription) {
-      this.proteinUpdateSubscription.unsubscribe();
-    }
   }
 
   public canAnimate(): boolean {
@@ -63,36 +57,37 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   }
 
   private requestInteractionViewerDetails() {
-    this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
-      .subscribe(data => {
-          this.interactionData = data;
-          ProgressBarComponent.hide();
+    this.subscribe(
+      this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
+      , (data) => {
+        this.interactionData = data;
+        ProgressBarComponent.hide();
 
-          if (this.interactionData !== undefined) {
-            viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
-            viewer.readMIJSON(this.interactionData, true);
-            viewer.autoLayout();
-            this.expandAll();
-            this.participantsService.initParticipants(viewer.getExpandedParticipants());
-            this.updateColorLegend(viewer.getColorKeyJson());
-            this.collectTypes();
-            viewer.addExpandListener((expandedParticipants: Participant[]) => {
-              this.notifyViewerOfUpdates = false;
-              this.participantsService.updateProteinsStatus(expandedParticipants)
-              this.notifyViewerOfUpdates = true;
-            })
+        if (this.interactionData !== undefined) {
+          viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
+          viewer.readMIJSON(this.interactionData, true);
+          viewer.autoLayout();
+          this.expandAll();
+          this.participantsService.initParticipants(viewer.getExpandedParticipants());
+          this.updateColorLegend(viewer.getColorKeyJson());
+          this.collectTypes();
+          viewer.addExpandListener((expandedParticipants: Participant[]) => {
+            this.notifyViewerOfUpdates = false;
+            this.participantsService.updateProteinsStatus(expandedParticipants)
+            this.notifyViewerOfUpdates = true;
+          })
 
-            this.proteinUpdateSubscription = this.participantsService.proteinSetsUpdated.subscribe(update => {
-              if (this.notifyViewerOfUpdates) {
-                viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
-              }
-            })
-          }
-        },
-        (err: HttpErrorResponse) => {
-          this.error.emit(err);
+          this.subscribe(this.participantsService.proteinSetsUpdated, (update) => {
+            if (this.notifyViewerOfUpdates) {
+              viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
+            }
+          })
         }
-      );
+      },
+      (err: HttpErrorResponse) => {
+        this.error.emit(err);
+      }
+    );
   }
 
   expandAll(): void {

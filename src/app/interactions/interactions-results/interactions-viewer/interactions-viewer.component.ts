@@ -5,6 +5,7 @@ import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-
 import {NetworkViewService} from '../../shared/service/network-view.service';
 import {NetworkLegend} from '../../shared/model/interaction-legend/network-legend';
 import {GraphPort} from 'intact-network-viewer';
+import {SubscriberComponent} from '../../../shared/utils/observer-utils';
 
 @Component({
   selector: 'ip-interactions-viewer',
@@ -12,7 +13,7 @@ import {GraphPort} from 'intact-network-viewer';
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class InteractionsViewerComponent implements AfterViewInit {
+export class InteractionsViewerComponent extends SubscriberComponent implements AfterViewInit {
   private _hasMutation: boolean = false;
   private _interactionsJSON: any = {};
   legend: NetworkLegend = undefined;
@@ -21,25 +22,25 @@ export class InteractionsViewerComponent implements AfterViewInit {
               private router: Router,
               private networkSearchService: NetworkSearchService,
               public view: NetworkViewService) {
-
+    super();
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       $('ip-interactions-viewer').foundation();
       this.view.viewer = new GraphPort('for-canvas-graph', 'nodeL');
-      this.route.queryParamMap.subscribe((paramMap: ParamMap) => {
+      this.subscribe(this.route.queryParamMap, (paramMap: ParamMap) => {
         this.view.fromParams(paramMap);
         if (this.view.mustQuery) {
           this.requestIntactNetworkDetails()
         }
         this.view.mustQuery = true;
       });
-    })
+    });
   }
 
   private requestIntactNetworkDetails() {
-    this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies).subscribe(json => {
+    this.subscribe(this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies), json => {
       this.interactionsJSON = json;
       if (json.legend) {
         this.legend = json.legend;

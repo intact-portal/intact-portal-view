@@ -1,12 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {RouterModule, UrlSerializer} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 
 import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule, MyUrlSerializer} from './app-routing.module';
 import {HomeDashboardModule} from './home-dashboard/home-dashboard.module';
 import {FeatureDatasetService} from './home-dashboard/featured-dataset/service/feature-dataset.service';
 import {InteractionsResultsModule} from './interactions/interactions-results/interactions-results.module';
@@ -30,7 +30,8 @@ import {Angulartics2Module} from 'angulartics2';
 import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
 import {GoogleAnalyticsService} from './shared/service/google-analytics/google-analytics.service';
 import {APP_BASE_HREF, PlatformLocation} from '@angular/common';
-import { RedirectComponent } from './navigation/redirect/redirect.component';
+import {RedirectComponent} from './navigation/redirect/redirect.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +66,8 @@ import { RedirectComponent } from './navigation/redirect/redirect.component';
     NetworkSearchService,
     NetworkViewService,
     GoogleAnalyticsService,
-    {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]}
+    {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]},
+    {provide: UrlSerializer, useClass: MyUrlSerializer}
   ],
   bootstrap: [AppComponent]
 })

@@ -1,10 +1,20 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {DefaultUrlSerializer, RouterModule, Routes, UrlSerializer, UrlTree} from '@angular/router';
 import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {AboutComponent} from './navigation/about/about.component';
 import {environment} from '../environments/environment';
 import {RedirectComponent} from './navigation/redirect/redirect.component';
+
+// Enable parenthesis in url parameters
+export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
+  parse(url: string): UrlTree {
+    return super.parse(url.replace(/[!'()*]/g, (c) => {
+      // Also encode !, ', (, ), and *
+      return '%' + c.charCodeAt(0).toString(16);
+    }));
+  }
+}
 
 const routes: Routes = [
   {
@@ -63,15 +73,15 @@ const routes: Routes = [
     component: RedirectComponent,
     data: {externalUrl: environment.former_intact_url + 'pages/details/details.xhtml'}
   },
-  {
-    path: '**',
-    redirectTo: 'home'
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: 'home'
+  // }
 ];
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forRoot(routes, {useHash: false})],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true})]
 })
 
 export class AppRoutingModule {

@@ -1,4 +1,4 @@
-<div class="margin-top-large margin-bottom-large" id="network-viewer-container" *ngIf="view.visible; else tooMany">
+<div class="margin-top-large margin-bottom-large" id="network-viewer-container" *ngIf="view.visible; else error">
   <div class="columns small-12 medium-6 large-2" id="toolbar-column">
     <h4 class="underline margin-bottom-large">
       <i class="icon icon-common icon-spacer icon-tool"></i>Network Tools
@@ -92,9 +92,10 @@
   </div>
 </div>
 
-<ng-template #tooMany>
-  <div class="row expanded margin-top-large margin-bottom-large" id="no-network-viewer">
-    <div class="alert-panel">
+<ng-template #error>
+
+  <div [ngSwitch]="view.error.status" class="row expanded margin-top-large margin-bottom-large" id="no-network-viewer">
+    <div class="alert-panel" *ngSwitchCase="403">
       <h3><i class="icon icon-common icon-exclamation-triangle"></i> Too many results</h3>
       There are more than <b>1500 interactions</b> in your results, too many for our network
       viewer display, sorry.<br>
@@ -106,6 +107,14 @@
           to visualise without size restrictions
         </li>
       </ul>
+    </div>
+
+    <div class="alert-panel" *ngSwitchDefault>
+      <h3><i class="icon icon-common icon-exclamation-triangle"></i> Error {{view.error.status}}
+        : {{view.error.statusText}}</h3>
+      <p><i>{{view.error.message}}</i></p>
+      An unexpected error occurred. Please help us fix this issue by describing the steps that led to this error <a
+      href="//www.ebi.ac.uk/support/intact">in our feedback area</a>
     </div>
   </div>
 </ng-template>

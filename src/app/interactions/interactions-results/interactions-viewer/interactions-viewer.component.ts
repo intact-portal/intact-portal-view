@@ -49,6 +49,7 @@ export class InteractionsViewerComponent extends SubscriberComponent implements 
           this.view.setAffectedByMutation(false, false);
         }
       }
+      this.view.error = null;
       if (json.data.length > 0) {
         this.view.viewer.initializeWithData(this.interactionsJSON, this.view.expanded, this.view.affectedByMutation, this.view.layoutName);
         this.view.visible = true;
@@ -56,8 +57,9 @@ export class InteractionsViewerComponent extends SubscriberComponent implements 
         this.view.visible = false;
         ProgressBarComponent.hideWithoutDelay();
       }
-    }, () => {
+    }, (e) => {
       this.view.visible = false;
+      this.view.error = e;
       ProgressBarComponent.hideWithoutDelay();
     })
   }

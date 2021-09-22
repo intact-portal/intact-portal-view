@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ParamMap} from '@angular/router';
 import {GraphPort} from 'intact-network-viewer'
 import {Subject} from 'rxjs/Subject';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable()
 export class NetworkViewService {
@@ -13,6 +14,7 @@ export class NetworkViewService {
   private _groupBySpecies: boolean = false;
   private _layoutName: string = 'fcose';
   private _mustQuery: boolean = true;
+  private _error: HttpErrorResponse = null;
 
   private updatesSubject: Subject<void> = new Subject<void>();
   public updates = this.updatesSubject.asObservable();
@@ -116,5 +118,13 @@ export class NetworkViewService {
 
   set mustQuery(value: boolean) {
     this._mustQuery = value;
+  }
+
+  get error(): HttpErrorResponse {
+    return this._error;
+  }
+
+  set error(value: HttpErrorResponse) {
+    this._error = value;
   }
 }

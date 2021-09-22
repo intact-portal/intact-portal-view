@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs/Rx';
 import {environment} from '../../../../environments/environment';
 import {NetworkLegend} from '../model/interaction-legend/network-legend';
 import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
@@ -25,11 +25,12 @@ export class NetworkSearchService {
 
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
-    this.reporter.reportError(err);
-    if (err.error instanceof Error) {
-      return Observable.throw(err);
-    } else {
+    if (this.reporter) {
+      this.reporter.reportError(err);
+    }
+    if (!(err.error instanceof Error)) {
       console.error(err.message ? err.message : err.toString());
     }
+    return Observable.throw(err);
   }
 }

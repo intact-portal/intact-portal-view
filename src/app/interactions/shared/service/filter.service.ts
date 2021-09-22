@@ -52,11 +52,18 @@ export class FilterService {
   }
 
   public initFacets(facets: InteractionFacets) {
-    this._facets = facets;
+    this._facets = FilterService.filterFacets(facets);
     this.initSpeciesFilter();
     this.initMIScoreFilter(facets.intact_miscore);
     this.initMutationFilter(facets.affected_by_mutation_styled);
     this.initExpansionFilter(facets.expansion_method_s);
+  }
+
+  private static filterFacets(facets: InteractionFacets): InteractionFacets {
+    for (const facetName of Object.keys(facets)) {
+      facets[facetName] = (<Facet<any>[]>facets[facetName]).filter(facet => facet.value !== 'null');
+    }
+    return facets
   }
 
   private initSpeciesFilter() {

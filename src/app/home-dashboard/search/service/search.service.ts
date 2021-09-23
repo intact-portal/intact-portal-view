@@ -212,15 +212,15 @@ export class SearchService {
           },
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: (item: Interactor) =>
-            `<div class="row expanded">
-               <div class="columns large-2 show-for-large">${item.interactorAc}</div>
-               <div class="columns small-6 medium-3 large-2">
+            `<div class="flex-row" role="rowgroup">
+               <div class="flex-cell first" role="cell">${item.interactorAc}</div>
+               <div class="flex-cell" role="cell">
                 ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}
                </div>
-               <div class="columns large-2 show-for-large"><i>"${item.interactorDescription}"</i> </div>
-               <div class="columns small-6 medium-3 large-2">${item.interactorSpecies}</div>
-               <div class="columns medium-3 large-2 show-for-medium"><span class="labelWrapper">${item.interactorType}</span></div>
-               <div class="columns medium-3 large-2 show-for-medium"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
+               <div class="flex-cell" role="cell"><i>"${item.interactorDescription}"</i> </div>
+               <div class="flex-cell" role="cell">${item.interactorSpecies}</div>
+               <div class="flex-cell" role="cell"><span class="labelWrapper">${item.interactorType}</span></div>
+               <div class="flex-cell" role="cell"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
              </div>`,
         }
       }

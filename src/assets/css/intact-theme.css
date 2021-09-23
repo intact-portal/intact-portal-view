@@ -1030,3 +1030,37 @@ span.collapsable-counter {
     height: 0;
   }
 }
+
+/***************FLEX TABLE**************/
+.flex-row {
+  display: flex;
+  flex-flow: row wrap;
+  transition: 250ms;
+  align-items: center;
+  padding: 0;
+}
+.flex-cell {
+  width: calc(100% / 6);
+  text-align: center;
+  padding: 0.5em;
+  overflow-wrap: anywhere;
+}
+
+@media all and (max-width: 1200px) {
+  .flex-cell {
+    width: calc(100% / 3);
+  }
+  .flex-cell.first {
+    width: 100%;
+    background-color: #68297cd9;
+    color: white;
+  }
+}
+@media all and (max-width: 430px) {
+  .flex-cell {
+    width: 100%;
+  }
+  .flex-cell.first {
+    width: 100%;
+  }
+}

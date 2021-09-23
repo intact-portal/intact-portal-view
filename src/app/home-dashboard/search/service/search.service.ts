@@ -35,9 +35,7 @@ export class SearchService {
   search(query: string) {
     this._query = query;
     this._isBatchSearch = false;
-    const b = !this.isAdvancedQuery(query);
-    console.log(b, query)
-    if (b) {
+    if (!this.isAdvancedQuery(query)) {
       this.router.navigate(['search'], {queryParams: {query}});
     }
   }

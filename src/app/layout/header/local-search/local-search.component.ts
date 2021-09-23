@@ -1,10 +1,7 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
-import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
-import {Pagination} from '../../../home-dashboard/shared/pagination.model';
-import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'ip-local-search',
@@ -20,6 +17,9 @@ export class LocalSearchComponent implements OnInit, AfterViewInit {
 
   }
 
+  @ViewChild('query')
+  query: ElementRef;
+
   ngOnInit() {
     $('ip-local-search').foundation();
   }
@@ -31,6 +31,7 @@ export class LocalSearchComponent implements OnInit, AfterViewInit {
   search(query: string, typeOfButton: string) {
     if (query) {
       this.searchService.search(query);
+      this.query.nativeElement.blur();
       if (typeOfButton === 'enter' || typeOfButton === 'button') {
         this.searchService.title = query;
       }

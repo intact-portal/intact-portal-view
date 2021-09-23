@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../environments/environment';
+import {SearchService} from '../search/service/search.service';
+
 
 @Component({
   selector: 'ip-home-description',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeDescriptionComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private search: SearchService) {
+  }
 
   ngOnInit() {
   }
 
+  onSearch() {
+    this.search.search('annot:"dataset:coronavirus"');
+  }
+
+  miXml25Url() {
+    return `${environment.intact_psi25_url}/datasets/Coronavirus.zip`;
+  }
+
+  miXml30Url() {
+    return `${environment.intact_psi30_url}/datasets/Coronavirus.zip`;
+  }
 }

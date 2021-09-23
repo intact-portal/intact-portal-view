@@ -4,3 +4,23 @@
   All interactions are derived from literature curation or direct user submissions and are freely available.
   The IntAct Team also produces the <a href="https://www.ebi.ac.uk/complexportal" target="_blank">Complex Portal</a>.
 </p>
+
+<div class="row expanded alert-panel">
+
+  <h3><i class="icon icon-species padding-medium" data-icon="&#x76;"></i> COVID19-related interactions at IntAct's
+    Coronavirus dataset</h3>
+  Dataset of molecular interactions extracted from publications involving viral proteins from the Coronaviridae family
+  and human proteins, along with a certain proportion of other model organisms. The data features mostly protein-protein
+  and some RNA-protein interactions and covers SARS-CoV2 and SARS-CoV primarily, with some interactions from other
+  members of Coronaviridae as well. Interactions between human proteins relevant for SARS-CoV2 infection have also been
+  included.
+
+  <div class="float-right margin-top-medium">
+    <a class="button lighter no-margin" (click)="onSearch()">Browse in IntAct</a>
+
+    <a class="button lighter no-margin" download target="_blank"
+       [href]="miXml25Url()">miXML<sub>2.5</sub></a>
+    <a class="button lighter no-margin" download target="_blank"
+       [href]="miXml30Url()">miXML<sub>3.0</sub></a>
+  </div>
+</div>

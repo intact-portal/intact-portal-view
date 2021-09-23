@@ -28,7 +28,13 @@ export class FeaturedDatasetComponent extends SubscriberComponent implements OnI
   }
 
   requestDOTM() {
-    this.subscribe(this.featureDatasetService.getFeaturedDataset(), response => this.dataset = response.datasets[0])
+    this.subscribe(this.featureDatasetService.getFeaturedDataset(), response => {
+      this.dataset = response.datasets[0];
+      setTimeout(() => {
+        $('#dataset-group').foundation();
+        FoundationUtils.adjustWidth();
+      })
+    })
   }
 
   onIntActSearch() {
@@ -36,8 +42,6 @@ export class FeaturedDatasetComponent extends SubscriberComponent implements OnI
   }
 
   ngAfterViewInit(): void {
-    $('#dataset-group').foundation();
-    FoundationUtils.adjustWidth();
   }
 
   get firstPubmed() {

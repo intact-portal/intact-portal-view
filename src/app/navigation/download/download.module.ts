@@ -4,7 +4,7 @@ import {DownloadComponent} from './download.component';
 import {DownloadRoutingModule} from './download-routing.module';
 import {FTPComponent} from './ftp/ftp.component';
 import {DatasetsComponent} from './datasets/datasets.component';
-import {MarkdownModule} from "./shared/markdown/markdown.module";
+import {MarkdownModule} from '../documentation/shared/markdown/markdown.module';
 
 
 @NgModule({

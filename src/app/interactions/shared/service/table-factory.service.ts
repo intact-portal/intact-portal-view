@@ -174,7 +174,7 @@ export class TableFactoryService {
     let html = '<div class="show-more-content">'
     let displayed = 0;
     for (let i = 0; i < data.length; i++) {
-      if (i === 2) {
+      if (displayed === 2) {
         html += '<div class="to-hide" style="display: none">';
       }
       const render = renderer(data[i], i);
@@ -184,7 +184,9 @@ export class TableFactoryService {
       }
     }
     if (displayed > 2) {
-      html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${data.length - 2})</button>`;
+      html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${displayed - 2})</button>`;
+    } else if (displayed === 2) {
+      html += '</div></div>';
     } else {
       html += '</div>';
     }

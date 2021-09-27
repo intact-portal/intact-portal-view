@@ -55,6 +55,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+// Enable parenthesis in url parameters
+class MyUrlSerializer extends __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* DefaultUrlSerializer */] {
+    parse(url) {
+        return super.parse(url.replace(/[!'()*]/g, (c) => {
+            // Also encode !, ', (, ), and *
+            return '%' + c.charCodeAt(0).toString(16);
+        }));
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["b"] = MyUrlSerializer;
+
 const routes = [
     {
         path: 'home',
@@ -112,17 +123,13 @@ const routes = [
         component: __WEBPACK_IMPORTED_MODULE_6__navigation_redirect_redirect_component__["a" /* RedirectComponent */],
         data: { externalUrl: __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].former_intact_url + 'pages/details/details.xhtml' }
     },
-    {
-        path: '**',
-        redirectTo: 'home'
-    }
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
 AppRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]],
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forRoot(routes, { useHash: false })],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]],
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forRoot(routes, { useHash: false })]
     })
 ], AppRoutingModule);
 
@@ -155,6 +162,7 @@ module.exports = "<ip-compact-header *ngIf=\"showCompactHeader; else elseBlock\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angulartics2_ga__ = __webpack_require__("./node_modules/angulartics2/ga/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -173,8 +181,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 
 
 
-let AppComponent = AppComponent_1 = class AppComponent {
+
+let AppComponent = AppComponent_1 = class AppComponent extends __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(router, activatedRoute, analytics, baseHref) {
+        super();
         this.router = router;
         this.activatedRoute = activatedRoute;
         this.analytics = analytics;
@@ -191,8 +201,8 @@ let AppComponent = AppComponent_1 = class AppComponent {
     ngOnInit() {
         __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].context_path = /\/$/.test(this.baseHref) ? this.baseHref.substring(0, this.baseHref.length - 1) : this.baseHref;
         AppComponent_1.initFoundation();
-        this.router.events.subscribe(event => {
-            if (event instanceof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* NavigationEnd */]) {
+        this.subscribe(this.router.events, (event) => {
+            if (event instanceof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* NavigationEnd */]) {
                 this.showCompactHeader = this.activatedRoute.firstChild.snapshot.data.showCompactHeader !== false;
                 this.showFooter = this.activatedRoute.firstChild.snapshot.data.showFooter !== false;
                 __WEBPACK_IMPORTED_MODULE_2__layout_loading_indicators_progress_bar_progress_bar_component__["a" /* ProgressBarComponent */].display();
@@ -210,7 +220,7 @@ AppComponent = AppComponent_1 = __decorate([
         styles: [__webpack_require__("./src/app/app.component.css")]
     }),
     __param(3, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Inject */])(__WEBPACK_IMPORTED_MODULE_5__angular_common__["a" /* APP_BASE_HREF */])),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */],
         __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
         __WEBPACK_IMPORTED_MODULE_3_angulartics2_ga__["a" /* Angulartics2GoogleAnalytics */], String])
 ], AppComponent);
@@ -307,7 +317,7 @@ AppModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_25__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* RouterModule */].forRoot([]),
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["e" /* RouterModule */].forRoot([]),
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["d" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["b" /* HttpClientModule */],
             __WEBPACK_IMPORTED_MODULE_19__layout_layout_module__["a" /* LayoutModule */],
@@ -330,7 +340,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_14__interactions_shared_service_network_search_service__["a" /* NetworkSearchService */],
             __WEBPACK_IMPORTED_MODULE_20__interactions_shared_service_network_view_service__["a" /* NetworkViewService */],
             __WEBPACK_IMPORTED_MODULE_28__shared_service_google_analytics_google_analytics_service__["a" /* GoogleAnalyticsService */],
-            { provide: __WEBPACK_IMPORTED_MODULE_29__angular_common__["a" /* APP_BASE_HREF */], useFactory: (s) => s.getBaseHrefFromDOM(), deps: [__WEBPACK_IMPORTED_MODULE_29__angular_common__["i" /* PlatformLocation */]] }
+            { provide: __WEBPACK_IMPORTED_MODULE_29__angular_common__["a" /* APP_BASE_HREF */], useFactory: (s) => s.getBaseHrefFromDOM(), deps: [__WEBPACK_IMPORTED_MODULE_29__angular_common__["i" /* PlatformLocation */]] },
+            { provide: __WEBPACK_IMPORTED_MODULE_2__angular_router__["f" /* UrlSerializer */], useClass: __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["b" /* MyUrlSerializer */] }
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
     })
@@ -1079,6 +1090,7 @@ module.exports = "<aw-wizard [navBarLayout]=\"'large-empty-symbols'\">\n  <aw-wi
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__interactions_shared_model_network_shapes_node_shape__ = __webpack_require__("./src/app/interactions/shared/model/network-shapes/node-shape.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1093,9 +1105,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 const baseURL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_ws;
-let BatchSearchComponent = class BatchSearchComponent {
+let BatchSearchComponent = class BatchSearchComponent extends __WEBPACK_IMPORTED_MODULE_5__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(search) {
+        super();
         this.search = search;
         this._dataReceived = false;
         this._foundEntries = [];
@@ -1120,10 +1134,7 @@ let BatchSearchComponent = class BatchSearchComponent {
         this.uploader.response.subscribe(res => this.response = res);
     }
     resolveSearch() {
-        this.search.resolveSearch(this.query)
-            .subscribe(data => {
-            this.splitData(data);
-        });
+        this.subscribe(this.search.resolveSearch(this.query), this.splitData);
     }
     splitData(data) {
         for (const key of Object.keys(data)) {
@@ -1225,7 +1236,7 @@ let BatchSearchComponent = class BatchSearchComponent {
             return;
         }
         const query = entriesToComplete.map(entry => entry.term).join(', ');
-        this.search.resolveSearch(query, page, 50).subscribe(data => {
+        this.subscribe(this.search.resolveSearch(query, page, 50), (data) => {
             const nextEntriesToComplete = [];
             for (const key of Object.keys(data)) {
                 const entry = data[key];
@@ -1363,6 +1374,7 @@ module.exports = "<div id=\"dataset_archive\" class=\"row\">\n  <div class=\"sti
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_feature_dataset_service__ = __webpack_require__("./src/app/home-dashboard/featured-dataset/service/feature-dataset.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_utils_array_utils__ = __webpack_require__("./src/app/shared/utils/array-utils.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1375,15 +1387,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-let DatasetArchiveComponent = class DatasetArchiveComponent {
+
+let DatasetArchiveComponent = class DatasetArchiveComponent extends __WEBPACK_IMPORTED_MODULE_3__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(featureDatasetService) {
+        super();
         this.featureDatasetService = featureDatasetService;
     }
     ngOnInit() {
         this.requestDatasetArchive();
     }
     requestDatasetArchive() {
-        this.featureDatasetService.getFeaturedDataset().subscribe(data => {
+        this.subscribe(this.featureDatasetService.getFeaturedDataset(), data => {
             this.featuredDatasets = data.datasets;
             this.datasetsByYear = Object(__WEBPACK_IMPORTED_MODULE_2__shared_utils_array_utils__["a" /* groupBy */])(this.featuredDatasets, element => element.year);
         });
@@ -1506,7 +1520,7 @@ module.exports = "h4 {\n  border-bottom-style: solid;\n  border-color:#5ca23561;
 /***/ "./src/app/home-dashboard/featured-dataset/featured-dataset.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"dataset\" class=\"margin-top-large\">\n  <h4 class=\"margin-bottom-large\">\n    <i class=\"icon icon-generic\" data-icon=\"D\"></i> Featured Dataset\n  </h4>\n\n  <div>\n    <div class=\"text-justify margin-bottom-large\">{{dataset.title}} - <b>{{firstPubmed.author}}</b></div>\n\n    <div class=\"expanded no-margin button-group stacked-for-medium\" id=\"dataset-group\">\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"access\">\n        <i class=\"icon icon-common icon-search\"></i>\n        Access\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"access\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li><a class=\"button lightest expanded no-margin\" (click)=\"onIntActSearch()\">IntAct</a></li>\n          <!--<li><a class=\"button lightest expanded no-margin\" [href]=\"pubMedUrl()\">Europe PMC</a></li>-->\n        </ul>\n      </div>\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"download\">\n        <i class=\"icon icon-functional icon-download\"></i> Download\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"download\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miTabUrl()\">miTab<sub>2.7</sub></a>\n          </li>\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miXmlUrl()\">miXML<sub>2.5</sub></a>\n          </li>\n        </ul>\n      </div>\n\n    </div>\n    <div class=\"archive\">\n      <a class=\"button outlined expanded no-margin\" [routerLink]=\"archiveUrl()\">\n        <i class=\"icon icon-generic\" data-icon=\";\"></i>\n        Archive\n      </a>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div id=\"dataset\" class=\"margin-top-large\">\n  <h4 class=\"margin-bottom-large\">\n    <i class=\"icon icon-generic\" data-icon=\"D\"></i> Featured Dataset\n  </h4>\n\n  <div *ngIf=\"dataset !== undefined\">\n    <div class=\"text-justify margin-bottom-large\">\n      {{dataset.title}} - <b>{{firstPubmed.author}}</b>\n    </div>\n\n    <div class=\"expanded no-margin button-group stacked-for-medium\" id=\"dataset-group\">\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"access\">\n        <i class=\"icon icon-common icon-search\"></i>\n        Access\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"access\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li><a class=\"button lightest expanded no-margin\" (click)=\"onIntActSearch()\">IntAct</a></li>\n          <!--<li><a class=\"button lightest expanded no-margin\" [href]=\"pubMedUrl()\">Europe PMC</a></li>-->\n        </ul>\n      </div>\n\n      <button class=\"button lighter adjust-width\" type=\"button\" data-toggle=\"download\">\n        <i class=\"icon icon-functional icon-download\"></i> Download\n      </button>\n      <div class=\"dropdown-pane no-padding no-border\" id=\"download\" data-dropdown data-hover=\"true\"\n           data-hover-pane=\"true\">\n        <ul class=\"no-bullet no-margin\">\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miTabUrl()\">miTab<sub>2.7</sub></a>\n          </li>\n          <li>\n            <a class=\"button lightest expanded no-margin\" download target=\"_blank\"\n               [href]=\"miXmlUrl()\">miXML<sub>2.5</sub></a>\n          </li>\n        </ul>\n      </div>\n\n    </div>\n    <div class=\"archive\">\n      <a class=\"button outlined expanded no-margin\" [routerLink]=\"archiveUrl()\">\n        <i class=\"icon icon-generic\" data-icon=\";\"></i>\n        Archive\n      </a>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1521,6 +1535,7 @@ module.exports = "<div id=\"dataset\" class=\"margin-top-large\">\n  <h4 class=\
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_utils_foundation_utils__ = __webpack_require__("./src/app/shared/utils/foundation-utils.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm2015/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1536,10 +1551,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 const intactFTP_URL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_psi25_url;
 const intactFTPMiTab_URL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_psimitab_url;
-let FeaturedDatasetComponent = class FeaturedDatasetComponent {
+let FeaturedDatasetComponent = class FeaturedDatasetComponent extends __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(featureDatasetService, router, search) {
+        super();
         this.featureDatasetService = featureDatasetService;
         this.router = router;
         this.search = search;
@@ -1548,16 +1565,18 @@ let FeaturedDatasetComponent = class FeaturedDatasetComponent {
         this.requestDOTM();
     }
     requestDOTM() {
-        this.featureDatasetService.getFeaturedDataset().subscribe(response => {
+        this.subscribe(this.featureDatasetService.getFeaturedDataset(), response => {
             this.dataset = response.datasets[0];
+            setTimeout(() => {
+                $('#dataset-group').foundation();
+                __WEBPACK_IMPORTED_MODULE_3__shared_utils_foundation_utils__["a" /* FoundationUtils */].adjustWidth();
+            });
         });
     }
     onIntActSearch() {
         this.search.search(this.firstPubmed.id);
     }
     ngAfterViewInit() {
-        $('#dataset-group').foundation();
-        __WEBPACK_IMPORTED_MODULE_3__shared_utils_foundation_utils__["a" /* FoundationUtils */].adjustWidth();
     }
     get firstPubmed() {
         return this.dataset.pubmeds[0];
@@ -1581,7 +1600,7 @@ FeaturedDatasetComponent = __decorate([
         template: __webpack_require__("./src/app/home-dashboard/featured-dataset/featured-dataset.component.html"),
         styles: [__webpack_require__("./src/app/home-dashboard/featured-dataset/featured-dataset.component.css"), __webpack_require__("./src/app/app.component.css")]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_feature_dataset_service__["a" /* FeatureDatasetService */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_5__search_service_search_service__["a" /* SearchService */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_feature_dataset_service__["a" /* FeatureDatasetService */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* Router */], __WEBPACK_IMPORTED_MODULE_5__search_service_search_service__["a" /* SearchService */]])
 ], FeaturedDatasetComponent);
 
 
@@ -1681,8 +1700,8 @@ let HomeDashboardRoutingModule = class HomeDashboardRoutingModule {
 };
 HomeDashboardRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]],
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forChild(routes)]
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]],
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(routes)]
     })
 ], HomeDashboardRoutingModule);
 
@@ -1863,14 +1882,14 @@ HomeDashboardModule = __decorate([
 /***/ "./src/app/home-dashboard/home-description/home-description.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".icon-species {\n  color: white;\n  background-color: #68297c;\n  border-radius: 100px;\n  font-size: xxx-large;\n  padding: 5px;\n\n}\n"
 
 /***/ }),
 
 /***/ "./src/app/home-dashboard/home-description/home-description.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>IntAct Molecular Interaction Database</h1>\n<p>\n  IntAct provides a freely available, open source database system and analysis tools for molecular interaction data.\n  All interactions are derived from literature curation or direct user submissions and are freely available.\n  The IntAct Team also produces the <a href=\"https://www.ebi.ac.uk/complexportal\" target=\"_blank\">Complex Portal</a>.\n</p>\n"
+module.exports = "<h1>IntAct Molecular Interaction Database</h1>\n<p>\n  IntAct provides a free, open source database system and analysis tools for molecular interaction data.\n  All interactions are derived from literature curation or direct user submissions.\n  The IntAct Team also produces the <a href=\"https://www.ebi.ac.uk/complexportal\" target=\"_blank\">Complex Portal</a>.\n</p>\n\n<div class=\"row expanded alert-panel\">\n\n  <h3><i class=\"icon icon-species padding-medium\" data-icon=\"&#x76;\"></i> COVID19-related interactions at IntAct's\n    Coronavirus dataset</h3>\n  Dataset of molecular interactions extracted from publications involving viral proteins from the Coronaviridae family\n  and human proteins, along with a certain proportion of other model organisms. The data features mostly protein-protein\n  and some RNA-protein interactions and covers SARS-CoV2 and SARS-CoV primarily, with some interactions from other\n  members of Coronaviridae as well. Interactions between human proteins relevant for SARS-CoV2 infection have also been\n  included.\n\n  <div class=\"float-right margin-top-medium\">\n    <a class=\"button lighter no-margin\" (click)=\"onSearch()\">Browse in IntAct</a>\n\n    <a class=\"button lighter no-margin\" download target=\"_blank\"\n       [href]=\"miXml25Url()\">miXML<sub>2.5</sub></a>\n    <a class=\"button lighter no-margin\" download target=\"_blank\"\n       [href]=\"miXml30Url()\">miXML<sub>3.0</sub></a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1880,6 +1899,8 @@ module.exports = "<h1>IntAct Molecular Interaction Database</h1>\n<p>\n  IntAct 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeDescriptionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1890,9 +1911,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 let HomeDescriptionComponent = class HomeDescriptionComponent {
-    constructor() { }
+    constructor(search) {
+        this.search = search;
+    }
     ngOnInit() {
+    }
+    onSearch() {
+        this.search.search('"Coronavirus -"');
+    }
+    miXml25Url() {
+        return `${__WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_psi25_url}/datasets/Coronavirus.zip`;
+    }
+    miXml30Url() {
+        return `${__WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_psi30_url}/datasets/Coronavirus.zip`;
     }
 };
 HomeDescriptionComponent = __decorate([
@@ -1901,7 +1935,7 @@ HomeDescriptionComponent = __decorate([
         template: __webpack_require__("./src/app/home-dashboard/home-description/home-description.component.html"),
         styles: [__webpack_require__("./src/app/home-dashboard/home-description/home-description.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__search_service_search_service__["a" /* SearchService */]])
 ], HomeDescriptionComponent);
 
 
@@ -1940,7 +1974,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 let NewsComponent = class NewsComponent {
     constructor() {
-        this.version = '1.0.0';
+        this.version = '1.0.1';
         this.environmentName = 'dev';
         this.releaseDate = 'September 2021';
         this.publications = '22496';
@@ -2032,7 +2066,6 @@ module.exports = "<div id=\"search\" class=\"row\">\n\n  <ul class=\"tabs\" data
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2044,8 +2077,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-const baseURL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_ws;
 let SearchComponent = class SearchComponent {
     constructor(searchService) {
         this.searchService = searchService;
@@ -2126,9 +2157,7 @@ let SearchService = SearchService_1 = class SearchService {
     search(query) {
         this._query = query;
         this._isBatchSearch = false;
-        const b = !this.isAdvancedQuery(query);
-        console.log(b, query);
-        if (b) {
+        if (!this.isAdvancedQuery(query)) {
             this.router.navigate(['search'], { queryParams: { query } });
         }
     }
@@ -2280,15 +2309,15 @@ let SearchService = SearchService_1 = class SearchService {
                     }
                 },
                 notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
-                suggestion: (item) => `<div class="row expanded">
-               <div class="columns large-2 show-for-large">${item.interactorAc}</div>
-               <div class="columns small-6 medium-3 large-2">
+                suggestion: (item) => `<div class="flex-row" role="rowgroup">
+               <div class="flex-cell first" role="cell">${item.interactorAc}</div>
+               <div class="flex-cell" role="cell">
                 ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}
                </div>
-               <div class="columns large-2 show-for-large"><i>"${item.interactorDescription}"</i> </div>
-               <div class="columns small-6 medium-3 large-2">${item.interactorSpecies}</div>
-               <div class="columns medium-3 large-2 show-for-medium"><span class="labelWrapper">${item.interactorType}</span></div>
-               <div class="columns medium-3 large-2 show-for-medium"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
+               <div class="flex-cell" role="cell"><i>"${item.interactorDescription}"</i> </div>
+               <div class="flex-cell" role="cell">${item.interactorSpecies}</div>
+               <div class="flex-cell" role="cell"><span class="labelWrapper">${item.interactorType}</span></div>
+               <div class="flex-cell" role="cell"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
              </div>`,
             }
         }).on('typeahead:selected', (ev, item) => {
@@ -2329,7 +2358,7 @@ let SearchService = SearchService_1 = class SearchService {
 SearchService.localTokenId = token => `intact-batch-search-${token}`;
 SearchService = SearchService_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_5__shared_service_google_analytics_google_analytics_service__["a" /* GoogleAnalyticsService */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */], __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_5__shared_service_google_analytics_google_analytics_service__["a" /* GoogleAnalyticsService */]])
 ], SearchService);
 
 var SearchService_1;
@@ -2520,6 +2549,7 @@ module.exports = "<div class=\"row expanded\" *ngIf=\"interactionAc; else noInte
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_utils_foundation_utils__ = __webpack_require__("./src/app/shared/utils/foundation-utils.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_model_download_format_model__ = __webpack_require__("./src/app/interactions/shared/model/download/format.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2537,9 +2567,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 const baseURL = __WEBPACK_IMPORTED_MODULE_7__environments_environment__["a" /* environment */].intact_portal_ws;
-let DetailsDashboardComponent = class DetailsDashboardComponent {
+let DetailsDashboardComponent = class DetailsDashboardComponent extends __WEBPACK_IMPORTED_MODULE_8__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(titleService, route) {
+        super();
         this.titleService = titleService;
         this.route = route;
         this.viewer = __WEBPACK_IMPORTED_MODULE_4__details_viewer_details_viewer_component__["b" /* viewer */];
@@ -2549,8 +2581,7 @@ let DetailsDashboardComponent = class DetailsDashboardComponent {
         return `${baseURL}/graph/export/interaction/${this.interactionAc}?format=${format.name}`;
     }
     ngOnInit() {
-        this.route.params
-            .subscribe(params => {
+        this.subscribe(this.route.params, (params) => {
             this.interactionAc = params['id'];
             this.titleService.setTitle('Interaction - ' + this.interactionAc);
         });
@@ -2603,8 +2634,9 @@ let DetailsDashboardComponent = class DetailsDashboardComponent {
                 // fixes unicode bug
                 for (let i = 0; i < binary.length; i++) {
                     let charcode = binary.charCodeAt(i);
-                    if (charcode < 0x80)
+                    if (charcode < 0x80) {
                         array.push(charcode);
+                    }
                     else if (charcode < 0x800) {
                         array.push(0xc0 | (charcode >> 6), 0x80 | (charcode & 0x3f));
                     }
@@ -2685,6 +2717,7 @@ module.exports = "<div class=\"margin-top-large margin-bottom-large\">\n\n  <!--
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_service_interactions_details_service__ = __webpack_require__("./src/app/interactions/shared/service/interactions-details.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__details_participant_table_participant_table_component__ = __webpack_require__("./src/app/interactions/interaction-details/details-tabs/details/participant-table/participant-table.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__details_features_table_features_table_component__ = __webpack_require__("./src/app/interactions/interaction-details/details-tabs/details/features-table/features-table.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2698,8 +2731,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-let DetailsTabsComponent = class DetailsTabsComponent {
+
+let DetailsTabsComponent = class DetailsTabsComponent extends __WEBPACK_IMPORTED_MODULE_4__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(interactionsDetailsService) {
+        super();
         this.interactionsDetailsService = interactionsDetailsService;
         this.featureChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.moleculeTypesCollected = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
@@ -2727,10 +2762,7 @@ let DetailsTabsComponent = class DetailsTabsComponent {
         });
     }
     requestInteractionDetails() {
-        this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
-            .subscribe(interactionDetails => {
-            this.interactionDetails = interactionDetails;
-        });
+        this.subscribe(this.interactionsDetailsService.getInteractionDetails(this.interactionAc), interactionDetails => this.interactionDetails = interactionDetails);
     }
     get interactionDetails() {
         return this._interactionDetails;
@@ -3548,6 +3580,7 @@ module.exports = "<div class=\"row expanded\">\n    <table id=\"participantTable
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_model_tables_participant_table_model__ = __webpack_require__("./src/app/interactions/shared/model/tables/participant-table.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_service_table_factory_service__ = __webpack_require__("./src/app/interactions/shared/service/table-factory.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_service_interaction_participants_service__ = __webpack_require__("./src/app/interactions/interaction-details/shared/service/interaction-participants.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3562,9 +3595,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 const baseURL = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_portal_graph_ws;
-let ParticipantTableComponent = class ParticipantTableComponent {
+let ParticipantTableComponent = class ParticipantTableComponent extends __WEBPACK_IMPORTED_MODULE_5__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(tableFactory, participantsService) {
+        super();
         this.tableFactory = tableFactory;
         this.participantsService = participantsService;
         this.columnView = 'participants_columnView';
@@ -3618,9 +3653,9 @@ let ParticipantTableComponent = class ParticipantTableComponent {
                     title: this._columns.expand.title,
                     render: (data, type, full) => {
                         if (type === 'display') {
-                            let id = full.participantId.identifier;
+                            const id = full.participantId.identifier;
                             if (full.type.shortName === 'protein') {
-                                let expanded = this.participantsService.getParticipantAndStatusById(id).status === __WEBPACK_IMPORTED_MODULE_4__shared_service_interaction_participants_service__["b" /* Status */].EXPANDED;
+                                const expanded = this.participantsService.getParticipantAndStatusById(id).status === __WEBPACK_IMPORTED_MODULE_4__shared_service_interaction_participants_service__["b" /* Status */].EXPANDED;
                                 return `<input type="checkbox" id="${id}" name="check" value="${data}" ${expanded ? 'checked' : ''}/>`;
                                 // TODO Switch to participants AC for correct interaction
                             }
@@ -3768,13 +3803,13 @@ let ParticipantTableComponent = class ParticipantTableComponent {
                 }
             ],
         });
-        this.proteinExpansionSubscription = this.participantsService.proteinSetsUpdated.subscribe(proteins => {
+        this.subscribe(this.participantsService.proteinSetsUpdated, proteins => {
             proteins.expanded.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', true));
             proteins.collapsed.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', false));
         });
         table.on('change', 'input[name=\'check\']', (e) => {
             const id = e.currentTarget.id;
-            let protein = this.participantsService.getParticipantAndStatusById(id).participant;
+            const protein = this.participantsService.getParticipantAndStatusById(id).participant;
             if ($(`#${id}:checkbox`).prop('checked')) {
                 this.participantsService.setProteinStatus(protein, __WEBPACK_IMPORTED_MODULE_4__shared_service_interaction_participants_service__["b" /* Status */].EXPANDED);
             }
@@ -3785,10 +3820,6 @@ let ParticipantTableComponent = class ParticipantTableComponent {
     }
     get columns() {
         return this._columns;
-    }
-    ngOnDestroy() {
-        if (this.proteinExpansionSubscription)
-            this.proteinExpansionSubscription.unsubscribe();
     }
 };
 __decorate([
@@ -3899,6 +3930,7 @@ module.exports = "<div>\n  <div id=\"details-viewer\" class=\"row expanded\">\n 
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_complexviewer__ = __webpack_require__("./node_modules/complexviewer/src/js/app.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_service_interaction_participants_service__ = __webpack_require__("./src/app/interactions/interaction-details/shared/service/interaction-participants.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_model_network_shapes_node_shape__ = __webpack_require__("./src/app/interactions/shared/model/network-shapes/node-shape.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3914,9 +3946,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 let viewer;
-let DetailsViewerComponent = DetailsViewerComponent_1 = class DetailsViewerComponent {
+let DetailsViewerComponent = DetailsViewerComponent_1 = class DetailsViewerComponent extends __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(interactionsDetailsService, participantsService) {
+        super();
         this.interactionsDetailsService = interactionsDetailsService;
         this.participantsService = participantsService;
         this.error = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
@@ -3936,11 +3970,6 @@ let DetailsViewerComponent = DetailsViewerComponent_1 = class DetailsViewerCompo
         $('ip-interactions-viewer').foundation();
         $('.button-group.expanded').foundation();
     }
-    ngOnDestroy() {
-        if (this.proteinUpdateSubscription) {
-            this.proteinUpdateSubscription.unsubscribe();
-        }
-    }
     canAnimate() {
         // @ts-ignore
         return !!window.chrome;
@@ -3949,8 +3978,7 @@ let DetailsViewerComponent = DetailsViewerComponent_1 = class DetailsViewerCompo
         return this.nodeTypes ? this.nodeTypes.has(type) : false;
     }
     requestInteractionViewerDetails() {
-        this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
-            .subscribe(data => {
+        this.subscribe(this.interactionsDetailsService.getInteractionViewer(this.interactionAc), (data) => {
             this.interactionData = data;
             __WEBPACK_IMPORTED_MODULE_2__layout_loading_indicators_progress_bar_progress_bar_component__["a" /* ProgressBarComponent */].hide();
             if (this.interactionData !== undefined) {
@@ -3966,7 +3994,7 @@ let DetailsViewerComponent = DetailsViewerComponent_1 = class DetailsViewerCompo
                     this.participantsService.updateProteinsStatus(expandedParticipants);
                     this.notifyViewerOfUpdates = true;
                 });
-                this.proteinUpdateSubscription = this.participantsService.proteinSetsUpdated.subscribe(update => {
+                this.subscribe(this.participantsService.proteinSetsUpdated, (update) => {
                     if (this.notifyViewerOfUpdates) {
                         viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
                     }
@@ -4126,8 +4154,8 @@ let InteractionDetailsRoutingModule = class InteractionDetailsRoutingModule {
 };
 InteractionDetailsRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]],
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forChild(routes)]
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]],
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(routes)]
     })
 ], InteractionDetailsRoutingModule);
 
@@ -4781,6 +4809,7 @@ module.exports = "<div>\n  <div id=\"innerTable\">\n    <table id=\"interactions
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_service_network_selection_service__ = __webpack_require__("./src/app/interactions/shared/service/network-selection.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_dashboard_search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_service_filter_service__ = __webpack_require__("./src/app/interactions/shared/service/filter.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4799,10 +4828,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 const baseURL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_ws;
 const ebiURL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].ebi_url;
-let InteractionsTableComponent = class InteractionsTableComponent {
+let InteractionsTableComponent = class InteractionsTableComponent extends __WEBPACK_IMPORTED_MODULE_9__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(route, tableFactory, networkSelection, search, filters) {
+        super();
         this.route = route;
         this.tableFactory = tableFactory;
         this.networkSelection = networkSelection;
@@ -4813,8 +4844,7 @@ let InteractionsTableComponent = class InteractionsTableComponent {
         this.tableUnselectedEvent = new CustomEvent('tableUnselected', { bubbles: true });
     }
     ngOnInit() {
-        this.route.queryParams
-            .subscribe(params => {
+        this.subscribe(this.route.queryParams, (params) => {
             if (this.dataTable !== undefined) {
                 const table = $('#interactionsTable');
                 this.dataTable = table.DataTable().ajax.reload();
@@ -5265,6 +5295,7 @@ module.exports = "<div>\n  <table id=\"interactorsTable\" class=\"display tableD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_service_network_selection_service__ = __webpack_require__("./src/app/interactions/shared/service/network-selection.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_dashboard_search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_service_filter_service__ = __webpack_require__("./src/app/interactions/shared/service/filter.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5283,9 +5314,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 const baseURL = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].intact_portal_ws;
-let InteractorsTableComponent = class InteractorsTableComponent {
+let InteractorsTableComponent = class InteractorsTableComponent extends __WEBPACK_IMPORTED_MODULE_9__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(route, tableFactory, networkSelection, search, filters) {
+        super();
         this.route = route;
         this.tableFactory = tableFactory;
         this.networkSelection = networkSelection;
@@ -5297,8 +5330,7 @@ let InteractorsTableComponent = class InteractorsTableComponent {
     }
     ngOnInit() {
         this.table = $('#interactorsTable');
-        this.route.queryParams
-            .subscribe(() => {
+        this.subscribe(this.route.queryParams, () => {
             if (this.dataTable !== undefined) {
                 this.dataTable = this.table.DataTable().ajax.reload();
             }
@@ -5523,6 +5555,7 @@ module.exports = "<div id=\"results\" class=\"row expanded\">\n  <div class=\"co
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_dashboard_search_service_search_service__ = __webpack_require__("./src/app/home-dashboard/search/service/search.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_service_filter_service__ = __webpack_require__("./src/app/interactions/shared/service/filter.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__shared_service_network_view_service__ = __webpack_require__("./src/app/interactions/shared/service/network-view.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5540,8 +5573,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-let InteractionsResultsComponent = class InteractionsResultsComponent {
+
+let InteractionsResultsComponent = class InteractionsResultsComponent extends __WEBPACK_IMPORTED_MODULE_8__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(titleService, search, route, router, interactionsSearchService, view, filters) {
+        super();
         this.titleService = titleService;
         this.search = search;
         this.route = route;
@@ -5553,17 +5588,16 @@ let InteractionsResultsComponent = class InteractionsResultsComponent {
     }
     ngOnInit() {
         this.titleService.setTitle('IntAct - Search Results');
-        this.route.queryParamMap.subscribe(paramMap => {
+        this.subscribe(this.route.queryParamMap, paramMap => {
             this.search.fromParams(paramMap);
             this.filters.fromParams(paramMap);
             this.requestInteractionsResults();
         });
-        this.filters.updates.subscribe(() => this.updateURLParams());
-        this.view.updates.subscribe(() => this.updateURLParams());
+        this.subscribe(this.filters.updates, () => this.updateURLParams());
+        this.subscribe(this.view.updates, () => this.updateURLParams());
     }
     requestInteractionsResults() {
-        this.interactionsSearchService.queryFacets()
-            .subscribe(interactionsSearch => {
+        this.subscribe(this.interactionsSearchService.queryFacets(), (interactionsSearch) => {
             this.interactionsSearch = interactionsSearch;
             if (this.interactionsSearch.totalElements !== 0) {
                 this._hasResults = true;
@@ -5620,7 +5654,7 @@ InteractionsResultsComponent = __decorate([
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["g" /* Title */],
         __WEBPACK_IMPORTED_MODULE_5__home_dashboard_search_service_search_service__["a" /* SearchService */],
         __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* Router */],
         __WEBPACK_IMPORTED_MODULE_3__shared_service_interactions_search_service__["a" /* InteractionsSearchService */],
         __WEBPACK_IMPORTED_MODULE_7__shared_service_network_view_service__["a" /* NetworkViewService */],
         __WEBPACK_IMPORTED_MODULE_6__shared_service_filter_service__["b" /* FilterService */]])
@@ -5758,8 +5792,8 @@ let InteractionsRoutingModule = class InteractionsRoutingModule {
 };
 InteractionsRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]],
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forChild(routes)]
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]],
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(routes)]
     })
 ], InteractionsRoutingModule);
 
@@ -5841,7 +5875,7 @@ module.exports = ".underline {\n  border-bottom-style: solid;\n  border-color: #
 /***/ "./src/app/interactions/interactions-results/interactions-viewer/interactions-viewer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"margin-top-large margin-bottom-large\" id=\"network-viewer-container\" *ngIf=\"view.visible; else tooMany\">\n  <div class=\"columns small-12 medium-6 large-2\" id=\"toolbar-column\">\n    <h4 class=\"underline margin-bottom-large\">\n      <i class=\"icon icon-common icon-spacer icon-tool\"></i>Network Tools\n    </h4>\n    <div class=\"row\">\n      <button id=\"reset\" class=\"button expanded\" type=\"button\" (click)=\"onClickReset()\">\n        <i class=\"icon icon-common icon-spacer icon-redo-alt\"></i>Redraw Network\n      </button>\n    </div>\n\n    <ul class=\"vertical menu facets\">\n      <h5>Layout</h5>\n      <div class=\"margin-bottom-large\" style=\"background-color: #fbfbfb\">\n        <li>\n          <span class=\"margin-left-small\">\n          <input #forcedirected type=\"radio\" name=\"layout\" (change)=\"onChangeLayout($event, forcedirected.value)\"\n                 value=\"fcose\" [checked]=\"view.layoutName === forcedirected.value\" id=\"force-directed\"/>\n              <label for=\"force-directed\">Force directed</label>\n          </span>\n        </li>\n        <li>\n          <span class=\"margin-left-small\">\n          <input #avsdf type=\"radio\" name=\"layout\" (change)=\"onChangeLayout($event, avsdf.value)\" value=\"avsdf\"\n                 id=\"avsdf\" [checked]=\"view.layoutName === avsdf.value\"/>\n                <label for=\"avsdf\">Circular</label>\n          </span>\n        </li>\n        <li>\n          <span class=\"margin-left-small\">\n          <input #cise type=\"radio\" name=\"layout\" (change)=\"onChangeLayout($event, cise.value)\" value=\"cise\"\n                 id=\"cise\" [checked]=\"view.layoutName === cise.value\" [disabled]=\"groupby.checked\"/>\n                <label for=\"cise\">Bubbles</label>\n          </span>\n        </li>\n      </div>\n\n      <h5>Edges</h5>\n      <div class=\"margin-bottom-large\" style=\"background-color: #fbfbfb\">\n        <li>\n          <span class=\"margin-left-small\">\n          <input #expand type=\"checkbox\" (change)=\"onChangeExpand(expand.checked, affectedByMutationCb)\"\n                 [checked]=\"view.expanded\" id=\"expand\"/>\n            <label for=\"expand\">Expand</label>\n          </span>\n        </li>\n        <li>\n          <span class=\"margin-left-small tool-tip\">\n            <input #affectedByMutationCb type=\"checkbox\" id=\"affectedByMutationCb\"\n                   (change)=\"onChangeAffectedByMutation(affectedByMutationCb.checked, expand)\"\n                   [checked]=\"view.affectedByMutation\" [disabled]=\"!hasMutation\"/>\n            <label for=\"affectedByMutationCb\" [ngClass]=\"{'disabled':!hasMutation}\">Affected By Mutation</label>\n            <span class=\"tool-tip-text\" *ngIf=\"!hasMutation\">There is no mutation in this network</span>\n          </span>\n        </li>\n      </div>\n\n      <h5>Group By</h5>\n      <div class=\"margin-bottom-large\" style=\"background-color: #fbfbfb\">\n        <li>\n          <span class=\"margin-left-small\">\n          <input #groupby type=\"checkbox\" (change)=\"onChangeGroupBy(groupby.checked)\"\n                 [checked]=\"view.groupBySpecies\" id=\"group-by\" [disabled]=\"cise.checked\"/>\n            <label for=\"group-by\">Species</label>\n          </span>\n        </li>\n      </div>\n    </ul>\n  </div>\n\n  <div class=\"columns medium-12 large-8\" id=\"viewer-column\">\n    <h4 class=\"underline margin-bottom-large\">Interaction Network</h4>\n    <div id=\"graph-top-panel\">\n      <div id=\"suggestions_div\">\n        <div class=\"input-group margin-bottom-none\">\n          <input id=\"nodeL\" #nodeL class=\"input-group-field\" type=\"text\" (keydown.enter)=\"onClickSearch(nodeL.value)\"\n                 placeholder=\"Interactor Name\"/>\n          <div class=\"input-group-button\">\n            <input id=\"network-search-button\" type=\"button\" name=\"submit\" value=\"1\" (click)=\"onClickSearch(nodeL.value)\"\n                   class=\"button icon icon-functional\">\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div id=\"for-canvas-graph\"></div>\n  </div>\n\n  <div class=\"columns small-12 medium-6 large-2\" id=\"legend-column\" *ngIf=\"legend\">\n    <ip-interactions-legend [legend]=\"legend\" [expanded]=\"view.expanded\"\n                            [mutation]=\"view.affectedByMutation\"></ip-interactions-legend>\n  </div>\n</div>\n\n<ng-template #tooMany>\n  <div class=\"row expanded margin-top-large margin-bottom-large\" id=\"no-network-viewer\">\n    <div class=\"alert-panel\">\n      <h3><i class=\"icon icon-common icon-exclamation-triangle\"></i> Too many results</h3>\n      There are more than <b>1500 interactions</b> in your results, too many for our network\n      viewer display, sorry.<br>\n      To solve this problem, you can:\n      <ul>\n        <li>Use the filters above</li>\n        <li>Make your search more specific</li>\n        <li>Use <a href=\"https://apps.cytoscape.org/apps/intactapp\">IntAct App</a> on <a href=\"https://cytoscape.org/\">Cytoscape</a>\n          to visualise without size restrictions\n        </li>\n      </ul>\n    </div>\n  </div>\n</ng-template>\n"
+module.exports = "<div class=\"margin-top-large margin-bottom-large\" id=\"network-viewer-container\" *ngIf=\"view.visible; else error\">\n  <div class=\"columns small-12 medium-6 large-2\" id=\"toolbar-column\">\n    <h4 class=\"underline margin-bottom-large\">\n      <i class=\"icon icon-common icon-spacer icon-tool\"></i>Network Tools\n    </h4>\n    <div class=\"row\">\n      <button id=\"reset\" class=\"button expanded\" type=\"button\" (click)=\"onClickReset()\">\n        <i class=\"icon icon-common icon-spacer icon-redo-alt\"></i>Redraw Network\n      </button>\n    </div>\n\n    <ul class=\"vertical menu facets\">\n      <h5>Layout</h5>\n      <div class=\"margin-bottom-large\" style=\"background-color: #fbfbfb\">\n        <li>\n          <span class=\"margin-left-small\">\n          <input #forcedirected type=\"radio\" name=\"layout\" (change)=\"onChangeLayout($event, forcedirected.value)\"\n                 value=\"fcose\" [checked]=\"view.layoutName === forcedirected.value\" id=\"force-directed\"/>\n              <label for=\"force-directed\">Force directed</label>\n          </span>\n        </li>\n        <li>\n          <span class=\"margin-left-small\">\n          <input #avsdf type=\"radio\" name=\"layout\" (change)=\"onChangeLayout($event, avsdf.value)\" value=\"avsdf\"\n                 id=\"avsdf\" [checked]=\"view.layoutName === avsdf.value\"/>\n                <label for=\"avsdf\">Circular</label>\n          </span>\n        </li>\n        <li>\n          <span class=\"margin-left-small\">\n          <input #cise type=\"radio\" name=\"layout\" (change)=\"onChangeLayout($event, cise.value)\" value=\"cise\"\n                 id=\"cise\" [checked]=\"view.layoutName === cise.value\" [disabled]=\"groupby.checked\"/>\n                <label for=\"cise\">Bubbles</label>\n          </span>\n        </li>\n      </div>\n\n      <h5>Edges</h5>\n      <div class=\"margin-bottom-large\" style=\"background-color: #fbfbfb\">\n        <li>\n          <span class=\"margin-left-small\">\n          <input #expand type=\"checkbox\" (change)=\"onChangeExpand(expand.checked, affectedByMutationCb)\"\n                 [checked]=\"view.expanded\" id=\"expand\"/>\n            <label for=\"expand\">Expand</label>\n          </span>\n        </li>\n        <li>\n          <span class=\"margin-left-small tool-tip\">\n            <input #affectedByMutationCb type=\"checkbox\" id=\"affectedByMutationCb\"\n                   (change)=\"onChangeAffectedByMutation(affectedByMutationCb.checked, expand)\"\n                   [checked]=\"view.affectedByMutation\" [disabled]=\"!hasMutation\"/>\n            <label for=\"affectedByMutationCb\" [ngClass]=\"{'disabled':!hasMutation}\">Affected By Mutation</label>\n            <span class=\"tool-tip-text\" *ngIf=\"!hasMutation\">There is no mutation in this network</span>\n          </span>\n        </li>\n      </div>\n\n      <h5>Group By</h5>\n      <div class=\"margin-bottom-large\" style=\"background-color: #fbfbfb\">\n        <li>\n          <span class=\"margin-left-small\">\n          <input #groupby type=\"checkbox\" (change)=\"onChangeGroupBy(groupby.checked)\"\n                 [checked]=\"view.groupBySpecies\" id=\"group-by\" [disabled]=\"cise.checked\"/>\n            <label for=\"group-by\">Species</label>\n          </span>\n        </li>\n      </div>\n    </ul>\n  </div>\n\n  <div class=\"columns medium-12 large-8\" id=\"viewer-column\">\n    <h4 class=\"underline margin-bottom-large\">Interaction Network</h4>\n    <div id=\"graph-top-panel\">\n      <div id=\"suggestions_div\">\n        <div class=\"input-group margin-bottom-none\">\n          <input id=\"nodeL\" #nodeL class=\"input-group-field\" type=\"text\" (keydown.enter)=\"onClickSearch(nodeL.value)\"\n                 placeholder=\"Interactor Name\"/>\n          <div class=\"input-group-button\">\n            <input id=\"network-search-button\" type=\"button\" name=\"submit\" value=\"1\" (click)=\"onClickSearch(nodeL.value)\"\n                   class=\"button icon icon-functional\">\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div id=\"for-canvas-graph\"></div>\n  </div>\n\n  <div class=\"columns small-12 medium-6 large-2\" id=\"legend-column\" *ngIf=\"legend\">\n    <ip-interactions-legend [legend]=\"legend\" [expanded]=\"view.expanded\"\n                            [mutation]=\"view.affectedByMutation\"></ip-interactions-legend>\n  </div>\n</div>\n\n<ng-template #error>\n\n  <div [ngSwitch]=\"view.error.status\" class=\"row expanded margin-top-large margin-bottom-large\" id=\"no-network-viewer\">\n    <div class=\"alert-panel\" *ngSwitchCase=\"403\">\n      <h3><i class=\"icon icon-common icon-exclamation-triangle\"></i> Too many results</h3>\n      There are more than <b>1500 interactions</b> in your results, too many for our network\n      viewer display, sorry.<br>\n      To solve this problem, you can:\n      <ul>\n        <li>Use the filters above</li>\n        <li>Make your search more specific</li>\n        <li>Use <a href=\"https://apps.cytoscape.org/apps/intactapp\">IntAct App</a> on <a href=\"https://cytoscape.org/\">Cytoscape</a>\n          to visualise without size restrictions\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"alert-panel\" *ngSwitchDefault>\n      <h3><i class=\"icon icon-common icon-exclamation-triangle\"></i> Error {{view.error.status}}\n        : {{view.error.statusText}}</h3>\n      <p><i>{{view.error.message}}</i></p>\n      An unexpected error occurred. Please help us fix this issue by describing the steps that led to this error <a\n      href=\"//www.ebi.ac.uk/support/intact\">in our feedback area</a>\n    </div>\n  </div>\n</ng-template>\n"
 
 /***/ }),
 
@@ -5857,6 +5891,7 @@ module.exports = "<div class=\"margin-top-large margin-bottom-large\" id=\"netwo
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_service_network_view_service__ = __webpack_require__("./src/app/interactions/shared/service/network-view.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_intact_network_viewer__ = __webpack_require__("./node_modules/intact-network-viewer/build/intact_network.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_intact_network_viewer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_intact_network_viewer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5872,8 +5907,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-let InteractionsViewerComponent = class InteractionsViewerComponent {
+
+let InteractionsViewerComponent = class InteractionsViewerComponent extends __WEBPACK_IMPORTED_MODULE_6__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(route, router, networkSearchService, view) {
+        super();
         this.route = route;
         this.router = router;
         this.networkSearchService = networkSearchService;
@@ -5886,7 +5923,7 @@ let InteractionsViewerComponent = class InteractionsViewerComponent {
         setTimeout(() => {
             $('ip-interactions-viewer').foundation();
             this.view.viewer = new __WEBPACK_IMPORTED_MODULE_5_intact_network_viewer__["GraphPort"]('for-canvas-graph', 'nodeL');
-            this.route.queryParamMap.subscribe((paramMap) => {
+            this.subscribe(this.route.queryParamMap, (paramMap) => {
                 this.view.fromParams(paramMap);
                 if (this.view.mustQuery) {
                     this.requestIntactNetworkDetails();
@@ -5896,7 +5933,7 @@ let InteractionsViewerComponent = class InteractionsViewerComponent {
         });
     }
     requestIntactNetworkDetails() {
-        this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies).subscribe(json => {
+        this.subscribe(this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies), json => {
             this.interactionsJSON = json;
             if (json.legend) {
                 this.legend = json.legend;
@@ -5905,6 +5942,7 @@ let InteractionsViewerComponent = class InteractionsViewerComponent {
                     this.view.setAffectedByMutation(false, false);
                 }
             }
+            this.view.error = null;
             if (json.data.length > 0) {
                 this.view.viewer.initializeWithData(this.interactionsJSON, this.view.expanded, this.view.affectedByMutation, this.view.layoutName);
                 this.view.visible = true;
@@ -5913,8 +5951,9 @@ let InteractionsViewerComponent = class InteractionsViewerComponent {
                 this.view.visible = false;
                 __WEBPACK_IMPORTED_MODULE_3__layout_loading_indicators_progress_bar_progress_bar_component__["a" /* ProgressBarComponent */].hideWithoutDelay();
             }
-        }, () => {
+        }, (e) => {
             this.view.visible = false;
+            this.view.error = e;
             __WEBPACK_IMPORTED_MODULE_3__layout_loading_indicators_progress_bar_progress_bar_component__["a" /* ProgressBarComponent */].hideWithoutDelay();
         });
     }
@@ -5970,7 +6009,7 @@ InteractionsViewerComponent = __decorate([
         encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewEncapsulation */].None
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* Router */],
         __WEBPACK_IMPORTED_MODULE_1__shared_service_network_search_service__["a" /* NetworkSearchService */],
         __WEBPACK_IMPORTED_MODULE_4__shared_service_network_view_service__["a" /* NetworkViewService */]])
 ], InteractionsViewerComponent);
@@ -6390,7 +6429,7 @@ let FilterService = FilterService_1 = class FilterService {
         this._nbNonMutation = 0;
         this._nbExpansion = 0;
         this._nbNonExpansion = 0;
-        this.updatesSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
+        this.updatesSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["b" /* Subject */]();
         this.updates = this.updatesSubject.asObservable();
     }
     static updateDiscreteFilter(container, updatedValue) {
@@ -6402,11 +6441,17 @@ let FilterService = FilterService_1 = class FilterService {
         }
     }
     initFacets(facets) {
-        this._facets = facets;
+        this._facets = FilterService_1.filterFacets(facets);
         this.initSpeciesFilter();
         this.initMIScoreFilter(facets.intact_miscore);
         this.initMutationFilter(facets.affected_by_mutation_styled);
         this.initExpansionFilter(facets.expansion_method_s);
+    }
+    static filterFacets(facets) {
+        for (const facetName of Object.keys(facets)) {
+            facets[facetName] = facets[facetName].filter(facet => facet.value !== 'null');
+        }
+        return facets;
     }
     initSpeciesFilter() {
         this.intraSpeciesCounts = new Map(this.facets.combined_species.map(facet => [facet.value, facet.valueCount.intra]));
@@ -6856,7 +6901,7 @@ InteractionsSearchService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetworkSearchService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm2015/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm2015/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm2015/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_service_google_analytics_google_analytics_service__ = __webpack_require__("./src/app/shared/service/google-analytics/google-analytics.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__filter_service__ = __webpack_require__("./src/app/interactions/shared/service/filter.service.ts");
@@ -6892,13 +6937,13 @@ let NetworkSearchService = class NetworkSearchService {
             .catch(this.handleError);
     }
     handleError(err) {
-        this.reporter.reportError(err);
-        if (err.error instanceof Error) {
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].throw(err);
+        if (this.reporter) {
+            this.reporter.reportError(err);
         }
-        else {
+        if (!(err.error instanceof Error)) {
             console.error(err.message ? err.message : err.toString());
         }
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(err);
     }
 };
 NetworkSearchService = __decorate([
@@ -7017,7 +7062,8 @@ let NetworkViewService = class NetworkViewService {
         this._groupBySpecies = false;
         this._layoutName = 'fcose';
         this._mustQuery = true;
-        this.updatesSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
+        this._error = null;
+        this.updatesSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["b" /* Subject */]();
         this.updates = this.updatesSubject.asObservable();
     }
     fromParams(paramMap) {
@@ -7102,6 +7148,12 @@ let NetworkViewService = class NetworkViewService {
     set mustQuery(value) {
         this._mustQuery = value;
     }
+    get error() {
+        return this._error;
+    }
+    set error(value) {
+        this._error = value;
+    }
 };
 NetworkViewService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
@@ -7145,7 +7197,7 @@ let TableFactoryService = TableFactoryService_1 = class TableFactoryService {
             let html = '<div class="show-more-content">';
             let displayed = 0;
             for (let i = 0; i < data.length; i++) {
-                if (i === 2) {
+                if (displayed === 2) {
                     html += '<div class="to-hide" style="display: none">';
                 }
                 const render = renderer(data[i], i);
@@ -7155,7 +7207,10 @@ let TableFactoryService = TableFactoryService_1 = class TableFactoryService {
                 }
             }
             if (displayed > 2) {
-                html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${data.length - 2})</button>`;
+                html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${displayed - 2})</button>`;
+            }
+            else if (displayed === 2) {
+                html += '</div></div>';
             }
             else {
                 html += '</div>';
@@ -7909,6 +7964,7 @@ let LocalSearchComponent = class LocalSearchComponent {
     search(query, typeOfButton) {
         if (query) {
             this.searchService.search(query);
+            this.query.nativeElement.blur();
             if (typeOfButton === 'enter' || typeOfButton === 'button') {
                 this.searchService.title = query;
             }
@@ -7918,6 +7974,10 @@ let LocalSearchComponent = class LocalSearchComponent {
         return this.router.url.includes(route);
     }
 };
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* ViewChild */])('query'),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+], LocalSearchComponent.prototype, "query", void 0);
 LocalSearchComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'ip-local-search',
@@ -7925,7 +7985,7 @@ LocalSearchComponent = __decorate([
         styles: [__webpack_require__("./src/app/layout/header/local-search/local-search.component.css")]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_common__["f" /* Location */],
-        __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
+        __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */],
         __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
         __WEBPACK_IMPORTED_MODULE_3__home_dashboard_search_service_search_service__["a" /* SearchService */]])
 ], LocalSearchComponent);
@@ -7971,7 +8031,7 @@ LayoutModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_6__angular_router__["d" /* RouterModule */],
+            __WEBPACK_IMPORTED_MODULE_6__angular_router__["e" /* RouterModule */],
             __WEBPACK_IMPORTED_MODULE_8__angular_material_progress_bar__["a" /* MatProgressBarModule */]
         ],
         declarations: [
@@ -8494,8 +8554,8 @@ let DocumentationRoutingModule = class DocumentationRoutingModule {
 };
 DocumentationRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]],
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forChild(documentationRoutes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]],
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(documentationRoutes)],
     })
 ], DocumentationRoutingModule);
 
@@ -8988,8 +9048,8 @@ let DownloadRoutingModule = class DownloadRoutingModule {
 };
 DownloadRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]],
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forChild(downloadRoutes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]],
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(downloadRoutes)],
     })
 ], DownloadRoutingModule);
 
@@ -9062,7 +9122,7 @@ DownloadComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__download_routing_module__ = __webpack_require__("./src/app/navigation/download/download-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ftp_ftp_component__ = __webpack_require__("./src/app/navigation/download/ftp/ftp.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__datasets_datasets_component__ = __webpack_require__("./src/app/navigation/download/datasets/datasets.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_markdown_markdown_module__ = __webpack_require__("./src/app/navigation/download/shared/markdown/markdown.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__documentation_shared_markdown_markdown_module__ = __webpack_require__("./src/app/navigation/documentation/shared/markdown/markdown.module.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9083,7 +9143,7 @@ DownloadModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_3__download_routing_module__["a" /* DownloadRoutingModule */],
-            __WEBPACK_IMPORTED_MODULE_6__shared_markdown_markdown_module__["a" /* MarkdownModule */],
+            __WEBPACK_IMPORTED_MODULE_6__documentation_shared_markdown_markdown_module__["a" /* MarkdownModule */],
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_2__download_component__["a" /* DownloadComponent */],
@@ -9154,160 +9214,6 @@ FTPComponent = __decorate([
 
 /***/ }),
 
-/***/ "./src/app/navigation/download/shared/markdown/markdown.component.css":
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/navigation/download/shared/markdown/markdown.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div [innerHTML]=\"output\"></div>\n"
-
-/***/ }),
-
-/***/ "./src/app/navigation/download/shared/markdown/markdown.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MarkdownComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm2015/platform-browser.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_markdown_renderer_service__ = __webpack_require__("./src/app/navigation/download/shared/markdown/service/markdown-renderer.service.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-let MarkdownComponent = class MarkdownComponent {
-    constructor(md, sanitizer) {
-        this.md = md;
-        this.sanitizer = sanitizer;
-    }
-    ngOnInit() {
-        if (this.data) {
-            this.output = this.sanitizer.bypassSecurityTrustHtml(this.md.render(this.data));
-        }
-        else if (this.src) {
-            fetch(this.src)
-                .then(src => src.text())
-                .then(content => this.md.render(content.replace(/(..\/)?\.gitbook\/assets\//g, `assets/images/gitbook/`)))
-                .then(value => this.output = this.sanitizer.bypassSecurityTrustHtml(value));
-        }
-    }
-};
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
-], MarkdownComponent.prototype, "src", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
-], MarkdownComponent.prototype, "data", void 0);
-MarkdownComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'ip-markdown',
-        template: __webpack_require__("./src/app/navigation/download/shared/markdown/markdown.component.html"),
-        styles: [__webpack_require__("./src/app/navigation/download/shared/markdown/markdown.component.css")]
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__service_markdown_renderer_service__["a" /* MarkdownRendererService */], __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]])
-], MarkdownComponent);
-
-
-
-/***/ }),
-
-/***/ "./src/app/navigation/download/shared/markdown/markdown.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MarkdownModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm2015/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__markdown_component__ = __webpack_require__("./src/app/navigation/download/shared/markdown/markdown.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__service_markdown_renderer_service__ = __webpack_require__("./src/app/navigation/download/shared/markdown/service/markdown-renderer.service.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-let MarkdownModule = class MarkdownModule {
-};
-MarkdownModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */]
-        ],
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__markdown_component__["a" /* MarkdownComponent */]
-        ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_2__markdown_component__["a" /* MarkdownComponent */]
-        ],
-        providers: [
-            __WEBPACK_IMPORTED_MODULE_3__service_markdown_renderer_service__["a" /* MarkdownRendererService */]
-        ]
-    })
-], MarkdownModule);
-
-
-
-/***/ }),
-
-/***/ "./src/app/navigation/download/shared/markdown/service/markdown-renderer.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MarkdownRendererService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_markdown_it__ = __webpack_require__("./node_modules/markdown-it/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_markdown_it___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_markdown_it__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex__ = __webpack_require__("./node_modules/@iktakahiro/markdown-it-katex/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-let MarkdownRendererService = class MarkdownRendererService {
-    constructor() {
-        this.md = new __WEBPACK_IMPORTED_MODULE_1_markdown_it__();
-        this.md.use(__WEBPACK_IMPORTED_MODULE_2__iktakahiro_markdown_it_katex__);
-    }
-    render(markdown) {
-        return this.md.render(markdown);
-    }
-};
-MarkdownRendererService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
-], MarkdownRendererService);
-
-
-
-/***/ }),
-
 /***/ "./src/app/navigation/redirect/redirect.component.html":
 /***/ (function(module, exports) {
 
@@ -9322,6 +9228,7 @@ module.exports = "<h1>Redirection</h1>\n\nYou are being redirected to <a [href]=
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RedirectComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm2015/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm2015/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_utils_observer_utils__ = __webpack_require__("./src/app/shared/utils/observer-utils.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9333,18 +9240,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-let RedirectComponent = class RedirectComponent {
+
+let RedirectComponent = class RedirectComponent extends __WEBPACK_IMPORTED_MODULE_2__shared_utils_observer_utils__["a" /* SubscriberComponent */] {
     constructor(route) {
+        super();
         this.route = route;
+        this.subscriptions = [];
     }
     ngOnInit() {
-        this.route.data.subscribe(data => {
+        this.subscribe(this.route.data, (data) => {
             this.href = data.externalUrl;
-            this.route.params.subscribe((params) => {
+            this.subscribe(this.route.params, (params) => {
                 for (const param of Object.keys(params)) {
                     this.href = this.href.replace(':' + param, params[param]);
                 }
-                this.route.queryParams.subscribe(queryParams => {
+                this.subscribe(this.route.queryParams, (queryParams) => {
                     const paramList = Object.keys(queryParams);
                     if (paramList.length > 0) {
                         this.href += `?${paramList.map(param => `${param}=${queryParams[param]}`).join('&')}`;
@@ -10035,10 +9945,10 @@ var Label;
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = groupBy;
-function groupBy(array, groupBy) {
+function groupBy(array, classifier) {
     return Array.from(array.reduce((groups, value) => {
-        let group = groupBy(value);
-        let key = JSON.stringify(group);
+        const group = classifier(value);
+        const key = JSON.stringify(group);
         if (groups.has(key)) {
             groups.get(key).elements.push(value);
         }
@@ -10072,6 +9982,29 @@ class FoundationUtils {
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FoundationUtils;
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/utils/observer-utils.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_util_toSubscriber__ = __webpack_require__("./node_modules/rxjs/_esm2015/util/toSubscriber.js");
+
+class SubscriberComponent {
+    constructor() {
+        this.subscriptions = [];
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    }
+    subscribe(observable, observerOrNext, error, complete) {
+        this.subscriptions.push(observable.subscribe(Object(__WEBPACK_IMPORTED_MODULE_0_rxjs_util_toSubscriber__["a" /* toSubscriber */])(observerOrNext, error, complete)));
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = SubscriberComponent;
 
 
 

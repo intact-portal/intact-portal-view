@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./news.component.css', '../../app.component.css']
 })
 export class NewsComponent implements OnInit {
-  version = '1.0.0';
+  version = '1.0.1';
   environmentName = 'dev';
   releaseDate = 'September 2021';
   publications = '22496';

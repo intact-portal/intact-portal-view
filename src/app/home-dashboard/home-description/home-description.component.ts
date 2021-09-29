@@ -18,7 +18,7 @@ export class HomeDescriptionComponent implements OnInit {
   }
 
   onSearch() {
-    this.search.search('"Coronavirus -"');
+    this.search.search('"Coronavirus -"', 'coronavirus dataset');
   }
 
   miXml25Url() {

@@ -38,7 +38,7 @@ export class FeaturedDatasetComponent extends SubscriberComponent implements OnI
   }
 
   onIntActSearch() {
-    this.search.search(this.firstPubmed.id);
+    this.search.search(this.firstPubmed.id, `publication: ${this.firstPubmed.author} (${this.firstPubmed.id})`);
   }
 
   ngAfterViewInit(): void {

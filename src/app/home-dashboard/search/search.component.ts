@@ -21,11 +21,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   search(query: string, typeOfButton: string) {
     if (query) {
-      this.searchService.search(query);
-
       if (typeOfButton === 'enter' || typeOfButton === 'button' || typeOfButton === 'example') {
         this.searchService.title = query;
       }
+      this.searchService.search(query);
     }
   }
 }

@@ -1574,7 +1574,7 @@ let FeaturedDatasetComponent = class FeaturedDatasetComponent extends __WEBPACK_
         });
     }
     onIntActSearch() {
-        this.search.search(this.firstPubmed.id);
+        this.search.search(this.firstPubmed.id, `publication: ${this.firstPubmed.author} (${this.firstPubmed.id})`);
     }
     ngAfterViewInit() {
     }
@@ -1920,7 +1920,7 @@ let HomeDescriptionComponent = class HomeDescriptionComponent {
     ngOnInit() {
     }
     onSearch() {
-        this.search.search('"Coronavirus -"');
+        this.search.search('"Coronavirus -"', 'coronavirus dataset');
     }
     miXml25Url() {
         return `${__WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].intact_psi25_url}/datasets/Coronavirus.zip`;
@@ -2089,10 +2089,10 @@ let SearchComponent = class SearchComponent {
     }
     search(query, typeOfButton) {
         if (query) {
-            this.searchService.search(query);
             if (typeOfButton === 'enter' || typeOfButton === 'button' || typeOfButton === 'example') {
                 this.searchService.title = query;
             }
+            this.searchService.search(query);
         }
     }
 };
@@ -2154,9 +2154,12 @@ let SearchService = SearchService_1 = class SearchService {
         }
         return isMIQL;
     }
-    search(query) {
+    search(query, title) {
         this._query = query;
         this._isBatchSearch = false;
+        if (title) {
+            this._title = title;
+        }
         if (!this.isAdvancedQuery(query)) {
             this.router.navigate(['search'], { queryParams: { query } });
         }

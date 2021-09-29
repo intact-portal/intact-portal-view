@@ -32,9 +32,12 @@ export class SearchService {
     return isMIQL;
   }
 
-  search(query: string) {
+  search(query: string, title?: string) {
     this._query = query;
     this._isBatchSearch = false;
+    if (title) {
+      this._title = title;
+    }
     if (!this.isAdvancedQuery(query)) {
       this.router.navigate(['search'], {queryParams: {query}});
     }

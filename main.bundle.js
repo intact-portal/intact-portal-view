@@ -1889,7 +1889,7 @@ module.exports = ".icon-species {\n  color: white;\n  background-color: #68297c;
 /***/ "./src/app/home-dashboard/home-description/home-description.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>IntAct Molecular Interaction Database</h1>\n<p>\n  IntAct provides a free, open source database system and analysis tools for molecular interaction data.\n  All interactions are derived from literature curation or direct user submissions.\n  The IntAct Team also produces the <a href=\"https://www.ebi.ac.uk/complexportal\" target=\"_blank\">Complex Portal</a>.\n</p>\n\n<div class=\"row expanded alert-panel\">\n\n  <h3><i class=\"icon icon-species padding-medium\" data-icon=\"&#x76;\"></i> COVID19-related interactions at IntAct's\n    Coronavirus dataset</h3>\n  Dataset of molecular interactions extracted from publications involving viral proteins from the Coronaviridae family\n  and human proteins, along with a certain proportion of other model organisms. The data features mostly protein-protein\n  and some RNA-protein interactions and covers SARS-CoV2 and SARS-CoV primarily, with some interactions from other\n  members of Coronaviridae as well. Interactions between human proteins relevant for SARS-CoV2 infection have also been\n  included.\n\n  <div class=\"float-right margin-top-medium\">\n    <a class=\"button lighter no-margin\" (click)=\"onSearch()\">Browse in IntAct</a>\n\n    <a class=\"button lighter no-margin\" download target=\"_blank\"\n       [href]=\"miXml25Url()\">miXML<sub>2.5</sub></a>\n    <a class=\"button lighter no-margin\" download target=\"_blank\"\n       [href]=\"miXml30Url()\">miXML<sub>3.0</sub></a>\n  </div>\n</div>\n"
+module.exports = "<h1>IntAct Molecular Interaction Database</h1>\n<p>\n  IntAct provides a free, open source database system and analysis tools for molecular interaction data.\n  All interactions are derived from literature curation or direct user submissions.\n  The IntAct Team also produces the <a href=\"https://www.ebi.ac.uk/complexportal\" target=\"_blank\">Complex Portal</a>.\n</p>\n<p>\n  You are currently visiting the new website of IntAct. The former version can be found <a href=\"{{formerURL}}\">here</a>\n  and will be supported until the end of 2021.\n</p>\n\n<div class=\"row expanded alert-panel\" style=\"max-width: 100em\">\n\n  <h3><i class=\"icon icon-species padding-medium\" data-icon=\"&#x76;\"></i> COVID19-related interactions at IntAct's\n    Coronavirus dataset</h3>\n  Dataset of molecular interactions extracted from publications involving viral proteins from the Coronaviridae family\n  and human proteins, along with a certain proportion of other model organisms. The data features mostly protein-protein\n  and some RNA-protein interactions and covers SARS-CoV2 and SARS-CoV primarily, with some interactions from other\n  members of Coronaviridae as well. Interactions between human proteins relevant for SARS-CoV2 infection have also been\n  included.\n\n  <div class=\"float-right margin-top-medium\">\n    <a class=\"button lighter no-margin\" (click)=\"onSearch()\">Browse in IntAct</a>\n\n    <a class=\"button lighter no-margin\" download target=\"_blank\"\n       [href]=\"miXml25Url()\">miXML<sub>2.5</sub></a>\n    <a class=\"button lighter no-margin\" download target=\"_blank\"\n       [href]=\"miXml30Url()\">miXML<sub>3.0</sub></a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1916,6 +1916,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 let HomeDescriptionComponent = class HomeDescriptionComponent {
     constructor(search) {
         this.search = search;
+        this.formerURL = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].former_intact_url;
     }
     ngOnInit() {
     }
@@ -9994,8 +9995,6 @@ class FoundationUtils {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_util_toSubscriber__ = __webpack_require__("./node_modules/rxjs/_esm2015/util/toSubscriber.js");
-
 class SubscriberComponent {
     constructor() {
         this.subscriptions = [];
@@ -10004,7 +10003,16 @@ class SubscriberComponent {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
     subscribe(observable, observerOrNext, error, complete) {
-        this.subscriptions.push(observable.subscribe(Object(__WEBPACK_IMPORTED_MODULE_0_rxjs_util_toSubscriber__["a" /* toSubscriber */])(observerOrNext, error, complete)));
+        if (SubscriberComponent.isObserver(observerOrNext)) {
+            this.subscriptions.push(observable.subscribe(observerOrNext));
+        }
+        else {
+            this.subscriptions.push(observable.subscribe(observerOrNext.bind(this), error ? error.bind(this) : null, complete ? complete.bind(this) : null));
+        }
+    }
+    static isObserver(toBeDetermined) {
+        const asObserver = toBeDetermined;
+        return !!(asObserver.next || asObserver.error || asObserver.complete || asObserver.closed);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = SubscriberComponent;

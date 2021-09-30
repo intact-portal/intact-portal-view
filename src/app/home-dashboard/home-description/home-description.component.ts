@@ -10,6 +10,7 @@ import {SearchService} from '../search/service/search.service';
 })
 export class HomeDescriptionComponent implements OnInit {
 
+  readonly formerURL = environment.former_intact_url;
 
   constructor(private search: SearchService) {
   }

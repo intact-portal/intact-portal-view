@@ -47,4 +47,8 @@ export class AppComponent extends SubscriberComponent implements OnInit, AfterVi
   ngAfterViewInit(): void {
     ga('create', environment.analytics_id, 'none');
   }
+
+  scrollTo(topScrollAnchor: HTMLDivElement) {
+    topScrollAnchor.scrollIntoView(true)
+  }
 }

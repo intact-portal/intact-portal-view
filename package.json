@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "publish-gh-pages": "rm -rf dist; ng build --output-path=dist --env=dev --build-optimizer=false --base-href \"https://intact-portal.github.io/intact-portal-view/\"; sudo ngh",
+    "publish-gh-pages": "rm -rf dist; ng build --prod --output-path=dist --env=dev --base-href \"https://intact-portal.github.io/intact-portal-view/\"; sudo ngh",
     "proxy": "ng serve --env=local --base-href \"/intact/local/\" --proxy-config proxy.conf.json",
     "dev": "ng serve --env=dev --base-href \"/intact/dev/\"",
     "build-test": "ng serve --env=test --build-optimizer=false --base-href \"/intact/beta/\"",

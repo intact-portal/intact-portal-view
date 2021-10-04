@@ -45,3 +45,7 @@ tr:nth-child(even) {
 .accordion-content {
   padding: 0;
 }
+
+.mat-raised-button {
+  margin-right: 5px;
+}

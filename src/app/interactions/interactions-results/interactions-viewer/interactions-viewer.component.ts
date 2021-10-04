@@ -40,28 +40,32 @@ export class InteractionsViewerComponent extends SubscriberComponent implements 
   }
 
   private requestIntactNetworkDetails() {
-    this.subscribe(this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies), json => {
-      this.interactionsJSON = json;
-      if (json.legend) {
-        this.legend = json.legend;
-        this._hasMutation = json.legend.edge_legend.mutation_color.true !== undefined;
-        if (!this._hasMutation) {
-          this.view.setAffectedByMutation(false, false);
+    this.view.visible = true;
+    this.subscribe(this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies),
+      {
+        next: (json) => {
+          this.interactionsJSON = json;
+          if (json.legend) {
+            this.legend = json.legend;
+            this._hasMutation = json.legend.edge_legend.mutation_color.true !== undefined;
+            if (!this._hasMutation) {
+              this.view.setAffectedByMutation(false, false);
+            }
+          }
+          this.view.error = null;
+          if (json.data.length > 0) {
+            this.view.viewer.initializeWithData(this.interactionsJSON, this.view.expanded, this.view.affectedByMutation, this.view.layoutName);
+          } else {
+            this.view.visible = false;
+            ProgressBarComponent.hideWithoutDelay();
+          }
+        },
+        error: (e) => {
+          this.view.visible = false;
+          this.view.error = e;
+          ProgressBarComponent.hideWithoutDelay();
         }
-      }
-      this.view.error = null;
-      if (json.data.length > 0) {
-        this.view.viewer.initializeWithData(this.interactionsJSON, this.view.expanded, this.view.affectedByMutation, this.view.layoutName);
-        this.view.visible = true;
-      } else {
-        this.view.visible = false;
-        ProgressBarComponent.hideWithoutDelay();
-      }
-    }, (e) => {
-      this.view.visible = false;
-      this.view.error = e;
-      ProgressBarComponent.hideWithoutDelay();
-    })
+      });
   }
 
   onChangeLayout(event: Event, value) {

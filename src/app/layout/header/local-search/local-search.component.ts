@@ -17,7 +17,7 @@ export class LocalSearchComponent implements OnInit, AfterViewInit {
 
   }
 
-  @ViewChild('query')
+  @ViewChild('query', { static: true })
   query: ElementRef;
 
   ngOnInit() {

@@ -1,12 +1,11 @@
-import {TestBed, async} from '@angular/core/testing';
+import {async, TestBed} from '@angular/core/testing';
 
 import {AppComponent} from './app.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {ActivatedRoute, Router, RouterEvent} from "@angular/router";
-import {ActivatedRouteStub} from "../testing/activated-route-stub";
-import {ReplaySubject} from "rxjs";
-import {Angulartics2GoogleAnalytics} from "angulartics2/ga";
-import {Angulartics2} from "angulartics2";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {ActivatedRoute, Router, RouterEvent} from '@angular/router';
+import {ActivatedRouteStub} from '../testing/activated-route-stub';
+import {ReplaySubject} from 'rxjs';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 const activatedRoute = new ActivatedRouteStub();
 
@@ -29,7 +28,7 @@ describe('AppComponent', () => {
       providers: [
         {provide: Router, useValue: routerMock},
         {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: Angulartics2GoogleAnalytics, useValue: analytics}
+        {provide: GoogleAnalyticsService, useValue: analytics}
       ]
     }).compileComponents();
   }));

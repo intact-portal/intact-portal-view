@@ -11,10 +11,10 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   private _isTabInteractionActive = false;
   private _isTabInteractorActive = false;
 
-  @ViewChild(InteractionsTableComponent)
+  @ViewChild(InteractionsTableComponent, { static: true })
   interactionsTable: InteractionsTableComponent;
 
-  @ViewChild(InteractorsTableComponent)
+  @ViewChild(InteractorsTableComponent, { static: true })
   interactorsTable: InteractorsTableComponent;
 
   constructor() {

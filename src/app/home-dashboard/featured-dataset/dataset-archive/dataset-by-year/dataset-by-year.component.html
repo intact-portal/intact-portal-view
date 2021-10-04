@@ -23,12 +23,14 @@
               <td><b class="tool-tip">{{pubmed.author}} ({{pubmed.year}})<span class="tool-tip-text">Article only available as a preprint</span></b></td>
             </ng-template>
             <td style="text-align: right">
-              <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed.year || dataset.year, pubmed.id)">
-                <i class="icon icon-common icon-download"></i> PSI-MI XML 2.5
-              </button>
-              <button mat-raised-button color="accent" (click)="goPSIMITABFTP(pubmed.year || dataset.year, pubmed.id)">
-                <i class="icon icon-common icon-download"></i> PSI-MI TAB 2.7
-              </button>
+              <div>
+                <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed.year || dataset.year, pubmed.id)">
+                  <i class="icon icon-common icon-download"></i> PSI-MI XML 2.5
+                </button>
+                <button mat-raised-button color="accent" (click)="goPSIMITABFTP(pubmed.year || dataset.year, pubmed.id)">
+                  <i class="icon icon-common icon-download"></i> PSI-MI TAB 2.7
+                </button>
+              </div>
             </td>
           </tr>
           </tbody>

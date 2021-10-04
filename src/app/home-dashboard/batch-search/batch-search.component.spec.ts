@@ -1,13 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {BatchSearchComponent} from './batch-search.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {SearchService} from "../search/service/search.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ActivatedRouteStub} from "../../../testing/activated-route-stub";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {Angulartics2GoogleAnalytics} from "angulartics2/ga";
-import {GoogleAnalyticsService} from "../../shared/service/google-analytics/google-analytics.service";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {SearchService} from '../search/service/search.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub} from '../../../testing/activated-route-stub';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 describe('BatchSearchComponent', () => {
   let component: BatchSearchComponent;

@@ -59,35 +59,37 @@ export class DetailsViewerComponent extends SubscriberComponent implements After
   private requestInteractionViewerDetails() {
     this.subscribe(
       this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
-      , (data) => {
-        this.interactionData = data;
-        ProgressBarComponent.hide();
+      , {
+        next: (data) => {
+          this.interactionData = data;
+          ProgressBarComponent.hide();
 
-        if (this.interactionData !== undefined) {
-          viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
-          viewer.readMIJSON(this.interactionData, true);
-          viewer.autoLayout();
-          this.expandAll();
-          this.participantsService.initParticipants(viewer.getExpandedParticipants());
-          this.updateColorLegend(viewer.getColorKeyJson());
-          this.collectTypes();
-          viewer.addExpandListener((expandedParticipants: Participant[]) => {
-            this.notifyViewerOfUpdates = false;
-            this.participantsService.updateProteinsStatus(expandedParticipants)
-            this.notifyViewerOfUpdates = true;
-          })
+          if (this.interactionData !== undefined) {
+            viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
+            viewer.readMIJSON(this.interactionData, true);
+            viewer.autoLayout();
+            this.expandAll();
+            this.participantsService.initParticipants(viewer.getExpandedParticipants());
+            this.updateColorLegend(viewer.getColorKeyJson());
+            this.collectTypes();
+            viewer.addExpandListener((expandedParticipants: Participant[]) => {
+              this.notifyViewerOfUpdates = false;
+              this.participantsService.updateProteinsStatus(expandedParticipants)
+              this.notifyViewerOfUpdates = true;
+            })
 
-          this.subscribe(this.participantsService.proteinSetsUpdated, (update) => {
-            if (this.notifyViewerOfUpdates) {
-              viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
-            }
-          })
+            this.subscribe(this.participantsService.proteinSetsUpdated, (update) => {
+              if (this.notifyViewerOfUpdates) {
+                viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
+              }
+            })
+          }
         }
-      },
-      (err: HttpErrorResponse) => {
-        this.error.emit(err);
-      }
-    );
+        ,
+        error: (err: HttpErrorResponse) => {
+          this.error.emit(err);
+        }
+      });
   }
 
   expandAll(): void {

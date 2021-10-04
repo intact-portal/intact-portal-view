@@ -1,6 +1,4 @@
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
-import {PartialObserver} from 'rxjs/Observer';
+import {Subscription, Observable, PartialObserver} from 'rxjs';
 import {OnDestroy} from '@angular/core';
 
 
@@ -11,14 +9,11 @@ export class SubscriberComponent implements OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  subscribe<T>(observable: Observable<T>,
-               observerOrNext?: PartialObserver<T> | ((value: T) => void),
-               error?: (error: any) => void,
-               complete?: () => void) {
+  subscribe<T>(observable: Observable<T>, observerOrNext?: PartialObserver<T> | ((value: T) => void)) {
     if (SubscriberComponent.isObserver(observerOrNext)) {
       this.subscriptions.push(observable.subscribe(observerOrNext));
     } else {
-      this.subscriptions.push(observable.subscribe(observerOrNext.bind(this), error ? error.bind(this) : null, complete ? complete.bind(this) : null));
+      this.subscriptions.push(observable.subscribe(observerOrNext.bind(this)));
     }
   }
 

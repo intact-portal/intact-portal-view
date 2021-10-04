@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {ProgressBarComponent} from './layout/loading-indicators/progress-bar/progress-bar.component';
-import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
 import {environment} from '../environments/environment';
 import {APP_BASE_HREF} from '@angular/common';
 import {SubscriberComponent} from './shared/utils/observer-utils';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 
 @Component({
@@ -12,7 +12,7 @@ import {SubscriberComponent} from './shared/utils/observer-utils';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent extends SubscriberComponent implements OnInit, AfterViewInit {
+export class AppComponent extends SubscriberComponent implements OnInit {
   version = '0.0.1';
   showCompactHeader = false;
   showFooter = true;
@@ -27,7 +27,6 @@ export class AppComponent extends SubscriberComponent implements OnInit, AfterVi
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private analytics: Angulartics2GoogleAnalytics,
     @Inject(APP_BASE_HREF) private baseHref: string) {
     super()
   }
@@ -42,10 +41,6 @@ export class AppComponent extends SubscriberComponent implements OnInit, AfterVi
         ProgressBarComponent.display();
       }
     })
-  }
-
-  ngAfterViewInit(): void {
-    ga('create', environment.analytics_id, 'none');
   }
 
   scrollTo(topScrollAnchor: HTMLDivElement) {

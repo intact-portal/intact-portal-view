@@ -44,10 +44,10 @@ export class InteractionsResultsComponent extends SubscriberComponent implements
   }
 
   private requestInteractionsResults() {
+    this._hasResults = true;
     this.subscribe(this.interactionsSearchService.queryFacets(), (interactionsSearch) => {
       this.interactionsSearch = interactionsSearch;
       if (this.interactionsSearch.totalElements !== 0) {
-        this._hasResults = true;
         this.filters.initFacets(this.interactionsSearch.facetResultPage);
       } else {
         this._hasResults = false;

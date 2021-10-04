@@ -724,6 +724,9 @@ table.dataTable tr, th {
   border: 1px solid #ffffff00 !important;
 }
 
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: none !important;
+}
 /************** TABLES ELEMENTS **************/
 
 .shadow-left {

@@ -233,7 +233,7 @@ a.intact-background,
 }
 
 .button-group:not(.rounded) > .button:not(:last-child) {
-  margin-right: 4px;
+  margin-right: 1px;
 }
 
 .button-group.rounded > .button:first-child {
@@ -725,6 +725,10 @@ table.dataTable tr, th {
 }
 
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: none !important;
+}
+
+table.dataTable thead th, table.dataTable thead td {
   border-bottom: none !important;
 }
 /************** TABLES ELEMENTS **************/

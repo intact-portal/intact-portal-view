@@ -355,7 +355,7 @@ export class TableFactoryService {
     const filterBar = $('#filters-bar');
     $('div.dataTables_scrollHead')
       .css('position', 'sticky')
-      .css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.outerHeight(true) - 1 + 'px' : '0')
+      .css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.outerHeight(true) + 1 + 'px' : '0')
       .css('box-shadow', '0 6px 7px -2px #0000005c')
       .css('z-index', '2');
   }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ThemePalette} from "@angular/material/core";
+import {ThemePalette} from '@angular/material/core';
 
 @Component({
   selector: 'ip-progress-bar',
@@ -44,11 +44,11 @@ export class ProgressBarComponent implements OnInit {
     this._color = value;
   }
 
-  get mode(): "determinate" | "indeterminate" | "buffer" | "query" {
+  get mode(): 'determinate' | 'indeterminate' | 'buffer' | 'query' {
     return this._mode;
   }
 
-  set mode(value: "determinate" | "indeterminate" | "buffer" | "query") {
+  set mode(value: 'determinate' | 'indeterminate' | 'buffer' | 'query') {
     this._mode = value;
   }
 }

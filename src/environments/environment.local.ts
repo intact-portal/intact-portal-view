@@ -13,7 +13,7 @@ const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intac
 export const environment = {
   production: false,
   evn: 'local',
-  analytics_id: 'UA-XXXXXX-XX',
+  analytics_id: 'UA-672146-15',
   ebi_url: EBI_URL,
   former_intact_url: FORMER_INTACT_URL,
   context_path: '',

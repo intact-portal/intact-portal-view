@@ -27,24 +27,26 @@ import {ProgressSpinnerModule} from '../layout/loading-indicators/progress-spinn
 import {ComponentsModule} from '../shared/components/components.module';
 import {MIQLPipe} from './advanced-search/MIQL.pipe';
 import {ColorMIQLPipe} from './advanced-search/colorMIQL.pipe';
+import {MarkdownModule} from '../navigation/documentation/shared/markdown/markdown.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    QueryBuilderModule,
-    HomeDashboardRoutingModule,
-    FileUploadModule,
-    ArchwizardModule,
-    MatProgressSpinnerModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatCardModule,
-    ProgressSpinnerModule,
-    ComponentsModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        QueryBuilderModule,
+        HomeDashboardRoutingModule,
+        FileUploadModule,
+        ArchwizardModule,
+        MatProgressSpinnerModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatButtonModule,
+        MatCardModule,
+        ProgressSpinnerModule,
+        ComponentsModule,
+        MarkdownModule
+    ],
   exports: [
     KeyvaluemapPipe
   ],

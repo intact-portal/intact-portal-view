@@ -7,16 +7,17 @@ import {viewer} from './details-viewer/details-viewer.component';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {Format} from '../shared/model/download/format.model';
 import {environment} from '../../../environments/environment';
-import {SubscriberComponent} from '../../shared/utils/observer-utils';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 const baseURL = environment.intact_portal_ws;
 
+@UntilDestroy()
 @Component({
   selector: 'ip-details-dashboard',
   templateUrl: './details-dashboard.component.html',
   styleUrls: ['./details-dashboard.component.css']
 })
-export class DetailsDashboardComponent extends SubscriberComponent implements OnInit, AfterViewInit {
+export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   private _interactionAc: string;
   @Input() featureSelected: string;
   private _error: HttpErrorResponse;
@@ -25,7 +26,6 @@ export class DetailsDashboardComponent extends SubscriberComponent implements On
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) {
-    super()
   }
 
   downloadURL(format: Format): string {
@@ -33,10 +33,12 @@ export class DetailsDashboardComponent extends SubscriberComponent implements On
   }
 
   ngOnInit() {
-    this.subscribe(this.route.params, (params) => {
-      this.interactionAc = params['id'];
-      this.titleService.setTitle('Interaction - ' + this.interactionAc);
-    });
+    this.route.params
+      .pipe(untilDestroyed(this))
+      .subscribe((params) => {
+        this.interactionAc = params['id'];
+        this.titleService.setTitle('Interaction - ' + this.interactionAc);
+      });
   }
 
   ngAfterViewInit(): void {

@@ -5,15 +5,16 @@ import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-
 import {NetworkViewService} from '../../shared/service/network-view.service';
 import {NetworkLegend} from '../../shared/model/interaction-legend/network-legend';
 import {GraphPort} from 'intact-network-viewer';
-import {SubscriberComponent} from '../../../shared/utils/observer-utils';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'ip-interactions-viewer',
   templateUrl: './interactions-viewer.component.html',
   styleUrls: ['./interactions-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class InteractionsViewerComponent extends SubscriberComponent implements AfterViewInit {
+export class InteractionsViewerComponent implements AfterViewInit {
   private _hasMutation: boolean = false;
   private _interactionsJSON: any = {};
   legend: NetworkLegend = undefined;
@@ -22,27 +23,29 @@ export class InteractionsViewerComponent extends SubscriberComponent implements 
               private router: Router,
               private networkSearchService: NetworkSearchService,
               public view: NetworkViewService) {
-    super();
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       $('ip-interactions-viewer').foundation();
       this.view.viewer = new GraphPort('for-canvas-graph', 'nodeL');
-      this.subscribe(this.route.queryParamMap, (paramMap: ParamMap) => {
-        this.view.fromParams(paramMap);
-        if (this.view.mustQuery) {
-          this.requestIntactNetworkDetails()
-        }
-        this.view.mustQuery = true;
-      });
+      this.route.queryParamMap
+        .pipe(untilDestroyed(this))
+        .subscribe((paramMap: ParamMap) => {
+          this.view.fromParams(paramMap);
+          if (this.view.mustQuery) {
+            this.requestIntactNetworkDetails()
+          }
+          this.view.mustQuery = true;
+        });
     });
   }
 
   private requestIntactNetworkDetails() {
     this.view.visible = true;
-    this.subscribe(this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies),
-      {
+    this.networkSearchService.getInteractionNetwork(this.view.groupBySpecies)
+      .pipe(untilDestroyed(this))
+      .subscribe({
         next: (json) => {
           this.interactionsJSON = json;
           if (json.legend) {

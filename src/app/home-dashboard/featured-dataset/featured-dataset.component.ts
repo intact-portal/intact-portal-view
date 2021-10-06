@@ -5,22 +5,22 @@ import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {Router} from '@angular/router';
 import {SearchService} from '../search/service/search.service';
 import {Dataset} from './model/dataset.model';
-import {SubscriberComponent} from '../../shared/utils/observer-utils';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
 
+@UntilDestroy()
 @Component({
   selector: 'ip-featured-dataset',
   templateUrl: './featured-dataset.component.html',
   styleUrls: ['./featured-dataset.component.css', '../../app.component.css']
 })
-export class FeaturedDatasetComponent extends SubscriberComponent implements OnInit, AfterViewInit {
+export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 
   dataset: Dataset;
 
   constructor(private featureDatasetService: FeatureDatasetService, public router: Router, private search: SearchService) {
-    super();
   }
 
   ngOnInit() {
@@ -28,13 +28,15 @@ export class FeaturedDatasetComponent extends SubscriberComponent implements OnI
   }
 
   requestDOTM() {
-    this.subscribe(this.featureDatasetService.getFeaturedDataset(), response => {
-      this.dataset = response.datasets[0];
-      setTimeout(() => {
-        $('#dataset-group').foundation();
-        FoundationUtils.adjustWidth();
+    this.featureDatasetService.getFeaturedDataset()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.dataset = response.datasets[0];
+        setTimeout(() => {
+          $('#dataset-group').foundation();
+          FoundationUtils.adjustWidth();
+        })
       })
-    })
   }
 
   onIntActSearch() {

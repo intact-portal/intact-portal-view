@@ -7,8 +7,9 @@ import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar
 import {SearchService} from '../../home-dashboard/search/service/search.service';
 import {FilterService} from '../shared/service/filter.service';
 import {NetworkViewService} from '../shared/service/network-view.service';
-import {untilDestroyed} from '@ngneat/until-destroy';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'ip-interactions-results',
   templateUrl: './interactions-results.component.html',

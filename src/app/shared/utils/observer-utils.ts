@@ -2,6 +2,7 @@ import {Subscription, Observable, PartialObserver} from 'rxjs';
 import {OnDestroy} from '@angular/core';
 
 
+// TODO: Add Angular decorator.
 export class SubscriberComponent implements OnDestroy {
   protected subscriptions: Subscription[] = [];
 

@@ -1,4 +1,11 @@
 {
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ],
   "compileOnSave": false,
   "compilerOptions": {
     "downlevelIteration": true,
@@ -12,7 +19,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "target": "es2018",
+    "target": "es5",
     "typeRoots": [
       "node_modules/@types",
       "src/types"

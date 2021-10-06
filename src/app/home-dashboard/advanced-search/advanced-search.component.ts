@@ -26,10 +26,10 @@ export class AdvancedSearchComponent implements AfterViewInit {
     rules: []
   };
 
-  @ViewChild(QueryBuilderComponent, { static: true })
+  @ViewChild(QueryBuilderComponent, {static: true})
   builder: QueryBuilderComponent;
 
-  @ViewChild('editor', { static: true })
+  @ViewChild('editor', {static: true})
   editor: ElementRef;
 
   constructor() {
@@ -84,7 +84,8 @@ export class AdvancedSearchComponent implements AfterViewInit {
   builderToInput(builder: QueryBuilderComponent, editor: HTMLDivElement) {
     if (this.doUpdate) {
       this.doUpdate = false;
-      editor.innerHTML = ColorMIQLPipe.transform(MIQLPipe.transform(builder.value));
+      // editor.innerHTML = ColorMIQLPipe.transform(MIQLPipe.transform(builder.value));
+      editor.innerHTML = MIQLPipe.transform(builder.value);
     }
     this.doUpdate = true
   }
@@ -98,10 +99,14 @@ export class AdvancedSearchComponent implements AfterViewInit {
   }
 
   onInput() {
+    const miql = this.editor.nativeElement.innerText;
+    // this.colorBox(miql);
+    this.inputToBuilder(this.builder, miql);
+  }
+
+  private colorBox(miql: string) {
     const sel = window.getSelection();
     const caretPosition = sel.getRangeAt(0).getBoundingClientRect();
-
-    const miql = this.editor.nativeElement.innerText;
     this.editor.nativeElement.innerHTML = ColorMIQLPipe.transform(miql);
     let range: Range;
     if (caretPosition.left === 0 && caretPosition.top === 0) {
@@ -114,7 +119,6 @@ export class AdvancedSearchComponent implements AfterViewInit {
     sel.removeAllRanges();
     sel.addRange(range);
     this.editor.nativeElement.focus();
-    this.inputToBuilder(this.builder, miql);
   }
 
   onBuilderUpdate() {

@@ -8,7 +8,7 @@ import {InteractionsViewerComponent} from './interactions-viewer/interactions-vi
 import {InteractorsTableComponent} from './interactions-list/interactors-table/interactors-table.component';
 import {InteractionsTableComponent} from './interactions-list/interactions-table/interactions-table.component';
 import {InteractionDetailsModule} from '../interaction-details/interaction-details.module';
-import {Ng5SliderModule} from 'ng5-slider';
+import {NgxSliderModule} from '@angular-slider/ngx-slider';
 import {ProgressSpinnerModule} from '../../layout/loading-indicators/progress-spinner/progress-spinner.module';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -28,7 +28,7 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     InteractionsRoutingModule,
     InteractionDetailsModule,
-    Ng5SliderModule,
+    NgxSliderModule,
     ProgressSpinnerModule,
     MatButtonModule,
     MatDialogModule,

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'ip-news',
@@ -9,11 +10,12 @@ export class NewsComponent implements OnInit {
   version = '1.0.1';
   environmentName = 'dev';
   releaseDate = 'September 2021';
-  publications = '22496';
-  interactors = '117664';
-  interactions = '1144360';
 
-  constructor() { }
+  statistics = environment.intact_portal_documentation_url + 'statistics.md';
+
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

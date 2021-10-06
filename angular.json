@@ -44,10 +44,10 @@
           },
           "configurations": {
             "dev": {
+              "baseHref": "/intact/dev/",
               "optimization": false,
-              "outputHashing": "media",
+              "outputHashing": "all",
               "sourceMap": true,
-              "extractCss": true,
               "namedChunks": true,
               "aot": false,
               "extractLicenses": true,
@@ -55,10 +55,10 @@
               "buildOptimizer": false
             },
             "test": {
+              "baseHref": "https://intact-portal.github.io/intact-portal-view/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -72,10 +72,10 @@
               ]
             },
             "production": {
+              "baseHref": "/intact/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -89,6 +89,7 @@
               ]
             },
             "local": {
+              "baseHref": "/intact/local/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

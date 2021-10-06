@@ -10,18 +10,19 @@ import {NetworkSelectionService} from '../../../shared/service/network-selection
 import {ResultTable} from '../../../shared/model/interactions-results/result-table-interface';
 import {SearchService} from '../../../../home-dashboard/search/service/search.service';
 import {FilterService} from '../../../shared/service/filter.service';
-import {SubscriberComponent} from '../../../../shared/utils/observer-utils';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 
 const baseURL = environment.intact_portal_ws;
 const ebiURL = environment.ebi_url;
 
+@UntilDestroy()
 @Component({
   selector: 'ip-interactions-table',
   templateUrl: './interactions-table.component.html',
   styleUrls: ['./interactions-table.component.css']
 })
-export class InteractionsTableComponent extends SubscriberComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
+export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
   @Input() interactionTab: boolean;
 
 
@@ -39,16 +40,17 @@ export class InteractionsTableComponent extends SubscriberComponent implements O
     private search: SearchService,
     private filters: FilterService
   ) {
-    super()
   }
 
   ngOnInit(): void {
-    this.subscribe(this.route.queryParams, (params) => {
-      if (this.dataTable !== undefined) {
-        const table: any = $('#interactionsTable');
-        this.dataTable = table.DataTable().ajax.reload();
-      }
-    });
+    this.route.queryParams
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        if (this.dataTable !== undefined) {
+          const table: any = $('#interactionsTable');
+          this.dataTable = table.DataTable().ajax.reload();
+        }
+      });
 
     this.initDataTable();
     this.networkSelection.registerSelectionListener(this.dataTable, this);

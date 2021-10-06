@@ -89,7 +89,7 @@
     "protractor": "^5.1.2",
     "stylus": "^0.55.0",
     "ts-node": "^5.0.1",
-    "tslint": "^6.1.3",
+    "tslint": "~6.1.0",
     "typescript": "4.0.8"
   }
 }

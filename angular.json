@@ -28,7 +28,7 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "node_modules/angular-archwizard/archwizard.css",
+              "node_modules/angular-archwizard/styles/archwizard.scss",
               "src/styles.scss"
             ],
             "scripts": [

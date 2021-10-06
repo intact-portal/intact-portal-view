@@ -7,14 +7,14 @@ import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar
 import {SearchService} from '../../home-dashboard/search/service/search.service';
 import {FilterService} from '../shared/service/filter.service';
 import {NetworkViewService} from '../shared/service/network-view.service';
-import {SubscriberComponent} from '../../shared/utils/observer-utils';
+import {untilDestroyed} from '@ngneat/until-destroy';
 
 @Component({
   selector: 'ip-interactions-results',
   templateUrl: './interactions-results.component.html',
   styleUrls: ['./interactions-results.component.css']
 })
-export class InteractionsResultsComponent extends SubscriberComponent implements OnInit {
+export class InteractionsResultsComponent implements OnInit {
 
   private _interactionsSearch: InteractionsSearchResultData;
   private _hasResults = true;
@@ -26,34 +26,37 @@ export class InteractionsResultsComponent extends SubscriberComponent implements
               private interactionsSearchService: InteractionsSearchService,
               private view: NetworkViewService,
               public filters: FilterService) {
-    super();
   }
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Search Results');
 
-    this.subscribe(this.route.queryParamMap, paramMap => {
-      this.search.fromParams(paramMap);
-      this.filters.fromParams(paramMap);
-      this.requestInteractionsResults();
-    });
+    this.route.queryParamMap
+      .pipe(untilDestroyed(this))
+      .subscribe(paramMap => {
+        this.search.fromParams(paramMap);
+        this.filters.fromParams(paramMap);
+        this.requestInteractionsResults();
+      });
 
-    this.subscribe(this.filters.updates, () => this.updateURLParams());
-    this.subscribe(this.view.updates, () => this.updateURLParams());
+    this.filters.updates.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
+    this.view.updates.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
 
   }
 
   private requestInteractionsResults() {
     this._hasResults = true;
-    this.subscribe(this.interactionsSearchService.queryFacets(), (interactionsSearch) => {
-      this.interactionsSearch = interactionsSearch;
-      if (this.interactionsSearch.totalElements !== 0) {
-        this.filters.initFacets(this.interactionsSearch.facetResultPage);
-      } else {
-        this._hasResults = false;
-      }
-      ProgressBarComponent.hideWithoutDelay();
-    });
+    this.interactionsSearchService.queryFacets()
+      .pipe(untilDestroyed(this))
+      .subscribe((interactionsSearch) => {
+        this.interactionsSearch = interactionsSearch;
+        if (this.interactionsSearch.totalElements !== 0) {
+          this.filters.initFacets(this.interactionsSearch.facetResultPage);
+        } else {
+          this._hasResults = false;
+        }
+        ProgressBarComponent.hideWithoutDelay();
+      });
   }
 
   /** END OF EVENT EMITTERS **/

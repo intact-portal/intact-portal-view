@@ -6,7 +6,7 @@ import * as complexviewer from 'complexviewer';
 import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
 import {Participant} from '../shared/model/participant.model';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
-import {SubscriberComponent} from '../../../shared/utils/observer-utils';
+import {untilDestroyed} from '@ngneat/until-destroy';
 
 export let viewer: any;
 
@@ -17,7 +17,7 @@ export let viewer: any;
   styleUrls: ['./details-viewer.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class DetailsViewerComponent extends SubscriberComponent implements AfterViewInit {
+export class DetailsViewerComponent implements AfterViewInit {
   @Input() interactionAc: string;
 
   @Input() featureAc: string;
@@ -38,7 +38,6 @@ export class DetailsViewerComponent extends SubscriberComponent implements After
   private nodeTypes: Set<string> = new Set<string>();
 
   constructor(private interactionsDetailsService: InteractionsDetailsService, private participantsService: InteractionParticipantsService) {
-    super()
   }
 
   ngAfterViewInit() {
@@ -57,9 +56,16 @@ export class DetailsViewerComponent extends SubscriberComponent implements After
   }
 
   private requestInteractionViewerDetails() {
-    this.subscribe(
-      this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
-      , {
+    this.participantsService.proteinSetsUpdated
+      .pipe(untilDestroyed(this))
+      .subscribe((update) => {
+        if (this.notifyViewerOfUpdates) {
+          viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
+        }
+      });
+    this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
+      .pipe(untilDestroyed(this))
+      .subscribe({
         next: (data) => {
           this.interactionData = data;
           ProgressBarComponent.hide();
@@ -76,12 +82,6 @@ export class DetailsViewerComponent extends SubscriberComponent implements After
               this.notifyViewerOfUpdates = false;
               this.participantsService.updateProteinsStatus(expandedParticipants)
               this.notifyViewerOfUpdates = true;
-            })
-
-            this.subscribe(this.participantsService.proteinSetsUpdated, (update) => {
-              if (this.notifyViewerOfUpdates) {
-                viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
-              }
             })
           }
         }

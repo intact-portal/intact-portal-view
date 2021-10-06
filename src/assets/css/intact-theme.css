@@ -938,10 +938,10 @@ button.showMore, button.showLess {
   vertical-align: bottom;
 }
 
-.button-group .icon {
-  line-height: 14px;
-  vertical-align: middle;
-}
+/*.button-group .icon {*/
+/*  line-height: 12px;*/
+/*  vertical-align: middle;*/
+/*}*/
 
 /**************************************************************/
 /********* END DATATABLES ROW STYLES ********************/

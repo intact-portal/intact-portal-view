@@ -11,6 +11,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "d3",
+              "jquery",
+              "intersectionjs",
+              "markdown-it",
+              "@iktakahiro/markdown-it-katex"
+            ],
             "outputPath": "dist/intact-portal-view",
             "index": "src/index.html",
             "main": "src/main.ts",

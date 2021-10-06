@@ -3,16 +3,16 @@ import {InteractionDetails} from '../../shared/model/interaction-details/interac
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ParticipantTableComponent} from './details/participant-table/participant-table.component';
 import {FeaturesTableComponent} from './details/features-table/features-table.component';
-import {SubscriberComponent} from '../../../shared/utils/observer-utils';
 import {HttpErrorResponse} from '@angular/common/http';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-
+@UntilDestroy()
 @Component({
   selector: 'ip-details-tabs',
   templateUrl: './details-tabs.component.html',
   styleUrls: ['./details-tabs.component.css']
 })
-export class DetailsTabsComponent extends SubscriberComponent implements OnInit, AfterViewInit {
+export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
   @Input() interactionAc: string;
   @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -25,14 +25,13 @@ export class DetailsTabsComponent extends SubscriberComponent implements OnInit,
   private _isTabParticipantActive = false;
   private _isTabFeatureActive = false;
 
-  @ViewChild(ParticipantTableComponent, { static: true })
+  @ViewChild(ParticipantTableComponent, {static: true})
   participantTable: ParticipantTableComponent;
 
-  @ViewChild(FeaturesTableComponent, { static: true })
+  @ViewChild(FeaturesTableComponent, {static: true})
   featureTable: FeaturesTableComponent;
 
   constructor(private interactionsDetailsService: InteractionsDetailsService) {
-    super()
   }
 
   ngOnInit() {
@@ -57,8 +56,9 @@ export class DetailsTabsComponent extends SubscriberComponent implements OnInit,
 
 
   private requestInteractionDetails() {
-    this.subscribe(
-      this.interactionsDetailsService.getInteractionDetails(this.interactionAc), interactionDetails => {
+    this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
+      .pipe(untilDestroyed(this))
+      .subscribe(interactionDetails => {
         if (!(interactionDetails instanceof HttpErrorResponse)) this.interactionDetails = interactionDetails;
       })
   }

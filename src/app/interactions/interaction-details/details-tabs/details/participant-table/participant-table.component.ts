@@ -5,16 +5,17 @@ import {Column} from '../../../../shared/model/tables/column.model';
 import {ParticipantTable} from '../../../../shared/model/tables/participant-table.model';
 import {TableFactoryService} from '../../../../shared/service/table-factory.service';
 import {InteractionParticipantsService, Status} from '../../../shared/service/interaction-participants.service';
-import {SubscriberComponent} from '../../../../../shared/utils/observer-utils';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 const baseURL = environment.intact_portal_graph_ws;
 
+@UntilDestroy()
 @Component({
   selector: 'ip-participant-table',
   templateUrl: './participant-table.component.html',
   styleUrls: ['./participant-table.component.css']
 })
-export class ParticipantTableComponent extends SubscriberComponent implements OnInit, OnChanges, AfterViewInit {
+export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
@@ -28,7 +29,6 @@ export class ParticipantTableComponent extends SubscriberComponent implements On
   private fillParticipants = true;
 
   constructor(private tableFactory: TableFactoryService, private participantsService: InteractionParticipantsService) {
-    super();
   }
 
   ngOnInit(): void {
@@ -232,10 +232,12 @@ export class ParticipantTableComponent extends SubscriberComponent implements On
       ],
     });
 
-    this.subscribe(this.participantsService.proteinSetsUpdated, proteins => {
-      proteins.expanded.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', true));
-      proteins.collapsed.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', false));
-    });
+    this.participantsService.proteinSetsUpdated
+      .pipe(untilDestroyed(this))
+      .subscribe(proteins => {
+        proteins.expanded.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', true));
+        proteins.collapsed.map(protein => protein.identifier.id).forEach(id => $(`#${id}:checkbox`).prop('checked', false));
+      });
 
     table.on('change', 'input[name=\'check\']', (e) => {
         const id = e.currentTarget.id;

@@ -41,3 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 /*.iml
+
+package-lock.json
+src/types/datatables.net-fixedheader
+src/types/typeahead.js

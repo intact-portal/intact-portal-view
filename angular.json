@@ -43,6 +43,17 @@
             ]
           },
           "configurations": {
+            "dev": {
+              "optimization": false,
+              "outputHashing": "media",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": false
+            },
             "test": {
               "optimization": true,
               "outputHashing": "all",
@@ -101,6 +112,9 @@
             },
             "local": {
               "browserTarget": "intact-portal:build:local"
+            },
+            "dev": {
+              "browserTarget": "intact-portal:build:dev"
             }
           }
         },

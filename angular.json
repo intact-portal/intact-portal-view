@@ -170,7 +170,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ip",
-      "styleext": "css"
+      "style": "css"
     },
     "@schematics/angular:directive": {
       "prefix": "ip"

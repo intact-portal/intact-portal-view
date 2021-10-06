@@ -40,19 +40,20 @@
               "node_modules/typeahead.js/dist/typeahead.bundle.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/complexviewer/dist/complexviewer.js"
-            ]
+            ],
+            "aot": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "dev": {
               "baseHref": "/intact/dev/",
-              "optimization": false,
               "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": true,
-              "aot": false,
               "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": false
             },
             "test": {
               "baseHref": "https://intact-portal.github.io/intact-portal-view/",
@@ -97,7 +98,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

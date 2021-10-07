@@ -1,10 +1,7 @@
 import {InteractionsSearchResultData} from './interactions-search-data.model';
 
-export class InteractionSearchResult {
-  constructor(
-    public readonly recordsFiltered: number,
-    public readonly recordsTotal: number,
-    public readonly data: InteractionsSearchResultData
-  ) {
-  }
+export interface InteractionSearchResult {
+  recordsFiltered: number,
+  recordsTotal: number,
+  data: InteractionsSearchResultData
 }

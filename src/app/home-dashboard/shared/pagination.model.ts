@@ -1,20 +1,19 @@
-export class Pagination<T = any> {
-
-  public readonly content: T;
-  public readonly empty: boolean;
-  public readonly first: boolean;
-  public readonly last: boolean;
-  public readonly number: number;
-  public readonly numberOfElements: number;
-  public readonly totalElements: number;
-  public readonly totalPages: number;
-  public readonly size: number;
-  public readonly sort: {
+export interface Pagination<T = any> {
+  content: T;
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  sort: {
     empty: boolean,
     sorted: boolean,
     unsorted: boolean
   };
-  public readonly pageable: {
+  pageable: {
     offset: number,
     pageNumber: number,
     pageSize: number,

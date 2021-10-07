@@ -1,4 +1,3 @@
-import {CvTerm} from '../../interactions/shared/model/interaction-details/cv-term.model';
 import {Annotation} from '../../interactions/shared/model/interaction-details/annotation.model';
 import {Alias} from '../../interactions/shared/model/interaction-details/alias.model';
 
@@ -12,10 +11,13 @@ export function titleCase(s: string): string {
  */
 export function extractAlias(rawData: string): Alias {
   const split = rawData.split('(')
-  return new Alias(
-    split.slice(0, -2).join('(').trim(),
-    new CvTerm(split[split.length - 1].slice(0, -2), split[split.length - 2])
-  )
+  return {
+    name: split.slice(0, -2).join('(').trim(),
+    type: {
+      shortName: split[split.length - 1].slice(0, -2),
+      identifier: split[split.length - 2]
+    }
+  }
 }
 
 /**
@@ -38,9 +40,9 @@ export function extractId(rawData: string): { identifier: string, database: stri
 export function extractAnnotation(rawData: string): Annotation {
   if (rawData === null) return null
   const split = rawData.split('(')
-  return new Annotation(
-    new CvTerm(split[0].trim(), undefined),
-    split.slice(1).join('(').slice(0, -1).trim()
-  )
+  return {
+    description: split.slice(1).join('(').slice(0, -1).trim(),
+    topic: {shortName: split[0].trim(), identifier: undefined}
+  }
 }
 

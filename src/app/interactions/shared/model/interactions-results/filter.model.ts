@@ -1,7 +1,4 @@
-export class Filter {
-  constructor(
-    public readonly name: string,
-    public readonly value: string
-  ) {
-  }
+export interface Filter {
+  name: string,
+  value: string
 }

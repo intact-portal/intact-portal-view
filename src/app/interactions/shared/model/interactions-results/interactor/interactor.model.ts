@@ -1,17 +1,14 @@
 import {NodeShape} from '../../network-shapes/node-shape';
 
-export class Interactor {
-  constructor(
-    public readonly interactorName: string,
-    public readonly interactorDescription: string,
-    public readonly interactorPreferredIdentifier: string,
-    public readonly interactorAc: string,
-    public readonly interactorAlias: string,
-    public readonly interactorType: string,
-    public readonly interactorSpecies: string,
-    public readonly interactionCount: number,
-    public readonly interactorColor: string,
-    public readonly interactorShape: NodeShape
-  ) {
-  }
+export interface Interactor {
+  interactorName: string,
+  interactorDescription: string,
+  interactorPreferredIdentifier: string,
+  interactorAc: string,
+  interactorAlias: string,
+  interactorType: string,
+  interactorSpecies: string,
+  interactionCount: number,
+  interactorColor: string,
+  interactorShape: NodeShape
 }

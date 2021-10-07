@@ -1,10 +1,7 @@
 import {NodeLegend} from './node-legend';
 import {EdgeLegend} from './edge-legend';
 
-export class NetworkLegend {
-  constructor(
-    public readonly node_legend: NodeLegend,
-    public readonly edge_legend: EdgeLegend
-  ) {
-  }
+export interface NetworkLegend {
+  node_legend: NodeLegend,
+  edge_legend: EdgeLegend
 }

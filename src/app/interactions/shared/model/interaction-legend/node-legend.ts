@@ -1,13 +1,10 @@
 import {BooleanLegend} from './boolean-legend';
 import {NodeShape} from '../network-shapes/node-shape';
 
-export class NodeLegend {
-  constructor(
-    public readonly shape: { [p: string]: NodeShape },
-    public readonly species_color: any,
-    public readonly kingdom_color: any,
-    public readonly border_color: { true: BooleanLegend<string>; false: BooleanLegend<string> },
-    public readonly border_width: { true: BooleanLegend<number>; false: BooleanLegend<number> }
-  ) {
-  }
+export interface NodeLegend {
+  shape: { [p: string]: NodeShape },
+  species_color: any,
+  kingdom_color: any,
+  border_color: { true: BooleanLegend<string>; false: BooleanLegend<string> },
+  border_width: { true: BooleanLegend<number>; false: BooleanLegend<number> }
 }

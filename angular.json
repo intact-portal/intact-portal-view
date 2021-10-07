@@ -28,7 +28,7 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "node_modules/angular-archwizard/styles/archwizard.scss",
+              "node_modules/angular-archwizard/styles/archwizard.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -52,8 +52,8 @@
           "configurations": {
             "dev": {
               "baseHref": "/intact/dev/",
-              "outputHashing": "all",
-              "extractLicenses": true,
+              "outputHashing": "none",
+              "extractLicenses": true
             },
             "test": {
               "baseHref": "https://intact-portal.github.io/intact-portal-view/",

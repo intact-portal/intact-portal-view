@@ -1,0 +1,16 @@
+<a *ngIf="database.shortName !== undefined; else noShortName "
+   [style.color]="color"
+   [style.background-color]="backColor"
+   class="identifier-cell tag-cell"
+   target="_blank"
+   [href]="database.identifier | cv">
+  {{text}}
+</a>
+
+<ng-template #noShortName>
+  <span class="identifier-cell tag-cell"
+        [style.color]="color"
+        [style.background-color]="backColor">
+    {{text}}
+  </span>
+</ng-template>

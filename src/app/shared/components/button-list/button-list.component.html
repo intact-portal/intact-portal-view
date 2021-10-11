@@ -1,0 +1,9 @@
+<div [ngClass]="upperClass">
+  <div @viewsTrigger *ngFor="let context of contexts">
+    <ng-container *ngTemplateOutlet="template; context: context"></ng-container>
+  </div>
+  <button *ngIf="delta > 0"
+    [ngClass]="{showMore: isLimiting, showLess: !isLimiting}"
+    type="button" (click)="onToggle()">
+    Show {{isLimiting ? 'more' : 'less'}} ({{delta}})</button>
+</div>

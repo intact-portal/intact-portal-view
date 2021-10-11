@@ -1,10 +1,13 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
+
+import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
+
 import {Dataset} from '../model/dataset.model';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 
 @Injectable()
@@ -16,14 +19,14 @@ export class FeatureDatasetService {
   public readonly API_URL = 'https://raw.githubusercontent.com/intact-portal/intact-portal-feature-datasets/main/feature-datasets.json';
 
   getFeaturedDataset(): Observable<{ datasets: Dataset[] }> {
-    return this.http.get<{ datasets: Dataset[] }>(this.API_URL, {responseType: 'json'})
-      .catch(this.handleError)
+    return this.http.get<{ datasets: Dataset[] }>(this.API_URL, {responseType: 'json'}).pipe(
+      catchError(this.handleError))
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
-    this.reporter.reportError(err);
+    this.reporter.exception()
     if (err.error instanceof Error) {
-      return Observable.throw(err);
+      return observableThrowError(err);
     } else {
       console.error(err.message ? err.message : err.toString());
     }

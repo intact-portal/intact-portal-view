@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ParamMap} from '@angular/router';
 import {GraphPort} from 'intact-network-viewer'
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable()

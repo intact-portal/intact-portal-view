@@ -19,15 +19,15 @@ export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializ
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: 'app/home-dashboard/home-dashboard.module#HomeDashboardModule'
+    loadChildren: () => import('app/home-dashboard/home-dashboard.module').then(m => m.HomeDashboardModule)
   },
   {
     path: 'search',
-    loadChildren: 'app/interactions/interactions-results/interactions-results.module#InteractionsResultsModule'
+    loadChildren: () => import('app/interactions/interactions-results/interactions-results.module').then(m => m.InteractionsResultsModule)
   },
   {
     path: 'details',
-    loadChildren: 'app/interactions/interaction-details/interaction-details.module#InteractionDetailsModule'
+    loadChildren: () => import('app/interactions/interaction-details/interaction-details.module').then(m => m.InteractionDetailsModule)
   },
   {
     path: 'download',
@@ -73,10 +73,10 @@ const routes: Routes = [
     component: RedirectComponent,
     data: {externalUrl: environment.former_intact_url + 'pages/details/details.xhtml'}
   },
-  // {
-  //   path: '**',
-  //   redirectTo: 'home'
-  // }
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
 ];
 
 @NgModule({

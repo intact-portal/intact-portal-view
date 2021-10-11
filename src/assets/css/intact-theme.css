@@ -232,6 +232,10 @@ a.intact-background,
   align-items: flex-end;
 }
 
+.button-group:not(.rounded) > .button:not(:last-child) {
+  margin-right: 1px;
+}
+
 .button-group.rounded > .button:first-child {
   border-radius: 1.4em 0 0 1.4em;
   font-weight: bold;
@@ -246,7 +250,7 @@ a.intact-background,
 }
 
 .button-group .button.outlined {
-  margin-right: -1px;
+  margin-right: -1px !important;
 }
 
 .on-top {
@@ -720,6 +724,13 @@ table.dataTable tr, th {
   border: 1px solid #ffffff00 !important;
 }
 
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: none !important;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+  border-bottom: none !important;
+}
 /************** TABLES ELEMENTS **************/
 
 .shadow-left {
@@ -927,10 +938,10 @@ button.showMore, button.showLess {
   vertical-align: bottom;
 }
 
-.button-group .icon {
-  line-height: 14px;
-  vertical-align: middle;
-}
+/*.button-group .icon {*/
+/*  line-height: 12px;*/
+/*  vertical-align: middle;*/
+/*}*/
 
 /**************************************************************/
 /********* END DATATABLES ROW STYLES ********************/
@@ -1039,6 +1050,7 @@ span.collapsable-counter {
   align-items: center;
   padding: 0;
 }
+
 .flex-cell {
   width: calc(100% / 6);
   text-align: center;
@@ -1050,16 +1062,19 @@ span.collapsable-counter {
   .flex-cell {
     width: calc(100% / 3);
   }
+
   .flex-cell.first {
     width: 100%;
     background-color: #68297cd9;
     color: white;
   }
 }
+
 @media all and (max-width: 430px) {
   .flex-cell {
     width: 100%;
   }
+
   .flex-cell.first {
     width: 100%;
   }

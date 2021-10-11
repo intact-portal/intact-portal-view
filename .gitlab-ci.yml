@@ -96,7 +96,7 @@ build-prod:
   stage: build
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - ng build --env=prod --build-optimizer=false --base-href "/intact/"
+    - node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=production --base-href "/intact/"
   artifacts:
     expire_in: 1 day
     paths:

@@ -6,11 +6,11 @@ import * as complexviewer from 'complexviewer';
 import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
 import {Participant} from '../shared/model/participant.model';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
-import {untilDestroyed} from '@ngneat/until-destroy';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 export let viewer: any;
 
-
+@UntilDestroy()
 @Component({
   selector: 'ip-details-viewer',
   templateUrl: './details-viewer.component.html',

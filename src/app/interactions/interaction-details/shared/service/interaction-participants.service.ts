@@ -102,7 +102,7 @@ export class InteractionParticipantsService {
   }
 
   public getParticipantAndStatusById(id: string): { participant: Participant, status: Status } {
-    let participant = this.idToParticipant.get(id);
+    const participant = this.idToParticipant.get(id);
     return {participant: participant, status: this.participantStatus.get(participant)};
   }
 }

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {InteractionsTableComponent} from './interactions-table/interactions-table.component';
 import {InteractorsTableComponent} from './interactors-table/interactors-table.component';
+import {InteractionsTableTwoComponent} from './interactions-table-two/interactions-table-two.component';
 
 @Component({
   selector: 'ip-interactions-list',
@@ -11,8 +11,8 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   private _isTabInteractionActive = false;
   private _isTabInteractorActive = false;
 
-  @ViewChild(InteractionsTableComponent, { static: true })
-  interactionsTable: InteractionsTableComponent;
+  @ViewChild(InteractionsTableTwoComponent, { static: true })
+  interactionsTable: InteractionsTableTwoComponent;
 
   @ViewChild(InteractorsTableComponent, { static: true })
   interactorsTable: InteractorsTableComponent;

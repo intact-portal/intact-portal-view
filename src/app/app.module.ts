@@ -32,43 +32,43 @@ import {environment} from '../environments/environment';
 import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    InteractomesComponent,
-    InteractomeComponent,
-    AboutComponent,
-    RedirectComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot([]),
-    FormsModule,
-    HttpClientModule,
-    LayoutModule,
-    HomeDashboardModule,
-    InteractionsResultsModule,
-    InteractionDetailsModule,
-    DocumentationModule,
-    DownloadModule,
-    AppRoutingModule,
-    MatButtonModule,
-    NgxGoogleAnalyticsModule.forRoot(environment.analytics_id),
-    NgxGoogleAnalyticsRouterModule,
-    MarkdownModule
-  ],
-  providers: [
-    FeatureDatasetService,
-    SearchService,
-    InteractionsSearchService,
-    InteractionsDetailsService,
-    FilterService,
-    NetworkSearchService,
-    NetworkViewService,
-    {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]},
-    {provide: UrlSerializer, useClass: MyUrlSerializer}
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        InteractomesComponent,
+        InteractomeComponent,
+        AboutComponent,
+        RedirectComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot([]),
+        FormsModule,
+        HttpClientModule,
+        LayoutModule,
+        HomeDashboardModule,
+        InteractionsResultsModule,
+        InteractionDetailsModule,
+        DocumentationModule,
+        DownloadModule,
+        AppRoutingModule,
+        MatButtonModule,
+        NgxGoogleAnalyticsModule.forRoot(environment.analytics_id),
+        NgxGoogleAnalyticsRouterModule,
+        MarkdownModule
+    ],
+    providers: [
+        FeatureDatasetService,
+        SearchService,
+        InteractionsSearchService,
+        InteractionsDetailsService,
+        FilterService,
+        NetworkSearchService,
+        NetworkViewService,
+        {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]},
+        {provide: UrlSerializer, useClass: MyUrlSerializer}
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

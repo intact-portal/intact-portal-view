@@ -1,0 +1,7 @@
+<a *ngIf="url; else noURL" [href]="url" class="cv-term" target="_blank">
+  {{organism.scientificName}}
+</a>
+
+<ng-template #noURL>
+  {{organism.scientificName}}
+</ng-template>

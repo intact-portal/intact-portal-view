@@ -6,7 +6,7 @@ import {InteractionParticipantsService} from '../shared/service/interaction-part
 import * as complexviewer from 'complexviewer';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {MIJson} from 'complexviewer';
-import {untilDestroyed} from '@ngneat/until-destroy';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 export let viewer: complexviewer.App;
 

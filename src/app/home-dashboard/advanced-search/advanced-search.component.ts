@@ -26,10 +26,10 @@ export class AdvancedSearchComponent implements AfterViewInit {
     rules: []
   };
 
-  @ViewChild(QueryBuilderComponent)
+  @ViewChild(QueryBuilderComponent, { static: true })
   builder: QueryBuilderComponent;
 
-  @ViewChild('editor')
+  @ViewChild('editor', { static: true })
   editor: ElementRef;
 
   constructor() {

@@ -4,6 +4,7 @@ import {InteractionsDetailsService} from '../../shared/service/interactions-deta
 import {ParticipantTableComponent} from './details/participant-table/participant-table.component';
 import {FeaturesTableComponent} from './details/features-table/features-table.component';
 import {SubscriberComponent} from '../../../shared/utils/observer-utils';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Component({
@@ -24,10 +25,10 @@ export class DetailsTabsComponent extends SubscriberComponent implements OnInit,
   private _isTabParticipantActive = false;
   private _isTabFeatureActive = false;
 
-  @ViewChild(ParticipantTableComponent)
+  @ViewChild(ParticipantTableComponent, { static: true })
   participantTable: ParticipantTableComponent;
 
-  @ViewChild(FeaturesTableComponent)
+  @ViewChild(FeaturesTableComponent, { static: true })
   featureTable: FeaturesTableComponent;
 
   constructor(private interactionsDetailsService: InteractionsDetailsService) {
@@ -57,7 +58,9 @@ export class DetailsTabsComponent extends SubscriberComponent implements OnInit,
 
   private requestInteractionDetails() {
     this.subscribe(
-      this.interactionsDetailsService.getInteractionDetails(this.interactionAc), interactionDetails => this.interactionDetails = interactionDetails)
+      this.interactionsDetailsService.getInteractionDetails(this.interactionAc), interactionDetails => {
+        if (!(interactionDetails instanceof HttpErrorResponse)) this.interactionDetails = interactionDetails;
+      })
   }
 
   get interactionDetails(): InteractionDetails {

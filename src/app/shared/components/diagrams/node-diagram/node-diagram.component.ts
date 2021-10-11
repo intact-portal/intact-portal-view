@@ -12,9 +12,9 @@ export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() borderColor: string;
   @Input() label: string;
   @Input() height: string;
-  @ViewChild('labelElt') labelElt: ElementRef;
-  @ViewChild('svg') svgElt: ElementRef;
-  @ViewChild('shapeGroup') shapeGroupElt: ElementRef;
+  @ViewChild('labelElt', { static: false }) labelElt: ElementRef;
+  @ViewChild('svg', { static: true }) svgElt: ElementRef;
+  @ViewChild('shapeGroup', { static: true }) shapeGroupElt: ElementRef;
   NodeShape = NodeShape;
 
   constructor() {

@@ -7,15 +7,15 @@
 
   <div class="flex-spacer"></div>
   <div class="medium-12" style="text-align: center">
-      <button (click)="search.speciesSearch(interactome)" class="species-button">
+    <button (click)="search.speciesSearch(interactome)" class="species-button">
         <span [attr.data-icon]="interactome.symbol" style="color: #68297c"
               [ngClass]="{'icon ': true,'icon-species': interactome.symbol !== '?', 'icon-functional': interactome.symbol === '?'}">
         </span>
-      </button>
+    </button>
   </div>
-  <div class="actions">
-      <button mat-raised-button color="primary" (click)="goToInteractomePSI25()">miXML 2.5</button>
-      <button mat-raised-button color="primary" (click)="goToInteractomePSI30()">miXML 3.0</button>
+  <div class="actions button-group no-margin">
+    <button class="button lighter" (click)="goToInteractomePSI25()">miXML 2.5</button>
+    <button class="button lighter" (click)="goToInteractomePSI30()">miXML 3.0</button>
   </div>
 </div>
 

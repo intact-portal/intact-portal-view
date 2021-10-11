@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Observable, Subject} from 'rxjs';
 import {Facet} from '../model/interactions-results/facet.model';
-import {Observable} from 'rxjs/Observable';
 import {ParamMap} from '@angular/router';
 import {InteractionFacets} from '../model/interactions-results/interaction/interaction-facets.model';
-import {NetworkViewService} from './network-view.service';
 import {NetworkSelectionService} from './network-selection.service';
 
 

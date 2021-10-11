@@ -1,30 +1,30 @@
 <h1>IntAct Molecular Interaction Database</h1>
-<p>
+<p class="text-justify">
   IntAct provides a free, open source database system and analysis tools for molecular interaction data.
   All interactions are derived from literature curation or direct user submissions.
   The IntAct Team also produces the <a href="https://www.ebi.ac.uk/complexportal" target="_blank">Complex Portal</a>.
-</p>
-<p>
   You are currently visiting the new website of IntAct. The former version can be found <a href="{{formerURL}}">here</a>
   and will be supported until the end of 2021.
 </p>
 
 <div class="row expanded alert-panel" style="max-width: 100em">
+  <div class="alert-header">
+    <h3>
+      <i class="icon icon-species padding-medium" data-icon="&#x76;"></i>
+      IntAct's COVID-19 dataset
+    </h3>
+    <div class="alert-button-group no-margin">
+      <a class="button lighter margin-bottom-none" download target="_blank"
+         [href]="miXml25Url()">miXML<sub>2.5</sub></a>
+      <a class="button lighter margin-bottom-none" download target="_blank"
+         [href]="miXml30Url()">miXML<sub>3.0</sub></a>
+      <a class="button lighter margin-bottom-none" (click)="onSearch()">Browse in IntAct</a>
 
-  <h3><i class="icon icon-species padding-medium" data-icon="&#x76;"></i> COVID19-related interactions at IntAct's
-    Coronavirus dataset</h3>
-  Dataset of molecular interactions extracted from publications involving viral proteins from the Coronaviridae family
-  and human proteins, along with a certain proportion of other model organisms. The data features mostly protein-protein
-  and some RNA-protein interactions and covers SARS-CoV2 and SARS-CoV primarily, with some interactions from other
-  members of Coronaviridae as well. Interactions between human proteins relevant for SARS-CoV2 infection have also been
-  included.
+    </div>
+  </div>
 
-  <div class="float-right margin-top-medium">
-    <a class="button lighter no-margin" (click)="onSearch()">Browse in IntAct</a>
-
-    <a class="button lighter no-margin" download target="_blank"
-       [href]="miXml25Url()">miXML<sub>2.5</sub></a>
-    <a class="button lighter no-margin" download target="_blank"
-       [href]="miXml30Url()">miXML<sub>3.0</sub></a>
+  <div class="row expanded text-justify">
+    The data primarily covers protein-protein and several RNA-protein interactions involving SARS-CoV2 and SARS-CoV. All
+    interactions from the relevant publications are covered in this dataset, including interactions with other organism.
   </div>
 </div>

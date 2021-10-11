@@ -21,16 +21,15 @@ import {DownloadModule} from './navigation/download/download.module';
 import {InteractomeComponent} from './interactomes/interactome/interactome.component';
 import {LayoutModule} from './layout/layout.module';
 import {NetworkViewService} from './interactions/shared/service/network-view.service';
-import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 import {MatButtonModule} from '@angular/material/button';
 import {FilterService} from './interactions/shared/service/filter.service';
 import {AboutComponent} from './navigation/about/about.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Angulartics2Module} from 'angulartics2';
-import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
-import {GoogleAnalyticsService} from './shared/service/google-analytics/google-analytics.service';
 import {APP_BASE_HREF, PlatformLocation} from '@angular/common';
 import {RedirectComponent} from './navigation/redirect/redirect.component';
+import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from 'ngx-google-analytics';
+import {environment} from '../environments/environment';
+import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 
 @NgModule({
   declarations: [
@@ -53,9 +52,10 @@ import {RedirectComponent} from './navigation/redirect/redirect.component';
     DocumentationModule,
     DownloadModule,
     AppRoutingModule,
-    MarkdownModule,
     MatButtonModule,
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
+    NgxGoogleAnalyticsModule.forRoot(environment.analytics_id),
+    NgxGoogleAnalyticsRouterModule,
+    MarkdownModule
   ],
   providers: [
     FeatureDatasetService,
@@ -65,7 +65,6 @@ import {RedirectComponent} from './navigation/redirect/redirect.component';
     FilterService,
     NetworkSearchService,
     NetworkViewService,
-    GoogleAnalyticsService,
     {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]},
     {provide: UrlSerializer, useClass: MyUrlSerializer}
   ],

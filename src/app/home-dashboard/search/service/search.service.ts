@@ -1,13 +1,16 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
+
+import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {ParamMap, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Pagination} from '../../shared/pagination.model';
 import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
-import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
 import {Interactome} from '../../../interactomes/interactome.model';
 import {ColorMIQLPipe} from '../../advanced-search/colorMIQL.pipe';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 const baseURL = environment.intact_portal_ws;
 
@@ -82,14 +85,14 @@ export class SearchService {
       .append('page', page.toString())
       .append('pageSize', pageSize.toString());
 
-    return this.http.post<{ [term: string]: Pagination<Interactor[]> }>(`${baseURL}/interactor/list/resolve`, params)
-      .catch(this.handleError);
+    return this.http.post<{ [term: string]: Pagination<Interactor[]> }>(`${baseURL}/interactor/list/resolve`, params).pipe(
+      catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
-    this.reporter.reportError(err)
+    this.reporter.exception(err);
     if (err.error instanceof Error) {
-      return Observable.throw(err);
+      return observableThrowError(err);
     } else {
       console.error(err.message ? err.message : err.toString());
     }

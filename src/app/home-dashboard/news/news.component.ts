@@ -7,9 +7,9 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./news.component.css', '../../app.component.css']
 })
 export class NewsComponent implements OnInit {
-  version = '1.0.1';
+  version = '1.0.2';
   environmentName = 'dev';
-  releaseDate = 'September 2021';
+  releaseDate = 'October 2021';
 
   statistics = environment.intact_portal_documentation_url + 'statistics.md';
 

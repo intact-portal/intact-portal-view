@@ -935,7 +935,7 @@ button.showMore, button.showLess {
 }
 
 .icon::before {
-  vertical-align: bottom;
+  /*vertical-align: bottom;*/
 }
 
 /*.button-group .icon {*/

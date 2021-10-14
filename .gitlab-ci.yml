@@ -83,7 +83,7 @@ build-test:
   stage: build
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - ng build --env=test --build-optimizer=false --base-href "/intact/beta/"
+    - node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=test --base-href "/intact/beta/"
   artifacts:
     expire_in: 1 day
     paths:

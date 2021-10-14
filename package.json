@@ -10,9 +10,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "publish-gh-pages": "rm -rf dist && node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=test --output-path=dist --base-href \"https://intact-portal.github.io/intact-portal-view/\" && sudo ngh",
+    "publish-gh-pages": "rm -rf dist && node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=dev --output-path=dist --base-href \"https://intact-portal.github.io/intact-portal-view/\" && sudo ngh",
     "proxy": "ng serve --configuraiton=local --base-href \"/intact/local/\" --proxy-config proxy.conf.json",
-    "dev": "ng serve --configuration=test --base-href \"/intact/dev/\"",
+    "dev": "ng serve  --base-href \"/intact/dev/\"",
     "build-test": "ng serve --configuration=test --build-optimizer=false --base-href \"/intact/beta/\"",
     "update-types": "npm install; for toCopy in \"datatables.net-fixedheader\" \"typeahead.js\"; do rm -rf src/types/$toCopy; cp -rf node_modules/@types/${toCopy} src/types/; done;"
   },

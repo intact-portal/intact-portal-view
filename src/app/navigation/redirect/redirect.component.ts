@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 
 @UntilDestroy()
 @Component({
@@ -16,26 +17,24 @@ export class RedirectComponent implements OnInit {
   href: string;
 
   ngOnInit() {
-    this.route.data
-      .pipe(untilDestroyed(this))
-      .subscribe((data) => {
-        this.href = data.externalUrl;
-        this.route.params
-          .pipe(untilDestroyed(this))
-          .subscribe((params) => {
-            for (const param of Object.keys(params)) {
-              this.href = this.href.replace(':' + param, params[param])
-            }
-            this.route.queryParams
-              .pipe(untilDestroyed(this))
-              .subscribe((queryParams) => {
-                const paramList = Object.keys(queryParams);
-                if (paramList.length > 0) {
-                  this.href += `?${paramList.map(param => `${param}=${queryParams[param]}`).join('&')}`;
-                }
-                window.location.href = this.href;
-              });
-          });
+    forkJoin({
+      href: this.route.data,
+      params: this.route.params,
+      queryParams: this.route.queryParams
+    }).pipe(untilDestroyed(this))
+      .subscribe(route => {
+        this.href = route.href.data.externalUrl;
+
+        for (const param of Object.keys(route.params)) {
+          this.href = this.href.replace(':' + param, route.params[param])
+        }
+
+        const paramList = Object.keys(route.queryParams);
+        if (paramList.length > 0) {
+          this.href += `?${paramList.map(param => `${param}=${route.queryParams[param]}`).join('&')}`;
+        }
+
+        window.location.href = this.href;
       });
   }
 }

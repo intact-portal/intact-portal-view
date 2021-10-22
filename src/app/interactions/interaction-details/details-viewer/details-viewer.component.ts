@@ -5,7 +5,7 @@ import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-
 import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
 import * as complexviewer from 'complexviewer';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
-import {MIJson} from 'complexviewer';
+import {MIJson, Participant} from 'complexviewer';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 export let viewer: complexviewer.App;
@@ -78,7 +78,7 @@ export class DetailsViewerComponent implements AfterViewInit {
             this.participantsService.initParticipants(viewer.getExpandedParticipants());
             this.updateColorLegend(viewer.getColorKeyJson());
             this.collectTypes();
-            viewer.addExpandListener((expandedParticipants: complexviewer.Participant[]) => {
+            viewer.addExpandListener((expandedParticipants: Participant[]) => {
               this.notifyViewerOfUpdates = false;
               this.participantsService.updateProteinsStatus(expandedParticipants)
               this.notifyViewerOfUpdates = true;
@@ -94,12 +94,10 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   expandAll(): void {
     viewer.expandAll();
-    this.participantsService.expandAllProteins();
   }
 
   collapseAll(): void {
     viewer.collapseAll();
-    this.participantsService.collapseAllProteins();
   }
 
   onChangeAnnotation(value: string) {

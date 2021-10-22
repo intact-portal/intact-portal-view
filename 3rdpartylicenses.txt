@@ -154,6 +154,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+@ngneat/until-destroy
+MIT
+
 angular-archwizard
 MIT
 MIT License

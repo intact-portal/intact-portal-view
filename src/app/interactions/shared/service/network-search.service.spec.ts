@@ -3,9 +3,10 @@ import {inject, TestBed} from '@angular/core/testing';
 import {NetworkSearchService} from './network-search.service';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
+
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
 import {FilterService} from './filter.service';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 describe('NetworkSearchService', () => {
   const reporter = jasmine.createSpy('reporter');

@@ -2,13 +2,13 @@ import {AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
-import * as complexviewer from 'complexviewer';
 import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
-import {Participant} from '../shared/model/participant.model';
+import * as complexviewer from 'complexviewer';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {SubscriberComponent} from '../../../shared/utils/observer-utils';
+import {MIJson} from 'complexviewer';
 
-export let viewer: any;
+export let viewer: complexviewer.App;
 
 
 @Component({
@@ -22,7 +22,7 @@ export class DetailsViewerComponent extends SubscriberComponent implements After
 
   @Input() featureAc: string;
   @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
-  private interactionData: any;
+  private interactionData: MIJson;
 
   annotations = {
     'MI Features': true,
@@ -72,7 +72,7 @@ export class DetailsViewerComponent extends SubscriberComponent implements After
             this.participantsService.initParticipants(viewer.getExpandedParticipants());
             this.updateColorLegend(viewer.getColorKeyJson());
             this.collectTypes();
-            viewer.addExpandListener((expandedParticipants: Participant[]) => {
+            viewer.addExpandListener((expandedParticipants: complexviewer.Participant[]) => {
               this.notifyViewerOfUpdates = false;
               this.participantsService.updateProteinsStatus(expandedParticipants)
               this.notifyViewerOfUpdates = true;

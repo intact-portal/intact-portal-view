@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Participant} from '../model/participant.model';
 import {Subject} from 'rxjs';
+import {Participant} from 'complexviewer';
 
 @Injectable()
 export class InteractionParticipantsService {
@@ -25,7 +25,9 @@ export class InteractionParticipantsService {
   }
 
   public setProteinStatus(participant: Participant, status: Status.COLLAPSED | Status.EXPANDED) {
-    if (!this.participantStatus.has(participant)) throw new Error(`${participant.label} (id:${participant.identifier.id}) was not defined as a participant`);
+    if (!this.participantStatus.has(participant)) {
+      throw new Error(`${participant.label} (id:${participant.identifier.id}) was not defined as a participant`);
+    }
     this.participantStatus.set(participant, status);
     this.notifySetsListener();
   }
@@ -42,23 +44,30 @@ export class InteractionParticipantsService {
 
   public expandAllProteins() {
     this.participantStatus.forEach((participantStatus, participant) => {
-      if (participantStatus === Status.COLLAPSED) this.participantStatus.set(participant, Status.EXPANDED);
+      if (participantStatus === Status.COLLAPSED) {
+        this.participantStatus.set(participant, Status.EXPANDED);
+      }
     });
     this.notifySetsListener();
   }
 
   public collapseAllProteins() {
     this.participantStatus.forEach((participantStatus, participant) => {
-      if (participantStatus === Status.EXPANDED) this.participantStatus.set(participant, Status.COLLAPSED);
+      if (participantStatus === Status.EXPANDED) {
+        this.participantStatus.set(participant, Status.COLLAPSED);
+      }
     });
     this.notifySetsListener();
   }
 
   private notifySetsListener() {
-    let expanded = [], collapsed = [];
+    const expanded = [], collapsed = [];
     this.participantStatus.forEach((status, participant) => {
-      if (status === Status.EXPANDED) expanded.push(participant);
-      else if (status === Status.COLLAPSED) collapsed.push(participant);
+      if (status === Status.EXPANDED) {
+        expanded.push(participant);
+      } else if (status === Status.COLLAPSED) {
+        collapsed.push(participant);
+      }
     });
     this.proteinSetsUpdateSubject.next({expanded: expanded, collapsed: collapsed});
   }
@@ -68,15 +77,17 @@ export class InteractionParticipantsService {
   }
 
   public getParticipantsByStatus(status: Status): Participant[] {
-    let selectedParticipants = [];
+    const selectedParticipants = [];
     this.participantStatus.forEach((participantStatus, participant) => {
-      if (participantStatus === status) selectedParticipants.push(participant);
+      if (participantStatus === status) {
+        selectedParticipants.push(participant);
+      }
     });
     return selectedParticipants;
   }
 
   get participants(): Participant[] {
-    let participants = [];
+    const participants = [];
     this.participantStatus.forEach((status, participant) => participants.push(participant));
     return participants;
   }
@@ -94,15 +105,17 @@ export class InteractionParticipantsService {
   }
 
   get proteinParticipants(): Participant[] {
-    let proteins = [];
+    const proteins = [];
     this.participantStatus.forEach((status, participant) => {
-      if (status !== Status.NON_PROTEIN) proteins.push(participant);
+      if (status !== Status.NON_PROTEIN) {
+        proteins.push(participant);
+      }
     });
     return proteins;
   }
 
   public getParticipantAndStatusById(id: string): { participant: Participant, status: Status } {
-    let participant = this.idToParticipant.get(id);
+    const participant = this.idToParticipant.get(id);
     return {participant: participant, status: this.participantStatus.get(participant)};
   }
 }

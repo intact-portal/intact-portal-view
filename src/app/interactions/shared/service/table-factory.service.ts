@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import * as $ from 'jquery';
 import {CvTerm} from '../model/interaction-details/cv-term.model';
 import {Annotation} from '../model/interaction-details/annotation.model';
 import {Organism} from '../model/interaction-details/organism.model';

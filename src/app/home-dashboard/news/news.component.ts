@@ -9,7 +9,7 @@ import {environment} from '../../../environments/environment';
 export class NewsComponent implements OnInit {
   version = '1.0.2';
   environmentName = 'dev';
-  releaseDate = 'October 2021';
+  releaseDate = 'September 2021';
 
   statistics = environment.intact_portal_documentation_url + 'statistics.md';
 

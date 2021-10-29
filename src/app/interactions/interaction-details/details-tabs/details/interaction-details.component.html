@@ -25,7 +25,7 @@
 
           <div class="margin-top-large">
             <h5>Host Organism</h5>
-            <ip-organism-cell [organism]="interactionDetails.hostOrganism"></ip-organism-cell>
+            <span [innerHTML]="interactionDetails.hostOrganism | organism"></span>
           </div>
         </div>
 

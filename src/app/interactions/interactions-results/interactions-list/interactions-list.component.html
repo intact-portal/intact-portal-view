@@ -7,11 +7,11 @@
     </li>
     <li class="tabs-title"><a href="#interactor" (click)="interactorsTabSelected()">Interactors</a></li>
 
-<!--    <ip-column-toggle *ngIf="isInteractionTableShown"-->
-<!--                      [columns]="interactionsTable.columns"-->
-<!--                      [dataTable]="interactionsTable.dataTable"-->
-<!--                      [columnView]="interactionsTable.columnView"-->
-<!--                      [isTabActive]="isTabInteractionActive" class="float-right"></ip-column-toggle>-->
+    <ip-column-toggle *ngIf="isInteractionTableShown"
+                      [columns]="interactionsTable.columns"
+                      [dataTable]="interactionsTable.dataTable"
+                      [columnView]="interactionsTable.columnView"
+                      [isTabActive]="isTabInteractionActive" class="float-right"></ip-column-toggle>
 
     <ip-column-toggle *ngIf="!isInteractionTableShown"
                       [columns]="interactorsTable.columns"
@@ -22,7 +22,7 @@
 
   <div class="tabs-content" data-tabs-content="search-results-tabs" data-deep-link="true" data-update-history="false">
     <div class="tabs-panel table-tab is-active" id="interactions">
-      <ip-interactions-table-two ></ip-interactions-table-two>
+      <ip-interactions-table [interactionTab]="isTabInteractionActive"></ip-interactions-table>
     </div>
 
     <div class="tabs-panel table-tab" id="interactor">

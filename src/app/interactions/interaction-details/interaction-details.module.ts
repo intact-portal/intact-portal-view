@@ -15,11 +15,12 @@ import {PublicationComponent} from './details-tabs/details/publication/publicati
 import {ParticipantTableComponent} from './details-tabs/details/participant-table/participant-table.component';
 import {FeaturesTableComponent} from './details-tabs/details/features-table/features-table.component';
 import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {CvToUrlPipe} from './details-tabs/details/cv-term/cv-to-url.pipe';
-import {TableFactoryService} from '../shared/service/table-factory.service';
-import {InteractionParticipantsService} from './shared/service/interaction-participants.service';
-import {SharedModule} from '../../shared/shared.module';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
+import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
+import {TableFactoryService} from "../shared/service/table-factory.service";
+import {InteractionParticipantsService} from "./shared/service/interaction-participants.service";
+import {ComponentsModule} from "../../shared/components/components.module";
 
 
 @NgModule({
@@ -27,11 +28,9 @@ import {SharedModule} from '../../shared/shared.module';
     CommonModule,
     InteractionDetailsRoutingModule,
     MatTooltipModule,
-    SharedModule
+    ComponentsModule
   ],
-  exports: [
-    CvTermComponent
-  ],
+  exports: [],
   declarations: [
     DetailsDashboardComponent,
     DetailsViewerComponent,
@@ -47,7 +46,8 @@ import {SharedModule} from '../../shared/shared.module';
     ParticipantTableComponent,
     FeaturesTableComponent,
     CvTermComponent,
-    CvToUrlPipe
+    CvToUrlPipe,
+    OrganismPipe
   ],
   providers: [
     TableFactoryService,

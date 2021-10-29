@@ -24,10 +24,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {DatasetByYearComponent} from './featured-dataset/dataset-archive/dataset-by-year/dataset-by-year.component';
 import {ProgressSpinnerModule} from '../layout/loading-indicators/progress-spinner/progress-spinner.module';
+import {ComponentsModule} from '../shared/components/components.module';
 import {MIQLPipe} from './advanced-search/MIQL.pipe';
 import {ColorMIQLPipe} from './advanced-search/colorMIQL.pipe';
 import {MarkdownModule} from '../navigation/documentation/shared/markdown/markdown.module';
-import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
     imports: [
@@ -44,7 +44,7 @@ import {SharedModule} from '../shared/shared.module';
         MatButtonModule,
         MatCardModule,
         ProgressSpinnerModule,
-        SharedModule,
+        ComponentsModule,
         MarkdownModule
     ],
   exports: [

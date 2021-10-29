@@ -1,5 +1,5 @@
 import {CrossReference} from './cross-reference.model';
-import {TypeValue} from './type.value';
+import {TypeValueModel} from './type-value.model';
 import {Publication} from './publication.model';
 import {Annotation} from './annotation.model';
 import {CvTerm} from './cv-term.model';
@@ -12,7 +12,7 @@ export interface InteractionDetails {
   hostOrganism: Organism,
   type: CvTerm,
   detectionMethod: CvTerm,
-  confidences: TypeValue<CvTerm>[],
+  confidences: TypeValueModel<CvTerm>[],
   parameters: Parameter[],
   annotations: Annotation[],
   xrefs: CrossReference[],

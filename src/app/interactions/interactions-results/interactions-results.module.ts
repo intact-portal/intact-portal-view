@@ -19,29 +19,26 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {TableFactoryService} from '../shared/service/table-factory.service';
 import {NetworkSelectionService} from '../shared/service/network-selection.service';
 import {InteractionsLegendComponent} from './interactions-viewer/interactions-legend/interactions-legend.component';
+import {ComponentsModule} from '../../shared/components/components.module';
 import {DownloadFormComponent} from './interactions-filters/download-form/download-form.component';
 import {FormsModule} from '@angular/forms';
-import {InteractionsTableTwoComponent} from './interactions-list/interactions-table-two/interactions-table-two.component';
-import {DataTablesModule} from 'angular-datatables';
-import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        InteractionsRoutingModule,
-        InteractionDetailsModule,
-        NgxSliderModule,
-        ProgressSpinnerModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatTooltipModule,
-        BrowserAnimationsModule,
-        MatSlideToggleModule,
-        MatExpansionModule,
-        FormsModule,
-        DataTablesModule,
-        SharedModule
-    ],
+  imports: [
+    CommonModule,
+    InteractionsRoutingModule,
+    InteractionDetailsModule,
+    NgxSliderModule,
+    ProgressSpinnerModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatExpansionModule,
+    ComponentsModule,
+    FormsModule
+  ],
   declarations: [
     InteractionsFiltersComponent,
     InteractionsListComponent,
@@ -51,7 +48,6 @@ import {SharedModule} from '../../shared/shared.module';
     InteractionsTableComponent,
     InteractionsLegendComponent,
     DownloadFormComponent,
-    InteractionsTableTwoComponent,
   ],
   providers: [
     TableFactoryService,

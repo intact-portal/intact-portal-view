@@ -1,6 +1,0 @@
-<a *ngIf="cv.identifier; else noMIId" [href]="cv.identifier | cv" class="cv-term" target="_blank">
-  {{cv.shortName}}
-</a>
-<ng-template #noMIId>
-  {{cv.shortName}}
-</ng-template>

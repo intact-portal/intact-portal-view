@@ -22,7 +22,7 @@ variables:
 init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
-  script: ['']
+  script: [ '' ]
   cache:
     policy: push
     key: ${CI_COMMIT_SHA}
@@ -83,7 +83,7 @@ build-test:
   stage: build
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - ng build --configuration=test
+    - node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=test
   artifacts:
     expire_in: 1 day
     paths:
@@ -133,7 +133,7 @@ build-image:
 hh-production-deploy:
   stage: deploy
   image: alpine
-  before_script: []
+  before_script: [ ]
   script:
     - apk add --no-cache curl git
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -149,7 +149,7 @@ hh-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [build-prod,build-image]
+  needs: [ build-prod,build-image ]
 #  only:
 #    refs:
 #      - master
@@ -157,7 +157,7 @@ hh-production-deploy:
 hx-production-deploy:
   stage: deploy
   image: alpine
-  before_script: []
+  before_script: [ ]
   script:
     - apk add --no-cache curl git
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -173,7 +173,7 @@ hx-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [build-prod,build-image]
+  needs: [ build-prod,build-image ]
 #  only:
 #    refs:
 #      - master
@@ -181,7 +181,7 @@ hx-production-deploy:
 hx-test-deploy:
   stage: deploy
   image: alpine
-  before_script: []
+  before_script: [ ]
   script:
     - apk add --no-cache curl git
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -198,7 +198,7 @@ hx-test-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [build-test,build-image]
+  needs: [ build-test,build-image ]
 #  only:
 #    refs:
 #      - master

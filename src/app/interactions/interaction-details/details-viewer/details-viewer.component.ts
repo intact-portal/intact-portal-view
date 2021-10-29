@@ -2,13 +2,13 @@ import {AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
-import * as complexviewer from 'complexviewer';
 import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
-import {Participant} from '../shared/model/participant.model';
+import * as complexviewer from 'complexviewer';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
+import {MIJson, Participant} from 'complexviewer';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-export let viewer: any;
+export let viewer: complexviewer.App;
 
 @UntilDestroy()
 @Component({
@@ -22,7 +22,7 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   @Input() featureAc: string;
   @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
-  private interactionData: any;
+  private interactionData: MIJson;
 
   annotations = {
     'MI Features': true,
@@ -99,7 +99,6 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   collapseAll(): void {
     viewer.collapseAll();
-    this.participantsService.collapseAllProteins();
   }
 
   onChangeAnnotation(value: string) {

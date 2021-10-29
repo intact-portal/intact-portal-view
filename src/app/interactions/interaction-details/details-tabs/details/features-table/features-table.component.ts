@@ -46,9 +46,8 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
   }
 
   private initDataTable(): void {
-    const table: any = $('#featureTable');
+    const table: JQuery = $('#featureTable');
     this.dataTable = table.DataTable({
-      bSort: false,
       searching: false,
       paging: true,
       lengthMenu: [10, 25, 50, 75, 100],
@@ -63,7 +62,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
         type: 'POST',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
-        data: function (d) {
+        data: function (d: any) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
         }

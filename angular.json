@@ -11,6 +11,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "d3",
+              "jquery",
+              "intersectionjs",
+              "markdown-it",
+              "@iktakahiro/markdown-it-katex"
+            ],
             "outputPath": "dist/intact-portal-view",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -21,7 +28,7 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "node_modules/angular-archwizard/archwizard.css",
+              "node_modules/angular-archwizard/styles/archwizard.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -33,25 +40,26 @@
               "node_modules/typeahead.js/dist/typeahead.bundle.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/complexviewer/dist/complexviewer.js"
-            ]
+            ],
+            "aot": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "dev": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "baseHref": "/intact/dev/",
+              "outputHashing": "none",
+              "extractLicenses": true
             },
             "test": {
+              "baseHref": "https://intact-portal.github.io/intact-portal-view/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -65,10 +73,10 @@
               ]
             },
             "production": {
+              "baseHref": "/intact/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -82,6 +90,7 @@
               ]
             },
             "local": {
+              "baseHref": "/intact/local/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -89,7 +98,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -105,6 +115,9 @@
             },
             "local": {
               "browserTarget": "intact-portal:build:local"
+            },
+            "dev": {
+              "browserTarget": "intact-portal:build:dev"
             }
           }
         },
@@ -181,10 +194,13 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ip",
-      "styleext": "css"
+      "style": "css"
     },
     "@schematics/angular:directive": {
       "prefix": "ip"
     }
+  },
+  "cli": {
+    "analytics": "5e70a9c4-41aa-41f9-b7e7-2d07f35a2f1d"
   }
 }

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import {DefaultUrlSerializer, RouterModule, Routes, UrlSerializer, UrlTree} from '@angular/router';
 import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
@@ -7,6 +7,7 @@ import {environment} from '../environments/environment';
 import {RedirectComponent} from './navigation/redirect/redirect.component';
 
 // Enable parenthesis in url parameters
+@Injectable()
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
   parse(url: string): UrlTree {
     return super.parse(url.replace(/[!'()*]/g, (c) => {

@@ -277,10 +277,10 @@
     <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
          *ngIf="filterTypes.MI_SCORE as filter">
       <div style="width: 300px" class="custom-slider margin-bottom-large">
-        <ng5-slider class="columns medium-3" [(value)]="filters.currentMinMIScore"
+        <ngx-slider class="columns medium-3" [(value)]="filters.currentMinMIScore"
                     [(highValue)]="filters.currentMaxMIScore"
                     [options]="options"
-                    (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
+                    (userChangeEnd)="onUserChangeEnd($event)"></ngx-slider>
       </div>
       <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
         <button class="delete-button" (click)="filters.resetFilter(filter)"

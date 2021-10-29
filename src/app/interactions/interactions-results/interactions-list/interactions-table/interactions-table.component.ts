@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactory, ComponentFactoryResolver, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -47,8 +47,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       .pipe(untilDestroyed(this))
       .subscribe(() => {
         if (this.dataTable !== undefined) {
-          const table: any = $('#interactionsTable');
-          this.dataTable = table.DataTable().ajax.reload();
+          this.dataTable = $('#interactionsTable').DataTable().ajax.reload();
         }
       });
 
@@ -284,7 +283,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
               if (!d.includes('intact-miscore')) {
                 const [name, value] = d.split(/[()]/);
-                const fixed = parseFloat(value).toFixed(2);
+                const scoreValue = parseFloat(value);
+                const fixed = isNaN(scoreValue) ? value : scoreValue.toFixed(2);
                 return `<div class="tag-cell-container vertical-flex"><span class="detailsExpansionsCell tag-cell centered">${name}:${fixed}</span></div>`
               }
               const YELLOW_ORANGE_BROWN_PALETTE: string[] = [

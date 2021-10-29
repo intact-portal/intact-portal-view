@@ -94,6 +94,7 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   expandAll(): void {
     viewer.expandAll();
+    this.participantsService.expandAllProteins();
   }
 
   collapseAll(): void {

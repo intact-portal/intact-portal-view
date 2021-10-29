@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactory, ComponentFactoryResolver, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -47,8 +47,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
       .pipe(untilDestroyed(this))
       .subscribe(() => {
         if (this.dataTable !== undefined) {
-          const table: any = $('#interactionsTable');
-          this.dataTable = table.DataTable().ajax.reload();
+          this.dataTable = $('#interactionsTable').DataTable().ajax.reload();
         }
       });
 

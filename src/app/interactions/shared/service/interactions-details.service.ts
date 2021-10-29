@@ -6,6 +6,7 @@ import {environment} from '../../../../environments/environment';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 import {catchError} from 'rxjs/operators';
 import {GoogleAnalyticsService} from 'ngx-google-analytics';
+import {MIJson} from 'complexviewer';
 
 const baseURL = environment.intact_portal_graph_ws;
 
@@ -18,21 +19,19 @@ export class InteractionsDetailsService {
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
-  getInteractionDetails(interactionAc: string): Observable<InteractionDetails | HttpErrorResponse> {
+  getInteractionDetails(interactionAc: string): Observable<InteractionDetails> {
     return this.http.get<InteractionDetails>(`${this.interactionDetailsURL}${interactionAc}`)
       .pipe(
         catchError(this.handleError),
       );
   }
 
-  getInteractionViewer(interactionAc: string): Observable<any> {
-    return this.http.get(`${this.interactionViewerURL}${interactionAc}`, {params: {format: 'miJSON'}})
-      .pipe(
-        catchError(this.handleError),
-      );
+  getInteractionViewer(interactionAc: string): Observable<MIJson> {
+    return this.http.get<MIJson>(`${this.interactionViewerURL}${interactionAc}`, {params: {format: 'miJSON'}})
+      .pipe(catchError(this.handleError));
   }
 
-  private handleError(err: HttpErrorResponse | any): ErrorObservable<HttpErrorResponse> {
+  private handleError(err: HttpErrorResponse | any): ErrorObservable<any> {
     this.reporter.exception(err);
     if (err.error instanceof Error) {
       return observableThrowError(err);

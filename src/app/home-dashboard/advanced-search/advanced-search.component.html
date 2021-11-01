@@ -5,8 +5,12 @@
 </div>
 
 <div class="input-group">
-  <div #editor id="editor" class="row output input-group-field" contenteditable="true" (input)="onInput()">
+  <div style="position: relative">
+    <textarea id="editor" #editor (input)="onInput(editor, builder)" (scroll)="syncScroll(editor, pre)"
+              spellcheck="false"></textarea>
+    <pre id="highlighting" aria-hidden="true" #pre><code class="highlighting-content" [innerHTML]="coloredMIQL"></code></pre>
   </div>
+
   <div class="input-group-button">
     <input id="ad-search-button" type="button" name="submit" value="1"
            (click)="search(editor.innerText)" class="button icon icon-functional">
@@ -19,19 +23,21 @@
     <div class="accordion-content" data-tab-content>
       <div class="margin-top-large margin-bottom-large">
         <query-builder #builder id="builder" [formControl]='queryCtrl' [config]='currentConfig'
-                       [classNames]="classNames" (ngModelChange)="onBuilderUpdate()">
+                       [classNames]="classNames" (ngModelChange)="builderToEditor(builder, editor)">
 
           <ng-container *querySwitchGroup="let ruleSet">
             <div class="button-group margin-bottom-none">
               <div class="display-contents ad-q-switch-control">
                 <input type="radio" value="and" [checked]="ruleSet.condition === 'and'"
                        class="ad-q-switch-radio no-margin checked ng-untouched ng-pristine ng-valid">
-                <label class="button margin-bottom-none" (click)="updateCondition(ruleSet, $event)">AND</label>
+                <label class="button margin-bottom-none"
+                       (click)="updateCondition(ruleSet,$event,builder,editor)">AND</label>
               </div>
               <div class="display-contents ad-q-switch-control">
                 <input type="radio" value="or" [checked]="ruleSet.condition === 'or'"
                        class="ad-q-switch-radio no-margin ng-untouched ng-pristine ng-valid">
-                <label class="button margin-bottom-none" (click)="updateCondition(ruleSet, $event)">OR</label>
+                <label class="button margin-bottom-none"
+                       (click)="updateCondition(ruleSet,$event,builder,editor)">OR</label>
               </div>
             </div>
           </ng-container>

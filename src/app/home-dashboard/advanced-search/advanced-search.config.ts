@@ -356,3 +356,5 @@ for (const key of Object.keys(fields)) {
   AdvancedQueryHelper.fieldToKeyMap.set(field, key);
 }
 
+AdvancedQueryHelper.keywords.sort()
+

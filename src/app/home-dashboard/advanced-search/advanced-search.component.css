@@ -9,6 +9,14 @@
   padding: 0;
 }
 
+.autocomplete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: fit-content;
+  z-index: 3;
+}
+
 #editor, #highlighting {
   position: absolute;
   top: 0;

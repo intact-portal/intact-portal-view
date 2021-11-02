@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
@@ -27,6 +27,15 @@ export class AdvancedSearchComponent implements AfterViewInit {
   };
 
   coloredMIQL: string;
+  autocompleteOptions: string[] = [];
+  x = 0;
+  y = 0;
+
+  @ViewChild(QueryBuilderComponent)
+  builder: QueryBuilderComponent;
+
+  @ViewChild('editor')
+  private _editor: ElementRef<HTMLTextAreaElement>;
 
   constructor() {
     this.queryCtrl = new FormControl(this.query);
@@ -53,7 +62,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
     invalidRuleSet: 'ad-q-row invalid-rule-set'
   }
 
-  updateCondition(ruleSet: RuleSet, e: MouseEvent, builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {
+  updateCondition(ruleSet: RuleSet, e: MouseEvent) {
     const target = $(e.target);
     const parent = target.parents('.button-group')
     parent.find('.ad-q-switch-radio').each(function () {
@@ -65,7 +74,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
         $(this).prop('checked', false)
       }
     });
-    this.builderToEditor(builder, editor);
+    this.builderToEditor();
   }
 
   ngAfterViewInit(): void {
@@ -77,42 +86,68 @@ export class AdvancedSearchComponent implements AfterViewInit {
 
   private doUpdate = true;
 
-  builderToEditor(builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {
+  builderToEditor() {
     if (this.doUpdate) {
       this.doUpdate = false;
-      const miql = MIQLPipe.transform(builder.value);
-      editor.innerText = miql;
+      const miql = MIQLPipe.transform(this.builder.value);
+      this.editor.innerText = miql;
       this.coloredMIQL = ColorMIQLPipe.transform(miql);
     }
     this.doUpdate = true
   }
 
-  editorToBuilder(builder: QueryBuilderComponent, miql: string) {
+  editorToBuilder(miql: string) {
     if (this.doUpdate) {
       this.doUpdate = false;
-      builder.value = parseMIQL(miql);
+      this.builder.value = parseMIQL(miql);
     }
     this.doUpdate = true
   }
 
-  onInput(editor: HTMLTextAreaElement, builder: QueryBuilderComponent) {
-    let miql = editor.value;
+
+  onInput() {
+
+    const aroundCaret = this.extractWordAroundCaret();
+    this.autocompleteOptions = AdvancedQueryHelper.keywords.filter(value => value.startsWith(aroundCaret.word));
+    const miql = this.processHighlights();
+    this.editorToBuilder(miql);
+  }
+
+  extractWordAroundCaret(): { start: number, end: number, word: string } {
+    const pos = this.editor.selectionStart;
+    const text = this.editor.value;
+    let start, end;
+    for (start = pos - 1; start >= 0 && text[start]?.match(/\w/); start--) {
+    }
+    for (end = pos - 1; end < text.length && text[end]?.match(/\w/); end++) {
+    }
+    return {start, end, word: text.substring(start, end)};
+  }
+
+  private processHighlights() {
+    let miql = this.editor.value;
     if (miql.endsWith('\n')) {
       miql += ' ';
     }
     this.coloredMIQL = ColorMIQLPipe.transform(miql);
-    this.editorToBuilder(builder, miql);
-  }
-  onBuilderUpdate(editor: HTMLTextAreaElement, builder: QueryBuilderComponent) {
-    this.builderToEditor(builder, editor)
+    return miql;
   }
 
-  syncScroll(editor: HTMLTextAreaElement, pre: HTMLPreElement) {
+  onBuilderUpdate() {
+    this.builderToEditor()
+  }
+
+  syncScroll(pre: HTMLPreElement) {
     setTimeout(() => {
-      pre.scrollTop = editor.scrollTop;
-      pre.scrollLeft = editor.scrollLeft;
+      pre.scrollTop = this.editor.scrollTop;
+      pre.scrollLeft = this.editor.scrollLeft;
     })
   }
+
+  get editor(): HTMLTextAreaElement {
+    return this._editor.nativeElement;
+  }
+
 }
 
 

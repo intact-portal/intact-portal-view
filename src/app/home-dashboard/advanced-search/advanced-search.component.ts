@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
@@ -26,11 +26,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
     rules: []
   };
 
-  @ViewChild(QueryBuilderComponent, {static: true})
-  builder: QueryBuilderComponent;
-
-  @ViewChild('editor', {static: true})
-  editor: ElementRef;
+  coloredMIQL: string;
 
   constructor() {
     this.queryCtrl = new FormControl(this.query);
@@ -57,7 +53,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
     invalidRuleSet: 'ad-q-row invalid-rule-set'
   }
 
-  updateCondition(ruleSet: RuleSet, e: MouseEvent) {
+  updateCondition(ruleSet: RuleSet, e: MouseEvent, builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {
     const target = $(e.target);
     const parent = target.parents('.button-group')
     parent.find('.ad-q-switch-radio').each(function () {
@@ -69,7 +65,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
         $(this).prop('checked', false)
       }
     });
-    this.onBuilderUpdate()
+    this.builderToEditor(builder, editor);
   }
 
   ngAfterViewInit(): void {
@@ -81,16 +77,17 @@ export class AdvancedSearchComponent implements AfterViewInit {
 
   private doUpdate = true;
 
-  builderToInput(builder: QueryBuilderComponent, editor: HTMLDivElement) {
+  builderToEditor(builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {
     if (this.doUpdate) {
       this.doUpdate = false;
-      // editor.innerHTML = ColorMIQLPipe.transform(MIQLPipe.transform(builder.value));
-      editor.innerHTML = MIQLPipe.transform(builder.value);
+      const miql = MIQLPipe.transform(builder.value);
+      editor.innerText = miql;
+      this.coloredMIQL = ColorMIQLPipe.transform(miql);
     }
     this.doUpdate = true
   }
 
-  inputToBuilder(builder: QueryBuilderComponent, miql: string) {
+  editorToBuilder(builder: QueryBuilderComponent, miql: string) {
     if (this.doUpdate) {
       this.doUpdate = false;
       builder.value = parseMIQL(miql);
@@ -98,31 +95,23 @@ export class AdvancedSearchComponent implements AfterViewInit {
     this.doUpdate = true
   }
 
-  onInput() {
-    const miql = this.editor.nativeElement.innerText;
-    // this.colorBox(miql);
-    this.inputToBuilder(this.builder, miql);
-  }
-
-  private colorBox(miql: string) {
-    const sel = window.getSelection();
-    const caretPosition = sel.getRangeAt(0).getBoundingClientRect();
-    this.editor.nativeElement.innerHTML = ColorMIQLPipe.transform(miql);
-    let range: Range;
-    if (caretPosition.left === 0 && caretPosition.top === 0) {
-      range = document.createRange();
-      range.setStart(this.editor.nativeElement, 0);
-    } else {
-      range = document.caretRangeFromPoint(caretPosition.left, caretPosition.top);
+  onInput(editor: HTMLTextAreaElement, builder: QueryBuilderComponent) {
+    let miql = editor.value;
+    if (miql.endsWith('\n')) {
+      miql += ' ';
     }
-    range.collapse(true)
-    sel.removeAllRanges();
-    sel.addRange(range);
-    this.editor.nativeElement.focus();
+    this.coloredMIQL = ColorMIQLPipe.transform(miql);
+    this.editorToBuilder(builder, miql);
+  }
+  onBuilderUpdate(editor: HTMLTextAreaElement, builder: QueryBuilderComponent) {
+    this.builderToEditor(builder, editor)
   }
 
-  onBuilderUpdate() {
-    this.builderToInput(this.builder, this.editor.nativeElement)
+  syncScroll(editor: HTMLTextAreaElement, pre: HTMLPreElement) {
+    setTimeout(() => {
+      pre.scrollTop = editor.scrollTop;
+      pre.scrollLeft = editor.scrollLeft;
+    })
   }
 }
 
@@ -202,11 +191,11 @@ function removeSuperiorRules(value: string, start: number, end: number, stackLev
 }
 
 function fillRuleSet(ruleSet: RuleSet, value: string) {
-  ruleSet.condition = /[ \u00a0]OR[ \u00a0]/ig.test(value) ? 'or' : 'and';
+  ruleSet.condition = /\sOR\s/ig.test(value) ? 'or' : 'and';
   const superiorRuleSets = ruleSet.rules;
   let i = 0;
   ruleSet.rules = [];
-  value.split(/[ \u00a0]AND[ \u00a0]|[ \u00a0]OR[ \u00a0]/ig)
+  value.split(/\sAND\s|\sOR\s/ig)
     .map(ruleStr => ruleStr.trim())
     .filter(ruleStr => ruleStr.length > 0)
     .forEach(ruleStr => {

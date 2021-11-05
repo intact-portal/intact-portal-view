@@ -227,6 +227,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             render: this.tableFactory.speciesRender('hostOrganismTaxId')
           },
           {
+            ...this._columns.negative,
+            render: data => data ? '❌' : '✔️'
+          },
+          {
             data: this._columns.detectionMethod.data,
             title: this._columns.detectionMethod.title,
             render: this.tableFactory.cvRender('detectionMethodMIIdentifier')

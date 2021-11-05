@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./color-range-diagram.component.css']
 })
 export class ColorRangeDiagramComponent implements OnInit {
-  @Input() rangeMap: any;
+  @Input() rangeMap: { [range: string]: string };
   private _points: ColoredPoint[] = [];
   min: number = null;
   max: number = null;
@@ -17,10 +17,10 @@ export class ColorRangeDiagramComponent implements OnInit {
   ngOnInit() {
     Object.keys(this.rangeMap)
       .forEach(key => {
-        let [start, stop] = key.split(' - ').map(Number.parseFloat);
+        const [start, stop] = key.split(' - ').map(Number.parseFloat);
         if (this.min == null || start < this.min) this.min = start;
         if (this.max == null || stop > this.max) this.max = stop;
-        let color = this.rangeMap[key];
+        const color = this.rangeMap[key];
         this.points.push(new ColoredPoint(color, start))
         this.points.push(new ColoredPoint(color, stop))
       }, this);
@@ -31,7 +31,7 @@ export class ColorRangeDiagramComponent implements OnInit {
   }
 
   get pointLabels(): number[] {
-    return this._points.map(p => p.x).filter((v, i) => i % 4 == 1);
+    return this._points.map(p => p.x).filter((v, i) => i % 4 === 1);
   }
 
   get height(): number {

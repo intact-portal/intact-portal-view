@@ -64,6 +64,13 @@
         <span class="network-legend-label">{{legend.edge_legend.expansion[status].label}}</span>
       </div>
     </div>
+    <div *ngIf="legend.edge_legend.negative?.true">
+      <span>Cross ~ <i>Positive interaction</i></span>
+      <div *ngFor="let status of ['true']" class="edge-line">
+        <ip-edge-diagram [midCrossColor]="legend.edge_legend.negative[status].value" ></ip-edge-diagram>
+        <span class="network-legend-label">{{legend.edge_legend.expansion[status].label}}</span>
+      </div>
+    </div>
 
   </div>
   <ng-template #collapsedLegend>

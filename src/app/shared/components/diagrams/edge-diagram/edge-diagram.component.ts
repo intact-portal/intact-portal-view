@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EdgeShape} from "../../../../interactions/shared/model/network-shapes/edge-shape";
+import {EdgeShape} from '../../../../interactions/shared/model/network-shapes/edge-shape';
 
 @Component({
   selector: 'ip-edge-diagram',
@@ -8,15 +8,17 @@ import {EdgeShape} from "../../../../interactions/shared/model/network-shapes/ed
 })
 export class EdgeDiagramComponent implements OnInit {
   @Input() shape: EdgeShape = EdgeShape.SOLID_LINE;
-  @Input() color: string = "#d6d6d6";
+  @Input() color: string = '#d6d6d6';
   @Input() thickness: number = 15;
+  @Input() midCrossColor: string = '';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
   get strokeShape(): string {
-    return this.shape == EdgeShape.SOLID_LINE ? "100" : "25 10";
+    return this.shape === EdgeShape.SOLID_LINE ? '100' : '25 10';
   }
 }

@@ -28,12 +28,15 @@ export class FilterService {
 
   private _hasExpansion = false;
   private _hasMutation = false;
+  private _hasNegative = false;
   private _mutationColor: string = '#FF00A1';
 
   private _nbMutation = 0;
   private _nbNonMutation = 0;
   private _nbExpansion = 0;
   private _nbNonExpansion = 0;
+  private _nbNegative = 0;
+  private _nbPositive = 0;
 
   private updatesSubject: Subject<Filter | void> = new Subject<Filter | void>();
   public updates: Observable<Filter | void> = this.updatesSubject.asObservable();
@@ -55,6 +58,7 @@ export class FilterService {
     this.initMIScoreFilter(facets.intact_miscore);
     this.initMutationFilter(facets.affected_by_mutation_styled);
     this.initExpansionFilter(facets.expansion_method_s);
+    this.initNegativeFilter(facets.negative);
   }
 
   private static filterFacets(facets: InteractionFacets): InteractionFacets {
@@ -105,6 +109,18 @@ export class FilterService {
       }
     }
     this._hasExpansion = this._nbExpansion > 0;
+  }
+
+  private initNegativeFilter(negativeFacets: Facet[]) {
+    this._nbNegative = 0;
+    this._nbPositive = 0;
+    for (const negativeFacet of negativeFacets) {
+      this._nbNegative += negativeFacet.valueCount;
+      if (negativeFacet.value === 'false' && negativeFacet.valueCount > 0) {
+        this._nbPositive = negativeFacet.valueCount;
+      }
+    }
+    this._hasNegative = this._nbNegative > 0;
   }
 
   public updateFilter(filter: Filter, value: any, update: boolean = true): void {
@@ -416,6 +432,18 @@ export class FilterService {
 
   get nbNonExpansion(): number {
     return this._nbNonExpansion;
+  }
+
+  get hasNegative(): boolean {
+    return this._hasNegative;
+  }
+
+  get nbNegative(): number {
+    return this._nbNegative;
+  }
+
+  get nbPositive(): number {
+    return this._nbPositive;
   }
 }
 

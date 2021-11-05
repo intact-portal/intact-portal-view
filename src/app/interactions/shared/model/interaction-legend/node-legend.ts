@@ -1,6 +1,6 @@
 import {BooleanLegend} from './boolean-legend';
 import {NodeShape} from '../network-shapes/node-shape';
-import {Mapper} from './Mapper';
+import {Mapper} from './mapper';
 
 export interface NodeLegend {
   shape: Mapper<NodeShape>,

@@ -1,6 +1,6 @@
 import {BooleanLegend} from './boolean-legend';
 import {EdgeShape} from '../network-shapes/edge-shape';
-import {Mapper} from './Mapper';
+import {Mapper} from './mapper';
 
 
 export interface EdgeLegend {

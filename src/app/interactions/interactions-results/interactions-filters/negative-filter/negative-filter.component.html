@@ -1,0 +1,28 @@
+<div class="container">
+  <em>Negative and/or positive</em>
+  <em class="margin-bottom-xsmall">interactions only</em>
+  <mat-button-toggle-group (valueChange)="filters.updateFilter(FILTER.NEGATIVE, $event.value)"
+                           aria-label="Negative interaction filter">
+    <mat-button-toggle [value]="STATUS.POSITIVE_ONLY" [disabled]="filters.nbPositive === 0" checked>
+      <div class="bi-layered">
+        <span class="top-level">✔️</span>
+        <span class="bottom-level">{{filters.nbPositive}}</span>
+      </div>
+    </mat-button-toggle>
+    <mat-button-toggle [value]="STATUS.INACTIVATED">
+      <div class="bi-layered">
+        <span class="top-level">✔️ | ❌</span>
+        <span class="bottom-level">{{filters.nbPositive + filters.nbNegative}}</span>
+      </div>
+    </mat-button-toggle>
+    <mat-button-toggle [value]="STATUS.NEGATIVE_ONLY" [disabled]="filters.nbNegative === 0">
+      <div class="bi-layered">
+        <span class="top-level">❌</span>
+        <span class="bottom-level">{{filters.nbNegative}}</span>
+      </div>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+
+

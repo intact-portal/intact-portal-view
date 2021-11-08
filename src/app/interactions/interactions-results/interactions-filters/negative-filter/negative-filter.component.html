@@ -1,15 +1,15 @@
 <div class="container">
   <em>Negative and/or positive</em>
   <em class="margin-bottom-xsmall">interactions only</em>
-  <mat-button-toggle-group (valueChange)="filters.updateFilter(FILTER.NEGATIVE, $event.value)"
+  <mat-button-toggle-group [ngModel]="filters.negative" (change)="filters.updateFilter(FILTER.NEGATIVE, $event.value)"
                            aria-label="Negative interaction filter">
-    <mat-button-toggle [value]="STATUS.POSITIVE_ONLY" [disabled]="filters.nbPositive === 0" checked>
+    <mat-button-toggle [value]="STATUS.POSITIVE_ONLY" [disabled]="filters.nbPositive === 0">
       <div class="bi-layered">
         <span class="top-level">✔️</span>
         <span class="bottom-level">{{filters.nbPositive}}</span>
       </div>
     </mat-button-toggle>
-    <mat-button-toggle [value]="STATUS.INACTIVATED">
+    <mat-button-toggle [value]="STATUS.POSITIVE_AND_NEGATIVE">
       <div class="bi-layered">
         <span class="top-level">✔️ | ❌</span>
         <span class="bottom-level">{{filters.nbPositive + filters.nbNegative}}</span>

@@ -1,5 +1,5 @@
 export enum NegativeFilterStatus {
-  POSITIVE_ONLY = 'false',
-  INACTIVATED = 'null',
-  NEGATIVE_ONLY = 'true'
+  POSITIVE_ONLY = 'POSITIVE_ONLY',
+  POSITIVE_AND_NEGATIVE = 'POSITIVE_AND_NEGATIVE',
+  NEGATIVE_ONLY = 'NEGATIVE_ONLY'
 }

@@ -168,7 +168,7 @@ export class FilterService {
 
     this._currentMaxMIScore = params.has('maxMIScore') ? parseFloat(params.get('maxMIScore')) : 1;
 
-    this._negative = NegativeFilterStatus[params.get('negativeFilter')];
+    this._negative = params.has('negativeFilter') ? params.get('negativeFilter') as NegativeFilterStatus : NegativeFilterStatus.POSITIVE_ONLY;
 
     this._mutation = params.get('mutationFilter') === 'true';
 
@@ -200,7 +200,7 @@ export class FilterService {
 
     if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
       // TODO revert to params.negativeFilter = this.negative when backend is ready
-      params.negativeFilter = this._negative === 'true';
+      params.negativeFilter = this._negative;
     }
 
     if (this._currentMinMIScore !== undefined && this._currentMinMIScore > this.minMIScore) {
@@ -256,7 +256,7 @@ export class FilterService {
       this.interactionDetectionMethods.length !== 0 ||
       this.interactionHostOrganisms.length !== 0 ||
       this.mutation ||
-      this.negative ||
+      this.negative !== NegativeFilterStatus.POSITIVE_ONLY ||
       this.expansion ||
       this.isFilteringScore();
   }

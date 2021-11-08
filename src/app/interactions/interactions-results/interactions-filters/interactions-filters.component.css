@@ -180,3 +180,7 @@ input.vertically-centered {
   margin-left: 4px;
   margin-right: 4px;
 }
+
+.underline {
+  text-decoration-line: underline;
+}

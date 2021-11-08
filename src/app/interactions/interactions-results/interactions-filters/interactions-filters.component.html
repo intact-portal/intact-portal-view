@@ -1,10 +1,10 @@
 <div id="filters-bar" class="button-bar">
-
   <div class="button-group rounded stack-for-small">
     <div class="button no-hover">
       <i class="icon icon-functional icon-spacer icon-filter"></i> Filters
     </div>
-    <button class="button lighter" type="button" data-toggle="interactor-species-dropdown">
+    <button class="button lighter" type="button" data-toggle="interactor-species-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.SPECIES)}">
       Interactor Species
     </button>
     <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
@@ -88,7 +88,8 @@
       </div>
     </div>
 
-    <button class="button lighter" type="button" data-toggle="interactor-type-dropdown">
+    <button class="button lighter" type="button" data-toggle="interactor-type-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.INTERACTOR_TYPE)}">
       Interactor Type
     </button>
     <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
@@ -125,7 +126,8 @@
       </div>
     </div>
 
-    <button class="button lighter" type="button" data-toggle="interaction-type-dropdown">
+    <button class="button lighter" type="button" data-toggle="interaction-type-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.INTERACTION_TYPE)}">
       Interaction Type
     </button>
     <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
@@ -159,7 +161,8 @@
       </div>
     </div>
 
-    <button class="button lighter" type="button" data-toggle="interaction-detection-method-dropdown">
+    <button class="button lighter" type="button" data-toggle="interaction-detection-method-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.DETECTION_METHOD)}">
       Interaction Detection Method
     </button>
     <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
@@ -193,7 +196,8 @@
       </div>
     </div>
 
-    <button class="button lighter" type="button" data-toggle="interaction-host-organism-dropdown">
+    <button class="button lighter" type="button" data-toggle="interaction-host-organism-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.HOST_ORGANISM)}">
       Interaction Host Organism
     </button>
     <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
@@ -226,7 +230,8 @@
       </div>
     </div>
 
-    <button class="button lighter" type="button" data-toggle="interaction-mutation-dropdown">
+    <button class="button lighter" type="button" data-toggle="interaction-mutation-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.MUTATION)}">
       Mutation
     </button>
     <div class="dropdown-pane" id="interaction-mutation-dropdown" data-dropdown data-hover="true"
@@ -250,7 +255,8 @@
       </div>
     </div>
 
-    <button class="button lighter" type="button" data-toggle="interaction-expansion-dropdown">
+    <button class="button lighter" type="button" data-toggle="interaction-expansion-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.EXPANSION)}">
       Expansion
     </button>
     <div class="dropdown-pane" id="interaction-expansion-dropdown" data-dropdown data-hover="true"
@@ -270,7 +276,8 @@
       </div>
     </div>
 
-    <button class="button lighter" type="button" data-toggle="interaction-negative-dropdown">
+    <button class="button lighter" type="button" data-toggle="interaction-negative-dropdown"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.NEGATIVE)}">
       Negative
     </button>
     <div class="dropdown-pane" id="interaction-negative-dropdown" data-dropdown data-hover="true"
@@ -279,7 +286,8 @@
     </div>
 
     <button class="button lighter on-top" type="button" data-toggle="score-dropdown"
-            [@bendTip]="filters.anyFiltersSelected() ? 'tipStraight' : 'tipBended'">
+            [@bendTip]="filters.anyFiltersSelected() ? 'tipStraight' : 'tipBended'"
+            [ngClass]="{'underline': filters.isFiltering(filterTypes.MI_SCORE)}">
       MI Score
     </button>
     <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true"

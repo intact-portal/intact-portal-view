@@ -4,11 +4,11 @@
     <input class="hidden" type="text" name="query" [value]="search.spacedQuery">
 
     <input class="hidden" type="checkbox" name="batchSearch" [checked]="search.isBatchSearch">
-    <input class="hidden" type="checkbox" name="negativeFilter" [checked]="filters.negative">
     <input class="hidden" type="checkbox" name="mutationFilter" [checked]="filters.mutation">
     <input class="hidden" type="checkbox" name="expansionFilter" [checked]="filters.expansion">
     <input class="hidden" type="checkbox" name="intraSpecies" [checked]="filters.intraSpecies">
 
+    <input class="hidden" type="text" name="negativeFilter" [value]="filters.negative">
     <input class="hidden" type="text" name="interactorAcs"
            *ngFor="let value of selection.interactorAcs" [value]="value">
     <input class="hidden" type="text" name="binaryInteractionIds"

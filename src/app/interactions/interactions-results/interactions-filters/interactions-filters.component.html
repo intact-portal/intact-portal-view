@@ -274,20 +274,8 @@
       Negative
     </button>
     <div class="dropdown-pane" id="interaction-negative-dropdown" data-dropdown data-hover="true"
-         data-hover-pane="true" *ngIf="filterTypes.NEGATIVE as filter">
-
-      <em>Include negative interactions</em>
-      <div class="centered-switch-wrap">
-        <span class="tag-cell species-cell margin-right-small"
-              [ngClass]="{'discreet':filters.negative, 'emphasized':!filters.negative}">{{filters.nbPositive}} ✔️</span>
-        <mat-slide-toggle color="primary"
-                          (change)="filters.updateFilter(filter, $event.checked)"
-                          [disabled]="!filters.hasNegative"
-                          [checked]="filters.negative">
-        </mat-slide-toggle>
-        <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
-              [ngClass]="{'discreet':!filters.negative, 'emphasized':filters.negative}">{{filters.nbNegative}} ✔️ | ❌</span>
-      </div>
+         data-hover-pane="true">
+      <ip-negative-filter></ip-negative-filter>
     </div>
 
     <button class="button lighter on-top" type="button" data-toggle="score-dropdown"

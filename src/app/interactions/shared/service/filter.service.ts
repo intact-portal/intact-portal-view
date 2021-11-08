@@ -4,13 +4,14 @@ import {Facet} from '../model/interactions-results/facet.model';
 import {ParamMap} from '@angular/router';
 import {InteractionFacets} from '../model/interactions-results/interaction/interaction-facets.model';
 import {NetworkSelectionService} from './network-selection.service';
+import {NegativeFilterStatus} from '../../interactions-results/interactions-filters/negative-filter/negative-filter-status.model';
 
 
 @Injectable()
 export class FilterService {
   private _facets: InteractionFacets;
   private intraSpeciesCounts: Map<string, number>;
-  private _negative = false;
+  private _negative = NegativeFilterStatus.POSITIVE_ONLY;
   private _mutation = false;
   private _expansion = false;
   private _intraSpecies = false;
@@ -115,9 +116,10 @@ export class FilterService {
     this._nbNegative = 0;
     this._nbPositive = 0;
     for (const negativeFacet of negativeFacets) {
-      this._nbNegative += negativeFacet.valueCount;
       if (negativeFacet.value === 'false' && negativeFacet.valueCount > 0) {
         this._nbPositive = negativeFacet.valueCount;
+      } else if (negativeFacet.value === 'true' && negativeFacet.valueCount > 0) {
+        this._nbNegative += negativeFacet.valueCount;
       }
     }
     this._hasNegative = this._nbNegative > 0;
@@ -166,7 +168,7 @@ export class FilterService {
 
     this._currentMaxMIScore = params.has('maxMIScore') ? parseFloat(params.get('maxMIScore')) : 1;
 
-    this._negative = params.get('negativeFilter') === 'true';
+    this._negative = NegativeFilterStatus[params.get('negativeFilter')];
 
     this._mutation = params.get('mutationFilter') === 'true';
 
@@ -196,8 +198,9 @@ export class FilterService {
       params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
     }
 
-    if (this._negative !== undefined && this._negative !== false) {
-      params.negativeFilter = this._negative;
+    if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
+      // TODO revert to params.negativeFilter = this.negative when backend is ready
+      params.negativeFilter = this._negative === 'true';
     }
 
     if (this._currentMinMIScore !== undefined && this._currentMinMIScore > this.minMIScore) {
@@ -263,7 +266,7 @@ export class FilterService {
       case Filter.MI_SCORE:
         return this.isFilteringScore();
       case Filter.NEGATIVE:
-        return this._negative;
+        return this._negative !== NegativeFilterStatus.POSITIVE_ONLY;
       case Filter.MUTATION:
         return this._mutation;
       case Filter.EXPANSION:
@@ -312,7 +315,7 @@ export class FilterService {
         this.interactorSpecies = []
         break
       case Filter.NEGATIVE:
-        this._negative = false;
+        this._negative = NegativeFilterStatus.POSITIVE_ONLY;
         break;
       case Filter.MUTATION:
         this._mutation = false;
@@ -382,7 +385,7 @@ export class FilterService {
     return this._expansion;
   }
 
-  get negative(): boolean {
+  get negative(): NegativeFilterStatus {
     return this._negative;
   }
 

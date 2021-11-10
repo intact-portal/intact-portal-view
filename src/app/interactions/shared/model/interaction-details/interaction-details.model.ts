@@ -16,5 +16,6 @@ export interface InteractionDetails {
   parameters: Parameter[],
   annotations: Annotation[],
   xrefs: CrossReference[],
-  publication: Publication
+  publication: Publication,
+  negative: boolean
 }

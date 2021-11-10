@@ -27,6 +27,11 @@
             <h5>Host Organism</h5>
             <span [innerHTML]="interactionDetails.hostOrganism | organism"></span>
           </div>
+
+          <div class="margin-top-large">
+            <h5>Positive Interaction</h5>
+            <span>{{interactionDetails.negative ? '❌' : '✔️'}}</span>
+          </div>
         </div>
 
         <div class="columns medium-6 small-12">

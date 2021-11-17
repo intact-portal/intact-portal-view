@@ -8,6 +8,8 @@ import {Filter, FilterService} from '../shared/service/filter.service';
 import {NetworkViewService} from '../shared/service/network-view.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NegativeFilterStatus} from './interactions-filters/negative-filter/negative-filter-status.model';
+import {InteractionSearchResult} from '../shared/model/interactions-results/interaction/interaction-search-result.model';
+import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
 
 @UntilDestroy()
 @Component({
@@ -18,6 +20,8 @@ import {NegativeFilterStatus} from './interactions-filters/negative-filter/negat
 export class InteractionsResultsComponent implements OnInit {
 
   private _hasResults = true;
+
+  interactionsSearch: InteractionsSearchResultData;
 
   constructor(private titleService: Title,
               public search: SearchService,
@@ -49,15 +53,13 @@ export class InteractionsResultsComponent implements OnInit {
     this.interactionsSearchService.queryFacets()
       .pipe(untilDestroyed(this))
       .subscribe((interactionsSearch) => {
+        this.interactionsSearch = interactionsSearch;
         if (interactionsSearch.totalElements !== 0) {
-          console.log('Normal')
           this.filters.initFacets(interactionsSearch.facetResultPage);
         } else if (interactionsSearch.facetResultPage.negative.find(value => value.value === 'true')?.valueCount > 0) {
-          console.log('Only negative')
           this.filters.initFacets(interactionsSearch.facetResultPage);
           this.filters.updateFilter(Filter.NEGATIVE, NegativeFilterStatus.POSITIVE_AND_NEGATIVE, true)
         } else {
-          console.log('No results')
           this._hasResults = false;
         }
         ProgressBarComponent.hideWithoutDelay();

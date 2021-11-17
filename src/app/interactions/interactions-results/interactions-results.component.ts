@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {SearchService} from '../../home-dashboard/search/service/search.service';
-import {FilterService} from '../shared/service/filter.service';
+import {Filter, FilterService} from '../shared/service/filter.service';
 import {NetworkViewService} from '../shared/service/network-view.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {NegativeFilterStatus} from './interactions-filters/negative-filter/negative-filter-status.model';
 
 @UntilDestroy()
 @Component({
@@ -17,7 +17,6 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 })
 export class InteractionsResultsComponent implements OnInit {
 
-  private _interactionsSearch: InteractionsSearchResultData;
   private _hasResults = true;
 
   constructor(private titleService: Title,
@@ -50,10 +49,15 @@ export class InteractionsResultsComponent implements OnInit {
     this.interactionsSearchService.queryFacets()
       .pipe(untilDestroyed(this))
       .subscribe((interactionsSearch) => {
-        this.interactionsSearch = interactionsSearch;
-        if (this.interactionsSearch.totalElements !== 0) {
-          this.filters.initFacets(this.interactionsSearch.facetResultPage);
+        if (interactionsSearch.totalElements !== 0) {
+          console.log('Normal')
+          this.filters.initFacets(interactionsSearch.facetResultPage);
+        } else if (interactionsSearch.facetResultPage.negative.find(value => value.value === 'true')?.valueCount > 0) {
+          console.log('Only negative')
+          this.filters.initFacets(interactionsSearch.facetResultPage);
+          this.filters.updateFilter(Filter.NEGATIVE, NegativeFilterStatus.POSITIVE_AND_NEGATIVE, true)
         } else {
+          console.log('No results')
           this._hasResults = false;
         }
         ProgressBarComponent.hideWithoutDelay();
@@ -97,11 +101,5 @@ export class InteractionsResultsComponent implements OnInit {
     return this._hasResults;
   }
 
-  get interactionsSearch(): InteractionsSearchResultData {
-    return this._interactionsSearch;
-  }
 
-  set interactionsSearch(value: InteractionsSearchResultData) {
-    this._interactionsSearch = value;
-  }
 }

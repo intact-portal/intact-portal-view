@@ -38,9 +38,12 @@ export class FilterService {
   private _nbNonExpansion = 0;
   private _nbNegative = 0;
   private _nbPositive = 0;
+  private _totalElements = 0;
 
   private updatesSubject: Subject<Filter | void> = new Subject<Filter | void>();
   public updates: Observable<Filter | void> = this.updatesSubject.asObservable();
+
+
 
   private static updateDiscreteFilter(container: string[], updatedValue: string) {
     if (!container.includes(updatedValue)) {
@@ -53,7 +56,8 @@ export class FilterService {
   constructor(private selection: NetworkSelectionService) {
   }
 
-  public initFacets(facets: InteractionFacets) {
+  public initFacets(facets: InteractionFacets, totalElements: number) {
+    this._totalElements = totalElements;
     this._facets = FilterService.filterFacets(facets);
     this.initSpeciesFilter();
     this.initMIScoreFilter(facets.intact_miscore);
@@ -447,6 +451,10 @@ export class FilterService {
 
   get nbPositive(): number {
     return this._nbPositive;
+  }
+
+  get totalElements(): number {
+    return this._totalElements;
   }
 }
 

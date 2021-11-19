@@ -50,6 +50,9 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   filterTypes = Filter;
   shapes = NodeShape;
 
+  readonly NO_EXPORT_TEXT = 'Exports are disabled when there are more than 2000 interactions for performance issues.\n' +
+    'Please use Cytoscape IntAct App to support large networks'
+
   constructor(private tableFactory: TableFactoryService, public view: NetworkViewService, public filters: FilterService) {
   }
 
@@ -57,8 +60,12 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.initSliderRange();
   }
 
+  get enableExports(): boolean {
+    return this.filters.totalElements < 2000;
+  }
+
   ngAfterViewInit(): void {
-    $('ip-interactions-filters').foundation();
+    $('#filters-bar').foundation();
     $(window).trigger('load.zf.sticky');
     this.tableFactory.makeTableHeaderSticky(); // Enables sticky header for all tables on the page
     FoundationUtils.adjustWidth();

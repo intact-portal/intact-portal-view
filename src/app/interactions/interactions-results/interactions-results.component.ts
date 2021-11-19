@@ -55,9 +55,9 @@ export class InteractionsResultsComponent implements OnInit {
       .subscribe((interactionsSearch) => {
         this.interactionsSearch = interactionsSearch;
         if (interactionsSearch.totalElements !== 0) {
-          this.filters.initFacets(interactionsSearch.facetResultPage);
+          this.filters.initFacets(interactionsSearch.facetResultPage, interactionsSearch.totalElements);
         } else if (interactionsSearch.facetResultPage.negative.find(value => value.value === 'true')?.valueCount > 0) {
-          this.filters.initFacets(interactionsSearch.facetResultPage);
+          this.filters.initFacets(interactionsSearch.facetResultPage, interactionsSearch.totalElements);
           this.filters.updateFilter(Filter.NEGATIVE, NegativeFilterStatus.POSITIVE_AND_NEGATIVE, true)
         } else {
           this._hasResults = false;

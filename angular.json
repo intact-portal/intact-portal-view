@@ -67,7 +67,7 @@
               "buildOptimizer": true
             },
             "test": {
-              "baseHref": "/intact-portal-view/",
+              "baseHref": "/intact/beta/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

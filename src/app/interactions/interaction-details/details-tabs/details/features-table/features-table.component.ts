@@ -46,8 +46,9 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
   }
 
   private initDataTable(): void {
-    const table: JQuery = $('#featureTable');
+    const table = $('#featureTable');
     this.dataTable = table.DataTable({
+      ordering: false,
       searching: false,
       paging: true,
       lengthMenu: [10, 25, 50, 75, 100],
@@ -124,6 +125,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
                   '</div>';
               }).join('');
             }
+            return null;
           }
         },
         {

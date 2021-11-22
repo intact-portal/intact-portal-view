@@ -320,7 +320,8 @@
       <i class="icon icon-functional icon-spacer icon-share"></i> Export
     </div>
 
-    <button class="button lighter adjust-width" type="button" data-toggle="export-network" [hidden]="!view.visible">
+    <button class="button lighter adjust-width" type="button" data-toggle="export-network"
+            [style.display]="view.visible ? 'initial': 'none'">
       Network
     </button>
     <div class="dropdown-pane no-padding no-border" id="export-network" data-dropdown data-hover="true"

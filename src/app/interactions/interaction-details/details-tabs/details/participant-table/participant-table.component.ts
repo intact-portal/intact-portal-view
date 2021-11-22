@@ -53,9 +53,9 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   private initDataTable(): void {
-    const table: any = $('#participantTable');
+    const table = $('#participantTable');
     this.dataTable = table.DataTable({
-      bSort: false,
+      ordering: false,
       searching: false,
       paging: true,
       lengthMenu: [10, 25, 50, 75, 100],
@@ -70,7 +70,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
         type: 'POST',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
-        data: function (d) {
+        data: function (d: any) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
         }

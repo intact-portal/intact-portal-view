@@ -197,7 +197,7 @@ export class TableFactoryService {
                 headerRenderer: (K) => string = group => ' ' + group) {
     return (data: T[], type, row, meta) => {
       if (data == null) {
-        return;
+        return '';
       }
       let html = '<div class="table-list">';
       const groups = groupBy(data, grouper);
@@ -223,7 +223,7 @@ export class TableFactoryService {
 
   speciesRenderStructured = (species: Organism) => {
     if (species == null) {
-      return;
+      return '';
     }
     if (species.taxId != null && species.taxId > 0) {
       const url = `https://www.uniprot.org/taxonomy/${species.taxId}`;
@@ -244,7 +244,7 @@ export class TableFactoryService {
 
   cvRenderStructured = (data: CvTerm, type?) => {
     if (type !== undefined && type !== 'display') {
-      return;
+      return '';
     }
     if (data.identifier) {
       return `<a href="${TableFactoryService.getCvURL(data.identifier)}" class="cv-term" target="_blank">${data.shortName}</a>`
@@ -277,7 +277,7 @@ export class TableFactoryService {
 
   aliasRender = (alias: Alias, type?) => {
     if (type !== undefined && type !== 'display') {
-      return;
+      return '';
     }
     return `<div class="aliasesCell tag-cell-container">
               <a class="detailsAliasesCell tag-cell" target="_blank"
@@ -289,7 +289,7 @@ export class TableFactoryService {
 
   identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
     if (id === null) {
-      return;
+      return '';
     }
     const db = TableFactoryService.processDatabase(id.database);
     const url = db.access ? db.access.getURL(id.identifier) : null;
@@ -310,7 +310,7 @@ export class TableFactoryService {
 
   identifierLink(id: { identifier: string, database: string | any, qualifier?: any }) {
     if (id === null) {
-      return;
+      return '';
     }
     const db = TableFactoryService.processDatabase(id.database);
     const url = db.access ? db.access.getURL(id.identifier) : null;

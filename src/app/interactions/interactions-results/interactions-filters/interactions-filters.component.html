@@ -338,11 +338,11 @@
     </button>
     <div class="dropdown-pane no-padding no-border" id="export-table" data-dropdown data-hover="true"
          data-hover-pane="true">
-        <ul class="no-bullet no-margin" [hidden]="!enableExports">
-          <li *ngFor="let format of formats; let last = last;">
-            <ip-download-form [format]="format" [last]="last"></ip-download-form>
-          </li>
-        </ul>
+      <ul class="no-bullet no-margin">
+        <li *ngFor="let format of formats; let last = last;">
+          <ip-download-form [format]="format" [last]="last"></ip-download-form>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

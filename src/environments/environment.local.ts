@@ -28,5 +28,6 @@ export const environment = {
   // todo remove it when all the ws are mapped to wwwdev.ebi.ac.uk/intact/ws
   intact_portal_ws: EBI_BASE_URL + '/intact/ws',
   intact_portal_graph_ws: EBI_BASE_URL + '/intact/ws',
-  intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL
+  intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL,
+  avoidDownloadOverload: false
 };

@@ -8,6 +8,7 @@ import {Format} from '../../shared/model/download/format.model';
 import {Filter, FilterService} from '../../shared/service/filter.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -61,7 +62,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   get enableExports(): boolean {
-    return this.filters.totalElements < 2000;
+    return environment.avoidDownloadOverload ? this.filters.totalElements < 2000 : true;
   }
 
   ngAfterViewInit(): void {

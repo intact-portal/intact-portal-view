@@ -40,10 +40,11 @@ export class FilterService {
   private _nbPositive = 0;
   private _totalElements = 0;
 
-  private updatesSubject: Subject<Filter | void> = new Subject<Filter | void>();
-  public updates: Observable<Filter | void> = this.updatesSubject.asObservable();
+  private updateFiltersSubject: Subject<Filter | void> = new Subject<Filter | void>();
+  public $updateFilters: Observable<Filter | void> = this.updateFiltersSubject.asObservable();
 
-
+  private updateFacetsSubject: Subject<InteractionFacets> = new Subject<InteractionFacets>();
+  public $updateFacets: Observable<InteractionFacets> = this.updateFacetsSubject.asObservable();
 
   private static updateDiscreteFilter(container: string[], updatedValue: string) {
     if (!container.includes(updatedValue)) {
@@ -64,6 +65,7 @@ export class FilterService {
     this.initMutationFilter(facets.affected_by_mutation_styled);
     this.initExpansionFilter(facets.expansion_method_s);
     this.initNegativeFilter(facets.negative);
+    this.updateFacetsSubject.next(facets);
   }
 
   private static filterFacets(facets: InteractionFacets): InteractionFacets {
@@ -129,7 +131,7 @@ export class FilterService {
     this._hasNegative = this._nbNegative > 0;
   }
 
-  public updateFilter(filter: Filter, value: any, update: boolean = true): void {
+  public updateFilter(filter: Filter, value?: any, update: boolean = true): void {
     switch (filter) {
       case Filter.NEGATIVE:
         this._negative = value;
@@ -144,8 +146,6 @@ export class FilterService {
         this._intraSpecies = value;
         break;
       case Filter.MI_SCORE:
-        this._currentMinMIScore = value.min;
-        this._currentMaxMIScore = value.max;
         break;
       default:
         FilterService.updateDiscreteFilter(this.getFilter(filter), value);
@@ -153,7 +153,7 @@ export class FilterService {
     }
     if (update) {
       this.selection.resetSelection();
-      this.updatesSubject.next(filter);
+      this.updateFiltersSubject.next(filter);
     }
   }
 
@@ -303,7 +303,7 @@ export class FilterService {
     for (const filter of Object.keys(Filter)) {
       this.resetFilter(Filter[filter], false);
     }
-    this.updatesSubject.next();
+    this.updateFiltersSubject.next();
   }
 
   resetFilter(filter: Filter, update: boolean = true) {
@@ -334,7 +334,7 @@ export class FilterService {
     }
 
     if (update) {
-      this.updatesSubject.next(filter);
+      this.updateFiltersSubject.next(filter);
     }
   }
 

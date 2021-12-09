@@ -8,7 +8,6 @@ import {Filter, FilterService} from '../shared/service/filter.service';
 import {NetworkViewService} from '../shared/service/network-view.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NegativeFilterStatus} from './interactions-filters/negative-filter/negative-filter-status.model';
-import {InteractionSearchResult} from '../shared/model/interactions-results/interaction/interaction-search-result.model';
 import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
 
 @UntilDestroy()
@@ -43,7 +42,7 @@ export class InteractionsResultsComponent implements OnInit {
         this.requestInteractionsResults();
       });
 
-    this.filters.updates.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
+    this.filters.$updateFilters.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
     this.view.updates.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
 
   }

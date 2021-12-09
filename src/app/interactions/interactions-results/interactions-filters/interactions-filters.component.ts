@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ChangeContext, LabelType, Options} from '@angular-slider/ngx-slider';
+import {LabelType, Options} from '@angular-slider/ngx-slider';
 import {TableFactoryService} from '../../shared/service/table-factory.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NetworkViewService} from '../../shared/service/network-view.service';
@@ -162,9 +162,5 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   onChangeInteractionIntraSpeciesFilter(event: MatSlideToggleChange) {
     this.filters.updateFilter(Filter.INTRA_SPECIES, event.checked)
-  }
-
-  onUserChangeEnd(changeContext: ChangeContext): void {
-    this.filters.updateFilter(Filter.MI_SCORE, {min: changeContext.value, max: changeContext.highValue})
   }
 }

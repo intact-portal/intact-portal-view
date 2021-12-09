@@ -1,0 +1,19 @@
+<div [style.width]="cOptions.width + 'px'">
+  <svg #histogram>
+    <defs>
+      <linearGradient id="MIScoreGradient">
+        <stop [attr.stop-color]="gradientColor.color" [attr.offset]="gradientColor.stop"
+              *ngFor="let gradientColor of gradientColors"/>
+      </linearGradient>
+    </defs>
+    <g #chartArea></g>
+    <g id="lines">
+      <line #leftLine y1="0" [attr.y2]="cOptions.height" stroke-width="2" stroke="white"></line>
+      <line #rightLine y1="0" [attr.y2]="cOptions.height" stroke-width="2" stroke="white"></line>
+    </g>
+    <g #total></g>
+    <g #labels></g>
+  </svg>
+  <ngx-slider [(value)]="filters.currentMinMIScore" [(highValue)]="filters.currentMaxMIScore" [options]="options"
+              (userChange)="onSliderUpdate()" (userChangeEnd)="updateFilter()"></ngx-slider>
+</div>

@@ -10,6 +10,9 @@ export interface ChartOptions {
 
   minX?: number;
   maxX?: number;
+
+  labelXMargin?: number;
+  labelYMargin?: number;
 }
 
 

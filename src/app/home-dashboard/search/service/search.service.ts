@@ -1,5 +1,4 @@
-
-import {throwError as observableThrowError, Observable} from 'rxjs';
+import {throwError as observableThrowError, Observable, Subject} from 'rxjs';
 
 import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
@@ -21,6 +20,8 @@ export class SearchService {
   private _query: string;
   private _title: string;
   private _isBatchSearch = false;
+  private searchSubject: Subject<string> = new Subject<string>();
+  public $searchObserver: Observable<string> = this.searchSubject.asObservable();
 
   private static localTokenId = token => `intact-batch-search-${token}`;
 
@@ -42,6 +43,7 @@ export class SearchService {
       this._title = title;
     }
     if (!this.isAdvancedQuery(query)) {
+      this.searchSubject.next(query);
       this.router.navigate(['search'], {queryParams: {query}});
     }
   }
@@ -51,6 +53,7 @@ export class SearchService {
     this._isBatchSearch = true;
 
     this.manageTokens();
+    this.searchSubject.next(query);
     this.router.navigate(['search'], {queryParams: {token: this._token, batchSearch: true}});
   }
 
@@ -74,6 +77,7 @@ export class SearchService {
     this._query = interactome.taxid.toString();
     this._title = `${interactome.name}`;
     this._isBatchSearch = false;
+    this.searchSubject.next(this._query);
     this.router.navigate(['search'], {queryParams: {query: this._query, interactorSpeciesFilter: interactome.name}});
   }
 

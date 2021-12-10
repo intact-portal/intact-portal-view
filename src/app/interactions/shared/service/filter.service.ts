@@ -5,8 +5,10 @@ import {ParamMap} from '@angular/router';
 import {InteractionFacets} from '../model/interactions-results/interaction/interaction-facets.model';
 import {NetworkSelectionService} from './network-selection.service';
 import {NegativeFilterStatus} from '../../interactions-results/interactions-filters/negative-filter/negative-filter-status.model';
+import {SearchService} from '../../../home-dashboard/search/service/search.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-
+@UntilDestroy()
 @Injectable()
 export class FilterService {
   private _facets: InteractionFacets;
@@ -52,7 +54,10 @@ export class FilterService {
     }
   }
 
-  constructor(private selection: NetworkSelectionService) {
+  constructor(private selection: NetworkSelectionService, private search: SearchService) {
+    this.search.$searchObserver
+      .pipe(untilDestroyed(this))
+      .subscribe(this.resetAllFilters.bind(this));
   }
 
   public initFacets(facets: InteractionFacets, totalElements: number) {

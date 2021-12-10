@@ -22,9 +22,7 @@ export class FilterService {
   private interactionDetectionMethods: string[] = [];
   private interactionHostOrganisms: string[] = [];
 
-  private minMIScore = 0;
   private _currentMinMIScore = 0;
-  private maxMIScore = 1;
   private _currentMaxMIScore = 1;
 
   private _hasExpansion = false;
@@ -61,7 +59,6 @@ export class FilterService {
     this._totalElements = totalElements;
     this._facets = FilterService.filterFacets(facets);
     this.initSpeciesFilter();
-    this.initMIScoreFilter(facets.intact_miscore);
     this.initMutationFilter(facets.affected_by_mutation_styled);
     this.initExpansionFilter(facets.expansion_method_s);
     this.initNegativeFilter(facets.negative);
@@ -77,18 +74,6 @@ export class FilterService {
 
   private initSpeciesFilter() {
     this.intraSpeciesCounts = new Map(this.facets.combined_species.map(facet => [facet.value, facet.valueCount.intra] as [string, number]));
-  }
-
-  private initMIScoreFilter(scoreFacets: Facet[]) {
-    const scores = scoreFacets.map(facet => parseFloat(facet.value));
-    this.minMIScore = scores.length !== 0 ? Math.min(...scores) : 0;
-    this.maxMIScore = scores.length !== 0 ? Math.max(...scores) : 1;
-    if (this._currentMinMIScore < this.minMIScore) {
-      this._currentMinMIScore = this.minMIScore;
-    }
-    if (this._currentMaxMIScore > this.maxMIScore) {
-      this._currentMaxMIScore = this.maxMIScore;
-    }
   }
 
   private initMutationFilter(mutationFacets: Facet[]) {
@@ -168,9 +153,9 @@ export class FilterService {
 
     this.interactionHostOrganisms = params.has('interactionHostOrganismsFilter') ? params.get('interactionHostOrganismsFilter').split(',') : [];
 
-    this._currentMinMIScore = params.has('minMIScore') ? parseFloat(params.get('minMIScore')) : 0;
+    this._currentMinMIScore = params.has('minMIScore') ? parseFloat(params.get('minMIScore')) : this.currentMinMIScore ?? 0;
 
-    this._currentMaxMIScore = params.has('maxMIScore') ? parseFloat(params.get('maxMIScore')) : 1;
+    this._currentMaxMIScore = params.has('maxMIScore') ? parseFloat(params.get('maxMIScore')) : this.currentMaxMIScore ?? 1;
 
     this._negative = params.has('negativeFilter') ? params.get('negativeFilter') as NegativeFilterStatus : NegativeFilterStatus.POSITIVE_ONLY;
 
@@ -207,11 +192,11 @@ export class FilterService {
       params.negativeFilter = this._negative;
     }
 
-    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > this.minMIScore) {
+    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > 0) {
       params.minMIScore = this._currentMinMIScore;
     }
 
-    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < this.maxMIScore) {
+    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < 1) {
       params.maxMIScore = this._currentMaxMIScore;
     }
 
@@ -250,7 +235,7 @@ export class FilterService {
 
 
   isFilteringScore() {
-    return this._currentMinMIScore > this.minMIScore || this._currentMaxMIScore < this.maxMIScore;
+    return this._currentMinMIScore > 0 || this._currentMaxMIScore < 1;
   }
 
   anyFiltersSelected() {
@@ -339,8 +324,8 @@ export class FilterService {
   }
 
   private resetMISCoreFilter() {
-    this._currentMinMIScore = this.minMIScore;
-    this._currentMaxMIScore = this.maxMIScore;
+    this._currentMinMIScore = 0;
+    this._currentMaxMIScore = 1;
   }
 
   getFilter(filter: Filter): string[] {

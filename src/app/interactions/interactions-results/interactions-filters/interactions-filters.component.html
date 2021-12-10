@@ -292,8 +292,9 @@
     </button>
     <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
          *ngIf="filterTypes.MI_SCORE as filter">
-      <div class="margin-bottom-large">
-        <ip-histogram-slider [cOptions]="{height: 100, width: 300}"></ip-histogram-slider>
+      <div class="margin-bottom-large" style="text-align: center">
+        <em>Number of interactions ~ MI Score</em>
+        <ip-histogram-slider [cOptions]="{height: 75, width: 300}"></ip-histogram-slider>
       </div>
       <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
         <button class="delete-button" (click)="filters.resetFilter(filter)"

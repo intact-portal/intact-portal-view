@@ -28,8 +28,6 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
   leftLineRef: ElementRef<SVGLineElement>;
   @ViewChild('rightLine')
   rightLineRef: ElementRef<SVGLineElement>;
-  @ViewChild('labels')
-  labelsRef: ElementRef<SVGGElement>;
   @ViewChild('total')
   totalRef: ElementRef<SVGGElement>;
 
@@ -38,8 +36,6 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
   svg: d3.Selection<SVGGElement, any, any, any>;
   path: d3.Selection<SVGPathElement, any, any, any>;
   labels: d3.Selection<SVGGElement, Bin, null, undefined>;
-  labelBackgrounds: d3.Selection<BaseType | SVGRectElement, Bin, any, Bin>;
-  bins: Bin[];
   x: d3.ScaleLinear<number, number>;
   y: d3.ScaleLinear<number, number>;
   line: d3.Line<[number, number]>;
@@ -87,30 +83,6 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
     this.svg = d3.select(this.chartAreaRef.nativeElement)
       .attr('transform', `translate(${this.cOptions.margin.left},${this.cOptions.margin.top})`);
 
-    this.labels = d3.select(this.labelsRef.nativeElement);
-
-    this.fillBins();
-
-    this.labels.append('g')
-      .style('font', '12px sans-serif')
-      .selectAll('text')
-      .data(this.bins)
-      .join('text')
-      .attr('fill', (d, i) => this.labelColors[i])
-      .attr('text-anchor', 'middle')
-      .attr('x', d => this.x(d.x0 + 0.05) + this.cOptions.margin.left)
-      .attr('y', (d, i) => i % 2 === 0 ? 12 : 30)
-      .text(d => d.amount);
-
-    this.labelBackgrounds = this.labels.append('g')
-      .selectAll('rect')
-      .data(this.bins)
-      .join('rect')
-      .attr('x', d => this.x(d.x0 + 0.05) + this.cOptions.margin.left)
-      .attr('y', (d, i) => i % 2 === 0 ? 12 : 30)
-      .style('fill', d => this.colorAt(d.x1) + '1A')
-      .style('stroke', d => this.colorAt(d.x1));
-
     const totalCount = d3.select(this.totalRef.nativeElement)
       .attr('transform', `translate(${this.cOptions.margin.left},${this.cOptions.margin.top + this.innerHeight})`);
 
@@ -145,25 +117,22 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
       .subscribe(this.draw.bind(this));
 
     onVisible(this.svgRef.nativeElement, () => {
-      this.placeLabels();
-      this.placeTotal();
+      this.updateTotal();
     })
   }
 
   draw() {
     this.drawDensityCurve();
-    this.drawAmounts();
-    this.updateLinePosition();
-    this.updateGradient();
+    this.onSliderUpdate();
   }
 
   onSliderUpdate() {
     this.updateLinePosition();
     this.updateGradient();
-    this.placeTotal();
+    this.updateTotal();
   }
 
-  placeTotal() {
+  updateTotal() {
     this.totalInRange = this.filters.facets.intact_miscore
       .map(facet => ({value: parseFloat(facet.value), valueCount: facet.valueCount}))
       .reduce((sum, facet) => (facet.value >= this.filters.currentMinMIScore && facet.value <= this.filters.currentMaxMIScore) ? sum + facet.valueCount : sum, 0);
@@ -210,54 +179,6 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
     this.y.domain([0, max]);
     this.path.datum(density).attr('d', this.line(density))
   }
-
-  private drawAmounts() {
-    this.fillBins();
-    this.placeLabels();
-  }
-
-  private fillBins() {
-    const bins: Bin[] = new Array(11)
-      .fill(0)
-      .map((value, index) => ({x0: index / 10, x1: (index + 1) / 10, amount: 0}));
-    console.log(bins)
-    this.filters.facets.intact_miscore.forEach(facet => {
-      const value = Math.trunc(parseFloat(facet.value) * 10);
-      bins[value].amount += facet.valueCount;
-    })
-    bins[9].amount += bins.pop().amount;
-
-    this.bins = bins;
-  }
-
-  placeLabels() {
-    this.labels.selectAll('text')
-      .data(this.bins)
-      .text(d => d.amount)
-      .each(function (d) {
-        d.bbox = (this as SVGGraphicsElement).getBBox();
-      });
-    this.labels.selectAll('rect')
-      .data(this.bins)
-      .attr('height', d => d.bbox.height + 2 * this.labelYMargin)
-      .attr('width', d => d.bbox.width + 2 * this.labelXMargin)
-      .attr('transform', d => `translate(-${d.bbox.width / 2 + this.labelXMargin}, -${d.bbox.height * 0.8 + this.labelYMargin})`)
-      .attr('rx', d => d.bbox.height / 2)
-      .attr('ry', d => d.bbox.height / 2)
-  }
-
-  labelColors: string[] = [
-    'rgb(254,153,41)',
-    'rgb(254,153,41)',
-    'rgb(254,153,41)',
-    'rgb(254,153,41)',
-    'rgb(254,153,41)',
-    'rgb(236,112,20)',
-    'rgb(204,76,2)',
-    'rgb(153,52,4)',
-    'rgb(102,19,5)',
-    'rgb(54, 19, 3)'
-  ];
 
   thresholdColorAt(value: number) {
     return value < this.filters.currentMinMIScore || value > this.filters.currentMaxMIScore ? this.colorAt(value) + '1A' : this.colorAt(value);
@@ -329,7 +250,7 @@ interface Bin {
 }
 
 const defaultHOptions: ChartOptions = {
-  margin: {bottom: 16, left: 16, right: 16, top: 35},
+  margin: {bottom: 16, left: 16, right: 16, top: 0},
   width: 800,
   height: 200,
   minX: 0,

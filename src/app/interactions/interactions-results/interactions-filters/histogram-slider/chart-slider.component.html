@@ -12,7 +12,6 @@
       <line #rightLine y1="0" [attr.y2]="cOptions.height" stroke-width="2" stroke="white"></line>
     </g>
     <g #total></g>
-    <g #labels></g>
   </svg>
   <ngx-slider [(value)]="filters.currentMinMIScore" [(highValue)]="filters.currentMaxMIScore" [options]="options"
               (userChange)="onSliderUpdate()" (userChangeEnd)="updateFilter()"></ngx-slider>

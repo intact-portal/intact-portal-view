@@ -87,11 +87,11 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
       .attr('transform', `translate(${this.cOptions.margin.left},${this.cOptions.margin.top + this.innerHeight})`);
 
     this.totalLine = totalCount.append('line')
-      .attr('stroke', '#68297c')
+      .attr('stroke', '#55637d')
       .attr('y1', 9)
       .attr('y2', 9);
     this.totalRect = totalCount.append('rect')
-      .attr('fill', '#68297c')
+      .attr('fill', '#55637d')
       .attr('rx', 8)
       .attr('ry', 8)
       .attr('height', 16);
@@ -142,10 +142,10 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
       .attr('x', middle)
       .node().getBBox();
     this.totalRect
-      .attr('x', bbox.x - 4)
-      .attr('y', bbox.y)
-      .attr('width', bbox.width + 8)
-      .attr('height', bbox.height)
+      .attr('x', bbox.x - this.cOptions.labelXMargin)
+      .attr('y', bbox.y - this.cOptions.labelYMargin)
+      .attr('width', bbox.width + this.cOptions.labelXMargin * 2)
+      .attr('height', bbox.height + this.cOptions.labelYMargin * 2)
     this.totalLine
       .attr('x1', this.x(this.filters.currentMinMIScore))
       .attr('x2', this.x(this.filters.currentMaxMIScore));

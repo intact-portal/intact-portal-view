@@ -5,7 +5,6 @@ import {ChartOptions} from './chart-options.model';
 import {Filter, FilterService} from '../../../shared/service/filter.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Facet} from '../../../shared/model/interactions-results/facet.model';
-import {BaseType} from 'd3';
 
 @UntilDestroy()
 @Component({
@@ -18,8 +17,6 @@ export class ChartSliderComponent implements OnInit, AfterViewInit {
   @Input()
   cOptions: ChartOptions;
   options: Options;
-  labelXMargin = 4;
-  labelYMargin = 0;
 
   totalInRange = 0;
 
@@ -336,7 +333,9 @@ const defaultHOptions: ChartOptions = {
   width: 800,
   height: 200,
   minX: 0,
-  maxX: 1
+  maxX: 1,
+  labelXMargin: 4,
+  labelYMargin: 0
 }
 
 function kernelDensityEstimator<D>(samples: number[], bandwidth: number, valueAccessor: (data: D) => number, weightAccessor: (data: D) => number): (data: D[]) => [number, number][] {

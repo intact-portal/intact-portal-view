@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChartSliderComponent } from './chart-slider.component';
+import { DensitySliderComponent } from './density-slider.component';
 
 describe('HistogramSliderComponent', () => {
-  let component: ChartSliderComponent;
-  let fixture: ComponentFixture<ChartSliderComponent>;
+  let component: DensitySliderComponent;
+  let fixture: ComponentFixture<DensitySliderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChartSliderComponent ]
+      declarations: [ DensitySliderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChartSliderComponent);
+    fixture = TestBed.createComponent(DensitySliderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

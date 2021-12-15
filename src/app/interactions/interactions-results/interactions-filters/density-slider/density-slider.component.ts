@@ -1,21 +1,21 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import * as d3 from 'd3';
 import {LabelType, Options} from '@angular-slider/ngx-slider';
-import {ChartOptions} from './chart-options.model';
+import {DensityOptions} from './density-options.model';
 import {Filter, FilterService} from '../../../shared/service/filter.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Facet} from '../../../shared/model/interactions-results/facet.model';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-histogram-slider',
-  templateUrl: './chart-slider.component.html',
-  styleUrls: ['./chart-slider.component.css']
+  selector: 'ip-density-slider',
+  templateUrl: './density-slider.component.html',
+  styleUrls: ['./density-slider.component.css']
 })
-export class ChartSliderComponent implements OnInit, AfterViewInit {
+export class DensitySliderComponent implements OnInit, AfterViewInit {
 
   @Input()
-  cOptions: ChartOptions;
+  cOptions: DensityOptions;
   options: Options;
 
   totalInRange = 0;
@@ -249,7 +249,7 @@ interface Bin {
   bbox?: SVGRect
 }
 
-const defaultHOptions: ChartOptions = {
+const defaultHOptions: DensityOptions = {
   margin: {bottom: 16, left: 16, right: 16, top: 0},
   width: 800,
   height: 200,

@@ -1,4 +1,4 @@
-export interface ChartOptions {
+export interface DensityOptions {
   margin?: {
     top?: number;
     right?: number;

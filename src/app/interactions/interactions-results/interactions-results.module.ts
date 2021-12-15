@@ -24,7 +24,7 @@ import {DownloadFormComponent} from './interactions-filters/download-form/downlo
 import {FormsModule} from '@angular/forms';
 import { NegativeFilterComponent } from './interactions-filters/negative-filter/negative-filter.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { ChartSliderComponent } from './interactions-filters/histogram-slider/chart-slider.component';
+import { DensitySliderComponent } from './interactions-filters/density-slider/density-slider.component';
 
 @NgModule({
     imports: [
@@ -53,7 +53,7 @@ import { ChartSliderComponent } from './interactions-filters/histogram-slider/ch
     InteractionsLegendComponent,
     DownloadFormComponent,
     NegativeFilterComponent,
-    ChartSliderComponent,
+    DensitySliderComponent,
   ],
   providers: [
     TableFactoryService,

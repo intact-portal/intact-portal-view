@@ -22,27 +22,27 @@ import {InteractionsLegendComponent} from './interactions-viewer/interactions-le
 import {ComponentsModule} from '../../shared/components/components.module';
 import {DownloadFormComponent} from './interactions-filters/download-form/download-form.component';
 import {FormsModule} from '@angular/forms';
-import { NegativeFilterComponent } from './interactions-filters/negative-filter/negative-filter.component';
+import {NegativeFilterComponent} from './interactions-filters/negative-filter/negative-filter.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { DensitySliderComponent } from './interactions-filters/density-slider/density-slider.component';
+import {DensitySliderComponent} from './interactions-filters/density-slider/density-slider.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        InteractionsRoutingModule,
-        InteractionDetailsModule,
-        NgxSliderModule,
-        ProgressSpinnerModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatTooltipModule,
-        BrowserAnimationsModule,
-        MatSlideToggleModule,
-        MatExpansionModule,
-        ComponentsModule,
-        FormsModule,
-        MatButtonToggleModule
-    ],
+  imports: [
+    CommonModule,
+    InteractionsRoutingModule,
+    InteractionDetailsModule,
+    NgxSliderModule,
+    ProgressSpinnerModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatExpansionModule,
+    ComponentsModule,
+    FormsModule,
+    MatButtonToggleModule
+  ],
   declarations: [
     InteractionsFiltersComponent,
     InteractionsListComponent,

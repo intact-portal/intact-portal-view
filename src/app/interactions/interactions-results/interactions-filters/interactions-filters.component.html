@@ -294,7 +294,7 @@
          *ngIf="filterTypes.MI_SCORE as filter">
       <div class="margin-bottom-large" style="text-align: center">
         <em>Number of interactions ~ MI Score</em>
-        <ip-histogram-slider [cOptions]="{height: 75, width: 300}"></ip-histogram-slider>
+        <ip-density-slider [dOptions]="{height: 75, width: 300}"></ip-density-slider>
       </div>
       <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
         <button class="delete-button" (click)="filters.resetFilter(filter)"

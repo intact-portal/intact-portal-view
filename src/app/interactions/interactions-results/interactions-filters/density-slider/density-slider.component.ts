@@ -15,7 +15,7 @@ import {Facet} from '../../../shared/model/interactions-results/facet.model';
 export class DensitySliderComponent implements OnInit, AfterViewInit {
 
   @Input()
-  cOptions: DensityOptions;
+  dOptions: DensityOptions;
   options: Options;
 
   totalInRange = 0;
@@ -51,13 +51,13 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.cOptions = {...defaultHOptions, ...this.cOptions}
+    this.dOptions = {...defaultHOptions, ...this.dOptions}
 
-    this.innerWidth = this.cOptions.width - this.cOptions.margin.left - this.cOptions.margin.right;
-    this.innerHeight = this.cOptions.height - this.cOptions.margin.top - this.cOptions.margin.bottom;
+    this.innerWidth = this.dOptions.width - this.dOptions.margin.left - this.dOptions.margin.right;
+    this.innerHeight = this.dOptions.height - this.dOptions.margin.top - this.dOptions.margin.bottom;
 
     this.x = d3.scaleLinear()
-      .domain([this.cOptions.minX, this.cOptions.maxX])
+      .domain([this.dOptions.minX, this.dOptions.maxX])
       .range([0, this.innerWidth]);
 
     this.y = d3.scaleLinear()
@@ -76,15 +76,15 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
     );
 
     d3.select(this.svgRef.nativeElement)
-      .attr('viewBox', [0, 0, this.cOptions.width, this.cOptions.height])
-      .attr('width', this.cOptions.width)
-      .attr('height', this.cOptions.height);
+      .attr('viewBox', [0, 0, this.dOptions.width, this.dOptions.height])
+      .attr('width', this.dOptions.width)
+      .attr('height', this.dOptions.height);
 
     this.svg = d3.select(this.chartAreaRef.nativeElement)
-      .attr('transform', `translate(${this.cOptions.margin.left},${this.cOptions.margin.top})`);
+      .attr('transform', `translate(${this.dOptions.margin.left},${this.dOptions.margin.top})`);
 
     const totalCount = d3.select(this.totalRef.nativeElement)
-      .attr('transform', `translate(${this.cOptions.margin.left},${this.cOptions.margin.top + this.innerHeight})`);
+      .attr('transform', `translate(${this.dOptions.margin.left},${this.dOptions.margin.top + this.innerHeight})`);
 
     this.totalLine = totalCount.append('line')
       .attr('stroke', '#55637d')
@@ -142,10 +142,10 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
       .attr('x', middle)
       .node().getBBox();
     this.totalRect
-      .attr('x', bbox.x - this.cOptions.labelXMargin)
-      .attr('y', bbox.y - this.cOptions.labelYMargin)
-      .attr('width', bbox.width + this.cOptions.labelXMargin * 2)
-      .attr('height', bbox.height + this.cOptions.labelYMargin * 2)
+      .attr('x', bbox.x - this.dOptions.labelXMargin)
+      .attr('y', bbox.y - this.dOptions.labelYMargin)
+      .attr('width', bbox.width + this.dOptions.labelXMargin * 2)
+      .attr('height', bbox.height + this.dOptions.labelYMargin * 2)
     this.totalLine
       .attr('x1', this.x(this.filters.currentMinMIScore))
       .attr('x2', this.x(this.filters.currentMaxMIScore));
@@ -166,11 +166,11 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
 
   private updateLinePosition() {
     d3.select(this.leftLineRef.nativeElement)
-      .attr('x1', this.x(this.filters.currentMinMIScore) + this.cOptions.margin.left)
-      .attr('x2', this.x(this.filters.currentMinMIScore) + this.cOptions.margin.left)
+      .attr('x1', this.x(this.filters.currentMinMIScore) + this.dOptions.margin.left)
+      .attr('x2', this.x(this.filters.currentMinMIScore) + this.dOptions.margin.left)
     d3.select(this.rightLineRef.nativeElement)
-      .attr('x1', this.x(this.filters.currentMaxMIScore) + this.cOptions.margin.left)
-      .attr('x2', this.x(this.filters.currentMaxMIScore) + this.cOptions.margin.left)
+      .attr('x1', this.x(this.filters.currentMaxMIScore) + this.dOptions.margin.left)
+      .attr('x2', this.x(this.filters.currentMaxMIScore) + this.dOptions.margin.left)
   }
 
   private drawDensityCurve() {

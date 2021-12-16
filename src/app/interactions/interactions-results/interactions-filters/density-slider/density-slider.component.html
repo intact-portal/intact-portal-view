@@ -1,4 +1,4 @@
-<div [style.width]="cOptions.width + 'px'">
+<div [style.width]="dOptions.width + 'px'">
   <svg #histogram>
     <defs>
       <linearGradient id="MIScoreGradient">
@@ -8,8 +8,8 @@
     </defs>
     <g #chartArea></g>
     <g id="lines">
-      <line #leftLine y1="0" [attr.y2]="cOptions.height" stroke-width="2" stroke="white"></line>
-      <line #rightLine y1="0" [attr.y2]="cOptions.height" stroke-width="2" stroke="white"></line>
+      <line #leftLine y1="0" [attr.y2]="dOptions.height" stroke-width="2" stroke="white"></line>
+      <line #rightLine y1="0" [attr.y2]="dOptions.height" stroke-width="2" stroke="white"></line>
     </g>
     <g #total></g>
   </svg>

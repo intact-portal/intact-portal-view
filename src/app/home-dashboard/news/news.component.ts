@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from '../../../environments/environment';
+import pkg from '../../../../package.json';
 
 @Component({
   selector: 'ip-news',
@@ -7,9 +8,9 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./news.component.css', '../../app.component.css']
 })
 export class NewsComponent implements OnInit {
-  version = '1.0.2';
+  version = pkg.version;
   environmentName = 'dev';
-  releaseDate = 'September 2021';
+  releaseDate = 'December 2021';
 
   statistics = environment.intact_portal_documentation_url + 'statistics.md';
 

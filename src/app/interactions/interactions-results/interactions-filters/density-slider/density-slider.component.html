@@ -14,5 +14,5 @@
     <g #total></g>
   </svg>
   <ngx-slider [(value)]="filters.currentMinMIScore" [(highValue)]="filters.currentMaxMIScore" [options]="options"
-              (userChange)="onSliderUpdate()" (userChangeEnd)="updateFilter()"></ngx-slider>
+              (userChangeStart)="onSliderUpdateStart()" (userChange)="onSliderUpdate()" (userChangeEnd)="updateFilter()"></ngx-slider>
 </div>

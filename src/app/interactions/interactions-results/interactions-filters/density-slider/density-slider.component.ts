@@ -19,6 +19,8 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
   options: Options;
 
   totalInRange = 0;
+  initMin = 0;
+  initMax = 1;
 
   @ViewChild('histogram')
   svgRef: ElementRef<SVGElement>;
@@ -86,20 +88,21 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
     const totalCount = d3.select(this.totalRef.nativeElement)
       .attr('transform', `translate(${this.dOptions.margin.left},${this.dOptions.margin.top + this.innerHeight})`);
 
+    const midBottomMargin = this.dOptions.margin.bottom / 2 + 1;
     this.totalLine = totalCount.append('line')
       .attr('stroke', '#55637d')
-      .attr('y1', 9)
-      .attr('y2', 9);
+      .attr('y1', midBottomMargin)
+      .attr('y2', midBottomMargin);
     this.totalRect = totalCount.append('rect')
       .attr('fill', '#55637d')
       .attr('rx', 8)
-      .attr('ry', 8)
-      .attr('height', 16);
+      .attr('ry', 8);
     this.totalLabel = totalCount.style('font', '12px sans-serif').append('text')
       .attr('fill', 'white')
       .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'text-before-edge')
-      .attr('y', 2);
+      .attr('dominant-baseline', 'middle')
+      .attr('y', midBottomMargin)
+      .style('font-weight',  'bold' );
 
     const density = this.density(this.filters.facets.intact_miscore);
     this.y.domain([0, d3.max(density, d => d[1])]);
@@ -138,7 +141,8 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
       .reduce((sum, facet) => (facet.value >= this.filters.currentMinMIScore && facet.value <= this.filters.currentMaxMIScore) ? sum + facet.valueCount : sum, 0);
 
     const middle = this.x((this.filters.currentMinMIScore + this.filters.currentMaxMIScore) / 2);
-    const bbox = this.totalLabel.text(this.totalFormat.format(this.totalInRange))
+    const bbox = this.totalLabel
+      .text(this.totalInRange === 0 ? '∅' :  this.totalFormat.format(this.totalInRange))
       .attr('x', middle)
       .node().getBBox();
     this.totalRect
@@ -233,7 +237,18 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
   }
 
   updateFilter() {
-    this.filters.updateFilter(Filter.MI_SCORE)
+    if (this.totalInRange > 0) {
+      this.filters.updateFilter(Filter.MI_SCORE)
+    } else {
+      this.filters.currentMinMIScore = this.initMin;
+      this.filters.currentMaxMIScore = this.initMax;
+      this.onSliderUpdate();
+    }
+  }
+
+  onSliderUpdateStart() {
+    this.initMin = this.filters.currentMinMIScore;
+    this.initMax = this.filters.currentMaxMIScore;
   }
 }
 
@@ -276,8 +291,11 @@ function sortedIndex(array: number[], value: number) {
 
   while (low < high) {
     const mid = (low + high) >>> 1;
-    if (array[mid] < value) low = mid + 1;
-    else high = mid;
+    if (array[mid] < value) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
   }
   return low;
 }
@@ -294,7 +312,9 @@ function onVisible(element, callback) {
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.intersectionRatio > 0) callback();
+      if (entry.intersectionRatio > 0) {
+        callback();
+      }
     });
   }, options);
 

@@ -1,0 +1,245 @@
+Method,Experiments
+2d-infrared spectrometry,1
+3D electron microscopy,653
+Cr-two hybrid,1
+DNase I footprinting,4
+Split renilla luciferase complementation,6
+Super-resolution microscopy,3
+acetylase assay,40
+adenylate cyclase complementation,114
+adp ribosylase assay,3
+affinity chromatography technology,474
+affinity technology,80
+aggregation assay,21
+aminoacylation assay,3
+amplified luminescent proximity homogeneous assay,70
+ampylation assay,6
+anti bait coimmunoprecipitation,10428
+anti tag coimmunoprecipitation,11378
+antibody array,5
+array technology,11
+atomic force microscopy,79
+atpase assay,68
+aut-page,2
+avexis,2
+barcode fusion genetics two hybrid,2
+bead aggregation assay,2
+beta galactosidase complementation,26
+beta lactamase complementation,12
+bimolecular fluorescence complementation,485
+bio-layer interferometry,91
+biochemical,122
+bioluminescence resonance energy transfer,114
+biophysical,46
+biosensor,5
+blue native page,191
+carboxylation assay,2
+chemical rna modification plus base pairing prediction,10
+chromatin immunoprecipitation array,7
+chromatin immunoprecipitation assay,718
+chromatography technology,117
+chromosome conformation capture assay,2
+circular dichroism,121
+clash,1
+classical fluorescence spectroscopy,347
+cleavage assay,55
+clip,2
+clip-seq,1
+coimmunoprecipitation,1185
+comigration in gel electrophoresis,76
+comigration in non denaturing gel electrophoresis,333
+comigration in sds page,338
+competition binding,163
+complemented donor-acceptor resonance energy transfer,1
+confocal microscopy,1574
+cosedimentation,164
+cosedimentation in solution,708
+cosedimentation through density gradient,366
+crac,17
+cross-linking study,1129
+de-ADP-ribosylation assay,3
+deacetylase assay,60
+deamidation assay,1
+deamination assay,8
+decarboxylation assay,5
+deglycosylase assay,1
+demethylase assay,36
+demyristoylase assay,3
+depalmitoylase assay,1
+detection by mass spectrometry,12
+deubiquitinase assay,20
+differential scanning calorimetry,11
+dihydrofolate reductase reconstruction,14
+display technology,1
+dna directed dna polymerase assay,2
+dynamic light scattering,156
+electron diffraction,5
+electron microscopy,297
+electron microscopy 3D helical reconstruction,2
+electron microscopy 3D single particle reconstruction,75
+electron paramagnetic resonance,155
+electron resonance,2
+electron tomography,4
+electrophoretic mobility shift assay,218
+electrophoretic mobility supershift assay,139
+electrophoretic mobility-based method,42
+enzymatic footprinting,14
+enzymatic study,299
+enzyme linked immunosorbent assay,365
+enzyme-mediated activation of radical sources,2
+equilibrium dialysis,2
+experimental interaction detection,141
+far western blotting,421
+field flow fractionation,9
+filamentous phage display,3
+filter binding,235
+filter trap assay,7
+fluorescence correlation spectroscopy,21
+fluorescence microscopy,1880
+fluorescence polarization spectroscopy,238
+fluorescence recovery after photobleaching,22
+fluorescence technology,193
+fluorescence-activated cell sorting,88
+fluorescent resonance energy transfer,535
+footprinting,10
+force measurement,1
+force spectroscopy,13
+gal4 vp16 complementation,33
+gdp/gtp exchange assay,38
+genetic interference,2
+glycosylase assay,13
+gtpase assay,79
+histone acetylase assay,1
+homogeneous time resolved fluorescence,3
+hydroxylase assay,21
+imaging technique,353
+immunodepleted coimmunoprecipitation,10
+in gel phosphatase assay,1
+in-gel kinase assay,25
+inference by quantitative co-purification,1
+inference by socio-affinity scoring,1
+inferred by author,6
+infrared spectroscopy,7
+interaction detection method,5
+interactome parallel affinity capture,2
+ion exchange chromatography,205
+ion mobility mass spectrometry of complexes,32
+isomerase assay,2
+isothermal titration calorimetry,870
+kinase homogeneous time resolved fluorescence,4
+kinase scintillation proximity assay,3
+lambda phage display,10
+lambda repressor two hybrid,23
+lex-a dimerization assay,17
+lexa b52 complementation,15
+lexa vp16 complementation,1
+light microscopy,24
+light scattering,278
+lipase assay,5
+lipoprotein cleavage assay,2
+liposome binding assay,7
+luminescence based mammalian interactome mapping,27
+luminiscence technology,1
+mammalian protein protein interaction trap,14
+mass spectrometry studies of complexes,231
+mass spectrometry study of hydrogen/deuterium exchange,29
+methyltransferase assay,123
+methyltransferase radiometric assay,13
+miRNA interference luciferase reporter assay,277
+microscale thermophoresis,63
+miniaturized immunoprecipitation,3
+molecular sieving,3357
+mrna display,1
+myristoylase assay,1
+neddylase assay,1
+neutron diffraction,4
+nuclear magnetic resonance,863
+nuclease assay,5
+nuclease footprinting,2
+nucleic acid uv cross-linking assay,7
+nucleoside triphosphatase assay,2
+nucleotide exchange assay,1
+one hybrid,21
+oxidase assay,1
+oxidoreductase assay,28
+p3 filamentous phage display,4
+p8 filamentous phage display,1
+palmitoylase assay,2
+par-clip,4
+peptide array,143
+phage display,58
+phenotype-based detection assay,2
+phosphatase assay,182
+phospholipase assay,1
+phosphotransferase assay,57
+polymerization,8
+probe interaction assay,3
+protease accessibility laddering,2
+protease assay,310
+protein array,50
+protein complementation assay,22
+protein cross-linking with a bifunctional reagent,31
+protein folding/unfolding,3
+protein in situ array,1
+protein kinase assay,1191
+protein phosphatase assay,11
+protein three hybrid,12
+proteinchip(r) on a surface-enhanced laser desorption/ionization,2
+proximity labelling technology,1
+proximity ligation assay,394
+proximity-dependent biotin identification,21
+pull down,10067
+qcmd,1
+quartz crystal microbalance,1
+reverse phase chromatography,7
+reverse ras recruitment system,10
+reverse two hybrid,4
+ribonuclease assay,19
+rna directed rna polymerase assay,8
+rna immunoprecipitation,44
+rna interference,1
+rna three hybrid,3
+sandwich immunoassay,1
+saturation binding,31
+scanning electron microscopy,6
+scintillation proximity assay,4
+silicon nanowire field-effect transistor,1
+small angle neutron scattering,10
+solid phase assay,176
+solid state nmr,12
+solution state nmr,19
+split firefly luciferase complementation,9
+split luciferase complementation,20
+static light scattering,95
+sulfurtransferase assay,2
+sumoylase assay,3
+surface plasmon resonance,1089
+surface plasmon resonance array,5
+systematic evolution of ligands by exponential enrichment,1
+t7 phage display,4
+tandem affinity purification,1467
+thermal shift binding,19
+three hybrid,27
+total internal reflection fluorescence spectroscopy,1
+tox-r dimerization assay,10
+transcriptional complementation assay,15
+transmission electron microscopy,406
+two hybrid,6148
+two hybrid array,149
+two hybrid bait and prey pooling approach,1
+two hybrid fragment pooling approach,29
+two hybrid pooling approach,883
+two hybrid prey pooling approach,14
+ubiquitin reconstruction,114
+ubiquitinase assay,22
+ultraviolet-visible spectroscopy,20
+uracil interference assay,1
+uridylation assay,2
+validated two hybrid,13
+virotrap,1
+x ray scattering,283
+x-ray crystallography,4423
+x-ray fiber diffraction,17
+x-ray powder diffraction,2
+yeast display,3
+zymography,5

@@ -1,0 +1,13 @@
+<header>
+  <h1>Statistics work :)</h1>
+</header>
+<div>
+  <ip-panel1 [data]="data"></ip-panel1>
+</div>
+<svg id="panel-2"></svg>
+
+<ul>
+  <li *ngFor="let point of statPoints">
+    <b>{{point.date.toLocaleDateString()}}</b> - experiments : {{point.experiments}} - pubs : {{point.publications}}
+  </li>
+</ul>

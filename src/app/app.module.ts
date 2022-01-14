@@ -30,6 +30,8 @@ import {RedirectComponent} from './navigation/redirect/redirect.component';
 import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from 'ngx-google-analytics';
 import {environment} from '../environments/environment';
 import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
+import { StatisticsComponent } from './navigation/about/statistics/statistics.component';
+import { Panel1Component } from './navigation/about/statistics/panel1/panel1.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {MarkdownModule} from './navigation/documentation/shared/markdown/markdow
     InteractomesComponent,
     InteractomeComponent,
     AboutComponent,
-    RedirectComponent
+    RedirectComponent,
+    StatisticsComponent,
+    Panel1Component,
   ],
   imports: [
     BrowserModule,

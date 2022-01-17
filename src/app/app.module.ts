@@ -32,6 +32,7 @@ import {environment} from '../environments/environment';
 import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 import { StatisticsComponent } from './navigation/about/statistics/statistics.component';
 import { Panel1Component } from './navigation/about/statistics/panel1/panel1.component';
+import { Panel2PubExpComponent } from './navigation/about/statistics/panel2-pub-exp/panel2-pub-exp.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { Panel1Component } from './navigation/about/statistics/panel1/panel1.com
     RedirectComponent,
     StatisticsComponent,
     Panel1Component,
+    Panel2PubExpComponent,
   ],
   imports: [
     BrowserModule,

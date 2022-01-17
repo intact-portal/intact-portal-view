@@ -21,15 +21,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-//     d3.csv("./assets/data-files/panel_2.csv", function(d_p2) {
-//       return {
-//         Date : d_p2.Date,
-//         Publications : +d_p2.Publications,
-//         Experiments : +d_p2.Experiments
-//       };
-//     }).then(function(data_p2){
-//     console.log(data_p2[4]);
-//     });
+
 //
 //     d3.csv("./assets/data-files/panel_3.csv", function(d_p3) {
 //       return {

@@ -1,14 +1,5 @@
-<header>
-  <h1>Statistics work :)</h1>
-</header>
 <div>
   <ip-panel1 [data]="data"></ip-panel1>
   <ip-panel2-pub-exp [data]="data"></ip-panel2-pub-exp>
+<!--  <ip-panel3-cur-aut-request [data]="data"></ip-panel3-cur-aut-request>-->
 </div>
-
-
-<ul>
-  <li *ngFor="let point of statPoints">
-    <b>{{point.date.toLocaleDateString()}}</b> - experiments : {{point.experiments}} - pubs : {{point.publications}}
-  </li>
-</ul>

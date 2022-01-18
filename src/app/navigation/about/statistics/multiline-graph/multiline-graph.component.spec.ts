@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Panel2PubExpComponent } from './panel2-pub-exp.component';
+import { MultilineGraphComponent } from './multiline-graph.component';
 
 describe('Panel2PubExpComponent', () => {
-  let component: Panel2PubExpComponent;
-  let fixture: ComponentFixture<Panel2PubExpComponent>;
+  let component: MultilineGraphComponent;
+  let fixture: ComponentFixture<MultilineGraphComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Panel2PubExpComponent ]
+      declarations: [ MultilineGraphComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Panel2PubExpComponent);
+    fixture = TestBed.createComponent(MultilineGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,13 @@
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #262525;
   shape-rendering: crispEdges;
+}
+
+.tick {
+  stroke: none;
+  
 }
 
 .line {

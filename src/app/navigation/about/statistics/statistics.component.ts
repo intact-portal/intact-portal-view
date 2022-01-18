@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-import {StatisticsService, ReleaseStatPoint} from "./statistics.service"
 
 
 @Component({
@@ -11,12 +10,10 @@ import {StatisticsService, ReleaseStatPoint} from "./statistics.service"
 
 export class StatisticsComponent implements OnInit, AfterViewInit {
 
-  statPoints : ReleaseStatPoint[];
 
-  constructor(private statistics: StatisticsService) { }
+  constructor() { }
 
   ngOnInit(): void {
-//       this.statistics.getReleasesStats().subscribe(resp => this.statPoints = resp);
   }
 
   ngAfterViewInit(): void {

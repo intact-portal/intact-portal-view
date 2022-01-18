@@ -33,6 +33,7 @@ import {MarkdownModule} from './navigation/documentation/shared/markdown/markdow
 import { StatisticsComponent } from './navigation/about/statistics/statistics.component';
 import { Panel1Component } from './navigation/about/statistics/panel1/panel1.component';
 import { Panel2PubExpComponent } from './navigation/about/statistics/panel2-pub-exp/panel2-pub-exp.component';
+import { Panel3CurAutRequestComponent } from './navigation/about/statistics/panel3-cur-aut-request/panel3-cur-aut-request.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { Panel2PubExpComponent } from './navigation/about/statistics/panel2-pub-
     StatisticsComponent,
     Panel1Component,
     Panel2PubExpComponent,
+    Panel3CurAutRequestComponent,
   ],
   imports: [
     BrowserModule,

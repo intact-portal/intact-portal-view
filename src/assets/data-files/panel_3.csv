@@ -1,4 +1,4 @@
-Year,CurationRequest,AuthorSubmitted
+Date,CurationRequest,AuthorSubmitted
 2001,0,0
 2002,0,0
 2003,0,0
@@ -20,4 +20,4 @@ Year,CurationRequest,AuthorSubmitted
 2019,60,204
 2020,67,217
 2021,71,223
-2022,0,0
+2022,71,223

@@ -31,9 +31,7 @@ import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from 'ngx-goog
 import {environment} from '../environments/environment';
 import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 import { StatisticsComponent } from './navigation/about/statistics/statistics.component';
-import { Panel1Component } from './navigation/about/statistics/panel1/panel1.component';
-import { Panel2PubExpComponent } from './navigation/about/statistics/panel2-pub-exp/panel2-pub-exp.component';
-import { Panel3CurAutRequestComponent } from './navigation/about/statistics/panel3-cur-aut-request/panel3-cur-aut-request.component';
+import { MultilineGraphComponent } from './navigation/about/statistics/multiline-graph/multiline-graph.component';
 
 @NgModule({
   declarations: [
@@ -43,9 +41,7 @@ import { Panel3CurAutRequestComponent } from './navigation/about/statistics/pane
     AboutComponent,
     RedirectComponent,
     StatisticsComponent,
-    Panel1Component,
-    Panel2PubExpComponent,
-    Panel3CurAutRequestComponent,
+    MultilineGraphComponent,
   ],
   imports: [
     BrowserModule,

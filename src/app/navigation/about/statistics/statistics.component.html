@@ -1,5 +1,8 @@
 <div>
-  <ip-panel1 [data]="data"></ip-panel1>
-  <ip-panel2-pub-exp [data]="data"></ip-panel2-pub-exp>
-<!--  <ip-panel3-cur-aut-request [data]="data"></ip-panel3-cur-aut-request>-->
+  <p>Interactions Graph</p>
+  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_1.csv'"></ip-multiline-graph>
+  <p>Publucations, Experiments Graph</p>
+  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_2.csv'"></ip-multiline-graph>
+  <p>Authour submitted or Curated request</p>
+  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3.csv'" [dateGranularity]="'year'"></ip-multiline-graph>
 </div>

@@ -13,7 +13,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
     @Input() dataPath: string;
     @Input() dateGranularity: 'day' | 'year' = 'day';
 
-    @ViewChild('panel2')
+    @ViewChild('lineChart')
     svgRef: ElementRef<SVGElement>;
 
 
@@ -38,7 +38,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
             .range([0, width]);
         const y = d3.scaleLinear()
             .range([height, 0]);
-        const color: d3.ScaleOrdinal<string, string> = d3.scaleOrdinal();
+        // const color: d3.ScaleOrdinal<string, string> = d3.scaleOrdinal();
         const numberFormat = new Intl.NumberFormat();
         const dateFormat = new Intl.DateTimeFormat();
         const xAxis = d3.axisBottom(x);
@@ -62,17 +62,19 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                 }, {})
             })
         ).then((data) => {
-            color
-                .domain(Object.keys(data[0]).filter(key => key !== 'Date' && key !== 'date'))
-                .range(d3.schemeCategory10)
-
-            const datedAmountsMap: NamedAmounts[] = color.domain().map(name => ({
+            const domains: string[] = Object.keys(data[0]).filter(key => key !== 'Date' && key !== 'date');
+            const datedAmountsMap: NamedAmounts[] = domains.map(name => ({
                 name: name,
                 datedAmounts: data.map(d => ({
                     date: d.date,
                     amount: d[name]
                 }))
             })).sort((a, b) => b.datedAmounts[b.datedAmounts.length - 1].amount - a.datedAmounts[a.datedAmounts.length - 1].amount);
+            const len = datedAmountsMap.length;
+            const lineColor: d3.ScaleOrdinal<string, string> = d3.scaleOrdinal()
+                .domain(datedAmountsMap.map(d => d.name))
+                .range(datedAmountsMap.map((d, i) => d3.interpolatePlasma( 0.2 + (i / len) / 1.5) + 'af') ) as d3.ScaleOrdinal<string, string>;
+
             x.domain(d3.extent(data, d => d.date));
             y.domain([0, d3.max(datedAmountsMap, item => d3.max(item.datedAmounts, v => v.amount))]);
 
@@ -99,7 +101,8 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
             amount.append('path')
                 .attr('class', 'line')
                 .attr('d', d => line(d.datedAmounts))
-                .attr('stroke', d => color(d.name));
+                .attr('stroke', (d) => lineColor(d.name))
+                .style('stroke-width', '2px')
 
             amount.append('text')
                 .datum(d => ({
@@ -109,6 +112,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                 .attr('transform', d => `translate(${x(d.value.date)},${y(d.value.amount)})`)
                 .attr('x', 3)
                 .attr('dy', '.35em')
+                .style('font-size', '12px')
                 .text(d => d.name);
 
             const mouseG = svg.append('g')
@@ -117,17 +121,15 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
 
             const mouseLine = mouseG.append('path') // this is the black vertical line to follow mouse
                 .attr('class', 'mouse-line')
-                .attr('stroke', 'black')
+                .attr('stroke', 'grey')
                 .attr('stroke-width', '1px')
 
             const mouseLegendG = mouseG.append('g');
 
             const mouseLegendBg = mouseLegendG.append('rect')
-                // .attr('rx', '5')
-                // .attr('ry', '5')
                 .style('fill', 'white')
                 .style('opacity', '0.85')
-                .style('stroke', 'black')
+                .style('stroke', 'grey')
 
             const mouseLegend = mouseLegendG
                 .append('g')
@@ -135,15 +137,17 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
 
             const mouseDate = mouseG.append('text')
                 .attr('text-anchor', 'middle')
-                .attr('alignment-baseline', 'hanging');
+                .attr('alignment-baseline', 'hanging')
+                .style('font-size', '12px');
 
             const mouseLegendTexts = mouseLegend.selectAll('mouse-legend-texts')
                 .data(datedAmountsMap)
                 .enter()
                 .append('text')
                 .attr('class', 'mouse-legend-text')
-                .attr('fill', d => color(d.name))
-                .attr('y', (d, i) => 20 * i + 30);
+                .attr('fill', d => lineColor(d.name))
+                .attr('y', (d, i) => 15 * i + 30)
+                .style('font-size', '12px');
 
             const lines: HTMLCollectionOf<SVGLineElement> = <HTMLCollectionOf<SVGLineElement>>document.getElementsByClassName('line');
 
@@ -155,8 +159,8 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
 
             mousePerLine.append('circle')
                 .attr('r', 4)
-                .style('stroke', d => color(d.name))
-                .style('fill', d => color(d.name))
+                .style('stroke', d => lineColor(d.name))
+                .style('fill', d => lineColor(d.name))
                 .style('stroke-width', '1px')
 
             mouseG.append('svg:rect') // append a rect to catch mouse movements on canvas

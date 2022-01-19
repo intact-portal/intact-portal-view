@@ -73,7 +73,7 @@
     "@types/typeahead.js": "^0.11.1",
     "@types/xml2js": "^0.4.9",
     "@types/d3": "^7.1.0",
-    "@types/d3-scale": "^4.0.1",
+    "@types/d3-scale": "^4.0.2",
     "@types/d3-color": "^3.0.2",
     "@types/complexviewer": "^2.1.0",
     "ajv": "^6.9.2",

@@ -32,6 +32,8 @@ import {environment} from '../environments/environment';
 import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 import { StatisticsComponent } from './navigation/about/statistics/statistics.component';
 import { MultilineGraphComponent } from './navigation/about/statistics/multiline-graph/multiline-graph.component';
+import { P5CoverTop10Component } from './navigation/about/statistics/p5-cover-top10/p5-cover-top10.component';
+import { P4MethodsComponent } from './navigation/about/statistics/p4-methods/p4-methods.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { MultilineGraphComponent } from './navigation/about/statistics/multiline
     RedirectComponent,
     StatisticsComponent,
     MultilineGraphComponent,
+    P5CoverTop10Component,
+    P4MethodsComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,20 +4,21 @@ import * as d3 from 'd3';
 // // https://observablehq.com/@d3/zoomable-treemap
 
 interface Data {
-    Method: string,
-    Experiments: number,
+    label: string,
+    amount: number,
     percentage: number,
 }
 
 @Component({
-    selector: 'ip-p4-methods',
-    templateUrl: './p4-methods.component.html',
-    styleUrls: ['./p4-methods.component.css'],
+    selector: 'ip-donut-graph',
+    templateUrl: './donut-graph.component.html',
+    styleUrls: ['./donut-graph.component.css'],
     encapsulation: ViewEncapsulation.None
 
 })
-export class P4MethodsComponent implements OnInit, AfterViewInit {
+export class DonutGraphComponent implements OnInit, AfterViewInit {
     @Input() dataPath: string;
+    @Input() threshold: number = null;
 
     @ViewChild('pieChart')
     svgRef: ElementRef<SVGElement>;
@@ -48,23 +49,22 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
             .attr('transform', `translate(${WIDTH / 2}, ${HEIGHT / 2})`);
 
         // Open data
-        d3.csv(this.dataPath, (row) => {
-                return ({
-                    Method: row.Method_Name,
-                    Experiments: +row.Experiments
-                });
-            }
-        ).then(function (data: any) {
+        d3.csv(this.dataPath, (row) => ({
+            label : row.label,
+            amount : +row.amount
+            })
+        ).then( (data: any) => {
             // slice data to set threshold to visualise in donut
-            const OTHER_THRESHOLD = 10;
-            const others = data.slice(OTHER_THRESHOLD, data.length).reduce((t, e) => t + e.Experiments, 0)
-            data = data.slice(0, OTHER_THRESHOLD);
-            data.push({Method: 'Others', Experiments: others})
-            const total = data.reduce((t, e) => t + e.Experiments, 0)
-            data.forEach(d => d.percentage = d.Experiments / total * 100)
+            if (this.threshold !== null) {
+                const others = data.slice(this.threshold, data.length).reduce((t, e) => t + e.amount, 0)
+                data = data.slice(0, this.threshold);
+                data.push({label: 'Others', amount: others})
+            }
+            const total = data.reduce((t, e) => t + e.amount, 0)
+            data.forEach(d => d.percentage = d.amount / total * 100)
 
             const pie = d3.pie<Data>()
-                .value((d) => d.Experiments)
+                .value((d) => d.amount)
                 .sort(() => 0)
             // Compute the position of each group on the pie:
 
@@ -103,7 +103,7 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
                         .attr('points', placeLine)
                         .style('opacity', 1)
 
-                    polyLabels
+                    polylabels
                         .filter(`#line-${i}`)
                         .transition()
                         .duration(200)
@@ -122,12 +122,12 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
                         .duration(200)
                         .attr('points', placeLine)
                         .style('opacity', DEFAULT_OPACITY)
-                    polyLabels
+                    polylabels
                         .filter(`#line-${i}`)
                         .transition()
                         .duration(200)
                         .style('opacity', DEFAULT_OPACITY)
-                        // .text(d.data.Method)
+                        // .text(d.data.label)
                         .select('.method-amount').style('opacity', 0)
                         .attr('dy', '0em')
                 })
@@ -136,7 +136,7 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
             const placeLine = d => {
                 const posA = arc.centroid(d) // line insertion in the slice
                 const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-                const posC = outerArc.centroid(d); // Label position = almost the same as posB
+                const posC = outerArc.centroid(d); // label position = almost the same as posB
                 const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
                 posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
                 return [posA, posB, posC].toString()
@@ -153,8 +153,8 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
                 .attr('points', placeLine)
 
             // Add the polylines between chart and labels:
-            const polyLabels = svg
-                .selectAll('allLabels')
+            const polylabels = svg
+                .selectAll('alllabels')
                 .data(data_ready)
                 .join('text')
                 .attr('id', (d, i) => `line-${i}`)
@@ -173,15 +173,15 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
                 })
 
             // Set labels for text formatting
-            polyLabels.append('tspan')
+            polylabels.append('tspan')
                 .attr('class', 'method-name')
                 .attr('x', '0')
-                .text(d => d.data.Method)
+                .text(d => d.data.label)
                 .style('font-size', '14px')
 
-            polyLabels.append('tspan')
+            polylabels.append('tspan')
                 .attr('class', 'method-amount')
-                .text(d => `${numberFormat.format(d.data.Experiments)} - ${d.data.percentage.toFixed(0)}%`)
+                .text(d => `${numberFormat.format(d.data.amount)} - ${d.data.percentage.toFixed(0)}%`)
                 .attr('x', '0')
                 .attr('dy', '0em')
                 .style('opacity', 0)

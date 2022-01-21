@@ -1,4 +1,4 @@
-Method_ID,Method_Name,Experiments
+method_ID,label,amount
 MI:0007,Anti tag coimmunoprecipitation,206799
 MI:0397,Two hybrid array,154371
 MI:0676,Tandem affinity purification,124515

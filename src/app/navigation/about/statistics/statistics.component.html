@@ -1,16 +1,25 @@
 <div>
+  <h3>Eliot's stacked area graph</h3>
+  <ip-stacked-area-graph [dataPath]="'./assets/data-files/panel_3_all.csv'"></ip-stacked-area-graph>
   <h3>Interactions Graph</h3>
   <ip-multiline-graph [dataPath]="'./assets/data-files/panel_1.csv'"></ip-multiline-graph>
-  <h3>Publucations, Experiments Graph</h3>
+  <h3>Publications, Experiments Graph</h3>
   <ip-multiline-graph [dataPath]="'./assets/data-files/panel_2.csv'"></ip-multiline-graph>
-  <h3>Authour submitted or Curated request on evidence</h3>
-  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3_evidence3.csv'"></ip-multiline-graph>
+  <h3>Author submitted or Curated request on evidence</h3>
+  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3_all.csv'"></ip-multiline-graph>
 <!--  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3.csv'" [dateGranularity]="'year'"></ip-multiline-graph>-->
 
 
-  <h3>Panel 4: Used methods on evidence</h3>
-  <ip-p4-methods [dataPath]="'./assets/data-files/panel_4_evidence.csv'"></ip-p4-methods>
+  <h3>Used methods on evidence</h3>
+  <ip-donut-graph [dataPath]="'./assets/data-files/panel_4_evidence.csv'" [threshold]="8"></ip-donut-graph>
 
-  <h3>Panel 5: top10 species cover</h3>
-  <ip-p5-cover-top10 [dataPath]="'./assets/data-files/panel_5.csv'"></ip-p5-cover-top10>
+<!--  DOESN'T LOOK PRETTY-->
+<!--  <h3>Molecule distribution</h3>-->
+<!--  <ip-donut-graph [dataPath]="'./assets/data-files/panel_7.csv'" ></ip-donut-graph>-->
+
+  <h3>top10 species proteome cover</h3>
+  <ip-h-bar-graph [dataPath]="'./assets/data-files/panel_5.csv'"></ip-h-bar-graph>
+
+  <h3>Summary table: </h3>
+  <ip-count-table [dataPath]="'./assets/data-files/panel_6.csv'"></ip-count-table>
 </div>

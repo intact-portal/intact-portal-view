@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { P5CoverTop10Component } from './p5-cover-top10.component';
+import { CountTableComponent } from './count-table.component';
 
-describe('P4MethodComponent', () => {
-  let component: P5CoverTop10Component;
-  let fixture: ComponentFixture<P5CoverTop10Component>;
+describe('CountTableComponent', () => {
+  let component: CountTableComponent;
+  let fixture: ComponentFixture<CountTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ P5CoverTop10Component ]
+      declarations: [ CountTableComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(P5CoverTop10Component);
+    fixture = TestBed.createComponent(CountTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

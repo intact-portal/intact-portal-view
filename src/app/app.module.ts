@@ -32,8 +32,10 @@ import {environment} from '../environments/environment';
 import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 import { StatisticsComponent } from './navigation/about/statistics/statistics.component';
 import { MultilineGraphComponent } from './navigation/about/statistics/multiline-graph/multiline-graph.component';
-import { P5CoverTop10Component } from './navigation/about/statistics/p5-cover-top10/p5-cover-top10.component';
-import { P4MethodsComponent } from './navigation/about/statistics/p4-methods/p4-methods.component';
+import { HBarGraphComponent } from './navigation/about/statistics/hbar-graph/h-bar-graph.component';
+import { DonutGraphComponent } from './navigation/about/statistics/donut-graph/donut-graph.component';
+import { CountTableComponent } from './navigation/about/statistics/count-table/count-table.component';
+import { StackedAreaGraphComponent } from './navigation/about/statistics/stacked-area-graph/stacked-area-graph.component';
 
 @NgModule({
   declarations: [
@@ -44,8 +46,10 @@ import { P4MethodsComponent } from './navigation/about/statistics/p4-methods/p4-
     RedirectComponent,
     StatisticsComponent,
     MultilineGraphComponent,
-    P5CoverTop10Component,
-    P4MethodsComponent,
+    HBarGraphComponent,
+    DonutGraphComponent,
+    CountTableComponent,
+    StackedAreaGraphComponent,
   ],
   imports: [
     BrowserModule,

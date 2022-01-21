@@ -49,8 +49,6 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
             .x(d => x(d.date))
             .y(d => y(d.amount));
         const svg = d3.select(this.svgRef.nativeElement)
-            // .attr('width', width + margin.left + margin.right)
-            // .attr('height', height + margin.top + margin.bottom)
             .attr('viewBox', [0, 0, WIDTH, HEIGHT])
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
@@ -123,7 +121,8 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                 .attr('x', 3)
                 .attr('dy', '.35em')
                 .style('font-size', '12px')
-                .text(d => d.name);
+                .text(d => d.name)
+                .style('opacity', 0.6);
 
             const mouseG = svg.append('g')
                 .attr('class', 'mouse-over-effects')

@@ -1,4 +1,4 @@
-Method_ID,Method_Name,Experiments
+Method_ID,Label,Experiments
 MI:0007,anti tag coimmunoprecipitation,11378
 MI:0006,anti bait coimmunoprecipitation,10428
 MI:0096,pull down,10067

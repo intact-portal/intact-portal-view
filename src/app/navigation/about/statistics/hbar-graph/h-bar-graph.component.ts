@@ -3,12 +3,12 @@ import * as d3 from 'd3';
 
 
 @Component({
-    selector: 'ip-p5-cover-top10',
-    templateUrl: './p5-cover-top10.component.html',
-    styleUrls: ['./p5-cover-top10.component.css'],
+    selector: 'ip-h-bar-graph',
+    templateUrl: './h-bar-graph.component.html',
+    styleUrls: ['./h-bar-graph.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class P5CoverTop10Component implements OnInit, AfterViewInit {
+export class HBarGraphComponent implements OnInit, AfterViewInit {
     @Input() dataPath: string;
 
     @ViewChild('barChart')
@@ -103,8 +103,8 @@ export class P5CoverTop10Component implements OnInit, AfterViewInit {
                 .attr('y', d => y(d.Organism))
                 .attr('width', d => x(d.Reference))
                 .attr('height', y.bandwidth())
-                .attr('fill', '#a75bc4')
-                .style('opacity', 0.2);
+                .attr('fill', 'rgba(2,0,0,0.98)')
+                .style('opacity', 0.1);
 
             // Bars real %
             const reals = svg.selectAll('myRect')

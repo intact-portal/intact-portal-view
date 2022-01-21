@@ -1,0 +1,16 @@
+<table class="dataTable">
+    <thead>
+    <tr>
+        <th>Feature</th>
+        <th>Amount</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let datum of data">
+        <td class="firstColumn">{{datum.feature | titlecase}}</td>
+        <td>{{datum.amount | number}}</td>
+    </tr>
+    </tbody>
+
+</table>

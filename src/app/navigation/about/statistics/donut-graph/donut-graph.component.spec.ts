@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { P4MethodsComponent } from './p4-methods.component';
+import { DonutGraphComponent } from './p4-methods.component';
 
 describe('P4MethodsComponent', () => {
-  let component: P4MethodsComponent;
-  let fixture: ComponentFixture<P4MethodsComponent>;
+  let component: DonutGraphComponent;
+  let fixture: ComponentFixture<DonutGraphComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ P4MethodsComponent ]
+      declarations: [ DonutGraphComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(P4MethodsComponent);
+    fixture = TestBed.createComponent(DonutGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

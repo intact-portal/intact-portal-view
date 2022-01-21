@@ -1,7 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import * as d3 from 'd3';
-import {strategy} from '@angular-devkit/core/src/experimental/jobs';
-import reuse = strategy.reuse;
 
 @Component({
     selector: 'ip-multiline-graph',
@@ -41,8 +39,11 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
         // const color: d3.ScaleOrdinal<string, string> = d3.scaleOrdinal();
         const numberFormat = new Intl.NumberFormat();
         const dateFormat = new Intl.DateTimeFormat();
-        const xAxis = d3.axisBottom(x);
-        const yAxis = d3.axisLeft(y);
+        const xAxis = d3.axisBottom(x).ticks(10);
+        const yAxis = d3.axisLeft(y).ticks(10);
+        const xAxisGrid = d3.axisBottom(x).tickSize(-height).ticks(10);
+        const yAxisGrid = d3.axisLeft(y).tickSize(-width).ticks(10);
+
         const line = d3.line<DatedAmount>()
             .curve(this.dateGranularity === 'year' ? d3.curveStepAfter : d3.curveLinear)
             .x(d => x(d.date))
@@ -73,11 +74,20 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
             const len = datedAmountsMap.length;
             const lineColor: d3.ScaleOrdinal<string, string> = d3.scaleOrdinal()
                 .domain(datedAmountsMap.map(d => d.name))
-                .range(datedAmountsMap.map((d, i) => d3.interpolatePlasma( 0.2 + (i / len) / 1.5) + 'af') ) as d3.ScaleOrdinal<string, string>;
+                .range(datedAmountsMap.map((d, i) => d3.interpolatePlasma(0.2 + (i / len) / 1.5) + 'af')) as d3.ScaleOrdinal<string, string>;
 
             x.domain(d3.extent(data, d => d.date));
             y.domain([0, d3.max(datedAmountsMap, item => d3.max(item.datedAmounts, v => v.amount))]);
 
+            // Create grids.
+            svg.append('g')
+                .attr('class', 'x axis-grid')
+                .attr('transform', 'translate(0,' + height + ')')
+                .call(xAxisGrid);
+            svg.append('g')
+                .attr('class', 'y axis-grid')
+                .call(yAxisGrid);
+            // create axis
             svg.append('g')
                 .attr('class', 'x axis')
                 .attr('transform', 'translate(0,' + height + ')')
@@ -149,8 +159,6 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                 .attr('y', (d, i) => 15 * i + 30)
                 .style('font-size', '12px');
 
-            const lines: HTMLCollectionOf<SVGLineElement> = <HTMLCollectionOf<SVGLineElement>>document.getElementsByClassName('line');
-
             const mousePerLine = mouseG.selectAll('.mouse-per-line')
                 .data(datedAmountsMap)
                 .enter()
@@ -169,12 +177,10 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                 .attr('fill', 'none')
                 .attr('pointer-events', 'all')
                 .on('mouseout', () => { // on mouse out hide line, circles and text
-                    mouseG
-                        .style('opacity', '0');
+                    mouseG.style('opacity', '0');
                 })
                 .on('mouseover', () => { // on mouse in show line, circles and text
-                    mouseG
-                        .style('opacity', '1');
+                    mouseG.style('opacity', '1');
                 })
                 .on('mousemove', e => { // mouse moving over canvas
                     const mouse = d3.pointer(e);
@@ -217,7 +223,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                     }
 
                     mousePerLine
-                        .attr('transform', function (namedAmounts: NamedAmounts, i) {
+                        .attr('transform', function (namedAmounts: NamedAmounts) {
                             const yValue = namedAmounts.datedAmounts[index].amount;
                             mouseLegendTexts
                                 .filter(datum => datum === namedAmounts)

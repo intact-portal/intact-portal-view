@@ -3,11 +3,13 @@
   <ip-multiline-graph [dataPath]="'./assets/data-files/panel_1.csv'"></ip-multiline-graph>
   <h3>Publucations, Experiments Graph</h3>
   <ip-multiline-graph [dataPath]="'./assets/data-files/panel_2.csv'"></ip-multiline-graph>
-  <h3>Authour submitted or Curated request</h3>
-  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3.csv'" [dateGranularity]="'year'"></ip-multiline-graph>
+  <h3>Authour submitted or Curated request on evidence</h3>
+  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3_evidence3.csv'"></ip-multiline-graph>
+<!--  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3.csv'" [dateGranularity]="'year'"></ip-multiline-graph>-->
 
-  <h3>Panel 4: Used methods</h3>
-  <ip-p4-methods [dataPath]="'./assets/data-files/panel_4.csv'"></ip-p4-methods>
+
+  <h3>Panel 4: Used methods on evidence</h3>
+  <ip-p4-methods [dataPath]="'./assets/data-files/panel_4_evidence.csv'"></ip-p4-methods>
 
   <h3>Panel 5: top10 species cover</h3>
   <ip-p5-cover-top10 [dataPath]="'./assets/data-files/panel_5.csv'"></ip-p5-cover-top10>

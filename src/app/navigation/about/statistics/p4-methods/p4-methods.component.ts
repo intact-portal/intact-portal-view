@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import * as d3 from 'd3';
-import {randomInt} from 'd3';
 
 // // https://observablehq.com/@d3/zoomable-treemap
 
@@ -57,17 +56,17 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
             }
         ).then(function (data: any) {
             // slice data to set threshold to visualise in donut
-            const OTHER_THRESHOLD = 8;
+            const OTHER_THRESHOLD = 10;
             const others = data.slice(OTHER_THRESHOLD, data.length).reduce((t, e) => t + e.Experiments, 0)
             data = data.slice(0, OTHER_THRESHOLD);
-            data.push({Method: 'others', Experiments: others})
+            data.push({Method: 'Others', Experiments: others})
             const total = data.reduce((t, e) => t + e.Experiments, 0)
             data.forEach(d => d.percentage = d.Experiments / total * 100)
 
-            // Compute the position of each group on the pie:
             const pie = d3.pie<Data>()
                 .value((d) => d.Experiments)
-                .sort(a => 0)
+                .sort(() => 0)
+            // Compute the position of each group on the pie:
 
             const len = data.length;
             const data_ready = pie(data)
@@ -110,7 +109,7 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
                         .duration(200)
                         .style('opacity', 1)
                         .select('.method-amount').style('opacity', 0.6)
-                        .attr('dy', '1.1em')
+                        .attr('dy', '1.2em')
                 })
                 .on('mouseout', function (event, d) {
                     const i = data_ready.indexOf(d);
@@ -186,7 +185,7 @@ export class P4MethodsComponent implements OnInit, AfterViewInit {
                 .attr('x', '0')
                 .attr('dy', '0em')
                 .style('opacity', 0)
-                .style('font-size', '10px')
+                .style('font-size', '12px')
 
         })
     }

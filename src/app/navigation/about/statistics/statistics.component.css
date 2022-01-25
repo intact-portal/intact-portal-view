@@ -1,0 +1,16 @@
+h1 {
+    font-size:  xx-large;
+    color: #312146;
+    font-weight: 300;
+}
+h2 {
+    font-size: x-large;
+    color: #68297c;
+    font-weight: 400;
+}
+
+p {
+    margin-bottom: 1rem;
+    font-size: inherit;
+    line-height: 1.5;
+}

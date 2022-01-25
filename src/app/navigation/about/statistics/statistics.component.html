@@ -1,25 +1,34 @@
 <div>
 <!--  <h3>Eliot's stacked area graph</h3>-->
 <!--  <ip-stacked-area-graph [dataPath]="'./assets/data-files/curation_distribution.csv'"></ip-stacked-area-graph>-->
-  <h3>Interactions Graph</h3>
+  <h1>Statistics</h1>
+  <p>Move your cursor over the graphs for further details.</p>
+
+  <h2>Interactions over time</h2>
   <ip-multiline-graph [dataPath]="'./assets/data-files/interactions.csv'"></ip-multiline-graph>
-  <h3>Publications, Experiments Graph</h3>
+  <p>
+    Binary interactions are both binary interactions observed by one experiment,
+    as well as n-ary interactions expanded according to the "spoke model". See <a href="https://www.ebi.ac.uk/intact/documentation/user-guide#expansion_method">Expansion Method</a> for more information.
+  </p>
+
+  <h2>Publications & Experiments over time</h2>
   <ip-multiline-graph [dataPath]="'./assets/data-files/publication_experiment.csv'"></ip-multiline-graph>
-  <h3>Author submitted or Curated request on evidence</h3>
+
+  <h2>Curations over time </h2>
   <ip-multiline-graph [dataPath]="'./assets/data-files/curation_distribution.csv'"></ip-multiline-graph>
 <!--  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3.csv'" [dateGranularity]="'year'"></ip-multiline-graph>-->
 
 
-  <h3>Used methods on evidence</h3>
+  <h2>Method distribution</h2>
   <ip-donut-graph [dataPath]="'./assets/data-files/method_distribution.csv'" [threshold]="8"></ip-donut-graph>
 
 <!--  DOESN'T LOOK PRETTY-->
 <!--  <h3>Molecule distribution</h3>-->
 <!--  <ip-donut-graph [dataPath]="'./assets/data-files/panel_7.csv'" ></ip-donut-graph>-->
 
-  <h3>top10 species proteome cover</h3>
+  <h2>Proteome Cover</h2>
   <ip-h-bar-graph [dataPath]="'./assets/data-files/species_cover.csv'"></ip-h-bar-graph>
 
-  <h3>Summary table: </h3>
+  <h2>Summary Table </h2>
   <ip-count-table [dataPath]="'./assets/data-files/summary_table.csv'"></ip-count-table>
 </div>

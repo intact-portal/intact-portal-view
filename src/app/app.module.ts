@@ -35,7 +35,6 @@ import { MultilineGraphComponent } from './navigation/about/statistics/multiline
 import { HBarGraphComponent } from './navigation/about/statistics/hbar-graph/h-bar-graph.component';
 import { DonutGraphComponent } from './navigation/about/statistics/donut-graph/donut-graph.component';
 import { CountTableComponent } from './navigation/about/statistics/count-table/count-table.component';
-import { StackedAreaGraphComponent } from './navigation/about/statistics/stacked-area-graph/stacked-area-graph.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +48,6 @@ import { StackedAreaGraphComponent } from './navigation/about/statistics/stacked
     HBarGraphComponent,
     DonutGraphComponent,
     CountTableComponent,
-    StackedAreaGraphComponent,
   ],
   imports: [
     BrowserModule,

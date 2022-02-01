@@ -16,7 +16,7 @@ export class CountTableComponent implements OnInit {
     ngOnInit(): void {
         d3.csv(this.dataPath, rawRow => ({
             feature: rawRow.Feature,
-            amount: +rawRow.Amount,
+            amount: +rawRow.Count,
         })).then(value => {
             this.data = value.sort((a, b) => b.amount - a.amount);
         })

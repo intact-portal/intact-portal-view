@@ -170,7 +170,7 @@ export class HBarGraphComponent implements OnInit, AfterViewInit {
                     reals.transition().duration(200).attr('width', d => x(d.Percentage));
                     xAxis.transition().duration(200).call(d3.axisBottom(x));
                     xAxisGrid.transition().duration(200).call(gridlinesX);
-                    xLabel.text('Proteome coverage in precentage');
+                    xLabel.text('Proteome coverage in percentage');
                     percentLeft
                         .transition().duration(200)
                         .attr('x', d => x(d.Percentage) - 5)

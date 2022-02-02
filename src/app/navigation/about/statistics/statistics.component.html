@@ -6,7 +6,7 @@
   <h2>Interactions over time</h2>
   <ip-multiline-graph [dataPath]="'./assets/data-files/interactions.csv'"></ip-multiline-graph>
   <p>
-    Interactions over time based on interaction reports.
+    Interactions over time, based on interaction reports.
     An "interaction report" or "evidence" is a report of one interaction by one method in one publication.
     An n-ary interaction has more than two participants. For the sake of comparison and computational processing,
     n-ary interactions are often expanded to multiple binary interactions following the "spoke model".
@@ -14,19 +14,18 @@
     The time assigned to an interaction report is the date the interaction evidence is created in IntAct.
   </p>
 
-  <h2>Publications & Experiments over time</h2>
+  <h2>Publications & experiments over time</h2>
   <ip-multiline-graph [dataPath]="'./assets/data-files/publication_experiment.csv'"></ip-multiline-graph>
   <p>One "Experiment" is the data derived form one method in one publication. A single publication can report multiple experiments,
   for example a large-scale method, and subsequent validation of a subset of interactions with a small scale method.</p>
 
   <h2>Interactions by curation reason</h2>
   <ip-multiline-graph [dataPath]="'./assets/data-files/curation_distribution.csv'"></ip-multiline-graph>
-  <p>Curators can choose publications to curate. This can be depended or funding priority. Beside this,
-    curations can be requested by the author, or submitted by the author.</p>
-
+  <p>Curators can choose publications to curate. This can be dependent on funding priority. Besides this,
+    curations can be requested by the author, or submitted by the author.
 <!--  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3.csv'" [dateGranularity]="'year'"></ip-multiline-graph>-->
 
-  <h2>Interactions by Detection Method</h2>
+  <h2>Interactions by detection method</h2>
   <ip-donut-graph [dataPath]="'./assets/data-files/method_distribution.csv'" [threshold]="8"></ip-donut-graph>
   <p>Distributions are determined on the number of interaction evidences in IntAct.</p>
 

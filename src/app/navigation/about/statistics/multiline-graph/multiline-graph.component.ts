@@ -22,7 +22,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        const WIDTH = 900;
+        const WIDTH = 780;
         const HEIGHT = 400;
         const margin = {
                 top: 20,
@@ -56,7 +56,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
         d3.csv(this.dataPath, (row) => ({
                 date: new Date(row.Date),
                 ...Object.keys(row).reduce((out, key) => {
-                    out[key.replace('_', ' ')] = +row[key];
+                    out[key.replace(/_/g, ' ')] = +row[key];
                     return out;
                 }, {})
             })
@@ -120,7 +120,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                 .attr('transform', d => `translate(${x(d.value.date)},${y(d.value.amount)})`)
                 .attr('x', 3)
                 .attr('dy', '.35em')
-                .style('font-size', '12px')
+                .style('font-size', '9px')
                 .text(d => d.name)
                 .style('opacity', 0.6);
 

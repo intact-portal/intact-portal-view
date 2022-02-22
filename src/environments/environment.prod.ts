@@ -18,6 +18,7 @@ export const environment = {
   former_intact_url: FORMER_INTACT_URL,
   context_path: '',
   license_url: LICENSE_URL,
+  statistics_url: 'https://raw.githubusercontent.com/intact-portal/intact-portal-statistics/statistics_prod/output_data/',
   intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25',
   intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30',
   intact_psimitab_url : INTACT_FTP_BASE_URL + '/current/psimitab/pmid',

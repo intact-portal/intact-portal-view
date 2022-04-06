@@ -81,7 +81,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
     if (this.doUpdate) {
       this.doUpdate = false;
       const miql = MIQLPipe.transform(builder.value);
-      editor.innerText = miql;
+      editor.value = miql;
       this.coloredMIQL = ColorMIQLPipe.transform(miql);
     }
     this.doUpdate = true

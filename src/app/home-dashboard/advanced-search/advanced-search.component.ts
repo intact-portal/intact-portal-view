@@ -73,7 +73,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
   }
 
   search(miql: string) {
-    this.searchService.search(miql);
+    this.searchService.search(miql, miql);
   }
 
   private doUpdate = true;

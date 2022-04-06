@@ -50,11 +50,6 @@ const routes: Routes = [
     redirectTo: 'details/interaction/:interactionAc'
   },
   {
-    path: 'query/:advanced_query',
-    component: RedirectComponent,
-    data: {externalUrl: environment.former_intact_url + 'query/:advanced_query'}
-  },
-  {
     path: 'interactors/:query',
     component: RedirectComponent,
     data: {externalUrl: environment.former_intact_url + 'interactors/:query'}

@@ -46,6 +46,16 @@ const fields: FieldMap = {
     type: 'string',
     entity: 'participant'
   },
+  pubyear: {
+    name: 'Publication year',
+    type: 'string',
+    entity: 'publication'
+  },
+  pubauthors: {
+    name: 'Publication author(s)',
+    type: 'string',
+    entity: 'publication'
+  },
   pubauth: {
     name: 'Publication 1st author(s)',
     type: 'string',
@@ -153,6 +163,16 @@ const fields: FieldMap = {
     entity: 'interaction',
     operators: ['=', '≠']
   },
+  geneNameA: {
+    name: 'Gene name for Interactor A',
+    type: 'string',
+    entity: 'participantA'
+  },
+  geneNameB: {
+    name: 'Gene name for Interactor B',
+    type: 'string',
+    entity: 'participantB'
+  },
   geneName: {
     name: 'Gene name for Interactor A or B',
     type: 'string',
@@ -175,11 +195,16 @@ const fields: FieldMap = {
   },
   annot: {
     name: 'Interaction annotations',
-    type: '',
+    type: 'string',
     entity: 'interaction'
   },
   cdate: {
     name: 'Creation date',
+    type: 'date',
+    entity: 'curationMetadata'
+  },
+  rdate: {
+    name: 'Release date',
     type: 'date',
     entity: 'curationMetadata'
   },
@@ -192,6 +217,21 @@ const fields: FieldMap = {
     name: 'Negative interaction',
     type: 'boolean',
     entity: 'interaction'
+  },
+  mutationA: {
+    name: 'Mutation of Interactor A',
+    type: 'boolean',
+    entity: 'participant'
+  },
+  mutationB: {
+    name: 'Mutation of Interactor B',
+    type: 'boolean',
+    entity: 'participant'
+  },
+  mutation: {
+    name: 'Mutation of Interactor A or B',
+    type: 'boolean',
+    entity: 'participant'
   },
   complex: {
     name: 'Complex expansion',

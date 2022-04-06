@@ -1,4 +1,4 @@
-import {throwError as observableThrowError, Observable, Subject} from 'rxjs';
+import {Observable, Subject, throwError as observableThrowError} from 'rxjs';
 
 import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
@@ -20,6 +20,7 @@ export class SearchService {
   private _query: string;
   private _title: string;
   private _isBatchSearch = false;
+  private _isAdvancedSearch = false;
   private searchSubject: Subject<string> = new Subject<string>();
   public $searchObserver: Observable<string> = this.searchSubject.asObservable();
 
@@ -28,24 +29,15 @@ export class SearchService {
   constructor(private router: Router, private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
-  isAdvancedQuery(query: string): boolean {
-    const isMIQL = ColorMIQLPipe.isMIQL(query);
-    if (isMIQL) {
-      window.open('query/' + query);
-    }
-    return isMIQL;
-  }
-
   search(query: string, title?: string) {
     this._query = query;
     this._isBatchSearch = false;
     if (title) {
       this._title = title;
     }
-    if (!this.isAdvancedQuery(query)) {
-      this.searchSubject.next(query);
-      this.router.navigate(['search'], {queryParams: {query}});
-    }
+    this.updateAdvancedSearch(query);
+    this.searchSubject.next(query);
+    this.router.navigate(['search'], {queryParams: {query}});
   }
 
   batchSearch(query: string) {
@@ -74,11 +66,12 @@ export class SearchService {
   private genToken = (length) => (this.rand() + this.rand() + this.rand() + this.rand()).substr(0, length);
 
   speciesSearch(interactome: Interactome) {
-    this._query = interactome.taxid.toString();
+    this._query = `species:${interactome.taxid}`;
     this._title = `${interactome.name}`;
     this._isBatchSearch = false;
+    this._isAdvancedSearch = true
     this.searchSubject.next(this._query);
-    this.router.navigate(['search'], {queryParams: {query: this._query, interactorSpeciesFilter: interactome.name}});
+    this.router.navigate(['search'], {queryParams: {query: this._query}});
   }
 
   resolveSearch(query: string, page = 0, pageSize = 50): Observable<{ [term: string]: Pagination<Interactor[]> }> {
@@ -127,9 +120,18 @@ export class SearchService {
     return this._isBatchSearch;
   }
 
+  get isAdvancedSearch(): boolean {
+    return this._isAdvancedSearch;
+  }
+
+  private updateAdvancedSearch(query: string) {
+    this._isAdvancedSearch = ColorMIQLPipe.isMIQL(query);
+  }
+
   fromParams(params: ParamMap) {
     if (params.has('query')) {
       this._query = params.get('query');
+      this.updateAdvancedSearch(this._query)
     } else if (params.has('token')) {
       this._token = params.get('token');
       const mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
@@ -152,6 +154,9 @@ export class SearchService {
     } else if (this.query) {
       params.query = this.query.trim();
     }
+    if (this.isAdvancedSearch) {
+      params.advancedSearch = this.isAdvancedSearch;
+    }
 
     return params;
   }
@@ -162,6 +167,9 @@ export class SearchService {
     }
     if (this.isBatchSearch) {
       params.batchSearch = this.isBatchSearch;
+    }
+    if (this.isAdvancedSearch) {
+      params.advancedSearch = this.isAdvancedSearch;
     }
     return params;
   }

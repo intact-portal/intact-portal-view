@@ -4,6 +4,7 @@ import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule,
 import {MIQLPipe} from './MIQL.pipe';
 import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper} from './advanced-search.config';
 import {ColorMIQLPipe} from './colorMIQL.pipe';
+import {SearchService} from '../search/service/search.service';
 
 export interface ColorCode {
   regex: RegExp,
@@ -28,7 +29,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
 
   coloredMIQL: string;
 
-  constructor() {
+  constructor(private searchService: SearchService) {
     this.queryCtrl = new FormControl(this.query);
     this.currentConfig = ADVANCED_SEARCH_CONFIG;
   }
@@ -72,7 +73,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
   }
 
   search(miql: string) {
-    window.open('query/' + miql);
+    this.searchService.search(miql);
   }
 
   private doUpdate = true;
@@ -103,6 +104,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
     this.coloredMIQL = ColorMIQLPipe.transform(miql);
     this.editorToBuilder(builder, miql);
   }
+
   onBuilderUpdate(editor: HTMLTextAreaElement, builder: QueryBuilderComponent) {
     this.builderToEditor(builder, editor)
   }

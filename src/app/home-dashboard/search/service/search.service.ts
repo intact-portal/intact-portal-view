@@ -154,9 +154,6 @@ export class SearchService {
     } else if (this.query) {
       params.query = this.query.trim();
     }
-    if (this.isAdvancedSearch) {
-      params.advancedSearch = this.isAdvancedSearch;
-    }
 
     return params;
   }

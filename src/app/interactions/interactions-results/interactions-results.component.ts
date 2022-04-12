@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {SearchService} from '../../home-dashboard/search/service/search.service';
@@ -9,6 +9,7 @@ import {NetworkViewService} from '../shared/service/network-view.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NegativeFilterStatus} from './interactions-filters/negative-filter/negative-filter-status.model';
 import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
+import {zip} from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -34,13 +35,19 @@ export class InteractionsResultsComponent implements OnInit {
   ngOnInit() {
     this.titleService.setTitle('IntAct - Search Results');
 
-    this.route.queryParamMap
-      .pipe(untilDestroyed(this))
-      .subscribe(paramMap => {
-        this.search.fromParams(paramMap);
-        this.filters.fromParams(paramMap);
+    zip(
+      this.route.paramMap,
+      this.route.queryParamMap
+    ).pipe(untilDestroyed(this))
+      .subscribe((params) => {
+        params.forEach(value => {
+          this.search.fromParams(value);
+          this.filters.fromParams(value);
+        })
+        console.log(params)
+
         this.requestInteractionsResults();
-      });
+      })
 
     this.filters.$updateFilters.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
     this.view.updates.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());

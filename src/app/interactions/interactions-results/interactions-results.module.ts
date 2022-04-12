@@ -14,7 +14,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {TableFactoryService} from '../shared/service/table-factory.service';
 import {NetworkSelectionService} from '../shared/service/network-selection.service';
@@ -36,7 +35,6 @@ import {DensitySliderComponent} from './interactions-filters/density-slider/dens
     MatButtonModule,
     MatDialogModule,
     MatTooltipModule,
-    BrowserAnimationsModule,
     MatSlideToggleModule,
     MatExpansionModule,
     ComponentsModule,

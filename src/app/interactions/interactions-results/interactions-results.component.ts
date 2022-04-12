@@ -34,24 +34,26 @@ export class InteractionsResultsComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Search Results');
+    // Switch path params to query params
+    this.route.params
+      .pipe(untilDestroyed(this))
+      .subscribe(pathParams => {
+        if (Object.keys(pathParams).length > 0) {
+          this.router.navigate(['search'], {queryParams: pathParams})
+        }
+      })
 
-    zip(
-      this.route.paramMap,
-      this.route.queryParamMap
-    ).pipe(untilDestroyed(this))
+    // Use query params
+    this.route.queryParamMap
+      .pipe(untilDestroyed(this))
       .subscribe((params) => {
-        params.forEach(value => {
-          this.search.fromParams(value);
-          this.filters.fromParams(value);
-        })
-        console.log(params)
-
+        this.search.fromParams(params);
+        this.filters.fromParams(params);
         this.requestInteractionsResults();
       })
 
     this.filters.$updateFilters.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
     this.view.updates.pipe(untilDestroyed(this)).subscribe(() => this.updateURLParams());
-
   }
 
   private requestInteractionsResults() {

@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {RouterModule, UrlSerializer} from '@angular/router';
+import {UrlSerializer} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -30,11 +30,11 @@ import {RedirectComponent} from './navigation/redirect/redirect.component';
 import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from 'ngx-google-analytics';
 import {environment} from '../environments/environment';
 import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
-import { StatisticsComponent } from './navigation/about/statistics/statistics.component';
-import { MultilineGraphComponent } from './navigation/about/statistics/multiline-graph/multiline-graph.component';
-import { HBarGraphComponent } from './navigation/about/statistics/hbar-graph/h-bar-graph.component';
-import { DonutGraphComponent } from './navigation/about/statistics/donut-graph/donut-graph.component';
-import { CountTableComponent } from './navigation/about/statistics/count-table/count-table.component';
+import {StatisticsComponent} from './navigation/about/statistics/statistics.component';
+import {MultilineGraphComponent} from './navigation/about/statistics/multiline-graph/multiline-graph.component';
+import {HBarGraphComponent} from './navigation/about/statistics/hbar-graph/h-bar-graph.component';
+import {DonutGraphComponent} from './navigation/about/statistics/donut-graph/donut-graph.component';
+import {CountTableComponent} from './navigation/about/statistics/count-table/count-table.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,6 @@ import { CountTableComponent } from './navigation/about/statistics/count-table/c
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot([]),
     FormsModule,
     HttpClientModule,
     LayoutModule,

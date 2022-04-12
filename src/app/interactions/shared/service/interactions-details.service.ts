@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {environment} from '../../../../environments/environment';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 import {catchError} from 'rxjs/operators';
 import {GoogleAnalyticsService} from 'ngx-google-analytics';
 import {MIJson} from 'complexviewer';
@@ -31,7 +30,7 @@ export class InteractionsDetailsService {
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(err: HttpErrorResponse | any): ErrorObservable<any> {
+  private handleError(err: HttpErrorResponse | any): Observable<any> {
     this.reporter.exception(err);
     if (err.error instanceof Error) {
       return observableThrowError(err);

@@ -8,6 +8,11 @@ const routes: Routes = [
     component: InteractionsResultsComponent,
     data: {showCompactHeader: true, showFooter: true}
   },
+  {
+    path: 'search/:query',
+    component: InteractionsResultsComponent,
+    data: {showCompactHeader: true, showFooter: true}
+  },
 ];
 
 @NgModule({

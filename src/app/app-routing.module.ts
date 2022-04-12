@@ -73,36 +73,16 @@ const routes: Routes = [
     component: RedirectComponent,
     data: {externalUrl: environment.former_intact_url + 'pages/details/details.xhtml'}
   },
-  // {
-  //   path: '**',
-  //   redirectTo: 'home'
-  // }
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
 ];
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forRoot(routes, {useHash: false, enableTracing: true})]
+  imports: [RouterModule.forRoot(routes, {useHash: false, enableTracing: false})]
 })
 
 export class AppRoutingModule {
-}
-
-/**
- * custom url matcher for router config
- */
-export function redirectMatcher(url: UrlSegment[]) {
-  if (url[0] && url[0].path.includes('redirect')) {
-    const path = url[0].path;
-    // sanity check
-    if (path.includes('page') && path.includes('id')) {
-      return {
-        consumed: url,
-        posParams: {
-          page: new UrlSegment(path.match(/page=([^&]*)/)[1], {}),
-          id: new UrlSegment(path.match(/id=([^&]*)/)[1], {})
-        }
-      }
-    }
-  }
-  return null;
 }

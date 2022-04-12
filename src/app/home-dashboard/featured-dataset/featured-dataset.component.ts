@@ -40,7 +40,7 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
   }
 
   onIntActSearch() {
-    this.search.search(this.firstPubmed.id, `publication: ${this.firstPubmed.author} (${this.firstPubmed.id})`);
+    this.search.search(`pubid:${this.firstPubmed.id}`, `publication: ${this.firstPubmed.author} (${this.firstPubmed.id})`);
   }
 
   ngAfterViewInit(): void {

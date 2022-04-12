@@ -19,7 +19,7 @@ export class HomeDescriptionComponent implements OnInit {
   }
 
   onSearch() {
-    this.search.search('"Coronavirus -"', 'coronavirus dataset');
+    this.search.search('annot:"dataset:coronavirus"', 'coronavirus dataset');
   }
 
   miXml25Url() {

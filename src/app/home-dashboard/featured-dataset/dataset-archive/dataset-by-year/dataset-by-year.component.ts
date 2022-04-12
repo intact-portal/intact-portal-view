@@ -2,6 +2,8 @@ import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Dataset} from '../../model/dataset.model';
 import {environment} from '../../../../../environments/environment';
 import {PubmedDataset} from '../../model/pubmed-dataset.model';
+import {Router} from '@angular/router';
+import {SearchService} from '../../../search/service/search.service';
 
 
 const intactFTP_URL = environment.intact_psi25_url;
@@ -18,7 +20,7 @@ export class DatasetByYearComponent implements AfterViewInit {
 
   @Input() datasets: Dataset[]
 
-  constructor() {
+  constructor(private search: SearchService) {
   }
 
   ngAfterViewInit(): void {
@@ -50,6 +52,9 @@ export class DatasetByYearComponent implements AfterViewInit {
     });
   }
 
+  searchIntAct(pubmedId: string) {
+    this.search.search(`pubid:${pubmedId}`)
+  }
 
   goPSIMI25FTP(pubmedYear: string, pubmedId: string) {
     window.open(intactFTP_URL + `/pmid/${pubmedYear}/${pubmedId}.zip`);

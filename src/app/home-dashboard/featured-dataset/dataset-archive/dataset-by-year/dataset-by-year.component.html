@@ -24,6 +24,9 @@
             </ng-template>
             <td style="text-align: right">
               <div>
+                <button mat-raised-button color="accent" (click)="searchIntAct(pubmed.id)">
+                  <i class="icon icon-common icon-eye"></i>
+                </button>
                 <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed.year || dataset.year, pubmed.id)">
                   <i class="icon icon-common icon-download"></i> PSI-MI XML 2.5
                 </button>

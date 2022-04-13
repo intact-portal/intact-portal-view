@@ -16,16 +16,17 @@ export class MIQLPipe implements PipeTransform {
       if (this.isRuleSet(rule)) {
         return `(${this.transform(rule)})`;
       } else {
+        const value = rule.value || '';
         switch (rule.operator) {
           default:
           case '=':
-            return `${rule.field}:${rule.value}`;
+            return `${rule.field}:${value}`;
           case '≠':
-            return `NOT ${rule.field}:${rule.value}`;
+            return `NOT ${rule.field}:${value}`;
           case 'in':
-            return `${rule.field}:(${rule.value})`;
+            return `${rule.field}:(${value})`;
           case 'not in':
-            return `NOT ${rule.field}:(${rule.value})`;
+            return `NOT ${rule.field}:(${value})`;
         }
       }
     }).join(` ${ruleSet.condition.toUpperCase()} `);

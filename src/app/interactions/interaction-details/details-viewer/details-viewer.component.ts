@@ -157,11 +157,14 @@ export class DetailsViewerComponent implements AfterViewInit {
   private collectTypes() {
     for (const datum of this.interactionData.data) {
       if (datum.object !== 'interaction') {
-        break;
+        continue;
       }
       for (const jsonParticipant of datum.participants) {
         const intRef = jsonParticipant.interactorRef;
         const interactor = viewer.interactors.get(intRef);
+        if (!interactor) {
+          continue;
+        }
         for (const type of DetailsViewerComponent.types) {
           if (type.set.has(interactor.type.id)) {
             this.nodeTypes.add(type.name);

@@ -112,7 +112,7 @@ export class DetailsViewerComponent implements AfterViewInit {
     for (const group of Object.keys(legendData)) {
       if (group === 'Complex') {
         this._colorLegendGroups.push({
-          name: 'Interaction', legends: legendData[group].map(legend => {
+          name: 'Interaction & Complexes', legends: legendData[group].map(legend => {
             legend.name = legend.name.replace('intact_', '');
             return legend;
           })

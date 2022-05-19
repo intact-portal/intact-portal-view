@@ -16,17 +16,15 @@ export class InteractionParticipantsService {
   public initParticipants(participants: Participant[], statusByDefaultForProteins: Status.EXPANDED | Status.COLLAPSED = Status.EXPANDED) {
     this.participantStatus.clear();
     for (const participant of participants) {
-      if (participant.object === 'interactor') {
-        this.participantStatus.set(participant, participant.type.name === 'protein' ? statusByDefaultForProteins : Status.NON_PROTEIN);
-        this.idToParticipant.set(participant.identifier.id, participant);
-      }
+      this.participantStatus.set(participant, participant.type.name === 'protein' || participant.type.name === 'peptide' ? statusByDefaultForProteins : Status.NON_PROTEIN);
+      this.idToParticipant.set(participant.identifier.id, participant);
     }
     this.notifySetsListener();
   }
 
   public setProteinStatus(participant: Participant, status: Status.COLLAPSED | Status.EXPANDED) {
     if (!this.participantStatus.has(participant)) {
-      throw new Error(`${participant.label} (id:${participant.identifier.id}) was not defined as a participant`);
+      throw new Error(`${participant?.label} (id:${participant?.identifier.id}) was not defined as a participant`);
     }
     this.participantStatus.set(participant, status);
     this.notifySetsListener();

@@ -93,12 +93,6 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.parent.data,
-          title: this._columns.parent.title,
-          defaultContent: '',
-          render: this.tableFactory.identifierRender
-        },
-        {
           data: this._columns.name.data,
           title: this._columns.name.title,
           defaultContent: ' '

@@ -34,7 +34,6 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { RangeInputComponent } from './advanced-search/range-input/range-input.component';
 import { DateRangeComponent } from './advanced-search/date-range/date-range.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { BooleanPipe } from './advanced-search/boolean.pipe';
 import { BooleanInputComponent } from './advanced-search/boolean-input/boolean-input.component';
 
 @NgModule({
@@ -80,7 +79,6 @@ import { BooleanInputComponent } from './advanced-search/boolean-input/boolean-i
     ColorMIQLPipe,
     RangeInputComponent,
     DateRangeComponent,
-    BooleanPipe,
     BooleanInputComponent
   ]
 })

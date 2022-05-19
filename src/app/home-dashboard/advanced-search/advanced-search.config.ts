@@ -1,4 +1,8 @@
 import {Field, FieldMap, QueryBuilderConfig} from 'angular2-query-builder';
+import moment from 'moment';
+
+const DATE_FORMAT = 'YYYYMMDD';
+
 
 const fields: FieldMap = {
   idA: {
@@ -12,12 +16,12 @@ const fields: FieldMap = {
     entity: 'participantB'
   },
   altidA: {
-    name: 'Alternative Id.',
+    name: 'Alternative id',
     type: 'string',
     entity: 'participantA'
   },
   altidB: {
-    name: 'Alternative Id.',
+    name: 'Alternative id',
     type: 'string',
     entity: 'participantB'
   },
@@ -48,8 +52,10 @@ const fields: FieldMap = {
   },
   pubyear: {
     name: 'Publication year',
-    type: 'string',
-    entity: 'publication'
+    type: 'number-range',
+    entity: 'publication',
+    defaultValue: () => `[2000 TO ${moment().year()}]`,
+    operators: ['∈', '∉']
   },
   pubauthors: {
     name: 'Publication author(s)',
@@ -67,22 +73,22 @@ const fields: FieldMap = {
     entity: 'publication'
   },
   taxidA: {
-    name: 'Tax Id. interactor',
+    name: 'Taxon id or Species',
     type: 'string',
     entity: 'participantA'
   },
   taxidB: {
-    name: 'Tax Id. interactor',
+    name: 'Taxon id or Species',
     type: 'string',
     entity: 'participantB'
   },
   taxidHost: {
-    name: 'Tax Id. Host organism',
+    name: 'Taxon id or Species of Host organism',
     type: 'string',
     entity: 'interaction'
   },
   species: {
-    name: 'Tax Id. interactors',
+    name: 'Taxon id or Species',
     type: 'string',
     entity: 'participant'
   },
@@ -159,9 +165,9 @@ const fields: FieldMap = {
   'intact-miscore': {
     name: 'IntAct MI Score',
     defaultValue: '[0 TO 1]',
-    type: 'string',
+    type: 'number-range',
     entity: 'interaction',
-    operators: ['=', '≠']
+    operators: ['∈', '∉']
   },
   geneNameA: {
     name: 'Gene name for Interactor A',
@@ -198,40 +204,47 @@ const fields: FieldMap = {
     type: 'string',
     entity: 'interaction'
   },
-  cdate: {
-    name: 'Creation date',
-    type: 'date',
-    entity: 'curationMetadata'
-  },
   rdate: {
     name: 'Release date',
-    type: 'date',
-    entity: 'curationMetadata'
+    type: 'date-range',
+    entity: 'curationMetadata',
+    defaultValue: () => `[${moment('2003').format(DATE_FORMAT)} TO ${moment().format(DATE_FORMAT)}]`,
+    operators: ['∈', '∉']
   },
   udate: {
     name: 'Update date',
-    type: 'date',
-    entity: 'curationMetadata'
+    type: 'date-range',
+    entity: 'curationMetadata',
+    defaultValue: () => `[${moment('2003').format(DATE_FORMAT)} TO ${moment().format(DATE_FORMAT)}]`,
+    operators: ['∈', '∉']
   },
   negative: {
     name: 'Negative interaction',
     type: 'boolean',
-    entity: 'interaction'
+    entity: 'interaction',
+    operators: ['='],
+    defaultValue: 'TRUE'
   },
   mutationA: {
     name: 'Mutation of Interactor A',
     type: 'boolean',
-    entity: 'participant'
+    entity: 'participant',
+    operators: ['='],
+    defaultValue: 'TRUE'
   },
   mutationB: {
     name: 'Mutation of Interactor B',
     type: 'boolean',
-    entity: 'participant'
+    entity: 'participant',
+    operators: ['='],
+    defaultValue: 'TRUE'
   },
   mutation: {
     name: 'Mutation of Interactor A or B',
     type: 'boolean',
-    entity: 'participant'
+    entity: 'participant',
+    operators: ['='],
+    defaultValue: 'TRUE'
   },
   complex: {
     name: 'Complex expansion',
@@ -240,19 +253,19 @@ const fields: FieldMap = {
     options: [
       {
         name: 'Bipartite expansion',
-        value: 'MI:1062'
+        value: '"MI:1062"'
       },
       {
         name: 'Matrix expansion',
-        value: 'MI:1061'
+        value: '"MI:1061"'
       },
       {
         name: 'Spoke expansion',
-        value: 'MI:1060'
+        value: '"MI:1060"'
       },
       {
         name: 'Non-expanded',
-        value: '-'
+        value: '"-"'
       }
     ]
   },
@@ -286,25 +299,19 @@ const fields: FieldMap = {
     type: 'string',
     entity: 'participant'
   },
-  stcA: {
-    name: 'Stoichiometry',
-    type: 'string',
-    entity: 'participantA'
-  },
-  stcB: {
-    name: 'Stoichiometry',
-    type: 'string',
-    entity: 'participantB'
-  },
   stc: {
     name: 'Stoichiometry',
     type: 'boolean',
-    entity: 'participant'
+    entity: 'participant',
+    operators: ['='],
+    defaultValue: 'TRUE'
   },
   param: {
     name: 'Interaction parameters',
     type: 'boolean',
-    entity: 'interaction'
+    entity: 'interaction',
+    operators: ['='],
+    defaultValue: 'TRUE'
   },
   source: {
     name: 'Source database(s)',
@@ -339,8 +346,8 @@ const fields: FieldMap = {
 };
 
 export const ADVANCED_SEARCH_CONFIG: QueryBuilderConfig = {
-  getOperators() {
-    return ['=', '≠', 'in', 'not in']
+  getOperators(a, b) {
+    return b.operators || ['=', '≠', 'in', 'not in']
   },
   fields,
   entities: {
@@ -372,6 +379,18 @@ export const ADVANCED_SEARCH_CONFIG: QueryBuilderConfig = {
       name: 'Curation Metadata',
       defaultField: fields.source
     }
+  }
+}
+
+export const MIQL_DATE_FORMAT = {
+  parse: {
+    dateInput: DATE_FORMAT, // this is how your date will be parsed from Input
+  },
+  display: {
+    dateInput: 'YYYY/MM/DD', // this is how your date will get displayed on the Input
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
   }
 }
 

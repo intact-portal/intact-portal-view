@@ -28,25 +28,37 @@ import {ComponentsModule} from '../shared/components/components.module';
 import {MIQLPipe} from './advanced-search/MIQL.pipe';
 import {ColorMIQLPipe} from './advanced-search/colorMIQL.pipe';
 import {MarkdownModule} from '../navigation/documentation/shared/markdown/markdown.module';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import { RangeInputComponent } from './advanced-search/range-input/range-input.component';
+import { DateRangeComponent } from './advanced-search/date-range/date-range.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { BooleanPipe } from './advanced-search/boolean.pipe';
+import { BooleanInputComponent } from './advanced-search/boolean-input/boolean-input.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        QueryBuilderModule,
-        HomeDashboardRoutingModule,
-        FileUploadModule,
-        ArchwizardModule,
-        MatProgressSpinnerModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        MatButtonModule,
-        MatCardModule,
-        ProgressSpinnerModule,
-        ComponentsModule,
-        MarkdownModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    QueryBuilderModule,
+    HomeDashboardRoutingModule,
+    FileUploadModule,
+    ArchwizardModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatCardModule,
+    ProgressSpinnerModule,
+    ComponentsModule,
+    MarkdownModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatInputModule,
+    MatSlideToggleModule,
+  ],
   exports: [
     KeyvaluemapPipe
   ],
@@ -65,7 +77,11 @@ import {MarkdownModule} from '../navigation/documentation/shared/markdown/markdo
     KeyvaluemapPipe,
     DatasetByYearComponent,
     MIQLPipe,
-    ColorMIQLPipe
+    ColorMIQLPipe,
+    RangeInputComponent,
+    DateRangeComponent,
+    BooleanPipe,
+    BooleanInputComponent
   ]
 })
 export class HomeDashboardModule {

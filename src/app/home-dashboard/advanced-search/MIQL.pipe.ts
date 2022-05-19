@@ -16,12 +16,17 @@ export class MIQLPipe implements PipeTransform {
       if (this.isRuleSet(rule)) {
         return `(${this.transform(rule)})`;
       } else {
-        const value = rule.value || '';
+        let value = rule.value?.format?.('YYYYMMDD') || rule.value;
+        if (value === undefined) {
+          value = '';
+        }
         switch (rule.operator) {
           default:
           case '=':
+          case '∈':
             return `${rule.field}:${value}`;
           case '≠':
+          case '∉':
             return `NOT ${rule.field}:${value}`;
           case 'in':
             return `${rule.field}:(${value})`;

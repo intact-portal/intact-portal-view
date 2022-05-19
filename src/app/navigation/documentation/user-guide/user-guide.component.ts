@@ -18,6 +18,7 @@ export class UserGuideComponent implements OnInit {
   data_export = environment.intact_portal_documentation_url + 'documentation/user-guide/data-export.md';
   access_intact = environment.intact_portal_documentation_url + 'documentation/user-guide/access-intact.md';
   curation_manual = environment.intact_portal_documentation_url + 'documentation/user-guide/curation-manual.md';
+  advanced_search = environment.intact_portal_documentation_url + 'documentation/user-guide/advanced-search.md';
 
 
   constructor(private titleService: Title) {

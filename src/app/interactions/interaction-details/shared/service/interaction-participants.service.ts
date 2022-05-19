@@ -16,10 +16,11 @@ export class InteractionParticipantsService {
   public initParticipants(participants: Participant[], statusByDefaultForProteins: Status.EXPANDED | Status.COLLAPSED = Status.EXPANDED) {
     this.participantStatus.clear();
     for (const participant of participants) {
-      this.participantStatus.set(participant, participant.type.name === 'protein' || participant.type.name === 'peptide' ? statusByDefaultForProteins : Status.NON_PROTEIN);
-      this.idToParticipant.set(participant.identifier.id, participant);
+      if (participant.object === 'interactor') {
+        this.participantStatus.set(participant, participant.type.name === 'protein' || participant.type.name === 'peptide' ? statusByDefaultForProteins : Status.NON_PROTEIN);
+        this.idToParticipant.set(participant.identifier.id, participant);
+      }
     }
-    this.notifySetsListener();
   }
 
   public setProteinStatus(participant: Participant, status: Status.COLLAPSED | Status.EXPANDED) {

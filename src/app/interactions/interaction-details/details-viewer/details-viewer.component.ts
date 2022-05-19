@@ -2,10 +2,10 @@ import {AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation
 import {HttpErrorResponse} from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
-import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
+import {InteractionParticipantsService, Status} from '../shared/service/interaction-participants.service';
 import * as complexviewer from 'complexviewer';
-import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {MIJson, Participant} from 'complexviewer';
+import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 export let viewer: complexviewer.App;
@@ -73,9 +73,8 @@ export class DetailsViewerComponent implements AfterViewInit {
           if (this.interactionData !== undefined) {
             viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
             viewer.readMIJSON(this.interactionData, true);
+            this.participantsService.initParticipants(this.interactionData.data, Status.COLLAPSED);
             viewer.autoLayout();
-            this.expandAll();
-            this.participantsService.initParticipants(viewer.getExpandedParticipants());
             this.updateColorLegend(viewer.getColorKeyJson());
             this.collectTypes();
             viewer.addExpandListener((expandedParticipants: Participant[]) => {
@@ -94,7 +93,6 @@ export class DetailsViewerComponent implements AfterViewInit {
 
   expandAll(): void {
     viewer.expandAll();
-    this.participantsService.expandAllProteins();
   }
 
   collapseAll(): void {

@@ -1,10 +1,12 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ContentChild, ElementRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
-import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper} from './advanced-search.config';
+import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper, MIQL_DATE_FORMAT} from './advanced-search.config';
 import {ColorMIQLPipe} from './colorMIQL.pipe';
 import {SearchService} from '../search/service/search.service';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
 
 export interface ColorCode {
   regex: RegExp,
@@ -15,7 +17,12 @@ export interface ColorCode {
 @Component({
   selector: 'ip-advanced-search',
   templateUrl: './advanced-search.component.html',
-  styleUrls: ['./advanced-search.component.css']
+  styleUrls: ['./advanced-search.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MIQL_DATE_FORMAT}
+  ]
 })
 export class AdvancedSearchComponent implements AfterViewInit {
 
@@ -154,7 +161,7 @@ function parseMIQL(miql: string): RuleSet {
   return out;
 }
 
-function extractSetRule(miql: string, start: number, value: string) {
+function extractSetRule(miql: string, start: number, value: string): Rule {
   let previousSpaceIndex = miql.lastIndexOf(' ', start - 2);
   if (miql.substring(previousSpaceIndex + 1, previousSpaceIndex + 2) === '(') {
     previousSpaceIndex++; // Avoid hitting the start parenthesis if the field is the first in a rule set
@@ -212,12 +219,13 @@ function fillRuleSet(ruleSet: RuleSet, value: string) {
         const ruleField = AdvancedQueryHelper.toField(ruleFieldKeyword);
         if (ruleField !== undefined) {
           const ruleValue = ruleStr.substring(indexOfColon + 1, ruleStr.length);
+          const operator = ruleValue.startsWith('[') ? (different ? '∉' : '∈') : ruleOperator;
           if (ruleValue.startsWith('(')) {
             ruleSet.rules.push(superiorRuleSets.pop());
           } else if (ruleValue === 'undefined') {
-            ruleSet.rules.push({field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity})
+            ruleSet.rules.push({field: ruleFieldKeyword, operator: operator, entity: ruleField.entity})
           } else {
-            ruleSet.rules.push({field: ruleFieldKeyword, operator: ruleOperator, entity: ruleField.entity, value: ruleValue})
+            ruleSet.rules.push({field: ruleFieldKeyword, operator: operator, entity: ruleField.entity, value: ruleValue})
           }
         }
       }

@@ -1,71 +1,97 @@
+.query-input {
+    display: inline;
+    padding: 4px 8px;
+    width: 120px;
+    height: 39px;
+    border-radius: 0;
+    border: 1px solid #777;
+    margin: 0!important;
+}
+
+.mini {
+    width: 76px;
+}
+
 .text-input {
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.date-input {
+    border-right-width: 0!important;
+}
+
+.datepicker-toggle > .mat-icon-button {
+    background-color: #68297c;
+    color: white;
+    height: 39px;
+    line-height: 39px;
+    border-radius: 0;
 }
 
 .input-group {
-  height: 21px!important;
-  padding: 0;
+    height: 21px !important;
+    padding: 0;
 }
 
 #editor, #highlighting {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 5px 8px 0 8px;
-  border: 1px solid #CCC;
-  width: 100%;
-  height: 95px;
-  overflow: auto;
-  white-space: pre-wrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 5px 8px 0 8px;
+    border: 1px solid #CCC;
+    width: 100%;
+    height: 95px;
+    overflow: auto;
+    white-space: pre-wrap;
 }
 
 textarea#editor {
-  z-index: 1;
-  resize: none;
-  color: transparent;
-  background: transparent;
-  caret-color: black; /* Or choose your favorite color */
+    z-index: 1;
+    resize: none;
+    color: transparent;
+    background: transparent;
+    caret-color: black; /* Or choose your favorite color */
 }
 
 #highlighting {
-  z-index: 0;
+    z-index: 0;
 }
 
 #editor, #highlighting, #highlighting * {
-  /* Also add text styles to highlighting tokens */
-  font-family: monospace;
-  font-weight: bold;
-  font-size: 15px;
-  tab-size: 2;
+    /* Also add text styles to highlighting tokens */
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 15px;
+    tab-size: 2;
 }
 
 #editor {
-  /*width: 100%;*/
-  /*height: 21px!important;*/
-  /*padding: 8px;*/
-  /*border: 1px solid #CCC;*/
-  /*font-family: monospace;*/
-  /*font-weight: bold;*/
-  /*white-space: normal;*/
+    /*width: 100%;*/
+    /*height: 21px!important;*/
+    /*padding: 8px;*/
+    /*border: 1px solid #CCC;*/
+    /*font-family: monospace;*/
+    /*font-weight: bold;*/
+    /*white-space: normal;*/
 }
 
 .button-group .button.icon {
-  font-size: xxx-large;
-  border: none;
-  padding: 15px;
+    font-size: xxx-large;
+    border: none;
+    padding: 15px;
 }
 
 #arrow-panel {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 #ad-search-button {
-  padding: calc(50% - 0.85em) 15px calc(50% - 0.85em) 15px!important;
-  height: 95px;
+    padding: calc(50% - 0.85em) 15px calc(50% - 0.85em) 15px !important;
+    height: 95px;
 }
 
 

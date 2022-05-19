@@ -434,6 +434,10 @@ a:visited {
   color: #6dab49;
 }
 
+.miql-value {
+  color: #a65f12;
+}
+
 .ad-q-switch-label, .ad-q-switch-radio {
   line-height: 1;
   display: contents;

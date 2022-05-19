@@ -84,7 +84,8 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
         },
         {
           data: this._columns.role.data,
-          title: this._columns.role.title
+          title: this._columns.role.title,
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured, 'centered')
         },
         {
           data: this._columns.rangePositions.data,
@@ -112,7 +113,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
         {
           data: this._columns.detectionMethods.data,
           title: this._columns.detectionMethods.title,
-          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured, 'centered')
         },
         {
           data: this._columns.parameters.data,

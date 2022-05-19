@@ -22,7 +22,7 @@ export class TableFactoryService {
     }],
     ['intact', {
       fancyName: 'IntAct',
-      getURL: id => null,
+      getURL: id => `./details/interaction/${id}`,
       color: 'rgba(104,41,124,1.0)'
     }],
     ['chebi', {
@@ -166,22 +166,35 @@ export class TableFactoryService {
     }
   }
 
-  enlistWithButtons = (renderer: (data: any, i?: number) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
+  enlistWithButtons = (renderer: (data: any, type, row, meta) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
     if (data == null || type !== 'display') {
       return data;
     }
     let html = '<div class="show-more-content">'
     let displayed = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (displayed === 2) {
-        html += '<div class="to-hide" style="display: none">';
+    if (data instanceof Array) {
+      for (let i = 0; i < data.length; i++) {
+        if (displayed === 2) {
+          html += '<div class="to-hide" style="display: none">';
+        }
+        const render = renderer(data[i], type, row, meta);
+        if (render) {
+          html += render;
+          displayed++;
+        } else if (render !== null) {
+          console.error(`${data} is not handled correctly by its renderer`);
+        }
       }
-      const render = renderer(data[i], i);
+    } else {
+      const render = renderer(data, type, row, meta);
       if (render) {
         html += render;
         displayed++;
+      } else if (render !== null) {
+        console.error(`${data} is not handled correctly by its renderer`);
       }
     }
+
     if (displayed > 2) {
       html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${displayed - 2})</button>`;
     } else if (displayed === 2) {
@@ -243,7 +256,7 @@ export class TableFactoryService {
   }
 
   cvRenderStructured = (data: CvTerm, type?) => {
-    if (type !== undefined && type !== 'display') {
+    if ((type !== undefined && type !== 'display') || data == null) {
       return '';
     }
     if (data.identifier) {

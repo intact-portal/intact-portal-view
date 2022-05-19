@@ -250,7 +250,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               } else if (publicationSource === 'doi') {
                 url = 'https://www.doi.org/' + publicationId;
               } else {
-                return;
+                return null;
               }
 
               return `<div><span class="detailsCell">

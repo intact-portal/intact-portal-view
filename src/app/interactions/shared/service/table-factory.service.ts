@@ -301,7 +301,7 @@ export class TableFactoryService {
   }
 
   identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
-    if (id === null) {
+    if (!id) {
       return '';
     }
     const db = TableFactoryService.processDatabase(id.database);

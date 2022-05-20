@@ -30,7 +30,7 @@ export class RangeInputComponent<T> implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const range = this.model?.slice(1, this.model.length - 1).split(' TO ');
+    const range = this.model?.split(/\[|]| TO /ig).filter(s => s);
     this.start = range[0];
     this.stop = range[1];
   }

@@ -36,7 +36,7 @@ export class DateRangeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const range = this.model?.split(/\[|]| TO /g).filter(s => s);
+    const range = this.model?.split(/\[|]| TO /ig).filter(s => s);
     this.start = moment(range[0], 'YYYYMMDD');
     this.end = moment(range[1], 'YYYYMMDD');
   }

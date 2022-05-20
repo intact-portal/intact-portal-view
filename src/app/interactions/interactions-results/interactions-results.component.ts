@@ -91,7 +91,7 @@ export class InteractionsResultsComponent implements OnInit {
   }
 
   get isLongTitle(): boolean {
-    return this.title.length > 50;
+    return this.title?.length > 50;
   }
 
   get shortTerms(): string {

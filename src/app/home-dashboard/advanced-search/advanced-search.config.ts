@@ -250,15 +250,8 @@ const fields: FieldMap = {
     name: 'Complex expansion',
     type: 'category',
     entity: 'interaction',
+    defaultValue: '"-"',
     options: [
-      {
-        name: 'Bipartite expansion',
-        value: '"MI:1062"'
-      },
-      {
-        name: 'Matrix expansion',
-        value: '"MI:1061"'
-      },
       {
         name: 'Spoke expansion',
         value: '"MI:1060"'

@@ -11,7 +11,7 @@ export class ColorMIQLPipe implements PipeTransform {
   public static colorCodes: ColorCode[] = [
     {regex: /(".+")/g, class: 'miql-string'},
     {regex: RegExp(`(${AdvancedQueryHelper.keywords.map(keyword => keyword.replace('-', '\-') + '(?=:|$)').join('|')})`, 'gm'), class: 'miql-field'},
-    {regex: /(AND(?=\s|<br>)|NOT(?=\s|<br>)|OR(?=\s|<br>)|TO(?=\s|<br>))/img, class: 'miql-operator'},
+    {regex: /(AND(?=\s|<br>)|NOT(?=\s|<br>)|OR(?=\s|<br>)|TO(?=\s|<br>))/mg, class: 'miql-operator'},
     {regex: /([()+-,:\[\]*?])/g, class: 'miql-symbol'},
     {regex: /(true|false)/img, class: 'miql-value'},
   ];

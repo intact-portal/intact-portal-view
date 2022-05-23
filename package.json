@@ -78,6 +78,7 @@
     "@types/d3-scale": "^4.0.2",
     "@types/d3-color": "^3.0.2",
     "@types/complexviewer": "^2.1.0",
+    "yocto-queue": "^1.0.0",
     "ajv": "^6.9.2",
     "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^6.0.2",

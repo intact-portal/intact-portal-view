@@ -34,6 +34,8 @@ export class SearchService {
     this._isBatchSearch = false;
     if (title) {
       this._title = title;
+    } else {
+      this._title = query;
     }
     this.updateAdvancedSearch(query);
     this.searchSubject.next(query);

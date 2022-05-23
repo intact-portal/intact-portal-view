@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {InteractionsSearchService} from '../shared/service/interactions-search.service';
 import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {SearchService} from '../../home-dashboard/search/service/search.service';
@@ -9,7 +9,6 @@ import {NetworkViewService} from '../shared/service/network-view.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NegativeFilterStatus} from './interactions-filters/negative-filter/negative-filter-status.model';
 import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
-import {zip} from 'rxjs';
 
 @UntilDestroy()
 @Component({

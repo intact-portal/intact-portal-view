@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {extractRange} from '../utils';
 
 @Component({
   selector: 'ip-range-input',
@@ -9,6 +10,9 @@ export class RangeInputComponent<T> implements OnInit, OnChanges {
 
   @Input()
   typeD: string;
+
+  @Input()
+  step: number = 1;
 
   @Input()
   model: string;
@@ -30,7 +34,7 @@ export class RangeInputComponent<T> implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const range = this.model?.split(/\[|]| TO /ig).filter(s => s);
+    const range = extractRange(this.model);
     this.start = range[0];
     this.stop = range[1];
   }

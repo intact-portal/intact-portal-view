@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {SearchService} from './service/search.service';
 
 @Component({
@@ -6,24 +6,21 @@ import {SearchService} from './service/search.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements AfterViewInit {
 
   constructor(private searchService: SearchService) {
   }
 
-  ngOnInit() {
-  }
+  @ViewChild('query', {static: true})
+  query: ElementRef<HTMLInputElement>;
 
   ngAfterViewInit() {
     $('ip-search').foundation();
-    this.searchService.searchSuggestions($('#searchBox .typeahead'));
+    this.searchService.searchSuggestions($(this.query.nativeElement));
   }
 
   search(query: string, typeOfButton: string) {
     if (query) {
-      if (typeOfButton === 'enter' || typeOfButton === 'button' || typeOfButton === 'example') {
-        this.searchService.title = query;
-      }
       this.searchService.search(query);
     }
   }

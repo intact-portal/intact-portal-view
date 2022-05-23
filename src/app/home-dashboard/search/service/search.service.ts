@@ -16,6 +16,8 @@ const baseURL = environment.intact_portal_ws;
 
 @Injectable()
 export class SearchService {
+  private tmp_title: string;
+  private first_init = true;
   private _token: string;
   private _query: string;
   private _title: string;
@@ -32,11 +34,7 @@ export class SearchService {
   search(query: string, title?: string) {
     this._query = query;
     this._isBatchSearch = false;
-    if (title) {
-      this._title = title;
-    } else {
-      this._title = query;
-    }
+    this._title = title || this.tmp_title || query;
     this.updateAdvancedSearch(query);
     this.searchSubject.next(query);
     this.router.navigate(['search'], {queryParams: {query}});
@@ -173,7 +171,7 @@ export class SearchService {
     return params;
   }
 
-  searchSuggestions(searchBox: JQuery): void {
+  searchSuggestions(searchBox: JQuery<HTMLInputElement>): JQuery<HTMLInputElement> {
     let updatingPages = false;
     let ignoreChange = false;
     let currentPage = 0;
@@ -191,6 +189,7 @@ export class SearchService {
             settings.url = settings.url.replace('%QUERY', query);
             settings.url = settings.url.replace('page=0', `page=${currentPage}`)
           }
+          console.log(settings.url)
           return settings;
         },
         transform: (response: any) => {
@@ -248,28 +247,38 @@ export class SearchService {
       } else {
         id = item.interactorAc;
       }
-      this.title = `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`;
-      this.search(id);
-    });
+      this.search(id, `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`);
+    }).on('typeahead:cursorchange', (ev, item) => {
+      this.tmp_title = item ? `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}` : null;
+    })
+
     const updateAutosuggestion = () => {
-      updatingPages = true;
       const val = searchBox.typeahead('val');
-      ignoreChange = true;
-      searchBox.typeahead('val', val + ' ');
-      ignoreChange = false;
-      searchBox.typeahead('val', val);
-      updatingPages = false;
+      console.log(searchBox, val)
+      if (val) {
+        updatingPages = true;
+        ignoreChange = true;
+        searchBox.typeahead('val', val + ' ');
+        ignoreChange = false;
+        searchBox.typeahead('val', val);
+        console.log(searchBox[0].id)
+        updatingPages = false;
+      }
     }
+
     $(document).on('click', '#prev', () => {
       currentPage--;
       updateAutosuggestion();
     })
     $(document).on('click', '#next', () => {
       currentPage++;
+      // console.log(currentPage)
       updateAutosuggestion();
     });
     searchBox.on('input', () => {
       currentPage = 0;
+      this.tmp_title = null;
     })
+    return searchBox;
   }
 }

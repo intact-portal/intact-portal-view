@@ -3,6 +3,7 @@
     <input class="hidden" type="text" name="format" [value]="format.name">
     <input class="hidden" type="text" name="query" [value]="search.spacedQuery">
 
+    <input class="hidden" type="checkbox" name="advancedSearch" [checked]="search.isAdvancedSearch">
     <input class="hidden" type="checkbox" name="batchSearch" [checked]="search.isBatchSearch">
     <input class="hidden" type="checkbox" name="mutationFilter" [checked]="filters.mutation">
     <input class="hidden" type="checkbox" name="expansionFilter" [checked]="filters.expansion">

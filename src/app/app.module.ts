@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {UrlSerializer} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 
 import {AppComponent} from './app.component';
@@ -35,6 +35,7 @@ import {MultilineGraphComponent} from './navigation/about/statistics/multiline-g
 import {HBarGraphComponent} from './navigation/about/statistics/hbar-graph/h-bar-graph.component';
 import {DonutGraphComponent} from './navigation/about/statistics/donut-graph/donut-graph.component';
 import {CountTableComponent} from './navigation/about/statistics/count-table/count-table.component';
+import {EncodeHttpParamsInterceptor} from './shared/utils/encode-http-params-interceptor';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import {CountTableComponent} from './navigation/about/statistics/count-table/cou
     NetworkSearchService,
     NetworkViewService,
     {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]},
-    {provide: UrlSerializer, useClass: MyUrlSerializer}
+    {provide: UrlSerializer, useClass: MyUrlSerializer},
+    {provide: HTTP_INTERCEPTORS, useClass: EncodeHttpParamsInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

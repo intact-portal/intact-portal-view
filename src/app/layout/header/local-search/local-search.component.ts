@@ -24,7 +24,7 @@ export class LocalSearchComponent implements AfterViewInit {
     this.searchService.searchSuggestions($(this.query.nativeElement));
   }
 
-  search(query: string) {
+  search(query: string, actionType: string) {
     if (query) {
       this.searchService.search(query);
       this.query.nativeElement.blur();

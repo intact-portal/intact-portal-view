@@ -1,5 +1,6 @@
 import {Field, FieldMap, QueryBuilderConfig} from 'angular2-query-builder';
 import moment from 'moment';
+import {extractRange} from './utils';
 
 const DATE_FORMAT = 'YYYYMMDD';
 
@@ -52,7 +53,7 @@ const fields: FieldMap = {
   },
   pubyear: {
     name: 'Publication year',
-    type: 'number-range',
+    type: 'int-range',
     entity: 'publication',
     defaultValue: () => `[2000 TO ${moment().year()}]`,
     operators: ['∈', '∉']
@@ -165,9 +166,10 @@ const fields: FieldMap = {
   'intact-miscore': {
     name: 'IntAct MI Score',
     defaultValue: '[0 TO 1]',
-    type: 'number-range',
+    type: 'float-range',
     entity: 'interaction',
-    operators: ['∈', '∉']
+    operators: ['∈', '∉'],
+    validator: rule => extractRange(rule.value).map(parseFloat).every(value => value >= 0 && value <= 1)
   },
   geneNameA: {
     name: 'Gene name for Interactor A',

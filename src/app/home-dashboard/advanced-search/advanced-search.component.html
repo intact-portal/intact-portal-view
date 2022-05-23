@@ -33,12 +33,18 @@
                     </ng-container>
 
                     <ng-container *queryInput="let rule; type: 'date-range'; let onChange=onChange">
-                        <ip-date-range class="inline-block" [(model)]="rule.value" (modelChange)="onChange()"></ip-date-range>
+                        <ip-date-range class="inline-block" [(model)]="rule.value"
+                                       (modelChange)="onChange()"></ip-date-range>
                     </ng-container>
 
-                    <ng-container *queryInput="let rule; type: 'number-range'; let onChange=onChange">
-                        <ip-range-input class="inline-block" [typeD]="'number'" [(model)]="rule.value"
-                                        (modelChange)="onChange()"></ip-range-input>
+                    <ng-container *queryInput="let rule; type: 'int-range'; let onChange=onChange;">
+                        <ip-range-input class="inline-block" [typeD]="'number'"
+                                        [(model)]="rule.value" (modelChange)="onChange()"></ip-range-input>
+                    </ng-container>
+
+                    <ng-container *queryInput="let rule; type: 'float-range'; let onChange=onChange;">
+                        <ip-range-input class="inline-block" [typeD]="'number'" [step]="0.1"
+                                        [(model)]="rule.value" (modelChange)="onChange()"></ip-range-input>
                     </ng-container>
 
                     <ng-container *queryInput="let rule; type: 'number'; let onChange=onChange">

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {FormControl, FormGroup} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {extractRange} from '../utils';
 
 @Component({
   selector: 'ip-date-range',
@@ -36,7 +37,7 @@ export class DateRangeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const range = this.model?.split(/\[|]| TO /ig).filter(s => s);
+    const range = extractRange(this.model);
     this.start = moment(range[0], 'YYYYMMDD');
     this.end = moment(range[1], 'YYYYMMDD');
   }

@@ -52,8 +52,8 @@ export class DatasetByYearComponent implements AfterViewInit {
     });
   }
 
-  searchIntAct(pubmedId: string) {
-    this.search.search(`pubid:${pubmedId}`)
+  searchIntAct(pubmedId: string, pubmedAuthor: string) {
+    this.search.search(`pubid:${pubmedId}`, `publication: ${pubmedAuthor} (${pubmedId})`);
   }
 
   goPSIMI25FTP(pubmedYear: string, pubmedId: string) {

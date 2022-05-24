@@ -232,6 +232,12 @@ a.intact-background,
   align-items: flex-end;
 }
 
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
 .button-group:not(.rounded) > .button:not(:last-child) {
   margin-right: 1px;
 }
@@ -255,7 +261,7 @@ a.intact-background,
 
 .on-top {
   position: relative;
-  z-index: 100;
+  z-index: 9;
   opacity: 1;
 }
 

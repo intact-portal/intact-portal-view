@@ -73,6 +73,7 @@ export class DetailsViewerComponent implements AfterViewInit {
           if (this.interactionData !== undefined) {
             viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
             viewer.readMIJSON(this.interactionData, true);
+            viewer.collapseAll();
             this.participantsService.initParticipants(this.interactionData.data, Status.COLLAPSED);
             viewer.autoLayout();
             this.updateColorLegend(viewer.getColorKeyJson());

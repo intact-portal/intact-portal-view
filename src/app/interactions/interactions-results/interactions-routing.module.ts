@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {InteractionsResultsComponent} from './interactions-results.component';
+import {RedirectComponent} from './redirect/redirect.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'search/:query',
-    component: InteractionsResultsComponent,
+    component: RedirectComponent,
     data: {showCompactHeader: true, showFooter: true}
   },
 ];

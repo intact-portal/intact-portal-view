@@ -24,6 +24,7 @@ import {FormsModule} from '@angular/forms';
 import {NegativeFilterComponent} from './interactions-filters/negative-filter/negative-filter.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {DensitySliderComponent} from './interactions-filters/density-slider/density-slider.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import {DensitySliderComponent} from './interactions-filters/density-slider/dens
     DownloadFormComponent,
     NegativeFilterComponent,
     DensitySliderComponent,
+    RedirectComponent,
   ],
   providers: [
     TableFactoryService,

@@ -33,14 +33,6 @@ export class InteractionsResultsComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Search Results');
-    // Switch path params to query params
-    this.route.params
-      .pipe(untilDestroyed(this))
-      .subscribe(pathParams => {
-        if (Object.keys(pathParams).length > 0) {
-          this.router.navigate(['search'], {queryParams: pathParams})
-        }
-      })
 
     // Use query params
     this.route.queryParamMap

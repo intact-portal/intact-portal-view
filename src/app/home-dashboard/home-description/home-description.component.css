@@ -10,13 +10,13 @@
   display: inline-flex;
   width: 100%;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
   flex-wrap: nowrap;
 }
 
 .alert-button-group {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   align-content: flex-start;
   flex-wrap: wrap;
   gap: 1px;

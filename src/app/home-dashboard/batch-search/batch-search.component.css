@@ -73,6 +73,7 @@ th {
   position: sticky;
   top: 0;
   background-color: rgb(149, 85, 171) !important;
+  color: white;
   z-index: 1;
 }
 

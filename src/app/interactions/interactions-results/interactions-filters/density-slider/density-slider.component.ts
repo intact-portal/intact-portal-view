@@ -102,7 +102,7 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('y', midBottomMargin)
-      .style('font-weight',  'bold' );
+      .style('font-weight', 'bold');
 
     const density = this.density(this.filters.facets.intact_miscore);
     this.y.domain([0, d3.max(density, d => d[1])]);
@@ -142,7 +142,7 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
 
     const middle = this.x((this.filters.currentMinMIScore + this.filters.currentMaxMIScore) / 2);
     const bbox = this.totalLabel
-      .text(this.totalInRange === 0 ? '∅' :  this.totalFormat.format(this.totalInRange))
+      .text(this.totalInRange === 0 ? '∅' : this.totalFormat.format(this.totalInRange))
       .attr('x', middle)
       .node().getBBox();
     this.totalRect

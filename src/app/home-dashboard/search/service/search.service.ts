@@ -17,7 +17,6 @@ const baseURL = environment.intact_portal_ws;
 @Injectable()
 export class SearchService {
   private tmp_title: string;
-  private first_init = true;
   private _token: string;
   private _query: string;
   private _title: string;

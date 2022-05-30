@@ -55,23 +55,15 @@ const routes: Routes = [
   },
   {
     path: 'interactors/:query',
-    component: RedirectComponent,
-    data: {externalUrl: environment.former_intact_url + 'interactors/:query'}
+    redirectTo: 'search/interactors/:query',
   },
   {
     path: 'pages/list/list.xhtml',
-    component: RedirectComponent,
-    data: {externalUrl: environment.former_intact_url + 'pages/list/list.xhtml'}
+    redirectTo: 'search'
   },
   {
     path: 'pages/interactions/interactions.xhtml',
-    component: RedirectComponent,
-    data: {externalUrl: environment.former_intact_url + 'pages/interactions/interactions.xhtml'}
-  },
-  {
-    path: 'pages/details/details.xhtml',
-    component: RedirectComponent,
-    data: {externalUrl: environment.former_intact_url + 'pages/details/details.xhtml'}
+    redirectTo: 'search'
   },
   {
     path: '**',

@@ -12,7 +12,12 @@ const routes: Routes = [
   {
     path: 'search/:query',
     component: RedirectComponent,
-    data: {showCompactHeader: true, showFooter: true}
+    data: {showCompactHeader: true, showFooter: true, fragment: 'interaction'}
+  },
+  {
+    path: 'search/interactors/:query',
+    component: RedirectComponent,
+    data: {showCompactHeader: true, showFooter: true, fragment: 'interactor'}
   },
 ];
 
@@ -20,4 +25,5 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(routes)]
 })
-export class InteractionsRoutingModule { }
+export class InteractionsRoutingModule {
+}

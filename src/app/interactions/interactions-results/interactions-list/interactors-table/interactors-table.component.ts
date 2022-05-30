@@ -151,8 +151,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       },
       columns: [
         {
-          data: this._columns.select.data,
-          title: this._columns.select.title,
+          ...this._columns.select,
           render: function (data, type, full) {
             if (type === 'display') {
               return `<div class="margin-left-large">
@@ -163,16 +162,13 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.accession.data,
-          title: this._columns.accession.title
+          ...this._columns.accession,
         },
         {
-          data: this._columns.name.data,
-          title: this._columns.name.title
+          ...this._columns.name,
         },
         {
-          data: this._columns.preferredId.data,
-          title: this._columns.preferredId.title,
+          ...this._columns.preferredId,
           render: (data, type) => {
             if (type === 'display' && data !== null) {
               return this.tableFactory.identifierRender(extractId(data))
@@ -181,39 +177,32 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.type.data,
-          title: this._columns.type.title,
+          ...this._columns.type,
           render: this.tableFactory.cvRender('interactorTypeMIIdentifier')
         },
         {
-          data: this._columns.species.data,
-          title: this._columns.species.title,
+          ...this._columns.species,
           render: this.tableFactory.speciesRender('interactorTaxId')
         },
         {
-          data: this._columns.description.data,
-          title: this._columns.description.title
+          ...this._columns.description,
         },
         {
-          data: this._columns.alias.data,
-          title: this._columns.alias.title,
+          ...this._columns.alias,
           render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
         },
         {
-          data: this._columns.alternativeIds.data,
-          title: this._columns.alternativeIds.title,
+          ...this._columns.alternativeIds,
           render: this.tableFactory.groupBy<string, string>(
             (d) => extractId(d).database,
             this.tableFactory.enlist((d) => this.tableFactory.identifierLink(extractId(d))),
             this.tableFactory.databaseTag)
         },
         {
-          data: this._columns.interactionSearchCount.data,
-          title: this._columns.interactionSearchCount.title,
+          ...this._columns.interactionSearchCount,
         },
         {
-          data: this._columns.interactionCount.data,
-          title: this._columns.interactionCount.title
+          ...this._columns.interactionCount,
         }
       ],
       drawCallback: function () {

@@ -6,6 +6,7 @@ import {ParticipantTable} from '../../../../shared/model/tables/participant-tabl
 import {TableFactoryService} from '../../../../shared/service/table-factory.service';
 import {InteractionParticipantsService, Status} from '../../../shared/service/interaction-participants.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ResultTable} from '../../../../shared/model/interactions-results/result-table-interface';
 
 const baseURL = environment.intact_portal_graph_ws;
 
@@ -15,7 +16,7 @@ const baseURL = environment.intact_portal_graph_ws;
   templateUrl: './participant-table.component.html',
   styleUrls: ['./participant-table.component.css']
 })
-export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewInit {
+export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
 
   @Input() interactionAc: string;
   @Input() participantTab: boolean;
@@ -77,9 +78,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
       },
       columns: [
         {
-          data: this._columns.expand.data,
-          defaultContent: ' ',
-          title: this._columns.expand.title,
+          ...this._columns.expand,
           render: (data, type, full) => {
             if (type === 'display') {
               const id = full.participantId.identifier;
@@ -93,29 +92,24 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.name.data,
-          title: this._columns.name.title,
+          ...this._columns.name,
           defaultContent: ' '
         },
         {
-          data: this._columns.ac.data,
-          title: this._columns.ac.title
+          ...this._columns.ac,
         },
         {
-          data: this._columns.type.data,
-          title: this._columns.type.title,
+          ...this._columns.type,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.identifier.data,
-          title: this._columns.identifier.title,
+          ...this._columns.identifier,
           defaultContent: '',
           render: this.tableFactory.identifierRender
         },
         {
-          data: this._columns.aliases.data,
-          title: this._columns.aliases.title,
+          ...this._columns.aliases,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -126,49 +120,41 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.description.data,
-          title: this._columns.description.title,
+          ...this._columns.description,
           defaultContent: ''
         },
         {
-          data: this._columns.species.data,
-          title: this._columns.species.title,
+          ...this._columns.species,
           defaultContent: '',
           render: this.tableFactory.speciesRenderStructured
         },
         {
-          data: this._columns.expressionSystem.data,
-          title: this._columns.expressionSystem.title,
+          ...this._columns.expressionSystem,
           defaultContent: '',
           render: this.tableFactory.speciesRenderStructured
         },
         {
-          data: this._columns.detectionMethods.data,
-          title: this._columns.detectionMethods.title,
+          ...this._columns.detectionMethods,
           defaultContent: '',
           render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
         },
         {
-          data: this._columns.experimentalRole.data,
-          title: this._columns.experimentalRole.title,
+          ...this._columns.experimentalRole,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.biologicalRole.data,
-          title: this._columns.biologicalRole.title,
+          ...this._columns.biologicalRole,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.experimentalPreparations.data,
-          title: this._columns.experimentalPreparations.title,
+          ...this._columns.experimentalPreparations,
           defaultContent: '',
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.parameters.data,
-          title: this._columns.parameters.title,
+          ...this._columns.parameters,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -187,8 +173,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.confidences.data,
-          title: this._columns.confidences.title,
+          ...this._columns.confidences,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -201,8 +186,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.crossReferences.data,
-          title: this._columns.crossReferences.title,
+          ...this._columns.crossReferences,
           defaultContent: '',
           render: function (data, type, row, meta) {
             if (type === 'display') {
@@ -221,8 +205,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.annotations.data,
-          title: this._columns.annotations.title,
+          ...this._columns.annotations,
           defaultContent: '',
           render: this.tableFactory.enlistWithButtons(this.tableFactory.annotationRender())
         }

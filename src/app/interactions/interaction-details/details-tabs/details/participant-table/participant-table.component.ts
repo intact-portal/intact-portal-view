@@ -235,4 +235,11 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
   get columns(): Column[] {
     return this._columns;
   }
+
+  clearTableSelection(): void {
+  }
+
+  get isActive(): boolean {
+    return this.participantTab;
+  }
 }

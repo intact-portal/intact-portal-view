@@ -5,6 +5,8 @@ import {ParticipantTableComponent} from './details/participant-table/participant
 import {FeaturesTableComponent} from './details/features-table/features-table.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ResultTable} from '../../shared/model/interactions-results/result-table-interface';
+import {ActivatedRoute} from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -17,6 +19,9 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   @Input() interactionAc: string;
   @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() moleculeTypesCollected: EventEmitter<Set<string>> = new EventEmitter<Set<string>>();
+
+  table: EventEmitter<ResultTable> = new EventEmitter<ResultTable>();
+  href: string;
 
   private _currentPageIndex: number;
 
@@ -31,25 +36,60 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   @ViewChild(FeaturesTableComponent, {static: true})
   featureTable: FeaturesTableComponent;
 
-  constructor(private interactionsDetailsService: InteractionsDetailsService) {
+  constructor(private interactionsDetailsService: InteractionsDetailsService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    $('ip-details-tabs').foundation();
     this.requestInteractionDetails();
+
+    // Initial setter if foundation is activated, every time there is a modification of fragments otherwise
+    this.route.fragment
+      .pipe(untilDestroyed(this))
+      .subscribe(value => {
+        setTimeout(() => {
+          console.log(value)
+          switch (value) {
+            case 'participants':
+              this.isTabParticipantActive = true;
+              this.isTabFeatureActive = false;
+              this.table.emit(this.participantTable);
+              break;
+            case 'features':
+              this.isTabParticipantActive = false;
+              this.isTabFeatureActive = true;
+              this.table.emit(this.featureTable);
+              break;
+            default:
+              this.isTabParticipantActive = false;
+              this.isTabFeatureActive = false;
+              this.table.emit(null);
+          }
+        }, 0);
+      });
+
+    this.route.url.pipe(untilDestroyed(this))
+      .subscribe((url) => {
+        this.href = url.join('/');
+      });
   }
 
   ngAfterViewInit(): void {
-    $('#details-tabs').on('change.zf.tabs', () => {
-      if ($('#participants').hasClass('is-active') === true) {
-        this.isTabParticipantActive = true;
-        this.isTabFeatureActive = false;
-      } else if ($('#features').hasClass('is-active') === true) {
-        this.isTabParticipantActive = false;
-        this.isTabFeatureActive = true;
-      } else {
-        this.isTabParticipantActive = false;
-        this.isTabFeatureActive = false;
+    $('ip-details-tabs').foundation();
+    $('#details-tabs').on('change.zf.tabs', (e) => {
+      if (e.namespace === 'tabs.zf') {
+        if ($('#participants').hasClass('is-active') === true) {
+          this.isTabParticipantActive = true;
+          this.isTabFeatureActive = false;
+          this.table.emit(this.participantTable);
+        } else if ($('#features').hasClass('is-active') === true) {
+          this.isTabParticipantActive = false;
+          this.isTabFeatureActive = true;
+          this.table.emit(this.featureTable);
+        } else {
+          this.isTabParticipantActive = false;
+          this.isTabFeatureActive = false;
+          this.table.emit(null)
+        }
       }
     });
   }
@@ -59,7 +99,9 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
     this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
       .pipe(untilDestroyed(this))
       .subscribe(interactionDetails => {
-        if (!(interactionDetails instanceof HttpErrorResponse)) this.interactionDetails = interactionDetails;
+        if (!(interactionDetails instanceof HttpErrorResponse)) {
+          this.interactionDetails = interactionDetails;
+        }
       })
   }
 

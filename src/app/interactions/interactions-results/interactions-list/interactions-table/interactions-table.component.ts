@@ -440,4 +440,8 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   set interactionSelected(value: string) {
     this._interactionSelected = value;
   }
+
+  get isActive(): boolean {
+    return this.interactionTab;
+  }
 }

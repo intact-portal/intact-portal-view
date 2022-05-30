@@ -222,6 +222,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
     return this._columns;
   }
 
+  get isActive(): boolean {
+    return this.interactorTab;
+  }
+
   get interactorSelected(): string {
     return this._interactorSelected;
   }

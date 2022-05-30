@@ -4,6 +4,7 @@ import {environment} from '../../../../../../environments/environment';
 import {FeatureTable} from '../../../../shared/model/tables/feature-table.model';
 import {Column} from '../../../../shared/model/tables/column.model';
 import {TableFactoryService} from '../../../../shared/service/table-factory.service';
+import {ResultTable} from '../../../../shared/model/interactions-results/result-table-interface';
 
 const baseURL = environment.intact_portal_graph_ws;
 
@@ -12,7 +13,7 @@ const baseURL = environment.intact_portal_graph_ws;
   templateUrl: './features-table.component.html',
   styleUrls: ['./features-table.component.css']
 })
-export class FeaturesTableComponent implements OnInit, OnChanges {
+export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
 
   @Input() interactionAc: string;
   @Input() featureTab: boolean;
@@ -161,5 +162,12 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
 
   set featureSelected(value: string) {
     this._featureSelected = value;
+  }
+
+  clearTableSelection(): void {
+  }
+
+  get isActive(): boolean {
+    return this.featureTab;
   }
 }

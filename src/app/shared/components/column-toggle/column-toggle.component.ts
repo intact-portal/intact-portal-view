@@ -1,46 +1,43 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
-import {Column} from '../../../interactions/shared/model/tables/column.model';
-import {FoundationUtils} from '../../utils/foundation-utils';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Observable} from 'rxjs/internal/Observable';
+import {ResultTable} from '../../../interactions/shared/model/interactions-results/result-table-interface';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-
+@UntilDestroy()
 @Component({
   selector: 'ip-column-toggle',
   templateUrl: './column-toggle.component.html',
   styleUrls: ['./column-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
+export class ColumnToggleComponent implements OnInit {
 
-  @Input() columns: Column[];
-  @Input() dataTable: DataTables.Api;
-  @Input() columnView: string;
-  @Input() isTabActive: boolean;
+  @Input() table: Observable<ResultTable>;
+  public table$: ResultTable;
   @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-
+  active: boolean;
   private columnsSelected: string[];
+  private tableInit: Map<ResultTable, string[]> = new Map();
 
-  constructor(private cdRef: ChangeDetectorRef) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.initColumnVisibility()
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.isTabActive && changes.isTabActive.firstChange && changes.isTabActive.currentValue) {
-      this.initColumnVisibility()
-    }
+    this.table
+      .pipe(untilDestroyed(this))
+      .subscribe(table => {
+        this.table$ = table;
+        if (!table) {
+          return;
+        }
+        if (this.tableInit.has(table)) {
+          this.columnsSelected = this.tableInit.get(table)
+        } else {
+          setTimeout(() => {
+            this.tableInit.set(table, this.initColumnVisibility())
+          }, 0);
+        }
+      })
   }
 
   private initColumnVisibility(): string[] {
@@ -74,6 +71,10 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
 
   isColumnSelected(column: string) {
     return this.columnsSelected !== undefined ? this.columnsSelected.indexOf(column) < 0 : false;
+  }
+
+  toggleActivate(status: boolean) {
+    this.active = status;
   }
 
 }

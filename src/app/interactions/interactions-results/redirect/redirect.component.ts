@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {ActivatedRoute, Router} from '@angular/router';
-import {zip} from 'rxjs/internal/observable/zip';
+import {zip} from 'rxjs';
 
 @UntilDestroy()
 @Component({

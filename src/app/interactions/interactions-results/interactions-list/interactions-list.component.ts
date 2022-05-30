@@ -3,7 +3,7 @@ import {InteractionsTableComponent} from './interactions-table/interactions-tabl
 import {InteractorsTableComponent} from './interactors-table/interactors-table.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {zip} from 'rxjs/internal/observable/zip';
+import {zip} from 'rxjs';
 import {ResultTable} from '../../shared/model/interactions-results/result-table-interface';
 
 @UntilDestroy()

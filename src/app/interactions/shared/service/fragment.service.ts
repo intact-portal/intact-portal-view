@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {Subject} from 'rxjs/internal/Subject';
+import {Subject} from 'rxjs';
 
 @UntilDestroy()
 @Injectable({

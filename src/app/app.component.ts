@@ -35,15 +35,17 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(untilDestroyed(this))
       .subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.showCompactHeader = this.activatedRoute.firstChild.snapshot.data.showCompactHeader !== false;
-        this.showFooter = this.activatedRoute.firstChild.snapshot.data.showFooter !== false;
-        ProgressBarComponent.display();
-      }
-    })
+        if (event instanceof NavigationEnd) {
+          this.showCompactHeader = this.activatedRoute.firstChild.snapshot.data.showCompactHeader !== false;
+          this.showFooter = this.activatedRoute.firstChild.snapshot.data.showFooter !== false;
+          ProgressBarComponent.display();
+        }
+      })
   }
 
   scrollTo(topScrollAnchor: HTMLDivElement) {
-    topScrollAnchor.scrollIntoView(true)
+    setTimeout(() => {
+      topScrollAnchor.scrollIntoView(true)
+    }, 0);
   }
 }

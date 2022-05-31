@@ -7,6 +7,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {ResultTable} from '../../shared/model/interactions-results/result-table-interface';
 import {ActivatedRoute} from '@angular/router';
+import {FragmentService} from '../../shared/service/fragment.service';
 
 @UntilDestroy()
 @Component({
@@ -36,18 +37,17 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   @ViewChild(FeaturesTableComponent, {static: true})
   featureTable: FeaturesTableComponent;
 
-  constructor(private interactionsDetailsService: InteractionsDetailsService, private route: ActivatedRoute) {
+  constructor(private interactionsDetailsService: InteractionsDetailsService, private route: ActivatedRoute, private fragment: FragmentService) {
   }
 
   ngOnInit() {
     this.requestInteractionDetails();
 
     // Initial setter if foundation is activated, every time there is a modification of fragments otherwise
-    this.route.fragment
+    this.fragment.$onChange
       .pipe(untilDestroyed(this))
       .subscribe(value => {
         setTimeout(() => {
-          console.log(value)
           switch (value) {
             case 'participants':
               this.isTabParticipantActive = true;
@@ -78,17 +78,11 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
     $('#details-tabs').on('change.zf.tabs', (e) => {
       if (e.namespace === 'tabs.zf') {
         if ($('#participants').hasClass('is-active') === true) {
-          this.isTabParticipantActive = true;
-          this.isTabFeatureActive = false;
-          this.table.emit(this.participantTable);
+          this.fragment.value = 'participants';
         } else if ($('#features').hasClass('is-active') === true) {
-          this.isTabParticipantActive = false;
-          this.isTabFeatureActive = true;
-          this.table.emit(this.featureTable);
-        } else {
-          this.isTabParticipantActive = false;
-          this.isTabFeatureActive = false;
-          this.table.emit(null)
+          this.fragment.value = 'features';
+        } else if ($('#interactionDetails').hasClass('is-active') === true) {
+          this.fragment.value = 'interactionDetails';
         }
       }
     });

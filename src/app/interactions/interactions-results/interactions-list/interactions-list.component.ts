@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {zip} from 'rxjs';
 import {ResultTable} from '../../shared/model/interactions-results/result-table-interface';
+import {FragmentService} from '../../shared/service/fragment.service';
 
 @UntilDestroy()
 @Component({
@@ -26,12 +27,12 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   href: string;
 
-  constructor(public router: Router, public route: ActivatedRoute) {
+  constructor(public router: Router, public route: ActivatedRoute, public fragment: FragmentService) {
   }
 
   ngOnInit() {
     // Initial setter if foundation is activated, every time there is a modification of fragments otherwise
-    this.route.fragment
+    this.fragment.$onChange
       .pipe(untilDestroyed(this))
       .subscribe(value => {
         setTimeout(() => {
@@ -39,12 +40,16 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
             case 'interactor':
               this._isTabInteractionActive = false;
               this._isTabInteractorActive = true;
+              $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
+              $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
               this.table.emit(this.interactorsTable);
               break;
             case 'interaction':
             default:
               this._isTabInteractionActive = true;
               this._isTabInteractorActive = false;
+              $('[aria-describedby="interactorsTable_info"]').css('visibility', 'hidden');
+              $('[aria-describedby="interactionsTable_info"]').css('visibility', 'visible');
               this.table.emit(this.interactionsTable);
               break;
           }
@@ -71,20 +76,12 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     $('#search-results-tabs').on('change.zf.tabs', (e) => {
       if (e.namespace === 'tabs.zf') {
         setTimeout(() => {
-            if ($('#interactions').hasClass('is-active') === true) {
-              this.isTabInteractionActive = true;
-              this.isTabInteractorActive = false;
-              $('[aria-describedby="interactorsTable_info"]').css('visibility', 'hidden');
-              $('[aria-describedby="interactionsTable_info"]').css('visibility', 'visible');
-              this.table.emit(this.interactionsTable);
-            } else if ($('#interactor').hasClass('is-active') === true) {
-              this.isTabInteractionActive = false;
-              this.isTabInteractorActive = true;
-              $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
-              $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
-              this.table.emit(this.interactorsTable);
-            }
-          }, 0);
+          if ($('#interactions').hasClass('is-active') === true) {
+            this.fragment.value = 'interactions';
+          } else if ($('#interactor').hasClass('is-active') === true) {
+            this.fragment.value = 'interactor';
+          }
+        }, 0);
       }
     });
   }

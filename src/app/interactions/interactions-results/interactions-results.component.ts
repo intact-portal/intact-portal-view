@@ -9,6 +9,7 @@ import {NetworkViewService} from '../shared/service/network-view.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NegativeFilterStatus} from './interactions-filters/negative-filter/negative-filter-status.model';
 import {InteractionsSearchResultData} from '../shared/model/interactions-results/interaction/interactions-search-data.model';
+import {FragmentService} from '../shared/service/fragment.service';
 
 @UntilDestroy()
 @Component({
@@ -28,7 +29,8 @@ export class InteractionsResultsComponent implements OnInit {
               private router: Router,
               private interactionsSearchService: InteractionsSearchService,
               private view: NetworkViewService,
-              public filters: FilterService) {
+              public filters: FilterService,
+              private fragment: FragmentService) {
   }
 
   ngOnInit() {
@@ -71,7 +73,7 @@ export class InteractionsResultsComponent implements OnInit {
     this.router.navigate([], {
       queryParams: {
         ...this.search.toURLParams(), ...this.filters.toParams(), ...this.view.toParams()
-      }
+      }, fragment: this.fragment.value
     });
   }
 

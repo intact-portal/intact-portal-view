@@ -7,7 +7,6 @@ import {environment} from '../../../../environments/environment';
 import {groupBy} from '../../../shared/utils/array-utils';
 import ClickEvent = JQuery.ClickEvent;
 
-
 const ebiURL = environment.ebi_url;
 
 @Injectable()
@@ -363,15 +362,19 @@ export class TableFactoryService {
   }
 
   makeTableHeaderSticky() {
+    $(window).resize(Foundation.util.throttle(this.updateTableHeader.bind(this), 300));
     $('div.dataTables_scrollBody').css('position', 'static');
+    $('div.dataTables_scrollHead')
+      .css('position', 'sticky')
+      .css('box-shadow', '0 6px 7px -2px #0000005c')
+      .css('z-index', '2');
+    this.updateTableHeader();
+  }
+
+
+  async updateTableHeader() {
     const filterBar = $('#filters-bar');
-    setTimeout(() => {
-      $('div.dataTables_scrollHead')
-        .css('position', 'sticky')
-        .css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.outerHeight(false) + 'px' : '0')
-        .css('box-shadow', '0 6px 7px -2px #0000005c')
-        .css('z-index', '2');
-    }, 0);
+    $('div.dataTables_scrollHead').css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.outerHeight(false) + 'px' : '0');
   }
 
   isScreenSize(size: 'small' | 'medium' | 'large'): boolean {

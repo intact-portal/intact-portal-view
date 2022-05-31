@@ -89,22 +89,6 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /** EVENT EMITTERS **/
-
-  public interactorsTabSelected(): void {
-    if (!this.isTabInteractorActive) {
-      this.isTabInteractorActive = true;
-      this.isTabInteractionActive = false;
-    }
-  }
-
-  public interactionsTabSelected(): void {
-    if (!this.isTabInteractionActive) {
-      this.isTabInteractionActive = true;
-      this.isTabInteractorActive = false;
-    }
-  }
-
   /** GETTERS AND SETTERS **/
 
   get isTabInteractionActive(): boolean {
@@ -121,9 +105,5 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   set isTabInteractorActive(value: boolean) {
     this._isTabInteractorActive = value;
-  }
-
-  get isInteractionTableShown(): boolean {
-    return this.isTabInteractionActive || !(this.isTabInteractionActive || this.isTabInteractorActive);
   }
 }

@@ -15,7 +15,10 @@ export class TableFactoryService {
   private static databaseToAccess: Map<string, DatabaseAccess> = new Map<string, DatabaseAccess>([
     ['uniprotkb', {
       fancyName: 'UniProt',
-      getURL: id => `https://www.uniprot.org/uniprot/${id}`,
+      getURL: id => {
+        const match = /^([OPQ]\d[A-Z\d]{3}\d|[A-NR-Z]\d(?:[A-Z][A-Z\d]{2}\d){1,2})-(PRO_\d+)$/.exec(id); // extract (ac) and (pro id)
+        return match != null ? `https://www.uniprot.org/uniprotkb/${match[1]}/entry#${match[2]}` : `https://www.uniprot.org/uniprotkb/${id}/entry`;
+      },
       color: 'rgba(0,111,155,1.0)',
       backColor: 'rgba(143,195,195,0.1)'
     }],

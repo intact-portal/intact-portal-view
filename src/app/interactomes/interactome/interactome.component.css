@@ -26,6 +26,10 @@ div.actions {
   text-align: center;
 }
 
+.button-group {
+  justify-content: center;
+}
+
 .species-button {
   padding: 1em;
   color: #68297c;

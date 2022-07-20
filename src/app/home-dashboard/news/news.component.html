@@ -4,10 +4,9 @@
     </h4>
 
     <div id="releaseVersion" class="margin-top-medium padding-top-medium padding-left-medium padding-right-medium">
-        <h6><i class="icon icon-generic" data-icon="r"></i> New Intact View version: {{version}}</h6>
-        <p style="margin-left: 1.6rem"> Release Date: {{releaseDate}}</p>
+        <h6><i class="icon icon-common icon-cogs"></i> IntAct Portal version: {{version}} - {{releaseDate}}</h6>
 
-        <h6><i class="icon icon-generic" data-icon="g"></i> Data Content</h6>
+        <h6 *ngIf="release"><i class="icon icon-common icon-database"></i> {{release}}</h6>
         <ul *ngIf="summary">
             <li>Publications : {{summary['Publications'] | number}}</li>
             <li>Interactors : {{summary['Interactors'] | number }}</li>

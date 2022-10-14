@@ -37,14 +37,14 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
       .subscribe(value => {
         setTimeout(() => {
           switch (value) {
-            case 'interactor':
+            case 'interactors':
               this._isTabInteractionActive = false;
               this._isTabInteractorActive = true;
               $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
               $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
               this.table.emit(this.interactorsTable);
               break;
-            case 'interaction':
+            case 'interactions':
             default:
               this._isTabInteractionActive = true;
               this._isTabInteractorActive = false;
@@ -78,12 +78,13 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           if ($('#interactions').hasClass('is-active') === true) {
             this.fragment.value = 'interactions';
-          } else if ($('#interactor').hasClass('is-active') === true) {
-            this.fragment.value = 'interactor';
+          } else if ($('#interactors').hasClass('is-active') === true) {
+            this.fragment.value = 'interactors';
           }
         }, 0);
       }
     });
+    setTimeout(() => this.table.emit(this.interactionsTable), 0);
   }
 
   /** GETTERS AND SETTERS **/

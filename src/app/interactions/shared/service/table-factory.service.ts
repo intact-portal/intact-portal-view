@@ -371,7 +371,7 @@ export class TableFactoryService {
       .css('position', 'sticky')
       .css('box-shadow', '0 6px 7px -2px #0000005c')
       .css('z-index', '2');
-    this.updateTableHeader();
+    setTimeout(() => this.updateTableHeader(), 0);
   }
 
 

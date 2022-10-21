@@ -230,14 +230,14 @@ const fields: FieldMap = {
   mutationA: {
     name: 'Mutation of Interactor A',
     type: 'boolean',
-    entity: 'participant',
+    entity: 'participantA',
     operators: ['='],
     defaultValue: 'TRUE'
   },
   mutationB: {
     name: 'Mutation of Interactor B',
     type: 'boolean',
-    entity: 'participant',
+    entity: 'participantB',
     operators: ['='],
     defaultValue: 'TRUE'
   },

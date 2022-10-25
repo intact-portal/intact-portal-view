@@ -123,16 +123,6 @@ const fields: FieldMap = {
     type: 'string',
     entity: 'participant'
   },
-  pexproleA: {
-    name: 'Experimental Role',
-    type: 'string',
-    entity: 'participantA'
-  },
-  pexproleB: {
-    name: 'Experimental Role',
-    type: 'string',
-    entity: 'participantB'
-  },
   ptypeA: {
     name: 'Interactor type',
     type: 'string',
@@ -190,16 +180,6 @@ const fields: FieldMap = {
     name: 'Interaction xrefs.',
     type: 'string',
     entity: 'interaction'
-  },
-  annotA: {
-    name: 'Interactor annotations',
-    type: 'string',
-    entity: 'participantA'
-  },
-  annotB: {
-    name: 'Interactor annotations',
-    type: 'string',
-    entity: 'participantB'
   },
   annot: {
     name: 'Interaction annotations',

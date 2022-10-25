@@ -312,31 +312,6 @@ const fields: FieldMap = {
     name: 'Source database(s)',
     type: 'string',
     entity: 'curationMetadata'
-  },
-  bioeffectA: {
-    name: 'Biological effect',
-    type: 'string',
-    entity: 'participantA'
-  },
-  bioeffectB: {
-    name: 'Biological effect',
-    type: 'string',
-    entity: 'participantB'
-  },
-  bioeffect: {
-    name: 'Biological effect',
-    type: 'string',
-    entity: 'participant'
-  },
-  causalmechanism: {
-    name: 'Causal regulatory mechanism',
-    type: 'string',
-    entity: 'causalInteraction'
-  },
-  causalstatement: {
-    name: 'Causal statement',
-    type: 'string',
-    entity: 'causalInteraction'
   }
 };
 

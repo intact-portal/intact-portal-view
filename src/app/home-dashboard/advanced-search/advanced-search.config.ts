@@ -6,6 +6,11 @@ const DATE_FORMAT = 'YYYYMMDD';
 
 
 const fields: FieldMap = {
+  id: {
+    name: 'Identifiers',
+    type: 'string',
+    entity: 'participant'
+  },
   idA: {
     name: 'Identifier',
     type: 'string',
@@ -15,6 +20,11 @@ const fields: FieldMap = {
     name: 'Identifier',
     type: 'string',
     entity: 'participantB'
+  },
+  identifier: {
+    name: 'Identifiers, Alternatives, Aliases',
+    type: 'string',
+    entity: 'participant'
   },
   altidA: {
     name: 'Alternative id',
@@ -26,8 +36,8 @@ const fields: FieldMap = {
     type: 'string',
     entity: 'participantB'
   },
-  id: {
-    name: 'Identifiers',
+  alias: {
+    name: 'Alias',
     type: 'string',
     entity: 'participant'
   },
@@ -40,16 +50,6 @@ const fields: FieldMap = {
     name: 'Alias',
     type: 'string',
     entity: 'participantB'
-  },
-  alias: {
-    name: 'Alias',
-    type: 'string',
-    entity: 'participant'
-  },
-  identifier: {
-    name: 'Identifiers, Alternatives, Aliases',
-    type: 'string',
-    entity: 'participant'
   },
   pubyear: {
     name: 'Publication year',
@@ -340,10 +340,6 @@ export const ADVANCED_SEARCH_CONFIG: QueryBuilderConfig = {
     publication: {
       name: 'Publication',
       defaultField: fields.pubid
-    },
-    causalInteraction: {
-      name: 'Causal Interaction',
-      defaultField: fields.causalstatement
     },
     curationMetadata: {
       name: 'Curation Metadata',

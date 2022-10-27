@@ -1,7 +1,7 @@
 
 import {throwError as observableThrowError, Observable} from 'rxjs';
 
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
@@ -18,8 +18,9 @@ export class FeatureDatasetService {
 
   public readonly API_URL = 'https://raw.githubusercontent.com/intact-portal/intact-portal-feature-datasets/main/feature-datasets.json';
 
-  getFeaturedDataset(): Observable<{ datasets: Dataset[] }> {
+  getFeaturedDataset(): Observable< Dataset[] > {
     return this.http.get<{ datasets: Dataset[] }>(this.API_URL, {responseType: 'json'}).pipe(
+      map(value => value.datasets),
       catchError(this.handleError))
   }
 

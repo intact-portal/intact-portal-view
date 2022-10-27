@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FeatureDatasetService} from './service/feature-dataset.service';
 import {environment} from '../../../environments/environment';
-import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {Router} from '@angular/router';
 import {SearchService} from '../search/service/search.service';
 import {Dataset} from './model/dataset.model';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs/internal/Observable';
+import {PubmedDataset} from './model/pubmed-dataset.model';
+import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 const intactFTP_URL = environment.intact_psi25_url;
@@ -16,53 +19,42 @@ const intactFTPMiTab_URL = environment.intact_psimitab_url;
   templateUrl: './featured-dataset.component.html',
   styleUrls: ['./featured-dataset.component.css', '../../app.component.css']
 })
-export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
+export class FeaturedDatasetComponent implements OnInit {
 
-  dataset: Dataset;
+  dataset$: Observable<Dataset>;
 
   constructor(private featureDatasetService: FeatureDatasetService, public router: Router, private search: SearchService) {
   }
 
   ngOnInit() {
-    this.requestDOTM();
+    this.dataset$ = this.featureDatasetService.getFeaturedDataset().pipe(map(value => value[0]));
+    this.dataset$.pipe(untilDestroyed(this)).subscribe(() => setTimeout(() => {
+      $('#dataset-group').foundation();
+      FoundationUtils.adjustWidth();
+    }));
   }
 
-  requestDOTM() {
-    this.featureDatasetService.getFeaturedDataset()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.dataset = response.datasets[0];
-        setTimeout(() => {
-          $('#dataset-group').foundation();
-          FoundationUtils.adjustWidth();
-        })
-      })
+  onIntActSearch(pubmed: PubmedDataset) {
+    this.search.search(`pubid:${pubmed.id}`, `publication: ${pubmed.author} (${pubmed.id})`);
   }
 
-  onIntActSearch() {
-    this.search.search(`pubid:${this.firstPubmed.id}`, `publication: ${this.firstPubmed.author} (${this.firstPubmed.id})`);
+  isReleased(pubmed: PubmedDataset): boolean {
+    return pubmed.id.startsWith('unassigned');
   }
 
-  ngAfterViewInit(): void {
+  pubMedUrl(pubmed: PubmedDataset): string {
+    return `https://europepmc.org/article/MED/${pubmed.id}`;
   }
 
-  get firstPubmed() {
-    return this.dataset.pubmeds[0];
+  miXmlUrl(pubmed: PubmedDataset): string {
+    return `${intactFTP_URL}/pmid/${pubmed.year}/${pubmed.id}.zip`;
   }
 
-  pubMedUrl() {
-    return `https://europepmc.org/article/MED/${this.firstPubmed.id}`;
+  miTabUrl(pubmed: PubmedDataset): string {
+    return `${intactFTPMiTab_URL}/${pubmed.year}/${pubmed.id}.txt`;
   }
 
-  miXmlUrl() {
-    return `${intactFTP_URL}/pmid/${this.firstPubmed.year}/${this.firstPubmed.id}.zip`;
-  }
-
-  miTabUrl() {
-    return `${intactFTPMiTab_URL}/${this.firstPubmed.year}/${this.firstPubmed.id}.txt`;
-  }
-
-  archiveUrl() {
+  archiveUrl(): string {
     return '/featured-dataset/archive';
   }
 }

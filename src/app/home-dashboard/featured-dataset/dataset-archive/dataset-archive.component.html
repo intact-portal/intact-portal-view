@@ -5,7 +5,7 @@
     </h3>
   </div>
 
-  <div *ngFor="let datasetsOfYear of datasetsByYear" class="column">
+  <div *ngFor="let datasetsOfYear of $datasetByYear | async" class="column">
     <ip-dataset-by-year [year]="datasetsOfYear.group" [datasets]="datasetsOfYear.elements"></ip-dataset-by-year>
   </div>
 </div>

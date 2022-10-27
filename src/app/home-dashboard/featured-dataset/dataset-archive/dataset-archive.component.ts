@@ -2,17 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {FeatureDatasetService} from '../service/feature-dataset.service';
 import {Dataset} from '../model/dataset.model';
 import {groupBy} from '../../../shared/utils/array-utils';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {Observable} from 'rxjs/internal/Observable';
+import {map} from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
   selector: 'ip-dataset-archive',
   templateUrl: './dataset-archive.component.html',
   styleUrls: ['./dataset-archive.component.css']
 })
 export class DatasetArchiveComponent implements OnInit {
-  featuredDatasets: Dataset[];
-  datasetsByYear: { group: string; elements: Dataset[] }[];
+  $datasetByYear: Observable<{ group: string; elements: Dataset[] }[]>
 
   constructor(private featureDatasetService: FeatureDatasetService) {
   }
@@ -22,11 +21,7 @@ export class DatasetArchiveComponent implements OnInit {
   }
 
   requestDatasetArchive() {
-    this.featureDatasetService.getFeaturedDataset()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        this.featuredDatasets = data.datasets;
-        this.datasetsByYear = groupBy(this.featuredDatasets, element => element.year);
-      })
+    this.$datasetByYear = this.featureDatasetService.getFeaturedDataset()
+      .pipe(map(datasets => groupBy(datasets, dataset => dataset.year)));
   }
 }

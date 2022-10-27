@@ -40,7 +40,7 @@
     "ebi-framework": "1.3.8",
     "ember-cli-cors": "0.0.2",
     "file-saver": "^2.0.5",
-    "intact-network-viewer": "0.10.3",
+    "intact-network-viewer": "0.10.4",
     "jquery": "^3.6.0",
     "moment": "^2.18.1",
     "jquery-ui-dist": "^1.12.1",

@@ -35,7 +35,9 @@ export class NetworkSelectionService {
   resetSelection(updateTables = true) {
     this._binaryInteractionIds = [];
     this._interactorAcs = [];
-    if (updateTables) this.triggerDataTables();
+    if (updateTables) {
+      this.triggerDataTables();
+    }
   }
 
   private triggerDataTables() {

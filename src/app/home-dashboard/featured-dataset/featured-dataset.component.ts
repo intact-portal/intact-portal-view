@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FeatureDatasetService} from './service/feature-dataset.service';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
@@ -19,7 +19,7 @@ const intactFTPMiTab_URL = environment.intact_psimitab_url;
   templateUrl: './featured-dataset.component.html',
   styleUrls: ['./featured-dataset.component.css', '../../app.component.css']
 })
-export class FeaturedDatasetComponent implements OnInit {
+export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 
   dataset$: Observable<Dataset>;
 
@@ -28,10 +28,9 @@ export class FeaturedDatasetComponent implements OnInit {
 
   ngOnInit() {
     this.dataset$ = this.featureDatasetService.getFeaturedDataset().pipe(map(value => value[0]));
-    this.dataset$.pipe(untilDestroyed(this)).subscribe(() => setTimeout(() => {
-      $('#dataset-group').foundation();
-      FoundationUtils.adjustWidth();
-    }));
+  }
+
+  ngAfterViewInit(): void {
   }
 
   onIntActSearch(pubmed: PubmedDataset) {

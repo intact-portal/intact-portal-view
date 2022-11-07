@@ -1,0 +1,13 @@
+<div class="dropdown-container" [attr.disabled]="disabled">
+    <button class="button lighter" type="button" [disabled]="disabled">{{title}}</button>
+    <div class="place-holder">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+    <div class="dropdown-panel">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+
+    </div>
+</div>
+<ng-template #content>
+    <ng-content ></ng-content>
+</ng-template>

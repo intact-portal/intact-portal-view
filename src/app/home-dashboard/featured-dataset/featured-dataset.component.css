@@ -1,21 +1,25 @@
 h4 {
-  border-bottom-style: solid;
-  border-color:#5ca23561;
+    border-bottom-style: solid;
+    border-color: #5ca23561;
 }
 
-#dataset-group{
-  display: flex;
-  align-items: stretch;
+#dataset-group {
+    display: flex;
+    align-items: stretch;
 }
 
-#dataset-group > .button {
-  margin-right: 1px !important;
-  margin-bottom: 1px !important;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0;
+#dataset-group > .dropdown-container {
+    margin-right: 1px !important;
+    margin-bottom: 1px !important;
 }
 
-#dataset-group .button:last-of-type {
-  margin-right: 0 !important;
+#dataset-group > .dropdown-container:last-of-type {
+    margin-right: 0 !important;
 }
+
+
+
+
+
+
+

@@ -5,6 +5,8 @@ import {EdgeDiagramComponent} from './diagrams/edge-diagram/edge-diagram.compone
 import {ColorRangeDiagramComponent} from './diagrams/color-range-diagram/color-range-diagram.component';
 import {EdgeThicknessDiagramComponent} from './diagrams/edge-thickness-diagram/edge-thickness-diagram.component';
 import {ColumnToggleComponent} from './column-toggle/column-toggle.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
+import {DropdownDirective} from './dropdown/dropdown.directive';
 
 @NgModule({
   imports: [
@@ -15,14 +17,18 @@ import {ColumnToggleComponent} from './column-toggle/column-toggle.component';
     NodeDiagramComponent,
     EdgeDiagramComponent,
     ColorRangeDiagramComponent,
-    EdgeThicknessDiagramComponent
+    EdgeThicknessDiagramComponent,
+    DropdownComponent,
+    DropdownDirective
   ],
   exports: [
     ColumnToggleComponent,
     NodeDiagramComponent,
     EdgeDiagramComponent,
     ColorRangeDiagramComponent,
-    EdgeThicknessDiagramComponent
+    EdgeThicknessDiagramComponent,
+    DropdownComponent,
+    DropdownDirective
   ]
 })
 export class ComponentsModule {

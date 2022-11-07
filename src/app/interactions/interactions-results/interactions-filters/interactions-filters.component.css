@@ -20,52 +20,6 @@
   overflow-y: unset;
 }
 
-::ng-deep .custom-slider .ngx-slider .ngx-slider-bar {
-  background-image: url('../../../../assets/images/results/mi-score-slider-image.svg') !important;
-  background-position: center !important; /* Center the image */
-  background-repeat: no-repeat !important; /* Do not repeat the image */
-  background-size: cover !important; /* display the whole image */
-  z-index: 1;
-  padding: 2px;
-  border-radius: 2px !important;
-  border: 1px solid #D9D9D9 !important;
-}
-
-::ng-deep .custom-slider .ngx-slider .ngx-slider-selection {
-  z-index: 2 !important;
-  background: rgba(255, 255, 255, 0) !important;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 2px !important;
-  height: 12px;
-  top: 13px;
-}
-
-::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer {
-  width: 32px;
-  height: 32px;
-  border-style: solid;
-  border-color: #ffffff;
-  border-width: 2px;
-  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
-}
-
-::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer:active,
-::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer:focus {
-  box-shadow: 0 0 0 3px #216fd1;
-  outline: none;
-}
-
-::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer:after {
-  background-color: white !important;
-  top: 10px;
-  left: 10px;
-}
-
-::ng-deep .custom-slider .ngx-slider .ngx-slider-bubble {
-  bottom: 14px;
-}
-
-
 /* Disable color for text in toogles */
 .disabled-color {
   color: #847f7f;
@@ -183,4 +137,8 @@ input.vertically-centered {
 
 .underline {
   text-decoration-line: underline;
+}
+
+.dropdown-container > *:first-child {
+  /*width: 90px;*/
 }

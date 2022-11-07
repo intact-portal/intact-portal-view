@@ -29,7 +29,12 @@
             ],
             "styles": [
               "node_modules/angular-archwizard/styles/archwizard.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "node_modules/complexviewer/src/css/xinet.css",
+                "inject": false,
+                "bundleName": "complex-viewer"
+              }
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -201,7 +206,6 @@
       }
     }
   },
-  "defaultProject": "intact-portal",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ip",

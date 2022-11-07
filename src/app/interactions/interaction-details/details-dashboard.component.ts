@@ -128,7 +128,9 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
 
     let blob = dataURItoBlob(content);
 
+    // @ts-ignore
     if (navigator.msSaveOrOpenBlob) {
+      // @ts-ignore
       navigator.msSaveOrOpenBlob(blob, fileName);
     } else {
       const a = document.createElement('a');

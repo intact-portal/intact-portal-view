@@ -201,7 +201,6 @@
       }
     }
   },
-  "defaultProject": "intact-portal",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ip",

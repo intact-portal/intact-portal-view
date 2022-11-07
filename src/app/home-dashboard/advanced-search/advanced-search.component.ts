@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ContentChild, ElementRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
 import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
 import {MIQLPipe} from './MIQL.pipe';

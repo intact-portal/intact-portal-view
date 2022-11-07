@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ContentChild, ElementRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
 import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper, MIQL_DATE_FORMAT} from './advanced-search.config';
@@ -26,7 +26,7 @@ export interface ColorCode {
 })
 export class AdvancedSearchComponent implements AfterViewInit {
 
-  public queryCtrl: FormControl;
+  public queryCtrl: UntypedFormControl;
   public currentConfig: QueryBuilderConfig;
 
   public query: RuleSet = {
@@ -37,7 +37,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
   coloredMIQL: string;
 
   constructor(private searchService: SearchService) {
-    this.queryCtrl = new FormControl(this.query);
+    this.queryCtrl = new UntypedFormControl(this.query);
     this.currentConfig = ADVANCED_SEARCH_CONFIG;
   }
 

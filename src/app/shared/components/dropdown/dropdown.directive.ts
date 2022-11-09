@@ -18,8 +18,8 @@ import {DropdownComponent} from './dropdown.component';
  * </ng-content>
  * ```
  *
- * @param title: string, Title of the dropdown menu
- * @param disabled: boolean, Whether the dropdown is activated or not. Changes UI
+ * @param{string} title Title of the dropdown menu
+ * @param{boolean} disabled Whether the dropdown is activated or not. Changes UI
  */
 @Directive({
   selector: '[ipDropdown]'

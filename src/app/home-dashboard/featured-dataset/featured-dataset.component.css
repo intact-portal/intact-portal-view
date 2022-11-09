@@ -8,12 +8,13 @@ h4 {
     align-items: stretch;
 }
 
-#dataset-group > .dropdown-container {
+#dataset-group > ip-dropdown {
+    flex: 1;
     margin-right: 1px !important;
     margin-bottom: 1px !important;
 }
 
-#dataset-group > .dropdown-container:last-of-type {
+#dataset-group > ip-dropdown:last-of-type {
     margin-right: 0 !important;
 }
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 
 @Component({
   selector: 'ip-dropdown',
@@ -11,6 +11,8 @@ export class DropdownComponent implements OnInit {
   disabled: boolean;
   @Input()
   title: string;
+  @Input()
+  template: TemplateRef<any>;
 
   constructor() {
   }
@@ -18,4 +20,7 @@ export class DropdownComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  looseFocus($event: MouseEvent) {
+    ($event.target as HTMLElement).blur();
+  }
 }

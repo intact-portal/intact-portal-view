@@ -320,21 +320,19 @@
             <i class="icon icon-functional icon-spacer icon-share"></i> Export
         </div>
 
-        <ip-dropdown [title]="'Network'" >
-            <a class="button lightest expanded" (click)="view.viewer.exportAs('png')">PNG</a>
-            <a class="button lightest expanded no-margin"
-               (click)="view.viewer.exportAs('graphml')">GraphML</a>
-        </ip-dropdown>
-        <ip-dropdown [title]="enableExports ? 'Table' : 'Disabled'" [disabled]="!enableExports">
+        <ng-container *ngIf="view.visible">
+            <div *ipDropdown="'Network'">
+                <button class="button lightest expanded" (click)="view.viewer.exportAs('png')">PNG</button>
+                <button class="button lightest expanded no-margin" (click)="view.viewer.exportAs('graphml')">GraphML
+                </button>
+            </div>
+        </ng-container>
+
+        <div *ipDropdown="enableExports ? 'Table' : 'Disabled'; disabled: !enableExports">
             <ng-container *ngFor="let format of formats; let last = last;">
                 <ip-download-form [format]="format" [last]="last"></ip-download-form>
             </ng-container>
-        </ip-dropdown>
-        <ip-dropdown [title]="enableExports ? 'Table' : 'Disabled'" [disabled]="!enableExports">
-            <ng-container *ngFor="let format of formats; let last = last;">
-                <ip-download-form [format]="format" [last]="last"></ip-download-form>
-            </ng-container>
-        </ip-dropdown>
+        </div>
 
 
     </div>

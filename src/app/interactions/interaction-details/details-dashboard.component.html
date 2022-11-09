@@ -2,20 +2,20 @@
     <div class="button-bar">
         <h2 class="padding-left-large">Details of {{interactionAc}}</h2>
 
-        <div class="button-group rounded float-right margin-right-medium" id="detail-export" style="margin-left: 17px;">
+        <div class="button-group rounded float-right margin-right-medium" id="detail-export" style="margin-left: 17px;" *ngIf="!error">
             <div class="button no-hover">
                 <i class="icon icon-functional icon-spacer icon-share"></i> Export
             </div>
 
-            <ip-dropdown [title]="'View'">
-                <a class="button lightest expanded" download="{{interactionAc}}.svg" (click)="exportSVG()">SVG</a>
-            </ip-dropdown>
-            <ip-dropdown [title]="'Interaction'">
+            <div *ipDropdown="'View'">
+                <button class="button lightest expanded" (click)="exportSVG()">SVG</button>
+            </div>
+            <div *ipDropdown="'Interaction'">
                 <ng-container *ngFor="let format of formatTypes; let last = last;">
                     <a class="button lightest expanded" [ngClass]="{'no-margin':last}"
                        download [href]="downloadURL(format)" [innerHTML]="format.html"></a>
                 </ng-container>
-            </ip-dropdown>
+            </div>
         </div>
     </div>
 </div>

@@ -27,7 +27,6 @@ import {DropdownDirective} from './dropdown/dropdown.directive';
     EdgeDiagramComponent,
     ColorRangeDiagramComponent,
     EdgeThicknessDiagramComponent,
-    DropdownComponent,
     DropdownDirective
   ]
 })

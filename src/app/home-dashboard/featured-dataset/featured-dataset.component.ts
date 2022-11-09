@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FeatureDatasetService} from './service/feature-dataset.service';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
@@ -7,8 +7,7 @@ import {Dataset} from './model/dataset.model';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs/internal/Observable';
 import {PubmedDataset} from './model/pubmed-dataset.model';
-import {FoundationUtils} from '../../shared/utils/foundation-utils';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {UntilDestroy} from '@ngneat/until-destroy';
 
 const intactFTP_URL = environment.intact_psi25_url;
 const intactFTPMiTab_URL = environment.intact_psimitab_url;
@@ -17,7 +16,8 @@ const intactFTPMiTab_URL = environment.intact_psimitab_url;
 @Component({
   selector: 'ip-featured-dataset',
   templateUrl: './featured-dataset.component.html',
-  styleUrls: ['./featured-dataset.component.css', '../../app.component.css']
+  styleUrls: ['./featured-dataset.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 

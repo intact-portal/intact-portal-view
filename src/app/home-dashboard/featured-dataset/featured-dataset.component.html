@@ -19,29 +19,17 @@
 
         <div id="dataset-group">
 
-            <div class="dropdown-container expanded">
-                <button class="button lighter no-margin" type="button">
-                    <i class="icon icon-common icon-search"></i>
-                    Access
+            <div *ipDropdown="'Access'" class="expanded">
+                <button class="button lightest expanded no-margin"
+                        (click)="onIntActSearch(firstPubMed)">IntAct
                 </button>
-                <div class="no-padding no-border dropdown-panel" id="access">
-                    <button class="button lightest expanded no-margin"
-                            (click)="onIntActSearch(firstPubMed)">IntAct
-                    </button>
-                </div>
             </div>
+            <div *ipDropdown="'Download'; disabled: false" class="expanded">
+                <a class="button lightest expanded no-margin" download target="_blank"
+                   [href]="miTabUrl(firstPubMed)">miTab<sub>2.7</sub></a>
 
-            <div class="dropdown-container expanded">
-                <button class="button lighter no-margin" type="button">
-                    <i class="icon icon-functional icon-download"></i> Download
-                </button>
-                <div class="no-padding no-border dropdown-panel" id="download">
-                    <a class="button lightest expanded no-margin" download target="_blank"
-                       [href]="miTabUrl(firstPubMed)">miTab<sub>2.7</sub></a>
-
-                    <a class="button lightest expanded no-margin" download target="_blank"
-                       [href]="miXmlUrl(firstPubMed)">miXML<sub>2.5</sub></a>
-                </div>
+                <a class="button lightest expanded no-margin" download target="_blank"
+                   [href]="miXmlUrl(firstPubMed)">miXML<sub>2.5</sub></a>
             </div>
 
         </div>

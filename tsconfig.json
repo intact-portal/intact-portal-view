@@ -20,7 +20,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "target": "es5",
+    "target": "es2020",
     "typeRoots": [
       "node_modules/@types",
       "src/types"

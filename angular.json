@@ -58,7 +58,13 @@
             "dev": {
               "baseHref": "/intact/dev/",
               "outputHashing": "none",
-              "extractLicenses": true
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
             },
             "gh-dev": {
               "baseHref": "/intact-portal-view/",
@@ -115,7 +121,7 @@
               ]
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "dev"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

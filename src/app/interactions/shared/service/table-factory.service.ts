@@ -110,8 +110,7 @@ export class TableFactoryService {
     if (miId === undefined) {
       return null;
     }
-    const id = miId.replace(':', '_');
-    return `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
+    return `https://www.ebi.ac.uk/ols4/ontologies/mi/classes?obo_id=${miId}`;
   }
 
   private static processDatabase(database: string | any): { tag: string, access: DatabaseAccess } {
@@ -296,7 +295,7 @@ export class TableFactoryService {
     }
     return `<div class="aliasesCell tag-cell-container">
               <a class="detailsAliasesCell tag-cell" target="_blank"
-                 href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                 href="${ebiURL}/ols4/ontologies/mi/classes?obo_id=${alias.type.identifier}">
                 ${alias.type.shortName}</a>
               <span class="detailsCell">${alias.name}</span>
             </div>`;

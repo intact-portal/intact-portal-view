@@ -389,12 +389,21 @@ a:visited {
 .alert-panel {
     font-size: 16px;
     font-style: italic;
-    background-color: #68297b3d;
+    background-color: rgba(104, 41, 123, 0.24);
     padding: 1em;
+}
+
+.alert-panel.urgent {
+    background-color: rgba(183, 9, 86,0.24);
+    font-style: normal;
 }
 
 .alert-panel h3 {
     color: #68297c;
+}
+
+.alert-panel.urgent h3 {
+    color: rgb(183, 9, 86);
 }
 
 /***************** Tool tips **********************/

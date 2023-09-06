@@ -17,7 +17,8 @@ export class DownloadFormComponent implements OnInit {
   @Input() last: boolean = false;
 
   filterTypes = Filter;
-  readonly URL = `${baseURL}/graph/export/interaction/list`;
+  readonly URL = `http://ves-hx-47:8083/intact/ws/graph/export/interaction/list`;
+  // readonly URL = `${baseURL}/graph/export/interaction/list`;
 
   constructor(public filters: FilterService, public search: SearchService, public selection: NetworkSelectionService) {
   }

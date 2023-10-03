@@ -7,6 +7,7 @@ export class Format {
   public static xml2_5 = new Format('xml', 'miXML25', 'miXML<sub>2.5</sub>');
   public static xml3_0 = new Format('xml', 'miXML30', 'miXML<sub>3.0</sub>');
   public static json = new Format('json', 'miJSON', 'miJSON<sub>1.0</sub>');
+  public static xgmml = new Format('xml', 'miXGMML', 'miXGMML<sub>1.0</sub>');
 
   static get instances(): Format[] {
     return [...this._instances];

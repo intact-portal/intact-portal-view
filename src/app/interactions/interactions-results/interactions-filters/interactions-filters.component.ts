@@ -62,7 +62,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   get enableExports(): boolean {
-    return true; // environment.avoidDownloadOverload ? this.filters.totalElements < 2000 : true;
+    return environment.avoidDownloadOverload ? this.filters.totalElements < 15_000 : true;
   }
 
   ngAfterViewInit(): void {

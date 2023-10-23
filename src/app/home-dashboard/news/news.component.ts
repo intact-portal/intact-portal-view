@@ -11,7 +11,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class NewsComponent implements OnInit {
   version = pkg.version;
-  releaseDate = 'December 2021';
+  releaseDate = 'October 2023';
 
   release_url = environment.statistics_url + 'release.txt'
 

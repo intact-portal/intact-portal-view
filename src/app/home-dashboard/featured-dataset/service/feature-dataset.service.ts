@@ -10,17 +10,19 @@ import {Dataset} from '../model/dataset.model';
 import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 
+const MONTHS_ARRAY = ['January', 'Febraury', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 @Injectable()
 export class FeatureDatasetService {
 
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
-  public readonly API_URL = 'https://raw.githubusercontent.com/intact-portal/intact-portal-feature-datasets/main/feature-datasets.json';
+  public readonly API_URL = 'https://raw.githubusercontent.com/intact-portal/intact-portal-feature-datasets/release-october-2023/feature-datasets.json';
 
   getFeaturedDataset(): Observable< Dataset[] > {
     return this.http.get<{ datasets: Dataset[] }>(this.API_URL, {responseType: 'json'}).pipe(
-      map(value => value.datasets),
+      map(value => value.datasets.sort(this.sortDatasets)),
       catchError(this.handleError))
   }
 
@@ -33,5 +35,11 @@ export class FeatureDatasetService {
     }
   }
 
+  private sortDatasets(a: Dataset, b: Dataset): number {
+    if (a.year === b.year) {
+      return MONTHS_ARRAY.indexOf(b.month) - MONTHS_ARRAY.indexOf(a.month);
+    }
+    return Number(b.year) - Number(a.year);
+  }
 
 }

@@ -51,8 +51,11 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   filterTypes = Filter;
   shapes = NodeShape;
 
-  readonly NO_EXPORT_TEXT = 'Exports are disabled when there are more than 2000 interactions for performance issues.\n' +
-    'Please use Cytoscape IntAct App to support large networks'
+  private readonly EXPORT_LIMIT = 25_000;
+  readonly NO_EXPORT_TEXT = 'Exports are disabled when there are more than ' +
+      this.EXPORT_LIMIT.toLocaleString('en-GB') +
+      ' interactions for performance issues.\n' +
+      'Please use Cytoscape IntAct App to support large networks'
 
   constructor(private tableFactory: TableFactoryService, public view: NetworkViewService, public filters: FilterService) {
   }
@@ -62,7 +65,7 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   get enableExports(): boolean {
-    return environment.avoidDownloadOverload ? this.filters.totalElements < 25_000 : true;
+    return environment.avoidDownloadOverload ? this.filters.totalElements < this.EXPORT_LIMIT : true;
   }
 
   ngAfterViewInit(): void {

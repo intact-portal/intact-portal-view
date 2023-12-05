@@ -18,6 +18,7 @@ export class AboutComponent implements OnInit {
   license_privacy = environment.intact_portal_documentation_url + 'about/license-privacy.md';
   conceptual_design = environment.intact_portal_documentation_url + 'about/conceptual-design.md';
   sab = environment.intact_portal_documentation_url + 'about/scientific-advisory-board.md';
+  imex_partners = environment.intact_portal_documentation_url + 'about/imex-consortium-partners.md';
   cite_us = environment.intact_portal_documentation_url + 'about/cite-us.md';
 
   constructor(private titleService: Title) {

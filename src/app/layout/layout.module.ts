@@ -8,6 +8,7 @@ import {RouterModule} from '@angular/router';
 import {ProgressBarComponent} from './loading-indicators/progress-bar/progress-bar.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {LocalSearchComponent} from './header/local-search/local-search.component';
+import {ElixirFooterComponent} from './elixir-footer/elixir-footer.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {LocalSearchComponent} from './header/local-search/local-search.component
     CompactHeaderComponent,
     ExpandedHeaderComponent,
     LocalFooterComponent,
-    ContributorsComponent
+    ContributorsComponent,
+    ElixirFooterComponent
   ],
   exports: [
     ProgressBarComponent,
@@ -30,7 +32,8 @@ import {LocalSearchComponent} from './header/local-search/local-search.component
     ExpandedHeaderComponent,
     LocalFooterComponent,
     ContributorsComponent,
-    LocalSearchComponent
+    LocalSearchComponent,
+    ElixirFooterComponent
 
   ]
 })

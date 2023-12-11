@@ -91,6 +91,7 @@ build-test:
   tags:
     - docker
   when: manual
+  needs: [ init ]
 
 build-prod:
   stage: build
@@ -104,6 +105,7 @@ build-prod:
   tags:
     - docker
   when: manual
+  needs: [ init ]
 
 build-image:
   stage: build-image
@@ -130,6 +132,14 @@ build-image:
 #    refs:
 #      - master
 
+build-image-test:
+  needs: [ build-test ]
+  extends: [ build-image ]
+
+build-image-prod:
+  needs: [ build-prod ]
+  extends: [ build-image ]
+
 hh-production-deploy:
   stage: deploy
   image: alpine
@@ -149,7 +159,7 @@ hh-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [ build-prod,build-image ]
+  needs: [ build-image-prod ]
 #  only:
 #    refs:
 #      - master
@@ -173,7 +183,7 @@ hx-production-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [ build-prod,build-image ]
+  needs: [ build-image-prod ]
 #  only:
 #    refs:
 #      - master
@@ -198,7 +208,7 @@ hx-test-deploy:
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
   when: manual
-  needs: [ build-test,build-image ]
+  needs: [ build-image-test ]
 #  only:
 #    refs:
 #      - master

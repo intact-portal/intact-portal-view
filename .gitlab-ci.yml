@@ -107,7 +107,7 @@ build-prod:
   when: manual
   needs: [ init ]
 
-build-image:
+.build-image:
   stage: build-image
   image: docker:latest
   services:
@@ -134,11 +134,11 @@ build-image:
 
 build-image-test:
   needs: [ build-test ]
-  extends: [ build-image ]
+  extends: [ .build-image ]
 
 build-image-prod:
   needs: [ build-prod ]
-  extends: [ build-image ]
+  extends: [ .build-image ]
 
 hh-production-deploy:
   stage: deploy

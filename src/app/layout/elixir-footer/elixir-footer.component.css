@@ -30,11 +30,22 @@
 .elixir-ribbon .column {
     display: flex;
     flex-direction: column;
+}
+
+.elixir-ribbon .column-double {
+    flex: 2;
+}
+
+.elixir-ribbon .column-single {
     flex: 1;
 }
 
+.elixir-ribbon .column-centered {
+    justify-content: center;
+}
+
 .elixir-ribbon h5 {
-    font-size: 1.3rem;
+    font-size: 1rem;
     padding: 0;
     display: inline-block;
 }

@@ -11,3 +11,15 @@
   border-radius: 8px;
 }
 
+.alert-message {
+  display: inline-flex;
+}
+
+.alert-button-div {
+  padding-left: 16px;
+}
+
+.alert-button {
+  font-size: large;
+}
+

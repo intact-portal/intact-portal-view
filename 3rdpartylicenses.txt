@@ -491,7 +491,7 @@ THIS SOFTWARE.
 
 d3-array
 ISC
-Copyright 2010-2022 Mike Bostock
+Copyright 2010-2023 Mike Bostock
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
@@ -745,7 +745,7 @@ THIS SOFTWARE.
 
 d3-geo
 ISC
-Copyright 2010-2021 Mike Bostock
+Copyright 2010-2022 Mike Bostock
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
@@ -817,7 +817,7 @@ THIS SOFTWARE.
 
 d3-path
 ISC
-Copyright 2015-2021 Mike Bostock
+Copyright 2015-2022 Mike Bostock
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
@@ -951,7 +951,7 @@ THIS SOFTWARE.
 
 d3-shape
 ISC
-Copyright 2010-2021 Mike Bostock
+Copyright 2010-2022 Mike Bostock
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
@@ -968,7 +968,7 @@ THIS SOFTWARE.
 
 d3-time
 ISC
-Copyright 2010-2021 Mike Bostock
+Copyright 2010-2022 Mike Bostock
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice

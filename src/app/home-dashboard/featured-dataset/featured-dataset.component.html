@@ -15,6 +15,9 @@
                     <b>{{firstPubMed.author}}</b>
                 </a>
             </ng-template>
+            <div *ngIf="!!dataset.image">
+                <img [src]="dataset.image">
+            </div>
         </div>
 
         <div id="dataset-group">

@@ -49,3 +49,9 @@ tr:nth-child(even) {
 .mat-raised-button {
   margin-right: 5px;
 }
+
+.image {
+  text-align: center;
+  padding: 0;
+  background-color: white
+}

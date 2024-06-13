@@ -17,16 +17,4 @@ export class HomeDescriptionComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  onSearch() {
-    this.search.search('annot:"dataset:coronavirus"', 'coronavirus dataset');
-  }
-
-  miXml25Url() {
-    return `${environment.intact_psi25_url}/datasets/Coronavirus.zip`;
-  }
-
-  miXml30Url() {
-    return `${environment.intact_psi30_url}/datasets/Coronavirus.zip`;
-  }
 }

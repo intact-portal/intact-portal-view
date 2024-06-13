@@ -18,7 +18,7 @@ export class FeatureDatasetService {
   constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
-  public readonly API_URL = 'https://raw.githubusercontent.com/intact-portal/intact-portal-feature-datasets/dataset-images/feature-datasets.json';
+  public readonly API_URL = 'https://raw.githubusercontent.com/intact-portal/intact-portal-feature-datasets/main/feature-datasets.json';
 
   getFeaturedDataset(): Observable< Dataset[] > {
     return this.http.get<{ datasets: Dataset[] }>(this.API_URL, {responseType: 'json'}).pipe(

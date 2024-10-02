@@ -1,13 +1,8 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {Dataset} from '../../model/dataset.model';
 import {environment} from '../../../../../environments/environment';
 import {PubmedDataset} from '../../model/pubmed-dataset.model';
-import {Router} from '@angular/router';
 import {SearchService} from '../../../search/service/search.service';
-
-
-const intactFTP_URL = environment.intact_psi25_url;
-const intactFTPMiTab_URL = environment.intact_psimitab_url;
 
 @Component({
   selector: 'ip-dataset-by-year',
@@ -57,11 +52,15 @@ export class DatasetByYearComponent implements AfterViewInit {
   }
 
   goPSIMI25FTP(pubmedYear: string, pubmedId: string) {
-    window.open(intactFTP_URL + `/pmid/${pubmedYear}/${pubmedId}.zip`);
+    window.open(environment.intact_psi25_url + `/pmid/${pubmedYear}/${pubmedId}.zip`);
+  }
+
+  goPSIMI30FTP(pubmedYear: string, pubmedId: string) {
+    window.open(environment.intact_psi30_url + `/pmid/${pubmedYear}/${pubmedId}.zip`);
   }
 
   goPSIMITABFTP(pubmedYear: string, pubmedId: string) {
-    window.open(intactFTPMiTab_URL + `/${pubmedYear}/${pubmedId}.txt`);
+    window.open(environment.intact_psimitab_url + `/pmid/${pubmedYear}/${pubmedId}.txt`);
   }
 
   hasPubMedId(pubMed: PubmedDataset): boolean {

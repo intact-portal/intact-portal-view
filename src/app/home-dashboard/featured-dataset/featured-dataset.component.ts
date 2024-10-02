@@ -9,9 +9,6 @@ import {Observable} from 'rxjs/internal/Observable';
 import {PubmedDataset} from './model/pubmed-dataset.model';
 import {UntilDestroy} from '@ngneat/until-destroy';
 
-const intactFTP_URL = environment.intact_psi25_url;
-const intactFTPMiTab_URL = environment.intact_psimitab_url;
-
 @UntilDestroy()
 @Component({
   selector: 'ip-featured-dataset',
@@ -45,12 +42,16 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
     return `https://europepmc.org/article/MED/${pubmed.id}`;
   }
 
-  miXmlUrl(pubmed: PubmedDataset): string {
-    return `${intactFTP_URL}/pmid/${pubmed.year}/${pubmed.id}.zip`;
+  miXml25Url(pubmed: PubmedDataset): string {
+    return `${environment.intact_psi25_url}/pmid/${pubmed.year}/${pubmed.id}.zip`;
+  }
+
+  miXml30Url(pubmed: PubmedDataset): string {
+    return `${environment.intact_psi30_url}/pmid/${pubmed.year}/${pubmed.id}.zip`;
   }
 
   miTabUrl(pubmed: PubmedDataset): string {
-    return `${intactFTPMiTab_URL}/${pubmed.year}/${pubmed.id}.txt`;
+    return `${environment.intact_psimitab_url}/pmid/${pubmed.year}/${pubmed.id}.txt`;
   }
 
   archiveUrl(): string {

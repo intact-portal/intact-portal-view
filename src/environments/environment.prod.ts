@@ -21,7 +21,7 @@ export const environment = {
   statistics_url: 'https://raw.githubusercontent.com/intact-portal/intact-portal-statistics/statistics_prod/output_data/',
   intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25',
   intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30',
-  intact_psimitab_url : INTACT_FTP_BASE_URL + '/current/psimitab/pmid',
+  intact_psimitab_url : INTACT_FTP_BASE_URL + '/current/psimitab',
   intact_dotm_url: EBI_BASE_URL + '/~intact/site/dotm/dotm-1.1.xml',
   intact_portal_url: EBI_BASE_URL + '/intact',
   intact_portal_support_url: EBI_BASE_URL + 'support/intact',

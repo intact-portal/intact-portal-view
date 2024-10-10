@@ -975,6 +975,12 @@ button.showMore, button.showLess {
     text-align: left;
 }
 
+.show-more-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .icon-search-document {
     font-size: 15pt;
     color: #ffffff;

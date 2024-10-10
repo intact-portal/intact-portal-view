@@ -223,6 +223,14 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             render: this.tableFactory.cvRender('detectionMethodMIIdentifier')
           },
           {
+            ...this._columns.identificationMethodA,
+            render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRender('identificationMethodMIIdentifiersA'), '', false)
+          },
+          {
+            ...this._columns.identificationMethodB,
+            render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRender('identificationMethodMIIdentifiersB'), '', false)
+          },
+          {
             ...this._columns.publicationIdentifiers,
             render: this.tableFactory.enlistWithButtons((d) => {
               const data_s = d.split('(');

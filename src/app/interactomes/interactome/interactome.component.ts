@@ -19,11 +19,15 @@ export class InteractomeComponent implements OnInit {
   }
 
   goToInteractomePSI25(): void {
-    window.open(environment.intact_psi25_url + '/species/' + this.interactome.psi25 + '.zip', '_blank');
+    window.open(environment.intact_psi25_url + '/species/' + this.interactome.filename + '.zip', '_blank');
   }
 
   goToInteractomePSI30(): void {
-    window.open(environment.intact_psi30_url + '/species/' + this.interactome.psi30 + '.zip', '_blank');
+    window.open(environment.intact_psi30_url + '/species/' + this.interactome.filename + '.zip', '_blank');
+  }
+
+  goToInteractomeMiTab(): void {
+    window.open(environment.intact_psimitab_url + '/species/' + this.interactome.filename + '.zip', '_blank');
   }
 
   get interactome(): Interactome {

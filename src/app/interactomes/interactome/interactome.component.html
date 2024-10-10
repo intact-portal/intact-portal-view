@@ -9,13 +9,14 @@
   <div class="medium-12" style="text-align: center">
     <button (click)="search.speciesSearch(interactome)" class="species-button">
         <span [attr.data-icon]="interactome.symbol" style="color: #68297c"
-              [ngClass]="{'icon ': true,'icon-species': interactome.symbol !== '?', 'icon-functional': interactome.symbol === '?'}">
+              [ngClass]="{'icon ': true, 'icon-species': interactome.symbol !== '?', 'icon-functional': interactome.symbol === '?'}">
         </span>
     </button>
   </div>
   <div class="actions button-group no-margin">
-    <button class="button lighter" (click)="goToInteractomePSI25()">miXML 2.5</button>
-    <button class="button lighter" (click)="goToInteractomePSI30()">miXML 3.0</button>
+    <button class="button lighter download-button" (click)="goToInteractomePSI25()">miXML 2.5</button>
+    <button class="button lighter download-button" (click)="goToInteractomePSI30()">miXML 3.0</button>
+    <button class="button lighter download-button" (click)="goToInteractomeMiTab()">miTab 2.7</button>
   </div>
 </div>
 

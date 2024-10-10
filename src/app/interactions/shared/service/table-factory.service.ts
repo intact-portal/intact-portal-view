@@ -167,7 +167,7 @@ export class TableFactoryService {
     }
   }
 
-  enlistWithButtons = (renderer: (data: any, type, row, meta) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
+  enlistWithButtons = (renderer: (data: any, type, row, meta, i?) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
     if (data == null || type !== 'display') {
       return data;
     }
@@ -178,7 +178,7 @@ export class TableFactoryService {
         if (displayed === 2) {
           html += '<div class="to-hide" style="display: none">';
         }
-        const render = renderer(data[i], type, row, meta);
+        const render = renderer(data[i], type, row, meta, i);
         if (render) {
           html += render;
           displayed++;
@@ -207,7 +207,7 @@ export class TableFactoryService {
   }
 
   groupBy<T, K>(grouper: (data: T) => K,
-                groupRenderer: (data: T[], type?, row?, meta?) => string,
+                groupRenderer: (data: T[], type?, row?, meta?, i?) => string,
                 headerRenderer: (K) => string = group => ' ' + group) {
     return (data: T[], type, row, meta) => {
       if (data == null) {
@@ -215,10 +215,10 @@ export class TableFactoryService {
       }
       let html = '<div class="table-list">';
       const groups = groupBy(data, grouper);
-      groups.forEach(group => {
+      groups.forEach((group, i) => {
         html += `<span class="collapse-header collapsed">${headerRenderer(group.group)}<span class="collapsable-counter">${group.elements.length}</span></span>`;
         html += '<div class="collapse-panel">';
-        html += groupRenderer(group.elements, type, row, meta);
+        html += groupRenderer(group.elements, type, row, meta, i);
         html += '</div>';
       })
       return html + '</div>';
@@ -247,8 +247,12 @@ export class TableFactoryService {
     }
   }
 
-  cvRender = (identifierColumn: string) => (data, type, row) => {
-    const miId = row[identifierColumn];
+  cvRender = (identifierColumn: string) => (data: any, type: any, row: any, meta: any, i?: number) => {
+    let miId = row[identifierColumn];
+    console.log(i, miId[i], miId)
+    if (i !== undefined) {
+      miId = miId[i];
+    }
     if (miId) {
       return `<a href="${TableFactoryService.getCvURL(miId)}" class="cv-term" target="_blank">${data}</a>`
     } else {

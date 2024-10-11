@@ -44,9 +44,12 @@ div.actions {
   box-shadow: 0 0 20px #68297c;
 }
 
+div.download-button-group {
+  display: inline-block;
+  align-self: center;
+}
+
 button.download-button {
-  border: 1px solid #68297c;
-  border-radius: 16px;
-  color: #68297c;
+  font-weight: normal !important;
   padding: 8px;
 }

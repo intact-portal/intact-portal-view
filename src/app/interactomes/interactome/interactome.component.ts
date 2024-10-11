@@ -38,4 +38,8 @@ export class InteractomeComponent implements OnInit {
   set interactome(value: Interactome) {
     this._interactome = value;
   }
+
+  maskStyle(url: string): string {
+    return `mask: url(${url}) no-repeat center; -webkit-mask: url(${url}) no-repeat center`;
+  }
 }

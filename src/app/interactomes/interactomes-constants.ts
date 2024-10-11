@@ -32,7 +32,7 @@ export abstract class InteractomesConstants {
     new Interactome('Synechocystis sp. (strain PCC 6803 / Kazusa)', 'Y', 'syny3', 1111708),
     new Interactome('Plasmodium falciparum (isolate 3D7)', '@', 'plaf7', 36329),
     new Interactome('Helicobacter pylori', 'L', 'helpy', 85962),
-    new Interactome('Schizosaccharomyces pombe (strain ATCC 38366 / 972)', 'Y', 'schpo', 284812),
+    new Interactome('Schizosaccharomyces pombe (strain ATCC 38366 / 972)', 'assets/images/organisms/EMBL_Saccharomyces-pombe.svg', 'schpo', 284812),
     new Interactome('Bacillus subtilis', 'L', 'bacsu', 224308),
     new Interactome('SARS-CoV-2', 'v', 'SARS-CoV-2', 2697049),
     // new Interactome('Desulfovibrio vulgaris (strain Hildenborough / ATCC 29579 / NCIMB 8303)', 'L', 'desvh', 'desvh', 882),

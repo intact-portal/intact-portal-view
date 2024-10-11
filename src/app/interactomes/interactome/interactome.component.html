@@ -8,8 +8,13 @@
   <div class="flex-spacer"></div>
   <div class="medium-12" style="text-align: center">
     <button (click)="search.speciesSearch(interactome)" class="species-button">
-        <span [attr.data-icon]="interactome.symbol" style="color: #68297c"
+        <span *ngIf="!interactome.symbol.startsWith('assets')"
+              [attr.data-icon]="interactome.symbol"
+              style="color: #68297c"
               [ngClass]="{'icon ': true, 'icon-species': interactome.symbol !== '?', 'icon-functional': interactome.symbol === '?'}">
+        </span>
+        <span *ngIf="interactome.symbol.startsWith('assets')">
+            <div class="iconOrganismImg" [style]="maskStyle(interactome.symbol)"></div>
         </span>
     </button>
   </div>

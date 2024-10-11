@@ -53,3 +53,10 @@ button.download-button {
   font-weight: normal !important;
   padding: 8px;
 }
+
+.iconOrganismImg {
+  height: 100px;
+  width: 100px;
+  color: #68297c;
+  background-color: #68297c;
+}

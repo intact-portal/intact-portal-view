@@ -44,8 +44,19 @@ div.actions {
   box-shadow: 0 0 20px #68297c;
 }
 
+div.download-button-group {
+  display: inline-block;
+  align-self: center;
+}
+
 button.download-button {
-  border: 2px solid #68297c;
-  border-radius: 25px;
+  font-weight: normal !important;
+  padding: 8px;
+}
+
+.iconOrganismImg {
+  height: 100px;
+  width: 100px;
   color: #68297c;
+  background-color: #68297c;
 }

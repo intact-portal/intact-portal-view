@@ -1,3 +1,7 @@
+image: docker:latest
+services:
+  - docker:stable-dind
+
 stages:
   - init
   - test
@@ -16,6 +20,8 @@ default:
     - "[ -d src/types/typeahead.js ] || npm run update-types"
 
 variables:
+  CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
+  DOCKER_TLS_CERTDIR: ""
   DIST_DIR: dist/intact-portal-view
   CLI_VERSION: 14.2.6
 
@@ -109,11 +115,6 @@ build-prod:
 
 .build-image:
   stage: build-image
-  image: docker:latest
-  services:
-    - docker:dind
-  variables:
-    CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - docker --version

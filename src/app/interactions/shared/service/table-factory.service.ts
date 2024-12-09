@@ -249,7 +249,6 @@ export class TableFactoryService {
 
   cvRender = (identifierColumn: string) => (data: any, type: any, row: any, meta: any, i?: number) => {
     let miId = row[identifierColumn];
-    console.log(i, miId[i], miId)
     if (i !== undefined) {
       miId = miId[i];
     }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import 'bsky-embed/dist/bsky-embed.es.js';
 
 const twitterURL = 'https://platform.twitter.com/widgets.js';
 

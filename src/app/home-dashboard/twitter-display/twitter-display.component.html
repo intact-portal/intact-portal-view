@@ -1,9 +1,26 @@
 <div id="twitter" class="margin-top-large">
   <h4>
-    <a href="https://twitter.com/intact_project" target="_blank" matTooltip="Follow us" matTooltipPosition="left">
-      <i id="twitter-logo" class="icon icon-socialmedia" data-icon="T"></i>
-    </a> Tweets
+    <i class="icon icon-common icon-external-systems"></i>
+    Social Media
   </h4>
+
+  <bsky-embed username="ebi.embl.org" custom-styles="
+        section {
+            align-items: baseline;
+            max-height: 406px;
+            overflow-y: overlay;
+            overflow-x: clip;
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .p-4 {
+            padding: 0.75rem;
+        }
+
+        .max-w-screen-sm {
+            min-width: 280px;
+        }
+  "></bsky-embed>
 
   <div class="margin-top-large margin-bottom-large">
     <a href="https://twitter.com/intact_project?ref_src=twsrc%5Etfw"
@@ -12,13 +29,5 @@
        data-show-count="false">
       Follow @intact_project
     </a>
-<!--    <a class="twitter-timeline"-->
-<!--       data-lang="en"-->
-<!--       data-height="300"-->
-<!--       data-theme="light"-->
-<!--       data-chrome="nofooter noheader noborders"-->
-<!--       data-link-color="#007c82"-->
-<!--       href="https://twitter.com/intact_project">-->
-<!--      Tweets by IntAct</a>-->
   </div>
 </div>

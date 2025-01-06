@@ -1,13 +1,13 @@
-<div id="news" class="margin-top-large">
-    <h4 class="margin-bottom-large">
+<div id="news" class="margin-top-medium">
+    <h4>
         <i class="icon icon-generic" data-icon="N"></i> Latest News
     </h4>
 
-    <div id="releaseVersion" class="margin-top-medium padding-top-medium padding-left-medium padding-right-medium">
+    <div id="releaseVersion" class="padding-left-medium padding-right-medium">
         <h6><i class="icon icon-common icon-cogs"></i> IntAct Portal version: {{version}} - {{releaseDate}}</h6>
 
         <h6 *ngIf="release"><i class="icon icon-common icon-database"></i> {{release}}</h6>
-        <ul *ngIf="summary">
+        <ul *ngIf="summary" style="margin-bottom: 0">
             <li>Publications : {{summary['Publications'] | number}}</li>
             <li>Interactors : {{summary['Interactors'] | number }}</li>
             <li>Interactions : {{summary['Interactions'] | number }}</li>

@@ -1,10 +1,10 @@
-<div id="dataset" class="margin-top-large" *ngIf="dataset$ | async as dataset">
-    <h4 id="feature-dataset-title" class="margin-bottom-large">
+<div id="dataset" class="margin-top-medium" *ngIf="dataset$ | async as dataset">
+    <h4 id="feature-dataset-title">
         <i class="icon icon-generic" data-icon="D"></i> Featured Dataset
     </h4>
 
     <div *ngIf="dataset.pubmeds[0] as firstPubMed">
-        <div class="text-justify margin-bottom-large">
+        <div class="text-justify margin-bottom-medium">
             {{dataset.title}} -
 
             <b *ngIf="isReleased(firstPubMed); else link;">

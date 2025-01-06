@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeDescriptionComponent} from './home-description/home-description.component';
 import {TileMenuComponent} from './tile-menu/tile-menu.component';
@@ -80,7 +80,8 @@ import { BooleanInputComponent } from './advanced-search/boolean-input/boolean-i
     RangeInputComponent,
     DateRangeComponent,
     BooleanInputComponent
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class HomeDashboardModule {
 }

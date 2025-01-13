@@ -159,6 +159,8 @@ hh-production-deploy:
     - kubectl apply -f k8s-production/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
+  tags:
+    - dind
   when: manual
   needs: [ build-image-prod ]
 #  only:
@@ -183,6 +185,8 @@ hx-production-deploy:
     - kubectl apply -f k8s-production/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
+  tags:
+    - dind
   when: manual
   needs: [ build-image-prod ]
 #  only:
@@ -208,6 +212,8 @@ hh-test-deploy:
     - kubectl apply -f k8s-test/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
+  tags:
+    - dind
   when: manual
   needs: [ build-image-test ]
 #  only:

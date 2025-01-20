@@ -3,7 +3,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 // Environment for production
-const EBI_BASE_URL = 'https://www.ebi.ac.uk/';
+const EBI_BASE_URL = 'https://www.ebi.ac.uk';
 const EBI_URL = 'https://www.ebi.ac.uk';
 const FORMER_INTACT_URL = 'https://www.ebi.ac.uk/legacy-intact/';
 const LICENSE_URL = 'https://creativecommons.org/licenses/by/4.0/';
@@ -24,9 +24,9 @@ export const environment = {
   intact_psimitab_url : INTACT_FTP_BASE_URL + '/current/psimitab',
   intact_dotm_url: EBI_BASE_URL + '/~intact/site/dotm/dotm-1.1.xml',
   intact_portal_url: EBI_BASE_URL + '/intact',
-  intact_portal_support_url: EBI_BASE_URL + 'support/intact',
-  intact_training_url: EBI_BASE_URL + 'intact/resources/training',
-  intact_portal_ws: EBI_BASE_URL + 'intact/ws',
+  intact_portal_support_url: EBI_BASE_URL + '/support/intact',
+  intact_training_url: EBI_BASE_URL + '/intact/resources/training',
+  intact_portal_ws: EBI_BASE_URL + '/intact/ws',
   // todo remove it when all the ws are mapped to www.ebi.ac.uk/intact/ws
   intact_portal_graph_ws: EBI_URL + '/intact/ws',
   intact_portal_documentation_url: INTACT_PORTAL_DOCUMENTATION_URL,

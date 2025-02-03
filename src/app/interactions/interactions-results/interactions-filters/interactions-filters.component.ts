@@ -47,7 +47,7 @@ import {environment} from '../../../../environments/environment';
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   options: Options;
-  formats = Format.instances;
+  formats = Format.interactionListFormats;
   filterTypes = Filter;
   shapes = NodeShape;
 

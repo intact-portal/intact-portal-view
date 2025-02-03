@@ -22,7 +22,7 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   @Input() featureSelected: string;
   private _error: HttpErrorResponse;
   viewer = viewer;
-  formatTypes = Format.instances;
+  formatTypes = Format.singleInteractionFormats;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) {

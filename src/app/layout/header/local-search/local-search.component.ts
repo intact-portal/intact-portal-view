@@ -1,6 +1,4 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
 
 @Component({
@@ -10,10 +8,7 @@ import {SearchService} from '../../../home-dashboard/search/service/search.servi
 })
 export class LocalSearchComponent implements AfterViewInit {
 
-  constructor(private location: Location,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private searchService: SearchService) {
+  constructor(private searchService: SearchService) {
   }
 
   @ViewChild('query', {static: true})
@@ -31,8 +26,5 @@ export class LocalSearchComponent implements AfterViewInit {
     }
   }
 
-  hasRoute(route: string) {
-    return this.router.url.includes(route);
-  }
 
 }

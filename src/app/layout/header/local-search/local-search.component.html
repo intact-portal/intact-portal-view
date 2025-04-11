@@ -1,4 +1,4 @@
-<div [ngStyle]="{'visibility':!hasRoute('home') ? 'visible': 'hidden'}" id="intact-local-search">
+<div id="intact-local-search">
   <div id="localSearchBox" class="no-margin white-border">
     <input #query class="typeahead frosty-glass" type="text" name="first" id="local-searchbox"
            (keydown.enter)="search(query.value, 'enter')"

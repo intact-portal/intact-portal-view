@@ -171,29 +171,28 @@ export class FilterService {
     this._intraSpecies = params.get('intraSpeciesFilter') === 'true';
   }
 
-  public toParams(params: any = {}, arrayTransformer: (array: string[]) => any = (a) => a.join(',')): any {
+  public toParams(params: any = {}): any {
     if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0) {
-      params.interactorSpeciesFilter = arrayTransformer(this.interactorSpecies);
+      params.interactorSpeciesFilter = this.interactorSpecies;
     }
 
     if (this.interactorTypes !== undefined && this.interactorTypes.length !== 0) {
-      params.interactorTypesFilter = arrayTransformer(this.interactorTypes);
+      params.interactorTypesFilter = this.interactorTypes;
     }
 
     if (this.interactionTypes !== undefined && this.interactionTypes.length !== 0) {
-      params.interactionTypesFilter = arrayTransformer(this.interactionTypes);
+      params.interactionTypesFilter = this.interactionTypes;
     }
 
     if (this.interactionDetectionMethods !== undefined && this.interactionDetectionMethods.length !== 0) {
-      params.interactionDetectionMethodsFilter = arrayTransformer(this.interactionDetectionMethods);
+      params.interactionDetectionMethodsFilter = this.interactionDetectionMethods;
     }
 
     if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0) {
-      params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
+      params.interactionHostOrganismsFilter = this.interactionHostOrganisms;
     }
 
-    if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
-      // TODO revert to params.negativeFilter = this.negative when backend is ready
+    if (this._negative) {
       params.negativeFilter = this._negative;
     }
 

@@ -48,6 +48,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
 
   private initDataTable(): void {
     const table = $('#featureTable');
+    const interactionAc = this.interactionAc;
     this.dataTable = table.DataTable({
       ordering: false,
       searching: false,
@@ -60,13 +61,16 @@ export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/graph/features/datatables/` + this.interactionAc,
+        url: `${baseURL}/graph/features/datatables/body`,
         type: 'POST',
+        contentType: 'application/json',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
         data: function (d: any) {
+          d.ac = interactionAc;
           d.page = d.start / d.length;
           d.pageSize = d.length;
+          return JSON.stringify(d);
         }
       },
       columns: [

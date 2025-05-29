@@ -128,7 +128,6 @@ build-prod:
     - docker logout "$CI_REGISTRY"
   tags:
     - dind
-  when: manual
 #  only:
 #    refs:
 #      - master

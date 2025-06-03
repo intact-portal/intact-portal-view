@@ -19,7 +19,7 @@ export class DownloadFormComponent implements OnInit {
   @Input() format: Format = Format.json;
   @Input() last: boolean = false;
 
-  readonly URL = `${baseURL}/graph/export/interaction/list`;
+  readonly URL = `${baseURL}/graph/export/interaction/list/body`;
 
   constructor(private filters: FilterService,
               private search: SearchService,

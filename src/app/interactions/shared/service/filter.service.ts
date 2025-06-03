@@ -171,25 +171,35 @@ export class FilterService {
     this._intraSpecies = params.get('intraSpeciesFilter') === 'true';
   }
 
+  public toURLParams(params: any = {}): any {
+    const arrayTransformer: (array: string[]) => string = (a: string[]) => a.join(',');
+    return this.toParamsInternal(params, arrayTransformer);
+  }
+
   public toParams(params: any = {}): any {
+    const arrayTransformer: (array: string[]) => string[] = (a: string[]) => a;
+    return this.toParamsInternal(params, arrayTransformer);
+  }
+
+  private toParamsInternal(params: any = {}, arrayTransformer: (array: string[]) => any): any {
     if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0) {
-      params.interactorSpeciesFilter = this.interactorSpecies;
+      params.interactorSpeciesFilter = arrayTransformer(this.interactorSpecies);
     }
 
     if (this.interactorTypes !== undefined && this.interactorTypes.length !== 0) {
-      params.interactorTypesFilter = this.interactorTypes;
+      params.interactorTypesFilter = arrayTransformer(this.interactorTypes);
     }
 
     if (this.interactionTypes !== undefined && this.interactionTypes.length !== 0) {
-      params.interactionTypesFilter = this.interactionTypes;
+      params.interactionTypesFilter = arrayTransformer(this.interactionTypes);
     }
 
     if (this.interactionDetectionMethods !== undefined && this.interactionDetectionMethods.length !== 0) {
-      params.interactionDetectionMethodsFilter = this.interactionDetectionMethods;
+      params.interactionDetectionMethodsFilter = arrayTransformer(this.interactionDetectionMethods);
     }
 
     if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0) {
-      params.interactionHostOrganismsFilter = this.interactionHostOrganisms;
+      params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
     }
 
     if (this._negative) {

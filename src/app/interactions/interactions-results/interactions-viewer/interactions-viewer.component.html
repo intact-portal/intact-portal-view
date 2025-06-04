@@ -1,51 +1,51 @@
 <div class="margin-top-large margin-bottom-large" id="network-viewer-container"
      *ngIf="view.visible || !view.error; else error">
-  <div class="columns small-12 medium-6 large-2" id="toolbar-column">
-    <h4 class="underline margin-bottom-large">
-      <i class="icon icon-common icon-spacer icon-tool"></i>Network Tools
-    </h4>
-    <div class="row">
-      <button id="reset" class="button expanded" type="button" (click)="onClickReset()">
-        <i class="icon icon-common icon-spacer icon-redo-alt"></i>Redraw Network
-      </button>
-    </div>
+    <div class="columns small-12 medium-6 large-2" id="toolbar-column">
+        <h4 class="underline margin-bottom-large">
+            <i class="icon icon-common icon-spacer icon-tool"></i>Network Tools
+        </h4>
+        <div class="row">
+            <button id="reset" class="button expanded" type="button" (click)="onClickReset()">
+                <i class="icon icon-common icon-spacer icon-redo-alt"></i>Redraw Network
+            </button>
+        </div>
 
-    <ul class="vertical menu facets">
-      <h5>Layout</h5>
-      <div class="margin-bottom-large" style="background-color: #fbfbfb">
-        <li>
+        <ul class="vertical menu facets">
+            <h5>Layout</h5>
+            <div class="margin-bottom-large" style="background-color: #fbfbfb">
+                <li>
           <span class="margin-left-small">
           <input #forcedirected type="radio" name="layout" (change)="onChangeLayout($event, forcedirected.value)"
                  value="fcose" [checked]="view.layoutName === forcedirected.value" id="force-directed"/>
               <label for="force-directed">Force directed</label>
           </span>
-        </li>
-        <li>
+                </li>
+                <li>
           <span class="margin-left-small">
           <input #avsdf type="radio" name="layout" (change)="onChangeLayout($event, avsdf.value)" value="avsdf"
                  id="avsdf" [checked]="view.layoutName === avsdf.value"/>
                 <label for="avsdf">Circular</label>
           </span>
-        </li>
-        <li>
+                </li>
+                <li>
           <span class="margin-left-small">
           <input #cise type="radio" name="layout" (change)="onChangeLayout($event, cise.value)" value="cise"
                  id="cise" [checked]="view.layoutName === cise.value" [disabled]="groupby.checked"/>
                 <label for="cise">Bubbles</label>
           </span>
-        </li>
-      </div>
+                </li>
+            </div>
 
-      <h5>Edges</h5>
-      <div class="margin-bottom-large" style="background-color: #fbfbfb">
-        <li>
+            <h5>Edges</h5>
+            <div class="margin-bottom-large" style="background-color: #fbfbfb">
+                <li>
           <span class="margin-left-small">
           <input #expand type="checkbox" (change)="onChangeExpand(expand.checked, affectedByMutationCb)"
                  [checked]="view.expanded" id="expand"/>
             <label for="expand">Expand</label>
           </span>
-        </li>
-        <li>
+                </li>
+                <li>
           <span class="margin-left-small tool-tip">
             <input #affectedByMutationCb type="checkbox" id="affectedByMutationCb"
                    (change)="onChangeAffectedByMutation(affectedByMutationCb.checked, expand)"
@@ -53,69 +53,114 @@
             <label for="affectedByMutationCb" [ngClass]="{'disabled':!hasMutation}">Affected By Mutation</label>
             <span class="tool-tip-text" *ngIf="!hasMutation">There is no mutation in this network</span>
           </span>
-        </li>
-      </div>
+                </li>
+            </div>
 
-      <h5>Group By</h5>
-      <div class="margin-bottom-large" style="background-color: #fbfbfb">
-        <li>
+            <h5>Group By</h5>
+            <div class="margin-bottom-large" style="background-color: #fbfbfb">
+                <li>
           <span class="margin-left-small">
           <input #groupby type="checkbox" (change)="onChangeGroupBy(groupby.checked)"
                  [checked]="view.groupBySpecies" id="group-by" [disabled]="cise.checked"/>
             <label for="group-by">Species</label>
           </span>
-        </li>
-      </div>
-    </ul>
-  </div>
-
-  <div class="columns medium-12 large-8" id="viewer-column">
-    <h4 class="underline margin-bottom-large">Interaction Network</h4>
-    <div id="graph-top-panel">
-      <div id="suggestions_div">
-        <div class="input-group margin-bottom-none">
-          <input id="nodeL" #nodeL class="input-group-field" type="text" (keydown.enter)="onClickSearch(nodeL.value)"
-                 placeholder="Interactor Name"/>
-          <div class="input-group-button">
-            <input id="network-search-button" type="button" name="submit" value="1" (click)="onClickSearch(nodeL.value)"
-                   class="button icon icon-functional">
-          </div>
-        </div>
-      </div>
+                </li>
+            </div>
+        </ul>
     </div>
 
-    <div id="for-canvas-graph"></div>
-  </div>
+    <div class="columns medium-12 large-8" id="viewer-column">
+        <h4 class="underline margin-bottom-large">Interaction Network</h4>
+        <div id="graph-top-panel">
+            <div id="suggestions_div">
+                <div class="input-group margin-bottom-none">
+                    <input id="nodeL" #nodeL class="input-group-field" type="text"
+                           (keydown.enter)="onClickSearch(nodeL.value)"
+                           placeholder="Interactor Name"/>
+                    <div class="input-group-button">
+                        <input id="network-search-button" type="button" name="submit" value="1"
+                               (click)="onClickSearch(nodeL.value)"
+                               class="button icon icon-functional">
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <div class="columns small-12 medium-6 large-2" id="legend-column" *ngIf="legend">
-    <ip-interactions-legend [legend]="legend" [expanded]="view.expanded"
-                            [mutation]="view.affectedByMutation"></ip-interactions-legend>
-  </div>
+        <div id="for-canvas-graph"></div>
+    </div>
+
+    <div class="columns small-12 medium-6 large-2" id="legend-column" *ngIf="legend">
+        <ip-interactions-legend [legend]="legend" [expanded]="view.expanded"
+                                [mutation]="view.affectedByMutation"></ip-interactions-legend>
+    </div>
 </div>
 
 <ng-template #error>
 
-  <div [ngSwitch]="view.error.status" class="row expanded margin-top-large margin-bottom-large" id="no-network-viewer">
-    <div class="alert-panel" *ngSwitchCase="403">
-      <h3><i class="icon icon-common icon-exclamation-triangle"></i> Too many results</h3>
-      There are more than <b>1500 interactions</b> in your results, too many for our network
-      viewer display, sorry.<br>
-      To solve this problem, you can:
-      <ul>
-        <li>Use the filters above</li>
-        <li>Make your search more specific</li>
-        <li>Use <a href="https://apps.cytoscape.org/apps/intactapp">IntAct App</a> on <a href="https://cytoscape.org/">Cytoscape</a>
-          to visualise without size restrictions
-        </li>
-      </ul>
-    </div>
+    <div [ngSwitch]="view.error.status" class="row expanded margin-top-large margin-bottom-large"
+         id="no-network-viewer">
+        <div class="alert-panel" *ngSwitchCase="403">
+            <h3><i class="icon icon-common icon-exclamation-triangle"></i> Too many results</h3>
+            There are more than <b>1500 interactions</b> in your results, too many for our network
+            viewer display, sorry.<br>
+            To solve this problem, you can:
+            <ul>
+                <li>Use the filters above</li>
+                <li>Make your search more specific</li>
+                <li>Use <a href="https://apps.cytoscape.org/apps/intactapp">IntAct App</a> on <a
+                        href="https://cytoscape.org/">Cytoscape</a>
+                    to visualise without size restrictions
+                    <ul *ngIf="!cytoscape.allRequirementsPassed; else loadInCytoscape">
+                        <li class="checker" *ngIf="cytoscape.check$ | async as currentCheck">
+                            <div *ngIf="currentCheck.loading; else finishedCheck">
+                                <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
+                                <span [innerHTML]="currentCheck.name"></span>
+                            </div>
+                            <ng-template #finishedCheck>
+                                <ng-container *ngIf="currentCheck.passing; else action">
+                                    ✅ <span [innerHTML]="currentCheck.name"></span>
+                                </ng-container>
+                                <ng-template #action>
+                                    <span [innerHTML]="currentCheck.action"></span>
+                                </ng-template>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <ng-template #loadInCytoscape>
+                        <p>
+                            <button class="button" (click)="cytoscape.loadInCytoscapeDesktop()"
+                                    [class.disabled]="cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded">
+                                <ng-container *ngIf="!cytoscape.cytoscapeLoading && !cytoscape.cytoscapeLoaded ">
+                                    <div class="flex">
+                                        <i class="icon icon-common icon-download"></i>
+                                        Load in Cytoscape
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="cytoscape.cytoscapeLoading">
+                                    <div class="flex">
+                                        <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"
+                                                              color="primary"></mat-progress-spinner>
+                                        Loading in Cytoscape
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="cytoscape.cytoscapeLoaded">
+                                    <div class="flex">
+                                        ✅ Loaded in Cytoscape
+                                    </div>
+                                </ng-container>
+                            </button>
+                        </p>
+                    </ng-template>
+                </li>
+            </ul>
+        </div>
 
-    <div class="alert-panel" *ngSwitchDefault>
-      <h3><i class="icon icon-common icon-exclamation-triangle"></i> Error {{view.error.status}}
-        : {{view.error.statusText}}</h3>
-      <p><i>{{view.error.message}}</i></p>
-      An unexpected error occurred. Please help us fix this issue by describing the steps that led to this error <a
-      href="//www.ebi.ac.uk/support/intact">in our feedback area</a>
+        <div class="alert-panel" *ngSwitchDefault>
+            <h3><i class="icon icon-common icon-exclamation-triangle"></i> Error {{ view.error.status }}
+                : {{ view.error.statusText }}</h3>
+            <p><i>{{ view.error.message }}</i></p>
+            An unexpected error occurred. Please help us fix this issue by describing the steps that led to this error
+            <a href="//www.ebi.ac.uk/support/intact">in our feedback area</a>
+        </div>
     </div>
-  </div>
 </ng-template>

@@ -6,6 +6,7 @@ import {NetworkViewService} from '../../shared/service/network-view.service';
 import {NetworkLegend} from '../../shared/model/interaction-legend/network-legend';
 import {GraphPort} from 'intact-network-viewer';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {CytoscapeDesktopService} from '../../shared/service/cytoscape-desktop.service';
 
 @UntilDestroy()
 @Component({
@@ -22,7 +23,8 @@ export class InteractionsViewerComponent implements AfterViewInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private networkSearchService: NetworkSearchService,
-              public view: NetworkViewService) {
+              public view: NetworkViewService,
+              public cytoscape: CytoscapeDesktopService) {
   }
 
   ngAfterViewInit(): void {
@@ -67,6 +69,7 @@ export class InteractionsViewerComponent implements AfterViewInit {
           this.view.visible = false;
           this.view.error = e;
           ProgressBarComponent.hideWithoutDelay();
+          this.cytoscape.startCheck()
         }
       });
   }

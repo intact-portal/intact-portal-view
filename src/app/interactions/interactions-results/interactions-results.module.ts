@@ -25,6 +25,7 @@ import {NegativeFilterComponent} from './interactions-filters/negative-filter/ne
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {DensitySliderComponent} from './interactions-filters/density-slider/density-slider.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { RedirectComponent } from './redirect/redirect.component';
     MatExpansionModule,
     ComponentsModule,
     FormsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     InteractionsFiltersComponent,

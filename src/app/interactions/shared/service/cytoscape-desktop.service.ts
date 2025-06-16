@@ -65,21 +65,21 @@ export class CytoscapeDesktopService {
   requirements: CytoscapeRequirement[] = [
     new CytoscapeRequirement<{ apiVersion: string, cytoscapeVersion: string }>(
       'Checking Cytoscape Desktop opened',
-      '<b><a href="https://cytoscape.org/download.html" target="_blank">Install</a> and launch</b> Cytoscape desktop',
+      '<b><a href="https://cytoscape.org/download.html" target="_blank">install</a> and launch</b> Cytoscape desktop',
       `${host}/version`,
       (response) => response.ok,
       this.sanitizer
     ),
     new CytoscapeRequirement<{ bundleName: string, bundleSymbolicName: string, bundleVersion: string, bundleState: number }[]>(
       'Checking IntAct App installed',
-      '<a href="https://apps.cytoscape.org/apps/intactapp" target="_blank">Install</a> IntAct App',
+      '<a href="https://apps.cytoscape.org/apps/intactapp" target="_blank">install</a> IntAct App',
       `${host}/apps`,
       (response) => response.body.some(app => app.bundleName === 'IntAct App' && app.bundleState === 32),
       this.sanitizer
     ),
     new CytoscapeRequirement<{ bundleName: string, bundleSymbolicName: string, bundleVersion: string, bundleState: number }[]>(
       'Checking required IntAct App version installed',
-      '<a href="https://apps.cytoscape.org/apps/intactapp" target="_blank">Update</a> IntAct App',
+      '<a href="https://apps.cytoscape.org/apps/intactapp" target="_blank">update</a> IntAct App',
       `${host}/apps`,
       (response) => response.body.some(app => {
         if (app.bundleName === 'IntAct App') {

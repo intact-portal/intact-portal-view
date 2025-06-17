@@ -145,14 +145,16 @@ export class CytoscapeDesktopService {
     if (this.search.isBatchSearch) {
       this.http.post<void>(`${host}/commands/intact/query`, {
         seedTerms: this.search.query,
-        maxInteractorsPerTerm: '1'
+        maxInteractorsPerTerm: '1',
+        asynchronous: true,
       }).subscribe(() => {
         this.cytoscapeLoading = false;
         this.cytoscapeLoaded = true;
       });
     } else {
       this.http.post<void>(`${host}/commands/intact/advancedQuery`, {
-        query: this.search.query
+        query: this.search.query,
+        asynchronous: true,
       }).subscribe(() => {
         this.cytoscapeLoading = false;
         this.cytoscapeLoaded = true;

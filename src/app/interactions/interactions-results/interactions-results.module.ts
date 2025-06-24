@@ -26,6 +26,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {DensitySliderComponent} from './interactions-filters/density-slider/density-slider.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {CytoscapeDialogComponent} from './interactions-viewer/cytoscape-dialog.component/cytoscape-dialog.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     NegativeFilterComponent,
     DensitySliderComponent,
     RedirectComponent,
+    CytoscapeDialogComponent
   ],
   providers: [
     TableFactoryService,

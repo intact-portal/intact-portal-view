@@ -1,5 +1,6 @@
 <div class="margin-top-large margin-bottom-large" id="network-viewer-container"
      *ngIf="view.visible || !view.error; else error">
+
     <div class="columns small-12 medium-6 large-2" id="toolbar-column">
         <h4 class="underline margin-bottom-large">
             <i class="icon icon-common icon-spacer icon-tool"></i>Network Tools
@@ -7,6 +8,9 @@
         <div class="row">
             <button id="reset" class="button expanded" type="button" (click)="onClickReset()">
                 <i class="icon icon-common icon-spacer icon-redo-alt"></i>Redraw Network
+            </button>
+            <button id="loadCytoscapeBtn" class="button expanded" type="button" (click)="startCytoscapeCheck()">
+                Load in Cytoscape
             </button>
         </div>
 
@@ -108,45 +112,11 @@
                 <li>Use the filters above</li>
                 <li>Make your search more specific</li>
                 <li>
-                    <button class="button no-margin" (click)="cytoscape.loadInCytoscapeDesktop()"
-                            [disabled]="cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded || !cytoscape.allRequirementsPassed ">
-                        <ng-container *ngIf="!cytoscape.cytoscapeLoading && !cytoscape.cytoscapeLoaded ">
-                            <div class="flex">
-                                <i class="icon icon-common icon-download"></i>
-                                Load in Cytoscape
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="cytoscape.cytoscapeLoading">
-                            <div class="flex">
-                                <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"
-                                                      color="primary"></mat-progress-spinner>
-                                Loading in Cytoscape
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="cytoscape.cytoscapeLoaded">
-                            <div class="flex">
-                                ✅ Loaded in Cytoscape
-                            </div>
-                        </ng-container>
-                    </button>
-
-                    <span *ngIf="!cytoscape.allRequirementsPassed">
-                        <span class="checker" *ngIf="cytoscape.check$ | async as currentCheck">
-                            <div *ngIf="currentCheck.loading; else finishedCheck">
-                                <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
-                                <span [innerHTML]="currentCheck.name"></span>
-                            </div>
-                            <ng-template #finishedCheck>
-                                <ng-container *ngIf="currentCheck.passing; else action">
-                                    ✅ <span [innerHTML]="currentCheck.name"></span>
-                                </ng-container>
-                                <ng-template #action>
-                                    Requires to
-                                    <span [innerHTML]="currentCheck.action"></span>
-                                </ng-template>
-                            </ng-template>
-                        </span>
-                    </span>
+                    <div class="columns" style="padding: 0;">
+                        <a class="button" (click)="startCytoscapeCheck()">
+                            Load in Cytoscape
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>

@@ -4,7 +4,7 @@ import {SearchService} from '../../../home-dashboard/search/service/search.servi
 import {FilterService} from './filter.service';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs/internal/Observable';
-import {catchError, concatMap, finalize, map, startWith, switchMap, takeWhile, tap, toArray} from 'rxjs/operators';
+import {catchError, concatMap, map, startWith, switchMap, takeWhile, tap, toArray} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 import {fromArray} from 'rxjs/internal/observable/fromArray';
 import {interval} from 'rxjs/internal/observable/interval';
@@ -94,7 +94,11 @@ export class CytoscapeDesktopService {
   ]
 
 
-  constructor(private http: HttpClient, private search: SearchService, private filters: FilterService, private sanitizer: DomSanitizer) {
+  constructor(private http: HttpClient,
+              private search: SearchService,
+              private filters: FilterService,
+              private sanitizer: DomSanitizer) {
+
     this.start$.pipe(
       tap(() => console.log('Starting checks', this.allRequirementsPassed)),
       switchMap(() => fromArray(this.requirements).pipe(
@@ -104,13 +108,16 @@ export class CytoscapeDesktopService {
               startWith(0),
               switchMap(() => requirement.check(this.http)),
               tap(r => this.checkSubject$.next(r)),
+              takeWhile(_ => this.checksRunning),
               takeWhile(r => !r.passing, true)
             )
           ),
           toArray(),
           tap((x) => {
-            this.allRequirementsPassed = true;
-            console.log('✅ All requirements passed!', x.map(r => r.passing));
+            if (x.every(r => r.passing)) {
+              this.allRequirementsPassed = true;
+              console.log('✅ All requirements passed!', x.map(r => r.passing));
+            }
           }),
         )
       ),
@@ -121,12 +128,20 @@ export class CytoscapeDesktopService {
   private checkSubject$ = new ReplaySubject<CytoscapeRequirement>(1); // emits to async pipe
   public check$ = this.checkSubject$.asObservable();
   allRequirementsPassed = false;
+  checksRunning = false;
 
   public startCheck() {
     console.log('startCheck');
     this.allRequirementsPassed = false;
+    this.cytoscapeLoading = false;
     this.cytoscapeLoaded = false;
+    this.checksRunning = true;
     this.start$.next();
+  }
+
+  public stopCheck() {
+    console.log('stopCheck');
+    this.checksRunning = false;
   }
 
   cytoscapeLoading: boolean = false;

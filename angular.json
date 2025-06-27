@@ -121,27 +121,27 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "intact-portal:build"
+            "buildTarget": "intact-portal:build"
           },
           "configurations": {
             "test": {
-              "browserTarget": "intact-portal:build:test"
+              "buildTarget": "intact-portal:build:test"
             },
             "production": {
-              "browserTarget": "intact-portal:build:production"
+              "buildTarget": "intact-portal:build:production"
             },
             "local": {
-              "browserTarget": "intact-portal:build:local"
+              "buildTarget": "intact-portal:build:local"
             },
             "dev": {
-              "browserTarget": "intact-portal:build:dev"
+              "buildTarget": "intact-portal:build:dev"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "intact-portal:build"
+            "buildTarget": "intact-portal:build"
           }
         },
         "test": {

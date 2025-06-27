@@ -1,10 +1,10 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {FeaturedDatasetComponent} from './featured-dataset.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {FeatureDatasetService} from "./service/feature-dataset.service";
 import {HttpClientTestingModule, HttpTestingController, TestRequest} from "@angular/common/http/testing";
-import {GoogleAnalyticsService} from "../../shared/service/google-analytics/google-analytics.service";
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 describe('FeaturedDatasetComponent', () => {
   let component: FeaturedDatasetComponent;
@@ -26,7 +26,7 @@ describe('FeaturedDatasetComponent', () => {
     '  </dataset>' +
     '</datasets>';
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [FeaturedDatasetComponent],
       providers: [
@@ -40,8 +40,8 @@ describe('FeaturedDatasetComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    httpMock = TestBed.get(HttpTestingController);
-    featuredDatasetService = TestBed.get(FeatureDatasetService);
+    httpMock = TestBed.inject(HttpTestingController);
+    featuredDatasetService = TestBed.inject(FeatureDatasetService);
     req = httpMock.expectOne(featuredDatasetService.API_URL);
     expect(req.request.method).toBe("GET");
     req.flush(subset);

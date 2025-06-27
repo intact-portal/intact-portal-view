@@ -40,8 +40,8 @@ describe('DatasetArchiveComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    httpMock = TestBed.get(HttpTestingController);
-    featuredDatasetService = TestBed.get(FeatureDatasetService);
+    httpMock = TestBed.inject(HttpTestingController);
+    featuredDatasetService = TestBed.inject(FeatureDatasetService);
     req = httpMock.expectOne(featuredDatasetService.API_URL);
     expect(req.request.method).toBe('GET');
     req.flush(subset);

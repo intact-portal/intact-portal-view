@@ -1,10 +1,9 @@
-import {TestBed, inject, getTestBed, async} from '@angular/core/testing';
+import {getTestBed, inject, TestBed} from '@angular/core/testing';
 
 import {FeatureDatasetService} from './feature-dataset.service';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 describe('FeatureDatasetService', () => {
   let injector: TestBed;
@@ -22,8 +21,8 @@ describe('FeatureDatasetService', () => {
       schemas: [NO_ERRORS_SCHEMA]
     });
     injector = getTestBed();
-    service = injector.get(FeatureDatasetService);
-    httpMock = injector.get(HttpTestingController);
+    service = injector.inject(FeatureDatasetService);
+    httpMock = injector.inject(HttpTestingController);
   });
 
   afterEach(() => httpMock.verify());

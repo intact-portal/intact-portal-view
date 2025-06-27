@@ -15,7 +15,7 @@ import {PublicationComponent} from './details-tabs/details/publication/publicati
 import {ParticipantTableComponent} from './details-tabs/details/participant-table/participant-table.component';
 import {FeaturesTableComponent} from './details-tabs/details/features-table/features-table.component';
 import {CvTermComponent} from './details-tabs/details/cv-term/cv-term.component';
-import {MatLegacyTooltipModule as MatTooltipModule} from "@angular/material/legacy-tooltip";
+import {MatTooltipModule} from "@angular/material/tooltip";
 import { CvToUrlPipe } from './details-tabs/details/cv-term/cv-to-url.pipe';
 import { OrganismPipe } from './details-tabs/details/organism/organism.pipe';
 import {TableFactoryService} from "../shared/service/table-factory.service";

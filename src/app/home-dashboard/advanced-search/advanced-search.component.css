@@ -22,7 +22,7 @@
     border-right-width: 0!important;
 }
 
-.datepicker-toggle > .mat-icon-button {
+.datepicker-toggle > .mat-mdc-icon-button {
     background-color: #68297c;
     color: white;
     height: 39px;

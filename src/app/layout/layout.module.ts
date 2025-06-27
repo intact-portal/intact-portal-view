@@ -6,7 +6,7 @@ import {LocalFooterComponent} from './local-footer/local-footer.component';
 import {ContributorsComponent} from './contributors/contributors.component';
 import {RouterModule} from '@angular/router';
 import {ProgressBarComponent} from './loading-indicators/progress-bar/progress-bar.component';
-import {MatLegacyProgressBarModule as MatProgressBarModule} from '@angular/material/legacy-progress-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {LocalSearchComponent} from './header/local-search/local-search.component';
 import {ElixirFooterComponent} from './elixir-footer/elixir-footer.component';
 

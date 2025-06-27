@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import * as Md from 'markdown-it';
-import * as mk from '@iktakahiro/markdown-it-katex';
+import Md from 'markdown-it';
+import mk from '@iktakahiro/markdown-it-katex';
 
 @Injectable()
 export class MarkdownRendererService {

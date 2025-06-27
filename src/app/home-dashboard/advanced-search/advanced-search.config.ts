@@ -1,4 +1,4 @@
-import {Field, FieldMap, QueryBuilderConfig} from 'angular2-query-builder';
+import {Field, FieldMap, QueryBuilderConfig} from '@kerwin612/ngx-query-builder';
 import moment from 'moment';
 import {extractRange} from './utils';
 

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeDescriptionComponent} from './home-description/home-description.component';
 import {TileMenuComponent} from './tile-menu/tile-menu.component';
@@ -13,7 +13,7 @@ import {DatasetArchiveComponent} from './featured-dataset/dataset-archive/datase
 import {AdvancedSearchComponent} from './advanced-search/advanced-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FileUploadModule} from 'ng2-file-upload';
-import {QueryBuilderModule} from 'angular2-query-builder';
+import {QueryBuilderModule} from '@kerwin612/ngx-query-builder';
 import {BatchSearchComponent} from './batch-search/batch-search.component';
 import {KeyvaluemapPipe} from './shared/keyvaluemap.pipe';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';

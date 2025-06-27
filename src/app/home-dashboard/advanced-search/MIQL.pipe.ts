@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Rule, RuleSet} from 'angular2-query-builder';
+import {Rule, RuleSet} from '@kerwin612/ngx-query-builder';
 
 @Pipe({
   name: 'MIQL',

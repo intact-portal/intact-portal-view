@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
-import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
+import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from '@kerwin612/ngx-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
 import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper, MIQL_DATE_FORMAT} from './advanced-search.config';
 import {ColorMIQLPipe} from './colorMIQL.pipe';

@@ -3,8 +3,9 @@ import {async, ComponentFixture, TestBed, waitForAsync} from '@angular/core/test
 import {FeaturedDatasetComponent} from './featured-dataset.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {FeatureDatasetService} from "./service/feature-dataset.service";
-import {HttpClientTestingModule, HttpTestingController, TestRequest} from "@angular/common/http/testing";
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from "@angular/common/http/testing";
 import {GoogleAnalyticsService} from 'ngx-google-analytics';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FeaturedDatasetComponent', () => {
   let component: FeaturedDatasetComponent;
@@ -28,14 +29,16 @@ describe('FeaturedDatasetComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [FeaturedDatasetComponent],
-      providers: [
+    declarations: [FeaturedDatasetComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
         FeatureDatasetService,
-        {provide: GoogleAnalyticsService, useValue: reporter}
-      ],
-      imports: [HttpClientTestingModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+        { provide: GoogleAnalyticsService, useValue: reporter },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     fixture = TestBed.createComponent(FeaturedDatasetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

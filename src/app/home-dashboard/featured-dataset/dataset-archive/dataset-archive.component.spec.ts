@@ -3,8 +3,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DatasetArchiveComponent} from './dataset-archive.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {FeatureDatasetService} from '../service/feature-dataset.service';
-import {HttpClientTestingModule, HttpTestingController, TestRequest} from '@angular/common/http/testing';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import {GoogleAnalyticsService} from 'ngx-google-analytics';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DatasetArchiveComponent', () => {
   let component: DatasetArchiveComponent;
@@ -28,14 +29,16 @@ describe('DatasetArchiveComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DatasetArchiveComponent],
-      providers: [
+    declarations: [DatasetArchiveComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
         FeatureDatasetService,
-        {provide: GoogleAnalyticsService, useValue: reporter}
-      ],
-      imports: [HttpClientTestingModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+        { provide: GoogleAnalyticsService, useValue: reporter },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     fixture = TestBed.createComponent(DatasetArchiveComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

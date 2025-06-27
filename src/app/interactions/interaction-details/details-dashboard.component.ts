@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {viewer} from './details-viewer/details-viewer.component';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';

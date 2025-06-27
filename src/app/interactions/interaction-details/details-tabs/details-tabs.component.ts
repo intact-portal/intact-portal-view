@@ -3,7 +3,7 @@ import {InteractionDetails} from '../../shared/model/interaction-details/interac
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ParticipantTableComponent} from './details/participant-table/participant-table.component';
 import {FeaturesTableComponent} from './details/features-table/features-table.component';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {ResultTable} from '../../shared/model/interactions-results/result-table-interface';
 import {ActivatedRoute} from '@angular/router';

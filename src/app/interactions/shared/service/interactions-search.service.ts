@@ -2,7 +2,7 @@ import {Observable, throwError as observableThrowError} from 'rxjs';
 
 import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {InteractionSearchResult} from '../model/interactions-results/interaction/interaction-search-result.model';
 import {FilterService} from './filter.service';

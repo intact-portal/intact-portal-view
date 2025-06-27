@@ -21,7 +21,7 @@ import {DownloadModule} from './navigation/download/download.module';
 import {InteractomeComponent} from './interactomes/interactome/interactome.component';
 import {LayoutModule} from './layout/layout.module';
 import {NetworkViewService} from './interactions/shared/service/network-view.service';
-import {MatButtonModule} from '@angular/material/button';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {FilterService} from './interactions/shared/service/filter.service';
 import {AboutComponent} from './navigation/about/about.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';

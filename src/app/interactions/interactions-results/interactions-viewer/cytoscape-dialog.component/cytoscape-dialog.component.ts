@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {CytoscapeDesktopService} from '../../../shared/service/cytoscape-desktop.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
     selector: 'ip-cytoscape-dialog',

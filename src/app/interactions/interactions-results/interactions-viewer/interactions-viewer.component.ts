@@ -7,7 +7,7 @@ import {NetworkLegend} from '../../shared/model/interaction-legend/network-legen
 import {GraphPort} from 'intact-network-viewer';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {CytoscapeDesktopService} from '../../shared/service/cytoscape-desktop.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {CytoscapeDialogComponent} from './cytoscape-dialog.component/cytoscape-dialog.component';
 
 @UntilDestroy()

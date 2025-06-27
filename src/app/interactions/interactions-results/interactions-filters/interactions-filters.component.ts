@@ -6,7 +6,7 @@ import {NetworkViewService} from '../../shared/service/network-view.service';
 import {FoundationUtils} from '../../../shared/utils/foundation-utils';
 import {Format} from '../../shared/model/download/format.model';
 import {Filter, FilterService} from '../../shared/service/filter.service';
-import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {MatLegacySlideToggleChange as MatSlideToggleChange} from '@angular/material/legacy-slide-toggle';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {environment} from '../../../../environments/environment';
 

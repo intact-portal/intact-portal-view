@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, computed, EventEmitter, Input, model, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
@@ -12,13 +12,8 @@ import {extractRange} from '../utils';
 @UntilDestroy()
 export class DateRangeComponent implements OnInit, OnChanges {
 
-
-  @Input()
-  model: string;
-
-  @Output()
-  modelChange: EventEmitter<string> = new EventEmitter<string>();
-
+  model = model.required<string>()
+  ranges = computed(() => extractRange(this.model()) as [string, string])
   start: Moment;
   end: Moment;
 
@@ -32,12 +27,12 @@ export class DateRangeComponent implements OnInit, OnChanges {
   onChange(value: string) {
     console.log(value)
     if (value.length === 10) {
-      this.modelChange.emit(`[${this.start.format('YYYYMMDD')} TO ${this.end?.format('YYYYMMDD')}]`);
+      this.model.set(`[${this.start.format('YYYYMMDD')} TO ${this.end?.format('YYYYMMDD')}]`)
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const range = extractRange(this.model);
+    const range = extractRange(this.model());
     this.start = moment(range[0], 'YYYYMMDD');
     this.end = moment(range[1], 'YYYYMMDD');
   }

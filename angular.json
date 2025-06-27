@@ -29,12 +29,7 @@
             ],
             "styles": [
               "node_modules/angular-archwizard/styles/archwizard.css",
-              "src/styles.scss",
-              {
-                "input": "node_modules/complexviewer/src/css/xinet.css",
-                "inject": false,
-                "bundleName": "complex-viewer"
-              }
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

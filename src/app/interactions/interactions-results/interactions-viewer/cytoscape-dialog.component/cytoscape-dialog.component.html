@@ -6,14 +6,17 @@
         </a>
     </h3>
 
-    <div class="callout">
-        <p>
-            Load current search in IntAct app in Cytoscape.<br>
-            Currently selected filters won't apply automatically in Cytoscape.
+    <div>
+        <p class="info">
+            Load current search in IntAct app in Cytoscape.
+        </p>
+        <p class="note">
+            Not all filters will be automatically exported into Cytoscape.
         </p>
     </div>
-    <div>
-        <span *ngIf="!cytoscape.allRequirementsPassed">
+
+    <ng-container *ngIf="!cytoscape.allRequirementsPassed">
+        <div class="callout">
             <p *ngIf="!!cytoscape.check$">
                 <span class="checker" *ngIf="cytoscape.check$ | async as currentCheck">
                     <div *ngIf="currentCheck.loading; else finishedCheck">
@@ -31,30 +34,25 @@
                     </ng-template>
                 </span>
             </p>
-        </span>
-    </div>
+        </div>
+    </ng-container>
 
-    <div>
-        <button class="button no-margin" (click)="cytoscape.loadInCytoscapeDesktop()"
-                [disabled]="cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded || !cytoscape.allRequirementsPassed ">
-            <ng-container *ngIf="!cytoscape.cytoscapeLoading && !cytoscape.cytoscapeLoaded ">
-                <div class="flex">
-                    <i class="icon icon-common icon-download"></i>
-                    Load in Cytoscape
-                </div>
-            </ng-container>
-            <ng-container *ngIf="cytoscape.cytoscapeLoading">
-                <div class="flex">
-                    <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"
-                                          color="primary"></mat-progress-spinner>
-                    Loading in Cytoscape
-                </div>
-            </ng-container>
-            <ng-container *ngIf="cytoscape.cytoscapeLoaded">
-                <div class="flex">
-                    ✅ Loaded in Cytoscape
-                </div>
-            </ng-container>
-        </button>
-    </div>
+    <ng-container *ngIf="cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded ">
+        <div class="callout">
+            <span class="no-margin">
+                <ng-container *ngIf="cytoscape.cytoscapeLoading">
+                    <div class="flex">
+                        <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"
+                                              color="primary"></mat-progress-spinner>
+                        Loading in Cytoscape
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="cytoscape.cytoscapeLoaded">
+                    <div class="flex">
+                        ✅ Loaded in Cytoscape
+                    </div>
+                </ng-container>
+            </span>
+        </div>
+    </ng-container>
 </div>

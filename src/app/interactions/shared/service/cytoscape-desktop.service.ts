@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
 import {FilterService} from './filter.service';
@@ -11,6 +11,7 @@ import {interval} from 'rxjs/internal/observable/interval';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Subject} from 'rxjs/internal/Subject';
 import {ReplaySubject} from 'rxjs/internal/ReplaySubject';
+import {NetworkViewService} from './network-view.service';
 
 const host = environment.cytoscape_host
 
@@ -97,36 +98,39 @@ export class CytoscapeDesktopService {
   constructor(private http: HttpClient,
               private search: SearchService,
               private filters: FilterService,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              private view: NetworkViewService) {
 
     this.start$.pipe(
-      tap(() => console.log('Starting checks', this.allRequirementsPassed)),
-      switchMap(() => fromArray(this.requirements).pipe(
-          concatMap(requirement =>
-            interval(this.refreshRate).pipe(
-              tap(() => console.log(requirement.name)),
-              startWith(0),
-              switchMap(() => requirement.check(this.http)),
-              tap(r => this.checkSubject$.next(r)),
-              takeWhile(_ => this.checksRunning),
-              takeWhile(r => !r.passing, true)
+        tap(() => console.log('Starting checks', this.allRequirementsPassed)),
+        switchMap(() => fromArray(this.requirements).pipe(
+            concatMap(requirement =>
+                    interval(this.refreshRate).pipe(
+                        tap(() => console.log(requirement.name)),
+                        startWith(0),
+                        switchMap(() => requirement.check(this.http)),
+                        tap(r => this.checkSubject$.next(r)),
+                        takeWhile(_ => this.checksRunning),
+                        takeWhile(r => !r.passing, true)
+                    )
+            ),
+            toArray(),
+            tap((x) => {
+              if (x.every(r => r.passing)) {
+                this.allRequirementsPassed = true;
+                console.log('✅ All requirements passed!', x.map(r => r.passing));
+                this.loadInCytoscapeDesktop();
+              }
+            }),
             )
-          ),
-          toArray(),
-          tap((x) => {
-            if (x.every(r => r.passing)) {
-              this.allRequirementsPassed = true;
-              console.log('✅ All requirements passed!', x.map(r => r.passing));
-            }
-          }),
-        )
-      ),
-    ).subscribe()
+        ),
+        ).subscribe();
   }
 
   private start$ = new Subject<void>(); // trigger manually
   private checkSubject$ = new ReplaySubject<CytoscapeRequirement>(1); // emits to async pipe
   public check$ = this.checkSubject$.asObservable();
+  public cytoscapeLoadedEvent = new EventEmitter<void>();
   allRequirementsPassed = false;
   checksRunning = false;
 
@@ -162,17 +166,24 @@ export class CytoscapeDesktopService {
         seedTerms: this.search.query,
         maxInteractorsPerTerm: '1',
         asynchronous: true,
+        ...this.filters.toParams(),
+        ...this.view.toParams(),
       }).subscribe(() => {
         this.cytoscapeLoading = false;
         this.cytoscapeLoaded = true;
+        this.cytoscapeLoadedEvent.emit();
       });
     } else {
       this.http.post<void>(`${host}/commands/intact/advancedQuery`, {
         query: this.search.query,
+        testField: 'some value',
         asynchronous: true,
+        ...this.filters.toParams(),
+        ...this.view.toParams(),
       }).subscribe(() => {
         this.cytoscapeLoading = false;
         this.cytoscapeLoaded = true;
+        this.cytoscapeLoadedEvent.emit();
       });
     }
   }

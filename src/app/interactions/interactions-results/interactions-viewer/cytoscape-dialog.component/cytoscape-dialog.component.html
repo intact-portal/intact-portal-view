@@ -1,11 +1,5 @@
-<div id="cytoscapeModal">
-    <h3>
-        Load in Cytoscape
-        <a class="button float-right close-dialog-button" aria-label="Close modal" type="button" (click)="closeDialog()">
-            <span class="close-dialog-button-txt">&times;</span>
-        </a>
-    </h3>
-
+<h3 mat-dialog-title>Load in Cytoscape</h3>
+<mat-dialog-content>
     <div>
         <p class="info">
             Load current search in IntAct app in Cytoscape.
@@ -15,7 +9,7 @@
         </p>
     </div>
 
-    <ng-container *ngIf="!cytoscape.allRequirementsPassed">
+    @if (!cytoscape.allRequirementsPassed) {
         <div class="callout">
             <p *ngIf="!!cytoscape.check$">
                 <span class="checker" *ngIf="cytoscape.check$ | async as currentCheck">
@@ -35,9 +29,8 @@
                 </span>
             </p>
         </div>
-    </ng-container>
-
-    <ng-container *ngIf="cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded ">
+    }
+    @if (cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded ) {
         <div class="callout">
             <span class="no-margin">
                 <ng-container *ngIf="cytoscape.cytoscapeLoading">
@@ -54,5 +47,5 @@
                 </ng-container>
             </span>
         </div>
-    </ng-container>
-</div>
+    }
+</mat-dialog-content>

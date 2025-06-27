@@ -20,7 +20,7 @@
                         <th colspan="2" class="no-padding">
                             <div class="centered-switch-wrap">
                                 <span class="label margin-right-medium">Cross</span>
-                                <mat-slide-toggle color="primary"
+                                <mat-slide-toggle color="primary" hideIcon="true"
                                                   (change)="onChangeInteractionIntraSpeciesFilter($event)"
                                                   [disabled]="!filters.canFilterIntraSpecies()"
                                                   [checked]="filters.intraSpecies">

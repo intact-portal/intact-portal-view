@@ -2,7 +2,7 @@
   <em>Positive and/or negative</em>
   <em class="margin-bottom-xsmall">interactions only</em>
   <mat-button-toggle-group [ngModel]="filters.negative" (change)="filters.updateFilter(FILTER.NEGATIVE, $event.value)"
-                           aria-label="Negative interaction filter">
+                           aria-label="Negative interaction filter" [hideSingleSelectionIndicator]="true">
     <mat-button-toggle [value]="STATUS.POSITIVE_ONLY" [disabled]="filters.nbPositive === 0">
       <div class="bi-layered">
         <span class="top-level">✔️</span>

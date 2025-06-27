@@ -33,7 +33,6 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "node_modules/angular-archwizard/styles/archwizard.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -161,7 +160,6 @@
               "node_modules/complexviewer/dist/complexviewer.js"
             ],
             "styles": [
-              "node_modules/angular-archwizard/archwizard.css",
               "src/styles.scss"
             ],
             "assets": [

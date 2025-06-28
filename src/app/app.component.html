@@ -1,15 +1,20 @@
 <div #topScrollAnchor></div>
-<ip-compact-header *ngIf="showCompactHeader; else elseBlock"></ip-compact-header>
-<ng-template #elseBlock><ip-expanded-header></ip-expanded-header></ng-template>
+@if (showCompactHeader) {
+    <ip-compact-header></ip-compact-header>
+} @else {
+    <ip-expanded-header></ip-expanded-header>
+}
 
 <!-- Suggested layout containers -->
 <section id="main-content-area" class="row margin-top-large margin-bottom-medium expanded" role="main">
-  <section>
-    <router-outlet (activate)="scrollTo(topScrollAnchor)"></router-outlet>
-    <!-- Routed views go here -->
-  </section>
+    <section>
+        <router-outlet (activate)="scrollTo(topScrollAnchor)"></router-outlet>
+        <!-- Routed views go here -->
+    </section>
 </section>
 
-<ip-local-footer *ngIf="showFooter"></ip-local-footer>
+@if (showFooter) {
+    <ip-local-footer></ip-local-footer>
+}
 
 <ip-elixir-footer></ip-elixir-footer>

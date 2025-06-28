@@ -1,28 +1,33 @@
 <div class="row">
-  <h5>External Cross References ({{xrefs.length}})</h5>
-  <table id="externalXref">
-    <thead>
-    <th>Database</th>
-    <th>Identifier</th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let xref of xrefs">
-      <td>
-        <ip-cv-term [cvTerm]="xref.database"></ip-cv-term>
-      </td>
-
-      <td [ngSwitch]="xref.database.shortName">
-        <form action="https://imexcentral.org/icentral/pubsrc.action" method="post" target="_blank"
-              *ngSwitchCase="'imex'">
-          <input name="opp.ns" value="imex" hidden/>
-          <input name="opp.ac" [value]="extractImexPubId(xref.identifier)" hidden/>
-          <input name="op.esrc" value="SEARCH" hidden/>
-          <input type="submit" class="submit-to-link" [value]="xref.identifier">
-        </form>
-
-        <span *ngSwitchDefault>{{xref.identifier}}</span>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <h5>External Cross References ({{ xrefs.length }})</h5>
+    <table id="externalXref">
+        <thead>
+        <th>Database</th>
+        <th>Identifier</th>
+        </thead>
+        <tbody>
+        @for (xref of xrefs; track xref) {
+            <tr>
+                <td>
+                    <ip-cv-term [cvTerm]="xref.database"></ip-cv-term>
+                </td>
+                <td>
+                    @switch (xref.database.shortName) {
+                        @case ('imex') {
+                            <form action="https://imexcentral.org/icentral/pubsrc.action" method="post" target="_blank"
+                            >
+                                <input name="opp.ns" value="imex" hidden/>
+                                <input name="opp.ac" [value]="extractImexPubId(xref.identifier)" hidden/>
+                                <input name="op.esrc" value="SEARCH" hidden/>
+                                <input type="submit" class="submit-to-link" [value]="xref.identifier">
+                            </form>
+                        } @default {
+                            <span>{{ xref.identifier }}</span>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>

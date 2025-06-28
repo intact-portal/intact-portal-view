@@ -1,56 +1,27 @@
-<div class="row expanded" *ngIf="interactionAc; else noInteractor;">
-    <div class="button-bar">
-        <h2 class="padding-left-large">Details of {{interactionAc}}</h2>
-
-        <div class="button-group rounded float-right margin-right-medium" id="detail-export" style="margin-left: 17px;" *ngIf="!error">
-            <div class="button no-hover">
-                <i class="icon icon-functional icon-spacer icon-share"></i> Export
-            </div>
-
-            <div *ipDropdown="'View'">
-                <button class="button lightest expanded" (click)="exportSVG()">SVG</button>
-            </div>
-            <div *ipDropdown="'Interaction'">
-                <ng-container *ngFor="let format of formatTypes; let last = last;">
-                    <a class="button lightest expanded" [ngClass]="{'no-margin':last}"
-                       download [href]="downloadURL(format)" [innerHTML]="format.html"></a>
-                </ng-container>
-            </div>
+@if (interactionAc) {
+    <div class="row expanded">
+        <div class="button-bar">
+            <h2 class="padding-left-large">Details of {{ interactionAc }}</h2>
+            @if (!error) {
+                <div class="button-group rounded float-right margin-right-medium" id="detail-export"
+                     style="margin-left: 17px;">
+                    <div class="button no-hover">
+                        <i class="icon icon-functional icon-spacer icon-share"></i> Export
+                    </div>
+                    <div *ipDropdown="'View'">
+                        <button class="button lightest expanded" (click)="exportSVG()">SVG</button>
+                    </div>
+                    <div *ipDropdown="'Interaction'">
+                        @for (format of formatTypes; track format; let last = $last) {
+                            <a class="button lightest expanded" [ngClass]="{'no-margin':last}"
+                               download [href]="downloadURL(format)" [innerHTML]="format.html"></a>
+                        }
+                    </div>
+                </div>
+            }
         </div>
     </div>
-</div>
-<div class="row expanded" *ngIf="!error; else errorBlock;">
-
-    <div>
-        <ip-details-viewer [interactionAc]="interactionAc"
-                           [featureAc]="featureSelected"
-                           (error)="searchError($event)"></ip-details-viewer>
-    </div>
-
-    <div class="columns medium-12">
-        <ip-details-tabs [interactionAc]="interactionAc"
-                         (featureChanged)="onFeatureSelectedChanged($event)"></ip-details-tabs>
-    </div>
-
-</div>
-
-<ng-template #errorBlock>
-    <div class="row expanded margin-top-large margin-bottom-large margin-left-medium margin-right-medium">
-        <div class="columns medium-12">
-            <div class="alert-panel">
-                <h3><i class="icon icon-common icon-exclamation-triangle"></i> <b>{{interactionAc}}</b> not found</h3>
-                No interactions were found for the given accession number: <b>{{interactionAc}}</b><br>
-                This can be due to:
-                <ul>
-                    <li>An incomplete accession number (format: EBI-XXXXXXX)</li>
-                    <li>A spelling mistake</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</ng-template>
-
-<ng-template #noInteractor>
+} @else {
     <div class="row expanded margin-top-large margin-bottom-large margin-left-medium margin-right-medium">
         <div class="columns medium-12">
             <div class="alert-panel">
@@ -61,4 +32,32 @@
             </div>
         </div>
     </div>
-</ng-template>
+} @if (!error) {
+    <div class="row expanded">
+        <div>
+            <ip-details-viewer [interactionAc]="interactionAc"
+                               [featureAc]="featureSelected"
+                               (error)="searchError($event)"></ip-details-viewer>
+        </div>
+        <div class="columns medium-12">
+            <ip-details-tabs [interactionAc]="interactionAc"
+                             (featureChanged)="onFeatureSelectedChanged($event)"></ip-details-tabs>
+        </div>
+    </div>
+} @else {
+    <div class="row expanded margin-top-large margin-bottom-large margin-left-medium margin-right-medium">
+        <div class="columns medium-12">
+            <div class="alert-panel">
+                <h3><i class="icon icon-common icon-exclamation-triangle"></i> <b>{{ interactionAc }}</b> not found</h3>
+                No interactions were found for the given accession number: <b>{{ interactionAc }}</b><br>
+                This can be due to:
+                <ul>
+                    <li>An incomplete accession number (format: EBI-XXXXXXX)</li>
+                    <li>A spelling mistake</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+

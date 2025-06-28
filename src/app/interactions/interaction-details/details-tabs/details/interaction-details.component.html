@@ -1,63 +1,75 @@
 <div class="row expanded">
-  <div class="columns medium-12 large-6">
+    <div class="columns medium-12 large-6">
 
-    <h4>
-      Interaction Details
-    </h4>
+        <h4>
+            Interaction Details
+        </h4>
 
-    <div id="detailsPanel" class="margin-top-large margin-bottom-large">
+        <div id="detailsPanel" class="margin-top-large margin-bottom-large">
 
-      <div class="row expanded margin-top-large margin-bottom-large">
-        <div class="columns medium-6 small-12">
-          <div class="margin-top-large">
-            <h5>Accession</h5>
-            {{interactionDetails.interactionAc}}
-          </div>
-          <div class="margin-top-large">
-            <h5>Type</h5>
-            <ip-cv-term [cvTerm]="interactionDetails.type"></ip-cv-term>
-          </div>
+            <div class="row expanded margin-top-large margin-bottom-large">
+                <div class="columns medium-6 small-12">
+                    <div class="margin-top-large">
+                        <h5>Accession</h5>
+                        {{ interactionDetails.interactionAc }}
+                    </div>
+                    <div class="margin-top-large">
+                        <h5>Type</h5>
+                        <ip-cv-term [cvTerm]="interactionDetails.type"></ip-cv-term>
+                    </div>
 
-          <div class="margin-top-large">
-            <h5>Detection Method</h5>
-            <ip-cv-term [cvTerm]="interactionDetails.detectionMethod"></ip-cv-term>
-          </div>
+                    <div class="margin-top-large">
+                        <h5>Detection Method</h5>
+                        <ip-cv-term [cvTerm]="interactionDetails.detectionMethod"></ip-cv-term>
+                    </div>
 
-          <div class="margin-top-large">
-            <h5>Host Organism</h5>
-            <span [innerHTML]="interactionDetails.hostOrganism | organism"></span>
-          </div>
+                    <div class="margin-top-large">
+                        <h5>Host Organism</h5>
+                        <span [innerHTML]="interactionDetails.hostOrganism | organism"></span>
+                    </div>
 
-          <div class="margin-top-large">
-            <h5>Positive Interaction</h5>
-            <span>{{interactionDetails.negative ? '❌' : '✔️'}}</span>
-          </div>
+                    <div class="margin-top-large">
+                        <h5>Positive Interaction</h5>
+                        <span>{{ interactionDetails.negative ? '❌' : '✔️' }}</span>
+                    </div>
+                </div>
+
+                <div class="columns medium-6 small-12">
+                    @if (interactionDetails.xrefs.length != 0) {
+                        <div id="extXrefs" class="margin-top-large">
+                            @if (interactionDetails.xrefs) {
+                                <ip-external-xrefs
+                                        [xrefs]="interactionDetails.xrefs"></ip-external-xrefs>
+                            }
+                        </div>
+                    } @if (interactionDetails.annotations.length != 0) {
+                    <div id="curationAnnotations" class="margin-top-large">
+                        @if (interactionDetails.annotations) {
+                            <ip-curation-annotations
+                                    [annotations]="interactionDetails.annotations"></ip-curation-annotations>
+                        }
+                    </div>
+                }
+                </div>
+
+                @if (interactionDetails.parameters.length != 0) {
+                    <div id="parameters" class="columns medium-6 small-12 margin-top-large">
+                        @if (interactionDetails.parameters) {
+                            <ip-parameters
+                                    [parameters]="interactionDetails.parameters"></ip-parameters>
+                        }
+                    </div>
+                } @if (interactionDetails.confidences.length != 0) {
+                <div id="confidences" class="columns medium-6 small-12 margin-top-large">
+                    @if (interactionDetails.confidences) {
+                        <ip-confidences
+                                [confidences]="interactionDetails.confidences"></ip-confidences>
+                    }
+                </div>
+            }
+            </div>
         </div>
-
-        <div class="columns medium-6 small-12">
-          <div id="extXrefs" class="margin-top-large" *ngIf="interactionDetails.xrefs.length!=0">
-            <ip-external-xrefs *ngIf="interactionDetails.xrefs"
-                               [xrefs]="interactionDetails.xrefs"></ip-external-xrefs>
-          </div>
-
-          <div id="curationAnnotations" class="margin-top-large" *ngIf="interactionDetails.annotations.length!=0">
-            <ip-curation-annotations *ngIf="interactionDetails.annotations"
-                                     [annotations]="interactionDetails.annotations"></ip-curation-annotations>
-          </div>
-        </div>
-
-        <div *ngIf="interactionDetails.parameters.length!=0" id="parameters" class="columns medium-6 small-12 margin-top-large">
-          <ip-parameters *ngIf="interactionDetails.parameters"
-                         [parameters]="interactionDetails.parameters"></ip-parameters>
-        </div>
-
-        <div *ngIf="interactionDetails.confidences.length!=0" id="confidences" class="columns medium-6 small-12 margin-top-large">
-          <ip-confidences *ngIf="interactionDetails.confidences"
-                          [confidences]="interactionDetails.confidences"></ip-confidences>
-        </div>
-      </div>
     </div>
-  </div>
-  <ip-publication [publication]="interactionDetails.publication"></ip-publication>
+    <ip-publication [publication]="interactionDetails.publication"></ip-publication>
 
 </div>

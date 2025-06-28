@@ -1,9 +1,11 @@
 <div class="row">
-  <div class="columns medium-12" style="display: grid;
+    <div class="columns medium-12" style="display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   grid-gap: 1rem;">
-    <div class="medium-12" *ngFor="let interactome of interactomes" style="break-inside: avoid-column">
-      <ip-interactome [interactome]="interactome"></ip-interactome>
+        @for (interactome of interactomes; track interactome) {
+            <div class="medium-12" style="break-inside: avoid-column">
+                <ip-interactome [interactome]="interactome"></ip-interactome>
+            </div>
+        }
     </div>
-  </div>
 </div>

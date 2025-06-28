@@ -1,11 +1,13 @@
 <div id="dataset_archive" class="row">
-  <div class="sticky-container">
-    <h3 class="columns margin-bottom-xlarge margin-top-medium text-justify">
-      Featured datasets - Archive
-    </h3>
-  </div>
+    <div class="sticky-container">
+        <h3 class="columns margin-bottom-xlarge margin-top-medium text-justify">
+            Featured datasets - Archive
+        </h3>
+    </div>
 
-  <div *ngFor="let datasetsOfYear of $datasetByYear | async" class="column">
-    <ip-dataset-by-year [year]="datasetsOfYear.group" [datasets]="datasetsOfYear.elements"></ip-dataset-by-year>
-  </div>
+    @for (datasetsOfYear of $datasetByYear | async; track datasetsOfYear) {
+        <div class="column">
+            <ip-dataset-by-year [year]="datasetsOfYear.group" [datasets]="datasetsOfYear.elements"></ip-dataset-by-year>
+        </div>
+    }
 </div>

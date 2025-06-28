@@ -1,51 +1,65 @@
 <div class="columns medium-12 large-6">
 
-  <h4>Publication</h4>
+    <h4>Publication</h4>
 
-  <div id="publicationPanel" class="margin-top-large margin-bottom-large">
-    <div class="row expanded">
-      <div class="columns medium-6">
-        <div class="margin-top-large margin-bottom-large" *ngIf="publication.title">
-          <h5>Title</h5>
-          {{publication.title}}
-        </div>
-        <div class="margin-top-large margin-bottom-large" *ngIf="publication.journal">
-          <h5>Journal</h5>
-          {{publication.journal}}
-        </div>
-        <div class="margin-top-large margin-bottom-large" *ngIf="publication.authors">
-          <h5>Authors</h5>
-          {{publication.authors}}
-        </div>
-        <div class="margin-top-large margin-bottom-large" *ngIf="publication.publicationDate">
-          <h5>Publication date</h5>
-          {{publication.publicationDate}}
-        </div>
+    <div id="publicationPanel" class="margin-top-large margin-bottom-large">
+        <div class="row expanded">
+            <div class="columns medium-6">
+                @if (publication.title) {
+                    <div class="margin-top-large margin-bottom-large">
+                        <h5>Title</h5>
+                        {{ publication.title }}
+                    </div>
+                } @if (publication.journal) {
+                <div class="margin-top-large margin-bottom-large">
+                    <h5>Journal</h5>
+                    {{ publication.journal }}
+                </div>
+            } @if (publication.authors) {
+                <div class="margin-top-large margin-bottom-large">
+                    <h5>Authors</h5>
+                    {{ publication.authors }}
+                </div>
+            } @if (publication.publicationDate) {
+                <div class="margin-top-large margin-bottom-large">
+                    <h5>Publication date</h5>
+                    {{ publication.publicationDate }}
+                </div>
+            } @if (publication.pubmedId) {
+                <div class="margin-top-large margin-bottom-xlarge">
+                    <h5>Publication reference</h5>
+                    @if (!publication.pubmedId.startsWith('unassigned')) {
+                        <a href="https://europepmc.org/article/MED/{{publication.pubmedId}}?singleResult=true"
+                           target="_blank">
+                            PubMed: {{ publication.pubmedId }}
+                        </a>
+                    } @else {
+                    <div class="button alert">This publication is not present on PubMed yet.<br> Thus, this interaction
+                        is likely to come from a pre-publication
+                    </div>
+                }
+                </div>
+            }
 
-        <div class="margin-top-large margin-bottom-xlarge" *ngIf="publication.pubmedId">
-          <h5>Publication reference</h5>
-          <a href="https://europepmc.org/article/MED/{{publication.pubmedId}}?singleResult=true"
-             target="_blank" *ngIf="!publication.pubmedId.startsWith('unassigned'); else unassigned">
-            PubMed: {{publication.pubmedId}}
-          </a>
-          <ng-template #unassigned>
-            <div class="button alert">This publication is not present on PubMed yet.<br> Thus, this interaction is likely to come from a pre-publication </div>
-          </ng-template>
-        </div>
+            </div>
 
-      </div>
-
-      <div class="columns medium-6">
-        <div id="extXrefs" class="margin-top-large" *ngIf="publication.publicationXrefs.length !== 0">
-          <ip-external-xrefs *ngIf="publication.publicationXrefs"
-                             [xrefs]="publication.publicationXrefs"></ip-external-xrefs>
+            <div class="columns medium-6">
+                @if (publication.publicationXrefs.length !== 0) {
+                    <div id="extXrefs" class="margin-top-large">
+                        @if (publication.publicationXrefs) {
+                            <ip-external-xrefs
+                                    [xrefs]="publication.publicationXrefs"></ip-external-xrefs>
+                        }
+                    </div>
+                } @if (publication.publicationAnnotations.length !== 0) {
+                <div id="curationAnnotations" class="margin-top-large">
+                    @if (publication.publicationAnnotations) {
+                        <ip-curation-annotations
+                                [annotations]="publication.publicationAnnotations"></ip-curation-annotations>
+                    }
+                </div>
+            }
+            </div>
         </div>
-
-        <div id="curationAnnotations" class="margin-top-large" *ngIf="publication.publicationAnnotations.length !== 0">
-          <ip-curation-annotations *ngIf="publication.publicationAnnotations"
-                                   [annotations]="publication.publicationAnnotations"></ip-curation-annotations>
-        </div>
-      </div>
     </div>
-  </div>
 </div>

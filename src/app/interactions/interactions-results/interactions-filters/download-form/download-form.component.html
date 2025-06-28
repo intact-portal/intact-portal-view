@@ -1,33 +1,42 @@
 <form ngNoForm [action]="URL" method="post">
-  <label>
-    <input class="hidden" type="text" name="format" [value]="format.name">
-    <input class="hidden" type="text" name="query" [value]="search.spacedQuery">
+    <label>
+        <input class="hidden" type="text" name="format" [value]="format.name">
+        <input class="hidden" type="text" name="query" [value]="search.spacedQuery">
 
-    <input class="hidden" type="checkbox" name="advancedSearch" [checked]="search.isAdvancedSearch">
-    <input class="hidden" type="checkbox" name="batchSearch" [checked]="search.isBatchSearch">
-    <input class="hidden" type="checkbox" name="mutationFilter" [checked]="filters.mutation">
-    <input class="hidden" type="checkbox" name="expansionFilter" [checked]="filters.expansion">
-    <input class="hidden" type="checkbox" name="intraSpecies" [checked]="filters.intraSpecies">
+        <input class="hidden" type="checkbox" name="advancedSearch" [checked]="search.isAdvancedSearch">
+        <input class="hidden" type="checkbox" name="batchSearch" [checked]="search.isBatchSearch">
+        <input class="hidden" type="checkbox" name="mutationFilter" [checked]="filters.mutation">
+        <input class="hidden" type="checkbox" name="expansionFilter" [checked]="filters.expansion">
+        <input class="hidden" type="checkbox" name="intraSpecies" [checked]="filters.intraSpecies">
 
-    <input class="hidden" type="text" name="negativeFilter" [value]="filters.negative">
-    <input class="hidden" type="text" name="interactorAcs"
-           *ngFor="let value of selection.interactorAcs" [value]="value">
-    <input class="hidden" type="text" name="binaryInteractionIds"
-           *ngFor="let value of selection.binaryInteractionIds" [value]="value">
+        <input class="hidden" type="text" name="negativeFilter" [value]="filters.negative">
+        @for (value of selection.interactorAcs; track value) {
+            <input class="hidden" type="text" name="interactorAcs"
+                   [value]="value">
+        } @for (value of selection.binaryInteractionIds; track value) {
+        <input class="hidden" type="text" name="binaryInteractionIds"
+               [value]="value">
+    }
 
-    <input class="hidden" type="text" name="minMIScore" [value]="filters.currentMinMIScore">
-    <input class="hidden" type="text" name="maxMIScore" [value]="filters.currentMaxMIScore">
+        <input class="hidden" type="text" name="minMIScore" [value]="filters.currentMinMIScore">
+        <input class="hidden" type="text" name="maxMIScore" [value]="filters.currentMaxMIScore">
 
-    <input class="hidden" type="text" name="interactorSpeciesFilter"
-           *ngFor="let value of filters.getFilter(filterTypes.SPECIES)" [value]="value">
-    <input class="hidden" type="text" name="interactorTypesFilter"
-           *ngFor="let value of filters.getFilter(filterTypes.INTERACTOR_TYPE)" [value]="value">
-    <input class="hidden" type="text" name="interactionTypesFilter"
-           *ngFor="let value of filters.getFilter(filterTypes.INTERACTION_TYPE)" [value]="value">
-    <input class="hidden" type="text" name="interactionDetectionMethodsFilter"
-           *ngFor="let value of filters.getFilter(filterTypes.DETECTION_METHOD)" [value]="value">
-    <input class="hidden" type="text" name="interactionHostOrganismsFilter"
-           *ngFor="let value of filters.getFilter(filterTypes.HOST_ORGANISM)" [value]="value">
-  </label>
-  <button class="button lightest expanded" [ngClass]="{'no-margin':last}" [innerHTML]="format.html"></button>
+        @for (value of filters.getFilter(filterTypes.SPECIES); track value) {
+            <input class="hidden" type="text" name="interactorSpeciesFilter"
+                   [value]="value">
+        } @for (value of filters.getFilter(filterTypes.INTERACTOR_TYPE); track value) {
+        <input class="hidden" type="text" name="interactorTypesFilter"
+               [value]="value">
+    } @for (value of filters.getFilter(filterTypes.INTERACTION_TYPE); track value) {
+        <input class="hidden" type="text" name="interactionTypesFilter"
+               [value]="value">
+    } @for (value of filters.getFilter(filterTypes.DETECTION_METHOD); track value) {
+        <input class="hidden" type="text" name="interactionDetectionMethodsFilter"
+               [value]="value">
+    } @for (value of filters.getFilter(filterTypes.HOST_ORGANISM); track value) {
+        <input class="hidden" type="text" name="interactionHostOrganismsFilter"
+               [value]="value">
+    }
+    </label>
+    <button class="button lightest expanded" [ngClass]="{'no-margin':last}" [innerHTML]="format.html"></button>
 </form>

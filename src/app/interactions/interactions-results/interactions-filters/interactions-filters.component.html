@@ -32,7 +32,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for (species of filters.facets.combined_species; track species) {
+                        @for (species of filters.facets.combined_species; track species.value) {
                             <tr
                                     (click)="$event.target !== checkbox ? checkbox.click() : null"
                                     [ngClass]="{'disabled-row':filters.intraSpecies && species.valueCount.intra === 0}">
@@ -99,7 +99,7 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                        @for (molecule of filters.facets.type_MI_A_B_styled; track molecule) {
+                        @for (molecule of filters.facets.type_MI_A_B_styled; track molecule.value) {
                             <tr
                                     (click)="$event.target !== checkbox ? checkbox.click() : null">
                                 <td class="no-padding">
@@ -145,20 +145,21 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                        @for (molecule of filters.facets.type_mi_identifier_styled; track molecule) {
+                        @for (
+                            interactionType of filters.facets.type_mi_identifier_styled; track interactionType.value) {
                             <tr
                                     (click)="$event.target !== checkbox ? checkbox.click() : null">
                                 <td class="no-padding">
-                                    <input #checkbox type="checkbox" value="{{molecule.value}}"
+                                    <input #checkbox type="checkbox" value="{{interactionType.value}}"
                                            class="vertically-centered"
                                            (change)="onChangeInteractionTypeFilter($event)"
-                                           [checked]="filters.isFilteringValue(filter, molecule.value)"/>
-                                    <span>{{ molecule.value }}</span>
+                                           [checked]="filters.isFilteringValue(filter, interactionType.value)"/>
+                                    <span>{{ interactionType.value }}</span>
                                 </td>
                                 <td style="padding: 0 0 0 0.4rem;" class="float-right">
                     <span class="tag-cell species-cell emphasized light-background"
-                          [ngStyle]="{'background-color':molecule.visualProperty , 'color': fontColor(molecule.visualProperty)}">
-                      {{ molecule.valueCount }}
+                          [ngStyle]="{'background-color':interactionType.visualProperty , 'color': fontColor(interactionType.visualProperty)}">
+                      {{ interactionType.valueCount }}
                     </span>
                                 </td>
                             </tr>
@@ -187,19 +188,19 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                        @for (molecule of filters.facets.detection_method_s; track molecule) {
+                        @for (detectionMethod of filters.facets.detection_method_s; track detectionMethod.value) {
                             <tr
                                     (click)="$event.target !== checkbox ? checkbox.click() : null">
                                 <td class="no-padding">
-                                    <input #checkbox type="checkbox" value="{{molecule.value}}"
+                                    <input #checkbox type="checkbox" value="{{detectionMethod.value}}"
                                            class="vertically-centered"
                                            (change)="onChangeInteractionDetectionMethodFilter($event)"
-                                           [checked]="filters.isFilteringValue(filter, molecule.value)"/>
-                                    <span>{{ molecule.value }}</span>
+                                           [checked]="filters.isFilteringValue(filter, detectionMethod.value)"/>
+                                    <span>{{ detectionMethod.value }}</span>
                                 </td>
                                 <td style="padding: 0 0 0 0.4rem;" class="float-right">
                     <span class="tag-cell species-cell emphasized"
-                    >{{ molecule.valueCount }}</span>
+                    >{{ detectionMethod.valueCount }}</span>
                                 </td>
                             </tr>
                         }
@@ -228,20 +229,21 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                        @for (molecule of filters.facets.host_organism_taxId_styled; track molecule) {
-                            <tr
-                                    (click)="$event.target !== checkbox ? checkbox.click() : null">
+                        <!--                        TODO investigate why 2 S. cerevisiae in Ndc80 search -->
+                        @for (organism of filters.facets.host_organism_taxId_styled;
+                            track organism.value + organism.valueCount) {
+                            <tr (click)="$event.target !== checkbox ? checkbox.click() : null">
                                 <td class="no-padding">
-                                    <input #checkbox type="checkbox" value="{{molecule.value}}"
+                                    <input #checkbox type="checkbox" value="{{organism.value}}"
                                            class="vertically-centered"
                                            (change)="onChangeInteractionHostOrganismFilter($event)"
-                                           [checked]="filters.isFilteringValue(filter, molecule.value)"/>
-                                    <span>{{ molecule.value }}</span>
+                                           [checked]="filters.isFilteringValue(filter, organism.value)"/>
+                                    <span>{{ organism.value }}</span>
                                 </td>
                                 <td style="padding: 0 0 0 0.4rem;" class="float-right">
-                    <span class="tag-cell species-cell emphasized"
-                          [ngStyle]="{'background-color':molecule.visualProperty }"
-                    >{{ molecule.valueCount }}</span>
+                                    <span class="tag-cell species-cell emphasized"
+                                          [ngStyle]="{'background-color':organism.visualProperty }"
+                                    >{{ organism.valueCount }}</span>
                                 </td>
                             </tr>
                         }
@@ -268,8 +270,8 @@
                  data-hover-pane="true">
                 <em>Interactions affected by mutation only</em>
                 <div class="centered-switch-wrap">
-          <span class="tag-cell species-cell margin-right-small"
-                [ngClass]="{'discreet':filters.mutation, 'emphasized':!filters.mutation}">{{ filters.nbNonMutation }}</span>
+                    <span class="tag-cell species-cell margin-right-small"
+                        [ngClass]="{'discreet':filters.mutation, 'emphasized':!filters.mutation}">{{ filters.nbNonMutation }}</span>
                     <mat-slide-toggle color="primary"
                                       (change)="filters.updateFilter(filter, $event.checked)"
                                       [disabled]="!filters.hasMutation"
@@ -277,10 +279,10 @@
                     </mat-slide-toggle>
                     <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
                           [ngStyle]="{
-              'background-color': filters.mutation ? filters.mutationColor : 'white',
-              'color': filters.mutation ? 'white' : filters.mutationColor,
-              'border-color': filters.mutationColor
-              }"
+                          'background-color': filters.mutation ? filters.mutationColor : 'white',
+                          'color': filters.mutation ? 'white' : filters.mutationColor,
+                          'border-color': filters.mutationColor
+                          }"
                           [ngClass]="{'discreet':!filters.mutation, 'emphasized':filters.mutation}">{{ filters.nbMutation }}</span>
                 </div>
             </div>
@@ -295,8 +297,8 @@
                  data-hover-pane="true">
                 <em>Non-expanded interactions only</em>
                 <div class="centered-switch-wrap">
-          <span class="tag-cell species-cell dashed margin-right-small"
-                [ngClass]="{'discreet':filters.expansion, 'emphasized':!filters.expansion}">{{ filters.nbNonExpansion }}</span>
+                    <span class="tag-cell species-cell dashed margin-right-small"
+                        [ngClass]="{'discreet':filters.expansion, 'emphasized':!filters.expansion}">{{ filters.nbNonExpansion }}</span>
                     <mat-slide-toggle color="primary"
                                       (change)="filters.updateFilter(filter, $event.checked)"
                                       [disabled]="!filters.hasExpansion"
@@ -362,11 +364,9 @@
         }
 
         <div *ipDropdown="enableExports ? 'Table' : 'Disabled'; disabled: !enableExports">
-            @for (format of formats; track format; let last = $last) {
+            @for (format of formats; track format.name; let last = $last) {
                 <ip-download-form [format]="format" [last]="last"></ip-download-form>
             }
         </div>
-
-
     </div>
 </div>

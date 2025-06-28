@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, input, Input, OnInit, viewChild, ViewChild} from '@angular/core';
 import * as d3 from 'd3';
 import {LabelType, Options} from '@angular-slider/ngx-slider';
 import {DensityOptions} from './density-options.model';
@@ -14,24 +14,21 @@ import {Facet} from '../../../shared/model/interactions-results/facet.model';
 })
 export class DensitySliderComponent implements OnInit, AfterViewInit {
 
-  @Input()
-  dOptions: DensityOptions;
+
+  dOptions = input.required<DensityOptions, DensityOptions>({
+    transform: options => ({...defaultHOptions, ...options})
+  });
   options: Options;
 
   totalInRange = 0;
   initMin = 0;
   initMax = 1;
 
-  @ViewChild('histogram')
-  svgRef: ElementRef<SVGElement>;
-  @ViewChild('chartArea')
-  chartAreaRef: ElementRef<SVGGElement>;
-  @ViewChild('leftLine')
-  leftLineRef: ElementRef<SVGLineElement>;
-  @ViewChild('rightLine')
-  rightLineRef: ElementRef<SVGLineElement>;
-  @ViewChild('total')
-  totalRef: ElementRef<SVGGElement>;
+  svgRef = viewChild.required<ElementRef<SVGElement>>('histogram');
+  chartAreaRef = viewChild.required<ElementRef<SVGGElement>>('chartArea');
+  leftLineRef = viewChild.required<ElementRef<SVGLineElement>>('leftLine');
+  rightLineRef = viewChild.required<ElementRef<SVGLineElement>>('rightLine');
+  totalRef = viewChild.required<ElementRef<SVGGElement>>('total');
 
   gradientColors: GradientColor[] = [];
 
@@ -53,13 +50,11 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dOptions = {...defaultHOptions, ...this.dOptions}
-
-    this.innerWidth = this.dOptions.width - this.dOptions.margin.left - this.dOptions.margin.right;
-    this.innerHeight = this.dOptions.height - this.dOptions.margin.top - this.dOptions.margin.bottom;
+    this.innerWidth = this.dOptions().width - this.dOptions().margin.left - this.dOptions().margin.right;
+    this.innerHeight = this.dOptions().height - this.dOptions().margin.top - this.dOptions().margin.bottom;
 
     this.x = d3.scaleLinear()
-      .domain([this.dOptions.minX, this.dOptions.maxX])
+      .domain([this.dOptions().minX, this.dOptions().maxX])
       .range([0, this.innerWidth]);
 
     this.y = d3.scaleLinear()
@@ -77,18 +72,18 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
       facet => facet.valueCount
     );
 
-    d3.select(this.svgRef.nativeElement)
-      .attr('viewBox', [0, 0, this.dOptions.width, this.dOptions.height])
-      .attr('width', this.dOptions.width)
-      .attr('height', this.dOptions.height);
+    d3.select(this.svgRef().nativeElement)
+      .attr('viewBox', [0, 0, this.dOptions().width, this.dOptions().height])
+      .attr('width', this.dOptions().width)
+      .attr('height', this.dOptions().height);
 
-    this.svg = d3.select(this.chartAreaRef.nativeElement)
-      .attr('transform', `translate(${this.dOptions.margin.left},${this.dOptions.margin.top})`);
+    this.svg = d3.select(this.chartAreaRef().nativeElement)
+      .attr('transform', `translate(${this.dOptions().margin.left},${this.dOptions().margin.top})`);
 
-    const totalCount = d3.select(this.totalRef.nativeElement)
-      .attr('transform', `translate(${this.dOptions.margin.left},${this.dOptions.margin.top + this.innerHeight})`);
+    const totalCount = d3.select(this.totalRef().nativeElement)
+      .attr('transform', `translate(${this.dOptions().margin.left},${this.dOptions().margin.top + this.innerHeight})`);
 
-    const midBottomMargin = this.dOptions.margin.bottom / 2 + 1;
+    const midBottomMargin = this.dOptions().margin.bottom / 2 + 1;
     this.totalLine = totalCount.append('line')
       .attr('stroke', '#55637d')
       .attr('y1', midBottomMargin)
@@ -119,7 +114,7 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
       .pipe(untilDestroyed(this))
       .subscribe(this.draw.bind(this));
 
-    onVisible(this.svgRef.nativeElement, () => {
+    onVisible(this.svgRef().nativeElement, () => {
       this.updateTotal();
     })
   }
@@ -146,35 +141,32 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
       .attr('x', middle)
       .node().getBBox();
     this.totalRect
-      .attr('x', bbox.x - this.dOptions.labelXMargin)
-      .attr('y', bbox.y - this.dOptions.labelYMargin)
-      .attr('width', bbox.width + this.dOptions.labelXMargin * 2)
-      .attr('height', bbox.height + this.dOptions.labelYMargin * 2)
+      .attr('x', bbox.x - this.dOptions().labelXMargin)
+      .attr('y', bbox.y - this.dOptions().labelYMargin)
+      .attr('width', bbox.width + this.dOptions().labelXMargin * 2)
+      .attr('height', bbox.height + this.dOptions().labelYMargin * 2)
     this.totalLine
       .attr('x1', this.x(this.filters.currentMinMIScore))
       .attr('x2', this.x(this.filters.currentMaxMIScore));
   }
 
   private updateGradient() {
-    this.gradientColors = [];
     const limits = Array.from({length: 11}, (v, k) => k / 10)
     insert(limits, this.filters.currentMinMIScore);
     insert(limits, this.filters.currentMaxMIScore);
-    for (const limit of limits) {
-      this.gradientColors.push(
-        {stop: (limit - 0.0001) * 100 + '%', color: this.thresholdColorAt(limit - 0.0001)},
-        {stop: (limit + 0.0001) * 100 + '%', color: this.thresholdColorAt(limit + 0.0001)},
-      )
-    }
+    this.gradientColors = limits.flatMap(limit => [
+      {stop: (limit - 0.0001) * 100 + '%', color: this.thresholdColorAt(limit - 0.0001)},
+      {stop: (limit + 0.0001) * 100 + '%', color: this.thresholdColorAt(limit + 0.0001)},
+    ])
   }
 
   private updateLinePosition() {
-    d3.select(this.leftLineRef.nativeElement)
-      .attr('x1', this.x(this.filters.currentMinMIScore) + this.dOptions.margin.left)
-      .attr('x2', this.x(this.filters.currentMinMIScore) + this.dOptions.margin.left)
-    d3.select(this.rightLineRef.nativeElement)
-      .attr('x1', this.x(this.filters.currentMaxMIScore) + this.dOptions.margin.left)
-      .attr('x2', this.x(this.filters.currentMaxMIScore) + this.dOptions.margin.left)
+    d3.select(this.leftLineRef().nativeElement)
+      .attr('x1', this.x(this.filters.currentMinMIScore) + this.dOptions().margin.left)
+      .attr('x2', this.x(this.filters.currentMinMIScore) + this.dOptions().margin.left)
+    d3.select(this.rightLineRef().nativeElement)
+      .attr('x1', this.x(this.filters.currentMaxMIScore) + this.dOptions().margin.left)
+      .attr('x2', this.x(this.filters.currentMaxMIScore) + this.dOptions().margin.left)
   }
 
   private drawDensityCurve() {

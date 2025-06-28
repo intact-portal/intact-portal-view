@@ -12,9 +12,10 @@ const baseURL = environment.intact_portal_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-batch-search',
-  templateUrl: './batch-search.component.html',
-  styleUrls: ['./batch-search.component.css']
+    selector: 'ip-batch-search',
+    templateUrl: './batch-search.component.html',
+    styleUrls: ['./batch-search.component.css'],
+    standalone: false
 })
 export class BatchSearchComponent {
   private _query: string;

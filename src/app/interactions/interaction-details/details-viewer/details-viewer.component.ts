@@ -11,10 +11,11 @@ export let viewer: App;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-details-viewer',
-  templateUrl: './details-viewer.component.html',
-  styleUrls: ['./details-viewer.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-details-viewer',
+    templateUrl: './details-viewer.component.html',
+    styleUrls: ['./details-viewer.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DetailsViewerComponent implements AfterViewInit {
   @Input() interactionAc: string;

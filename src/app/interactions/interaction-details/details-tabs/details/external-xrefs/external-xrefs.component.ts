@@ -3,9 +3,10 @@ import {CrossReference} from "../../../../shared/model/interaction-details/cross
 
 
 @Component({
-  selector: 'ip-external-xrefs',
-  templateUrl: './external-xrefs.component.html',
-  styleUrls: ['./external-xrefs.component.css']
+    selector: 'ip-external-xrefs',
+    templateUrl: './external-xrefs.component.html',
+    styleUrls: ['./external-xrefs.component.css'],
+    standalone: false
 })
 export class ExternalXrefsComponent implements OnInit {
 

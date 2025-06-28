@@ -2,9 +2,10 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {extractRange} from '../utils';
 
 @Component({
-  selector: 'ip-range-input',
-  templateUrl: './range-input.component.html',
-  styleUrls: ['./range-input.component.css']
+    selector: 'ip-range-input',
+    templateUrl: './range-input.component.html',
+    styleUrls: ['./range-input.component.css'],
+    standalone: false
 })
 export class RangeInputComponent<T> implements OnInit, OnChanges {
 

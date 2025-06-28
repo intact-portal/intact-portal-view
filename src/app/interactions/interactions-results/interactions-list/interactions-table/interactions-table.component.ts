@@ -18,9 +18,10 @@ const ebiURL = environment.ebi_url;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-interactions-table',
-  templateUrl: './interactions-table.component.html',
-  styleUrls: ['./interactions-table.component.css']
+    selector: 'ip-interactions-table',
+    templateUrl: './interactions-table.component.html',
+    styleUrls: ['./interactions-table.component.css'],
+    standalone: false
 })
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
   @Input() interactionTab: boolean;

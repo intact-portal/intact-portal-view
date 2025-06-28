@@ -4,7 +4,8 @@ import * as d3 from 'd3';
 @Component({
     selector: 'ip-count-table',
     templateUrl: './count-table.component.html',
-    styleUrls: ['./count-table.component.css']
+    styleUrls: ['./count-table.component.css'],
+    standalone: false
 })
 export class CountTableComponent implements OnInit {
     @Input() dataPath: string;

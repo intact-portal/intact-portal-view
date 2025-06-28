@@ -3,9 +3,10 @@ import {environment} from '../../../../environments/environment';
 import {Title} from '@angular/platform-browser';
 
 @Component({
-  selector: 'ip-technical-corner',
-  templateUrl: './technical-corner.component.html',
-  styleUrls: ['./technical-corner.component.css']
+    selector: 'ip-technical-corner',
+    templateUrl: './technical-corner.component.html',
+    styleUrls: ['./technical-corner.component.css'],
+    standalone: false
 })
 export class TechnicalCornerComponent implements OnInit {
 

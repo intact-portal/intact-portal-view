@@ -13,9 +13,10 @@ const baseURL = environment.intact_portal_graph_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-details-dashboard',
-  templateUrl: './details-dashboard.component.html',
-  styleUrls: ['./details-dashboard.component.css']
+    selector: 'ip-details-dashboard',
+    templateUrl: './details-dashboard.component.html',
+    styleUrls: ['./details-dashboard.component.css'],
+    standalone: false
 })
 export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   private _interactionAc: string;

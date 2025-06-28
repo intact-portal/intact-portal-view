@@ -8,9 +8,10 @@ import {NetworkSelectionService} from '../../../shared/service/network-selection
 const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
-  selector: 'ip-download-form',
-  templateUrl: './download-form.component.html',
-  styleUrls: ['./download-form.component.css']
+    selector: 'ip-download-form',
+    templateUrl: './download-form.component.html',
+    styleUrls: ['./download-form.component.css'],
+    standalone: false
 })
 export class DownloadFormComponent implements OnInit {
   @Input() format: Format = Format.json;

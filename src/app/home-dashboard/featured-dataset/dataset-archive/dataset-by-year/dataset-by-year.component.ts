@@ -5,9 +5,10 @@ import {PubmedDataset} from '../../model/pubmed-dataset.model';
 import {SearchService} from '../../../search/service/search.service';
 
 @Component({
-  selector: 'ip-dataset-by-year',
-  templateUrl: './dataset-by-year.component.html',
-  styleUrls: ['./dataset-by-year.component.css']
+    selector: 'ip-dataset-by-year',
+    templateUrl: './dataset-by-year.component.html',
+    styleUrls: ['./dataset-by-year.component.css'],
+    standalone: false
 })
 export class DatasetByYearComponent implements AfterViewInit {
 

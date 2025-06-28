@@ -3,9 +3,10 @@ import {environment} from '../../../environments/environment';
 
 
 @Component({
-  selector: 'ip-home-description',
-  templateUrl: './home-description.component.html',
-  styleUrls: ['./home-description.component.css'],
+    selector: 'ip-home-description',
+    templateUrl: './home-description.component.html',
+    styleUrls: ['./home-description.component.css'],
+    standalone: false
 })
 export class HomeDescriptionComponent {
 

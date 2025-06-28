@@ -16,9 +16,10 @@ const baseURL = environment.intact_portal_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-interactors-table',
-  templateUrl: './interactors-table.component.html',
-  styleUrls: ['./interactors-table.component.css']
+    selector: 'ip-interactors-table',
+    templateUrl: './interactors-table.component.html',
+    styleUrls: ['./interactors-table.component.css'],
+    standalone: false
 })
 export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
   @Input() interactorTab: boolean;

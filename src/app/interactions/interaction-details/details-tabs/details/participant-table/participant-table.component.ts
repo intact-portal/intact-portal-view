@@ -12,9 +12,10 @@ const baseURL = environment.intact_portal_graph_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-participant-table',
-  templateUrl: './participant-table.component.html',
-  styleUrls: ['./participant-table.component.css']
+    selector: 'ip-participant-table',
+    templateUrl: './participant-table.component.html',
+    styleUrls: ['./participant-table.component.css'],
+    standalone: false
 })
 export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
 

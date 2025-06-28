@@ -5,10 +5,11 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-column-toggle',
-  templateUrl: './column-toggle.component.html',
-  styleUrls: ['./column-toggle.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'ip-column-toggle',
+    templateUrl: './column-toggle.component.html',
+    styleUrls: ['./column-toggle.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ColumnToggleComponent implements OnInit {
 

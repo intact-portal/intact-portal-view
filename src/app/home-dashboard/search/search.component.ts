@@ -2,9 +2,10 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {SearchService} from './service/search.service';
 
 @Component({
-  selector: 'ip-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+    selector: 'ip-search',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.css'],
+    standalone: false
 })
 export class SearchComponent implements AfterViewInit {
 

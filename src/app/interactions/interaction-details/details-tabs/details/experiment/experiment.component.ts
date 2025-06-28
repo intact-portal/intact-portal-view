@@ -3,9 +3,10 @@ import {Experiment} from '../../../../shared/model/interaction-details/experimen
 
 
 @Component({
-  selector: 'ip-experiment',
-  templateUrl: './experiment.component.html',
-  styleUrls: ['./experiment.component.css']
+    selector: 'ip-experiment',
+    templateUrl: './experiment.component.html',
+    styleUrls: ['./experiment.component.css'],
+    standalone: false
 })
 export class ExperimentComponent implements OnInit {
 

@@ -5,9 +5,10 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {extractRange} from '../utils';
 
 @Component({
-  selector: 'ip-date-range',
-  templateUrl: './date-range.component.html',
-  styleUrls: ['./date-range.component.css']
+    selector: 'ip-date-range',
+    templateUrl: './date-range.component.html',
+    styleUrls: ['./date-range.component.css'],
+    standalone: false
 })
 @UntilDestroy()
 export class DateRangeComponent implements OnInit, OnChanges {

@@ -4,9 +4,10 @@ import {Title} from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'ip-datasets',
-  templateUrl: './datasets.component.html',
-  styleUrls: ['./datasets.component.css']
+    selector: 'ip-datasets',
+    templateUrl: './datasets.component.html',
+    styleUrls: ['./datasets.component.css'],
+    standalone: false
 })
 export class DatasetsComponent implements OnInit {
 

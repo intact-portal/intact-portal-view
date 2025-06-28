@@ -3,9 +3,10 @@ import {Publication} from '../../../../shared/model/interaction-details/publicat
 
 
 @Component({
-  selector: 'ip-publication',
-  templateUrl: './publication.component.html',
-  styleUrls: ['./publication.component.css']
+    selector: 'ip-publication',
+    templateUrl: './publication.component.html',
+    styleUrls: ['./publication.component.css'],
+    standalone: false
 })
 export class PublicationComponent implements OnInit {
 

@@ -2,9 +2,10 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
 
 @Component({
-  selector: 'ip-local-search',
-  templateUrl: './local-search.component.html',
-  styleUrls: ['./local-search.component.css']
+    selector: 'ip-local-search',
+    templateUrl: './local-search.component.html',
+    styleUrls: ['./local-search.component.css'],
+    standalone: false
 })
 export class LocalSearchComponent implements AfterViewInit {
 

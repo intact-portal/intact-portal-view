@@ -3,9 +3,10 @@ import {InteractionDetails} from '../../../shared/model/interaction-details/inte
 
 
 @Component({
-  selector: 'ip-interaction-details',
-  templateUrl: './interaction-details.component.html',
-  styleUrls: ['./interaction-details.component.css']
+    selector: 'ip-interaction-details',
+    templateUrl: './interaction-details.component.html',
+    styleUrls: ['./interaction-details.component.css'],
+    standalone: false
 })
 export class InteractionDetailsComponent implements OnInit {
 

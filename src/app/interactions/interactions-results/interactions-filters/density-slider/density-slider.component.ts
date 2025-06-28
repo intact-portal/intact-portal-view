@@ -8,9 +8,10 @@ import {Facet} from '../../../shared/model/interactions-results/facet.model';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-density-slider',
-  templateUrl: './density-slider.component.html',
-  styleUrls: ['./density-slider.component.css']
+    selector: 'ip-density-slider',
+    templateUrl: './density-slider.component.html',
+    styleUrls: ['./density-slider.component.css'],
+    standalone: false
 })
 export class DensitySliderComponent implements OnInit, AfterViewInit {
 

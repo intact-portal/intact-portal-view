@@ -11,9 +11,10 @@ import {FragmentService} from '../../shared/service/fragment.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-details-tabs',
-  templateUrl: './details-tabs.component.html',
-  styleUrls: ['./details-tabs.component.css']
+    selector: 'ip-details-tabs',
+    templateUrl: './details-tabs.component.html',
+    styleUrls: ['./details-tabs.component.css'],
+    standalone: false
 })
 export class DetailsTabsComponent implements OnInit, AfterViewInit {
 

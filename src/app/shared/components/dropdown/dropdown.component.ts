@@ -1,9 +1,10 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 
 @Component({
-  selector: 'ip-dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.css']
+    selector: 'ip-dropdown',
+    templateUrl: './dropdown.component.html',
+    styleUrls: ['./dropdown.component.css'],
+    standalone: false
 })
 export class DropdownComponent implements OnInit {
 

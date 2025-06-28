@@ -15,14 +15,15 @@ export interface ColorCode {
 }
 
 @Component({
-  selector: 'ip-advanced-search',
-  templateUrl: './advanced-search.component.html',
-  styleUrls: ['./advanced-search.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MIQL_DATE_FORMAT}
-  ]
+    selector: 'ip-advanced-search',
+    templateUrl: './advanced-search.component.html',
+    styleUrls: ['./advanced-search.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MIQL_DATE_FORMAT }
+    ],
+    standalone: false
 })
 export class AdvancedSearchComponent implements AfterViewInit {
 

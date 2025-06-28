@@ -12,10 +12,11 @@ import {CytoscapeDialogComponent} from './cytoscape-dialog.component/cytoscape-d
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-interactions-viewer',
-  templateUrl: './interactions-viewer.component.html',
-  styleUrls: ['./interactions-viewer.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-interactions-viewer',
+    templateUrl: './interactions-viewer.component.html',
+    styleUrls: ['./interactions-viewer.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class InteractionsViewerComponent implements AfterViewInit {
   private _hasMutation: boolean = false;

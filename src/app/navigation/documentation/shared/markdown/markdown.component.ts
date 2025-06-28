@@ -4,9 +4,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MarkdownRendererService} from './service/markdown-renderer.service';
 
 @Component({
-  selector: 'ip-markdown',
-  templateUrl: './markdown.component.html',
-  styleUrls: ['./markdown.component.css']
+    selector: 'ip-markdown',
+    templateUrl: './markdown.component.html',
+    styleUrls: ['./markdown.component.css'],
+    standalone: false
 })
 export class MarkdownComponent implements OnInit {
 

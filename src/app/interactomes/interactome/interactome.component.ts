@@ -4,9 +4,10 @@ import {environment} from '../../../environments/environment';
 import {SearchService} from '../../home-dashboard/search/service/search.service';
 
 @Component({
-  selector: 'ip-interactome',
-  templateUrl: './interactome.component.html',
-  styleUrls: ['./interactome.component.css']
+    selector: 'ip-interactome',
+    templateUrl: './interactome.component.html',
+    styleUrls: ['./interactome.component.css'],
+    standalone: false
 })
 export class InteractomeComponent implements OnInit {
 

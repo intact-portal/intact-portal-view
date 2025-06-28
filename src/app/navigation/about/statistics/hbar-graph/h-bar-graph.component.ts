@@ -3,10 +3,11 @@ import * as d3 from 'd3';
 
 
 @Component({
-  selector: 'ip-h-bar-graph',
-  templateUrl: './h-bar-graph.component.html',
-  styleUrls: ['./h-bar-graph.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-h-bar-graph',
+    templateUrl: './h-bar-graph.component.html',
+    styleUrls: ['./h-bar-graph.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HBarGraphComponent implements OnInit, AfterViewInit {
   @Input() dataPath: string;

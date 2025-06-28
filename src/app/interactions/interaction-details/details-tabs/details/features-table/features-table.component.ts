@@ -9,9 +9,10 @@ import {ResultTable} from '../../../../shared/model/interactions-results/result-
 const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
-  selector: 'ip-features-table',
-  templateUrl: './features-table.component.html',
-  styleUrls: ['./features-table.component.css']
+    selector: 'ip-features-table',
+    templateUrl: './features-table.component.html',
+    styleUrls: ['./features-table.component.css'],
+    standalone: false
 })
 export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
 

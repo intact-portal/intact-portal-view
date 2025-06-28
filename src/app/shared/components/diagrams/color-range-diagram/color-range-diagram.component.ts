@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'ip-color-range-diagram',
-  templateUrl: './color-range-diagram.component.html',
-  styleUrls: ['./color-range-diagram.component.css']
+    selector: 'ip-color-range-diagram',
+    templateUrl: './color-range-diagram.component.html',
+    styleUrls: ['./color-range-diagram.component.css'],
+    standalone: false
 })
 export class ColorRangeDiagramComponent implements OnInit {
   @Input() rangeMap: { [range: string]: string };

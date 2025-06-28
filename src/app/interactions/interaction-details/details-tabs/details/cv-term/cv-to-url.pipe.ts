@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {CvTerm} from '../../../../shared/model/interaction-details/cv-term.model';
 
 @Pipe({
-  name: 'cvToUrl'
+    name: 'cvToUrl',
+    standalone: false
 })
 export class CvToUrlPipe implements PipeTransform {
 

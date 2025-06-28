@@ -13,8 +13,8 @@ interface Data {
     selector: 'ip-donut-graph',
     templateUrl: './donut-graph.component.html',
     styleUrls: ['./donut-graph.component.css'],
-    encapsulation: ViewEncapsulation.None
-
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DonutGraphComponent implements OnInit, AfterViewInit {
     @Input() dataPath: string;

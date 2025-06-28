@@ -2,9 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {EdgeShape} from '../../../../interactions/shared/model/network-shapes/edge-shape';
 
 @Component({
-  selector: 'ip-edge-diagram',
-  templateUrl: './edge-diagram.component.html',
-  styleUrls: ['./edge-diagram.component.css']
+    selector: 'ip-edge-diagram',
+    templateUrl: './edge-diagram.component.html',
+    styleUrls: ['./edge-diagram.component.css'],
+    standalone: false
 })
 export class EdgeDiagramComponent implements OnInit {
   @Input() shape: EdgeShape = EdgeShape.SOLID_LINE;

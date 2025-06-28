@@ -5,7 +5,8 @@ import * as d3 from 'd3';
     selector: 'ip-multiline-graph',
     templateUrl: './multiline-graph.component.html',
     styleUrls: ['./multiline-graph.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MultilineGraphComponent implements OnInit, AfterViewInit {
     @Input() dataPath: string;

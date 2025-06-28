@@ -12,37 +12,38 @@ import {environment} from '../../../../environments/environment';
 
 
 @Component({
-  selector: 'ip-interactions-filters',
-  templateUrl: './interactions-filters.component.html',
-  styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css'],
-  animations: [
-    trigger('bendTip', [
-      state('tipBended', style({
-        borderRadius: '0 1.4em 1.4em 0'
-      })),
-      state('tipStraight', style({
-        borderRadius: '0 0 0 0'
-      })),
-      transition('tipBended => tipStraight', [
-        animate('250ms')
-      ]),
-      transition('tipStraight => tipBended', [
-        animate('250ms 250ms')
-      ]),
-    ]),
-    trigger('slideIn', [
-      state('in', style({
-        transform: 'translateX(0)'
-      })),
-      transition(':enter', [
-        style({transform: 'translateX(-100%)'}),
-        animate('350ms 150ms')
-      ]),
-      transition(':leave', [
-        animate('350ms', style({transform: 'translateX(-100%)'}))
-      ])
-    ]),
-  ]
+    selector: 'ip-interactions-filters',
+    templateUrl: './interactions-filters.component.html',
+    styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css'],
+    animations: [
+        trigger('bendTip', [
+            state('tipBended', style({
+                borderRadius: '0 1.4em 1.4em 0'
+            })),
+            state('tipStraight', style({
+                borderRadius: '0 0 0 0'
+            })),
+            transition('tipBended => tipStraight', [
+                animate('250ms')
+            ]),
+            transition('tipStraight => tipBended', [
+                animate('250ms 250ms')
+            ]),
+        ]),
+        trigger('slideIn', [
+            state('in', style({
+                transform: 'translateX(0)'
+            })),
+            transition(':enter', [
+                style({ transform: 'translateX(-100%)' }),
+                animate('350ms 150ms')
+            ]),
+            transition(':leave', [
+                animate('350ms', style({ transform: 'translateX(-100%)' }))
+            ])
+        ]),
+    ],
+    standalone: false
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 

@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 
 @Component({
-  selector: 'ip-boolean-input',
-  templateUrl: './boolean-input.component.html',
-  styleUrls: ['./boolean-input.component.css']
+    selector: 'ip-boolean-input',
+    templateUrl: './boolean-input.component.html',
+    styleUrls: ['./boolean-input.component.css'],
+    standalone: false
 })
 export class BooleanInputComponent implements OnInit, OnChanges {
 

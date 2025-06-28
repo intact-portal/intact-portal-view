@@ -2,9 +2,10 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleCh
 import {NodeShape} from '../../../../interactions/shared/model/network-shapes/node-shape';
 
 @Component({
-  selector: 'ip-node-diagram',
-  templateUrl: './node-diagram.component.html',
-  styleUrls: ['./node-diagram.component.css']
+    selector: 'ip-node-diagram',
+    templateUrl: './node-diagram.component.html',
+    styleUrls: ['./node-diagram.component.css'],
+    standalone: false
 })
 export class NodeDiagramComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() shape: NodeShape;

@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'ip-edge-thickness-diagram',
-  templateUrl: './edge-thickness-diagram.component.html',
-  styleUrls: ['./edge-thickness-diagram.component.css']
+    selector: 'ip-edge-thickness-diagram',
+    templateUrl: './edge-thickness-diagram.component.html',
+    styleUrls: ['./edge-thickness-diagram.component.css'],
+    standalone: false
 })
 export class EdgeThicknessDiagramComponent implements OnInit {
 

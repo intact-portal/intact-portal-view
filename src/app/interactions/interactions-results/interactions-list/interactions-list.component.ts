@@ -9,9 +9,10 @@ import {FragmentService} from '../../shared/service/fragment.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-interactions-list',
-  templateUrl: './interactions-list.component.html',
-  styleUrls: ['./interactions-list.component.css']
+    selector: 'ip-interactions-list',
+    templateUrl: './interactions-list.component.html',
+    styleUrls: ['./interactions-list.component.css'],
+    standalone: false
 })
 export class InteractionsListComponent implements OnInit, AfterViewInit {
   private _isTabInteractionActive = false;

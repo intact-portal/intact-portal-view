@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {NetworkLegend} from "../../../shared/model/interaction-legend/network-legend";
 
 @Component({
@@ -10,9 +10,9 @@ import {NetworkLegend} from "../../../shared/model/interaction-legend/network-le
 export class InteractionsLegendComponent implements OnInit {
   objectKeys = Object.keys;
 
-  @Input() legend: NetworkLegend;
-  @Input() expanded: boolean;
-  @Input() mutation: boolean;
+  readonly legend = input<NetworkLegend>(undefined);
+  readonly expanded = input<boolean>(undefined);
+  readonly mutation = input<boolean>(undefined);
 
   constructor() {
   }

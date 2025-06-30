@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewEncapsulation, input, viewChild} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -9,11 +9,10 @@ import * as d3 from 'd3';
     standalone: false
 })
 export class MultilineGraphComponent implements OnInit, AfterViewInit {
-    @Input() dataPath: string;
-    @Input() dateGranularity: 'day' | 'year' = 'day';
+    readonly dataPath = input<string>(undefined);
+    readonly dateGranularity = input<'day' | 'year'>('day');
 
-    @ViewChild('lineChart')
-    svgRef: ElementRef<SVGElement>;
+    readonly svgRef = viewChild<ElementRef<SVGElement>>('lineChart');
 
 
     constructor() {
@@ -46,15 +45,15 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
         const yAxisGrid = d3.axisLeft(y).tickSize(-width).ticks(10);
 
         const line = d3.line<DatedAmount>()
-            .curve(this.dateGranularity === 'year' ? d3.curveStepAfter : d3.curveLinear)
+            .curve(this.dateGranularity() === 'year' ? d3.curveStepAfter : d3.curveLinear)
             .x(d => x(d.date))
             .y(d => y(d.amount));
-        const svg = d3.select(this.svgRef.nativeElement)
+        const svg = d3.select(this.svgRef().nativeElement)
             .attr('viewBox', [0, 0, WIDTH, HEIGHT])
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
-        d3.csv(this.dataPath, (row) => ({
+        d3.csv(this.dataPath(), (row) => ({
                 date: new Date(row.Date),
                 ...Object.keys(row).reduce((out, key) => {
                     out[key.replace(/_/g, ' ')] = +row[key];
@@ -191,7 +190,7 @@ export class MultilineGraphComponent implements OnInit, AfterViewInit {
                     const date = x.invert(mouse[0]);
                     mouseDate
                         .attr('transform', `translate(${mouse[0]}, ${-margin.top})`)
-                        .text(this.dateGranularity === 'year' ? date.getFullYear() : dateFormat.format(date))
+                        .text(this.dateGranularity() === 'year' ? date.getFullYear() : dateFormat.format(date))
 
                     const bbox = mouseLegend.node().getBBox();
                     const border = 5;

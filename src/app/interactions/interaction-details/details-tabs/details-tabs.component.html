@@ -19,12 +19,12 @@
 
         <div class="tabs-panel table-tab" id="participants">
             <ip-participant-table [participantTab]="isTabParticipantActive"
-                                  [interactionAc]="interactionAc"></ip-participant-table>
+                                  [interactionAc]="interactionAc()"></ip-participant-table>
 
         </div>
 
         <div class="tabs-panel table-tab" id="features">
-            <ip-features-table [interactionAc]="interactionAc"
+            <ip-features-table [interactionAc]="interactionAc()"
                                [featureTab]="isTabFeatureActive"
                                (featureChanged)="onFeatureSelectedChanged($event)"></ip-features-table>
         </div>

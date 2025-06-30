@@ -1,6 +1,6 @@
-<svg viewBox="0 0 100 100" class="node-diagram" [ngStyle]="{'height': height}" #svg>
+<svg viewBox="0 0 100 100" class="node-diagram" [ngStyle]="{'height': height()}" #svg>
     <g #shapeGroup>
-        @switch (shape) {
+        @switch (shape()) {
             @case (NodeShape.ELLIPSE) {
                 <circle
                         r="47.57" cx="50%" cy="50%"/>
@@ -32,9 +32,9 @@
         }
     </g>
 
-    @if (label !== null) {
+    @if (label() !== null) {
         <text fill="white" x="50%" y="52.5%" dominant-baseline="middle" text-anchor="middle" #labelElt>
-            {{ label }}
+            {{ label() }}
         </text>
     }
 </svg>

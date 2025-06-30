@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, input, output} from '@angular/core';
 
 @Component({
     selector: 'ip-boolean-input',
@@ -8,11 +8,9 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 })
 export class BooleanInputComponent implements OnInit, OnChanges {
 
-  @Input()
-  model: string;
+  readonly model = input<string>(undefined);
 
-  @Output()
-  modelChange: EventEmitter<string> = new EventEmitter<string>();
+  readonly modelChange = output<string>();
 
   value: boolean;
 
@@ -27,7 +25,7 @@ export class BooleanInputComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.value = this.model?.toLowerCase() === 'true';
+    this.value = this.model()?.toLowerCase() === 'true';
   }
 
 }

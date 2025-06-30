@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, input, output, viewChild, EventEmitter} from '@angular/core';
 import {InteractionDetails} from '../../shared/model/interaction-details/interaction-details.model';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ParticipantTableComponent} from './details/participant-table/participant-table.component';
@@ -18,9 +18,9 @@ import {FragmentService} from '../../shared/service/fragment.service';
 })
 export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
-  @Input() interactionAc: string;
-  @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() moleculeTypesCollected: EventEmitter<Set<string>> = new EventEmitter<Set<string>>();
+  readonly interactionAc = input<string>(undefined);
+  readonly featureChanged = output<string>();
+  readonly moleculeTypesCollected = output<Set<string>>();
 
   table: EventEmitter<ResultTable> = new EventEmitter<ResultTable>();
   href: string;
@@ -32,11 +32,9 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   private _isTabParticipantActive = false;
   private _isTabFeatureActive = false;
 
-  @ViewChild(ParticipantTableComponent, {static: true})
-  participantTable: ParticipantTableComponent;
+  readonly participantTable = viewChild(ParticipantTableComponent);
 
-  @ViewChild(FeaturesTableComponent, {static: true})
-  featureTable: FeaturesTableComponent;
+  readonly featureTable = viewChild(FeaturesTableComponent);
 
   constructor(private interactionsDetailsService: InteractionsDetailsService, private route: ActivatedRoute, private fragment: FragmentService) {
   }
@@ -53,12 +51,12 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
             case 'participants':
               this.isTabParticipantActive = true;
               this.isTabFeatureActive = false;
-              this.table.emit(this.participantTable);
+              this.table.emit(this.participantTable());
               break;
             case 'features':
               this.isTabParticipantActive = false;
               this.isTabFeatureActive = true;
-              this.table.emit(this.featureTable);
+              this.table.emit(this.featureTable());
               break;
             default:
               this.isTabParticipantActive = false;
@@ -91,7 +89,7 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
 
   private requestInteractionDetails() {
-    this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
+    this.interactionsDetailsService.getInteractionDetails(this.interactionAc())
       .pipe(untilDestroyed(this))
       .subscribe(interactionDetails => {
         if (!(interactionDetails instanceof HttpErrorResponse)) {

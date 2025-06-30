@@ -36,7 +36,7 @@ import {BooleanInputComponent} from './advanced-search/boolean-input/boolean-inp
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatIcon} from '@angular/material/icon';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {QueryBuilderModule} from '@kerwin612/ngx-query-builder';
+import {QueryBuilderModule} from '@eliot-ragueneau/ngx-query-builder';
 
 @NgModule({
   imports: [

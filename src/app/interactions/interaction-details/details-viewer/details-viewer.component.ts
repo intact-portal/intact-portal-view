@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ViewEncapsulation, input, output} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
@@ -18,10 +18,10 @@ export let viewer: App;
     standalone: false
 })
 export class DetailsViewerComponent implements AfterViewInit {
-  @Input() interactionAc: string;
+  readonly interactionAc = input<string>(undefined);
 
-  @Input() featureAc: string;
-  @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
+  readonly featureAc = input<string>(undefined);
+  readonly error = output<HttpErrorResponse>();
   private interactionData: MIJson;
 
   annotations = {
@@ -63,7 +63,7 @@ export class DetailsViewerComponent implements AfterViewInit {
           viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
         }
       });
-    this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
+    this.interactionsDetailsService.getInteractionViewer(this.interactionAc())
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (data) => {

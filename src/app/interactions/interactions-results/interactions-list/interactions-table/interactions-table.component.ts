@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ComponentFactory, ComponentFactoryResolver, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactory, ComponentFactoryResolver, OnChanges, OnInit, SimpleChanges, input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -18,15 +18,13 @@ const ebiURL = environment.ebi_url;
 
 @UntilDestroy()
 @Component({
-    selector: 'ip-interactions-table',
-    templateUrl: './interactions-table.component.html',
-    styleUrls: ['./interactions-table.component.css'],
-    standalone: false
+  selector: 'ip-interactions-table',
+  templateUrl: './interactions-table.component.html',
+  styleUrls: ['./interactions-table.component.css'],
+  standalone: false
 })
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-  @Input() interactionTab: boolean;
-
-
+  readonly interactionTab = input<boolean>(undefined);
   private _interactionSelected: string;
   dataTable: DataTables.Api;
 
@@ -187,7 +185,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            ... this._columns.identifierB,
+            ...this._columns.identifierB,
             render: (data, type) => {
               if (type === 'display' && data !== null) {
                 return this.tableFactory.identifierRender(extractId(data))
@@ -217,7 +215,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
           },
           {
             ...this._columns.negative,
-            render: data => data ? '❌' : '✔️'
+            render: data => data ?
+              '<i class="icon icon-common icon-times negative-interaction"></i>' :
+              '<i class="icon icon-common icon-check positive-interaction"></i>'
           },
           {
             ...this._columns.detectionMethod,
@@ -451,6 +451,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
   }
 
   get isActive(): boolean {
-    return this.interactionTab;
+    return this.interactionTab();
   }
 }

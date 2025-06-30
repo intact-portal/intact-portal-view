@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewEncapsulation, input, viewChild} from '@angular/core';
 import * as d3 from 'd3';
 
 // // https://observablehq.com/@d3/zoomable-treemap
@@ -17,11 +17,10 @@ interface Data {
     standalone: false
 })
 export class DonutGraphComponent implements OnInit, AfterViewInit {
-    @Input() dataPath: string;
-    @Input() threshold: number = null;
+    readonly dataPath = input<string>(undefined);
+    readonly threshold = input<number>(null);
 
-    @ViewChild('pieChart')
-    svgRef: ElementRef<SVGElement>;
+    readonly svgRef = viewChild<ElementRef<SVGElement>>('pieChart');
 
     constructor() {
     }
@@ -43,21 +42,22 @@ export class DonutGraphComponent implements OnInit, AfterViewInit {
             height = HEIGHT - margin.top - margin.bottom;
         const numberFormat = new Intl.NumberFormat();
         const radius = Math.min(width, height) / 2;
-        const svg = d3.select(this.svgRef.nativeElement)
+        const svg = d3.select(this.svgRef().nativeElement)
             .attr('viewBox', [0, 0, WIDTH, HEIGHT])
             .append('g')
             .attr('transform', `translate(${WIDTH / 2}, ${HEIGHT / 2})`);
 
         // Open data
-        d3.csv(this.dataPath, (row) => ({
+        d3.csv(this.dataPath(), (row) => ({
             label : row.label,
             amount : +row.amount
             })
         ).then( (data: any) => {
             // slice data to set threshold to visualise in donut
-            if (this.threshold !== null) {
-                const others = data.slice(this.threshold, data.length).reduce((t, e) => t + e.amount, 0)
-                data = data.slice(0, this.threshold);
+            const threshold = this.threshold();
+            if (threshold !== null) {
+                const others = data.slice(threshold, data.length).reduce((t, e) => t + e.amount, 0)
+                data = data.slice(0, threshold);
                 data.push({label: 'Others', amount: others})
             }
             const total = data.reduce((t, e) => t + e.amount, 0)

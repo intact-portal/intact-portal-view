@@ -27,6 +27,7 @@ import {DensitySliderComponent} from './interactions-filters/density-slider/dens
 import { RedirectComponent } from './redirect/redirect.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {CytoscapeDialogComponent} from './interactions-viewer/cytoscape-dialog.component/cytoscape-dialog.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import {CytoscapeDialogComponent} from './interactions-viewer/cytoscape-dialog.c
     ComponentsModule,
     FormsModule,
     MatButtonToggleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatIconModule,
   ],
   declarations: [
     InteractionsFiltersComponent,

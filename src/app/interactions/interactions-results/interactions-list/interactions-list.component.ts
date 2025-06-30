@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, viewChild} from '@angular/core';
 import {InteractionsTableComponent} from './interactions-table/interactions-table.component';
 import {InteractorsTableComponent} from './interactors-table/interactors-table.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -18,11 +18,9 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
   private _isTabInteractionActive = false;
   private _isTabInteractorActive = false;
 
-  @ViewChild(InteractionsTableComponent, {static: true})
-  interactionsTable: InteractionsTableComponent;
+  readonly interactionsTable = viewChild(InteractionsTableComponent);
 
-  @ViewChild(InteractorsTableComponent, {static: true})
-  interactorsTable: InteractorsTableComponent;
+  readonly interactorsTable = viewChild(InteractorsTableComponent);
 
   table: EventEmitter<ResultTable> = new EventEmitter<ResultTable>();
 
@@ -43,7 +41,7 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
               this._isTabInteractorActive = true;
               $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
               $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
-              this.table.emit(this.interactorsTable);
+              this.table.emit(this.interactorsTable());
               break;
             case 'interactions':
             default:
@@ -51,7 +49,7 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
               this._isTabInteractorActive = false;
               $('[aria-describedby="interactorsTable_info"]').css('visibility', 'hidden');
               $('[aria-describedby="interactionsTable_info"]').css('visibility', 'visible');
-              this.table.emit(this.interactionsTable);
+              this.table.emit(this.interactionsTable());
               break;
           }
         }, 0);
@@ -85,7 +83,7 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
         }, 0);
       }
     });
-    setTimeout(() => this.table.emit(this.interactionsTable), 0);
+    setTimeout(() => this.table.emit(this.interactionsTable()), 0);
   }
 
   /** GETTERS AND SETTERS **/

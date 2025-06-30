@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, input, output} from '@angular/core';
 import {extractRange} from '../utils';
 
 @Component({
@@ -9,17 +9,13 @@ import {extractRange} from '../utils';
 })
 export class RangeInputComponent<T> implements OnInit, OnChanges {
 
-  @Input()
-  typeD: string;
+  readonly typeD = input<string>(undefined);
 
-  @Input()
-  step: number = 1;
+  readonly step = input<number>(1);
 
-  @Input()
-  model: string;
+  readonly model = input<string>(undefined);
 
-  @Output()
-  modelChange: EventEmitter<string> = new EventEmitter<string>();
+  readonly modelChange = output<string>();
 
   start: string;
   stop: string;
@@ -35,7 +31,7 @@ export class RangeInputComponent<T> implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const range = extractRange(this.model);
+    const range = extractRange(this.model());
     this.start = range[0];
     this.stop = range[1];
   }

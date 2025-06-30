@@ -24,8 +24,7 @@
                                     <mat-slide-toggle color="primary" hideIcon="true"
                                                       (change)="onChangeInteractionIntraSpeciesFilter($event)"
                                                       [disabled]="!filters.canFilterIntraSpecies()"
-                                                      [checked]="filters.intraSpecies">
-                                    </mat-slide-toggle>
+                                                      [checked]="filters.intraSpecies"/>
                                     <span class="label margin-left-medium">Intra</span>
                                 </div>
                             </th>
@@ -231,7 +230,7 @@
                         <tbody>
                         <!--                        TODO investigate why 2 S. cerevisiae in Ndc80 search -->
                         @for (organism of filters.facets.host_organism_taxId_styled;
-                            track organism.value + organism.valueCount) {
+                            track $index) {
                             <tr (click)="$event.target !== checkbox ? checkbox.click() : null">
                                 <td class="no-padding">
                                     <input #checkbox type="checkbox" value="{{organism.value}}"
@@ -275,8 +274,7 @@
                     <mat-slide-toggle color="primary"
                                       (change)="filters.updateFilter(filter, $event.checked)"
                                       [disabled]="!filters.hasMutation"
-                                      [checked]="filters.mutation">
-                    </mat-slide-toggle>
+                                      [checked]="filters.mutation"/>
                     <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
                           [ngStyle]="{
                           'background-color': filters.mutation ? filters.mutationColor : 'white',
@@ -302,8 +300,7 @@
                     <mat-slide-toggle color="primary"
                                       (change)="filters.updateFilter(filter, $event.checked)"
                                       [disabled]="!filters.hasExpansion"
-                                      [checked]="filters.expansion">
-                    </mat-slide-toggle>
+                                      [checked]="filters.expansion"/>
                     <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
                           [ngClass]="{'discreet':!filters.expansion, 'emphasized':filters.expansion}">{{ filters.nbExpansion }}</span>
                 </div>

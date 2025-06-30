@@ -1,4 +1,4 @@
-@if (table | async) {
+@if (table() | async) {
     <div class="column-toggle-container " (mouseenter)="toggleActivate(true)" (mouseleave)="toggleActivate(false)">
         <button class="dropdown button stick-and-fill-right" type="button" [attr.data-toggle]="table$.columnView">
             Column toggle

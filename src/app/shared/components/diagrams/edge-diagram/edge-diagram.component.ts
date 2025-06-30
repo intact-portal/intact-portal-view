@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {EdgeShape} from '../../../../interactions/shared/model/network-shapes/edge-shape';
 
 @Component({
@@ -8,10 +8,10 @@ import {EdgeShape} from '../../../../interactions/shared/model/network-shapes/ed
     standalone: false
 })
 export class EdgeDiagramComponent implements OnInit {
-  @Input() shape: EdgeShape = EdgeShape.SOLID_LINE;
-  @Input() color: string = '#d6d6d6';
-  @Input() thickness: number = 15;
-  @Input() midCrossColor: string = '';
+  readonly shape = input<EdgeShape>(EdgeShape.SOLID_LINE);
+  readonly color = input<string>('#d6d6d6');
+  readonly thickness = input<number>(15);
+  readonly midCrossColor = input<string>('');
 
   constructor() {
   }
@@ -20,6 +20,6 @@ export class EdgeDiagramComponent implements OnInit {
   }
 
   get strokeShape(): string {
-    return this.shape === EdgeShape.SOLID_LINE ? '100' : '25 10';
+    return this.shape() === EdgeShape.SOLID_LINE ? '100' : '25 10';
   }
 }

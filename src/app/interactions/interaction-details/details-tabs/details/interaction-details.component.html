@@ -11,65 +11,71 @@
                 <div class="columns medium-6 small-12">
                     <div class="margin-top-large">
                         <h5>Accession</h5>
-                        {{ interactionDetails.interactionAc }}
+                        {{ interactionDetails().interactionAc }}
                     </div>
                     <div class="margin-top-large">
                         <h5>Type</h5>
-                        <ip-cv-term [cvTerm]="interactionDetails.type"></ip-cv-term>
+                        <ip-cv-term [cvTerm]="interactionDetails().type"></ip-cv-term>
                     </div>
 
                     <div class="margin-top-large">
                         <h5>Detection Method</h5>
-                        <ip-cv-term [cvTerm]="interactionDetails.detectionMethod"></ip-cv-term>
+                        <ip-cv-term [cvTerm]="interactionDetails().detectionMethod"></ip-cv-term>
                     </div>
 
                     <div class="margin-top-large">
                         <h5>Host Organism</h5>
-                        <span [innerHTML]="interactionDetails.hostOrganism | organism"></span>
+                        <span [innerHTML]="interactionDetails().hostOrganism | organism"></span>
                     </div>
 
                     <div class="margin-top-large">
                         <h5>Positive Interaction</h5>
-                        <span>{{ interactionDetails.negative ? '❌' : '✔️' }}</span>
+                        <span>
+                            @if (interactionDetails().negative) {
+                                <i class="icon icon-common icon-times negative-interaction"></i>
+                            } @else {
+                                <i class="icon icon-common icon-check positive-interaction"></i>
+                            }
+                        </span>
                     </div>
                 </div>
 
                 <div class="columns medium-6 small-12">
-                    @if (interactionDetails.xrefs.length != 0) {
+                    @if (interactionDetails().xrefs.length != 0) {
                         <div id="extXrefs" class="margin-top-large">
-                            @if (interactionDetails.xrefs) {
+                            @if (interactionDetails().xrefs) {
                                 <ip-external-xrefs
-                                        [xrefs]="interactionDetails.xrefs"></ip-external-xrefs>
+                                        [xrefs]="interactionDetails().xrefs"></ip-external-xrefs>
                             }
                         </div>
-                    } @if (interactionDetails.annotations.length != 0) {
+                    } @if (interactionDetails().annotations.length != 0) {
                     <div id="curationAnnotations" class="margin-top-large">
-                        @if (interactionDetails.annotations) {
+                        @if (interactionDetails().annotations) {
                             <ip-curation-annotations
-                                    [annotations]="interactionDetails.annotations"></ip-curation-annotations>
+                                    [annotations]="interactionDetails().annotations"></ip-curation-annotations>
                         }
                     </div>
                 }
                 </div>
 
-                @if (interactionDetails.parameters.length != 0) {
+                @if (interactionDetails().parameters.length != 0) {
                     <div id="parameters" class="columns medium-6 small-12 margin-top-large">
-                        @if (interactionDetails.parameters) {
+                        @if (interactionDetails().parameters) {
                             <ip-parameters
-                                    [parameters]="interactionDetails.parameters"></ip-parameters>
+                                    [parameters]="interactionDetails().parameters"></ip-parameters>
                         }
                     </div>
-                } @if (interactionDetails.confidences.length != 0) {
+                } @if (interactionDetails().confidences.length != 0) {
                 <div id="confidences" class="columns medium-6 small-12 margin-top-large">
-                    @if (interactionDetails.confidences) {
+                    @if (interactionDetails().confidences) {
                         <ip-confidences
-                                [confidences]="interactionDetails.confidences"></ip-confidences>
+                                [confidences]="interactionDetails().confidences"></ip-confidences>
                     }
                 </div>
             }
             </div>
         </div>
     </div>
-    <ip-publication [publication]="interactionDetails.publication"></ip-publication>
+    <ip-publication [publication]="interactionDetails().publication"></ip-publication>
 
 </div>

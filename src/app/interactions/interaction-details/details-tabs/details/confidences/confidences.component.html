@@ -1,12 +1,12 @@
 <div class="row">
-    <h4>Confidences ({{ confidences.length }})</h4>
+    <h4>Confidences ({{ confidences().length }})</h4>
     <table id="confidences">
         <thead>
         <th>Type</th>
         <th>Value</th>
         </thead>
         <tbody>
-        @for (confidence of confidences; track confidence) {
+        @for (confidence of confidences(); track confidence) {
             <tr>
                 <td>{{ confidence.type }}</td>
                 <td>{{ confidence.value }}</td>

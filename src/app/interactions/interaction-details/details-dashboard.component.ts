@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, input, model} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,7 +20,7 @@ const baseURL = environment.intact_portal_graph_ws;
 })
 export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   private _interactionAc: string;
-  @Input() featureSelected: string;
+  readonly featureSelected = model<string>(undefined);
   private _error: HttpErrorResponse;
   viewer = viewer;
   formatTypes = Format.singleInteractionFormats;
@@ -61,7 +61,7 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   }
 
   public onFeatureSelectedChanged(featureAc: string): void {
-    this.featureSelected = featureAc;
+    this.featureSelected.set(featureAc);
   }
 
   get error(): HttpErrorResponse {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {Experiment} from '../../../../shared/model/interaction-details/experiment.model';
 
 
@@ -10,7 +10,7 @@ import {Experiment} from '../../../../shared/model/interaction-details/experimen
 })
 export class ExperimentComponent implements OnInit {
 
-  @Input() experiment: Experiment;
+  readonly experiment = input<Experiment>(undefined);
 
   hover = false;
 

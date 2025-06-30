@@ -36,7 +36,7 @@
     <div class="row expanded">
         <div>
             <ip-details-viewer [interactionAc]="interactionAc"
-                               [featureAc]="featureSelected"
+                               [featureAc]="featureSelected()"
                                (error)="searchError($event)"></ip-details-viewer>
         </div>
         <div class="columns medium-12">

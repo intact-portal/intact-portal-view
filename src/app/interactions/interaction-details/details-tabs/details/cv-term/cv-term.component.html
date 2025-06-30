@@ -1,9 +1,9 @@
 @if (description) {
     <span [matTooltip]="description" class="has-tip cv-term" tabindex="1">
-    {{ cvTerm.shortName }}
+    {{ cvTerm().shortName }}
   </span>
 } @else {
-    <a [href]="cvTerm | cvToUrl: 'access'" class="cv-term" target="_blank">
-        {{ cvTerm.shortName }}
+    <a [href]="cvTerm() | cvToUrl: 'access'" class="cv-term" target="_blank">
+        {{ cvTerm().shortName }}
     </a>
 }

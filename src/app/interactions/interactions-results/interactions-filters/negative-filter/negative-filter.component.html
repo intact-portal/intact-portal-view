@@ -1,27 +1,28 @@
 <div class="container">
-  <em>Positive and/or negative</em>
-  <em class="margin-bottom-xsmall">interactions only</em>
-  <mat-button-toggle-group [ngModel]="filters.negative" (change)="filters.updateFilter(FILTER.NEGATIVE, $event.value)"
-                           aria-label="Negative interaction filter" [hideSingleSelectionIndicator]="true">
-    <mat-button-toggle [value]="STATUS.POSITIVE_ONLY" [disabled]="filters.nbPositive === 0">
-      <div class="bi-layered">
-        <span class="top-level">✔️</span>
-        <span class="bottom-level">{{filters.nbPositive}}</span>
-      </div>
-    </mat-button-toggle>
-    <mat-button-toggle [value]="STATUS.POSITIVE_AND_NEGATIVE">
-      <div class="bi-layered">
-        <span class="top-level">✔️ | ❌</span>
-        <span class="bottom-level">{{filters.nbPositive + filters.nbNegative}}</span>
-      </div>
-    </mat-button-toggle>
-    <mat-button-toggle [value]="STATUS.NEGATIVE_ONLY" [disabled]="filters.nbNegative === 0">
-      <div class="bi-layered">
-        <span class="top-level">❌</span>
-        <span class="bottom-level">{{filters.nbNegative}}</span>
-      </div>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
+    <em>Positive and/or negative</em>
+    <em class="margin-bottom-xsmall">interactions only</em>
+    <mat-button-toggle-group [ngModel]="filters.negative" (change)="filters.updateFilter(FILTER.NEGATIVE, $event.value)"
+                             aria-label="Negative interaction filter" [hideSingleSelectionIndicator]="true">
+        <mat-button-toggle [value]="STATUS.POSITIVE_ONLY" [disabled]="filters.nbPositive === 0">
+            <div class="bi-layered left">
+                <span class="top-level"><i class="icon icon-common icon-check positive-interaction"></i></span>
+                <span class="bottom-level">{{ filters.nbPositive }}</span>
+            </div>
+        </mat-button-toggle>
+        <mat-button-toggle [value]="STATUS.POSITIVE_AND_NEGATIVE">
+            <div class="bi-layered middle">
+                <span class="top-level"><i class="icon icon-common icon-check positive-interaction"></i>️ | <i
+                        class="icon icon-common icon-times negative-interaction"></i></span>
+                <span class="bottom-level">{{ filters.nbPositive + filters.nbNegative }}</span>
+            </div>
+        </mat-button-toggle>
+        <mat-button-toggle [value]="STATUS.NEGATIVE_ONLY" [disabled]="filters.nbNegative === 0">
+            <div class="bi-layered right">
+                <span class="top-level"><i class="icon icon-common icon-times negative-interaction"></i></span>
+                <span class="bottom-level">{{ filters.nbNegative }}</span>
+            </div>
+        </mat-button-toggle>
+    </mat-button-toggle-group>
 </div>
 
 

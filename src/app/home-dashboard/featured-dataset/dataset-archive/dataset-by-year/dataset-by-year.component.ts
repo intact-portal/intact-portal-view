@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, input} from '@angular/core';
 import {Dataset} from '../../model/dataset.model';
 import {environment} from '../../../../../environments/environment';
 import {PubmedDataset} from '../../model/pubmed-dataset.model';
@@ -12,15 +12,15 @@ import {SearchService} from '../../../search/service/search.service';
 })
 export class DatasetByYearComponent implements AfterViewInit {
 
-  @Input() year: string;
+  readonly year = input<string>(undefined);
 
-  @Input() datasets: Dataset[]
+  readonly datasets = input<Dataset[]>(undefined);
 
   constructor(private search: SearchService) {
   }
 
   ngAfterViewInit(): void {
-    $(`#accordion-${this.year}`).foundation();
+    $(`#accordion-${this.year()}`).foundation();
     $('.accordion-title').on('mouseup', function () {
       const $accordionItem = $(this).parent(),
         // is the section hidden? if the section is not yet visible, the click is to open it

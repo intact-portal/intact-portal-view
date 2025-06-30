@@ -1,30 +1,30 @@
-@if (interactome.symbol) {
+@if (interactome().symbol) {
     <div class="card">
         <div class="medium-12">
-            <b>{{ interactome.scientificName }}</b><br>
-            {{ interactome.nameDetails }}
+            <b>{{ interactome().scientificName }}</b><br>
+            {{ interactome().nameDetails }}
         </div>
-        <a href="https://www.uniprot.org/taxonomy/{{interactome.taxid}}" target="_blank">{{ interactome.taxid }}</a>
+        <a href="https://www.uniprot.org/taxonomy/{{interactome().taxid}}" target="_blank">{{ interactome().taxid }}</a>
         <div class="flex-spacer"></div>
         <div class="medium-12" style="text-align: center">
-            <button (click)="search.speciesSearch(interactome)" class="species-button">
-                @if (!interactome.symbol.startsWith('assets')) {
+            <button (click)="search.speciesSearch(interactome())" class="species-button">
+                @if (!interactome().symbol.startsWith('assets')) {
                     <span
-                            [attr.data-icon]="interactome.symbol"
+                            [attr.data-icon]="interactome().symbol"
                             style="color: #68297c"
-                            [ngClass]="{'icon ': true, 'icon-species': interactome.symbol !== '?', 'icon-functional': interactome.symbol === '?'}">
+                            [ngClass]="{'icon ': true, 'icon-species': interactome().symbol !== '?', 'icon-functional': interactome().symbol === '?'}">
           </span>
-                } @if (interactome.symbol.startsWith('assets')) {
+                } @if (interactome().symbol.startsWith('assets')) {
                 <span>
-            <div class="iconOrganismImg" [style]="maskStyle(interactome.symbol)"></div>
+            <div class="iconOrganismImg" [style]="maskStyle(interactome().symbol)"></div>
           </span>
             }
             </button>
         </div>
         <div class="actions button-group no-margin rounded no-wrap download-button-group">
-            <button class="button lighter download-button" (click)="goToInteractomePSI25()">miXML 2.5</button>
-            <button class="button lighter download-button" (click)="goToInteractomePSI30()">miXML 3.0</button>
-            <button class="button lighter download-button" (click)="goToInteractomeMiTab()">miTab 2.7</button>
+            <a class="button lighter download-button" [href]="psi25()" download target="_blank">miXML 2.5</a>
+            <a class="button lighter download-button" [href]="psi30()" download target="_blank">miXML 3.0</a>
+            <a class="button lighter download-button" [href]="miTab()" download target="_blank">miTab 2.7</a>
         </div>
     </div>
 }

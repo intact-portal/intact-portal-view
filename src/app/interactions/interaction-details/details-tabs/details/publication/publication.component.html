@@ -5,33 +5,33 @@
     <div id="publicationPanel" class="margin-top-large margin-bottom-large">
         <div class="row expanded">
             <div class="columns medium-6">
-                @if (publication.title) {
+                @if (publication().title) {
                     <div class="margin-top-large margin-bottom-large">
                         <h5>Title</h5>
-                        {{ publication.title }}
+                        {{ publication().title }}
                     </div>
-                } @if (publication.journal) {
+                } @if (publication().journal) {
                 <div class="margin-top-large margin-bottom-large">
                     <h5>Journal</h5>
-                    {{ publication.journal }}
+                    {{ publication().journal }}
                 </div>
-            } @if (publication.authors) {
+            } @if (publication().authors) {
                 <div class="margin-top-large margin-bottom-large">
                     <h5>Authors</h5>
-                    {{ publication.authors }}
+                    {{ publication().authors }}
                 </div>
-            } @if (publication.publicationDate) {
+            } @if (publication().publicationDate) {
                 <div class="margin-top-large margin-bottom-large">
                     <h5>Publication date</h5>
-                    {{ publication.publicationDate }}
+                    {{ publication().publicationDate }}
                 </div>
-            } @if (publication.pubmedId) {
+            } @if (publication().pubmedId) {
                 <div class="margin-top-large margin-bottom-xlarge">
                     <h5>Publication reference</h5>
-                    @if (!publication.pubmedId.startsWith('unassigned')) {
-                        <a href="https://europepmc.org/article/MED/{{publication.pubmedId}}?singleResult=true"
+                    @if (!publication().pubmedId.startsWith('unassigned')) {
+                        <a href="https://europepmc.org/article/MED/{{publication().pubmedId}}?singleResult=true"
                            target="_blank">
-                            PubMed: {{ publication.pubmedId }}
+                            PubMed: {{ publication().pubmedId }}
                         </a>
                     } @else {
                     <div class="button alert">This publication is not present on PubMed yet.<br> Thus, this interaction
@@ -44,18 +44,18 @@
             </div>
 
             <div class="columns medium-6">
-                @if (publication.publicationXrefs.length !== 0) {
+                @if (publication().publicationXrefs.length !== 0) {
                     <div id="extXrefs" class="margin-top-large">
-                        @if (publication.publicationXrefs) {
+                        @if (publication().publicationXrefs) {
                             <ip-external-xrefs
-                                    [xrefs]="publication.publicationXrefs"></ip-external-xrefs>
+                                    [xrefs]="publication().publicationXrefs"></ip-external-xrefs>
                         }
                     </div>
-                } @if (publication.publicationAnnotations.length !== 0) {
+                } @if (publication().publicationAnnotations.length !== 0) {
                 <div id="curationAnnotations" class="margin-top-large">
-                    @if (publication.publicationAnnotations) {
+                    @if (publication().publicationAnnotations) {
                         <ip-curation-annotations
-                                [annotations]="publication.publicationAnnotations"></ip-curation-annotations>
+                                [annotations]="publication().publicationAnnotations"></ip-curation-annotations>
                     }
                 </div>
             }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {Annotation} from '../../../../shared/model/interaction-details/annotation.model';
 
 @Component({
@@ -9,7 +9,7 @@ import {Annotation} from '../../../../shared/model/interaction-details/annotatio
 })
 export class CurationAnnotationsComponent implements OnInit {
 
-  @Input() annotations: Annotation[];
+  readonly annotations = input<Annotation[]>(undefined);
 
   constructor() { }
 

@@ -9,8 +9,11 @@
   flex-direction: column;
   line-height: normal;
   margin: 0.5em 0;
+  &.left {
+    margin-left: 4px;
+  }
+  &.right {
+    margin-right: 4px;
+  }
 }
 
-.top-level {
-  margin-bottom: 0.5em;
-}

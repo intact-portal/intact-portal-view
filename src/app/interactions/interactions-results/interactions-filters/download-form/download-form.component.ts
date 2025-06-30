@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {environment} from '../../../../../environments/environment';
 import {Format} from '../../../shared/model/download/format.model';
 import {Filter, FilterService} from '../../../shared/service/filter.service';
@@ -14,8 +14,8 @@ const baseURL = environment.intact_portal_graph_ws;
     standalone: false
 })
 export class DownloadFormComponent implements OnInit {
-  @Input() format: Format = Format.json;
-  @Input() last: boolean = false;
+  readonly format = input<Format>(Format.json);
+  readonly last = input<boolean>(false);
 
   filterTypes = Filter;
   readonly URL = `${baseURL}/graph/export/interaction/list`;

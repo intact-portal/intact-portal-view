@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model";
 import { HttpClient } from "@angular/common/http";
 
@@ -10,7 +10,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class CvTermComponent implements OnInit {
 
-  @Input() cvTerm: CvTerm
+  readonly cvTerm = input<CvTerm>(undefined);
   description: string;
 
   constructor() {

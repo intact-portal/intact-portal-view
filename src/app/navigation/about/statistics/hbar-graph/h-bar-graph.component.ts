@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewEncapsulation, input, viewChild} from '@angular/core';
 import * as d3 from 'd3';
 
 
@@ -10,10 +10,9 @@ import * as d3 from 'd3';
     standalone: false
 })
 export class HBarGraphComponent implements OnInit, AfterViewInit {
-  @Input() dataPath: string;
+  readonly dataPath = input<string>(undefined);
 
-  @ViewChild('barChart')
-  svgRef: ElementRef<SVGElement>;
+  readonly svgRef = viewChild<ElementRef<SVGElement>>('barChart');
 
   constructor() {
   }
@@ -33,13 +32,13 @@ export class HBarGraphComponent implements OnInit, AfterViewInit {
       width = WIDTH - margin.left - margin.right,
       height = HEIGHT - margin.top - margin.bottom;
     const numberFormat = new Intl.NumberFormat();
-    const svg = d3.select(this.svgRef.nativeElement)
+    const svg = d3.select(this.svgRef().nativeElement)
       .attr('viewBox', [0, 0, WIDTH, HEIGHT])
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
 
-    d3.csv(this.dataPath, (row) => {
+    d3.csv(this.dataPath(), (row) => {
         return ({
           Organism: row.Organism,
           Reference: +row.Reference,

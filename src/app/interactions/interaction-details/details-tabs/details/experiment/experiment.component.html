@@ -9,29 +9,29 @@
 
         <div class="margin-top-large margin-bottom-large">
             <h5>Experiment Accession</h5>
-            {{ experiment.experimentAc }}
+            {{ experiment().experimentAc }}
         </div>
         <div class="margin-top-large margin-bottom-large">
             <h5>Host Organism Model</h5>
-            {{ experiment.interactionHostOrganism }}
+            {{ experiment().interactionHostOrganism }}
         </div>
         <div class="margin-top-large margin-bottom-xlarge">
             <h5>Interaction Detection Method</h5>
-            {{ experiment.interactionDetectionMethod }}
+            {{ experiment().interactionDetectionMethod }}
         </div>
 
-        @if (experiment.experimentXrefs.length !== 0) {
+        @if (experiment().experimentXrefs.length !== 0) {
             <div id="extXrefs" class="margin-top-large">
-                @if (experiment.experimentXrefs) {
+                @if (experiment().experimentXrefs) {
                     <ip-external-xrefs
-                            [xrefs]="experiment.experimentXrefs"></ip-external-xrefs>
+                            [xrefs]="experiment().experimentXrefs"></ip-external-xrefs>
                 }
             </div>
-        } @if (experiment.experimentAnnotations.length !== 0) {
+        } @if (experiment().experimentAnnotations.length !== 0) {
         <div id="curationAnnotations" class="margin-top-large">
-            @if (experiment.experimentAnnotations) {
+            @if (experiment().experimentAnnotations) {
                 <ip-curation-annotations
-                        [annotations]="experiment.experimentAnnotations"></ip-curation-annotations>
+                        [annotations]="experiment().experimentAnnotations"></ip-curation-annotations>
             }
         </div>
     }

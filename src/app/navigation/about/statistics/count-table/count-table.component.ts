@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -8,14 +8,14 @@ import * as d3 from 'd3';
     standalone: false
 })
 export class CountTableComponent implements OnInit {
-    @Input() dataPath: string;
+    readonly dataPath = input<string>(undefined);
     data: { feature: string, amount: number }[];
 
     constructor() {
     }
 
     ngOnInit(): void {
-        d3.csv(this.dataPath, rawRow => ({
+        d3.csv(this.dataPath(), rawRow => ({
             feature: rawRow.Feature,
             amount: +rawRow.Count,
         })).then(value => {

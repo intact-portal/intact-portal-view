@@ -5,7 +5,7 @@
                           [value]="0">
     </mat-progress-spinner>
     <div style="text-align: center">
-        <h4>Loading {{ query }}</h4>
+        <h4>Loading {{ query() }}</h4>
         @if (takesLonger) {
             <p>This takes longer than usual. Bear with us!</p>
         }

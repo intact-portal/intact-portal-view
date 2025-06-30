@@ -1,12 +1,12 @@
 <div class="row">
-    <h5>External Cross References ({{ xrefs.length }})</h5>
+    <h5>External Cross References ({{ xrefs().length }})</h5>
     <table id="externalXref">
         <thead>
         <th>Database</th>
         <th>Identifier</th>
         </thead>
         <tbody>
-        @for (xref of xrefs; track xref) {
+        @for (xref of xrefs(); track xref) {
             <tr>
                 <td>
                     <ip-cv-term [cvTerm]="xref.database"></ip-cv-term>

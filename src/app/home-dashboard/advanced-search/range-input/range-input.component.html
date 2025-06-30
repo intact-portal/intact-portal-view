@@ -1,5 +1,5 @@
 [
-<input [step]="step" class="query-input mini" matInput [type]="typeD" [(ngModel)]="start" (ngModelChange)="onChange()">
+<input [step]="step()" class="query-input mini" matInput [type]="typeD()" [(ngModel)]="start" (ngModelChange)="onChange()">
 TO
-<input [step]="step" class="query-input mini" matInput [type]="typeD" [(ngModel)]="stop" (ngModelChange)="onChange()">
+<input [step]="step()" class="query-input mini" matInput [type]="typeD()" [(ngModel)]="stop" (ngModelChange)="onChange()">
 ]

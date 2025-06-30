@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
 import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model";
 import {Parameter} from "../../../../shared/model/interaction-details/parameter.model";
@@ -11,7 +11,7 @@ import {Parameter} from "../../../../shared/model/interaction-details/parameter.
 })
 export class ParametersComponent implements OnInit {
 
-  @Input() parameters: Parameter[];
+  readonly parameters = input<Parameter[]>(undefined);
 
   constructor() { }
 

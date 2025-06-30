@@ -1,5 +1,5 @@
 <div class="row">
-    <h5>Parameters ({{ parameters.length }})</h5>
+    <h5>Parameters ({{ parameters().length }})</h5>
     <table id="parameters">
         <thead>
         <tr>
@@ -9,7 +9,7 @@
         </tr>
         </thead>
         <tbody>
-        @for (param of parameters; track param) {
+        @for (param of parameters(); track param) {
             <tr>
                 <td>
                     <ip-cv-term [cvTerm]="param.type"></ip-cv-term>

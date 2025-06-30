@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit, input, output} from '@angular/core';
 import {InteractionDetails} from '../../../shared/model/interaction-details/interaction-details.model';
 
 
@@ -10,9 +10,9 @@ import {InteractionDetails} from '../../../shared/model/interaction-details/inte
 })
 export class InteractionDetailsComponent implements OnInit {
 
-  @Input() interactionDetails: InteractionDetails;
+  readonly interactionDetails = input<InteractionDetails>(undefined);
 
-  @Output() featureToEmit: EventEmitter<string> = new EventEmitter<string>();
+  readonly featureToEmit = output<string>();
 
   hover = false;
 

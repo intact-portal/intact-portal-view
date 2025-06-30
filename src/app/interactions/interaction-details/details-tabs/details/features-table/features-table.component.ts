@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, input, output} from '@angular/core';
 
 import {environment} from '../../../../../../environments/environment';
 import {FeatureTable} from '../../../../shared/model/tables/feature-table.model';
@@ -16,10 +16,10 @@ const baseURL = environment.intact_portal_graph_ws;
 })
 export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
 
-  @Input() interactionAc: string;
-  @Input() featureTab: boolean;
+  readonly interactionAc = input<string>(undefined);
+  readonly featureTab = input<boolean>(undefined);
 
-  @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
+  readonly featureChanged = output<string>();
 
   dataTable: DataTables.Api;
   columnView = 'features_columnView';
@@ -61,7 +61,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/graph/features/datatables/` + this.interactionAc,
+        url: `${baseURL}/graph/features/datatables/` + this.interactionAc(),
         type: 'POST',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
@@ -169,6 +169,6 @@ export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
   }
 
   get isActive(): boolean {
-    return this.featureTab;
+    return this.featureTab();
   }
 }

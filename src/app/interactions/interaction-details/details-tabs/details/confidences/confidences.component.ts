@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {TypeValueModel} from '../../../../shared/model/interaction-details/type-value.model';
 import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model";
 
@@ -10,7 +10,7 @@ import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model
 })
 export class ConfidencesComponent implements OnInit {
 
-  @Input() confidences: TypeValueModel<CvTerm>[];
+  readonly confidences = input<TypeValueModel<CvTerm>[]>(undefined);
 
   constructor() { }
 

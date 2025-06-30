@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {CrossReference} from "../../../../shared/model/interaction-details/cross-reference.model";
 
 
@@ -10,7 +10,7 @@ import {CrossReference} from "../../../../shared/model/interaction-details/cross
 })
 export class ExternalXrefsComponent implements OnInit {
 
-  @Input() xrefs: CrossReference[];
+  readonly xrefs = input<CrossReference[]>(undefined);
 
   constructor() { }
 

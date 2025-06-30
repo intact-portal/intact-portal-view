@@ -14,7 +14,7 @@ import {environment} from '../../../../environments/environment';
 @Component({
     selector: 'ip-interactions-filters',
     templateUrl: './interactions-filters.component.html',
-    styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css'],
+    styleUrls: ['./interactions-filters.component.css'],
     animations: [
         trigger('bendTip', [
             state('tipBended', style({

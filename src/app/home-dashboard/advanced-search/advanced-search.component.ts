@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
-import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from '@kerwin612/ngx-query-builder';
+import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from '@eliot-ragueneau/ngx-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
 import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper, MIQL_DATE_FORMAT} from './advanced-search.config';
 import {ColorMIQLPipe} from './colorMIQL.pipe';
@@ -59,7 +59,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
     transition: 'margin-bottom-none',
     connector: 'ad-q-connector',
     row: 'ad-q-row',
-    invalidRuleSet: 'ad-q-row invalid-rule-set'
+    invalidRuleSet: 'ad-q-row invalid-rule-set',
   }
 
   updateCondition(ruleSet: RuleSet, e: MouseEvent, builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {

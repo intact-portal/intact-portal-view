@@ -4,20 +4,20 @@
     <h5>Nodes</h5>
     <div>
         <span>Color ~ <i>Species</i></span>
-        @if (legend.node_legend.species_color) {
+        @if (legend().node_legend.species_color) {
             <div id="species-colors">
-                @for (key of objectKeys(legend.node_legend.species_color); track key) {
+                @for (key of objectKeys(legend().node_legend.species_color); track key) {
                     <div class="node-line">
-                        <ip-node-diagram [color]="legend.node_legend.species_color[key]"></ip-node-diagram>
+                        <ip-node-diagram [color]="legend().node_legend.species_color[key]"></ip-node-diagram>
                         <span><i class="network-legend-label">{{ key }}</i></span>
                     </div>
                 }
             </div>
-        } @if (legend.node_legend.kingdom_color) {
+        } @if (legend().node_legend.kingdom_color) {
         <div id="kingdom-colors">
-            @for (key of objectKeys(legend.node_legend.kingdom_color); track key) {
+            @for (key of objectKeys(legend().node_legend.kingdom_color); track key) {
                 <div class="node-line">
-                    <ip-node-diagram [color]="legend.node_legend.kingdom_color[key]"></ip-node-diagram>
+                    <ip-node-diagram [color]="legend().node_legend.kingdom_color[key]"></ip-node-diagram>
                     <span class="network-legend-label">{{ key }}</span>
                 </div>
             }
@@ -25,23 +25,23 @@
     }
     </div>
 
-    @if (legend.node_legend.shape) {
+    @if (legend().node_legend.shape) {
         <div id="node-shapes">
             <span>Shape ~ <i>Type</i></span>
-            @for (key of objectKeys(legend.node_legend.shape); track key) {
+            @for (key of objectKeys(legend().node_legend.shape); track key) {
                 <div class="node-line">
-                    <ip-node-diagram [shape]="legend.node_legend.shape[key]"></ip-node-diagram>
+                    <ip-node-diagram [shape]="legend().node_legend.shape[key]"></ip-node-diagram>
                     <span>{{ key }}</span>
                 </div>
             }
         </div>
-    } @if (mutation && legend.node_legend.border_color.true) {
+    } @if (mutation() && legend().node_legend.border_color.true) {
     <div id="node-mutation">
         <span>Border ~ <i>Affected by mutation</i></span>
         @for (status of ['true']; track status) {
             <div class="node-line">
-                <ip-node-diagram [borderColor]="legend.node_legend.border_color[status].value"></ip-node-diagram>
-                <span class="network-legend-label">{{ legend.node_legend.border_color[status].label }}</span>
+                <ip-node-diagram [borderColor]="legend().node_legend.border_color[status].value"></ip-node-diagram>
+                <span class="network-legend-label">{{ legend().node_legend.border_color[status].label }}</span>
             </div>
         }
     </div>
@@ -51,14 +51,14 @@
 <div id="edge-legends">
     <h5>Edges</h5>
 
-    @if (expanded) {
+    @if (expanded()) {
         <div>
-            @if (!mutation) {
+            @if (!mutation()) {
                 <div>
                     <span>Color ~ <i>Type</i></span>
-                    @for (key of objectKeys(legend.edge_legend.evidence_color); track key) {
+                    @for (key of objectKeys(legend().edge_legend.evidence_color); track key) {
                         <div class="edge-line">
-                            <ip-edge-diagram [color]="legend.edge_legend.evidence_color[key]"></ip-edge-diagram>
+                            <ip-edge-diagram [color]="legend().edge_legend.evidence_color[key]"></ip-edge-diagram>
                             <span class="network-legend-label">{{ key }}</span>
                         </div>
                     }
@@ -68,46 +68,46 @@
                 <span>Color ~ <i>Affected by mutation</i></span>
                 @for (status of ['true']; track status) {
                     <div class="edge-line">
-                        <ip-edge-diagram [color]="legend.edge_legend.mutation_color[status].value"></ip-edge-diagram>
-                        <span class="network-legend-label">{{ legend.edge_legend.mutation_color[status].label }}</span>
+                        <ip-edge-diagram [color]="legend().edge_legend.mutation_color[status].value"></ip-edge-diagram>
+                        <span class="network-legend-label">{{ legend().edge_legend.mutation_color[status].label }}</span>
                     </div>
                 }
             </div>
-        } @if (legend.edge_legend.expansion.true) {
+        } @if (legend().edge_legend.expansion.true) {
             <div>
                 <span>Shape ~ <i>Expansion method</i></span>
                 @for (status of ['true']; track status) {
                     <div class="edge-line">
-                        <ip-edge-diagram [shape]="legend.edge_legend.expansion[status].value"></ip-edge-diagram>
-                        <span class="network-legend-label">{{ legend.edge_legend.expansion[status].label }}</span>
+                        <ip-edge-diagram [shape]="legend().edge_legend.expansion[status].value"></ip-edge-diagram>
+                        <span class="network-legend-label">{{ legend().edge_legend.expansion[status].label }}</span>
                     </div>
                 }
             </div>
-        } @if (legend.edge_legend.negative?.true) {
+        } @if (legend().edge_legend.negative?.true) {
             <div>
                 <span>Cross ~ <i>Positive interaction</i></span>
                 @for (status of ['true']; track status) {
                     <div class="edge-line">
-                        <ip-edge-diagram [midCrossColor]="legend.edge_legend.negative[status]?.value"></ip-edge-diagram>
-                        <span class="network-legend-label">{{ legend.edge_legend.negative[status]?.label }}</span>
+                        <ip-edge-diagram [midCrossColor]="legend().edge_legend.negative[status]?.value"></ip-edge-diagram>
+                        <span class="network-legend-label">{{ legend().edge_legend.negative[status]?.label }}</span>
                     </div>
                 }
             </div>
         }
         </div>
     } @else {
-    @if (legend.edge_legend.summary_color) {
+    @if (legend().edge_legend.summary_color) {
         <div>
             <span>Color ~ <i>MI Score</i></span>
-            <ip-color-range-diagram [rangeMap]="legend.edge_legend.summary_color"></ip-color-range-diagram>
+            <ip-color-range-diagram [rangeMap]="legend().edge_legend.summary_color"></ip-color-range-diagram>
         </div>
     }
     <div>
         <span>Width ~ <i>#Evidence</i></span>
-        <ip-edge-thickness-diagram [minValue]="legend.edge_legend.summary_width.minValue"
-                                   [maxValue]="legend.edge_legend.summary_width.maxValue"
-                                   [minThickness]="legend.edge_legend.summary_width.minWidth"
-                                   [maxThickness]="legend.edge_legend.summary_width.maxWidth"
+        <ip-edge-thickness-diagram [minValue]="legend().edge_legend.summary_width.minValue"
+                                   [maxValue]="legend().edge_legend.summary_width.maxValue"
+                                   [minThickness]="legend().edge_legend.summary_width.minWidth"
+                                   [maxThickness]="legend().edge_legend.summary_width.maxWidth"
                                    [color]="'#e75a00'"></ip-edge-thickness-diagram>
     </div>
 }

@@ -1,4 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeDescriptionComponent} from './home-description/home-description.component';
 import {TileMenuComponent} from './tile-menu/tile-menu.component';
@@ -13,7 +13,6 @@ import {DatasetArchiveComponent} from './featured-dataset/dataset-archive/datase
 import {AdvancedSearchComponent} from './advanced-search/advanced-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FileUploadModule} from 'ng2-file-upload';
-import {QueryBuilderModule} from '@kerwin612/ngx-query-builder';
 import {BatchSearchComponent} from './batch-search/batch-search.component';
 import {KeyvaluemapPipe} from './shared/keyvaluemap.pipe';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -37,13 +36,13 @@ import {BooleanInputComponent} from './advanced-search/boolean-input/boolean-inp
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatIcon} from '@angular/material/icon';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import {QueryBuilderModule} from '@kerwin612/ngx-query-builder';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    QueryBuilderModule,
     HomeDashboardRoutingModule,
     FileUploadModule,
     MatProgressSpinnerModule,
@@ -51,6 +50,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
     MatTooltipModule,
     MatButtonModule,
     MatCardModule,
+    QueryBuilderModule,
     MatStepperModule,
     ProgressSpinnerModule,
     ComponentsModule,
@@ -59,7 +59,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
     MatMomentDateModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatIcon
+    MatIcon,
   ],
   exports: [
     KeyvaluemapPipe

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, input, Input, OnInit, viewChild, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, input, Input, numberAttribute, OnInit, viewChild, ViewChild} from '@angular/core';
 import * as d3 from 'd3';
 import {LabelType, Options} from '@angular-slider/ngx-slider';
 import {DensityOptions} from './density-options.model';
@@ -8,10 +8,10 @@ import {Facet} from '../../../shared/model/interactions-results/facet.model';
 
 @UntilDestroy()
 @Component({
-    selector: 'ip-density-slider',
-    templateUrl: './density-slider.component.html',
-    styleUrls: ['./density-slider.component.css'],
-    standalone: false
+  selector: 'ip-density-slider',
+  templateUrl: './density-slider.component.html',
+  styleUrls: ['./density-slider.component.css'],
+  standalone: false
 })
 export class DensitySliderComponent implements OnInit, AfterViewInit {
 
@@ -152,12 +152,12 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
   }
 
   private updateGradient() {
-    const limits = Array.from({length: 11}, (v, k) => k / 10)
-    insert(limits, this.filters.currentMinMIScore);
-    insert(limits, this.filters.currentMaxMIScore);
+    const limits = Array.from({length: 11}, (v, k) => ({value: k / 10, name: 'p' + k}))
+    insert(limits, {value: this.filters.currentMinMIScore, name: 'min'}, p => p.value);
+    insert(limits, {value: this.filters.currentMaxMIScore, name: 'max'}, p => p.value);
     this.gradientColors = limits.flatMap(limit => [
-      {stop: (limit - 0.0001) * 100 + '%', color: this.thresholdColorAt(limit - 0.0001)},
-      {stop: (limit + 0.0001) * 100 + '%', color: this.thresholdColorAt(limit + 0.0001)},
+      {stop: (limit.value - 0.0001) * 100 + '%', color: this.thresholdColorAt(limit.value - 0.0001), id: limit.name + '<'},
+      {stop: (limit.value + 0.0001) * 100 + '%', color: this.thresholdColorAt(limit.value + 0.0001), id: limit.name + '>'},
     ])
   }
 
@@ -248,6 +248,7 @@ export class DensitySliderComponent implements OnInit, AfterViewInit {
 interface GradientColor {
   stop: string;
   color: string;
+  id: string;
 }
 
 interface Bin {
@@ -279,12 +280,12 @@ function kernelDensityEstimator<D>(samples: number[], bandwidth: number, valueAc
   return (data: D[]) => samples.map(sample => [sample, d3.sum(data, d => scaledEpanechnikov(sample, d) * weightAccessor(d))]);
 }
 
-function sortedIndex(array: number[], value: number) {
+function sortedIndex<T>(array: T[], element: T, valueExtractor: ((item: T) => number)) {
   let low = 0, high = array.length;
 
   while (low < high) {
     const mid = (low + high) >>> 1;
-    if (array[mid] < value) {
+    if (valueExtractor(array[mid]) < valueExtractor(element)) {
       low = mid + 1;
     } else {
       high = mid;
@@ -293,8 +294,8 @@ function sortedIndex(array: number[], value: number) {
   return low;
 }
 
-function insert(array: number[], element: number) {
-  array.splice(sortedIndex(array, element), 0, element);
+function insert<T>(array: T[], element: T, valueExtractor: ((item: T) => number)) {
+  array.splice(sortedIndex(array, element, valueExtractor), 0, element);
   return array;
 }
 

@@ -2,7 +2,7 @@
     <svg #histogram>
         <defs>
             <linearGradient id="MIScoreGradient">
-                @for (gradientColor of gradientColors; track $index) {
+                @for (gradientColor of gradientColors; track gradientColor.id) {
                     <stop [attr.stop-color]="gradientColor.color" [attr.offset]="gradientColor.stop"
                     />
                 }

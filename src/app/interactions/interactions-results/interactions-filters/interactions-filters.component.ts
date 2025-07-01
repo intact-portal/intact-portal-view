@@ -9,41 +9,42 @@ import {Filter, FilterService} from '../../shared/service/filter.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {environment} from '../../../../environments/environment';
+import {Facet} from '../../shared/model/interactions-results/facet.model';
 
 
 @Component({
-    selector: 'ip-interactions-filters',
-    templateUrl: './interactions-filters.component.html',
-    styleUrls: ['./interactions-filters.component.css'],
-    animations: [
-        trigger('bendTip', [
-            state('tipBended', style({
-                borderRadius: '0 1.4em 1.4em 0'
-            })),
-            state('tipStraight', style({
-                borderRadius: '0 0 0 0'
-            })),
-            transition('tipBended => tipStraight', [
-                animate('250ms')
-            ]),
-            transition('tipStraight => tipBended', [
-                animate('250ms 250ms')
-            ]),
-        ]),
-        trigger('slideIn', [
-            state('in', style({
-                transform: 'translateX(0)'
-            })),
-            transition(':enter', [
-                style({ transform: 'translateX(-100%)' }),
-                animate('350ms 150ms')
-            ]),
-            transition(':leave', [
-                animate('350ms', style({ transform: 'translateX(-100%)' }))
-            ])
-        ]),
-    ],
-    standalone: false
+  selector: 'ip-interactions-filters',
+  templateUrl: './interactions-filters.component.html',
+  styleUrls: ['./interactions-filters.component.css'],
+  animations: [
+    trigger('bendTip', [
+      state('tipBended', style({
+        borderRadius: '0 1.4em 1.4em 0'
+      })),
+      state('tipStraight', style({
+        borderRadius: '0 0 0 0'
+      })),
+      transition('tipBended => tipStraight', [
+        animate('250ms')
+      ]),
+      transition('tipStraight => tipBended', [
+        animate('250ms 250ms')
+      ]),
+    ]),
+    trigger('slideIn', [
+      state('in', style({
+        transform: 'translateX(0)'
+      })),
+      transition(':enter', [
+        style({transform: 'translateX(-100%)'}),
+        animate('350ms 150ms')
+      ]),
+      transition(':leave', [
+        animate('350ms', style({transform: 'translateX(-100%)'}))
+      ])
+    ]),
+  ],
+  standalone: false
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
@@ -54,9 +55,9 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   private readonly EXPORT_LIMIT = 25_000;
   readonly NO_EXPORT_TEXT = 'Exports are disabled when there are more than ' +
-      this.EXPORT_LIMIT.toLocaleString('en-GB') +
-      ' interactions for performance issues.\n' +
-      'Please use Cytoscape IntAct App to support large networks'
+    this.EXPORT_LIMIT.toLocaleString('en-GB') +
+    ' interactions for performance issues.\n' +
+    'Please use Cytoscape IntAct App to support large networks'
 
   constructor(private tableFactory: TableFactoryService, public view: NetworkViewService, public filters: FilterService) {
   }
@@ -133,6 +134,10 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     const g = (bigint >> 8) & 255;
     const b = bigint & 255;
     return {r, g, b};
+  }
+
+  trackFacet(facet: Facet<any>) {
+    return `${facet.value}-${facet.termId} (${JSON.stringify(facet.valueCount)})`;
   }
 
   /**

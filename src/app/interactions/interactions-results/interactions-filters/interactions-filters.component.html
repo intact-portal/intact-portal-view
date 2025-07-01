@@ -31,48 +31,49 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for (species of filters.facets.combined_species; track species.value) {
-                            <tr
-                                    (click)="$event.target !== checkbox ? checkbox.click() : null"
-                                    [ngClass]="{'disabled-row':filters.intraSpecies && species.valueCount.intra === 0}">
-                                <td class="no-padding">
-                                    <input name="species" type="checkbox" class="vertically-centered"
-                                           #checkbox [value]="species.value"
-                                           (change)="onChangeInteractorSpeciesFilter($event)"
-                                           [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
-                                           [checked]="filters.isFilteringValue(filter,species.value)"/>
-                                </td>
-                                <td class="no-padding">
-                                    <span class="term-id no-padding no-underline float-right">{{ species.termId }}</span>
-                                </td>
-                                <td class="no-padding">
-                                    <span class="vertically-centered">{{ species.value }}</span>
-                                </td>
-                                @if (!filters.intraSpecies) {
-                                    <td style="text-align: right" class="no-padding">
-                      <span class="tag-cell species-cell emphasized"
-                            [ngStyle]="{'background-color':species.visualProperty}"
-                      >{{ species.valueCount.all }}</span>
+                            @for (species of filters.facets.combined_species; track trackFacet(species)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null"
+                                        [ngClass]="{'disabled-row':filters.intraSpecies && species.valueCount.intra === 0}">
+                                    <td class="no-padding">
+                                        <input name="species" type="checkbox" class="vertically-centered"
+                                               #checkbox [value]="species.value"
+                                               (change)="onChangeInteractorSpeciesFilter($event)"
+                                               [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
+                                               [checked]="filters.isFilteringValue(filter,species.value)"/>
                                     </td>
                                     <td class="no-padding">
+                                        <span class="term-id no-padding no-underline float-right">{{ species.termId }}</span>
+                                    </td>
+                                    <td class="no-padding">
+                                        <span class="vertically-centered">{{ species.value }}</span>
+                                    </td>
+                                    @if (!filters.intraSpecies) {
+                                        <td style="text-align: right" class="no-padding">
+                      <span class="tag-cell species-cell emphasized"
+                            [ngStyle]="{'background-color':species.visualProperty}"
+                      >{{ species.valueCount.all }}</span>
+                                        </td>
+                                        <td class="no-padding">
                       <span class="tag-cell species-cell discreet"
                             [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
                       >{{ species.valueCount.intra }}</span>
-                                    </td>
-                                } @if (filters.intraSpecies) {
-                                <td style="text-align: right" class="no-padding">
+                                        </td>
+                                    }
+                                    @if (filters.intraSpecies) {
+                                        <td style="text-align: right" class="no-padding">
                       <span class="tag-cell species-cell discreet"
                             [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
                       >{{ species.valueCount.all }}</span>
-                                </td>
-                                <td class="no-padding">
+                                        </td>
+                                        <td class="no-padding">
                       <span class="tag-cell species-cell emphasized"
                             [ngStyle]="{'background-color':species.visualProperty}"
                       >{{ species.valueCount.intra }}</span>
-                                </td>
+                                        </td>
+                                    }
+                                </tr>
                             }
-                            </tr>
-                        }
                         </tbody>
                     </table>
                 </div>
@@ -98,26 +99,26 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                        @for (molecule of filters.facets.type_MI_A_B_styled; track molecule.value) {
-                            <tr
-                                    (click)="$event.target !== checkbox ? checkbox.click() : null">
-                                <td class="no-padding">
-                                    <input #checkbox type="checkbox" value="{{molecule.value}}"
-                                           class="vertically-centered"
-                                           (change)="onChangeInteractorTypeFilter($event)"
-                                           [checked]="filters.isFilteringValue(filter, molecule.value)"/>
-                                    <span>{{ molecule.value }}</span>
-                                </td>
-                                <td style="padding: 0 0 0 0.4rem;" class="float-right">
-                                    <span class="tag-cell species-cell emphasized">{{ molecule.valueCount }}</span>
-                                </td>
-                                <td class="no-padding">
-                                    <ip-node-diagram [shape]="shapes[molecule.visualProperty]" color="#cdaae0"
-                                                     class="margin-left-small"
-                                                     height="16pt" style="padding-right: 3px"></ip-node-diagram>
-                                </td>
-                            </tr>
-                        }
+                            @for (molecule of filters.facets.type_MI_A_B_styled; track trackFacet(molecule)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{molecule.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractorTypeFilter($event)"
+                                               [checked]="filters.isFilteringValue(filter, molecule.value)"/>
+                                        <span>{{ molecule.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                                        <span class="tag-cell species-cell emphasized">{{ molecule.valueCount }}</span>
+                                    </td>
+                                    <td class="no-padding">
+                                        <ip-node-diagram [shape]="shapes[molecule.visualProperty]" color="#cdaae0"
+                                                         class="margin-left-small"
+                                                         height="16pt" style="padding-right: 3px"></ip-node-diagram>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -144,25 +145,25 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                        @for (
-                            interactionType of filters.facets.type_mi_identifier_styled; track interactionType.value) {
-                            <tr
-                                    (click)="$event.target !== checkbox ? checkbox.click() : null">
-                                <td class="no-padding">
-                                    <input #checkbox type="checkbox" value="{{interactionType.value}}"
-                                           class="vertically-centered"
-                                           (change)="onChangeInteractionTypeFilter($event)"
-                                           [checked]="filters.isFilteringValue(filter, interactionType.value)"/>
-                                    <span>{{ interactionType.value }}</span>
-                                </td>
-                                <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                            @for (
+                                interactionType of filters.facets.type_mi_identifier_styled; track trackFacet(interactionType)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{interactionType.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractionTypeFilter($event)"
+                                               [checked]="filters.isFilteringValue(filter, interactionType.value)"/>
+                                        <span>{{ interactionType.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
                     <span class="tag-cell species-cell emphasized light-background"
                           [ngStyle]="{'background-color':interactionType.visualProperty , 'color': fontColor(interactionType.visualProperty)}">
                       {{ interactionType.valueCount }}
                     </span>
-                                </td>
-                            </tr>
-                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -187,22 +188,22 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                        @for (detectionMethod of filters.facets.detection_method_s; track detectionMethod.value) {
-                            <tr
-                                    (click)="$event.target !== checkbox ? checkbox.click() : null">
-                                <td class="no-padding">
-                                    <input #checkbox type="checkbox" value="{{detectionMethod.value}}"
-                                           class="vertically-centered"
-                                           (change)="onChangeInteractionDetectionMethodFilter($event)"
-                                           [checked]="filters.isFilteringValue(filter, detectionMethod.value)"/>
-                                    <span>{{ detectionMethod.value }}</span>
-                                </td>
-                                <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                            @for (detectionMethod of filters.facets.detection_method_s; track trackFacet(detectionMethod)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{detectionMethod.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractionDetectionMethodFilter($event)"
+                                               [checked]="filters.isFilteringValue(filter, detectionMethod.value)"/>
+                                        <span>{{ detectionMethod.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
                     <span class="tag-cell species-cell emphasized"
                     >{{ detectionMethod.valueCount }}</span>
-                                </td>
-                            </tr>
-                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -229,23 +230,23 @@
                     <table class="no-margin table-scroll">
                         <tbody>
                         <!--                        TODO investigate why 2 S. cerevisiae in Ndc80 search -->
-                        @for (organism of filters.facets.host_organism_taxId_styled;
-                            track $index) {
-                            <tr (click)="$event.target !== checkbox ? checkbox.click() : null">
-                                <td class="no-padding">
-                                    <input #checkbox type="checkbox" value="{{organism.value}}"
-                                           class="vertically-centered"
-                                           (change)="onChangeInteractionHostOrganismFilter($event)"
-                                           [checked]="filters.isFilteringValue(filter, organism.value)"/>
-                                    <span>{{ organism.value }}</span>
-                                </td>
-                                <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                            @for (organism of filters.facets.host_organism_taxId_styled;
+                                track trackFacet(organism)) {
+                                <tr (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{organism.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractionHostOrganismFilter($event)"
+                                               [checked]="filters.isFilteringValue(filter, organism.value)"/>
+                                        <span>{{ organism.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
                                     <span class="tag-cell species-cell emphasized"
                                           [ngStyle]="{'background-color':organism.visualProperty }"
                                     >{{ organism.valueCount }}</span>
-                                </td>
-                            </tr>
-                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -270,7 +271,7 @@
                 <em>Interactions affected by mutation only</em>
                 <div class="centered-switch-wrap">
                     <span class="tag-cell species-cell margin-right-small"
-                        [ngClass]="{'discreet':filters.mutation, 'emphasized':!filters.mutation}">{{ filters.nbNonMutation }}</span>
+                          [ngClass]="{'discreet':filters.mutation, 'emphasized':!filters.mutation}">{{ filters.nbNonMutation }}</span>
                     <mat-slide-toggle color="primary"
                                       (change)="filters.updateFilter(filter, $event.checked)"
                                       [disabled]="!filters.hasMutation"
@@ -296,7 +297,7 @@
                 <em>Non-expanded interactions only</em>
                 <div class="centered-switch-wrap">
                     <span class="tag-cell species-cell dashed margin-right-small"
-                        [ngClass]="{'discreet':filters.expansion, 'emphasized':!filters.expansion}">{{ filters.nbNonExpansion }}</span>
+                          [ngClass]="{'discreet':filters.expansion, 'emphasized':!filters.expansion}">{{ filters.nbNonExpansion }}</span>
                     <mat-slide-toggle color="primary"
                                       (change)="filters.updateFilter(filter, $event.checked)"
                                       [disabled]="!filters.hasExpansion"
@@ -337,13 +338,14 @@
                     </div>
                 }
             </div>
-        } @if (filters.anyFiltersSelected()) {
-        <button @slideIn class="button lighter" type="button"
-                (click)="filters.resetAllFilters()"
-                style="z-index: 0">
-            <i class="icon icon-functional" data-icon="d"></i>
-        </button>
-    }
+        }
+        @if (filters.anyFiltersSelected()) {
+            <button @slideIn class="button lighter" type="button"
+                    (click)="filters.resetAllFilters()"
+                    style="z-index: 0">
+                <i class="icon icon-functional" data-icon="d"></i>
+            </button>
+        }
 
     </div>
 

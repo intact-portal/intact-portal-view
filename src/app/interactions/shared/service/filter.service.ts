@@ -220,6 +220,42 @@ export class FilterService {
     return params;
   }
 
+  public toCytoscapeParams(params: any = {}, arrayTransformer: (array: string[]) => any = (a) => a.join(',')): any {
+    if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0) {
+      params.interactorSpeciesFilter = arrayTransformer(this.interactorSpecies);
+    }
+
+    if (this.interactorTypes !== undefined && this.interactorTypes.length !== 0) {
+      params.interactorTypesFilter = arrayTransformer(this.interactorTypes);
+    }
+
+    if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0) {
+      params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
+    }
+
+    if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
+      params.negativeFilter = this._negative;
+    }
+
+    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > 0) {
+      params.minMIScore = this._currentMinMIScore;
+    }
+
+    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < 1) {
+      params.maxMIScore = this._currentMaxMIScore;
+    }
+
+    if (this.mutation === true) {
+      params.mutationFilter = this.mutation;
+    }
+
+    if (this.expansion === true) {
+      params.expansionFilter = this.expansion;
+    }
+
+    return params;
+  }
+
   canFilterIntraSpecies() {
     if (this.interactorSpecies.length === 0) {
       // @ts-ignore

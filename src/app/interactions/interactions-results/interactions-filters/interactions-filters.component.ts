@@ -9,6 +9,7 @@ import {Filter, FilterService} from '../../shared/service/filter.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {environment} from '../../../../environments/environment';
+import {Facet} from '../../shared/model/interactions-results/facet.model';
 
 
 @Component({
@@ -143,24 +144,29 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
       {'overflow-y': 'hidden', 'height': 'auto'};
   }
 
-  onChangeInteractorSpeciesFilter(event: Event) {
-    this.filters.updateFilter(Filter.SPECIES, (event.target as HTMLInputElement).value);
+  // For species we use the label (value) instead of the tax id (termId) as we may have multiple entries in the species filters,
+  // especially the host organism filter, with the same tax id.
+
+  onChangeInteractorSpeciesFilter(facet: Facet<{ all: number, intra: number }>) {
+    this.filters.updateFilter(Filter.SPECIES, facet.value);
   }
 
-  onChangeInteractorTypeFilter(event: Event) {
-    this.filters.updateFilter(Filter.INTERACTOR_TYPE, (event.target as HTMLInputElement).value);
+  onChangeInteractorTypeFilter(facet: Facet) {
+    this.filters.updateFilter(Filter.INTERACTOR_TYPE, facet.termId);
   }
 
-  onChangeInteractionTypeFilter(event: Event) {
-    this.filters.updateFilter(Filter.INTERACTION_TYPE, (event.target as HTMLInputElement).value);
+  onChangeInteractionTypeFilter(facet: Facet) {
+    // TODO: use term id when new field added in SOLR
+    this.filters.updateFilter(Filter.INTERACTION_TYPE, facet.value);
   }
 
-  onChangeInteractionDetectionMethodFilter(event: Event) {
-    this.filters.updateFilter(Filter.DETECTION_METHOD, (event.target as HTMLInputElement).value);
+  onChangeInteractionDetectionMethodFilter(facet: Facet) {
+    // TODO: use term id when new field added in SOLR
+    this.filters.updateFilter(Filter.DETECTION_METHOD, facet.value);
   }
 
-  onChangeInteractionHostOrganismFilter(event: Event) {
-    this.filters.updateFilter(Filter.HOST_ORGANISM, (event.target as HTMLInputElement).value);
+  onChangeInteractionHostOrganismFilter(facet: Facet) {
+    this.filters.updateFilter(Filter.HOST_ORGANISM, facet.value);
   }
 
   onChangeInteractionIntraSpeciesFilter(event: MatSlideToggleChange) {

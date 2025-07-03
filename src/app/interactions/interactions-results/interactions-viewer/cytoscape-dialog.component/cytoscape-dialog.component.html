@@ -17,6 +17,14 @@
 
     <ng-container *ngIf="!cytoscape.allRequirementsPassed">
         <div class="callout">
+            <p *ngIf="!cytoscape.check$">
+                <span class="checker">
+                    <div>
+                        <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
+                        <span>Checking Cytoscape requirements</span>
+                    </div>
+                </span>
+            </p>
             <p *ngIf="!!cytoscape.check$">
                 <span class="checker" *ngIf="cytoscape.check$ | async as currentCheck">
                     <div *ngIf="currentCheck.loading; else finishedCheck">

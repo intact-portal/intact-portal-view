@@ -12,7 +12,7 @@
             </b>
             <ng-template #link>
                 <a [href]="pubMedUrl(firstPubMed)" target="_blank">
-                    <b>{{firstPubMed.author}} ({{firstPubMed.year || dataset.year}})</b>
+                    <b>{{firstPubMed.author}} ({{firstPubMed.year}})</b>
                 </a>
             </ng-template>
             <div *ngIf="!!dataset.image">

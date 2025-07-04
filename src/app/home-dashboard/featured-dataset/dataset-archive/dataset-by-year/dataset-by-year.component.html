@@ -16,7 +16,7 @@
           <tr *ngFor="let pubmed of dataset.pubmeds">
             <td *ngIf="hasPubMedId(pubmed); else noID">
               <a href="https://europepmc.org/article/MED/{{pubmed.id}}?singleResult=true" target="_blank">
-                <b>{{pubmed.author}} ({{pubmed.year || dataset.year}})</b>
+                <b>{{pubmed.author}} ({{pubmed.year }})</b>
               </a>
             </td>
             <ng-template #noID>
@@ -24,16 +24,16 @@
             </ng-template>
             <td style="text-align: right">
               <div>
-                <button mat-raised-button color="accent" (click)="searchIntAct(pubmed.id, pubmed.author)">
+                <button mat-raised-button color="accent" (click)="searchIntAct(pubmed)">
                   <i class="icon icon-common icon-eye"></i>
                 </button>
-                <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed.year || dataset.year, pubmed.id)">
+                <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed)">
                   <i class="icon icon-common icon-download"></i> PSI-MI XML 2.5
                 </button>
-                  <button mat-raised-button color="accent" (click)="goPSIMI30FTP(pubmed.year || dataset.year, pubmed.id)">
+                  <button mat-raised-button color="accent" (click)="goPSIMI30FTP(pubmed)">
                       <i class="icon icon-common icon-download"></i> PSI-MI XML 3.0
                   </button>
-                <button mat-raised-button color="accent" (click)="goPSIMITABFTP(pubmed.year || dataset.year, pubmed.id)">
+                <button mat-raised-button color="accent" (click)="goPSIMITABFTP(pubmed)">
                   <i class="icon icon-common icon-download"></i> PSI-MI TAB 2.7
                 </button>
               </div>

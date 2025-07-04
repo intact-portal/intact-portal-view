@@ -4,7 +4,7 @@
             <i class="icon icon-functional icon-spacer icon-filter"></i> Filters
         </div>
         <button class="button lighter" type="button" data-toggle="interactor-species-dropdown"
-                [ngClass]="{'underline': filters.isFiltering(filterTypes.SPECIES)}">
+                [ngClass]="{'underline': filters.isFiltering(filterTypes.SPECIES) || filters.isFiltering(filterTypes.INTRA_SPECIES)}">
             Interactor Species
         </button>
         @if (filterTypes.SPECIES; as filter) {
@@ -37,9 +37,9 @@
                                     <td class="no-padding">
                                         <input name="species" type="checkbox" class="vertically-centered"
                                                #checkbox [value]="species.value"
-                                               (change)="onChangeInteractorSpeciesFilter($event)"
+                                               (change)="onChangeInteractorSpeciesFilter(species)"
                                                [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
-                                               [checked]="filters.isFilteringValue(filter,species)"/>
+                                               [checked]="filters.isFilteringValue(filter, species)"/>
                                     </td>
                                     <td class="no-padding">
                                         <span class="term-id no-padding no-underline float-right">{{ species.termId }}</span>
@@ -193,7 +193,7 @@
                                     <td class="no-padding">
                                         <input #checkbox type="checkbox" value="{{detectionMethod.value}}"
                                                class="vertically-centered"
-                                               (change)="onChangeInteractionDetectionMethodFilter($event)"
+                                               (change)="onChangeInteractionDetectionMethodFilter(detectionMethod)"
                                                [checked]="filters.isFilteringValue(filter, detectionMethod.value)"/>
                                         <span>{{ detectionMethod.value }}</span>
                                     </td>
@@ -239,10 +239,10 @@
                                                [checked]="filters.isFilteringValue(filter, organism)"/>
                                     </td>
                                     <td class="no-padding">
-                                        <span class="term-id no-padding no-underline float-right">{{organism.termId}}</span>
+                                        <span class="term-id no-padding no-underline float-right">{{ organism.termId }}</span>
                                     </td>
                                     <td class="no-padding">
-                                        <span class="vertically-centered">{{organism.value}}</span>
+                                        <span class="vertically-centered">{{ organism.value }}</span>
                                     </td>
                                     <td style="padding: 0 0 0 0.4rem;" class="float-right">
                                     <span class="tag-cell species-cell emphasized"

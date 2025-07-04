@@ -288,6 +288,7 @@ export class FilterService {
       this.mutation ||
       this.negative !== NegativeFilterStatus.POSITIVE_ONLY ||
       this.expansion ||
+      this.intraSpecies ||
       this.isFilteringScore();
   }
 

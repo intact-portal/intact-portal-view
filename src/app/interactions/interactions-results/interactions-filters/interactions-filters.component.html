@@ -9,8 +9,7 @@
         </button>
         @if (filterTypes.SPECIES; as filter) {
             <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true"
-                 data-hover-pane="true"
-            >
+                 data-hover-pane="true">
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <thead>
@@ -40,7 +39,7 @@
                                                #checkbox [value]="species.value"
                                                (change)="onChangeInteractorSpeciesFilter($event)"
                                                [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
-                                               [checked]="filters.isFilteringValue(filter,species.value)"/>
+                                               [checked]="filters.isFilteringValue(filter,species)"/>
                                     </td>
                                     <td class="no-padding">
                                         <span class="term-id no-padding no-underline float-right">{{ species.termId }}</span>
@@ -105,8 +104,8 @@
                                     <td class="no-padding">
                                         <input #checkbox type="checkbox" value="{{molecule.value}}"
                                                class="vertically-centered"
-                                               (change)="onChangeInteractorTypeFilter($event)"
-                                               [checked]="filters.isFilteringValue(filter, molecule.value)"/>
+                                               (change)="onChangeInteractorTypeFilter(molecule)"
+                                               [checked]="filters.isFilteringValue(filter, molecule.termId)"/>
                                         <span>{{ molecule.value }}</span>
                                     </td>
                                     <td style="padding: 0 0 0 0.4rem;" class="float-right">
@@ -145,21 +144,20 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                            @for (
-                                interactionType of filters.facets.type_mi_identifier_styled; track trackFacet(interactionType)) {
+                            @for (type of filters.facets.type_mi_identifier_styled; track trackFacet(type)) {
                                 <tr
                                         (click)="$event.target !== checkbox ? checkbox.click() : null">
                                     <td class="no-padding">
-                                        <input #checkbox type="checkbox" value="{{interactionType.value}}"
+                                        <input #checkbox type="checkbox" value="{{type.value}}"
                                                class="vertically-centered"
-                                               (change)="onChangeInteractionTypeFilter($event)"
-                                               [checked]="filters.isFilteringValue(filter, interactionType.value)"/>
-                                        <span>{{ interactionType.value }}</span>
+                                               (change)="onChangeInteractionTypeFilter(type)"
+                                               [checked]="filters.isFilteringValue(filter, type.value)"/>
+                                        <span>{{ type.value }}</span>
                                     </td>
                                     <td style="padding: 0 0 0 0.4rem;" class="float-right">
                     <span class="tag-cell species-cell emphasized light-background"
-                          [ngStyle]="{'background-color':interactionType.visualProperty , 'color': fontColor(interactionType.visualProperty)}">
-                      {{ interactionType.valueCount }}
+                          [ngStyle]="{'background-color':type.visualProperty , 'color': fontColor(type.visualProperty)}">
+                      {{ type.valueCount }}
                     </span>
                                     </td>
                                 </tr>
@@ -188,7 +186,8 @@
                 <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                     <table class="no-margin table-scroll">
                         <tbody>
-                            @for (detectionMethod of filters.facets.detection_method_s; track trackFacet(detectionMethod)) {
+                            @for (
+                                detectionMethod of filters.facets.detection_method_s; track trackFacet(detectionMethod)) {
                                 <tr
                                         (click)="$event.target !== checkbox ? checkbox.click() : null">
                                     <td class="no-padding">
@@ -236,9 +235,14 @@
                                     <td class="no-padding">
                                         <input #checkbox type="checkbox" value="{{organism.value}}"
                                                class="vertically-centered"
-                                               (change)="onChangeInteractionHostOrganismFilter($event)"
-                                               [checked]="filters.isFilteringValue(filter, organism.value)"/>
-                                        <span>{{ organism.value }}</span>
+                                               (change)="onChangeInteractionHostOrganismFilter(organism)"
+                                               [checked]="filters.isFilteringValue(filter, organism)"/>
+                                    </td>
+                                    <td class="no-padding">
+                                        <span class="term-id no-padding no-underline float-right">{{organism.termId}}</span>
+                                    </td>
+                                    <td class="no-padding">
+                                        <span class="vertically-centered">{{organism.value}}</span>
                                     </td>
                                     <td style="padding: 0 0 0 0.4rem;" class="float-right">
                                     <span class="tag-cell species-cell emphasized"

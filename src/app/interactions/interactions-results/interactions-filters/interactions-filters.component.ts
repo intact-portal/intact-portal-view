@@ -10,6 +10,7 @@ import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {environment} from '../../../../environments/environment';
 import {Facet} from '../../shared/model/interactions-results/facet.model';
+import {NegativeFilterStatus} from './negative-filter/negative-filter-status.model';
 
 
 @Component({
@@ -147,8 +148,8 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   // For species we use the label (value) instead of the tax id (termId) as we may have multiple entries in the species filters,
   // especially the host organism filter, with the same tax id.
 
-  onChangeInteractorSpeciesFilter(facet: Facet<{ all: number, intra: number }>) {
-    this.filters.updateFilter(Filter.SPECIES, facet.value);
+  onChangeInteractorSpeciesFilter(facet: Facet<any>) {
+    this.filters.updateFilter(Filter.SPECIES, this.mergeFacetValueAndId(facet));
   }
 
   onChangeInteractorTypeFilter(facet: Facet) {
@@ -166,10 +167,18 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   onChangeInteractionHostOrganismFilter(facet: Facet) {
-    this.filters.updateFilter(Filter.HOST_ORGANISM, facet.value);
+    this.filters.updateFilter(Filter.HOST_ORGANISM, this.mergeFacetValueAndId(facet));
   }
 
   onChangeInteractionIntraSpeciesFilter(event: MatSlideToggleChange) {
     this.filters.updateFilter(Filter.INTRA_SPECIES, event.checked)
+  }
+
+  isFilteringOrganismValue(filter: Filter, facet: Facet<any>): boolean | NegativeFilterStatus {
+    return this.filters.isFilteringValue(filter, this.mergeFacetValueAndId(facet));
+  }
+
+  private mergeFacetValueAndId(facet: Facet): string {
+    return `${facet.value}__${facet.termId}`
   }
 }

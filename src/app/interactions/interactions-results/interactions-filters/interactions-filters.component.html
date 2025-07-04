@@ -39,7 +39,7 @@
                                    #checkbox [value]="species.value"
                                    (change)="onChangeInteractorSpeciesFilter(species)"
                                    [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
-                                   [checked]="filters.isFilteringValue(filter, species.value)"/>
+                                   [checked]="isFilteringOrganismValue(filter, species)"/>
                         </td>
                         <td class="no-padding">
                             <span class="term-id no-padding no-underline float-right">{{species.termId}}</span>
@@ -212,8 +212,13 @@
                         <td class="no-padding">
                             <input #checkbox type="checkbox" value="{{species.value}}" class="vertically-centered"
                                    (change)="onChangeInteractionHostOrganismFilter(species)"
-                                   [checked]="filters.isFilteringValue(filter, species.value)"/>
-                            <span>{{species.value}}</span>
+                                   [checked]="isFilteringOrganismValue(filter, species)"/>
+                        </td>
+                        <td class="no-padding">
+                            <span class="term-id no-padding no-underline float-right">{{species.termId}}</span>
+                        </td>
+                        <td class="no-padding">
+                            <span class="vertically-centered">{{species.value}}</span>
                         </td>
                         <td style="padding: 0 0 0 0.4rem;" class="float-right">
               <span class="tag-cell species-cell emphasized"

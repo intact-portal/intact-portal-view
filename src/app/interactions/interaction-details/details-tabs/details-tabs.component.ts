@@ -18,7 +18,7 @@ import {FragmentService} from '../../shared/service/fragment.service';
 })
 export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
-  readonly interactionAc = input<string>(undefined);
+  readonly interactionAc = input.required<string>();
   readonly featureChanged = output<string>();
   readonly moleculeTypesCollected = output<Set<string>>();
 

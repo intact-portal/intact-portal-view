@@ -23,7 +23,7 @@
         <div class="accordion-content" data-tab-content>
             <div class="margin-top-large margin-bottom-large">
                 <ngx-query-builder #builder id="builder" [formControl]='queryCtrl' [config]='currentConfig'
-                               [classNames]="classNames" (ngModelChange)="builderToEditor(builder, editor)">
+                                   [classNames]="classNames" (ngModelChange)="builderToEditor(builder, editor)">
                     <ng-container *queryInput="let rule; type: 'date'; let onChange=onChange">
                         <input class="date-input" matInput [matDatepicker]="picker" [(ngModel)]="rule.value"
                                (ngModelChange)="onChange()">
@@ -38,13 +38,13 @@
                     </ng-container>
 
                     <ng-container *queryInput="let rule; type: 'int-range'; let onChange=onChange;">
-                        <ip-range-input class="inline-block" [typeD]="'number'"
-                                        [(model)]="rule.value" (modelChange)="onChange()"></ip-range-input>
+                        <ip-range-input class="inline-block" [(model)]="rule.value"
+                                        (modelChange)="onChange()"/>
                     </ng-container>
 
                     <ng-container *queryInput="let rule; type: 'float-range'; let onChange=onChange;">
-                        <ip-range-input class="inline-block" [typeD]="'number'" [step]="0.1"
-                                        [(model)]="rule.value" (modelChange)="onChange()"></ip-range-input>
+                        <ip-range-input class="inline-block" [step]="0.1" [(model)]="rule.value"
+                                        (modelChange)="onChange()"/>
                     </ng-container>
 
                     <ng-container *queryInput="let rule; type: 'number'; let onChange=onChange">

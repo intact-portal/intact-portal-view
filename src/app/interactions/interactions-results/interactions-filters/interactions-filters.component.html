@@ -142,7 +142,7 @@
                         <td class="no-padding">
                             <input #checkbox type="checkbox" value="{{type.value}}" class="vertically-centered"
                                    (change)="onChangeInteractionTypeFilter(type)"
-                                   [checked]="filters.isFilteringValue(filter, type.value)"/>
+                                   [checked]="filters.isFilteringValue(filter, type.termId)"/>
                             <span>{{type.value}}</span>
                         </td>
                         <td style="padding: 0 0 0 0.4rem;" class="float-right">
@@ -172,12 +172,47 @@
             <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
                 <table class="no-margin table-scroll">
                     <tbody>
-                    <tr *ngFor="let method of filters.facets.detection_method_s"
+                    <tr *ngFor="let method of filters.facets.detection_method_mi_styled"
                         (click)="$event.target !== checkbox ? checkbox.click() : null">
                         <td class="no-padding">
                             <input #checkbox type="checkbox" value="{{method.value}}" class="vertically-centered"
                                    (change)="onChangeInteractionDetectionMethodFilter(method)"
-                                   [checked]="filters.isFilteringValue(filter, method.value)"/>
+                                   [checked]="filters.isFilteringValue(filter, method.termId)"/>
+                            <span>{{method.value}}</span>
+                        </td>
+                        <td style="padding: 0 0 0 0.4rem;" class="float-right">
+              <span class="tag-cell species-cell emphasized"
+              >{{method.valueCount}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
+                <button class="delete-button" (click)="filters.resetFilter(filter)"
+                        matTooltip="Remove filter"
+                        matTooltipPosition="below">
+                    <i class="icon icon-functional" data-icon="d"></i>
+                </button>
+            </div>
+        </div>
+
+        <button class="button lighter" type="button" data-toggle="participant-detection-method-dropdown"
+                [ngClass]="{'underline': filters.isFiltering(filterTypes.PARTICIPANT_DETECTION_METHOD)}">
+            Participant Detection Method
+        </button>
+        <div class="dropdown-pane" id="participant-detection-method-dropdown" data-dropdown data-hover="true"
+             data-hover-pane="true" *ngIf="filterTypes.PARTICIPANT_DETECTION_METHOD as filter">
+            <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+                <table class="no-margin table-scroll">
+                    <tbody>
+                    <tr *ngFor="let method of filters.facets.identification_method_mi_A_B_styled"
+                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                        <td class="no-padding">
+                            <input #checkbox type="checkbox" value="{{method.value}}" class="vertically-centered"
+                                   (change)="onChangeParticipantDetectionMethodFilter(method)"
+                                   [checked]="filters.isFilteringValue(filter, method.termId)"/>
                             <span>{{method.value}}</span>
                         </td>
                         <td style="padding: 0 0 0 0.4rem;" class="float-right">

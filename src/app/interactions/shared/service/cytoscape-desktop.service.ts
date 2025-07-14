@@ -166,8 +166,7 @@ export class CytoscapeDesktopService {
         seedTerms: this.search.query,
         maxInteractorsPerTerm: '1',
         asynchronous: true,
-        // TODO: use toParams() when all fields use ids
-        ...this.filters.toCytoscapeParams(),
+        ...this.filters.toParams(),
         ...this.view.toParams(),
       }).subscribe(() => {
         this.cytoscapeLoading = false;
@@ -179,8 +178,7 @@ export class CytoscapeDesktopService {
         query: this.search.query,
         testField: 'some value',
         asynchronous: true,
-        // TODO: use toParams() when all fields use ids
-        ...this.filters.toCytoscapeParams(),
+        ...this.filters.toParams(),
         ...this.view.toParams(),
       }).subscribe(() => {
         this.cytoscapeLoading = false;

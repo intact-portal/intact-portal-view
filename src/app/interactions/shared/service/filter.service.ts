@@ -22,6 +22,7 @@ export class FilterService {
   private interactorTypes: string[] = [];
   private interactionTypes: string[] = [];
   private interactionDetectionMethods: string[] = [];
+  private participantDetectionMethods: string[] = [];
   private interactionHostOrganisms: string[] = [];
 
   private _currentMinMIScore = 0;
@@ -156,6 +157,8 @@ export class FilterService {
 
     this.interactionDetectionMethods = params.has('interactionDetectionMethodsFilter') ? params.get('interactionDetectionMethodsFilter').split(',') : [];
 
+    this.participantDetectionMethods = params.has('participantDetectionMethodsFilter') ? params.get('participantDetectionMethodsFilter').split(',') : [];
+
     this.interactionHostOrganisms = params.has('interactionHostOrganismsFilter') ? params.get('interactionHostOrganismsFilter').split(',') : [];
 
     this._currentMinMIScore = params.has('minMIScore') ? parseFloat(params.get('minMIScore')) : this.currentMinMIScore ?? 0;
@@ -188,6 +191,10 @@ export class FilterService {
       params.interactionDetectionMethodsFilter = arrayTransformer(this.interactionDetectionMethods);
     }
 
+    if (this.participantDetectionMethods !== undefined && this.participantDetectionMethods.length !== 0) {
+      params.participantDetectionMethodsFilter = arrayTransformer(this.participantDetectionMethods);
+    }
+
     if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0) {
       params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
     }
@@ -207,42 +214,6 @@ export class FilterService {
 
     if (this.intraSpecies === true) {
       params.intraSpeciesFilter = this.intraSpecies;
-    }
-
-    if (this.mutation === true) {
-      params.mutationFilter = this.mutation;
-    }
-
-    if (this.expansion === true) {
-      params.expansionFilter = this.expansion;
-    }
-
-    return params;
-  }
-
-  public toCytoscapeParams(params: any = {}, arrayTransformer: (array: string[]) => any = (a) => a.join(',')): any {
-    if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0) {
-      params.interactorSpeciesFilter = arrayTransformer(this.interactorSpecies);
-    }
-
-    if (this.interactorTypes !== undefined && this.interactorTypes.length !== 0) {
-      params.interactorTypesFilter = arrayTransformer(this.interactorTypes);
-    }
-
-    if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0) {
-      params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
-    }
-
-    if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
-      params.negativeFilter = this._negative;
-    }
-
-    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > 0) {
-      params.minMIScore = this._currentMinMIScore;
-    }
-
-    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < 1) {
-      params.maxMIScore = this._currentMaxMIScore;
     }
 
     if (this.mutation === true) {
@@ -284,6 +255,7 @@ export class FilterService {
       this.interactorTypes.length !== 0 ||
       this.interactionTypes.length !== 0 ||
       this.interactionDetectionMethods.length !== 0 ||
+      this.participantDetectionMethods.length !== 0 ||
       this.interactionHostOrganisms.length !== 0 ||
       this.mutation ||
       this.negative !== NegativeFilterStatus.POSITIVE_ONLY ||
@@ -379,6 +351,8 @@ export class FilterService {
         return this.interactionTypes;
       case Filter.DETECTION_METHOD:
         return this.interactionDetectionMethods;
+      case Filter.PARTICIPANT_DETECTION_METHOD:
+        return this.participantDetectionMethods;
       case Filter.HOST_ORGANISM:
         return this.interactionHostOrganisms;
     }
@@ -395,7 +369,9 @@ export class FilterService {
       case Filter.INTERACTION_TYPE:
         return this.facets.type_mi_identifier_styled;
       case Filter.DETECTION_METHOD:
-        return this.facets.detection_method_s;
+        return this.facets.detection_method_mi_styled;
+      case Filter.PARTICIPANT_DETECTION_METHOD:
+        return this.facets.identification_method_mi_A_B_styled;
       case Filter.HOST_ORGANISM:
         return this.facets.host_organism_taxId_styled;
       case Filter.MUTATION:
@@ -490,6 +466,7 @@ export enum Filter {
   INTERACTOR_TYPE = 'interactorTypesFilter',
   INTERACTION_TYPE = 'interactionTypesFilter',
   DETECTION_METHOD = 'interactionDetectionMethodsFilter',
+  PARTICIPANT_DETECTION_METHOD = 'participantDetectionMethodsFilter',
   HOST_ORGANISM = 'interactionHostOrganismsFilter',
   MI_SCORE = 'miScore',
   NEGATIVE = 'isNegativeFilter',

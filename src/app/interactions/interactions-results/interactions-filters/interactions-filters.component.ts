@@ -157,13 +157,15 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
   }
 
   onChangeInteractionTypeFilter(facet: Facet) {
-    // TODO: use term id when new field added in SOLR
-    this.filters.updateFilter(Filter.INTERACTION_TYPE, facet.value);
+    this.filters.updateFilter(Filter.INTERACTION_TYPE, facet.termId);
   }
 
   onChangeInteractionDetectionMethodFilter(facet: Facet) {
-    // TODO: use term id when new field added in SOLR
-    this.filters.updateFilter(Filter.DETECTION_METHOD, facet.value);
+    this.filters.updateFilter(Filter.DETECTION_METHOD, facet.termId);
+  }
+
+  onChangeParticipantDetectionMethodFilter(facet: Facet) {
+    this.filters.updateFilter(Filter.PARTICIPANT_DETECTION_METHOD, facet.termId);
   }
 
   onChangeInteractionHostOrganismFilter(facet: Facet) {

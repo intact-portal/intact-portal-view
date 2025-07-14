@@ -26,6 +26,8 @@
            *ngFor="let value of filters.getFilter(filterTypes.INTERACTION_TYPE)" [value]="value">
     <input class="hidden" type="text" name="interactionDetectionMethodsFilter"
            *ngFor="let value of filters.getFilter(filterTypes.DETECTION_METHOD)" [value]="value">
+      <input class="hidden" type="text" name="participantDetectionMethodsFilter"
+             *ngFor="let value of filters.getFilter(filterTypes.PARTICIPANT_DETECTION_METHOD)" [value]="value">
     <input class="hidden" type="text" name="interactionHostOrganismsFilter"
            *ngFor="let value of filters.getFilter(filterTypes.HOST_ORGANISM)" [value]="value">
   </label>

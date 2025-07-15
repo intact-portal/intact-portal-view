@@ -53,15 +53,15 @@ export class DatasetByYearComponent implements AfterViewInit {
   }
 
   goPSIMI25FTP(pubmed: PubmedDataset) {
-    window.open(PubmedDataset.ftpFilePath(environment.intact_psi25_url, pubmed, 'zip'));
+    return PubmedDataset.ftpFilePath(environment.intact_psi25_url, pubmed, 'zip');
   }
 
   goPSIMI30FTP(pubmed: PubmedDataset) {
-    window.open(PubmedDataset.ftpFilePath(environment.intact_psi30_url, pubmed, 'zip'));
+    return PubmedDataset.ftpFilePath(environment.intact_psi30_url, pubmed, 'zip');
   }
 
   goPSIMITABFTP(pubmed: PubmedDataset) {
-    window.open(PubmedDataset.ftpFilePath(environment.intact_psimitab_url, pubmed, 'txt'));
+    return PubmedDataset.ftpFilePath(environment.intact_psimitab_url, pubmed, 'txt');
   }
 
   hasPubMedId(pubMed: PubmedDataset): boolean {

@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import pkg from '../../../../package.json';
 import {environment} from '../../../environments/environment';
 import * as d3 from 'd3';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'ip-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css', '../../app.component.css']
+    selector: 'ip-news',
+    templateUrl: './news.component.html',
+    styleUrls: ['./news.component.css', '../../app.component.css'],
+    standalone: false
 })
 export class NewsComponent implements OnInit {
   version = pkg.version;

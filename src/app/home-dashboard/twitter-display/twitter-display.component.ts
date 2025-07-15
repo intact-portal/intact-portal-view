@@ -9,9 +9,10 @@ declare global {
 }
 
 @Component({
-  selector: 'ip-twitter-display',
-  templateUrl: './twitter-display.component.html',
-  styleUrls: ['./twitter-display.component.css']
+    selector: 'ip-twitter-display',
+    templateUrl: './twitter-display.component.html',
+    styleUrls: ['./twitter-display.component.css'],
+    standalone: false
 })
 export class TwitterDisplayComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
 import {FilterService} from './filter.service';
 import {environment} from '../../../../environments/environment';

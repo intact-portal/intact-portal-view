@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -16,12 +16,13 @@ const baseURL = environment.intact_portal_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-interactors-table',
-  templateUrl: './interactors-table.component.html',
-  styleUrls: ['./interactors-table.component.css']
+    selector: 'ip-interactors-table',
+    templateUrl: './interactors-table.component.html',
+    styleUrls: ['./interactors-table.component.css'],
+    standalone: false
 })
 export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-  @Input() interactorTab: boolean;
+  readonly interactorTab = input<boolean>(undefined);
 
   private _interactorSelected: string;
 
@@ -223,7 +224,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   get isActive(): boolean {
-    return this.interactorTab;
+    return this.interactorTab();
   }
 
   get interactorSelected(): string {

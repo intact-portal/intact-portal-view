@@ -1,12 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 
 @Component({
-  selector: 'ip-color-range-diagram',
-  templateUrl: './color-range-diagram.component.html',
-  styleUrls: ['./color-range-diagram.component.css']
+    selector: 'ip-color-range-diagram',
+    templateUrl: './color-range-diagram.component.html',
+    styleUrls: ['./color-range-diagram.component.css'],
+    standalone: false
 })
 export class ColorRangeDiagramComponent implements OnInit {
-  @Input() rangeMap: { [range: string]: string };
+  readonly rangeMap = input<{
+    [range: string]: string;
+}>(undefined);
   private _points: ColoredPoint[] = [];
   min: number = null;
   max: number = null;
@@ -15,12 +18,12 @@ export class ColorRangeDiagramComponent implements OnInit {
   }
 
   ngOnInit() {
-    Object.keys(this.rangeMap)
+    Object.keys(this.rangeMap())
       .forEach(key => {
         const [start, stop] = key.split(' - ').map(Number.parseFloat);
         if (this.min == null || start < this.min) this.min = start;
         if (this.max == null || stop > this.max) this.max = stop;
-        const color = this.rangeMap[key];
+        const color = this.rangeMap()[key];
         this.points.push(new ColoredPoint(color, start))
         this.points.push(new ColoredPoint(color, stop))
       }, this);

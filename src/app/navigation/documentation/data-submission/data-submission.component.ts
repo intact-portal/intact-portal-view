@@ -4,9 +4,10 @@ import {Title} from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'ip-data-submission',
-  templateUrl: './data-submission.component.html',
-  styleUrls: ['./data-submission.component.css']
+    selector: 'ip-data-submission',
+    templateUrl: './data-submission.component.html',
+    styleUrls: ['./data-submission.component.css'],
+    standalone: false
 })
 export class DataSubmissionComponent implements OnInit {
 

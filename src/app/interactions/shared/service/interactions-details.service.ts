@@ -1,6 +1,6 @@
 import {Observable, throwError as observableThrowError} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {environment} from '../../../../environments/environment';
 import {catchError} from 'rxjs/operators';

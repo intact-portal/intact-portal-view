@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {UrlSerializer} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 
 import {AppComponent} from './app.component';
@@ -37,49 +37,43 @@ import {DonutGraphComponent} from './navigation/about/statistics/donut-graph/don
 import {CountTableComponent} from './navigation/about/statistics/count-table/count-table.component';
 import {EncodeHttpParamsInterceptor} from './shared/utils/encode-http-params-interceptor';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    InteractomesComponent,
-    InteractomeComponent,
-    AboutComponent,
-    RedirectComponent,
-    StatisticsComponent,
-    MultilineGraphComponent,
-    HBarGraphComponent,
-    DonutGraphComponent,
-    CountTableComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-    LayoutModule,
-    HomeDashboardModule,
-    InteractionsResultsModule,
-    InteractionDetailsModule,
-    DocumentationModule,
-    DownloadModule,
-    AppRoutingModule,
-    MatButtonModule,
-    NgxGoogleAnalyticsModule.forRoot(environment.analytics_id),
-    NgxGoogleAnalyticsRouterModule,
-    MarkdownModule
-  ],
-  providers: [
-    FeatureDatasetService,
-    SearchService,
-    InteractionsSearchService,
-    InteractionsDetailsService,
-    FilterService,
-    NetworkSearchService,
-    NetworkViewService,
-    {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]},
-    {provide: UrlSerializer, useClass: MyUrlSerializer},
-    {provide: HTTP_INTERCEPTORS, useClass: EncodeHttpParamsInterceptor, multi: true},
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        InteractomesComponent,
+        InteractomeComponent,
+        AboutComponent,
+        RedirectComponent,
+        StatisticsComponent,
+        MultilineGraphComponent,
+        HBarGraphComponent,
+        DonutGraphComponent,
+        CountTableComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        LayoutModule,
+        HomeDashboardModule,
+        InteractionsResultsModule,
+        InteractionDetailsModule,
+        DocumentationModule,
+        DownloadModule,
+        AppRoutingModule,
+        MatButtonModule,
+        NgxGoogleAnalyticsModule.forRoot(environment.analytics_id),
+        NgxGoogleAnalyticsRouterModule,
+        MarkdownModule], providers: [
+        FeatureDatasetService,
+        SearchService,
+        InteractionsSearchService,
+        InteractionsDetailsService,
+        FilterService,
+        NetworkSearchService,
+        NetworkViewService,
+        { provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation] },
+        { provide: UrlSerializer, useClass: MyUrlSerializer },
+        { provide: HTTP_INTERCEPTORS, useClass: EncodeHttpParamsInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
 }

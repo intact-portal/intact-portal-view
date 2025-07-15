@@ -1,17 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 
 @Component({
-  selector: 'ip-edge-thickness-diagram',
-  templateUrl: './edge-thickness-diagram.component.html',
-  styleUrls: ['./edge-thickness-diagram.component.css']
+    selector: 'ip-edge-thickness-diagram',
+    templateUrl: './edge-thickness-diagram.component.html',
+    styleUrls: ['./edge-thickness-diagram.component.css'],
+    standalone: false
 })
 export class EdgeThicknessDiagramComponent implements OnInit {
 
-  @Input() minThickness: number;
-  @Input() maxThickness: number;
-  @Input() minValue: number;
-  @Input() maxValue: number;
-  @Input() color: string = '#ababab';
+  readonly minThickness = input<number>(undefined);
+  readonly maxThickness = input<number>(undefined);
+  readonly minValue = input<number>(undefined);
+  readonly maxValue = input<number>(undefined);
+  readonly color = input<string>('#ababab');
 
   constructor() {
   }
@@ -24,7 +25,7 @@ export class EdgeThicknessDiagramComponent implements OnInit {
   }
 
   get height(): number {
-    return this.maxThickness;
+    return this.maxThickness();
   }
 
   get totalHeight(): number {
@@ -32,7 +33,7 @@ export class EdgeThicknessDiagramComponent implements OnInit {
   }
 
   get edgeWidth(): number {
-    return this.maxThickness * 2;
+    return this.maxThickness() * 2;
   }
 
   get fontSize(): number {
@@ -49,10 +50,10 @@ export class EdgeThicknessDiagramComponent implements OnInit {
 
   get connectionPoints(): string {
     return `
-    ${this.edgeWidth} ${(this.height - this.minThickness) / 2},
+    ${this.edgeWidth} ${(this.height - this.minThickness()) / 2},
     ${this.width - this.edgeWidth} 0,
-    ${this.width - this.edgeWidth} ${this.maxThickness},
-    ${this.edgeWidth} ${(this.height + this.minThickness) / 2}
+    ${this.width - this.edgeWidth} ${this.maxThickness()},
+    ${this.edgeWidth} ${(this.height + this.minThickness()) / 2}
     `;
   }
 }

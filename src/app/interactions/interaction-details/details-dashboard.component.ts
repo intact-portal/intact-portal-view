@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, input, model} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {viewer} from './details-viewer/details-viewer.component';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';
@@ -13,13 +13,14 @@ const baseURL = environment.intact_portal_graph_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-details-dashboard',
-  templateUrl: './details-dashboard.component.html',
-  styleUrls: ['./details-dashboard.component.css']
+    selector: 'ip-details-dashboard',
+    templateUrl: './details-dashboard.component.html',
+    styleUrls: ['./details-dashboard.component.css'],
+    standalone: false
 })
 export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   private _interactionAc: string;
-  @Input() featureSelected: string;
+  readonly featureSelected = model<string>(undefined);
   private _error: HttpErrorResponse;
   viewer = viewer;
   formatTypes = Format.singleInteractionFormats;
@@ -60,7 +61,7 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   }
 
   public onFeatureSelectedChanged(featureAc: string): void {
-    this.featureSelected = featureAc;
+    this.featureSelected.set(featureAc);
   }
 
   get error(): HttpErrorResponse {

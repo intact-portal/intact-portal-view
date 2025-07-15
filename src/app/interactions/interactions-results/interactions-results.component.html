@@ -1,51 +1,52 @@
 <div id="results" class="row expanded">
-  <div class="columns medium-12">
-    <mat-expansion-panel *ngIf="isLongTitle; else standardTitle">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <h2>Search for {{shortTerms}}</h2>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <p>{{title}}</p>
-    </mat-expansion-panel>
-    <ng-template #standardTitle>
-      <h2>Search for {{title}}</h2>
-    </ng-template>
-  </div>
-
-  <div *ngIf="hasResults; else noResults" style="display: contents">
-    <div class="columns medium-12 sticky-bar">
-      <ip-interactions-filters *ngIf="interactionsSearch; else loadingSpinner">
-
-      </ip-interactions-filters>
-      <ng-template #loadingSpinner>
-        <ip-progress-spinner class="margin-top-large margin-bottom-large"></ip-progress-spinner>
-      </ng-template>
-    </div>
-
     <div class="columns medium-12">
-      <ip-interactions-viewer></ip-interactions-viewer>
-
-      <ip-interactions-list></ip-interactions-list>
+        @if (isLongTitle) {
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Search for {{ shortTerms }}</h2>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>{{ title }}</p>
+            </mat-expansion-panel>
+        } @else {
+        <h2>Search for {{ title }}</h2>
+    }
     </div>
-  </div>
 
-  <ng-template #noResults>
-    <div class="row expanded margin-top-large margin-bottom-large margin-left-medium margin-right-medium">
-      <div class="columns medium-12">
-        <div class="alert-panel">
-          <h3><i class="icon icon-common icon-exclamation-triangle"></i> No results found</h3>
-          No interactions were found for your query: <b>{{search.query}}</b><br>
-          To solve this problem, you can:
-          <ul>
-            <li>Check the spelling</li>
-            <li>Use the auto suggestion</li>
-            <li>Use <a href="http://www.ebi.ac.uk/Tools/webservices/psicquic/view/main.xhtml?query={{search.query}}"
-                       target="_blank">PSICQUIC</a> to search among our IMEx partner databases
-            </li>
-          </ul>
+    @if (hasResults) {
+        <div style="display: contents">
+            <div class="columns medium-12 sticky-bar">
+                @if (interactionsSearch) {
+                    <ip-interactions-filters>
+                    </ip-interactions-filters>
+                } @else {
+                <ip-progress-spinner class="margin-top-large margin-bottom-large"></ip-progress-spinner>
+            }
+            </div>
+            <div class="columns medium-12">
+                <ip-interactions-viewer></ip-interactions-viewer>
+                <ip-interactions-list></ip-interactions-list>
+            </div>
         </div>
-      </div>
+    } @else {
+    <div class="row expanded margin-top-large margin-bottom-large margin-left-medium margin-right-medium">
+        <div class="columns medium-12">
+            <div class="alert-panel">
+                <h3><i class="icon icon-common icon-exclamation-triangle"></i> No results found</h3>
+                No interactions were found for your query: <b>{{ search.query }}</b><br>
+                To solve this problem, you can:
+                <ul>
+                    <li>Check the spelling</li>
+                    <li>Use the auto suggestion</li>
+                    <li>Use <a
+                            href="http://www.ebi.ac.uk/Tools/webservices/psicquic/view/main.xhtml?query={{search.query}}"
+                            target="_blank">PSICQUIC</a> to search among our IMEx partner databases
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </ng-template>
+}
+
 </div>

@@ -3,8 +3,9 @@ import {ColorCode} from './advanced-search.component';
 import {AdvancedQueryHelper} from './advanced-search.config';
 
 @Pipe({
-  name: 'colorMIQL',
-  pure: true
+    name: 'colorMIQL',
+    pure: true,
+    standalone: false
 })
 export class ColorMIQLPipe implements PipeTransform {
 

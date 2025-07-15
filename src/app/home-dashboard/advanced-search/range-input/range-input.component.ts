@@ -1,41 +1,31 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, input, linkedSignal, model} from '@angular/core';
 import {extractRange} from '../utils';
+import {MatInput} from '@angular/material/input';
 
 @Component({
-  selector: 'ip-range-input',
-  templateUrl: './range-input.component.html',
-  styleUrls: ['./range-input.component.css']
+    selector: 'ip-range-input',
+    templateUrl: './range-input.component.html',
+    styleUrls: ['./range-input.component.css'],
+    standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RangeInputComponent<T> implements OnInit, OnChanges {
+export class RangeInputComponent {
+  /**
+   * type of input to be used left and right
+   */
+  readonly typeD = input<MatInput['type']>('number');
+  /**
+   * Increment / decrement value
+   */
+  readonly step = input<number>(1);
 
-  @Input()
-  typeD: string;
+  readonly model = model.required<string>();
+  readonly ranges = computed(() => extractRange(this.model()) as [string, string])
 
-  @Input()
-  step: number = 1;
-
-  @Input()
-  model: string;
-
-  @Output()
-  modelChange: EventEmitter<string> = new EventEmitter<string>();
-
-  start: string;
-  stop: string;
+  readonly start = linkedSignal(() => this.ranges()[0]);
+  readonly stop = linkedSignal(() => this.ranges()[1]);
 
   constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
-  onChange() {
-    this.modelChange.emit(`[${this.start} TO ${this.stop}]`)
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const range = extractRange(this.model);
-    this.start = range[0];
-    this.stop = range[1];
+    effect(() => this.model.set(`[${this.start()} TO ${this.stop()}]`));
   }
 }

@@ -7,9 +7,10 @@ import {SearchService} from "../../../../home-dashboard/search/service/search.se
 import {ActivatedRouteStub} from "../../../../../testing/activated-route-stub";
 import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {GoogleAnalyticsService} from "../../../../shared/service/google-analytics/google-analytics.service";
 import {FilterService} from "../../../shared/service/filter.service";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('InteractionsTableComponent', () => {
   let component: InteractionsTableComponent;
@@ -20,20 +21,22 @@ describe('InteractionsTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InteractionsTableComponent],
-      providers: [
+    declarations: [InteractionsTableComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
         TableFactoryService,
         NetworkSelectionService,
         SearchService,
-        {provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate'])},
-        {provide: ActivatedRoute, useValue: new ActivatedRouteStub()},
-        {provide: SearchService, useValue: search},
-        {provide: FilterService, useValue: filters},
-        {provide: GoogleAnalyticsService, useValue: reporter}
-      ],
-      imports: [HttpClientTestingModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+        { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
+        { provide: ActivatedRoute, useValue: new ActivatedRouteStub() },
+        { provide: SearchService, useValue: search },
+        { provide: FilterService, useValue: filters },
+        { provide: GoogleAnalyticsService, useValue: reporter },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

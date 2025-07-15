@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
-import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from 'angular2-query-builder';
+import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from '@eliot-ragueneau/ngx-query-builder';
 import {MIQLPipe} from './MIQL.pipe';
 import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper, MIQL_DATE_FORMAT} from './advanced-search.config';
 import {ColorMIQLPipe} from './colorMIQL.pipe';
@@ -15,14 +15,15 @@ export interface ColorCode {
 }
 
 @Component({
-  selector: 'ip-advanced-search',
-  templateUrl: './advanced-search.component.html',
-  styleUrls: ['./advanced-search.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MIQL_DATE_FORMAT}
-  ]
+    selector: 'ip-advanced-search',
+    templateUrl: './advanced-search.component.html',
+    styleUrls: ['./advanced-search.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MIQL_DATE_FORMAT }
+    ],
+    standalone: false
 })
 export class AdvancedSearchComponent implements AfterViewInit {
 
@@ -58,7 +59,7 @@ export class AdvancedSearchComponent implements AfterViewInit {
     transition: 'margin-bottom-none',
     connector: 'ad-q-connector',
     row: 'ad-q-row',
-    invalidRuleSet: 'ad-q-row invalid-rule-set'
+    invalidRuleSet: 'ad-q-row invalid-rule-set',
   }
 
   updateCondition(ruleSet: RuleSet, e: MouseEvent, builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {

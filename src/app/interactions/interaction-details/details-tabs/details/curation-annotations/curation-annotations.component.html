@@ -1,15 +1,19 @@
 <div class="row">
-  <h5>Annotations ({{annotations.length}})</h5>
-  <table id="curAnnotations">
-    <thead>
-      <th>Topic</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let annotation of annotations">
-        <td><ip-cv-term [cvTerm]="annotation.topic"></ip-cv-term></td>
-        <td>{{annotation.description}}</td>
-      </tr>
-    </tbody>
-  </table>
+    <h5>Annotations ({{ annotations().length }})</h5>
+    <table id="curAnnotations">
+        <thead>
+        <th>Topic</th>
+        <th>Description</th>
+        </thead>
+        <tbody>
+        @for (annotation of annotations(); track annotation) {
+            <tr>
+                <td>
+                    <ip-cv-term [cvTerm]="annotation.topic"></ip-cv-term>
+                </td>
+                <td>{{ annotation.description }}</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>

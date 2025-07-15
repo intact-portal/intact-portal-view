@@ -3,9 +3,10 @@ import {Title} from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'ip-documentation',
-  templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.css']
+    selector: 'ip-documentation',
+    templateUrl: './documentation.component.html',
+    styleUrls: ['./documentation.component.css'],
+    standalone: false
 })
 export class DocumentationComponent implements OnInit {
 

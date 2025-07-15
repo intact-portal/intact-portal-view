@@ -394,7 +394,7 @@ a:visited {
 }
 
 .alert-panel.urgent {
-    background-color: rgba(183, 9, 86,0.24);
+    background-color: rgba(183, 9, 86, 0.24);
     font-style: normal;
 }
 
@@ -525,8 +525,11 @@ a:visited {
 
 .ad-q-row {
     margin-top: -1px;
-    margin-left: 0.75em;
-    padding: 0.5em;
+    padding-left: 8px
+}
+
+.q-right-align {
+    gap: 0 !important;
 }
 
 .invalid-rule-set {
@@ -566,6 +569,12 @@ a:visited {
     border-width: 0 0 0 2px !important;
 }
 
+.q-rule, .q-ruleset {
+    border: 1px solid var(--mat-sys-outline) !important;
+    padding: 6px!important;
+    background: color-mix(in oklch, var(--mat-sys-primary) 5%, transparent) !important;
+}
+
 .ad-q-connector.q-ruleset {
     border-left: none !important;
 }
@@ -582,8 +591,8 @@ a:visited {
 .ad-q-connector::after, .ad-q-connector::before {
     content: '';
     position: absolute;
-    left: -13px;
-    width: 13px;
+    left: 0;
+    width: 8px;
     height: 32px;
     border: 0 solid #68297c;
 }
@@ -1134,4 +1143,14 @@ span.collapsable-counter {
     .flex-cell.first {
         width: 100%;
     }
+}
+
+
+.positive-interaction {
+    font-size: 18px;
+    color: #39791e;
+}
+.negative-interaction {
+    font-size: 18px;
+    color: #cd180f;
 }

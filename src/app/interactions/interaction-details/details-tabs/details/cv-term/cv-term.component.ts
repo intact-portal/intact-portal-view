@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {CvTerm} from "../../../../shared/model/interaction-details/cv-term.model";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'ip-cv-term',
-  templateUrl: './cv-term.component.html',
-  styleUrls: ['./cv-term.component.css']
+    selector: 'ip-cv-term',
+    templateUrl: './cv-term.component.html',
+    styleUrls: ['./cv-term.component.css'],
+    standalone: false
 })
 export class CvTermComponent implements OnInit {
 
-  @Input() cvTerm: CvTerm
+  readonly cvTerm = input<CvTerm>(undefined);
   description: string;
 
   constructor() {

@@ -11,10 +11,11 @@ import {UntilDestroy} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-featured-dataset',
-  templateUrl: './featured-dataset.component.html',
-  styleUrls: ['./featured-dataset.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-featured-dataset',
+    templateUrl: './featured-dataset.component.html',
+    styleUrls: ['./featured-dataset.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 

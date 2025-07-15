@@ -46,7 +46,7 @@ tr:nth-child(even) {
   padding: 0;
 }
 
-.mat-raised-button {
+.mat-mdc-raised-button {
   margin-right: 5px;
 }
 

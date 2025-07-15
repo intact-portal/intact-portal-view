@@ -1,44 +1,26 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import moment, {Moment} from 'moment';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ChangeDetectionStrategy, Component, computed, linkedSignal, model} from '@angular/core';
+import moment from 'moment';
 import {extractRange} from '../utils';
 
 @Component({
   selector: 'ip-date-range',
   templateUrl: './date-range.component.html',
-  styleUrls: ['./date-range.component.css']
+  styleUrls: ['./date-range.component.css'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-@UntilDestroy()
-export class DateRangeComponent implements OnInit, OnChanges {
+export class DateRangeComponent {
 
+  model = model.required<string>()
 
-  @Input()
-  model: string;
-
-  @Output()
-  modelChange: EventEmitter<string> = new EventEmitter<string>();
-
-  start: Moment;
-  end: Moment;
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-
-  }
+  ranges = computed(() => extractRange(this.model()) as [string, string])
+  start = linkedSignal(() => moment(this.ranges()[0], 'YYYYMMDD'));
+  end = linkedSignal(() => moment(this.ranges()[1], 'YYYYMMDD'));
 
   onChange(value: string) {
-    console.log(value)
+    // Only update the model value if the triggering input is fully valid
     if (value.length === 10) {
-      this.modelChange.emit(`[${this.start.format('YYYYMMDD')} TO ${this.end?.format('YYYYMMDD')}]`);
+      this.model.set(`[${this.start().format('YYYYMMDD')} TO ${this.end().format('YYYYMMDD')}]`)
     }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const range = extractRange(this.model);
-    this.start = moment(range[0], 'YYYYMMDD');
-    this.end = moment(range[1], 'YYYYMMDD');
   }
 }

@@ -16,7 +16,7 @@ import {NegativeFilterStatus} from './negative-filter/negative-filter-status.mod
 @Component({
   selector: 'ip-interactions-filters',
   templateUrl: './interactions-filters.component.html',
-  styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css'],
+  styleUrls: ['./interactions-filters.component.css'],
   animations: [
     trigger('bendTip', [
       state('tipBended', style({
@@ -44,7 +44,8 @@ import {NegativeFilterStatus} from './negative-filter/negative-filter-status.mod
         animate('350ms', style({transform: 'translateX(-100%)'}))
       ])
     ]),
-  ]
+  ],
+  standalone: false
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
@@ -55,9 +56,9 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   private readonly EXPORT_LIMIT = 25_000;
   readonly NO_EXPORT_TEXT = 'Exports are disabled when there are more than ' +
-      this.EXPORT_LIMIT.toLocaleString('en-GB') +
-      ' interactions for performance issues.\n' +
-      'Please use Cytoscape IntAct App to support large networks'
+    this.EXPORT_LIMIT.toLocaleString('en-GB') +
+    ' interactions for performance issues.\n' +
+    'Please use Cytoscape IntAct App to support large networks'
 
   constructor(private tableFactory: TableFactoryService, public view: NetworkViewService, public filters: FilterService) {
   }
@@ -134,6 +135,10 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     const g = (bigint >> 8) & 255;
     const b = bigint & 255;
     return {r, g, b};
+  }
+
+  trackFacet(facet: Facet<any>) {
+    return `${facet.value}-${facet.termId} (${JSON.stringify(facet.valueCount)})`;
   }
 
   /**

@@ -3,17 +3,19 @@ import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
 import {SearchService} from '../search/service/search.service';
 import {ResolutionEntry} from './resolution-interactor-model';
-import {NodeShape} from '../../interactions/shared/model/network-shapes/node-shape';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {StepperSelectionEvent} from '@angular/cdk/stepper';
+import {MatStepper} from '@angular/material/stepper';
 
 
 const baseURL = environment.intact_portal_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-batch-search',
-  templateUrl: './batch-search.component.html',
-  styleUrls: ['./batch-search.component.css']
+    selector: 'ip-batch-search',
+    templateUrl: './batch-search.component.html',
+    styleUrls: ['./batch-search.component.css'],
+    standalone: false
 })
 export class BatchSearchComponent {
   private _query: string;
@@ -32,7 +34,8 @@ export class BatchSearchComponent {
   private _interactorsQueried = 0;
   private _acCollectionProgress = 0;
   private collectionReset = false;
-  nodeShape = NodeShape;
+
+  stepsLabel = ['Design query', 'Resolve terms', 'Collect interactors']
 
   constructor(private search: SearchService) {
     this.uploader = new FileUploader({
@@ -51,6 +54,7 @@ export class BatchSearchComponent {
   }
 
   resolveSearch() {
+    this.resetSecondStep()
     this.search.resolveSearch(this.query)
       .pipe(untilDestroyed(this))
       .subscribe((data) => {
@@ -75,13 +79,14 @@ export class BatchSearchComponent {
     this.search.batchSearch(Array.from(this.interactorAcs.values()).join('\n'));
   }
 
-  validateSearchBox(query: string) {
+  validateSearchBox(query: string, stepper: MatStepper) {
     this.search.title = query;
-    this.setQuery(query)
+    this.setQuery(query, stepper)
   }
 
-  setQuery(response: string) {
+  setQuery(response: string, stepper: MatStepper) {
     this.query = response;
+    stepper.next();
   }
 
   fileOverBase(e: any): void {
@@ -278,5 +283,16 @@ export class BatchSearchComponent {
 
   get interactorAcs(): Set<string> {
     return this._interactorAcs;
+  }
+
+  stepChanged(event: StepperSelectionEvent) {
+    setTimeout(() => { // Avoid being called before the click action is performed
+      if (event.previouslySelectedStep.label === this.stepsLabel[0]) {
+        this.resolveSearch()
+      }
+      if (event.selectedStep.label === this.stepsLabel[2]) {
+        this.collectNextPagesInteractors()
+      }
+    })
   }
 }

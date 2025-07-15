@@ -4,7 +4,8 @@ import {environment} from '../../../../environments/environment';
 @Component({
     selector: 'ip-statistics',
     templateUrl: './statistics.component.html',
-    styleUrls: ['./statistics.component.css']
+    styleUrls: ['./statistics.component.css'],
+    standalone: false
 })
 
 export class StatisticsComponent implements OnInit, AfterViewInit {

@@ -1,26 +1,30 @@
 <div class="row">
-  <h5>Parameters ({{parameters.length}})</h5>
-  <table id="parameters">
-    <thead>
-    <tr>
-      <th>Type</th>
-      <th>Unit</th>
-      <th>Value</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let param of parameters">
-      <td>
-        <ip-cv-term [cvTerm]="param.type"></ip-cv-term>
-      </td>
-      <td>{{param.value}}</td>
-      <td>
-        <!-- Parameter units are optional-->
-        <div *ngIf="param.unit">
-          <ip-cv-term [cvTerm]="param.unit"></ip-cv-term>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <h5>Parameters ({{ parameters().length }})</h5>
+    <table id="parameters">
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Unit</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for (param of parameters(); track param) {
+            <tr>
+                <td>
+                    <ip-cv-term [cvTerm]="param.type"></ip-cv-term>
+                </td>
+                <td>{{ param.value }}</td>
+                <td>
+                    <!-- Parameter units are optional-->
+                    @if (param.unit) {
+                        <div>
+                            <ip-cv-term [cvTerm]="param.unit"></ip-cv-term>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>

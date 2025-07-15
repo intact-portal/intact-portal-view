@@ -1,7 +1,8 @@
 <div class="margin-top-large margin-bottom-large">
     <ul class="tabs" data-tabs data-deep-link="true" data-deep-link-smudge="false" data-update-history="false"
         id="details-tabs">
-        <li class="tabs-title is-active"><a [href]="href + '#interactionDetails'" aria-selected="true">Interaction Details</a></li>
+        <li class="tabs-title is-active"><a [href]="href + '#interactionDetails'" aria-selected="true">Interaction
+            Details</a></li>
         <li class="tabs-title"><a [href]="href + '#participants'">Participants</a></li>
         <li class="tabs-title"><a [href]="href + '#features'">Features</a></li>
 
@@ -10,18 +11,20 @@
 
     <div class="tabs-content" data-tabs-content="details-tabs">
         <div class="tabs-panel is-active" id="interactionDetails">
-            <ip-interaction-details *ngIf="interactionDetails"
-                                    [interactionDetails]="interactionDetails"></ip-interaction-details>
+            @if (interactionDetails) {
+                <ip-interaction-details
+                        [interactionDetails]="interactionDetails"></ip-interaction-details>
+            }
         </div>
 
         <div class="tabs-panel table-tab" id="participants">
             <ip-participant-table [participantTab]="isTabParticipantActive"
-                                  [interactionAc]="interactionAc"></ip-participant-table>
+                                  [interactionAc]="interactionAc()"></ip-participant-table>
 
         </div>
 
         <div class="tabs-panel table-tab" id="features">
-            <ip-features-table [interactionAc]="interactionAc"
+            <ip-features-table [interactionAc]="interactionAc()"
                                [featureTab]="isTabFeatureActive"
                                (featureChanged)="onFeatureSelectedChanged($event)"></ip-features-table>
         </div>

@@ -11,7 +11,7 @@ const INTACT_FTP_BASE_URL = 'https://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
 
 export const environment = {
-  production: true,
+  production: false,
   evn: 'test',
   analytics_id: 'UA-672146-15',
   ebi_url: EBI_URL,

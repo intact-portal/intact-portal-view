@@ -5,7 +5,8 @@ import {MatDialogRef} from '@angular/material/dialog';
 @Component({
     selector: 'ip-cytoscape-dialog',
     templateUrl: './cytoscape-dialog.component.html',
-    styleUrls: ['./cytoscape-dialog.component.css']
+    styleUrls: ['./cytoscape-dialog.component.css'],
+    standalone: false
 })
 export class CytoscapeDialogComponent {
 

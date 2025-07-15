@@ -4,15 +4,18 @@
     </h4>
 
     <div id="releaseVersion" class="padding-left-medium padding-right-medium">
-        <h6><i class="icon icon-common icon-cogs"></i> IntAct Portal version: {{version}} - {{releaseDate}}</h6>
+        <h6><i class="icon icon-common icon-cogs"></i> IntAct Portal version: {{ version }} - {{ releaseDate }}</h6>
 
-        <h6 *ngIf="release"><i class="icon icon-common icon-database"></i> {{release}}</h6>
-        <ul *ngIf="summary" style="margin-bottom: 0">
-            <li>Publications : {{summary['Publications'] | number}}</li>
-            <li>Interactors : {{summary['Interactors'] | number }}</li>
-            <li>Interactions : {{summary['Interactions'] | number }}</li>
-            <li>Binary Interactions : {{summary['Binary Interactions'] | number}}</li>
+        @if (release) {
+            <h6><i class="icon icon-common icon-database"></i> {{ release }}</h6>
+        } @if (summary) {
+        <ul style="margin-bottom: 0">
+            <li>Publications : {{ summary['Publications'] | number }}</li>
+            <li>Interactors : {{ summary['Interactors'] | number }}</li>
+            <li>Interactions : {{ summary['Interactions'] | number }}</li>
+            <li>Binary Interactions : {{ summary['Binary Interactions'] | number }}</li>
         </ul>
+    }
 
     </div>
 

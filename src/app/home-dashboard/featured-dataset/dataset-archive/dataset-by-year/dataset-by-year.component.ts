@@ -48,20 +48,20 @@ export class DatasetByYearComponent implements AfterViewInit {
     });
   }
 
-  searchIntAct(pubmedId: string, pubmedAuthor: string) {
-    this.search.search(`pubid:${pubmedId}`, `publication: ${pubmedAuthor} (${pubmedId})`);
+  searchIntAct(pubmed: PubmedDataset) {
+    this.search.search(PubmedDataset.searchQuery(pubmed), PubmedDataset.searchTitle(pubmed));
   }
 
-  goPSIMI25FTP(pubmedYear: string, pubmedId: string) {
-    window.open(environment.intact_psi25_url + `/pmid/${pubmedYear}/${pubmedId}.zip`);
+  goPSIMI25FTP(pubmed: PubmedDataset) {
+    window.open(PubmedDataset.ftpFilePath(environment.intact_psi25_url, pubmed, 'zip'));
   }
 
-  goPSIMI30FTP(pubmedYear: string, pubmedId: string) {
-    window.open(environment.intact_psi30_url + `/pmid/${pubmedYear}/${pubmedId}.zip`);
+  goPSIMI30FTP(pubmed: PubmedDataset) {
+    window.open(PubmedDataset.ftpFilePath(environment.intact_psi30_url, pubmed, 'zip'));
   }
 
-  goPSIMITABFTP(pubmedYear: string, pubmedId: string) {
-    window.open(environment.intact_psimitab_url + `/pmid/${pubmedYear}/${pubmedId}.txt`);
+  goPSIMITABFTP(pubmed: PubmedDataset) {
+    window.open(PubmedDataset.ftpFilePath(environment.intact_psimitab_url, pubmed, 'txt'));
   }
 
   hasPubMedId(pubMed: PubmedDataset): boolean {

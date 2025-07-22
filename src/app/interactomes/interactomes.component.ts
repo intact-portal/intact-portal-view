@@ -4,9 +4,10 @@ import {Title} from '@angular/platform-browser';
 import {InteractomesConstants} from './interactomes-constants';
 
 @Component({
-  selector: 'ip-interactomes',
-  templateUrl: './interactomes.component.html',
-  styleUrls: ['./interactomes.component.css']
+    selector: 'ip-interactomes',
+    templateUrl: './interactomes.component.html',
+    styleUrls: ['./interactomes.component.css'],
+    standalone: false
 })
 export class InteractomesComponent implements OnInit {
 

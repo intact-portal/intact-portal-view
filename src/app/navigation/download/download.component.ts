@@ -3,9 +3,10 @@ import {Title} from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'ip-download',
-  templateUrl: './download.component.html',
-  styleUrls: ['./download.component.css']
+    selector: 'ip-download',
+    templateUrl: './download.component.html',
+    styleUrls: ['./download.component.css'],
+    standalone: false
 })
 export class DownloadComponent implements OnInit {
 

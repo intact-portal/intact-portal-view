@@ -4,319 +4,355 @@
             <i class="icon icon-functional icon-spacer icon-filter"></i> Filters
         </div>
         <button class="button lighter" type="button" data-toggle="interactor-species-dropdown"
-                [ngClass]="{'underline': filters.isFiltering(filterTypes.SPECIES)}">
+                [ngClass]="{'underline': filters.isFiltering(filterTypes.SPECIES) || filters.isFiltering(filterTypes.INTRA_SPECIES)}">
             Interactor Species
         </button>
-        <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true"
-             data-hover-pane="true"
-             *ngIf="filterTypes.SPECIES as filter">
-            <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
-                <table class="no-margin table-scroll">
-                    <thead>
-                    <tr class="no-background">
-                        <th colspan="3" class="no-horizontal-padding padding-vertical-small">
-                            <span class="float-right margin-right-medium"><em>Filter out cross-species interactions</em></span>
-                        </th>
-                        <th colspan="2" class="no-padding">
-                            <div class="centered-switch-wrap">
-                                <span class="label margin-right-medium">Cross</span>
-                                <mat-slide-toggle color="primary"
-                                                  (change)="onChangeInteractionIntraSpeciesFilter($event)"
-                                                  [disabled]="!filters.canFilterIntraSpecies()"
-                                                  [checked]="filters.intraSpecies">
-                                </mat-slide-toggle>
-                                <span class="label margin-left-medium">Intra</span>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let species of filters.facets.combined_species"
-                        (click)="$event.target !== checkbox ? checkbox.click() : null"
-                        [ngClass]="{'disabled-row':filters.intraSpecies && species.valueCount.intra === 0}">
-                        <td class="no-padding">
-                            <input name="species" type="checkbox" class="vertically-centered"
-                                   #checkbox [value]="species.value"
-                                   (change)="onChangeInteractorSpeciesFilter(species)"
-                                   [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
-                                   [checked]="isFilteringOrganismValue(filter, species)"/>
-                        </td>
-                        <td class="no-padding">
-                            <span class="term-id no-padding no-underline float-right">{{species.termId}}</span>
-                        </td>
-                        <td class="no-padding">
-                            <span class="vertically-centered">{{species.value}}</span>
-                        </td>
-                        <ng-template [ngIf]="!filters.intraSpecies">
-                            <td style="text-align: right" class="no-padding">
-                  <span class="tag-cell species-cell emphasized"
-                        [ngStyle]="{'background-color':species.visualProperty}"
-                  >{{species.valueCount.all}}</span>
-                            </td>
-
-                            <td class="no-padding">
-                  <span class="tag-cell species-cell discreet"
-                        [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
-                  >{{species.valueCount.intra}}</span>
-                            </td>
-
-                        </ng-template>
-
-
-                        <ng-template [ngIf]="filters.intraSpecies">
-                            <td style="text-align: right" class="no-padding">
-                  <span class="tag-cell species-cell discreet"
-                        [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
-                  >{{species.valueCount.all}}</span>
-                            </td>
-
-                            <td class="no-padding">
-                  <span class="tag-cell species-cell emphasized"
-                        [ngStyle]="{'background-color':species.visualProperty}"
-                  >{{species.valueCount.intra}}</span>
-                            </td>
-                        </ng-template>
-                    </tr>
-
-                    </tbody>
-                </table>
+        @if (filterTypes.SPECIES; as filter) {
+            <div class="dropdown-pane" id="interactor-species-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true">
+                <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+                    <table class="no-margin table-scroll">
+                        <thead>
+                        <tr class="no-background">
+                            <th colspan="3" class="no-horizontal-padding padding-vertical-small">
+                                <span class="float-right margin-right-medium"><em>Filter out cross-species interactions</em></span>
+                            </th>
+                            <th colspan="2" class="no-padding">
+                                <div class="centered-switch-wrap">
+                                    <span class="label margin-right-medium">Cross</span>
+                                    <mat-slide-toggle color="primary" hideIcon="true"
+                                                      (change)="onChangeInteractionIntraSpeciesFilter($event)"
+                                                      [disabled]="!filters.canFilterIntraSpecies()"
+                                                      [checked]="filters.intraSpecies"/>
+                                    <span class="label margin-left-medium">Intra</span>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (species of filters.facets.combined_species; track trackFacet(species)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null"
+                                        [ngClass]="{'disabled-row':filters.intraSpecies && species.valueCount.intra === 0}">
+                                    <td class="no-padding">
+                                        <input name="species" type="checkbox" class="vertically-centered"
+                                               #checkbox [value]="species.value"
+                                               (change)="onChangeInteractorSpeciesFilter(species)"
+                                               [disabled]="filters.intraSpecies && species.valueCount.intra === 0"
+                                               [checked]="filters.isFilteringValue(filter, species)"/>
+                                    </td>
+                                    <td class="no-padding">
+                                        <span class="term-id no-padding no-underline float-right">{{ species.termId }}</span>
+                                    </td>
+                                    <td class="no-padding">
+                                        <span class="vertically-centered">{{ species.value }}</span>
+                                    </td>
+                                    @if (!filters.intraSpecies) {
+                                        <td style="text-align: right" class="no-padding">
+                      <span class="tag-cell species-cell emphasized"
+                            [ngStyle]="{'background-color':species.visualProperty}"
+                      >{{ species.valueCount.all }}</span>
+                                        </td>
+                                        <td class="no-padding">
+                      <span class="tag-cell species-cell discreet"
+                            [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
+                      >{{ species.valueCount.intra }}</span>
+                                        </td>
+                                    }
+                                    @if (filters.intraSpecies) {
+                                        <td style="text-align: right" class="no-padding">
+                      <span class="tag-cell species-cell discreet"
+                            [ngStyle]="{'border-color':species.visualProperty, 'color':species.visualProperty}"
+                      >{{ species.valueCount.all }}</span>
+                                        </td>
+                                        <td class="no-padding">
+                      <span class="tag-cell species-cell emphasized"
+                            [ngStyle]="{'background-color':species.visualProperty}"
+                      >{{ species.valueCount.intra }}</span>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (filters.isFiltering(filter)) {
+                    <div class="reset-button no-margin">
+                        <button class="centered delete-button margin-top-medium" (click)="filters.resetFilter(filter)"
+                                matTooltip="Remove filter" matTooltipPosition="below">
+                            <i class="icon icon-functional" data-icon="d"></i>
+                        </button>
+                    </div>
+                }
             </div>
-            <div class="reset-button no-margin" *ngIf="filters.isFiltering(filter)">
-                <button class="centered delete-button margin-top-medium" (click)="filters.resetFilter(filter)"
-                        matTooltip="Remove filter" matTooltipPosition="below">
-                    <i class="icon icon-functional" data-icon="d"></i>
-                </button>
-            </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="interactor-type-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.INTERACTOR_TYPE)}">
             Interactor Type
         </button>
-        <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
-             *ngIf="filterTypes.INTERACTOR_TYPE as filter">
-            <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
-                <table class="no-margin table-scroll">
-                    <tbody>
-                    <tr *ngFor="let molecule of filters.facets.type_MI_A_B_styled"
-                        (click)="$event.target !== checkbox ? checkbox.click() : null">
-                        <td class="no-padding">
-                            <input #checkbox type="checkbox" value="{{molecule.value}}" class="vertically-centered"
-                                   (change)="onChangeInteractorTypeFilter(molecule)"
-                                   [checked]="filters.isFilteringValue(filter, molecule.termId)"/>
-                            <span>{{molecule.value}}</span>
-                        </td>
-                        <td style="padding: 0 0 0 0.4rem;" class="float-right">
-                            <span class="tag-cell species-cell emphasized">{{molecule.valueCount}}</span>
-                        </td>
-                        <td class="no-padding">
-                            <ip-node-diagram [shape]="shapes[molecule.visualProperty]" color="#cdaae0"
-                                             class="margin-left-small"
-                                             height="16pt" style="padding-right: 3px"></ip-node-diagram>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        @if (filterTypes.INTERACTOR_TYPE; as filter) {
+            <div class="dropdown-pane" id="interactor-type-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true"
+            >
+                <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+                    <table class="no-margin table-scroll">
+                        <tbody>
+                            @for (molecule of filters.facets.type_MI_A_B_styled; track trackFacet(molecule)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{molecule.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractorTypeFilter(molecule)"
+                                               [checked]="filters.isFilteringValue(filter, molecule.termId)"/>
+                                        <span>{{ molecule.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                                        <span class="tag-cell species-cell emphasized">{{ molecule.valueCount }}</span>
+                                    </td>
+                                    <td class="no-padding">
+                                        <ip-node-diagram [shape]="shapes[molecule.visualProperty]" color="#cdaae0"
+                                                         class="margin-left-small"
+                                                         height="16pt" style="padding-right: 3px"></ip-node-diagram>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (filters.isFiltering(filter)) {
+                    <div class="margin-top-medium reset-button">
+                        <button class="delete-button" (click)="filters.resetFilter(filter)"
+                                matTooltip="Remove filter"
+                                matTooltipPosition="below">
+                            <i class="icon icon-functional" data-icon="d"></i>
+                        </button>
+                    </div>
+                }
             </div>
-
-            <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
-                <button class="delete-button" (click)="filters.resetFilter(filter)"
-                        matTooltip="Remove filter"
-                        matTooltipPosition="below">
-                    <i class="icon icon-functional" data-icon="d"></i>
-                </button>
-            </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="interaction-type-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.INTERACTION_TYPE)}">
             Interaction Type
         </button>
-        <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
-             *ngIf="filterTypes.INTERACTION_TYPE as filter">
-            <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
-                <table class="no-margin table-scroll">
-                    <tbody>
-                    <tr *ngFor="let type of filters.facets.type_mi_identifier_styled"
-                        (click)="$event.target !== checkbox ? checkbox.click() : null">
-                        <td class="no-padding">
-                            <input #checkbox type="checkbox" value="{{type.value}}" class="vertically-centered"
-                                   (change)="onChangeInteractionTypeFilter(type)"
-                                   [checked]="filters.isFilteringValue(filter, type.termId)"/>
-                            <span>{{type.value}}</span>
-                        </td>
-                        <td style="padding: 0 0 0 0.4rem;" class="float-right">
-              <span class="tag-cell species-cell emphasized light-background"
-                    [ngStyle]="{'background-color':type.visualProperty , 'color': fontColor(type.visualProperty)}">
-                {{type.valueCount}}
-              </span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        @if (filterTypes.INTERACTION_TYPE; as filter) {
+            <div class="dropdown-pane" id="interaction-type-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true"
+            >
+                <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+                    <table class="no-margin table-scroll">
+                        <tbody>
+                            @for (type of filters.facets.type_mi_identifier_styled; track trackFacet(type)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{type.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractionTypeFilter(type)"
+                                               [checked]="filters.isFilteringValue(filter, type.termId)"/>
+                                        <span>{{ type.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                    <span class="tag-cell species-cell emphasized light-background"
+                          [ngStyle]="{'background-color':type.visualProperty , 'color': fontColor(type.visualProperty)}">
+                      {{ type.valueCount }}
+                    </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (filters.isFiltering(filter)) {
+                    <div class="margin-top-medium reset-button">
+                        <button class="delete-button" (click)="filters.resetFilter(filter)"
+                                matTooltip="Remove filter" matTooltipPosition="below">
+                            <i class="icon icon-functional" data-icon="d"></i>
+                        </button>
+                    </div>
+                }
             </div>
-            <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
-                <button class="delete-button" (click)="filters.resetFilter(filter)"
-                        matTooltip="Remove filter" matTooltipPosition="below">
-                    <i class="icon icon-functional" data-icon="d"></i>
-                </button>
-            </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="interaction-detection-method-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.DETECTION_METHOD)}">
             Interaction Detection Method
         </button>
-        <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
-             data-hover-pane="true" *ngIf="filterTypes.DETECTION_METHOD as filter">
-            <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
-                <table class="no-margin table-scroll">
-                    <tbody>
-                    <tr *ngFor="let method of filters.facets.detection_method_mi_styled"
-                        (click)="$event.target !== checkbox ? checkbox.click() : null">
-                        <td class="no-padding">
-                            <input #checkbox type="checkbox" value="{{method.value}}" class="vertically-centered"
-                                   (change)="onChangeInteractionDetectionMethodFilter(method)"
-                                   [checked]="filters.isFilteringValue(filter, method.termId)"/>
-                            <span>{{method.value}}</span>
-                        </td>
-                        <td style="padding: 0 0 0 0.4rem;" class="float-right">
-              <span class="tag-cell species-cell emphasized"
-              >{{method.valueCount}}</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        @if (filterTypes.DETECTION_METHOD; as filter) {
+            <div class="dropdown-pane" id="interaction-detection-method-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true">
+                <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+                    <table class="no-margin table-scroll">
+                        <tbody>
+                            @for (
+                                detectionMethod of filters.facets.detection_method_mi_styled; track trackFacet(detectionMethod)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{detectionMethod.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractionDetectionMethodFilter(detectionMethod)"
+                                               [checked]="filters.isFilteringValue(filter, detectionMethod.termId)"/>
+                                        <span>{{ detectionMethod.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                    <span class="tag-cell species-cell emphasized"
+                    >{{ detectionMethod.valueCount }}</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (filters.isFiltering(filter)) {
+                    <div class="margin-top-medium reset-button">
+                        <button class="delete-button" (click)="filters.resetFilter(filter)"
+                                matTooltip="Remove filter"
+                                matTooltipPosition="below">
+                            <i class="icon icon-functional" data-icon="d"></i>
+                        </button>
+                    </div>
+                }
             </div>
-
-            <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
-                <button class="delete-button" (click)="filters.resetFilter(filter)"
-                        matTooltip="Remove filter"
-                        matTooltipPosition="below">
-                    <i class="icon icon-functional" data-icon="d"></i>
-                </button>
-            </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="participant-detection-method-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.PARTICIPANT_DETECTION_METHOD)}">
             Participant Detection Method
         </button>
-        <div class="dropdown-pane" id="participant-detection-method-dropdown" data-dropdown data-hover="true"
-             data-hover-pane="true" *ngIf="filterTypes.PARTICIPANT_DETECTION_METHOD as filter">
-            <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
-                <table class="no-margin table-scroll">
-                    <tbody>
-                    <tr *ngFor="let method of filters.facets.identification_method_mi_A_B_styled"
-                        (click)="$event.target !== checkbox ? checkbox.click() : null">
-                        <td class="no-padding">
-                            <input #checkbox type="checkbox" value="{{method.value}}" class="vertically-centered"
-                                   (change)="onChangeParticipantDetectionMethodFilter(method)"
-                                   [checked]="filters.isFilteringValue(filter, method.termId)"/>
-                            <span>{{method.value}}</span>
-                        </td>
-                        <td style="padding: 0 0 0 0.4rem;" class="float-right">
-              <span class="tag-cell species-cell emphasized"
-              >{{method.valueCount}}</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        @if (filterTypes.PARTICIPANT_DETECTION_METHOD; as filter) {
+            <div class="dropdown-pane" id="participant-detection-method-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true">
+                <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+                    <table class="no-margin table-scroll">
+                        <tbody>
+                            @for (
+                                identificationMethod of filters.facets.identification_method_mi_A_B_styled; track trackFacet(identificationMethod)) {
+                                <tr
+                                        (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{identificationMethod.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeParticipantDetectionMethodFilter(identificationMethod)"
+                                               [checked]="filters.isFilteringValue(filter, identificationMethod.termId)"/>
+                                        <span>{{ identificationMethod.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                    <span class="tag-cell species-cell emphasized"
+                    >{{ identificationMethod.valueCount }}</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (filters.isFiltering(filter)) {
+                    <div class="margin-top-medium reset-button">
+                        <button class="delete-button" (click)="filters.resetFilter(filter)"
+                                matTooltip="Remove filter"
+                                matTooltipPosition="below">
+                            <i class="icon icon-functional" data-icon="d"></i>
+                        </button>
+                    </div>
+                }
             </div>
-
-            <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
-                <button class="delete-button" (click)="filters.resetFilter(filter)"
-                        matTooltip="Remove filter"
-                        matTooltipPosition="below">
-                    <i class="icon icon-functional" data-icon="d"></i>
-                </button>
-            </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="interaction-host-organism-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.HOST_ORGANISM)}">
             Interaction Host Organism
         </button>
-        <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
-             data-hover-pane="true" *ngIf="filterTypes.HOST_ORGANISM as filter">
-            <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
-                <table class="no-margin table-scroll">
-                    <tbody>
-                    <tr *ngFor="let species of filters.facets.host_organism_taxId_styled"
-                        (click)="$event.target !== checkbox ? checkbox.click() : null">
-                        <td class="no-padding">
-                            <input #checkbox type="checkbox" value="{{species.value}}" class="vertically-centered"
-                                   (change)="onChangeInteractionHostOrganismFilter(species)"
-                                   [checked]="isFilteringOrganismValue(filter, species)"/>
-                        </td>
-                        <td class="no-padding">
-                            <span class="term-id no-padding no-underline float-right">{{species.termId}}</span>
-                        </td>
-                        <td class="no-padding">
-                            <span class="vertically-centered">{{species.value}}</span>
-                        </td>
-                        <td style="padding: 0 0 0 0.4rem;" class="float-right">
-              <span class="tag-cell species-cell emphasized"
-                    [ngStyle]="{'background-color':species.visualProperty }"
-              >{{species.valueCount}}</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        @if (filterTypes.HOST_ORGANISM; as filter) {
+            <div class="dropdown-pane" id="interaction-host-organism-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true">
+                <div class="scrollbar filter" [ngStyle]="scrollStyle(filter)">
+                    <table class="no-margin table-scroll">
+                        <tbody>
+                        <!--                        TODO investigate why 2 S. cerevisiae in Ndc80 search -->
+                            @for (organism of filters.facets.host_organism_taxId_styled;
+                                track trackFacet(organism)) {
+                                <tr (click)="$event.target !== checkbox ? checkbox.click() : null">
+                                    <td class="no-padding">
+                                        <input #checkbox type="checkbox" value="{{organism.value}}"
+                                               class="vertically-centered"
+                                               (change)="onChangeInteractionHostOrganismFilter(organism)"
+                                               [checked]="filters.isFilteringValue(filter, organism)"/>
+                                    </td>
+                                    <td class="no-padding">
+                                        <span class="term-id no-padding no-underline float-right">{{ organism.termId }}</span>
+                                    </td>
+                                    <td class="no-padding">
+                                        <span class="vertically-centered">{{ organism.value }}</span>
+                                    </td>
+                                    <td style="padding: 0 0 0 0.4rem;" class="float-right">
+                                    <span class="tag-cell species-cell emphasized"
+                                          [ngStyle]="{'background-color':organism.visualProperty }"
+                                    >{{ organism.valueCount }}</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (filters.isFiltering(filter)) {
+                    <div class="margin-top-medium reset-button">
+                        <button class="delete-button" (click)="filters.resetFilter(filter)"
+                                matTooltip="Remove filter" matTooltipPosition="below">
+                            <i class="icon icon-functional" data-icon="d"></i>
+                        </button>
+                    </div>
+                }
             </div>
-            <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
-                <button class="delete-button" (click)="filters.resetFilter(filter)"
-                        matTooltip="Remove filter" matTooltipPosition="below">
-                    <i class="icon icon-functional" data-icon="d"></i>
-                </button>
-            </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="interaction-mutation-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.MUTATION)}">
             Mutation
         </button>
-        <div class="dropdown-pane" id="interaction-mutation-dropdown" data-dropdown data-hover="true"
-             data-hover-pane="true" *ngIf="filterTypes.MUTATION as filter">
-            <em>Interactions affected by mutation only</em>
-            <div class="centered-switch-wrap">
-        <span class="tag-cell species-cell margin-right-small"
-              [ngClass]="{'discreet':filters.mutation, 'emphasized':!filters.mutation}">{{filters.nbNonMutation}}</span>
-                <mat-slide-toggle color="primary"
-                                  (change)="filters.updateFilter(filter, $event.checked)"
-                                  [disabled]="!filters.hasMutation"
-                                  [checked]="filters.mutation">
-                </mat-slide-toggle>
-                <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
-                      [ngStyle]="{
-              'background-color': filters.mutation ? filters.mutationColor : 'white',
-              'color': filters.mutation ? 'white' : filters.mutationColor,
-              'border-color': filters.mutationColor
-              }"
-                      [ngClass]="{'discreet':!filters.mutation, 'emphasized':filters.mutation}">{{filters.nbMutation}}</span>
+        @if (filterTypes.MUTATION; as filter) {
+            <div class="dropdown-pane" id="interaction-mutation-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true">
+                <em>Interactions affected by mutation only</em>
+                <div class="centered-switch-wrap">
+                    <span class="tag-cell species-cell margin-right-small"
+                          [ngClass]="{'discreet':filters.mutation, 'emphasized':!filters.mutation}">{{ filters.nbNonMutation }}</span>
+                    <mat-slide-toggle color="primary"
+                                      (change)="filters.updateFilter(filter, $event.checked)"
+                                      [disabled]="!filters.hasMutation"
+                                      [checked]="filters.mutation"/>
+                    <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
+                          [ngStyle]="{
+                          'background-color': filters.mutation ? filters.mutationColor : 'white',
+                          'color': filters.mutation ? 'white' : filters.mutationColor,
+                          'border-color': filters.mutationColor
+                          }"
+                          [ngClass]="{'discreet':!filters.mutation, 'emphasized':filters.mutation}">{{ filters.nbMutation }}</span>
+                </div>
             </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="interaction-expansion-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.EXPANSION)}">
             Expansion
         </button>
-        <div class="dropdown-pane" id="interaction-expansion-dropdown" data-dropdown data-hover="true"
-             data-hover-pane="true" *ngIf="filterTypes.EXPANSION as filter">
-
-            <em>Non-expanded interactions only</em>
-            <div class="centered-switch-wrap">
-        <span class="tag-cell species-cell dashed margin-right-small"
-              [ngClass]="{'discreet':filters.expansion, 'emphasized':!filters.expansion}">{{filters.nbNonExpansion}}</span>
-                <mat-slide-toggle color="primary"
-                                  (change)="filters.updateFilter(filter, $event.checked)"
-                                  [disabled]="!filters.hasExpansion"
-                                  [checked]="filters.expansion">
-                </mat-slide-toggle>
-                <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
-                      [ngClass]="{'discreet':!filters.expansion, 'emphasized':filters.expansion}">{{filters.nbExpansion}}</span>
+        @if (filterTypes.EXPANSION; as filter) {
+            <div class="dropdown-pane" id="interaction-expansion-dropdown" data-dropdown data-hover="true"
+                 data-hover-pane="true">
+                <em>Non-expanded interactions only</em>
+                <div class="centered-switch-wrap">
+                    <span class="tag-cell species-cell dashed margin-right-small"
+                          [ngClass]="{'discreet':filters.expansion, 'emphasized':!filters.expansion}">{{ filters.nbNonExpansion }}</span>
+                    <mat-slide-toggle color="primary"
+                                      (change)="filters.updateFilter(filter, $event.checked)"
+                                      [disabled]="!filters.hasExpansion"
+                                      [checked]="filters.expansion"/>
+                    <span class="tag-cell species-cell emphasized" style="margin-left: 4px;"
+                          [ngClass]="{'discreet':!filters.expansion, 'emphasized':filters.expansion}">{{ filters.nbExpansion }}</span>
+                </div>
             </div>
-        </div>
+        }
 
         <button class="button lighter" type="button" data-toggle="interaction-negative-dropdown"
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.NEGATIVE)}">
@@ -332,26 +368,30 @@
                 [ngClass]="{'underline': filters.isFiltering(filterTypes.MI_SCORE)}">
             MI Score
         </button>
-        <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
-             *ngIf="filterTypes.MI_SCORE as filter">
-            <div class="margin-bottom-large" style="text-align: center">
-                <em>Number of interactions ~ MI Score</em>
-                <ip-density-slider [dOptions]="{height: 75, width: 300}"></ip-density-slider>
+        @if (filterTypes.MI_SCORE; as filter) {
+            <div class="dropdown-pane" id="score-dropdown" data-dropdown data-hover="true" data-hover-pane="true"
+            >
+                <div class="margin-bottom-large" style="text-align: center">
+                    <em>Number of interactions ~ MI Score</em>
+                    <ip-density-slider [dOptions]="{height: 75, width: 300}"></ip-density-slider>
+                </div>
+                @if (filters.isFiltering(filter)) {
+                    <div class="margin-top-medium reset-button">
+                        <button class="delete-button" (click)="filters.resetFilter(filter)"
+                                matTooltip="Remove filter" matTooltipPosition="below">
+                            <i class="icon icon-functional" data-icon="d"></i>
+                        </button>
+                    </div>
+                }
             </div>
-            <div *ngIf="filters.isFiltering(filter)" class="margin-top-medium reset-button">
-                <button class="delete-button" (click)="filters.resetFilter(filter)"
-                        matTooltip="Remove filter" matTooltipPosition="below">
-                    <i class="icon icon-functional" data-icon="d"></i>
-                </button>
-            </div>
-        </div>
-
-
-        <button @slideIn *ngIf="filters.anyFiltersSelected()" class="button lighter" type="button"
-                (click)="filters.resetAllFilters()"
-                style="z-index: 0">
-            <i class="icon icon-functional" data-icon="d"></i>
-        </button>
+        }
+        @if (filters.anyFiltersSelected()) {
+            <button @slideIn class="button lighter" type="button"
+                    (click)="filters.resetAllFilters()"
+                    style="z-index: 0">
+                <i class="icon icon-functional" data-icon="d"></i>
+            </button>
+        }
 
     </div>
 
@@ -360,20 +400,18 @@
             <i class="icon icon-functional icon-spacer icon-share"></i> Export
         </div>
 
-        <ng-container *ngIf="view.visible">
+        @if (view.visible) {
             <div *ipDropdown="'Network'">
                 <button class="button lightest expanded" (click)="view.viewer.exportAs('png')">PNG</button>
                 <button class="button lightest expanded no-margin" (click)="view.viewer.exportAs('graphml')">GraphML
                 </button>
             </div>
-        </ng-container>
+        }
 
         <div *ipDropdown="enableExports ? 'Table' : 'Disabled'; disabled: !enableExports">
-            <ng-container *ngFor="let format of formats; let last = last;">
+            @for (format of formats; track format.name; let last = $last) {
                 <ip-download-form [format]="format" [last]="last"></ip-download-form>
-            </ng-container>
+            }
         </div>
-
-
     </div>
 </div>

@@ -4,7 +4,7 @@ import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {ParamMap, Router} from '@angular/router';
 import {environment} from '../../../../environments/environment';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {Pagination} from '../../shared/pagination.model';
 import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
 import {Interactome} from '../../../interactomes/interactome.model';

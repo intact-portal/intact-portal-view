@@ -1,11 +1,5 @@
-<div id="cytoscapeModal">
-    <h3>
-        Load in Cytoscape
-        <a class="button float-right close-dialog-button" aria-label="Close modal" type="button" (click)="closeDialog()">
-            <span class="close-dialog-button-txt">&times;</span>
-        </a>
-    </h3>
-
+<h3 mat-dialog-title>Load in Cytoscape</h3>
+<mat-dialog-content>
     <div>
         <p class="info">
             Load current search in IntAct app in Cytoscape.
@@ -15,52 +9,58 @@
         </p>
     </div>
 
-    <ng-container *ngIf="!cytoscape.allRequirementsPassed">
+    @if (!cytoscape.allRequirementsPassed) {
         <div class="callout">
-            <p *ngIf="!cytoscape.check$">
+            @if (!cytoscape.check$) {
                 <span class="checker">
                     <div>
                         <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
                         <span>Checking Cytoscape requirements</span>
                     </div>
                 </span>
-            </p>
-            <p *ngIf="!!cytoscape.check$">
-                <span class="checker" *ngIf="cytoscape.check$ | async as currentCheck">
-                    <div *ngIf="currentCheck.loading; else finishedCheck">
-                        <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
-                        <span [innerHTML]="currentCheck.name"></span>
-                    </div>
-                    <ng-template #finishedCheck>
-                        <ng-container *ngIf="currentCheck.passing; else action">
-                            ✅ <span [innerHTML]="currentCheck.name"></span>
-                        </ng-container>
-                        <ng-template #action>
-                            Requires to
-                            <span [innerHTML]="currentCheck.action"></span>
+            } @else if (!!cytoscape.check$) {
+                <p>
+                    @if (cytoscape.check$ | async; as currentCheck) {
+                        <span class="checker">
+                      @if (currentCheck.loading) {
+                          <div>
+                          <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
+                          <span [innerHTML]="currentCheck.name"></span>
+                        </div>
+                      } @else {
+                          @if (currentCheck.passing) {
+                              ✅ <span [innerHTML]="currentCheck.name"></span>
+                          } @else {
+                              Requires to
+                              <span [innerHTML]="currentCheck.action"></span>
+                          }
+                          <ng-template>
+                          Requires to
+                          <span [innerHTML]="currentCheck.action"></span>
                         </ng-template>
-                    </ng-template>
-                </span>
-            </p>
+                      }
+                    </span>
+                    }
+                </p>
+            }
         </div>
-    </ng-container>
-
-    <ng-container *ngIf="cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded ">
+    }
+    @if (cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded) {
         <div class="callout">
-            <span class="no-margin">
-                <ng-container *ngIf="cytoscape.cytoscapeLoading">
-                    <div class="flex">
-                        <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"
-                                              color="primary"></mat-progress-spinner>
-                        Loading in Cytoscape
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="cytoscape.cytoscapeLoaded">
-                    <div class="flex">
-                        ✅ Loaded in Cytoscape
-                    </div>
-                </ng-container>
-            </span>
+      <span class="no-margin">
+        @if (cytoscape.cytoscapeLoading) {
+            <div class="flex">
+            <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"
+                                  color="primary"></mat-progress-spinner>
+            Loading in Cytoscape
+          </div>
+        }
+          @if (cytoscape.cytoscapeLoaded) {
+              <div class="flex">
+            ✅ Loaded in Cytoscape
+          </div>
+          }
+      </span>
         </div>
-    </ng-container>
-</div>
+    }
+</mat-dialog-content>

@@ -11,10 +11,11 @@ import {UntilDestroy} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-featured-dataset',
-  templateUrl: './featured-dataset.component.html',
-  styleUrls: ['./featured-dataset.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-featured-dataset',
+    templateUrl: './featured-dataset.component.html',
+    styleUrls: ['./featured-dataset.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
 
@@ -31,7 +32,7 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
   }
 
   onIntActSearch(pubmed: PubmedDataset) {
-    this.search.search(`pubid:${pubmed.id}`, `publication: ${pubmed.author} (${pubmed.id})`);
+    this.search.search(PubmedDataset.searchQuery(pubmed), PubmedDataset.searchTitle(pubmed));
   }
 
   isReleased(pubmed: PubmedDataset): boolean {
@@ -43,15 +44,15 @@ export class FeaturedDatasetComponent implements OnInit, AfterViewInit {
   }
 
   miXml25Url(pubmed: PubmedDataset): string {
-    return `${environment.intact_psi25_url}/pmid/${pubmed.year}/${pubmed.id}.zip`;
+    return PubmedDataset.ftpFilePath(environment.intact_psi25_url, pubmed, 'zip');
   }
 
   miXml30Url(pubmed: PubmedDataset): string {
-    return `${environment.intact_psi30_url}/pmid/${pubmed.year}/${pubmed.id}.zip`;
+    return PubmedDataset.ftpFilePath(environment.intact_psi30_url, pubmed, 'zip');
   }
 
   miTabUrl(pubmed: PubmedDataset): string {
-    return `${environment.intact_psimitab_url}/pmid/${pubmed.year}/${pubmed.id}.txt`;
+    return PubmedDataset.ftpFilePath(environment.intact_psimitab_url, pubmed, 'txt');
   }
 
   archiveUrl(): string {

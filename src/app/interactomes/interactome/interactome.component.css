@@ -49,7 +49,7 @@ div.download-button-group {
   align-self: center;
 }
 
-button.download-button {
+.download-button {
   font-weight: normal !important;
   padding: 8px;
 }

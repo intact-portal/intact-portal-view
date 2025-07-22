@@ -1,0 +1,9 @@
+:host {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.flex {
+    display: flex;
+}

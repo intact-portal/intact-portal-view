@@ -6,9 +6,10 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-expanded-header',
-  templateUrl: './expanded-header.component.html',
-  styleUrls: ['./expanded-header.component.css']
+    selector: 'ip-expanded-header',
+    templateUrl: './expanded-header.component.html',
+    styleUrls: ['./expanded-header.component.css'],
+    standalone: false
 })
 export class ExpandedHeaderComponent implements OnInit {
 

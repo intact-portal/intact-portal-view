@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'ip-tile-menu',
-  templateUrl: './tile-menu.component.html',
-  styleUrls: ['./tile-menu.component.css']
+    selector: 'ip-tile-menu',
+    templateUrl: './tile-menu.component.html',
+    styleUrls: ['./tile-menu.component.css'],
+    standalone: false
 })
 export class TileMenuComponent implements OnInit {
 

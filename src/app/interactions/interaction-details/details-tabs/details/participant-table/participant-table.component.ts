@@ -56,7 +56,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
 
   private initDataTable(): void {
     const table = $('#participantTable');
-    const interactionAc = this.interactionAc;
+    const interactionAc = this.interactionAc();
     this.dataTable = table.DataTable({
       ordering: false,
       searching: false,
@@ -75,7 +75,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
         data: function (d: any) {
-          d.ac = interactionAc();
+          d.ac = interactionAc;
           d.page = d.start / d.length;
           d.pageSize = d.length;
           return JSON.stringify(d);

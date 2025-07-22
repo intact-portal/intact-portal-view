@@ -6,9 +6,10 @@ import {Observable} from 'rxjs/internal/Observable';
 import {map} from 'rxjs/operators';
 
 @Component({
-  selector: 'ip-dataset-archive',
-  templateUrl: './dataset-archive.component.html',
-  styleUrls: ['./dataset-archive.component.css']
+    selector: 'ip-dataset-archive',
+    templateUrl: './dataset-archive.component.html',
+    styleUrls: ['./dataset-archive.component.css'],
+    standalone: false
 })
 export class DatasetArchiveComponent implements OnInit {
   $datasetByYear: Observable<{ group: string; elements: Dataset[] }[]>

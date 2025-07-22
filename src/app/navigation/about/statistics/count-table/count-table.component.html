@@ -7,10 +7,12 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let datum of data">
-        <td class="firstColumn">{{datum.feature | titlecase}}</td>
-        <td class="secondColum">{{datum.amount | number}}</td>
-    </tr>
+    @for (datum of data; track datum) {
+        <tr>
+            <td class="firstColumn">{{ datum.feature | titlecase }}</td>
+            <td class="secondColum">{{ datum.amount | number }}</td>
+        </tr>
+    }
     </tbody>
 
 </table>

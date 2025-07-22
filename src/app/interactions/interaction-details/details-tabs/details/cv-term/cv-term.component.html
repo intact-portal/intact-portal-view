@@ -1,8 +1,9 @@
-<span [matTooltip]="description" class="has-tip cv-term" tabindex="1" *ngIf="description; else elseBlock">
-  {{cvTerm.shortName}}
-</span>
-<ng-template #elseBlock>
-  <a [href]="cvTerm | cvToUrl: 'access'" class="cv-term" target="_blank">
-    {{cvTerm.shortName}}
-  </a>
-</ng-template>
+@if (description) {
+    <span [matTooltip]="description" class="has-tip cv-term" tabindex="1">
+    {{ cvTerm().shortName }}
+  </span>
+} @else {
+    <a [href]="cvTerm() | cvToUrl: 'access'" class="cv-term" target="_blank">
+        {{ cvTerm().shortName }}
+    </a>
+}

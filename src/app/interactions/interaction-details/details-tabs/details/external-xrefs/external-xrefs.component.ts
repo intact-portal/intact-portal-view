@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {CrossReference} from "../../../../shared/model/interaction-details/cross-reference.model";
 
 
 @Component({
-  selector: 'ip-external-xrefs',
-  templateUrl: './external-xrefs.component.html',
-  styleUrls: ['./external-xrefs.component.css']
+    selector: 'ip-external-xrefs',
+    templateUrl: './external-xrefs.component.html',
+    styleUrls: ['./external-xrefs.component.css'],
+    standalone: false
 })
 export class ExternalXrefsComponent implements OnInit {
 
-  @Input() xrefs: CrossReference[];
+  readonly xrefs = input<CrossReference[]>(undefined);
 
   constructor() { }
 

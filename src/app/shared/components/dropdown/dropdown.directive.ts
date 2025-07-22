@@ -22,7 +22,8 @@ import {DropdownComponent} from './dropdown.component';
  * @param{boolean} disabled Whether the dropdown is activated or not. Changes UI
  */
 @Directive({
-  selector: '[ipDropdown]'
+    selector: '[ipDropdown]',
+    standalone: false
 })
 export class DropdownDirective {
   private component: ComponentRef<DropdownComponent>;

@@ -1,134 +1,148 @@
 <div>
-  <div id="details-viewer" class="row expanded">
-    <div id="interaction-viewer" class="columns medium-9">
-      <h4>Interaction Viewer</h4>
-      <div class="row expanded button-bar no-padding">
-        <div class="button-group expanded columns large-8 medium-12 no-pad-left no-pad-right no-margin">
-          <button class="button" (click)="onChangeAnnotation('MI Features')"
-                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['MI Features'],
+    <div id="details-viewer" class="row expanded">
+        <div id="interaction-viewer" class="columns medium-9">
+            <h4>Interaction Viewer</h4>
+            <div class="row expanded button-bar no-padding">
+                <div class="button-group expanded columns large-8 medium-12 no-pad-left no-pad-right no-margin">
+                    <button class="button" (click)="onChangeAnnotation('MI Features')"
+                            [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['MI Features'],
                               'outlined': !annotations['MI Features']}">
-            MI <span class="show-for-large">Features</span>
-          </button>
-          <button class="button" (click)="onChangeAnnotation('UniprotKB')"
-                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['UniprotKB'],
+                        MI <span class="show-for-large">Features</span>
+                    </button>
+                    <button class="button" (click)="onChangeAnnotation('UniprotKB')"
+                            [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['UniprotKB'],
                               'outlined': !annotations['UniprotKB']}">
-            Uniprot <span class="show-for-large">Features</span>
-          </button>
-          <button class="button" (click)="onChangeAnnotation('Superfamily')"
-                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['Superfamily'],
+                        Uniprot <span class="show-for-large">Features</span>
+                    </button>
+                    <button class="button" (click)="onChangeAnnotation('Superfamily')"
+                            [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['Superfamily'],
                               'outlined': !annotations['Superfamily']}">
-            <span class="show-for-large">Super</span>Family
-          </button>
-          <button class="button" (click)="onChangeAnnotation('Interactor')"
-                  [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['Interactor'],
+                        <span class="show-for-large">Super</span>Family
+                    </button>
+                    <button class="button" (click)="onChangeAnnotation('Interactor')"
+                            [ngClass]="{'icon icon-common icon-spacer icon-check': annotations['Interactor'],
                               'outlined': !annotations['Interactor']}">
-            Interactor
-          </button>
+                        Interactor
+                    </button>
+                </div>
+
+
+                <div class="button-group expanded columns large-4 medium-12 no-pad-left no-pad-right no-margin">
+                    <button class="button lighter" (click)="expandAll()">Expand <span class="show-for-large">all</span>
+                    </button>
+                    <button class="button lighter" (click)="collapseAll()">Collapse <span
+                            class="show-for-large">all</span>
+                    </button>
+                </div>
+            </div>
+            <div id="interaction-viewer-container"></div>
+
         </div>
 
-
-        <div class="button-group expanded columns large-4 medium-12 no-pad-left no-pad-right no-margin">
-          <button class="button lighter" (click)="expandAll()">Expand <span class="show-for-large">all</span></button>
-          <button class="button lighter" (click)="collapseAll()">Collapse <span class="show-for-large">all</span>
-          </button>
-        </div>
-      </div>
-      <div id="interaction-viewer-container"></div>
-
-    </div>
-
-    <div id="viewer-legend" class="columns medium-3">
-      <h4>Legend</h4>
-      <div id="legend" class="scrollbar margin-bottom-small">
-        <table *ngIf="colorLegendGroups" class="color-key no-margin">
-          <tbody>
-          <tr class="legend-group">
-            <td colspan="2" class="no-padding-left">
-              <h5 class="no-margin">Node Shape</h5>
-            </td>
-          </tr>
-          <tr *ngIf="hasNodeShapeOf('bioactive entity')">
-            <td class="centered">
-              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
-                               [shape]="NodeShape.TRIANGLE" height="13pt">
-              </ip-node-diagram>
-            </td>
-            <td class="legend-label">Bioactive Entity</td>
-          </tr>
-
-          <tr *ngIf="hasNodeShapeOf('complex')">
-            <td class="centered">
-              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
-                               [shape]="NodeShape.HEXAGON">
-              </ip-node-diagram>
-            </td>
-            <td class="legend-label">Complex</td>
-          </tr>
-
-          <tr *ngIf="hasNodeShapeOf('gene')">
-            <td class="centered">
-              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
-                               [shape]="NodeShape.ROUNDED_RECTANGLE">
-              </ip-node-diagram>
-            </td>
-            <td class="legend-label">Gene</td>
-          </tr>
-
-          <tr *ngIf="hasNodeShapeOf('dna')">
-            <td class="centered">
-              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
-                               [shape]="NodeShape.VEE">
-              </ip-node-diagram>
-            </td>
-            <td class="legend-label">DNA</td>
-          </tr>
-
-          <tr *ngIf="hasNodeShapeOf('rna')">
-            <td class="centered">
-              <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
-                               [shape]="NodeShape.DIAMOND">
-              </ip-node-diagram>
-            </td>
-            <td class="legend-label">RNA</td>
-          </tr>
-
-          <tr *ngIf="hasNodeShapeOf('protein')">
-            <td class="centered">
-              <svg viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" id="protein-svg">
-                <rect [attr.can-animate]="canAnimate()" id="rect-to-circle" x="1" y="6" width="98" height="18"/>
-                <rect [attr.can-animate]="canAnimate()" id="rect-tick" x="48" y="17" width="2" height="8"/>
-              </svg>
-            </td>
-            <td class="legend-label">Protein: click to switch</td>
-          </tr>
-
-          </tbody>
-
-          <tbody *ngFor="let group of colorLegendGroups" id="{{group.name}}-colors">
-          <tr class="legend-group">
-            <td colspan="2" class="no-padding-left">
-              <h5 class="no-margin">{{group.name}}</h5>
-            </td>
-          </tr>
-          <tr *ngFor="let legend of group.legends">
-            <td *ngIf="legend.certain && !legend.uncertain" [ngStyle]="{'background-color':legend.certain.color}"
-                class="color-square"></td>
-            <td *ngIf="!legend.certain && legend.uncertain"
-                [ngStyle]="{'background':'repeating-linear-gradient(45deg, white, white 3px,'+legend.uncertain.color+' 0px,'+legend.uncertain.color+' 12px)'}"
-                class="color-square"></td>
-            <td *ngIf="legend.certain && legend.uncertain" class="color-square no-padding">
-              <div [ngStyle]="{width: '50%', height:'100%', float: 'left',
+        <div id="viewer-legend" class="columns medium-3">
+            <h4>Legend</h4>
+            <div id="legend" class="scrollbar margin-bottom-small">
+                @if (colorLegendGroups) {
+                    <table class="color-key no-margin">
+                        <tbody>
+                        <tr class="legend-group">
+                            <td colspan="2" class="no-padding-left">
+                                <h5 class="no-margin">Node Shape</h5>
+                            </td>
+                        </tr>
+                        @if (hasNodeShapeOf('bioactive entity')) {
+                            <tr>
+                                <td class="centered">
+                                    <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                                                     [shape]="NodeShape.TRIANGLE" height="13pt">
+                                    </ip-node-diagram>
+                                </td>
+                                <td class="legend-label">Bioactive Entity</td>
+                            </tr>
+                        } @if (hasNodeShapeOf('complex')) {
+                            <tr>
+                                <td class="centered">
+                                    <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                                                     [shape]="NodeShape.HEXAGON">
+                                    </ip-node-diagram>
+                                </td>
+                                <td class="legend-label">Complex</td>
+                            </tr>
+                        } @if (hasNodeShapeOf('gene')) {
+                            <tr>
+                                <td class="centered">
+                                    <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                                                     [shape]="NodeShape.ROUNDED_RECTANGLE">
+                                    </ip-node-diagram>
+                                </td>
+                                <td class="legend-label">Gene</td>
+                            </tr>
+                        } @if (hasNodeShapeOf('dna')) {
+                            <tr>
+                                <td class="centered">
+                                    <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                                                     [shape]="NodeShape.VEE">
+                                    </ip-node-diagram>
+                                </td>
+                                <td class="legend-label">DNA</td>
+                            </tr>
+                        } @if (hasNodeShapeOf('rna')) {
+                            <tr>
+                                <td class="centered">
+                                    <ip-node-diagram [color]="'#00000000'" [borderColor]="'#000000'"
+                                                     [shape]="NodeShape.DIAMOND">
+                                    </ip-node-diagram>
+                                </td>
+                                <td class="legend-label">RNA</td>
+                            </tr>
+                        } @if (hasNodeShapeOf('protein')) {
+                            <tr>
+                                <td class="centered">
+                                    <svg viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" id="protein-svg">
+                                        <rect [attr.can-animate]="canAnimate()" id="rect-to-circle" x="1" y="6"
+                                              width="98" height="18"/>
+                                        <rect [attr.can-animate]="canAnimate()" id="rect-tick" x="48" y="17" width="2"
+                                              height="8"/>
+                                    </svg>
+                                </td>
+                                <td class="legend-label">Protein: click to switch</td>
+                            </tr>
+                        }
+                        </tbody>
+                        @for (group of colorLegendGroups; track group) {
+                            <tbody id="{{group.name}}-colors">
+                            <tr class="legend-group">
+                                <td colspan="2" class="no-padding-left">
+                                    <h5 class="no-margin">{{ group.name }}</h5>
+                                </td>
+                            </tr>
+                            @for (legend of group.legends; track legend) {
+                                <tr>
+                                    @if (legend.certain && !legend.uncertain) {
+                                        <td [ngStyle]="{'background-color':legend.certain.color}"
+                                            class="color-square"></td>
+                                    } @if (!legend.certain && legend.uncertain) {
+                                    <td
+                                            [ngStyle]="{'background':'repeating-linear-gradient(45deg, white, white 3px,'+legend.uncertain.color+' 0px,'+legend.uncertain.color+' 12px)'}"
+                                            class="color-square"></td>
+                                } @if (legend.certain && legend.uncertain) {
+                                    <td class="color-square no-padding">
+                                        <div [ngStyle]="{width: '50%', height:'100%', float: 'left',
               'background-color':legend.certain.color}">
-              </div>
-              <div [ngStyle]="{width: '50%', height:'100%', float: 'right',
+                                        </div>
+                                        <div [ngStyle]="{width: '50%', height:'100%', float: 'right',
               'background':'repeating-linear-gradient(45deg, white, white 3px,'+legend.uncertain.color+' 0px,'+legend.uncertain.color+' 12px)'}">
-              </div>
-            </td>
-            <td class="legend-label">{{legend.name}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+                                        </div>
+                                    </td>
+                                }
+                                    <td class="legend-label">{{ legend.name }}</td>
+                                </tr>
+                            }
+                            </tbody>
+                        }
+                    </table>
+                }
+            </div>
+        </div>
     </div>
-  </div>
 </div>

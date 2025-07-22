@@ -1,18 +1,16 @@
-import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit, TemplateRef, input} from '@angular/core';
 
 @Component({
-  selector: 'ip-dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.css']
+    selector: 'ip-dropdown',
+    templateUrl: './dropdown.component.html',
+    styleUrls: ['./dropdown.component.css'],
+    standalone: false
 })
 export class DropdownComponent implements OnInit {
 
-  @Input()
-  disabled: boolean;
-  @Input()
-  title: string;
-  @Input()
-  template: TemplateRef<any>;
+  readonly disabled = input<boolean>(undefined);
+  readonly title = input<string>(undefined);
+  readonly template = input<TemplateRef<any>>(undefined);
 
   constructor() {
   }

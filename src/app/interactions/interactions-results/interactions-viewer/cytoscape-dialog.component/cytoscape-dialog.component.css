@@ -1,0 +1,29 @@
+.close-dialog-button {
+    padding: 0.3rem 0.6rem 0.4rem 0.6rem;
+    border-radius: 10px;
+}
+
+.close-dialog-button-txt {
+    font-size: 1.5rem;
+}
+
+.checker div {
+    display: flex;
+    gap: 2px;
+}
+
+.info {
+    white-space: nowrap;
+    margin-bottom: 0;
+}
+
+.note {
+    white-space: nowrap;
+    font-size: small;
+}
+
+.flex {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

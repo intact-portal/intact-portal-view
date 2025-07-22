@@ -1,4 +1,4 @@
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeDescriptionComponent} from './home-description/home-description.component';
 import {TileMenuComponent} from './tile-menu/tile-menu.component';
@@ -13,9 +13,7 @@ import {DatasetArchiveComponent} from './featured-dataset/dataset-archive/datase
 import {AdvancedSearchComponent} from './advanced-search/advanced-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FileUploadModule} from 'ng2-file-upload';
-import {QueryBuilderModule} from 'angular2-query-builder';
 import {BatchSearchComponent} from './batch-search/batch-search.component';
-import {ArchwizardModule} from 'angular-archwizard';
 import {KeyvaluemapPipe} from './shared/keyvaluemap.pipe';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -31,25 +29,29 @@ import {MarkdownModule} from '../navigation/documentation/shared/markdown/markdo
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import { RangeInputComponent } from './advanced-search/range-input/range-input.component';
-import { DateRangeComponent } from './advanced-search/date-range/date-range.component';
+import {RangeInputComponent} from './advanced-search/range-input/range-input.component';
+import {DateRangeComponent} from './advanced-search/date-range/date-range.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { BooleanInputComponent } from './advanced-search/boolean-input/boolean-input.component';
+import {BooleanInputComponent} from './advanced-search/boolean-input/boolean-input.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatIcon} from '@angular/material/icon';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import {QueryBuilderModule} from '@eliot-ragueneau/ngx-query-builder';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    QueryBuilderModule,
     HomeDashboardRoutingModule,
     FileUploadModule,
-    ArchwizardModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatTooltipModule,
     MatButtonModule,
     MatCardModule,
+    QueryBuilderModule,
+    MatStepperModule,
     ProgressSpinnerModule,
     ComponentsModule,
     MarkdownModule,
@@ -57,6 +59,7 @@ import { BooleanInputComponent } from './advanced-search/boolean-input/boolean-i
     MatMomentDateModule,
     MatInputModule,
     MatSlideToggleModule,
+    MatIcon,
   ],
   exports: [
     KeyvaluemapPipe
@@ -81,7 +84,12 @@ import { BooleanInputComponent } from './advanced-search/boolean-input/boolean-i
     DateRangeComponent,
     BooleanInputComponent
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {displayDefaultIndicatorType: false }
+    }
+  ]
 })
 export class HomeDashboardModule {
 }

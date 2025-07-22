@@ -1,49 +1,48 @@
-<div id="dataset" class="margin-top-medium" *ngIf="dataset$ | async as dataset">
-    <h4 id="feature-dataset-title">
-        <i class="icon icon-generic" data-icon="D"></i> Featured Dataset
-    </h4>
-
-    <div *ngIf="dataset.pubmeds[0] as firstPubMed">
-        <div class="text-justify margin-bottom-medium">
-            {{dataset.title}} -
-
-            <b *ngIf="isReleased(firstPubMed); else link;">
-                {{firstPubMed.author}} ({{firstPubMed.year}})
-            </b>
-            <ng-template #link>
-                <a [href]="pubMedUrl(firstPubMed)" target="_blank">
-                    <b>{{firstPubMed.author}} ({{firstPubMed.year || dataset.year}})</b>
-                </a>
-            </ng-template>
-            <div *ngIf="!!dataset.image">
-                <img [src]="dataset.image">
+@if (dataset$ | async; as dataset) {
+    <div id="dataset" class="margin-top-medium">
+        <h4 id="feature-dataset-title">
+            <i class="icon icon-generic" data-icon="D"></i> Featured Dataset
+        </h4>
+        @if (dataset.pubmeds[0]; as firstPubMed) {
+            <div>
+                <div class="text-justify margin-bottom-medium">
+                    {{ dataset.title }} -
+                    @if (isReleased(firstPubMed)) {
+                        <b>
+                            {{ firstPubMed.author }} ({{ firstPubMed.year }})
+                        </b>
+                    } @else {
+                    <a [href]="pubMedUrl(firstPubMed)" target="_blank">
+                        <b>{{ firstPubMed.author }} ({{ firstPubMed.year || dataset.year }})</b>
+                    </a>
+                } @if (!!dataset.image) {
+                    <div>
+                        <img [src]="dataset.image">
+                    </div>
+                }
+                </div>
+                <div id="dataset-group">
+                    <div *ipDropdown="'Access'" class="expanded">
+                        <button class="button lightest expanded no-margin"
+                                (click)="onIntActSearch(firstPubMed)">IntAct
+                        </button>
+                    </div>
+                    <div *ipDropdown="'Download'; disabled: false" class="expanded">
+                        <a class="button lightest expanded no-margin" download target="_blank"
+                           [href]="miTabUrl(firstPubMed)">miTab<sub>2.7</sub></a>
+                        <a class="button lightest expanded no-margin" download target="_blank"
+                           [href]="miXml25Url(firstPubMed)">miXML<sub>2.5</sub></a>
+                        <a class="button lightest expanded no-margin" download target="_blank"
+                           [href]="miXml30Url(firstPubMed)">miXML<sub>3.0</sub></a>
+                    </div>
+                </div>
+                <div class="archive">
+                    <a class="button outlined expanded no-margin" [routerLink]="archiveUrl()">
+                        <i class="icon icon-generic" data-icon=";"></i>
+                        Archive
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <div id="dataset-group">
-
-            <div *ipDropdown="'Access'" class="expanded">
-                <button class="button lightest expanded no-margin"
-                        (click)="onIntActSearch(firstPubMed)">IntAct
-                </button>
-            </div>
-            <div *ipDropdown="'Download'; disabled: false" class="expanded">
-                <a class="button lightest expanded no-margin" download target="_blank"
-                   [href]="miTabUrl(firstPubMed)">miTab<sub>2.7</sub></a>
-
-                <a class="button lightest expanded no-margin" download target="_blank"
-                   [href]="miXml25Url(firstPubMed)">miXML<sub>2.5</sub></a>
-
-                <a class="button lightest expanded no-margin" download target="_blank"
-                   [href]="miXml30Url(firstPubMed)">miXML<sub>3.0</sub></a>
-            </div>
-
-        </div>
-        <div class="archive">
-            <a class="button outlined expanded no-margin" [routerLink]="archiveUrl()">
-                <i class="icon icon-generic" data-icon=";"></i>
-                Archive
-            </a>
-        </div>
+        }
     </div>
-</div>
+}

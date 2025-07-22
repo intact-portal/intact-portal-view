@@ -4,9 +4,10 @@ import {environment} from '../../../../environments/environment';
 
 
 @Component({
-  selector: 'ip-download',
-  templateUrl: './ftp.component.html',
-  styleUrls: ['./ftp.component.css']
+    selector: 'ip-download',
+    templateUrl: './ftp.component.html',
+    styleUrls: ['./ftp.component.css'],
+    standalone: false
 })
 export class FTPComponent implements OnInit {
 

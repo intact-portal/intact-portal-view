@@ -11,13 +11,14 @@ const INTACT_FTP_BASE_URL = 'https://ftp.ebi.ac.uk/pub/databases/intact';
 const INTACT_PORTAL_DOCUMENTATION_URL = 'https://raw.githubusercontent.com/Intact-Portal/intact-portal-documentation/master/';
 
 export const environment = {
-  production: true,
+  production: false,
   evn: 'test',
   analytics_id: 'UA-672146-15',
   ebi_url: EBI_URL,
   former_intact_url: FORMER_INTACT_URL,
   context_path: '',
   license_url: LICENSE_URL,
+  cytoscape_host: 'http://localhost:1234/v1',
   statistics_url: 'https://raw.githubusercontent.com/intact-portal/intact-portal-statistics/statistics_dev/output_data/',
   intact_psi25_url : INTACT_FTP_BASE_URL + '/current/psi25',
   intact_psi30_url : INTACT_FTP_BASE_URL + '/current/psi30',

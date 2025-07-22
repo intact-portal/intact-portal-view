@@ -1,52 +1,64 @@
 <div class="row expanded" style="position: relative">
 
-  <h4 class="column small-1 align-right year">{{year}}</h4>
-  <ul class="column small-11 align-left accordion" data-accordion data-deep-link="false" data-update-history="false"
-      data-allow-all-closed="true" id="accordion-{{year}}" data-deep-link-smudge="true">
-    <li class="accordion-item" data-accordion-item *ngFor="let dataset of datasets">
-
-      <a href="featured-dataset/archive#{{dataset.month}}-{{dataset.year}}" class="accordion-title">
-        <span class="month">{{dataset.month}} - </span>
-        {{dataset.title}}
-      </a>
-
-      <div class="accordion-content" data-tab-content id="{{dataset.month}}-{{dataset.year}}">
-        <table>
-          <tbody>
-          <tr *ngFor="let pubmed of dataset.pubmeds">
-            <td *ngIf="hasPubMedId(pubmed); else noID">
-              <a href="https://europepmc.org/article/MED/{{pubmed.id}}?singleResult=true" target="_blank">
-                <b>{{pubmed.author}} ({{pubmed.year || dataset.year}})</b>
-              </a>
-            </td>
-            <ng-template #noID>
-              <td><b class="tool-tip">{{pubmed.author}} ({{pubmed.year}})<span class="tool-tip-text">Article only available as a preprint</span></b></td>
-            </ng-template>
-            <td style="text-align: right">
-              <div>
-                <button mat-raised-button color="accent" (click)="searchIntAct(pubmed.id, pubmed.author)">
-                  <i class="icon icon-common icon-eye"></i>
-                </button>
-                <button mat-raised-button color="accent" (click)="goPSIMI25FTP(pubmed.year || dataset.year, pubmed.id)">
-                  <i class="icon icon-common icon-download"></i> PSI-MI XML 2.5
-                </button>
-                  <button mat-raised-button color="accent" (click)="goPSIMI30FTP(pubmed.year || dataset.year, pubmed.id)">
-                      <i class="icon icon-common icon-download"></i> PSI-MI XML 3.0
-                  </button>
-                <button mat-raised-button color="accent" (click)="goPSIMITABFTP(pubmed.year || dataset.year, pubmed.id)">
-                  <i class="icon icon-common icon-download"></i> PSI-MI TAB 2.7
-                </button>
-              </div>
-            </td>
-          </tr>
-          <ng-container *ngIf="!!dataset.image">
-              <tr><td colspan="2" class="image">
-                  <img [src]="dataset.image">
-              </td></tr>
-          </ng-container>
-          </tbody>
-        </table>
-      </div>
-    </li>
-  </ul>
+    <h4 class="column small-1 align-right year">{{ year() }}</h4>
+    <ul class="column small-11 align-left accordion" data-accordion data-deep-link="false" data-update-history="false"
+        data-allow-all-closed="true" id="accordion-{{year()}}" data-deep-link-smudge="true">
+        @for (dataset of datasets(); track dataset) {
+            <li class="accordion-item" data-accordion-item>
+                <a href="featured-dataset/archive#{{dataset.month}}-{{dataset.year}}" class="accordion-title">
+                    <span class="month">{{ dataset.month }} - </span>
+                    {{ dataset.title }}
+                </a>
+                <div class="accordion-content" data-tab-content id="{{dataset.month}}-{{dataset.year}}">
+                    <table>
+                        <tbody>
+                            @for (pubmed of dataset.pubmeds; track pubmed) {
+                                <tr>
+                                    @if (hasPubMedId(pubmed)) {
+                                        <td>
+                                            <a href="https://europepmc.org/article/MED/{{pubmed.id}}?singleResult=true"
+                                               target="_blank">
+                                                <b>{{ pubmed.author }} ({{ pubmed.year || dataset.year }})</b>
+                                            </a>
+                                        </td>
+                                    } @else {
+                                        <td><b class="tool-tip">{{ pubmed.author }} ({{ pubmed.year }})<span
+                                                class="tool-tip-text">Article only available as a preprint</span></b>
+                                        </td>
+                                    }
+                                    <td style="text-align: right">
+                                        <div>
+                                            <button mat-raised-button color="accent"
+                                                    (click)="searchIntAct(pubmed)">
+                                                <i class="icon icon-common icon-eye"></i>
+                                            </button>
+                                            <a mat-raised-button color="accent"
+                                               [href]="goPSIMI25FTP(pubmed)" download target="_blank">
+                                                <i class="icon icon-common icon-download"></i> PSI-MI XML 2.5
+                                            </a>
+                                            <a mat-raised-button color="accent"
+                                               [href]="goPSIMI30FTP(pubmed)" download target="_blank">
+                                                <i class="icon icon-common icon-download"></i> PSI-MI XML 3.0
+                                            </a>
+                                            <a mat-raised-button color="accent"
+                                               [href]="goPSIMITABFTP(pubmed)" download target="_blank">
+                                                <i class="icon icon-common icon-download"></i> PSI-MI TAB 2.7
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            @if (!!dataset.image) {
+                                <tr>
+                                    <td colspan="2" class="image">
+                                        <img [src]="dataset.image">
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+        }
+    </ul>
 </div>

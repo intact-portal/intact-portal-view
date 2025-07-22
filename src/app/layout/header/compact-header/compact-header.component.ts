@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'ip-compact-header',
-  templateUrl: './compact-header.component.html',
-  styleUrls: ['./compact-header.component.css']
+    selector: 'ip-compact-header',
+    templateUrl: './compact-header.component.html',
+    styleUrls: ['./compact-header.component.css'],
+    standalone: false
 })
 export class CompactHeaderComponent implements OnInit {
 

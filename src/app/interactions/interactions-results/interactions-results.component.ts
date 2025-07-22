@@ -13,9 +13,10 @@ import {FragmentService} from '../shared/service/fragment.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-interactions-results',
-  templateUrl: './interactions-results.component.html',
-  styleUrls: ['./interactions-results.component.css']
+    selector: 'ip-interactions-results',
+    templateUrl: './interactions-results.component.html',
+    styleUrls: ['./interactions-results.component.css'],
+    standalone: false
 })
 export class InteractionsResultsComponent implements OnInit {
 

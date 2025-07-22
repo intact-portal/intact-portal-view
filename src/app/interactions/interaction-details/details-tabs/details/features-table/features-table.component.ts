@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, input, output} from '@angular/core';
 
 import {environment} from '../../../../../../environments/environment';
 import {FeatureTable} from '../../../../shared/model/tables/feature-table.model';
@@ -9,16 +9,17 @@ import {ResultTable} from '../../../../shared/model/interactions-results/result-
 const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
-  selector: 'ip-features-table',
-  templateUrl: './features-table.component.html',
-  styleUrls: ['./features-table.component.css']
+    selector: 'ip-features-table',
+    templateUrl: './features-table.component.html',
+    styleUrls: ['./features-table.component.css'],
+    standalone: false
 })
 export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
 
-  @Input() interactionAc: string;
-  @Input() featureTab: boolean;
+  readonly interactionAc = input<string>(undefined);
+  readonly featureTab = input<boolean>(undefined);
 
-  @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
+  readonly featureChanged = output<string>();
 
   dataTable: DataTables.Api;
   columnView = 'features_columnView';
@@ -67,7 +68,7 @@ export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
         data: function (d: any) {
-          d.ac = interactionAc;
+          d.ac = interactionAc();
           d.page = d.start / d.length;
           d.pageSize = d.length;
           return JSON.stringify(d);
@@ -172,6 +173,6 @@ export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
   }
 
   get isActive(): boolean {
-    return this.featureTab;
+    return this.featureTab();
   }
 }

@@ -1,13 +1,18 @@
 <svg [attr.viewBox]="viewBox" class="complete-legend-line">
-  <defs>
-    <linearGradient id="lg" [attr.x1]="min" [attr.x2]="max" y1="0" y2="0" gradientUnits="userSpaceOnUse">
-      <stop *ngFor="let point of points" [attr.stop-color]="point.color" [attr.offset]="point.x"></stop>
-    </linearGradient>
-  </defs>
+    <defs>
+        <linearGradient id="lg" [attr.x1]="min" [attr.x2]="max" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+            @for (point of points; track point) {
+                <stop [attr.stop-color]="point.color" [attr.offset]="point.x"></stop>
+            }
+        </linearGradient>
+    </defs>
 
-  <rect x="0" y="0" [attr.width]="max - min" [attr.height]="height / 2" [attr.ry]="height / 4" fill="url(#lg)"
-        [attr.stroke-width]="height / 14" class="upper-filled"/>
+    <rect x="0" y="0" [attr.width]="max - min" [attr.height]="height / 2" [attr.ry]="height / 4" fill="url(#lg)"
+          [attr.stroke-width]="height / 14" class="upper-filled"/>
 
-  <text *ngFor="let pointLabel of pointLabels;" [attr.x]="pointLabel" [attr.y]="3 * height / 4" [attr.font-size]="height/3"
-        dominant-baseline="middle" text-anchor="middle">{{pointLabel}}</text>
+    @for (pointLabel of pointLabels; track pointLabel) {
+        <text [attr.x]="pointLabel" [attr.y]="3 * height / 4" [attr.font-size]="height/3"
+              dominant-baseline="middle" text-anchor="middle">{{ pointLabel }}
+        </text>
+    }
 </svg>

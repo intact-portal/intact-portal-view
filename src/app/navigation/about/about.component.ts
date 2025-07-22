@@ -4,9 +4,10 @@ import {environment} from '../../../environments/environment';
 
 
 @Component({
-  selector: 'ip-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+    selector: 'ip-about',
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.css'],
+    standalone: false
 })
 export class AboutComponent implements OnInit {
 

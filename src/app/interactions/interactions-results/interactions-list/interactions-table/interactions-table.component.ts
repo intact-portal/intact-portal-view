@@ -141,14 +141,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         scrollX: true,
         fixedHeader: false,
         ajax: {
-          url: `${baseURL}/interaction/list/`,
+          url: `${baseURL}/interaction/list/body`,
           type: 'POST',
+          contentType: 'application/json',
           data: (d: any) => {
             d.page = d.start / d.length;
             d.pageSize = d.length;
             this.search.toParams(d);
             this.networkSelection.toParams(d);
             this.filters.toParams(d);
+            return JSON.stringify(d);
           }
         },
         columns: [

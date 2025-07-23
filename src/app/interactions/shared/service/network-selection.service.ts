@@ -58,12 +58,12 @@ export class NetworkSelectionService {
     this._binaryInteractionIds = paramMap.has('binaryInteractionIds') ? paramMap.get('binaryInteractionIds').split(',').map(Number.parseInt) : [];
   }
 
-  toParams(params: any = {}, arrayHandler: (array: any[]) => any = array => array.join(',')) {
+  toParams(params: any = {}) {
     if (this.interactorAcs.length > 0) {
-      params.interactorAcs = arrayHandler(this.interactorAcs);
+      params.interactorAcs = this.interactorAcs;
     }
     if (this.binaryInteractionIds.length > 0) {
-      params.binaryInteractionIds = arrayHandler(this.binaryInteractionIds);
+      params.binaryInteractionIds = this.binaryInteractionIds;
     }
     return params;
   }

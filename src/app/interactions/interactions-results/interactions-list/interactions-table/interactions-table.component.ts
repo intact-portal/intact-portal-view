@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactory, ComponentFactoryResolver, OnChanges, OnInit, SimpleChanges, input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -10,20 +10,21 @@ import {NetworkSelectionService} from '../../../shared/service/network-selection
 import {ResultTable} from '../../../shared/model/interactions-results/result-table-interface';
 import {SearchService} from '../../../../home-dashboard/search/service/search.service';
 import {FilterService} from '../../../shared/service/filter.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 
 const baseURL = environment.intact_portal_ws;
 const ebiURL = environment.ebi_url;
 
+@UntilDestroy()
 @Component({
   selector: 'ip-interactions-table',
   templateUrl: './interactions-table.component.html',
-  styleUrls: ['./interactions-table.component.css']
+  styleUrls: ['./interactions-table.component.css'],
+  standalone: false
 })
 export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-  @Input() interactionTab: boolean;
-
-
+  readonly interactionTab = input<boolean>(undefined);
   private _interactionSelected: string;
   dataTable: DataTables.Api;
 
@@ -42,10 +43,10 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   ngOnInit(): void {
     this.route.queryParams
-      .subscribe(params => {
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
         if (this.dataTable !== undefined) {
-          const table: any = $('#interactionsTable');
-          this.dataTable = table.DataTable().ajax.reload();
+          this.dataTable = $('#interactionsTable').DataTable().ajax.reload();
         }
       });
 
@@ -152,8 +153,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
         },
         columns: [
           {
-            data: this._columns.id.data,
-            title: this._columns.id.title,
+            ...this._columns.id,
             render: function (data, type, full) {
               if (type === 'display') {
                 return `<div>
@@ -170,17 +170,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.moleculeA.data,
-            title: this._columns.moleculeA.title
+            ...this._columns.moleculeA,
           },
           {
-            data: this._columns.moleculeB.data,
-            title: this._columns.moleculeB.title
+            ...this._columns.moleculeB,
           },
           {
-            data: this._columns.identifierA.data,
-            defaultContent: '',
-            title: this._columns.identifierA.title,
+            ...this._columns.identifierA,
             render: (data, type) => {
               if (type === 'display' && data !== null) {
                 return this.tableFactory.identifierRender(extractId(data))
@@ -189,9 +185,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.identifierB.data,
-            defaultContent: '',
-            title: this._columns.identifierB.title,
+            ...this._columns.identifierB,
             render: (data, type) => {
               if (type === 'display' && data !== null) {
                 return this.tableFactory.identifierRender(extractId(data))
@@ -200,38 +194,45 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.typeA.data,
-            title: this._columns.typeA.title,
+            ...this._columns.typeA,
             render: this.tableFactory.cvRender('typeMIA')
           },
           {
-            data: this._columns.typeB.data,
-            title: this._columns.typeB.title,
+            ...this._columns.typeB,
             render: this.tableFactory.cvRender('typeMIB')
           },
           {
-            data: this._columns.speciesA.data,
-            title: this._columns.speciesA.title,
+            ...this._columns.speciesA,
             render: this.tableFactory.speciesRender('taxIdA')
           },
           {
-            data: this._columns.speciesB.data,
-            title: this._columns.speciesB.title,
+            ...this._columns.speciesB,
             render: this.tableFactory.speciesRender('taxIdB')
           },
           {
-            data: this._columns.hostOrganism.data,
-            title: this._columns.hostOrganism.title,
+            ...this._columns.hostOrganism,
             render: this.tableFactory.speciesRender('hostOrganismTaxId')
           },
           {
-            data: this._columns.detectionMethod.data,
-            title: this._columns.detectionMethod.title,
+            ...this._columns.negative,
+            render: data => data ?
+              '<i class="icon icon-common icon-times negative-interaction"></i>' :
+              '<i class="icon icon-common icon-check positive-interaction"></i>'
+          },
+          {
+            ...this._columns.detectionMethod,
             render: this.tableFactory.cvRender('detectionMethodMIIdentifier')
           },
           {
-            data: this._columns.publicationIdentifiers.data,
-            title: this._columns.publicationIdentifiers.title,
+            ...this._columns.identificationMethodA,
+            render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRender('identificationMethodMIIdentifiersA'), '', false)
+          },
+          {
+            ...this._columns.identificationMethodB,
+            render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRender('identificationMethodMIIdentifiersB'), '', false)
+          },
+          {
+            ...this._columns.publicationIdentifiers,
             render: this.tableFactory.enlistWithButtons((d) => {
               const data_s = d.split('(');
               const publicationId: string = data_s[0].trim();
@@ -244,7 +245,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               } else if (publicationSource === 'doi') {
                 url = 'https://www.doi.org/' + publicationId;
               } else {
-                return;
+                return null;
               }
 
               return `<div><span class="detailsCell">
@@ -253,13 +254,11 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }, 'alignCell', false)
           },
           {
-            data: this._columns.type.data,
-            title: this._columns.type.title,
+            ...this._columns.type,
             render: this.tableFactory.cvRender('typeMIIdentifier')
           },
           {
-            data: this._columns.ac.data,
-            title: this._columns.ac.title,
+            ...this._columns.ac,
             render: function (data, type) {
               if (type === 'display' && data != null) {
                 return `<div>
@@ -271,17 +270,16 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.database.data,
-            title: this._columns.database.title
+            ...this._columns.database,
           },
           {
-            data: this._columns.confidenceValue.data,
-            title: this._columns.confidenceValue.title,
+            ...this._columns.confidenceValue,
             render: this.tableFactory.enlistWithButtons((d: string) => {
 
               if (!d.includes('intact-miscore')) {
                 const [name, value] = d.split(/[()]/);
-                const fixed = parseFloat(value).toFixed(2);
+                const scoreValue = parseFloat(value);
+                const fixed = isNaN(scoreValue) ? value : scoreValue.toFixed(2);
                 return `<div class="tag-cell-container vertical-flex"><span class="detailsExpansionsCell tag-cell centered">${name}:${fixed}</span></div>`
               }
               const YELLOW_ORANGE_BROWN_PALETTE: string[] = [
@@ -329,7 +327,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
               // noinspection CssInvalidPropertyValue
               return `<div class="tag-cell-container vertical-flex">
                           <a class="detailsConfidencesCell tag-cell centered" target="_blank"
-                          href="${environment.context_path}/documentation/docs#interaction_scoring"
+                          href="${environment.context_path}/documentation/user-guide#interaction_scoring"
                           style="background-color:${YELLOW_ORANGE_BROWN_PALETTE_BG[paletteIndex]};
                                  border:1px solid ${YELLOW_ORANGE_BROWN_PALETTE[paletteIndex]};
                                  color: ${YELLOW_ORANGE_BROWN_PALETTE_TEXT[paletteIndex]}">
@@ -339,14 +337,13 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }, '', false)
           },
           {
-            data: this._columns.expansionMethod.data,
-            title: this._columns.expansionMethod.title,
+            ...this._columns.expansionMethod,
             defaultContent: ' ',
             render: function (data, type) {
               if (type === 'display' && data != null) {
                 return `<div style="display: flex">
                         <a target="_blank" class="tag-cell detailsExpansionsCell"
-                           href="${environment.context_path}/documentation/docs#expansion_method" >
+                           href="${environment.context_path}/documentation/user-guide#expansion_method" >
                             ${data}
                         </a>
                       </div>`;
@@ -354,44 +351,37 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.experimentalRoleA.data,
-            title: this._columns.experimentalRoleA.title,
+            ...this._columns.experimentalRoleA,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('experimentalRoleMIIdentifierA')
           },
           {
-            data: this._columns.experimentalRoleB.data,
-            title: this._columns.experimentalRoleB.title,
+            ...this._columns.experimentalRoleB,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('experimentalRoleMIIdentifierB')
           },
           {
-            data: this._columns.biologicalRoleA.data,
-            title: this._columns.biologicalRoleA.title,
+            ...this._columns.biologicalRoleA,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('biologicalRoleMIIdentifierA')
           },
           {
-            data: this._columns.biologicalRoleB.data,
-            title: this._columns.biologicalRoleB.title,
+            ...this._columns.biologicalRoleB,
             defaultContent: ' ',
             render: this.tableFactory.cvRender('biologicalRoleMIIdentifierB')
           },
           {
-            data: this._columns.aliasesA.data,
-            title: this._columns.aliasesA.title,
+            ...this._columns.aliasesA,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
           },
           {
-            data: this._columns.aliasesB.data,
-            title: this._columns.aliasesB.title,
+            ...this._columns.aliasesB,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
           },
           {
-            data: this._columns.featureCount.data,
-            title: this._columns.featureCount.title,
+            ...this._columns.featureCount,
             render: function (data, type) {
               if (type === 'display' && data != null) {
                 return `<div class="alignCell"><span>${data}</span></div>`;
@@ -399,8 +389,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.parameters.data,
-            title: this._columns.parameters.title,
+            ...this._columns.parameters,
             defaultContent: ' ',
             render: function (data, type) {
               if (type === 'display' && data != null) {
@@ -409,8 +398,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             }
           },
           {
-            data: this._columns.annotationsA.data,
-            title: this._columns.annotationsA.title,
+            ...this._columns.annotationsA,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
               ['comment', {class: 'detailsCommentsCell', symbol: 'icon-comment'}],
@@ -418,8 +406,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             ]))(extractAnnotation(d)), 'annotationsList')
           },
           {
-            data: this._columns.annotationsB.data,
-            title: this._columns.annotationsB.title,
+            ...this._columns.annotationsB,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
               ['comment', {class: 'detailsCommentsCell', symbol: 'icon-comment'}],
@@ -427,8 +414,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
             ]))(extractAnnotation(d)), 'annotationsList')
           },
           {
-            data: this._columns.annotations.data,
-            title: this._columns.annotations.title,
+            ...this._columns.annotations,
             defaultContent: ' ',
             render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.annotationRender(new Map([
               ['figure legend', {class: 'detailsFigureLegendCell', symbol: 'icon-image'}],
@@ -462,5 +448,9 @@ export class InteractionsTableComponent implements OnInit, OnChanges, AfterViewI
 
   set interactionSelected(value: string) {
     this._interactionSelected = value;
+  }
+
+  get isActive(): boolean {
+    return this.interactionTab();
   }
 }

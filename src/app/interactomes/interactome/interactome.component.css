@@ -1,4 +1,4 @@
-.icon {
+.icon-species {
   font-size: 100px;
   color: #80727f;
   line-height: 100px;
@@ -26,6 +26,10 @@ div.actions {
   text-align: center;
 }
 
+.button-group {
+  justify-content: center;
+}
+
 .species-button {
   padding: 1em;
   color: #68297c;
@@ -40,8 +44,19 @@ div.actions {
   box-shadow: 0 0 20px #68297c;
 }
 
-button.download-button {
-  border: 2px solid #68297c;
-  border-radius: 25px;
+div.download-button-group {
+  display: inline-block;
+  align-self: center;
+}
+
+.download-button {
+  font-weight: normal !important;
+  padding: 8px;
+}
+
+.iconOrganismImg {
+  height: 100px;
+  width: 100px;
   color: #68297c;
+  background-color: #68297c;
 }

@@ -1,84 +1,72 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
-import {Column} from '../../../interactions/shared/model/tables/column.model';
-import {FoundationUtils} from '../../utils/foundation-utils';
+import {ChangeDetectionStrategy, Component, OnInit, input, output} from '@angular/core';
+import {Observable} from 'rxjs/internal/Observable';
+import {ResultTable} from '../../../interactions/shared/model/interactions-results/result-table-interface';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-
+@UntilDestroy()
 @Component({
-  selector: 'ip-column-toggle',
-  templateUrl: './column-toggle.component.html',
-  styleUrls: ['./column-toggle.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'ip-column-toggle',
+    templateUrl: './column-toggle.component.html',
+    styleUrls: ['./column-toggle.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
+export class ColumnToggleComponent implements OnInit {
 
-  @Input() columns: Column[];
-  @Input() dataTable: DataTables.Api;
-  @Input() columnView: string;
-  @Input() isTabActive: boolean;
-  @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
-
+  readonly table = input<Observable<ResultTable>>(undefined);
+  public table$: ResultTable;
+  readonly columnSelectionChanged = output<string[]>();
+  active: boolean;
   private columnsSelected: string[];
+  private tableInit: Map<ResultTable, string[]> = new Map();
 
-  constructor(private cdRef: ChangeDetectorRef) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.initColumnVisibility()
+    this.table()
+      .pipe(untilDestroyed(this))
+      .subscribe(table => {
+        this.table$ = table;
+        if (!table) {
+          return;
+        }
+        if (this.tableInit.has(table)) {
+          this.columnsSelected = this.tableInit.get(table)
+        } else {
+          setTimeout(() => {
+            this.tableInit.set(table, this.initColumnVisibility())
+          }, 0);
+        }
+      })
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.isTabActive && changes.isTabActive.firstChange && changes.isTabActive.currentValue) {
-      this.initColumnVisibility()
-    }
-  }
-
-  private initColumnVisibility() {
-    const columnView = this.columnView + '_columns';
+  private initColumnVisibility(): string[] {
+    const columnView = this.table$.columnView + '_columns';
 
     // Initialize columns that are already selected to view
     if (localStorage.getItem(columnView) != null) {
-      this.columnsSelected = JSON.parse(localStorage.getItem(this.columnView + '_columns'));
+      this.columnsSelected = JSON.parse(localStorage.getItem(this.table$.columnView + '_columns'));
     } else {
-      this.columnsSelected = [...this.columns].filter(column => column.hiddenByDefault).map(column => column.title);
+      this.columnsSelected = [...this.table$.columns].filter(column => column.hiddenByDefault).map(column => column.name);
     }
 
     // Hide the columns from the table that are already selected to hide
-    const columnsToHide = this.columnsSelected;
-    this.dataTable.columns().every(function () {
-        const title = $(this.header()).text();
-        this.visible(columnsToHide.indexOf(title) < 0);
-      }
-    );
+    const columnsToHide = this.columnsSelected.map(value => `${value}:name`);
+    this.table$.dataTable.columns(columnsToHide).visible(false);
+    return this.columnsSelected;
   }
 
-
-  ngAfterViewInit(): void {
-    this.cdRef.detectChanges();
-    this.showHideColumns();
-    FoundationUtils.adjustWidth();
-    const container = $('.column-toggle-container');
-    container.foundation();
-    container.foundationExtendEBI();
-  }
-
-  onChangeColumnSelected(column: string) {
-    if (!this.columnsSelected.includes(column)) {
-      this.columnsSelected.push(column);
+  onChangeColumnSelected(columnName: string, value: boolean) {
+    if (!this.columnsSelected.includes(columnName)) {
+      this.columnsSelected.push(columnName);
     } else {
-      this.columnsSelected.splice(this.columnsSelected.indexOf(column), 1);
+      this.columnsSelected.splice(this.columnsSelected.indexOf(columnName), 1);
     }
-    localStorage.setItem(this.columnView + '_columns', JSON.stringify(this.columnsSelected));
+    const column = this.table$.dataTable.columns(`${columnName}:name`);
+    // Toggle the visibility
+    column.visible(value);
+    localStorage.setItem(this.table$.columnView + '_columns', JSON.stringify(this.columnsSelected));
     this.columnSelectionChanged.emit(this.columnsSelected);
   }
 
@@ -86,15 +74,8 @@ export class ColumnToggleComponent implements OnInit, AfterViewInit, OnChanges {
     return this.columnsSelected !== undefined ? this.columnsSelected.indexOf(column) < 0 : false;
   }
 
-  private showHideColumns(): void {
-    const table = this.dataTable;
-
-    $('#' + this.columnView + ' input[type="checkbox"]').on('click', function (e) {
-
-      // Get the column API object
-      const column = table.column($(this).attr('data-column'));
-      // Toggle the visibility
-      column.visible(!column.visible());
-    });
+  toggleActivate(status: boolean) {
+    this.active = status;
   }
+
 }

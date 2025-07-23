@@ -4,13 +4,14 @@ import {Title} from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'ip-data-submission',
-  templateUrl: './data-submission.component.html',
-  styleUrls: ['./data-submission.component.css']
+    selector: 'ip-data-submission',
+    templateUrl: './data-submission.component.html',
+    styleUrls: ['./data-submission.component.css'],
+    standalone: false
 })
 export class DataSubmissionComponent implements OnInit {
 
-  how_to_submit = environment.intact_portal_documentation_url + 'data-submission/how-to-submit.md';
+  how_to_submit = environment.intact_portal_documentation_url + 'documentation/how-to-submit.md';
 
   constructor(private titleService: Title) { }
 

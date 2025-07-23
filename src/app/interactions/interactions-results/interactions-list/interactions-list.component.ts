@@ -1,59 +1,89 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, viewChild} from '@angular/core';
 import {InteractionsTableComponent} from './interactions-table/interactions-table.component';
 import {InteractorsTableComponent} from './interactors-table/interactors-table.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {zip} from 'rxjs';
+import {ResultTable} from '../../shared/model/interactions-results/result-table-interface';
+import {FragmentService} from '../../shared/service/fragment.service';
 
+@UntilDestroy()
 @Component({
-  selector: 'ip-interactions-list',
-  templateUrl: './interactions-list.component.html',
-  styleUrls: ['./interactions-list.component.css']
+    selector: 'ip-interactions-list',
+    templateUrl: './interactions-list.component.html',
+    styleUrls: ['./interactions-list.component.css'],
+    standalone: false
 })
 export class InteractionsListComponent implements OnInit, AfterViewInit {
   private _isTabInteractionActive = false;
   private _isTabInteractorActive = false;
 
-  @ViewChild(InteractionsTableComponent)
-  interactionsTable: InteractionsTableComponent;
+  readonly interactionsTable = viewChild(InteractionsTableComponent);
 
-  @ViewChild(InteractorsTableComponent)
-  interactorsTable: InteractorsTableComponent;
+  readonly interactorsTable = viewChild(InteractorsTableComponent);
 
-  constructor() {
+  table: EventEmitter<ResultTable> = new EventEmitter<ResultTable>();
+
+  href: string;
+
+  constructor(public router: Router, public route: ActivatedRoute, public fragment: FragmentService) {
   }
 
   ngOnInit() {
-    $('ip-interactions-list').foundation();
+    // Initial setter if foundation is activated, every time there is a modification of fragments otherwise
+    this.fragment.$onChange
+      .pipe(untilDestroyed(this))
+      .subscribe(value => {
+        setTimeout(() => {
+          switch (value) {
+            case 'interactors':
+              this._isTabInteractionActive = false;
+              this._isTabInteractorActive = true;
+              $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
+              $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
+              this.table.emit(this.interactorsTable());
+              break;
+            case 'interactions':
+            default:
+              this._isTabInteractionActive = true;
+              this._isTabInteractorActive = false;
+              $('[aria-describedby="interactorsTable_info"]').css('visibility', 'hidden');
+              $('[aria-describedby="interactionsTable_info"]').css('visibility', 'visible');
+              this.table.emit(this.interactionsTable());
+              break;
+          }
+        }, 0);
+      });
+
+
+    zip(
+      this.route.url,
+      this.route.queryParams
+    ).pipe(untilDestroyed(this))
+      .subscribe(([url, queryParams]) => {
+        this.href = url.toString();
+
+        const paramList = Object.keys(queryParams);
+        if (paramList.length > 0) {
+          this.href += `?${paramList.map(param => `${param}=${queryParams[param]}`).join('&')}`;
+        }
+      });
   }
 
   ngAfterViewInit() {
-    $('#search-results-tabs').on('change.zf.tabs', () => {
-      if ($('#interactions').hasClass('is-active') === true) {
-        this.isTabInteractionActive = true;
-        this.isTabInteractorActive = false;
-        $('[aria-describedby="interactorsTable_info"]').css('visibility', 'hidden');
-        $('[aria-describedby="interactionsTable_info"]').css('visibility', 'visible');
-      } else if ($('#interactor').hasClass('is-active') === true) {
-        this.isTabInteractionActive = false;
-        this.isTabInteractorActive = true;
-        $('[aria-describedby="interactorsTable_info"]').css('visibility', 'visible');
-        $('[aria-describedby="interactionsTable_info"]').css('visibility', 'hidden');
+    $('ip-interactions-list').foundation();
+    $('#search-results-tabs').on('change.zf.tabs', (e) => {
+      if (e.namespace === 'tabs.zf') {
+        setTimeout(() => {
+          if ($('#interactions').hasClass('is-active') === true) {
+            this.fragment.value = 'interactions';
+          } else if ($('#interactors').hasClass('is-active') === true) {
+            this.fragment.value = 'interactors';
+          }
+        }, 0);
       }
     });
-  }
-
-  /** EVENT EMITTERS **/
-
-  public interactorsTabSelected(): void {
-    if (!this.isTabInteractorActive) {
-      this.isTabInteractorActive = true;
-      this.isTabInteractionActive = false;
-    }
-  }
-
-  public interactionsTabSelected(): void {
-    if (!this.isTabInteractionActive) {
-      this.isTabInteractionActive = true;
-      this.isTabInteractorActive = false;
-    }
+    setTimeout(() => this.table.emit(this.interactionsTable()), 0);
   }
 
   /** GETTERS AND SETTERS **/
@@ -72,9 +102,5 @@ export class InteractionsListComponent implements OnInit, AfterViewInit {
 
   set isTabInteractorActive(value: boolean) {
     this._isTabInteractorActive = value;
-  }
-
-  get isInteractionTableShown(): boolean {
-    return this.isTabInteractionActive || !(this.isTabInteractionActive || this.isTabInteractorActive);
   }
 }

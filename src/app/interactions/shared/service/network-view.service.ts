@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
 import {ParamMap} from '@angular/router';
 import {GraphPort} from 'intact-network-viewer'
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class NetworkViewService {
 
   private _visible: boolean = true;
   private _viewer: GraphPort;
-  private _expanded: boolean = true;
+  private _expanded: boolean = false;
   private _affectedByMutation: boolean = false;
   private _groupBySpecies: boolean = false;
   private _layoutName: string = 'fcose';
   private _mustQuery: boolean = true;
+  private _error: HttpErrorResponse = null;
 
   private updatesSubject: Subject<void> = new Subject<void>();
   public updates = this.updatesSubject.asObservable();
@@ -21,15 +23,15 @@ export class NetworkViewService {
   }
 
   fromParams(paramMap: ParamMap): void {
-    this._expanded = paramMap.get('collapsed') !== 'true';
+    this._expanded = paramMap.get('expanded') === 'true';
     this._affectedByMutation = paramMap.get('mutationStyle') === 'true';
     this._groupBySpecies = paramMap.get('groupBySpecies') === 'true';
     this._layoutName = paramMap.has('layout') ? paramMap.get('layout') : 'fcose';
   }
 
   toParams(params: any = {}, arrayHandler: (array: string[]) => any = a => a.join(',')): any {
-    if (!this._expanded) {
-      params.collapsed = true;
+    if (this._expanded) {
+      params.expanded = true;
     }
     if (this._affectedByMutation) {
       params.mutationStyle = this._affectedByMutation;
@@ -116,5 +118,13 @@ export class NetworkViewService {
 
   set mustQuery(value: boolean) {
     this._mustQuery = value;
+  }
+
+  get error(): HttpErrorResponse {
+    return this._error;
+  }
+
+  set error(value: HttpErrorResponse) {
+    this._error = value;
   }
 }

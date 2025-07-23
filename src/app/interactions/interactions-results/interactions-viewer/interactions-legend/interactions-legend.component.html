@@ -1,84 +1,114 @@
 <h4 class="underline margin-bottom-large">Legend</h4>
 
 <div id="node-legends">
-  <h5>Nodes</h5>
-  <div>
-    <span>Color ~ <i>Species</i></span>
-    <div id="species-colors" *ngIf="legend.node_legend.species_color">
-      <div *ngFor="let key of objectKeys(legend.node_legend.species_color)" class="node-line">
-        <ip-node-diagram [color]="legend.node_legend.species_color[key]"></ip-node-diagram>
-        <span><i class="network-legend-label">{{key}}</i></span>
-      </div>
+    <h5>Nodes</h5>
+    <div>
+        <span>Color ~ <i>Species</i></span>
+        @if (legend().node_legend.species_color) {
+            <div id="species-colors">
+                @for (key of objectKeys(legend().node_legend.species_color); track key) {
+                    <div class="node-line">
+                        <ip-node-diagram [color]="legend().node_legend.species_color[key]"></ip-node-diagram>
+                        <span><i class="network-legend-label">{{ key }}</i></span>
+                    </div>
+                }
+            </div>
+        } @if (legend().node_legend.kingdom_color) {
+        <div id="kingdom-colors">
+            @for (key of objectKeys(legend().node_legend.kingdom_color); track key) {
+                <div class="node-line">
+                    <ip-node-diagram [color]="legend().node_legend.kingdom_color[key]"></ip-node-diagram>
+                    <span class="network-legend-label">{{ key }}</span>
+                </div>
+            }
+        </div>
+    }
     </div>
 
-    <div id="kingdom-colors" *ngIf="legend.node_legend.kingdom_color">
-      <div *ngFor="let key of objectKeys(legend.node_legend.kingdom_color)" class="node-line">
-        <ip-node-diagram [color]="legend.node_legend.kingdom_color[key]"></ip-node-diagram>
-        <span class="network-legend-label">{{key}}</span>
-      </div>
+    @if (legend().node_legend.shape) {
+        <div id="node-shapes">
+            <span>Shape ~ <i>Type</i></span>
+            @for (key of objectKeys(legend().node_legend.shape); track key) {
+                <div class="node-line">
+                    <ip-node-diagram [shape]="legend().node_legend.shape[key]"></ip-node-diagram>
+                    <span>{{ key }}</span>
+                </div>
+            }
+        </div>
+    } @if (mutation() && legend().node_legend.border_color.true) {
+    <div id="node-mutation">
+        <span>Border ~ <i>Affected by mutation</i></span>
+        @for (status of ['true']; track status) {
+            <div class="node-line">
+                <ip-node-diagram [borderColor]="legend().node_legend.border_color[status].value"></ip-node-diagram>
+                <span class="network-legend-label">{{ legend().node_legend.border_color[status].label }}</span>
+            </div>
+        }
     </div>
-  </div>
-
-  <div id="node-shapes" *ngIf="legend.node_legend.shape">
-    <span>Shape ~ <i>Type</i></span>
-    <div *ngFor="let key of objectKeys(legend.node_legend.shape)" class="node-line">
-      <ip-node-diagram [shape]="legend.node_legend.shape[key]"></ip-node-diagram>
-      <span>{{key}}</span>
-    </div>
-  </div>
-
-  <div *ngIf="mutation && legend.node_legend.border_color.true" id="node-mutation">
-    <span>Border ~ <i>Affected by mutation</i></span>
-    <div *ngFor="let status of ['true']" class="node-line">
-      <ip-node-diagram [borderColor]="legend.node_legend.border_color[status].value"></ip-node-diagram>
-      <span class="network-legend-label">{{legend.node_legend.border_color[status].label}}</span>
-    </div>
-  </div>
+}
 </div>
 
 <div id="edge-legends">
-  <h5>Edges</h5>
+    <h5>Edges</h5>
 
-  <div *ngIf="expanded; else collapsedLegend">
-    <div *ngIf="!mutation; else mutationLegend">
-      <span>Color ~ <i>Type</i></span>
-      <div *ngFor="let key of objectKeys(legend.edge_legend.evidence_color)" class="edge-line">
-        <ip-edge-diagram [color]="legend.edge_legend.evidence_color[key]"></ip-edge-diagram>
-        <span class="network-legend-label">{{key}}</span>
-      </div>
-    </div>
-
-    <ng-template #mutationLegend>
-      <div>
-        <span>Color ~ <i>Affected by mutation</i></span>
-        <div *ngFor="let status of ['true']" class="edge-line">
-          <ip-edge-diagram [color]="legend.edge_legend.mutation_color[status].value"></ip-edge-diagram>
-          <span class="network-legend-label">{{legend.edge_legend.mutation_color[status].label}}</span>
+    @if (expanded()) {
+        <div>
+            @if (!mutation()) {
+                <div>
+                    <span>Color ~ <i>Type</i></span>
+                    @for (key of objectKeys(legend().edge_legend.evidence_color); track key) {
+                        <div class="edge-line">
+                            <ip-edge-diagram [color]="legend().edge_legend.evidence_color[key]"></ip-edge-diagram>
+                            <span class="network-legend-label">{{ key }}</span>
+                        </div>
+                    }
+                </div>
+            } @else {
+            <div>
+                <span>Color ~ <i>Affected by mutation</i></span>
+                @for (status of ['true']; track status) {
+                    <div class="edge-line">
+                        <ip-edge-diagram [color]="legend().edge_legend.mutation_color[status].value"></ip-edge-diagram>
+                        <span class="network-legend-label">{{ legend().edge_legend.mutation_color[status].label }}</span>
+                    </div>
+                }
+            </div>
+        } @if (legend().edge_legend.expansion.true) {
+            <div>
+                <span>Shape ~ <i>Expansion method</i></span>
+                @for (status of ['true']; track status) {
+                    <div class="edge-line">
+                        <ip-edge-diagram [shape]="legend().edge_legend.expansion[status].value"></ip-edge-diagram>
+                        <span class="network-legend-label">{{ legend().edge_legend.expansion[status].label }}</span>
+                    </div>
+                }
+            </div>
+        } @if (legend().edge_legend.negative?.true) {
+            <div>
+                <span>Cross ~ <i>Positive interaction</i></span>
+                @for (status of ['true']; track status) {
+                    <div class="edge-line">
+                        <ip-edge-diagram [midCrossColor]="legend().edge_legend.negative[status]?.value"></ip-edge-diagram>
+                        <span class="network-legend-label">{{ legend().edge_legend.negative[status]?.label }}</span>
+                    </div>
+                }
+            </div>
+        }
         </div>
-      </div>
-    </ng-template>
-    <div *ngIf="legend.edge_legend.expansion.true">
-      <span>Shape ~ <i>Expansion method</i></span>
-      <div *ngFor="let status of ['true']" class="edge-line">
-        <ip-edge-diagram [shape]="legend.edge_legend.expansion[status].value"></ip-edge-diagram>
-        <span class="network-legend-label">{{legend.edge_legend.expansion[status].label}}</span>
-      </div>
-    </div>
-
-  </div>
-  <ng-template #collapsedLegend>
-    <div *ngIf="legend.edge_legend.summary_color">
-      <span>Color ~ <i>MI Score</i></span>
-      <ip-color-range-diagram [rangeMap]="legend.edge_legend.summary_color"></ip-color-range-diagram>
-    </div>
-
+    } @else {
+    @if (legend().edge_legend.summary_color) {
+        <div>
+            <span>Color ~ <i>MI Score</i></span>
+            <ip-color-range-diagram [rangeMap]="legend().edge_legend.summary_color"></ip-color-range-diagram>
+        </div>
+    }
     <div>
-      <span>Width ~ <i>#Evidence</i></span>
-      <ip-edge-thickness-diagram [minValue]="legend.edge_legend.summary_width.minValue"
-                                 [maxValue]="legend.edge_legend.summary_width.maxValue"
-                                 [minThickness]="legend.edge_legend.summary_width.minWidth"
-                                 [maxThickness]="legend.edge_legend.summary_width.maxWidth"
-                                 [color]="'#e75a00'"></ip-edge-thickness-diagram>
+        <span>Width ~ <i>#Evidence</i></span>
+        <ip-edge-thickness-diagram [minValue]="legend().edge_legend.summary_width.minValue"
+                                   [maxValue]="legend().edge_legend.summary_width.maxValue"
+                                   [minThickness]="legend().edge_legend.summary_width.minWidth"
+                                   [maxThickness]="legend().edge_legend.summary_width.maxWidth"
+                                   [color]="'#e75a00'"></ip-edge-thickness-diagram>
     </div>
-  </ng-template>
+}
 </div>

@@ -1,0 +1,49 @@
+<div>
+  <h1>Statistics</h1>
+  <p>The details below are based on released content of the IntAct database, with contributions from all IMEx partners.
+  Move your cursor over the graphs for further details.</p>
+  <br>
+
+  <h2>Interactions over time</h2>
+  <ip-multiline-graph [dataPath]="stat_url + 'interactions.csv'"></ip-multiline-graph>
+  <p>
+    Interactions over time, based on interaction reports.
+    An "interaction report" or "evidence" is a report of one interaction by one method in one publication.
+    An n-ary interaction has more than two participants. For the sake of comparison and computational processing,
+    n-ary interactions are often expanded to multiple binary interactions following the "spoke model".
+    See <a href="https://www.ebi.ac.uk/intact/documentation/user-guide#expansion_method">Expansion Method</a> for more information.
+    The time assigned to an interaction report is the date the interaction evidence is created in IntAct.
+  </p>
+  <hr>
+  <br>
+
+  <h2>Publications & experiments over time</h2>
+  <ip-multiline-graph [dataPath]="stat_url + 'publication_experiment.csv'"></ip-multiline-graph>
+  <p>One "Experiment" is the data derived form one method in one publication. A single publication can report multiple experiments,
+  for example a large-scale method, and subsequent validation of a subset of interactions with a small scale method.</p>
+  <hr>
+  <br>
+
+  <h2>Interactions by curation reason</h2>
+  <ip-multiline-graph [dataPath]="stat_url + 'curation_distribution.csv'"></ip-multiline-graph>
+  <p>Curators can choose publications to curate. This can be dependent on funding priority. Besides this,
+    curations can be requested by the author, or submitted by the author.
+<!--  <ip-multiline-graph [dataPath]="'./assets/data-files/panel_3.csv'" [dateGranularity]="'year'"></ip-multiline-graph>-->
+  <hr>
+  <br>
+
+  <h2>Interactions by detection method</h2>
+  <ip-donut-graph [dataPath]="stat_url + 'method_distribution.csv'" [threshold]="8"></ip-donut-graph>
+  <p>Distributions are determined on the number of interaction evidences in IntAct.</p>
+  <hr>
+  <br>
+
+  <h2>Proteome Coverage</h2>
+  <ip-h-bar-graph [dataPath]="stat_url + 'species_cover.csv'"></ip-h-bar-graph>
+  <p>Proteins have been mapped to the reviewed proteome from the <a href="https://www.uniprot.org/proteomes/">UniProt proteome</a> sets. </p>
+  <hr>
+  <br>
+
+  <h2>Summary </h2>
+  <ip-count-table [dataPath]="stat_url + 'summary_table.csv'"></ip-count-table>
+</div>

@@ -1,342 +1,234 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {QueryBuilderConfig} from 'angular2-query-builder';
+import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
+import {UntypedFormControl} from '@angular/forms';
+import {QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig, Rule, RuleSet} from '@eliot-ragueneau/ngx-query-builder';
+import {MIQLPipe} from './MIQL.pipe';
+import {ADVANCED_SEARCH_CONFIG, AdvancedQueryHelper, MIQL_DATE_FORMAT} from './advanced-search.config';
+import {ColorMIQLPipe} from './colorMIQL.pipe';
+import {SearchService} from '../search/service/search.service';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+
+export interface ColorCode {
+  regex: RegExp,
+  class: string,
+  space?: boolean
+}
 
 @Component({
-  selector: 'ip-advanced-search',
-  templateUrl: './advanced-search.component.html',
-  styleUrls: ['./advanced-search.component.css']
+    selector: 'ip-advanced-search',
+    templateUrl: './advanced-search.component.html',
+    styleUrls: ['./advanced-search.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MIQL_DATE_FORMAT }
+    ],
+    standalone: false
 })
-export class AdvancedSearchComponent implements OnInit {
+export class AdvancedSearchComponent implements AfterViewInit {
 
-  public queryCtrl: FormControl;
+  public queryCtrl: UntypedFormControl;
   public currentConfig: QueryBuilderConfig;
 
-  public query = {
+  public query: RuleSet = {
     condition: 'and',
-    rules: [
-      {field: 'idA', operator: '=', entity: 'interactorA'},
-    ]
+    rules: []
   };
 
-  public config: QueryBuilderConfig = {
-    entities: {
-      interactor: {
-        name: 'Interactor (A or B)'
-      },
-      interactorA: {
-        name: 'Interactor A'
-      },
-      interactorB: {
-        name: 'Interactor B'
-      },
-      interaction: {
-        name: 'Interaction'
-      },
-      publication: {
-        name: 'Publication'
-      },
-      causalInteraction: {
-        name: 'Causal Interaction'
-      },
-      curationMetadata: {
-        name: 'Curation Metadata'
+  coloredMIQL: string;
+
+  constructor(private searchService: SearchService) {
+    this.queryCtrl = new UntypedFormControl(this.query);
+    this.currentConfig = ADVANCED_SEARCH_CONFIG;
+  }
+
+  public classNames: QueryBuilderClassNames = {
+    switchGroup: 'button-group',
+    switchControl: 'display-contents ad-q-switch-control',
+    switchRadio: 'ad-q-switch-radio no-margin',
+    switchLabel: 'button margin-bottom-none',
+    inputControl: 'no-margin',
+    entityControl: 'no-margin',
+    operatorControl: 'no-margin',
+    fieldControl: 'no-margin',
+    buttonGroup: 'button-group no-margin',
+    button: 'button margin-bottom-none',
+    addIcon: 'icon icon-common icon-plus centered-icon',
+    removeIcon: 'icon icon-common icon-times centered-icon',
+    removeButton: 'button',
+    transition: 'margin-bottom-none',
+    connector: 'ad-q-connector',
+    row: 'ad-q-row',
+    invalidRuleSet: 'ad-q-row invalid-rule-set',
+  }
+
+  updateCondition(ruleSet: RuleSet, e: MouseEvent, builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {
+    const target = $(e.target);
+    const parent = target.parents('.button-group')
+    parent.find('.ad-q-switch-radio').each(function () {
+      $(this).toggleClass('checked');
+      if ($(this).hasClass('checked')) {
+        $(this).prop('checked', true)
+        ruleSet.condition = (<string>$(this).val());
+      } else {
+        $(this).prop('checked', false)
       }
-    },
-    fields: {
-      idA: {
-        name: 'Identifier',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      idB: {
-        name: 'Identifier',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      altidA: {
-        name: 'Alternative Id.',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      altidB: {
-        name: 'Alternative Id.',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      id: {
-        name: 'Identifiers',
-        type: 'string',
-        entity: 'interactor'
-      },
-      aliasA: {
-        name: 'Alias',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      aliasB: {
-        name: 'Alias',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      alias: {
-        name: 'Alias',
-        type: 'string',
-        entity: 'interactor'
-      },
-      identifier: {
-        name: 'Identifiers, Alternatives, Aliases',
-        type: 'string',
-        entity: 'interactor'
-      },
-      pubauth: {
-        name: 'Publication 1st author(s)',
-        type: 'string',
-        entity: 'publication'
-      },
-      pubid: {
-        name: 'Publication Identifier(s)',
-        type: 'string',
-        entity: 'publication'
-      },
-      taxidA: {
-        name: 'Tax Id. interactor',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      taxidB: {
-        name: 'Tax Id. interactor',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      taxidHost: {
-        name: 'Tax Id. Host organism',
-        type: 'string',
-        entity: 'interaction'
-      },
-      species: {
-        name: 'Tax Id. interactors',
-        type: 'string',
-        entity: 'interactor'
-      },
-      type: {
-        name: 'Interaction type(s)',
-        type: 'string',
-        entity: 'interaction'
-      },
-      detmethod: {
-        name: 'Interaction Detection method(s)',
-        type: 'string',
-        entity: 'interaction'
-      },
-      interaction_id: {
-        name: 'Interaction identifier(s)',
-        type: 'string',
-        entity: 'interaction'
-      },
-      pbioroleA: {
-        name: 'Biological role',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      pbioroleB: {
-        name: 'Biological role',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      pbiorole: {
-        name: 'Biological role',
-        type: 'string',
-        entity: 'interactor'
-      },
-      pexproleA: {
-        name: 'Experimental Role',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      pexproleB: {
-        name: 'Experimental Role',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      ptypeA: {
-        name: 'Interactor type',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      ptypeB: {
-        name: 'Interactor type',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      ptype: {
-        name: 'Interactor type',
-        type: 'string',
-        entity: 'interactor'
-      },
-      pxrefA: {
-        name: 'Interactor xrefs.',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      pxrefB: {
-        name: 'Interactor xrefs.',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      pxref: {
-        name: 'Interactor xrefs.',
-        type: 'string',
-        entity: 'interactor'
-      },
-      xref: {
-        name: 'Interaction xrefs.',
-        type: 'string',
-        entity: 'interaction'
-      },
-      annotA: {
-        name: 'Interactor annotations',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      annotB: {
-        name: 'Interactor annotations',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      annot: {
-        name: 'Interaction annotations',
-        type: '',
-        entity: 'interaction'
-      },
-      cdate: {
-        name: 'Creation date',
-        type: 'date',
-        entity: 'curationMetadata'
-      },
-      udate: {
-        name: 'Update date',
-        type: 'date',
-        entity: 'curationMetadata'
-      },
-      negative: {
-        name: 'Negative interaction',
-        type: 'boolean',
-        entity: 'interaction'
-      },
-      complex: {
-        name: 'Complex expansion',
-        type: 'category',
-        entity: 'interaction',
-        options: [
-          {
-            name: 'Bipartite expansion',
-            value: 'MI:1062'
-          },
-          {
-            name: 'Matrix expansion',
-            value: 'MI:1061'
-          },
-          {
-            name: 'Spoke expansion',
-            value: 'MI:1060'
-          },
-          {
-            name: 'Non-expanded',
-            value: '-'
-          }
-        ]
-      },
-      ftypeA: {
-        name: 'Feature type',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      ftypeB: {
-        name: 'Feature type',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      ftype: {
-        name: 'Feature type',
-        type: 'string',
-        entity: 'interactor'
-      },
-      pmethodA: {
-        name: 'interactor identification method',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      pmethodB: {
-        name: 'interactor identification method',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      pmethod: {
-        name: 'interactor identification method',
-        type: 'string',
-        entity: 'interactor'
-      },
-      stcA: {
-        name: 'Stoichiometry',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      stcB: {
-        name: 'Stoichiometry',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      stc: {
-        name: 'Stoichiometry',
-        type: 'boolean',
-        entity: 'interactor'
-      },
-      param: {
-        name: 'Interaction parameters',
-        type: 'boolean',
-        entity: 'interaction'
-      },
-      source: {
-        name: 'Data source',
-        type: 'string',
-        entity: 'curationMetadata'
-      },
-      bioeffectA: {
-        name: 'Biological effect',
-        type: 'string',
-        entity: 'interactorA'
-      },
-      bioeffectB: {
-        name: 'Biological effect',
-        type: 'string',
-        entity: 'interactorB'
-      },
-      bioeffect: {
-        name: 'Biological effect',
-        type: 'string',
-        entity: 'interactor'
-      },
-      causalmechanism: {
-        name: 'Causal regulatory mechanism',
-        type: 'string',
-        entity: 'causalInteraction'
-      },
-      causalstatement: {
-        name: 'Causal statement',
-        type: 'string',
-        entity: 'causalInteraction'
+    });
+    this.builderToEditor(builder, editor);
+  }
+
+  ngAfterViewInit(): void {
+  }
+
+  search(miql: string) {
+    this.searchService.search(miql, miql);
+  }
+
+  private doUpdate = true;
+
+  builderToEditor(builder: QueryBuilderComponent, editor: HTMLTextAreaElement) {
+    if (this.doUpdate) {
+      this.doUpdate = false;
+      const miql = MIQLPipe.transform(builder.value);
+      editor.value = miql;
+      this.coloredMIQL = ColorMIQLPipe.transform(miql);
+    }
+    this.doUpdate = true
+  }
+
+  editorToBuilder(builder: QueryBuilderComponent, miql: string) {
+    if (this.doUpdate) {
+      this.doUpdate = false;
+      builder.value = parseMIQL(miql);
+    }
+    this.doUpdate = true
+  }
+
+  onInput(editor: HTMLTextAreaElement, builder: QueryBuilderComponent) {
+    let miql = editor.value;
+    if (miql.endsWith('\n')) {
+      miql += ' ';
+    }
+    this.coloredMIQL = ColorMIQLPipe.transform(miql);
+    this.editorToBuilder(builder, miql);
+  }
+
+  onBuilderUpdate(editor: HTMLTextAreaElement, builder: QueryBuilderComponent) {
+    this.builderToEditor(builder, editor)
+  }
+
+  syncScroll(editor: HTMLTextAreaElement, pre: HTMLPreElement) {
+    setTimeout(() => {
+      pre.scrollTop = editor.scrollTop;
+      pre.scrollLeft = editor.scrollLeft;
+    })
+  }
+}
+
+
+function parseMIQL(miql: string): RuleSet {
+  miql = `(${miql})`;
+  let out: RuleSet;
+  const stack: { start: number, ruleSet: RuleSet }[] = [];
+  let end: number, stackLevel: number = 0, value: string;
+  const levelMap: Map<number, { start: number, end: number }[]> = new Map<number, { start: number; end: number }[]>();
+
+  miql.split('').forEach((char, index, array) => {
+    switch (char) {
+      case '(':
+        stack.push({start: index, ruleSet: {condition: 'and', rules: []}});
+        break;
+      case ')':
+        const {start, ruleSet} = stack.pop();
+        out = ruleSet;
+        let rule: RuleSet | Rule = ruleSet;
+        end = index;
+        value = miql.substring(start + 1, end);
+        if (array[start - 1] === ':') { // Is a rule with a set operator
+          rule = extractSetRule(miql, start, value);
+        } else { // Is a rule set
+          stackLevel = stack.length;
+          const range = {start: start, end: end - 1};
+          setupLevelMap(levelMap, stackLevel, range);
+          const trimmedValue = removeSuperiorRules(value, start, end, stackLevel, levelMap);
+          fillRuleSet(ruleSet, trimmedValue);
+        }
+        if (stack.length > 0) {
+          stack[stack.length - 1].ruleSet.rules.push(rule)
+        }
+        break;
+    }
+  });
+  return out;
+}
+
+function extractSetRule(miql: string, start: number, value: string): Rule {
+  let previousSpaceIndex = miql.lastIndexOf(' ', start - 2);
+  if (miql.substring(previousSpaceIndex + 1, previousSpaceIndex + 2) === '(') {
+    previousSpaceIndex++; // Avoid hitting the start parenthesis if the field is the first in a rule set
+  }
+  const potentialNot = miql.substring(previousSpaceIndex - 3, previousSpaceIndex);
+  const operator = potentialNot === 'NOT' || potentialNot === 'not' ? 'not in' : 'in';
+  const field = miql.substring(previousSpaceIndex + 1, start - 1);
+  const entity = AdvancedQueryHelper.toField(field).entity;
+  if (value === 'undefined') {
+    return {field, operator, entity};
+  } else {
+    return {field, operator, entity, value};
+  }
+}
+
+function setupLevelMap(levelMap: Map<number, { start: number; end: number }[]>, stackLevel: number, range: { start: number; end: number }) {
+  if (levelMap.get(stackLevel) === undefined) {
+    levelMap.set(stackLevel, [range])
+  } else {
+    levelMap.get(stackLevel).push(range)
+  }
+}
+
+function removeSuperiorRules(value: string, start: number, end: number, stackLevel: number, levelMap: Map<number, { start: number; end: number }[]>) {
+  let deleted = start;
+  const superiorRanges = levelMap.get(stackLevel + 1);
+  if (superiorRanges !== undefined) {
+    for (const superiorRange of superiorRanges) {
+      if (superiorRange.start > start && superiorRange.end < end) {
+        value = value.substring(0, superiorRange.start - deleted) + value.substring(superiorRange.end - deleted, value.length);
+        deleted += superiorRange.end - superiorRange.start;
       }
     }
-  };
-
-
-  constructor() {
-    this.queryCtrl = new FormControl(this.query);
-    this.currentConfig = this.config;
   }
+  return value;
+}
 
-  ngOnInit() {
-  }
-
+function fillRuleSet(ruleSet: RuleSet, value: string) {
+  ruleSet.condition = /\sOR\s/ig.test(value) ? 'or' : 'and';
+  const superiorRuleSets = ruleSet.rules;
+  let i = 0;
+  ruleSet.rules = [];
+  value.split(/\sAND\s|\sOR\s/ig)
+    .map(ruleStr => ruleStr.trim())
+    .filter(ruleStr => ruleStr.length > 0)
+    .forEach(ruleStr => {
+      if (ruleStr === '()') {
+        ruleSet.rules.push(superiorRuleSets[i++])
+      } else {
+        ruleStr = ruleStr.trim();
+        const different = ruleStr.startsWith('NOT ') || ruleStr.startsWith('not ');
+        const ruleOperator = different ? '≠' : '=';
+        const indexOfColon = ruleStr.indexOf(':') || ruleStr.length;
+        const ruleFieldKeyword = ruleStr.substring(different ? 4 : 0, indexOfColon);
+        const ruleField = AdvancedQueryHelper.toField(ruleFieldKeyword);
+        if (ruleField !== undefined) {
+          const ruleValue = ruleStr.substring(indexOfColon + 1, ruleStr.length);
+          const operator = ruleValue.startsWith('[') ? (different ? '∉' : '∈') : ruleOperator;
+          if (ruleValue.startsWith('(')) {
+            ruleSet.rules.push(superiorRuleSets.pop());
+          } else if (ruleValue === 'undefined') {
+            ruleSet.rules.push({field: ruleFieldKeyword, operator: operator, entity: ruleField.entity})
+          } else {
+            ruleSet.rules.push({field: ruleFieldKeyword, operator: operator, entity: ruleField.entity, value: ruleValue})
+          }
+        }
+      }
+    });
 }

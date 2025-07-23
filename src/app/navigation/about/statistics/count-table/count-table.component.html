@@ -1,0 +1,18 @@
+<table class="dataTable">
+    <thead>
+    <tr>
+        <th>Feature</th>
+        <th>Amount</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @for (datum of data; track datum) {
+        <tr>
+            <td class="firstColumn">{{ datum.feature | titlecase }}</td>
+            <td class="secondColum">{{ datum.amount | number }}</td>
+        </tr>
+    }
+    </tbody>
+
+</table>

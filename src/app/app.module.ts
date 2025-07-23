@@ -1,12 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {UrlSerializer} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 
 import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule, MyUrlSerializer} from './app-routing.module';
 import {HomeDashboardModule} from './home-dashboard/home-dashboard.module';
 import {FeatureDatasetService} from './home-dashboard/featured-dataset/service/feature-dataset.service';
 import {InteractionsResultsModule} from './interactions/interactions-results/interactions-results.module';
@@ -15,60 +15,65 @@ import {InteractionsSearchService} from './interactions/shared/service/interacti
 import {InteractionDetailsModule} from './interactions/interaction-details/interaction-details.module';
 import {InteractionsDetailsService} from './interactions/shared/service/interactions-details.service';
 import {NetworkSearchService} from './interactions/shared/service/network-search.service';
-import {DownloadComponent} from './navigation/download/download.component';
 import {InteractomesComponent} from './interactomes/interactomes.component';
 import {DocumentationModule} from './navigation/documentation/documentation.module';
+import {DownloadModule} from './navigation/download/download.module';
 import {InteractomeComponent} from './interactomes/interactome/interactome.component';
 import {LayoutModule} from './layout/layout.module';
 import {NetworkViewService} from './interactions/shared/service/network-view.service';
-import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
 import {MatButtonModule} from '@angular/material/button';
 import {FilterService} from './interactions/shared/service/filter.service';
 import {AboutComponent} from './navigation/about/about.component';
-import {FaqComponent} from './navigation/faq/faq.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Angulartics2Module} from 'angulartics2';
-import {Angulartics2GoogleAnalytics} from 'angulartics2/ga';
-import {GoogleAnalyticsService} from './shared/service/google-analytics/google-analytics.service';
 import {APP_BASE_HREF, PlatformLocation} from '@angular/common';
+import {RedirectComponent} from './navigation/redirect/redirect.component';
+import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from 'ngx-google-analytics';
+import {environment} from '../environments/environment';
+import {MarkdownModule} from './navigation/documentation/shared/markdown/markdown.module';
+import {StatisticsComponent} from './navigation/about/statistics/statistics.component';
+import {MultilineGraphComponent} from './navigation/about/statistics/multiline-graph/multiline-graph.component';
+import {HBarGraphComponent} from './navigation/about/statistics/hbar-graph/h-bar-graph.component';
+import {DonutGraphComponent} from './navigation/about/statistics/donut-graph/donut-graph.component';
+import {CountTableComponent} from './navigation/about/statistics/count-table/count-table.component';
+import {EncodeHttpParamsInterceptor} from './shared/utils/encode-http-params-interceptor';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    DownloadComponent,
-    InteractomesComponent,
-    InteractomeComponent,
-    AboutComponent,
-    FaqComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot([]),
-    FormsModule,
-    HttpClientModule,
-    LayoutModule,
-    HomeDashboardModule,
-    InteractionsResultsModule,
-    InteractionDetailsModule,
-    DocumentationModule,
-    AppRoutingModule,
-    MarkdownModule,
-    MatButtonModule,
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
-  ],
-  providers: [
-    FeatureDatasetService,
-    SearchService,
-    InteractionsSearchService,
-    InteractionsDetailsService,
-    FilterService,
-    NetworkSearchService,
-    NetworkViewService,
-    GoogleAnalyticsService,
-    {provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation]}
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        InteractomesComponent,
+        InteractomeComponent,
+        AboutComponent,
+        RedirectComponent,
+        StatisticsComponent,
+        MultilineGraphComponent,
+        HBarGraphComponent,
+        DonutGraphComponent,
+        CountTableComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        LayoutModule,
+        HomeDashboardModule,
+        InteractionsResultsModule,
+        InteractionDetailsModule,
+        DocumentationModule,
+        DownloadModule,
+        AppRoutingModule,
+        MatButtonModule,
+        NgxGoogleAnalyticsModule.forRoot(environment.analytics_id),
+        NgxGoogleAnalyticsRouterModule,
+        MarkdownModule], providers: [
+        FeatureDatasetService,
+        SearchService,
+        InteractionsSearchService,
+        InteractionsDetailsService,
+        FilterService,
+        NetworkSearchService,
+        NetworkViewService,
+        { provide: APP_BASE_HREF, useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(), deps: [PlatformLocation] },
+        { provide: UrlSerializer, useClass: MyUrlSerializer },
+        { provide: HTTP_INTERCEPTORS, useClass: EncodeHttpParamsInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
 }

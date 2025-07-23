@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bi-layered {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  margin: 0.5em 0;
+  &.left {
+    margin-left: 4px;
+  }
+  &.right {
+    margin-right: 4px;
+  }
+}
+

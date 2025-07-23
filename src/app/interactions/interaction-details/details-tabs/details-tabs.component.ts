@@ -1,20 +1,29 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, input, output, viewChild, EventEmitter} from '@angular/core';
 import {InteractionDetails} from '../../shared/model/interaction-details/interaction-details.model';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
-import {ParticipantTableComponent} from "./details/participant-table/participant-table.component";
-import {FeaturesTableComponent} from "./details/features-table/features-table.component";
+import {ParticipantTableComponent} from './details/participant-table/participant-table.component';
+import {FeaturesTableComponent} from './details/features-table/features-table.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ResultTable} from '../../shared/model/interactions-results/result-table-interface';
+import {ActivatedRoute} from '@angular/router';
+import {FragmentService} from '../../shared/service/fragment.service';
 
-
+@UntilDestroy()
 @Component({
-  selector: 'ip-details-tabs',
-  templateUrl: './details-tabs.component.html',
-  styleUrls: ['./details-tabs.component.css']
+    selector: 'ip-details-tabs',
+    templateUrl: './details-tabs.component.html',
+    styleUrls: ['./details-tabs.component.css'],
+    standalone: false
 })
 export class DetailsTabsComponent implements OnInit, AfterViewInit {
 
-  @Input() interactionAc: string;
-  @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() moleculeTypesCollected: EventEmitter<Set<string>> = new EventEmitter<Set<string>>();
+  readonly interactionAc = input.required<string>();
+  readonly featureChanged = output<string>();
+  readonly moleculeTypesCollected = output<Set<string>>();
+
+  table: EventEmitter<ResultTable> = new EventEmitter<ResultTable>();
+  href: string;
 
   private _currentPageIndex: number;
 
@@ -23,40 +32,69 @@ export class DetailsTabsComponent implements OnInit, AfterViewInit {
   private _isTabParticipantActive = false;
   private _isTabFeatureActive = false;
 
-  @ViewChild(ParticipantTableComponent)
-  participantTable: ParticipantTableComponent;
+  readonly participantTable = viewChild(ParticipantTableComponent);
 
-  @ViewChild(FeaturesTableComponent)
-  featureTable: FeaturesTableComponent;
+  readonly featureTable = viewChild(FeaturesTableComponent);
 
-  constructor(private interactionsDetailsService: InteractionsDetailsService) {
+  constructor(private interactionsDetailsService: InteractionsDetailsService, private route: ActivatedRoute, private fragment: FragmentService) {
   }
 
   ngOnInit() {
-    $('ip-details-tabs').foundation();
     this.requestInteractionDetails();
+
+    // Initial setter if foundation is activated, every time there is a modification of fragments otherwise
+    this.fragment.$onChange
+      .pipe(untilDestroyed(this))
+      .subscribe(value => {
+        setTimeout(() => {
+          switch (value) {
+            case 'participants':
+              this.isTabParticipantActive = true;
+              this.isTabFeatureActive = false;
+              this.table.emit(this.participantTable());
+              break;
+            case 'features':
+              this.isTabParticipantActive = false;
+              this.isTabFeatureActive = true;
+              this.table.emit(this.featureTable());
+              break;
+            default:
+              this.isTabParticipantActive = false;
+              this.isTabFeatureActive = false;
+              this.table.emit(null);
+          }
+        }, 0);
+      });
+
+    this.route.url.pipe(untilDestroyed(this))
+      .subscribe((url) => {
+        this.href = url.join('/');
+      });
   }
 
   ngAfterViewInit(): void {
-    $('#details-tabs').on('change.zf.tabs', () => {
-      if ($('#participants').hasClass('is-active') === true) {
-        this.isTabParticipantActive = true;
-        this.isTabFeatureActive = false;
-      } else if ($('#features').hasClass('is-active') === true) {
-        this.isTabParticipantActive = false;
-        this.isTabFeatureActive = true;
-      } else {
-        this.isTabParticipantActive = false;
-        this.isTabFeatureActive = false;
+    $('ip-details-tabs').foundation();
+    $('#details-tabs').on('change.zf.tabs', (e) => {
+      if (e.namespace === 'tabs.zf') {
+        if ($('#participants').hasClass('is-active') === true) {
+          this.fragment.value = 'participants';
+        } else if ($('#features').hasClass('is-active') === true) {
+          this.fragment.value = 'features';
+        } else if ($('#interactionDetails').hasClass('is-active') === true) {
+          this.fragment.value = 'interactionDetails';
+        }
       }
     });
   }
 
 
   private requestInteractionDetails() {
-    this.interactionsDetailsService.getInteractionDetails(this.interactionAc)
+    this.interactionsDetailsService.getInteractionDetails(this.interactionAc())
+      .pipe(untilDestroyed(this))
       .subscribe(interactionDetails => {
-        this.interactionDetails = interactionDetails;
+        if (!(interactionDetails instanceof HttpErrorResponse)) {
+          this.interactionDetails = interactionDetails;
+        }
       })
   }
 

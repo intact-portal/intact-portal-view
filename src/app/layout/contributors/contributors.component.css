@@ -1,3 +1,10 @@
 a, a:visited {
   border: none;
+  padding: 2px;
+}
+
+a img {
+  max-height: 75px;
+  max-width: 175px;
+  padding: 2px;
 }

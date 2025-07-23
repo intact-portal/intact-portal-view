@@ -1,0 +1,21 @@
+<div [style.width]="dOptions().width + 'px'">
+    <svg #histogram>
+        <defs>
+            <linearGradient id="MIScoreGradient">
+                @for (gradientColor of gradientColors; track gradientColor.id) {
+                    <stop [attr.stop-color]="gradientColor.color" [attr.offset]="gradientColor.stop"
+                    />
+                }
+            </linearGradient>
+        </defs>
+        <g #chartArea></g>
+        <g id="lines">
+            <line #leftLine y1="0" [attr.y2]="dOptions().height" stroke-width="2" stroke="white"></line>
+            <line #rightLine y1="0" [attr.y2]="dOptions().height" stroke-width="2" stroke="white"></line>
+        </g>
+        <g #total></g>
+    </svg>
+    <ngx-slider [(value)]="filters.currentMinMIScore" [(highValue)]="filters.currentMaxMIScore" [options]="options"
+                (userChangeStart)="onSliderUpdateStart()" (userChange)="onSliderUpdate()"
+                (userChangeEnd)="updateFilter()"></ngx-slider>
+</div>

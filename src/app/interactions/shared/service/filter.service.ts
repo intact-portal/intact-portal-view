@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Observable, Subject} from 'rxjs';
 import {Facet} from '../model/interactions-results/facet.model';
-import {Observable} from 'rxjs/Observable';
 import {ParamMap} from '@angular/router';
 import {InteractionFacets} from '../model/interactions-results/interaction/interaction-facets.model';
-import {NetworkViewService} from './network-view.service';
 import {NetworkSelectionService} from './network-selection.service';
+import {NegativeFilterStatus} from '../../interactions-results/interactions-filters/negative-filter/negative-filter-status.model';
+import {SearchService} from '../../../home-dashboard/search/service/search.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-
+@UntilDestroy()
 @Injectable()
 export class FilterService {
   private _facets: InteractionFacets;
   private intraSpeciesCounts: Map<string, number>;
-  private _negative = false;
+  private _negative = NegativeFilterStatus.POSITIVE_ONLY;
   private _mutation = false;
   private _expansion = false;
   private _intraSpecies = false;
@@ -23,22 +24,27 @@ export class FilterService {
   private interactionDetectionMethods: string[] = [];
   private interactionHostOrganisms: string[] = [];
 
-  private minMIScore = 0;
   private _currentMinMIScore = 0;
-  private maxMIScore = 1;
   private _currentMaxMIScore = 1;
 
   private _hasExpansion = false;
   private _hasMutation = false;
+  private _hasNegative = false;
   private _mutationColor: string = '#FF00A1';
 
   private _nbMutation = 0;
   private _nbNonMutation = 0;
   private _nbExpansion = 0;
   private _nbNonExpansion = 0;
+  private _nbNegative = 0;
+  private _nbPositive = 0;
+  private _totalElements = 0;
 
-  private updatesSubject: Subject<Filter | void> = new Subject<Filter | void>();
-  public updates: Observable<Filter | void> = this.updatesSubject.asObservable();
+  private updateFiltersSubject: Subject<Filter | void> = new Subject<Filter | void>();
+  public $updateFilters: Observable<Filter | void> = this.updateFiltersSubject.asObservable();
+
+  private updateFacetsSubject: Subject<InteractionFacets> = new Subject<InteractionFacets>();
+  public $updateFacets: Observable<InteractionFacets> = this.updateFacetsSubject.asObservable();
 
   private static updateDiscreteFilter(container: string[], updatedValue: string) {
     if (!container.includes(updatedValue)) {
@@ -48,31 +54,31 @@ export class FilterService {
     }
   }
 
-  constructor(private selection: NetworkSelectionService) {
+  constructor(private selection: NetworkSelectionService, private search: SearchService) {
+    this.search.$searchObserver
+      .pipe(untilDestroyed(this))
+      .subscribe(this.resetAllFilters.bind(this));
   }
 
-  public initFacets(facets: InteractionFacets) {
-    this._facets = facets;
+  public initFacets(facets: InteractionFacets, totalElements: number) {
+    this._totalElements = totalElements;
+    this._facets = FilterService.filterFacets(facets);
     this.initSpeciesFilter();
-    this.initMIScoreFilter(facets.intact_miscore);
     this.initMutationFilter(facets.affected_by_mutation_styled);
     this.initExpansionFilter(facets.expansion_method_s);
+    this.initNegativeFilter(facets.negative);
+    this.updateFacetsSubject.next(facets);
+  }
+
+  private static filterFacets(facets: InteractionFacets): InteractionFacets {
+    for (const facetName of Object.keys(facets)) {
+      facets[facetName] = (<Facet<any>[]>facets[facetName]).filter(facet => facet.value !== 'null');
+    }
+    return facets
   }
 
   private initSpeciesFilter() {
     this.intraSpeciesCounts = new Map(this.facets.combined_species.map(facet => [facet.value, facet.valueCount.intra] as [string, number]));
-  }
-
-  private initMIScoreFilter(scoreFacets: Facet[]) {
-    const scores = scoreFacets.map(facet => parseFloat(facet.value));
-    this.minMIScore = scores.length !== 0 ? Math.min(...scores) : 0;
-    this.maxMIScore = scores.length !== 0 ? Math.max(...scores) : 1;
-    if (this._currentMinMIScore < this.minMIScore) {
-      this._currentMinMIScore = this.minMIScore;
-    }
-    if (this._currentMaxMIScore > this.maxMIScore) {
-      this._currentMaxMIScore = this.maxMIScore;
-    }
   }
 
   private initMutationFilter(mutationFacets: Facet[]) {
@@ -102,7 +108,20 @@ export class FilterService {
     this._hasExpansion = this._nbExpansion > 0;
   }
 
-  public updateFilter(filter: Filter, value: any, update: boolean = true): void {
+  private initNegativeFilter(negativeFacets: Facet[]) {
+    this._nbNegative = 0;
+    this._nbPositive = 0;
+    for (const negativeFacet of negativeFacets) {
+      if (negativeFacet.value === 'false' && negativeFacet.valueCount > 0) {
+        this._nbPositive = negativeFacet.valueCount;
+      } else if (negativeFacet.value === 'true' && negativeFacet.valueCount > 0) {
+        this._nbNegative += negativeFacet.valueCount;
+      }
+    }
+    this._hasNegative = this._nbNegative > 0;
+  }
+
+  public updateFilter(filter: Filter, value?: any, update: boolean = true): void {
     switch (filter) {
       case Filter.NEGATIVE:
         this._negative = value;
@@ -117,8 +136,6 @@ export class FilterService {
         this._intraSpecies = value;
         break;
       case Filter.MI_SCORE:
-        this._currentMinMIScore = value.min;
-        this._currentMaxMIScore = value.max;
         break;
       default:
         FilterService.updateDiscreteFilter(this.getFilter(filter), value);
@@ -126,7 +143,7 @@ export class FilterService {
     }
     if (update) {
       this.selection.resetSelection();
-      this.updatesSubject.next(filter);
+      this.updateFiltersSubject.next(filter);
     }
   }
 
@@ -141,11 +158,11 @@ export class FilterService {
 
     this.interactionHostOrganisms = params.has('interactionHostOrganismsFilter') ? params.get('interactionHostOrganismsFilter').split(',') : [];
 
-    this._currentMinMIScore = params.has('minMIScore') ? parseFloat(params.get('minMIScore')) : 0;
+    this._currentMinMIScore = params.has('minMIScore') ? parseFloat(params.get('minMIScore')) : this.currentMinMIScore ?? 0;
 
-    this._currentMaxMIScore = params.has('maxMIScore') ? parseFloat(params.get('maxMIScore')) : 1;
+    this._currentMaxMIScore = params.has('maxMIScore') ? parseFloat(params.get('maxMIScore')) : this.currentMaxMIScore ?? 1;
 
-    this._negative = params.get('negativeFilter') === 'true';
+    this._negative = params.has('negativeFilter') ? params.get('negativeFilter') as NegativeFilterStatus : NegativeFilterStatus.POSITIVE_ONLY;
 
     this._mutation = params.get('mutationFilter') === 'true';
 
@@ -175,20 +192,57 @@ export class FilterService {
       params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
     }
 
-    if (this._negative !== undefined && this._negative !== false) {
+    if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
+      // TODO revert to params.negativeFilter = this.negative when backend is ready
       params.negativeFilter = this._negative;
     }
 
-    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > this.minMIScore) {
+    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > 0) {
       params.minMIScore = this._currentMinMIScore;
     }
 
-    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < this.maxMIScore) {
+    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < 1) {
       params.maxMIScore = this._currentMaxMIScore;
     }
 
     if (this.intraSpecies === true) {
       params.intraSpeciesFilter = this.intraSpecies;
+    }
+
+    if (this.mutation === true) {
+      params.mutationFilter = this.mutation;
+    }
+
+    if (this.expansion === true) {
+      params.expansionFilter = this.expansion;
+    }
+
+    return params;
+  }
+
+  public toCytoscapeParams(params: any = {}, arrayTransformer: (array: string[]) => any = (a) => a.join(',')): any {
+    if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0) {
+      params.interactorSpeciesFilter = arrayTransformer(this.interactorSpecies);
+    }
+
+    if (this.interactorTypes !== undefined && this.interactorTypes.length !== 0) {
+      params.interactorTypesFilter = arrayTransformer(this.interactorTypes);
+    }
+
+    if (this.interactionHostOrganisms !== undefined && this.interactionHostOrganisms.length !== 0) {
+      params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
+    }
+
+    if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
+      params.negativeFilter = this._negative;
+    }
+
+    if (this._currentMinMIScore !== undefined && this._currentMinMIScore > 0) {
+      params.minMIScore = this._currentMinMIScore;
+    }
+
+    if (this._currentMaxMIScore !== undefined && this._currentMaxMIScore < 1) {
+      params.maxMIScore = this._currentMaxMIScore;
     }
 
     if (this.mutation === true) {
@@ -222,7 +276,7 @@ export class FilterService {
 
 
   isFilteringScore() {
-    return this._currentMinMIScore > this.minMIScore || this._currentMaxMIScore < this.maxMIScore;
+    return this._currentMinMIScore > 0 || this._currentMaxMIScore < 1;
   }
 
   anyFiltersSelected() {
@@ -232,8 +286,9 @@ export class FilterService {
       this.interactionDetectionMethods.length !== 0 ||
       this.interactionHostOrganisms.length !== 0 ||
       this.mutation ||
-      this.negative ||
+      this.negative !== NegativeFilterStatus.POSITIVE_ONLY ||
       this.expansion ||
+      this.intraSpecies ||
       this.isFilteringScore();
   }
 
@@ -242,7 +297,7 @@ export class FilterService {
       case Filter.MI_SCORE:
         return this.isFilteringScore();
       case Filter.NEGATIVE:
-        return this._negative;
+        return this._negative !== NegativeFilterStatus.POSITIVE_ONLY;
       case Filter.MUTATION:
         return this._mutation;
       case Filter.EXPANSION:
@@ -275,7 +330,7 @@ export class FilterService {
     for (const filter of Object.keys(Filter)) {
       this.resetFilter(Filter[filter], false);
     }
-    this.updatesSubject.next();
+    this.updateFiltersSubject.next();
   }
 
   resetFilter(filter: Filter, update: boolean = true) {
@@ -291,7 +346,7 @@ export class FilterService {
         this.interactorSpecies = []
         break
       case Filter.NEGATIVE:
-        this._negative = false;
+        this._negative = NegativeFilterStatus.POSITIVE_ONLY;
         break;
       case Filter.MUTATION:
         this._mutation = false;
@@ -306,13 +361,13 @@ export class FilterService {
     }
 
     if (update) {
-      this.updatesSubject.next(filter);
+      this.updateFiltersSubject.next(filter);
     }
   }
 
   private resetMISCoreFilter() {
-    this._currentMinMIScore = this.minMIScore;
-    this._currentMaxMIScore = this.maxMIScore;
+    this._currentMinMIScore = 0;
+    this._currentMaxMIScore = 1;
   }
 
   getFilter(filter: Filter): string[] {
@@ -361,7 +416,7 @@ export class FilterService {
     return this._expansion;
   }
 
-  get negative(): boolean {
+  get negative(): NegativeFilterStatus {
     return this._negative;
   }
 
@@ -411,6 +466,22 @@ export class FilterService {
 
   get nbNonExpansion(): number {
     return this._nbNonExpansion;
+  }
+
+  get hasNegative(): boolean {
+    return this._hasNegative;
+  }
+
+  get nbNegative(): number {
+    return this._nbNegative;
+  }
+
+  get nbPositive(): number {
+    return this._nbPositive;
+  }
+
+  get totalElements(): number {
+    return this._totalElements;
   }
 }
 

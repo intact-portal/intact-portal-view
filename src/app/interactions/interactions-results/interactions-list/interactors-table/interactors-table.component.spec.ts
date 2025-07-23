@@ -7,9 +7,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub} from "../../../../../testing/activated-route-stub";
 import {TableFactoryService} from "../../../shared/service/table-factory.service";
 import {NetworkSelectionService} from "../../../shared/service/network-selection.service";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {GoogleAnalyticsService} from "../../../../shared/service/google-analytics/google-analytics.service";
 import {FilterService} from "../../../shared/service/filter.service";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('InteractorsTableComponent', () => {
   let component: InteractorsTableComponent;
@@ -20,20 +21,22 @@ describe('InteractorsTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InteractorsTableComponent],
-      providers: [
+    declarations: [InteractorsTableComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
         TableFactoryService,
         NetworkSelectionService,
         SearchService,
-        {provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate'])},
-        {provide: ActivatedRoute, useValue: new ActivatedRouteStub({query: 'stat3'})},
-        {provide: SearchService, useValue: search},
-        {provide: FilterService, useValue: filters},
-        {provide: GoogleAnalyticsService, useValue: reporter}
-      ],
-      imports: [HttpClientTestingModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+        { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
+        { provide: ActivatedRoute, useValue: new ActivatedRouteStub({ query: 'stat3' }) },
+        { provide: SearchService, useValue: search },
+        { provide: FilterService, useValue: filters },
+        { provide: GoogleAnalyticsService, useValue: reporter },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

@@ -8,9 +8,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub} from "../../../../testing/activated-route-stub";
 import {NetworkViewService} from "../../shared/service/network-view.service";
 import {NetworkSearchService} from "../../shared/service/network-search.service";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
 import {FilterService} from "../../shared/service/filter.service";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const router = jasmine.createSpyObj('Router', ['navigate']);
 describe('InteractionsViewerComponent', () => {
@@ -21,20 +22,22 @@ describe('InteractionsViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InteractionsViewerComponent],
-      imports: [HttpClientTestingModule],
-      providers: [
+    declarations: [InteractionsViewerComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
         TableFactoryService,
         SearchService,
         NetworkViewService,
         NetworkSearchService,
-        {provide: ActivatedRoute, useValue: new ActivatedRouteStub()},
-        {provide: Router, useValue: router},
-        {provide: FilterService, useValue: filters},
-        {provide: GoogleAnalyticsService, useValue: reporter}
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+        { provide: ActivatedRoute, useValue: new ActivatedRouteStub() },
+        { provide: Router, useValue: router },
+        { provide: FilterService, useValue: filters },
+        { provide: GoogleAnalyticsService, useValue: reporter },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

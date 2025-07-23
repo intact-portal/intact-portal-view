@@ -1,31 +1,41 @@
+import {Observable, Subject, throwError as observableThrowError} from 'rxjs';
+
+import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {ParamMap, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {Pagination} from '../../shared/pagination.model';
 import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
-import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
 import {Interactome} from '../../../interactomes/interactome.model';
+import {ColorMIQLPipe} from '../../advanced-search/colorMIQL.pipe';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
 
 const baseURL = environment.intact_portal_ws;
 
 
 @Injectable()
 export class SearchService {
+  private tmp_title: string;
   private _token: string;
   private _query: string;
   private _title: string;
   private _isBatchSearch = false;
+  private _isAdvancedSearch = false;
+  private searchSubject: Subject<string> = new Subject<string>();
+  public $searchObserver: Observable<string> = this.searchSubject.asObservable();
 
   private static localTokenId = token => `intact-batch-search-${token}`;
 
   constructor(private router: Router, private http: HttpClient, private reporter: GoogleAnalyticsService) {
   }
 
-  search(query: string) {
+  search(query: string, title?: string) {
     this._query = query;
     this._isBatchSearch = false;
+    this._title = title || this.tmp_title || query;
+    this.updateAdvancedSearch(query);
+    this.searchSubject.next(query);
     this.router.navigate(['search'], {queryParams: {query}});
   }
 
@@ -34,6 +44,7 @@ export class SearchService {
     this._isBatchSearch = true;
 
     this.manageTokens();
+    this.searchSubject.next(query);
     this.router.navigate(['search'], {queryParams: {token: this._token, batchSearch: true}});
   }
 
@@ -54,10 +65,12 @@ export class SearchService {
   private genToken = (length) => (this.rand() + this.rand() + this.rand() + this.rand()).substr(0, length);
 
   speciesSearch(interactome: Interactome) {
-    this._query = interactome.taxid.toString();
+    this._query = `species:${interactome.taxid}`;
     this._title = `${interactome.name}`;
     this._isBatchSearch = false;
-    this.router.navigate(['search'], {queryParams: {query: this._query, interactorSpeciesFilter: interactome.name}});
+    this._isAdvancedSearch = true
+    this.searchSubject.next(this._query);
+    this.router.navigate(['search'], {queryParams: {query: this._query}});
   }
 
   resolveSearch(query: string, page = 0, pageSize = 50): Observable<{ [term: string]: Pagination<Interactor[]> }> {
@@ -68,14 +81,14 @@ export class SearchService {
       .append('page', page.toString())
       .append('pageSize', pageSize.toString());
 
-    return this.http.post<{ [term: string]: Pagination<Interactor[]> }>(`${baseURL}/interactor/list/resolve`, params)
-      .catch(this.handleError);
+    return this.http.post<{ [term: string]: Pagination<Interactor[]> }>(`${baseURL}/interactor/list/resolve`, params).pipe(
+      catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse | any): Observable<any> {
-    this.reporter.reportError(err)
+    this.reporter.exception(err);
     if (err.error instanceof Error) {
-      return Observable.throw(err);
+      return observableThrowError(err);
     } else {
       console.error(err.message ? err.message : err.toString());
     }
@@ -106,9 +119,18 @@ export class SearchService {
     return this._isBatchSearch;
   }
 
+  get isAdvancedSearch(): boolean {
+    return this._isAdvancedSearch;
+  }
+
+  private updateAdvancedSearch(query: string) {
+    this._isAdvancedSearch = ColorMIQLPipe.isMIQL(query);
+  }
+
   fromParams(params: ParamMap) {
     if (params.has('query')) {
       this._query = params.get('query');
+      this.updateAdvancedSearch(this._query)
     } else if (params.has('token')) {
       this._token = params.get('token');
       const mem = JSON.parse(localStorage.getItem(SearchService.localTokenId(this._token)));
@@ -142,10 +164,13 @@ export class SearchService {
     if (this.isBatchSearch) {
       params.batchSearch = this.isBatchSearch;
     }
+    if (this.isAdvancedSearch) {
+      params.advancedSearch = this.isAdvancedSearch;
+    }
     return params;
   }
 
-  searchSuggestions(searchBox: JQuery): void {
+  searchSuggestions(searchBox: JQuery<HTMLInputElement>): JQuery<HTMLInputElement> {
     let updatingPages = false;
     let ignoreChange = false;
     let currentPage = 0;
@@ -163,6 +188,7 @@ export class SearchService {
             settings.url = settings.url.replace('%QUERY', query);
             settings.url = settings.url.replace('page=0', `page=${currentPage}`)
           }
+          console.log(settings.url)
           return settings;
         },
         transform: (response: any) => {
@@ -199,15 +225,15 @@ export class SearchService {
           },
           notFound: '<div class="noResultsSuggestions"> No results found for Interactors</div>',
           suggestion: (item: Interactor) =>
-            `<div class="row expanded">
-               <div class="columns large-2 show-for-large">${item.interactorAc}</div>
-               <div class="columns small-6 medium-3 large-2">
+            `<div class="flex-row" role="rowgroup">
+               <div class="flex-cell first" role="cell">${item.interactorAc}</div>
+               <div class="flex-cell" role="cell">
                 ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}
                </div>
-               <div class="columns large-2 show-for-large"><i>"${item.interactorDescription}"</i> </div>
-               <div class="columns small-6 medium-3 large-2">${item.interactorSpecies}</div>
-               <div class="columns medium-3 large-2 show-for-medium"><span class="labelWrapper">${item.interactorType}</span></div>
-               <div class="columns medium-3 large-2 show-for-medium"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
+               <div class="flex-cell" role="cell"><i>"${item.interactorDescription}"</i> </div>
+               <div class="flex-cell" role="cell">${item.interactorSpecies}</div>
+               <div class="flex-cell" role="cell"><span class="labelWrapper">${item.interactorType}</span></div>
+               <div class="flex-cell" role="cell"><span class="interactionsWrapper nowrap">${item.interactionCount} interactions</span></div>
              </div>`,
         }
       }
@@ -220,28 +246,38 @@ export class SearchService {
       } else {
         id = item.interactorAc;
       }
-      this.title = `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`;
-      this.search(id);
-    });
+      this.search(id, `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}`);
+    }).on('typeahead:cursorchange', (ev, item) => {
+      this.tmp_title = item ? `${suggestionQuery} · ${item.interactorName === null ? item.interactorPreferredIdentifier : `${item.interactorName} (${item.interactorPreferredIdentifier})`}` : null;
+    })
+
     const updateAutosuggestion = () => {
-      updatingPages = true;
       const val = searchBox.typeahead('val');
-      ignoreChange = true;
-      searchBox.typeahead('val', val + ' ');
-      ignoreChange = false;
-      searchBox.typeahead('val', val);
-      updatingPages = false;
+      console.log(searchBox, val)
+      if (val) {
+        updatingPages = true;
+        ignoreChange = true;
+        searchBox.typeahead('val', val + ' ');
+        ignoreChange = false;
+        searchBox.typeahead('val', val);
+        console.log(searchBox[0].id)
+        updatingPages = false;
+      }
     }
+
     $(document).on('click', '#prev', () => {
       currentPage--;
       updateAutosuggestion();
     })
     $(document).on('click', '#next', () => {
       currentPage++;
+      // console.log(currentPage)
       updateAutosuggestion();
     });
     searchBox.on('input', () => {
       currentPage = 0;
+      this.tmp_title = null;
     })
+    return searchBox;
   }
 }

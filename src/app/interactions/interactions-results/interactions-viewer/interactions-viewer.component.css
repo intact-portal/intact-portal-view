@@ -1,3 +1,7 @@
+.hidden {
+  visibility: hidden;
+}
+
 .underline {
   border-bottom-style: solid;
   border-color: #5a2e6e3d;

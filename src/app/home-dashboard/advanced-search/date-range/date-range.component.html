@@ -1,0 +1,18 @@
+[
+<div class="flex">
+    <input class="date-input query-input" #startInput matInput [matDatepicker]="startPicker" [(ngModel)]="start"
+           (ngModelChange)="onChange(startInput.value)" placeholder="YYYY/MM/DD">
+    <mat-datepicker-toggle matSuffix [for]="startPicker" class="datepicker-toggle"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker startView="multi-year"></mat-datepicker>
+</div>
+
+TO
+<div class="flex">
+    <input class="date-input query-input" #endInput matInput [matDatepicker]="endPicker" [(ngModel)]="end"
+           (ngModelChange)="onChange(endInput.value)" placeholder="YYYY/MM/DD">
+    <mat-datepicker-toggle matSuffix [for]="endPicker" class="datepicker-toggle"></mat-datepicker-toggle>
+    <mat-datepicker #endPicker startView="multi-year"></mat-datepicker>
+</div>
+]
+
+

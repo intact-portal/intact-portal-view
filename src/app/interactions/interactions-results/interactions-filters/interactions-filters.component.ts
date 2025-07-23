@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ChangeContext, LabelType, Options} from 'ng5-slider';
+import {LabelType, Options} from '@angular-slider/ngx-slider';
 import {TableFactoryService} from '../../shared/service/table-factory.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NetworkViewService} from '../../shared/service/network-view.service';
@@ -8,12 +8,15 @@ import {Format} from '../../shared/model/download/format.model';
 import {Filter, FilterService} from '../../shared/service/filter.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
+import {environment} from '../../../../environments/environment';
+import {Facet} from '../../shared/model/interactions-results/facet.model';
+import {NegativeFilterStatus} from './negative-filter/negative-filter-status.model';
 
 
 @Component({
   selector: 'ip-interactions-filters',
   templateUrl: './interactions-filters.component.html',
-  styleUrls: ['./interactions-filters.component.css', './custom_switchOnOff.css'],
+  styleUrls: ['./interactions-filters.component.css'],
   animations: [
     trigger('bendTip', [
       state('tipBended', style({
@@ -41,14 +44,21 @@ import {NodeShape} from '../../shared/model/network-shapes/node-shape';
         animate('350ms', style({transform: 'translateX(-100%)'}))
       ])
     ]),
-  ]
+  ],
+  standalone: false
 })
 export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
 
   options: Options;
-  formats = Format.instances;
+  formats = Format.interactionListFormats;
   filterTypes = Filter;
   shapes = NodeShape;
+
+  private readonly EXPORT_LIMIT = 25_000;
+  readonly NO_EXPORT_TEXT = 'Exports are disabled when there are more than ' +
+    this.EXPORT_LIMIT.toLocaleString('en-GB') +
+    ' interactions for performance issues.\n' +
+    'Please use Cytoscape IntAct App to support large networks'
 
   constructor(private tableFactory: TableFactoryService, public view: NetworkViewService, public filters: FilterService) {
   }
@@ -57,8 +67,12 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     this.initSliderRange();
   }
 
+  get enableExports(): boolean {
+    return environment.avoidDownloadOverload ? this.filters.totalElements < this.EXPORT_LIMIT : true;
+  }
+
   ngAfterViewInit(): void {
-    $('ip-interactions-filters').foundation();
+    $('#filters-bar').foundation();
     $(window).trigger('load.zf.sticky');
     this.tableFactory.makeTableHeaderSticky(); // Enables sticky header for all tables on the page
     FoundationUtils.adjustWidth();
@@ -123,6 +137,10 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
     return {r, g, b};
   }
 
+  trackFacet(facet: Facet<any>) {
+    return `${facet.value}-${facet.termId} (${JSON.stringify(facet.valueCount)})`;
+  }
+
   /**
    * Use this function to avoid horizontal scrollbar in firefox
    */
@@ -132,31 +150,40 @@ export class InteractionsFiltersComponent implements OnInit, AfterViewInit {
       {'overflow-y': 'hidden', 'height': 'auto'};
   }
 
-  onChangeInteractorSpeciesFilter(event: Event) {
-    this.filters.updateFilter(Filter.SPECIES, (event.target as HTMLInputElement).value);
+  // For species we use the label (value) instead of the tax id (termId) as we may have multiple entries in the species filters,
+  // especially the host organism filter, with the same tax id.
+
+  onChangeInteractorSpeciesFilter(facet: Facet<any>) {
+    this.filters.updateFilter(Filter.SPECIES, this.mergeFacetValueAndId(facet));
   }
 
-  onChangeInteractorTypeFilter(event: Event) {
-    this.filters.updateFilter(Filter.INTERACTOR_TYPE, (event.target as HTMLInputElement).value);
+  onChangeInteractorTypeFilter(facet: Facet) {
+    this.filters.updateFilter(Filter.INTERACTOR_TYPE, facet.termId);
   }
 
-  onChangeInteractionTypeFilter(event: Event) {
-    this.filters.updateFilter(Filter.INTERACTION_TYPE, (event.target as HTMLInputElement).value);
+  onChangeInteractionTypeFilter(facet: Facet) {
+    // TODO: use term id when new field added in SOLR
+    this.filters.updateFilter(Filter.INTERACTION_TYPE, facet.value);
   }
 
-  onChangeInteractionDetectionMethodFilter(event: Event) {
-    this.filters.updateFilter(Filter.DETECTION_METHOD, (event.target as HTMLInputElement).value);
+  onChangeInteractionDetectionMethodFilter(facet: Facet) {
+    // TODO: use term id when new field added in SOLR
+    this.filters.updateFilter(Filter.DETECTION_METHOD, facet.value);
   }
 
-  onChangeInteractionHostOrganismFilter(event: Event) {
-    this.filters.updateFilter(Filter.HOST_ORGANISM, (event.target as HTMLInputElement).value);
+  onChangeInteractionHostOrganismFilter(facet: Facet) {
+    this.filters.updateFilter(Filter.HOST_ORGANISM, this.mergeFacetValueAndId(facet));
   }
 
   onChangeInteractionIntraSpeciesFilter(event: MatSlideToggleChange) {
     this.filters.updateFilter(Filter.INTRA_SPECIES, event.checked)
   }
 
-  onUserChangeEnd(changeContext: ChangeContext): void {
-    this.filters.updateFilter(Filter.MI_SCORE, {min: changeContext.value, max: changeContext.highValue})
+  isFilteringOrganismValue(filter: Filter, facet: Facet<any>): boolean | NegativeFilterStatus {
+    return this.filters.isFilteringValue(filter, this.mergeFacetValueAndId(facet));
+  }
+
+  private mergeFacetValueAndId(facet: Facet): string {
+    return `${facet.value}__${facet.termId}`
   }
 }

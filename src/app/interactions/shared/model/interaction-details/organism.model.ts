@@ -1,7 +1,4 @@
-export class Organism {
-  constructor(
-    public readonly scientificName: string,
-    public readonly taxId: any // TODO check type
-  ) {
-  }
+export interface Organism {
+  scientificName: string,
+  taxId: any // TODO check type
 }

@@ -12,7 +12,10 @@ export class InteractionTable extends Table {
   public readonly speciesA = new Column('Species A', 'speciesA', false, this);
   public readonly speciesB = new Column('Species B', 'speciesB', false, this);
   public readonly hostOrganism = new Column('Host Organism', 'hostOrganism', false, this);
+  public readonly negative = new Column('Positive interaction', 'negative', false, this);
   public readonly detectionMethod = new Column('Detection Method', 'detectionMethod', false, this);
+  public readonly identificationMethodA = new Column('Identification Methods A', 'identificationMethodsA', true, this);
+  public readonly identificationMethodB = new Column('Identification Methods B', 'identificationMethodsB', true, this);
   public readonly publicationIdentifiers = new Column('Publication IDs', 'publicationIdentifiers', false, this);
   public readonly type = new Column('Interaction Type', 'type', false, this);
   public readonly ac = new Column('Interaction AC', 'ac', false, this);

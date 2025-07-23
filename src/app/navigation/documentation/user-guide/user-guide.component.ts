@@ -4,13 +4,23 @@ import {environment} from '../../../../environments/environment';
 
 
 @Component({
-  selector: 'ip-user-guide',
-  templateUrl: './user-guide.component.html',
-  styleUrls: ['./user-guide.component.css']
+    selector: 'ip-user-guide',
+    templateUrl: './user-guide.component.html',
+    styleUrls: ['./user-guide.component.css'],
+    standalone: false
 })
 export class UserGuideComponent implements OnInit {
 
-  user_guide = environment.intact_portal_documentation_url + 'help/user-guide/README.md';
+  data_sources = environment.intact_portal_documentation_url + 'documentation/user-guide/data-sources-and-annotation-practices.md';
+  usage = environment.intact_portal_documentation_url + 'documentation/user-guide/searching-intact.md';
+  expansion_method = environment.intact_portal_documentation_url + 'documentation/user-guide/expansion-method.md';
+  interaction_scoring = environment.intact_portal_documentation_url + 'documentation/user-guide/interaction-scoring.md';
+  definitions_formats = environment.intact_portal_documentation_url + 'documentation/user-guide/definitions-and-formats.md';
+  data_export = environment.intact_portal_documentation_url + 'documentation/user-guide/data-export.md';
+  access_intact = environment.intact_portal_documentation_url + 'documentation/user-guide/access-intact.md';
+  curation_manual = environment.intact_portal_documentation_url + 'documentation/user-guide/curation-manual.md';
+  advanced_search = environment.intact_portal_documentation_url + 'documentation/user-guide/advanced-search.md';
+
 
   constructor(private titleService: Title) {
   }

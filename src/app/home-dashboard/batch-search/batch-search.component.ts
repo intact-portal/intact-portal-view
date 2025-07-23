@@ -2,18 +2,20 @@ import {Component} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
 import {SearchService} from '../search/service/search.service';
-import {Pagination} from '../shared/pagination.model';
-import {Interactor} from '../../interactions/shared/model/interactions-results/interactor/interactor.model';
 import {ResolutionEntry} from './resolution-interactor-model';
-import {NodeShape} from '../../interactions/shared/model/network-shapes/node-shape';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {StepperSelectionEvent} from '@angular/cdk/stepper';
+import {MatStepper} from '@angular/material/stepper';
 
 
 const baseURL = environment.intact_portal_ws;
 
+@UntilDestroy()
 @Component({
-  selector: 'ip-batch-search',
-  templateUrl: './batch-search.component.html',
-  styleUrls: ['./batch-search.component.css']
+    selector: 'ip-batch-search',
+    templateUrl: './batch-search.component.html',
+    styleUrls: ['./batch-search.component.css'],
+    standalone: false
 })
 export class BatchSearchComponent {
   private _query: string;
@@ -32,7 +34,8 @@ export class BatchSearchComponent {
   private _interactorsQueried = 0;
   private _acCollectionProgress = 0;
   private collectionReset = false;
-  nodeShape = NodeShape;
+
+  stepsLabel = ['Design query', 'Resolve terms', 'Collect interactors']
 
   constructor(private search: SearchService) {
     this.uploader = new FileUploader({
@@ -51,47 +54,39 @@ export class BatchSearchComponent {
   }
 
   resolveSearch() {
+    this.resetSecondStep()
     this.search.resolveSearch(this.query)
-      .subscribe(data => {
-        this.splitData(data)
-      });
-  }
-
-  splitData(data: { [term: string]: Pagination<Interactor[]> }) {
-    for (const key of Object.keys(data)) {
-      const entry: ResolutionEntry = data[key];
-      if (entry.totalElements !== 0) {
-        entry.term = key;
-        entry.content.forEach(interactor => this._interactorAcs.add(interactor.interactorAc));
-        if (!entry.last) {
-          this._entriesToComplete.set(key, entry);
+      .pipe(untilDestroyed(this))
+      .subscribe((data) => {
+        for (const key of Object.keys(data)) {
+          const entry: ResolutionEntry = data[key];
+          if (entry.totalElements !== 0) {
+            entry.term = key;
+            entry.content.forEach(interactor => this._interactorAcs.add(interactor.interactorAc));
+            if (!entry.last) {
+              this._entriesToComplete.set(key, entry);
+            }
+            this._foundEntries.push(entry);
+          } else {
+            this._notFoundEntries.push(key);
+          }
         }
-        // let i = 0;
-        // for (i; i < this._foundEntries.length; i++) {
-        //   if (this._foundEntries[i].totalElements < entry.totalElements) {
-        //     break;
-        //   }
-        // }
-        // this._foundEntries.splice(i, 0, entry)
-        this._foundEntries.push(entry);
-      } else {
-        this._notFoundEntries.push(key);
-      }
-    }
-    this.dataReceived = true;
+        this.dataReceived = true;
+      });
   }
 
   batchSearch() {
     this.search.batchSearch(Array.from(this.interactorAcs.values()).join('\n'));
   }
 
-  validateSearchBox(query: string) {
+  validateSearchBox(query: string, stepper: MatStepper) {
     this.search.title = query;
-    this.setQuery(query)
+    this.setQuery(query, stepper)
   }
 
-  setQuery(response: string) {
+  setQuery(response: string, stepper: MatStepper) {
     this.query = response;
+    stepper.next();
   }
 
   fileOverBase(e: any): void {
@@ -161,27 +156,29 @@ export class BatchSearchComponent {
       this.collectionReset = false
       return;
     }
-    const query = entriesToComplete.map(entry => entry.term).join(', ')
-    this.search.resolveSearch(query, page, 50).subscribe(data => {
-      const nextEntriesToComplete = [];
-      for (const key of Object.keys(data)) {
-        const entry: ResolutionEntry = data[key];
-        entry.term = key;
-        entry.content.forEach(interactor => {
-          this._interactorAcs.add(interactor.interactorAc);
-          this._interactorsQueried++;
-          this._acCollectionProgress = (this._interactorsQueried / this._totalInteractorsToQuery) * 100;
-        });
-        if (!entry.last) {
-          nextEntriesToComplete.push(entry);
+    const query = entriesToComplete.map(entry => entry.term).join(', ');
+    this.search.resolveSearch(query, page, 50)
+      .pipe(untilDestroyed(this))
+      .subscribe((data) => {
+        const nextEntriesToComplete = [];
+        for (const key of Object.keys(data)) {
+          const entry: ResolutionEntry = data[key];
+          entry.term = key;
+          entry.content.forEach(interactor => {
+            this._interactorAcs.add(interactor.interactorAc);
+            this._interactorsQueried++;
+            this._acCollectionProgress = (this._interactorsQueried / this._totalInteractorsToQuery) * 100;
+          });
+          if (!entry.last) {
+            nextEntriesToComplete.push(entry);
+          }
         }
-      }
-      if (nextEntriesToComplete.length !== 0) {
-        this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
-      } else {
-        this.batchSearch();
-      }
-    })
+        if (nextEntriesToComplete.length !== 0) {
+          this.collectNextPagesInteractors(nextEntriesToComplete, page + 1);
+        } else {
+          this.batchSearch();
+        }
+      })
   }
 
   resetSteps() {
@@ -286,5 +283,16 @@ export class BatchSearchComponent {
 
   get interactorAcs(): Set<string> {
     return this._interactorAcs;
+  }
+
+  stepChanged(event: StepperSelectionEvent) {
+    setTimeout(() => { // Avoid being called before the click action is performed
+      if (event.previouslySelectedStep.label === this.stepsLabel[0]) {
+        this.resolveSearch()
+      }
+      if (event.selectedStep.label === this.stepsLabel[2]) {
+        this.collectNextPagesInteractors()
+      }
+    })
   }
 }

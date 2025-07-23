@@ -1,44 +1,30 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
+import {AfterViewInit, Component, ElementRef, viewChild} from '@angular/core';
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
-import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
-import {Pagination} from '../../../home-dashboard/shared/pagination.model';
-import {environment} from '../../../../environments/environment';
 
 @Component({
-  selector: 'ip-local-search',
-  templateUrl: './local-search.component.html',
-  styleUrls: ['./local-search.component.css']
+    selector: 'ip-local-search',
+    templateUrl: './local-search.component.html',
+    styleUrls: ['./local-search.component.css'],
+    standalone: false
 })
-export class LocalSearchComponent implements OnInit, AfterViewInit {
+export class LocalSearchComponent implements AfterViewInit {
 
-  constructor(private location: Location,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private searchService: SearchService) {
-
+  constructor(private searchService: SearchService) {
   }
 
-  ngOnInit() {
-    $('ip-local-search').foundation();
-  }
+  readonly query = viewChild<ElementRef<HTMLInputElement>>('query');
 
   ngAfterViewInit(): void {
-    this.searchService.searchSuggestions($('#localSearchBox .typeahead'));
+    $('ip-local-search').foundation();
+    this.searchService.searchSuggestions($(this.query().nativeElement));
   }
 
-  search(query: string, typeOfButton: string) {
+  search(query: string, actionType: string) {
     if (query) {
       this.searchService.search(query);
-      if (typeOfButton === 'enter' || typeOfButton === 'button') {
-        this.searchService.title = query;
-      }
+      this.query().nativeElement.blur();
     }
   }
 
-  hasRoute(route: string) {
-    return this.router.url.includes(route);
-  }
 
 }

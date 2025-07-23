@@ -1,3 +1,7 @@
+image: docker:latest
+services:
+  - docker:stable-dind
+
 stages:
   - init
   - test
@@ -16,13 +20,15 @@ default:
     - "[ -d src/types/typeahead.js ] || npm run update-types"
 
 variables:
+  CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
+  DOCKER_TLS_CERTDIR: ""
   DIST_DIR: dist/intact-portal-view
-  CLI_VERSION: latest
+  CLI_VERSION: 14.2.6
 
 init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
-  script: ['']
+  script: [ '' ]
   cache:
     policy: push
     key: ${CI_COMMIT_SHA}
@@ -79,25 +85,36 @@ init:
   tags:
     - docker
 
-build:
+build-test:
   stage: build
   image: trion/ng-cli:${CLI_VERSION}
   script:
-    - ng build --env=prod --build-optimizer=false --base-href "/intact/beta/"
+    - node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=test
   artifacts:
     expire_in: 1 day
     paths:
       - $DIST_DIR
   tags:
     - docker
+  when: manual
+  needs: [ init ]
 
-build-image:
+build-prod:
+  stage: build
+  image: trion/ng-cli:${CLI_VERSION}
+  script:
+    - node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=production
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - $DIST_DIR
+  tags:
+    - docker
+  when: manual
+  needs: [ init ]
+
+.build-image:
   stage: build-image
-  image: docker:latest
-  services:
-    - docker:dind
-  variables:
-    CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - docker --version
@@ -111,76 +128,94 @@ build-image:
     - docker logout "$CI_REGISTRY"
   tags:
     - dind
-  only:
-    refs:
-      - master
+  when: manual
+#  only:
+#    refs:
+#      - master
+
+build-image-test:
+  needs: [ build-test ]
+  extends: [ .build-image ]
+
+build-image-prod:
+  needs: [ build-prod ]
+  extends: [ .build-image ]
 
 hh-production-deploy:
   stage: deploy
   image: alpine
-  before_script: []
+  before_script: [ ]
   script:
     - apk add --no-cache curl git
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     - chmod +x ./kubectl
     - mv ./kubectl /usr/local/bin/kubectl
-    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN_HH}@gitlab.ebi.ac.uk/anjali/k8s-config-hh
+    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN_HH}@gitlab.ebi.ac.uk/intact-ci/k8s-config
     - mkdir ~/.kube
-    - cp k8s-config-hh/config ~/.kube/
-    - kubectl config use-context prod
+    - cp k8s-config/config ~/.kube/
+    - kubectl config use-context harlow-production
     - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
     - kubectl get secrets gitlab-registry -o yaml
     - kubectl apply -f k8s-production/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
+  tags:
+    - dind
   when: manual
-  only:
-    refs:
-      - master
+  needs: [ build-image-prod ]
+#  only:
+#    refs:
+#      - master
 
 hx-production-deploy:
   stage: deploy
   image: alpine
-  before_script: []
+  before_script: [ ]
   script:
     - apk add --no-cache curl git
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     - chmod +x ./kubectl
     - mv ./kubectl /usr/local/bin/kubectl
-    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN_HX}@gitlab.ebi.ac.uk/anjali/k8s-config-hx
+    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN_HX}@gitlab.ebi.ac.uk/intact-ci/k8s-config
     - mkdir ~/.kube
-    - cp k8s-config-hx/config ~/.kube/
-    - kubectl config use-context prod
+    - cp k8s-config/config ~/.kube/
+    - kubectl config use-context hinxton-production
     - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
     - kubectl get secrets gitlab-registry -o yaml
     - kubectl apply -f k8s-production/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
+  tags:
+    - dind
   when: manual
-  only:
-    refs:
-      - master
+  needs: [ build-image-prod ]
+#  only:
+#    refs:
+#      - master
 
-hx-test-deploy:
+hh-test-deploy:
   stage: deploy
   image: alpine
-  before_script: []
+  before_script: [ ]
   script:
     - apk add --no-cache curl git
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     - chmod +x ./kubectl
     - mv ./kubectl /usr/local/bin/kubectl
-    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN_HX}@gitlab.ebi.ac.uk/anjali/k8s-config-hx
+    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN_HH}@gitlab.ebi.ac.uk/intact-ci/k8s-config
     - mkdir ~/.kube
-    - cp k8s-config-hx/config ~/.kube/
+    - cp k8s-config/config ~/.kube/
     - kubectl config get-contexts
-    - kubectl config use-context team-admin-hx-wp-webadmin-24
+    - kubectl config use-context harlow-test
     - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
     - kubectl get secrets gitlab-registry -o yaml
     - kubectl apply -f k8s-test/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-view-deployment
     - kubectl get nodes
+  tags:
+    - dind
   when: manual
-  only:
-    refs:
-      - master
+  needs: [ build-image-test ]
+#  only:
+#    refs:
+#      - master

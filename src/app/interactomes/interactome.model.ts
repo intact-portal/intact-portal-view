@@ -6,8 +6,7 @@ export class Interactome {
   constructor(
     public readonly name: string,
     public readonly symbol: string,
-    public readonly psi25: string,
-    public readonly psi30: string,
+    public readonly filename: string,
     public readonly taxid: number
   ) {
     const split = this.name.split(/[()]/)

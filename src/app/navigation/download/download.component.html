@@ -1,19 +1,13 @@
-<div class="margin-top-large margin-bottom-large row">
-  <h1>Download</h1>
-  <ul class="tabs" data-tabs data-deep-link="true" data-update-history="false" id="download-tabs">
-    <li class="tabs-title is-active"><a href="download#ftp" aria-selected="true">FTP</a></li>
-    <li class="tabs-title"><a href="download#dataset_files">Dataset Files</a></li>
-  </ul>
-
-  <div class="tabs-content" data-tabs-content="download-tabs">
-    <div class="tabs-panel is-active" id="ftp">
-      <ip-markdown [src]=ftp></ip-markdown>
-    </div>
-
-    <div class="tabs-panel" id="dataset_files">
-      <ip-markdown [src]=curated_datasets></ip-markdown>
-      <ip-markdown [src]=species_based_datasets></ip-markdown>
-      <ip-markdown [src]=mutations></ip-markdown>
-    </div>
+<div class="row button-grid" data-equalizer data-equalize-on="large" id="doc-button-grid">
+  <div class="columns medium-6 small-6 text-center padding-bottom-large">
+    <a class="button medium-12 columns intact-background" data-equalizer-watch routerLink="./ftp">
+      <h3 class="icon icon-common white-color" data-icon="&#xf019;"></h3>
+      <h5 class="white-color">FTP</h5></a>
   </div>
+  <div class="columns medium-6 small-6 text-center padding-bottom-large">
+    <a class="button medium-12 columns intact-background" data-equalizer-watch routerLink="./datasets">
+      <h3 class="icon icon-common white-color" data-icon="&#xf187;"></h3>
+      <h5 class="white-color">Datasets</h5></a>
+  </div>
+
 </div>

@@ -1,66 +1,68 @@
 <div id="search" class="row">
 
-    <ul class="tabs" data-tabs data-deep-link="true" data-update-history="false" id="search-tabs">
-      <li class="tabs-title is-active"><a href="home#quick-search" aria-selected="true">Quick Search</a></li>
-      <li class="tabs-title"><a href="home#batch-search">Batch Search</a></li>
-      <!-- We disable the advance search for now until we are able to provide it to the users-->
-      <li class="tabs-title"><a href="home#advanced-search">Advanced Search</a></li>
-    </ul>
+  <ul class="tabs" data-tabs data-deep-link="true" data-update-history="false" id="search-tabs">
+    <li class="tabs-title is-active"><a href="home#quick-search" aria-selected="true">Quick Search</a></li>
+    <li class="tabs-title"><a href="home#batch-search">Batch Search</a></li>
+    <!-- We disable the advance search for now until we are able to provide it to the users-->
+    <li class="tabs-title"><a href="home#advanced-search">Advanced Search</a></li>
+  </ul>
 
-    <div class="tabs-content" data-tabs-content="search-tabs">
+  <div class="tabs-content" data-tabs-content="search-tabs">
 
-      <!--TAB MAIN SEARCH SECTION-->
-      <div id="div-quick-search">
-        <div class="tabs-panel is-active" id="quick-search">
-          <fieldset>
-            <div id="searchBox" class="input-group margin-bottom-none">
-              <input #query class="typeahead input-group-field" type="text" id="query"
-                     (keydown.enter)="search(query.value, 'enter')"
-                     placeholder="Search by gene names, UniProt ACs, Pubmed, protein names, Complex ACs"/>
-              <div class="input-group-button">
-                <input id="home-search-button" type="button" name="submit" value="1"
-                       (click)="search(query.value, 'button')"
-                       class="button icon icon-functional">
-              </div>
+    <!--TAB MAIN SEARCH SECTION-->
+    <div id="div-quick-search">
+      <div class="tabs-panel is-active" id="quick-search">
+        <fieldset>
+          <div id="searchBox" class="input-group margin-bottom-none">
+            <input #query class="typeahead input-group-field" type="text" id="query"
+                   (keydown.enter)="search(query.value, 'enter')"
+                   placeholder="Search by gene names, UniProt ACs, Pubmed, protein names, Complex ACs"/>
+            <div class="input-group-button">
+              <input id="home-search-button" type="button" name="submit" value="1"
+                     (click)="search(query.value, 'button')"
+                     class="button icon icon-functional">
             </div>
-            <div class="columns margin-top-large">
-              <h5><i class="icon icon-generic padding-right-medium intact-color" data-icon="?"></i>Examples:</h5>
-              <div class="columns medium-4">
-                <ul class="no-margin no-padding">
-                  <li>Gene names: <a (click)="search('Ndc80', 'example')">Ndc80</a></li>
-                  <li>UniProt ACs: <a (click)="search('Q05471', 'example')">Q05471</a></li>
-                </ul>
-              </div>
-              <div class="columns medium-4">
-                <ul class="no-margin no-padding">
-                  <li>Taxon IDs: <a (click)="search('9606', 'example')">9606</a></li>
-                  <li>Publication IDs: <a (click)="search('32353859', 'example')">32353859</a></li>
-                </ul>
-              </div>
-              <div class="columns medium-4">
-                <ul class="no-margin no-padding">
-                  <li>Complex ACs:  <a (click)="search('CPX-5742', 'example')">CPX-5742</a></li>
-                  <li>GO terms: <a (click)="search('GO:0016491', 'example')">GO:0016491</a></li>
-                </ul>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-      </div>
-
-      <!--TAB BATCH SEARCH SECTION-->
-      <div class="tabs-panel" id="batch-search">
-        <ip-batch-search></ip-batch-search>
-      </div>
-
-      <!--TAB ADVANCED SECTION-->
-      <div class="tabs-panel" id="advanced-search">
-        <div class="row margin-top-large">
-          <div class="columns medium-12 callout-advanced">
-            <ip-advanced-search></ip-advanced-search>
           </div>
-        </div>
+          <div class="columns margin-top-large">
+            <h5><i class="icon icon-generic padding-right-medium intact-color" data-icon="?"></i>Examples:</h5>
+            <div class="columns medium-4">
+              <ul class="no-margin no-padding">
+                <li>Gene names: <a (click)="search('Ndc80', 'example')">Ndc80</a></li>
+                <li>UniProt ACs: <a (click)="search('Q05471', 'example')">Q05471</a></li>
+              </ul>
+            </div>
+            <div class="columns medium-4">
+              <ul class="no-margin no-padding">
+                <li>Taxon IDs: <a (click)="search('9606', 'example')">9606</a></li>
+                <li>Publication IDs: <a (click)="search('32353859', 'example')">32353859</a></li>
+              </ul>
+            </div>
+            <div class="columns medium-4">
+              <ul class="no-margin no-padding">
+                <li>Complex ACs: <a (click)="search('id:CPX-5742', 'example')">CPX-5742</a></li>
+                <li>GO terms: <a (click)="search('GO:0016491', 'example')">GO:0016491</a></li>
+              </ul>
+            </div>
+          </div>
+          <p class="columns margin-top-medium font">
+            <em>
+              Quick search can yield to false positives as one identifier can be referenced by 2 different fields.
+              If you want to avoid these, we suggest you to use <a href="home#advanced-search">Advanced Search</a>.
+            </em>
+          </p>
+        </fieldset>
       </div>
-
     </div>
+
+    <!--TAB BATCH SEARCH SECTION-->
+    <div class="tabs-panel" id="batch-search">
+      <ip-batch-search></ip-batch-search>
+    </div>
+
+    <!--TAB ADVANCED SECTION-->
+    <div class="tabs-panel" id="advanced-search">
+      <ip-advanced-search></ip-advanced-search>
+    </div>
+
+  </div>
 </div>

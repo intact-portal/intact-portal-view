@@ -45,3 +45,13 @@ tr:nth-child(even) {
 .accordion-content {
   padding: 0;
 }
+
+.mat-mdc-raised-button {
+  margin-right: 5px;
+}
+
+.image {
+  text-align: center;
+  padding: 0;
+  background-color: white
+}

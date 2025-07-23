@@ -1,19 +1,23 @@
-<div class="column-toggle-container">
-  <button class="dropdown button stick-and-fill-right adjust-width" type="button" [attr.data-toggle]="columnView">
-    Column toggle
-  </button>
-
-  <div id="{{columnView}}" class="dropdown-pane" data-dropdown data-hover="true" data-hover-pane="true">
-    <ul class="no-bullet tight">
-      <li *ngFor="let column of columns; let i = index">
-        <label>
-          <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i" value="{{column.title}}"
-                 (change)="onChangeColumnSelected(col.value)"
-                 [checked]="isColumnSelected(col.value)">{{column.title}}
-        </label>
-      </li>
-    </ul>
-  </div>
-</div>
+@if (table() | async) {
+    <div class="column-toggle-container " (mouseenter)="toggleActivate(true)" (mouseleave)="toggleActivate(false)">
+        <button class="dropdown button stick-and-fill-right" type="button" [attr.data-toggle]="table$.columnView">
+            Column toggle
+        </button>
+        <div id="{{table$.columnView}}" class="dropdown-pane" [style.visibility]="active ? 'visible' : 'hidden'">
+            <ul class="no-bullet tight">
+                @for (column of table$.columns; track column; let i = $index) {
+                    <li class="column-toggle">
+                        <label>
+                            <input #col class="list-view" type="checkbox" name="list" [attr.data-column]="i"
+                                   value="{{column.title}}"
+                                   (change)="onChangeColumnSelected(col.value, col.checked)"
+                                   [checked]="isColumnSelected(column.title)">{{ column.title }}
+                        </label>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
 
 

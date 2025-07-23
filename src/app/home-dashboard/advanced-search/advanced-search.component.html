@@ -1,8 +1,83 @@
-<div class="margin-top-large margin-bottom-large">
-  <query-builder id="builder" [formControl] ='queryCtrl' [config]='config'></query-builder>
+<p>
+    For more information about Advanced Search and the MIQL syntax, see the <a
+        href="documentation/user-guide#advanced_search">documentation</a>
+</p>
+
+<div class="input-group">
+    <div style="position: relative">
+    <textarea id="editor" #editor (input)="onInput(editor, builder)" (scroll)="syncScroll(editor, pre)"
+              spellcheck="false"></textarea>
+        <pre id="highlighting" aria-hidden="true" #pre><code class="highlighting-content"
+                                                             [innerHTML]="coloredMIQL"></code></pre>
+    </div>
+
+    <div class="input-group-button">
+        <input id="ad-search-button" type="button" name="submit" value="1"
+               (click)="search(editor.value)" class="button icon icon-functional">
+    </div>
 </div>
 
-<div class="row margin-top-large">
-  <label>Output query:</label>
-  <textarea class="output" rows="10">{{query | json}}</textarea>
-</div>
+<ul class="accordion" data-accordion>
+    <li class="accordion-item is-active" data-accordion-item>
+        <a class="accordion-title">MIQL Query Builder</a>
+        <div class="accordion-content" data-tab-content>
+            <div class="margin-top-large margin-bottom-large">
+                <ngx-query-builder #builder id="builder" [formControl]='queryCtrl' [config]='currentConfig'
+                                   [classNames]="classNames" (ngModelChange)="builderToEditor(builder, editor)">
+                    <ng-container *queryInput="let rule; type: 'date'; let onChange=onChange">
+                        <input class="date-input" matInput [matDatepicker]="picker" [(ngModel)]="rule.value"
+                               (ngModelChange)="onChange()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"
+                                               class="datepicker-toggle"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </ng-container>
+
+                    <ng-container *queryInput="let rule; type: 'date-range'; let onChange=onChange">
+                        <ip-date-range class="inline-block" [(model)]="rule.value"
+                                       (modelChange)="onChange()"></ip-date-range>
+                    </ng-container>
+
+                    <ng-container *queryInput="let rule; type: 'int-range'; let onChange=onChange;">
+                        <ip-range-input class="inline-block" [(model)]="rule.value"
+                                        (modelChange)="onChange()"/>
+                    </ng-container>
+
+                    <ng-container *queryInput="let rule; type: 'float-range'; let onChange=onChange;">
+                        <ip-range-input class="inline-block" [step]="0.1" [(model)]="rule.value"
+                                        (modelChange)="onChange()"/>
+                    </ng-container>
+
+                    <ng-container *queryInput="let rule; type: 'number'; let onChange=onChange">
+                        <input class="query-input" matInput type="number" [(ngModel)]="rule.value"
+                               (ngModelChange)="onChange()">
+                    </ng-container>
+
+                    <ng-container *queryInput="let rule; type: 'boolean'; let onChange=onChange">
+                        <ip-boolean-input [(model)]="rule.value" (modelChange)="onChange()"></ip-boolean-input>
+                    </ng-container>
+
+                    <ng-container *querySwitchGroup="let ruleSet">
+                        <div class="button-group margin-bottom-none">
+                            <div class="display-contents ad-q-switch-control">
+                                <input type="radio" value="and" [checked]="ruleSet.condition === 'and'"
+                                       class="ad-q-switch-radio no-margin checked ng-untouched ng-pristine ng-valid">
+                                <label class="button margin-bottom-none"
+                                       (click)="updateCondition(ruleSet,$event,builder,editor)">AND</label>
+                            </div>
+                            <div class="display-contents ad-q-switch-control">
+                                <input type="radio" value="or" [checked]="ruleSet.condition === 'or'"
+                                       class="ad-q-switch-radio no-margin ng-untouched ng-pristine ng-valid">
+                                <label class="button margin-bottom-none"
+                                       (click)="updateCondition(ruleSet,$event,builder,editor)">OR</label>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </ngx-query-builder>
+            </div>
+        </div>
+    </li>
+</ul>
+
+
+

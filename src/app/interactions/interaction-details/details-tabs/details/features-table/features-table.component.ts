@@ -1,23 +1,25 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, input, output} from '@angular/core';
 
 import {environment} from '../../../../../../environments/environment';
 import {FeatureTable} from '../../../../shared/model/tables/feature-table.model';
 import {Column} from '../../../../shared/model/tables/column.model';
 import {TableFactoryService} from '../../../../shared/service/table-factory.service';
+import {ResultTable} from '../../../../shared/model/interactions-results/result-table-interface';
 
 const baseURL = environment.intact_portal_graph_ws;
 
 @Component({
-  selector: 'ip-features-table',
-  templateUrl: './features-table.component.html',
-  styleUrls: ['./features-table.component.css']
+    selector: 'ip-features-table',
+    templateUrl: './features-table.component.html',
+    styleUrls: ['./features-table.component.css'],
+    standalone: false
 })
-export class FeaturesTableComponent implements OnInit, OnChanges {
+export class FeaturesTableComponent implements OnInit, OnChanges, ResultTable {
 
-  @Input() interactionAc: string;
-  @Input() featureTab: boolean;
+  readonly interactionAc = input<string>(undefined);
+  readonly featureTab = input<boolean>(undefined);
 
-  @Output() featureChanged: EventEmitter<string> = new EventEmitter<string>();
+  readonly featureChanged = output<string>();
 
   dataTable: DataTables.Api;
   columnView = 'features_columnView';
@@ -46,9 +48,9 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
   }
 
   private initDataTable(): void {
-    const table: any = $('#featureTable');
+    const table = $('#featureTable');
     this.dataTable = table.DataTable({
-      bSort: false,
+      ordering: false,
       searching: false,
       paging: true,
       lengthMenu: [10, 25, 50, 75, 100],
@@ -59,64 +61,54 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/graph/features/datatables/` + this.interactionAc,
+        url: `${baseURL}/graph/features/datatables/` + this.interactionAc(),
         type: 'POST',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
-        data: function (d) {
+        data: function (d: any) {
           d.page = d.start / d.length;
           d.pageSize = d.length;
         }
       },
       columns: [
         {
-          data: this._columns.ac.data,
-          title: this._columns.ac.title
+          ...this._columns.ac,
         },
         {
-          data: this._columns.name.data,
-          title: this._columns.name.title
+          ...this._columns.name,
         },
         {
-          data: this._columns.type.data,
-          title: this._columns.type.title,
+          ...this._columns.type,
           render: this.tableFactory.cvRenderStructured
         },
         {
-          data: this._columns.role.data,
-          title: this._columns.role.title
+          ...this._columns.role,
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured, 'centered')
         },
         {
-          data: this._columns.rangePositions.data,
-          title: this._columns.rangePositions.title,
+          ...this._columns.rangePositions,
           render: '[, ]',
         },
         {
-          data: this._columns.linkedFeatures.data,
-          title: this._columns.linkedFeatures.title,
+          ...this._columns.linkedFeatures,
           render: this.tableFactory.enlistWithButtons((d) => `${d.shortName} (${d.ac})`)
         },
         {
-          data: this._columns.participantName.data,
-          title: this._columns.participantName.title,
+          ...this._columns.participantName,
         },
         {
-          data: this._columns.participantIdentifier.data,
-          title: this._columns.participantIdentifier.title,
+          ...this._columns.participantIdentifier,
           render: this.tableFactory.identifierRender
         },
         {
-          data: this._columns.participantAc.data,
-          title: this._columns.participantAc.title,
+          ...this._columns.participantAc,
         },
         {
-          data: this._columns.detectionMethods.data,
-          title: this._columns.detectionMethods.title,
-          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured)
+          ...this._columns.detectionMethods,
+          render: this.tableFactory.enlistWithButtons(this.tableFactory.cvRenderStructured, 'centered')
         },
         {
-          data: this._columns.parameters.data,
-          title: this._columns.parameters.title,
+          ...this._columns.parameters,
           render: function (data, type, row, meta) {
             if (type === 'display') {
               return $.map(data, function (d, i) {
@@ -125,21 +117,19 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
                   '</div>';
               }).join('');
             }
+            return null;
           }
         },
         {
-          data: this._columns.identifiers.data,
-          title: this._columns.identifiers.title,
+          ...this._columns.identifiers,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.identifierRender)
         },
         {
-          data: this._columns.crossReferences.data,
-          title: this._columns.crossReferences.title,
+          ...this._columns.crossReferences,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.identifierRender)
         },
         {
-          data: this._columns.annotations.data,
-          title: this._columns.annotations.title,
+          ...this._columns.annotations,
           render: this.tableFactory.enlistWithButtons(this.tableFactory.annotationRender())
         }
       ]
@@ -173,5 +163,12 @@ export class FeaturesTableComponent implements OnInit, OnChanges {
 
   set featureSelected(value: string) {
     this._featureSelected = value;
+  }
+
+  clearTableSelection(): void {
+  }
+
+  get isActive(): boolean {
+    return this.featureTab();
   }
 }

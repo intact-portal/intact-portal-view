@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {Title} from '@angular/platform-browser';
 
-
 @Component({
-  selector: 'ip-technical-corner',
-  templateUrl: './technical-corner.component.html',
-  styleUrls: ['./technical-corner.component.css']
+    selector: 'ip-technical-corner',
+    templateUrl: './technical-corner.component.html',
+    styleUrls: ['./technical-corner.component.css'],
+    standalone: false
 })
 export class TechnicalCornerComponent implements OnInit {
 
-  apis = environment.intact_portal_documentation_url + 'technical-corner/apis.md';
-  source_code = environment.intact_portal_documentation_url + 'technical-corner/source-code.md';
-  tools = environment.intact_portal_documentation_url + 'technical-corner/tools.md';
+  apis = environment.intact_portal_documentation_url + 'documentation/technical-corner/apis.md';
+  source_code = environment.intact_portal_documentation_url + 'documentation/technical-corner/source-code.md';
+  tools = environment.intact_portal_documentation_url + 'documentation/technical-corner/tools.md';
 
-  constructor(private titleService: Title) { }
+  constructor(private titleService: Title) {
+  }
 
   ngOnInit() {
     this.titleService.setTitle('IntAct - Technical Corner');

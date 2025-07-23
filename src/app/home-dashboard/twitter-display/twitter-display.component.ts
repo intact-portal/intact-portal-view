@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import 'bsky-embed/dist/bsky-embed.es.js';
 
 const twitterURL = 'https://platform.twitter.com/widgets.js';
 
@@ -8,9 +9,10 @@ declare global {
 }
 
 @Component({
-  selector: 'ip-twitter-display',
-  templateUrl: './twitter-display.component.html',
-  styleUrls: ['./twitter-display.component.css']
+    selector: 'ip-twitter-display',
+    templateUrl: './twitter-display.component.html',
+    styleUrls: ['./twitter-display.component.css'],
+    standalone: false
 })
 export class TwitterDisplayComponent implements OnInit {
 

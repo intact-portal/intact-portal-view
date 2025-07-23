@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {environment} from '../../../../../environments/environment';
@@ -10,16 +10,19 @@ import {NetworkSelectionService} from '../../../shared/service/network-selection
 import {ResultTable} from '../../../shared/model/interactions-results/result-table-interface';
 import {SearchService} from '../../../../home-dashboard/search/service/search.service';
 import {FilterService} from '../../../shared/service/filter.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 const baseURL = environment.intact_portal_ws;
 
+@UntilDestroy()
 @Component({
-  selector: 'ip-interactors-table',
-  templateUrl: './interactors-table.component.html',
-  styleUrls: ['./interactors-table.component.css']
+    selector: 'ip-interactors-table',
+    templateUrl: './interactors-table.component.html',
+    styleUrls: ['./interactors-table.component.css'],
+    standalone: false
 })
 export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
-  @Input() interactorTab: boolean;
+  readonly interactorTab = input<boolean>(undefined);
 
   private _interactorSelected: string;
 
@@ -42,11 +45,12 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
   ngOnInit() {
     this.table = $('#interactorsTable');
     this.route.queryParams
+      .pipe(untilDestroyed(this))
       .subscribe(() => {
         if (this.dataTable !== undefined) {
           this.dataTable = this.table.DataTable().ajax.reload();
         }
-      });
+      })
 
     this.initDataTable();
     this.networkSelection.registerSelectionListener(this.dataTable, this);
@@ -148,8 +152,7 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       },
       columns: [
         {
-          data: this._columns.select.data,
-          title: this._columns.select.title,
+          ...this._columns.select,
           render: function (data, type, full) {
             if (type === 'display') {
               return `<div class="margin-left-large">
@@ -160,16 +163,13 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.accession.data,
-          title: this._columns.accession.title
+          ...this._columns.accession,
         },
         {
-          data: this._columns.name.data,
-          title: this._columns.name.title
+          ...this._columns.name,
         },
         {
-          data: this._columns.preferredId.data,
-          title: this._columns.preferredId.title,
+          ...this._columns.preferredId,
           render: (data, type) => {
             if (type === 'display' && data !== null) {
               return this.tableFactory.identifierRender(extractId(data))
@@ -178,39 +178,32 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
           }
         },
         {
-          data: this._columns.type.data,
-          title: this._columns.type.title,
+          ...this._columns.type,
           render: this.tableFactory.cvRender('interactorTypeMIIdentifier')
         },
         {
-          data: this._columns.species.data,
-          title: this._columns.species.title,
+          ...this._columns.species,
           render: this.tableFactory.speciesRender('interactorTaxId')
         },
         {
-          data: this._columns.description.data,
-          title: this._columns.description.title
+          ...this._columns.description,
         },
         {
-          data: this._columns.alias.data,
-          title: this._columns.alias.title,
+          ...this._columns.alias,
           render: this.tableFactory.enlistWithButtons((d) => this.tableFactory.aliasRender(extractAlias(d)))
         },
         {
-          data: this._columns.alternativeIds.data,
-          title: this._columns.alternativeIds.title,
+          ...this._columns.alternativeIds,
           render: this.tableFactory.groupBy<string, string>(
             (d) => extractId(d).database,
             this.tableFactory.enlist((d) => this.tableFactory.identifierLink(extractId(d))),
             this.tableFactory.databaseTag)
         },
         {
-          data: this._columns.interactionSearchCount.data,
-          title: this._columns.interactionSearchCount.title,
+          ...this._columns.interactionSearchCount,
         },
         {
-          data: this._columns.interactionCount.data,
-          title: this._columns.interactionCount.title
+          ...this._columns.interactionCount,
         }
       ],
       drawCallback: function () {
@@ -228,6 +221,10 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
 
   get columns(): Column[] {
     return this._columns;
+  }
+
+  get isActive(): boolean {
+    return this.interactorTab();
   }
 
   get interactorSelected(): string {

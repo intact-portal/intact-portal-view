@@ -1,28 +1,28 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewEncapsulation} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
+import {AfterViewInit, Component, ViewEncapsulation, input, output} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
-import * as complexviewer from 'complexviewer';
-import {InteractionParticipantsService} from '../shared/service/interaction-participants.service';
-import {Participant} from '../shared/model/participant.model';
-import {Subscription} from 'rxjs/Subscription';
+import {InteractionParticipantsService, Status} from '../shared/service/interaction-participants.service';
+import {App, Participant, MIJson} from 'complexviewer';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-export let viewer: any;
+export let viewer: App;
 
-
+@UntilDestroy()
 @Component({
-  selector: 'ip-details-viewer',
-  templateUrl: './details-viewer.component.html',
-  styleUrls: ['./details-viewer.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-details-viewer',
+    templateUrl: './details-viewer.component.html',
+    styleUrls: ['./details-viewer.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
-export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
-  @Input() interactionAc: string;
+export class DetailsViewerComponent implements AfterViewInit {
+  readonly interactionAc = input<string>(undefined);
 
-  @Input() featureAc: string;
-  @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
-  private interactionData: any;
+  readonly featureAc = input<string>(undefined);
+  readonly error = output<HttpErrorResponse>();
+  private interactionData: MIJson;
 
   annotations = {
     'MI Features': true,
@@ -32,7 +32,6 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   };
 
   private _colorLegendGroups: { name: string, legends: ColorLegend[] }[] = [];
-  private proteinUpdateSubscription: Subscription;
   private notifyViewerOfUpdates = true;
   NodeShape = NodeShape;
 
@@ -47,12 +46,6 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
     $('.button-group.expanded').foundation();
   }
 
-  ngOnDestroy(): void {
-    if (this.proteinUpdateSubscription) {
-      this.proteinUpdateSubscription.unsubscribe();
-    }
-  }
-
   public canAnimate(): boolean {
     // @ts-ignore
     return !!window.chrome;
@@ -63,17 +56,26 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
   }
 
   private requestInteractionViewerDetails() {
-    this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
-      .subscribe(data => {
+    this.participantsService.proteinSetsUpdated
+      .pipe(untilDestroyed(this))
+      .subscribe((update) => {
+        if (this.notifyViewerOfUpdates) {
+          viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
+        }
+      });
+    this.interactionsDetailsService.getInteractionViewer(this.interactionAc())
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (data) => {
           this.interactionData = data;
           ProgressBarComponent.hide();
 
           if (this.interactionData !== undefined) {
-            viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
+            viewer = new App(document.getElementById('interaction-viewer-container'));
             viewer.readMIJSON(this.interactionData, true);
+            viewer.collapseAll();
+            this.participantsService.initParticipants(this.interactionData.data, Status.COLLAPSED);
             viewer.autoLayout();
-            this.expandAll();
-            this.participantsService.initParticipants(viewer.getExpandedParticipants());
             this.updateColorLegend(viewer.getColorKeyJson());
             this.collectTypes();
             viewer.addExpandListener((expandedParticipants: Participant[]) => {
@@ -81,28 +83,21 @@ export class DetailsViewerComponent implements AfterViewInit, OnDestroy {
               this.participantsService.updateProteinsStatus(expandedParticipants)
               this.notifyViewerOfUpdates = true;
             })
-
-            this.proteinUpdateSubscription = this.participantsService.proteinSetsUpdated.subscribe(update => {
-              if (this.notifyViewerOfUpdates) {
-                viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
-              }
-            })
           }
-        },
-        (err: HttpErrorResponse) => {
+        }
+        ,
+        error: (err: HttpErrorResponse) => {
           this.error.emit(err);
         }
-      );
+      });
   }
 
   expandAll(): void {
     viewer.expandAll();
-    this.participantsService.expandAllProteins();
   }
 
   collapseAll(): void {
     viewer.collapseAll();
-    this.participantsService.collapseAllProteins();
   }
 
   onChangeAnnotation(value: string) {

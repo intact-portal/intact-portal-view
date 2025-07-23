@@ -9,10 +9,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 31245
+    - port: 31240
       protocol: TCP
       # The port which will be externally exposed. Must be in the range [30000, 32767].
-      nodePort: 31245
+      nodePort: 31241
       # The port on your Deployment which it will expose
       targetPort: 4200
       #Trying

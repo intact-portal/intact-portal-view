@@ -1,213 +1,269 @@
-<aw-wizard [navBarLayout]="'large-empty-symbols'">
-  <aw-wizard-step stepTitle="Design query"
-                  [navigationSymbol]="{ symbol: '&#xf093;', fontFamily: 'EBI-Common'}"
-                  (stepExit)="resolveSearch()">
+<mat-stepper [linear]="true" (selectionChange)="stepChanged($event)" #stepper>
+    <mat-step [label]="stepsLabel[0]" [state]="'upload'" [completed]="query && query.trim().length > 0">
+        <ul class="accordion margin-top-large" data-accordion>
+            <li class="accordion-item is-active" data-accordion-item>
+                <!-- Accordion tab title -->
+                <a href="home#identifier-list" class="accordion-title">Interactor Identifiers List</a>
 
-    <ul class="accordion margin-top-large" data-accordion>
-      <li class="accordion-item is-active" data-accordion-item>
-        <!-- Accordion tab title -->
-        <a href="home#identifier-list" class="accordion-title">Interactor Identifiers List</a>
+                <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+                <div id="identifier-list" class="accordion-content" data-tab-content>
+                    <div class="row margin-top-large">
+                        <div id="searchBox3" class="columns small-12">
+                            <textarea #queryInput id="term-list" placeholder="Search..." rows="5"
+                                      [(ngModel)]="query"></textarea>
+                            <button class="button float-right" type="button"
+                                    [class.disabled]="!query || query.length === 0"
+                                    (click)="validateSearchBox(queryInput.value, stepper)">
+                                <i class="icon icon-common icon-cogs"></i> Next Step
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="accordion-item" data-accordion-item>
+                <!-- Accordion tab title -->
+                <a href="home#upload-file" class="accordion-title">Upload File</a>
 
-        <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
-        <div id="identifier-list" class="accordion-content" data-tab-content>
-          <div class="row margin-top-large">
-            <div id="searchBox3" class="columns small-12">
-              <textarea #query id="term-list" placeholder="Search..." rows="5"></textarea>
-              <button class="button float-right" type="button" (click)="validateSearchBox(query.value)" awNextStep>
-                <i class="icon icon-common icon-cogs"></i> Next Step
-              </button>
+                <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+                <div id="upload-file" class="accordion-content" data-tab-content>
+                    <h5>Select file</h5>
+                    <div>
+                        <input type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="fileSelected()"/>
+                    </div>
+                    <div ng2FileDrop
+                         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                         (fileOver)="fileOverBase($event)"
+                         [uploader]="uploader"
+                         class="well my-drop-zone">
+                        Drag and drop your interactors file here
+                    </div>
+
+                    <h5>Upload</h5>
+                    <!-- <p>Queue length: {{ uploader?.queue?.length }}</p>-->
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-center" style="width: 25%">Name</th>
+                            <th class="text-center">Size</th>
+                            <th class="text-center">Progress</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Actions</th>
+                            <th class="text-center">Search</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @for (item of uploader.queue; track item) {
+                            <tr>
+                                <td class="text-center">
+                                    <strong>{{ item?.file?.name }}</strong>
+                                </td>
+                                @if (uploader.options.isHTML5) {
+                                    <td class="text-center" nowrap>
+                                        {{ item?.file?.size / 1024  | number:'.4' }} KB
+                                    </td>
+                                } @if (uploader.options.isHTML5) {
+                                <td class="text-center">
+                                    <div class="progress" role="progressbar" tabindex="0" aria-valuemin="10"
+                                         aria-valuemax="100">
+                                        <div class="progress-meter" [ngStyle]="{ 'width': item.progress + '%' }">
+                                            @if (item.progress > 5) {
+                                                <div
+                                                        class="progress-meter-text">{{ item.progress + '%' }}
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                            }
+                                <td class="text-center">
+                                    @if (item.isSuccess) {
+                                        <span><i class="icon icon-common icon-check-circle is-success"></i></span>
+                                    } @if (item.isCancel) {
+                                    <span><i class="icon icon-common icon-ban is-cancel"></i></span>
+                                } @if (item.isError) {
+                                    <span><i class="icon icon-common icon-times-circle is-error"></i></span>
+                                }
+                                </td>
+                                <td class="text-center" nowrap>
+                                    <button type="button" class="button" (click)="item.upload()"
+                                            [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                        <i class="icon icon-common icon-upload"></i> Upload
+                                    </button>
+                                    <button type="button" class="button" (click)="item.cancel()"
+                                            [disabled]="!item.isUploading">
+                                        <i class="icon icon-common icon-ban"></i> Cancel
+                                    </button>
+                                    <button type="button" class="button" (click)="item.remove()">
+                                        <i class="icon icon-common icon-trash-alt"></i> Remove
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    @if (item.isSuccess) {
+                                        <span>
+                        <button id="batch-search-button" type="button" class="button" name="submit" value="1"
+                                (click)="setQuery(response, stepper)">
+                          <i class="icon icon-common icon-cogs"></i> Next Step</button>
+                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </mat-step>
+
+    <mat-step [label]="stepsLabel[1]" state="cogs">
+        <div class="margin-top-xlarge margin-bottom-xlarge">
+            @if (dataReceived) {
+                <div>
+                    <h5 class="margin-bottom-medium">Resolved Identifiers</h5>
+                    <div class="terms-resolution-container">
+                        <table [ngClass]="{'margin-bottom-none': !hasNotFoundEntries, 'dataTable': true, 'stripe': true}">
+                            <thead>
+                            <tr>
+                                <th>Input Term</th>
+                                <th>Include</th>
+                                <!--<th>Preview</th>-->
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Species</th>
+                                <th>Type</th>
+                                <th>IntAct Ac</th>
+                                <th>Interaction Count</th>
+                            </tr>
+                            </thead>
+                            @for (entry of foundEntries; track entry; let j = $index) {
+                                <tbody>
+                                @for (interactor of entry.content; track interactor; let i = $index) {
+                                    <tr
+                                            [ngClass]="{'odd': i % 2 !== 0, 'even': i % 2 ===0}"
+                                            style="position: relative">
+                                        @if (i === 0) {
+                                            <td [rowSpan]="entry.totalElements <= 50 ? entry.totalElements : 51"
+                                                class="sticky-cell">
+                                                <div>
+                                                    <div class="select-buttons">
+                                                        <span>{{ entry.term }}</span>
+                                                        <button class="button outlined tight-focus"
+                                                                (click)="selectAll(entry.term)">
+                                                            Select all
+                                                        </button>
+                                                        <button class="button outlined tight-focus"
+                                                                (click)="unselectAll(entry.term)">
+                                                            Unselect all
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+                                        <td>
+                                            <div>
+                                                <input type="checkbox" checked name="interactor"
+                                                       [attr.group]="entry.term"
+                                                       [value]="interactor.interactorAc"
+                                                       (change)="onInteractorSelection($event)">
+                                            </div>
+                                        </td>
+                                        <!-- <td>
+                                        <ip-node-diagram [color]="interactor.interactorColor" [shape]="nodeShape[interactor.interactorShape]"
+                                        [label]="interactor.interactorName" [height]="'35pt'"></ip-node-diagram>
+                                      </td>-->
+                                        <td>{{ interactor.interactorName }}</td>
+                                        <td>{{ interactor.interactorPreferredIdentifier }}</td>
+                                        <td>{{ interactor.interactorDescription }}</td>
+                                        <td>{{ interactor.interactorSpecies }}</td>
+                                        <td>{{ interactor.interactorType }}</td>
+                                        <td>{{ interactor.interactorAc }}</td>
+                                        <td>{{ interactor.interactionCount }}</td>
+                                    </tr>
+                                } @if (!entry.last) {
+                                    <tr class="other-interactors">
+                                        <td>
+                                            <div>
+                                                <input type="checkbox" checked name="completion"
+                                                       [attr.group]="entry.term"
+                                                       [value]="entry.term" (change)="onCompletionSelection($event)">
+                                            </div>
+                                        </td>
+                                        <td colspan="7">
+                                            {{ entry.totalElements - 50 }} other interactors
+                                        </td>
+                                    </tr>
+                                } @if (j < foundEntries.length - 1) {
+                                    <tr class="separator">
+                                        <td colspan="9">
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            }
+                        </table>
+                        @if (hasNotFoundEntries) {
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <h5>Terms not found</h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <p>{{ notFoundEntries }}</p>
+                            </mat-expansion-panel>
+                        }
+                    </div>
+                </div>
+            } @else {
+            <mat-spinner class="float-center"></mat-spinner>
+        }
+        </div>
+
+        <div class="button-bar">
+            <div class="button-group">
+                <button class="button" type="button" (click)="selectAll()">Select all</button>
+                <button class="button" type="button" (click)="unselectAll()">Unselect all</button>
             </div>
-          </div>
-        </div>
-      </li>
-      <li class="accordion-item" data-accordion-item>
-        <!-- Accordion tab title -->
-        <a href="home#upload-file" class="accordion-title">Upload File</a>
 
-        <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
-        <div id="upload-file" class="accordion-content" data-tab-content>
-          <h5>Select file</h5>
-          <div>
-            <input type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="fileSelected()"/>
-          </div>
-          <div ng2FileDrop
-               [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-               (fileOver)="fileOverBase($event)"
-               [uploader]="uploader"
-               class="well my-drop-zone">
-            Drag and drop your interactors file here
-          </div>
-
-          <h5>Upload</h5>
-          <!-- <p>Queue length: {{ uploader?.queue?.length }}</p>-->
-
-          <table class="table">
-            <thead>
-            <tr>
-              <th class="text-center" style="width: 25%">Name</th>
-              <th class="text-center">Size</th>
-              <th class="text-center">Progress</th>
-              <th class="text-center">Status</th>
-              <th class="text-center">Actions</th>
-              <th class="text-center">Search</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of uploader.queue">
-              <td class="text-center">
-                <strong>{{ item?.file?.name }}</strong>
-              </td>
-              <td class="text-center" *ngIf="uploader.options.isHTML5" nowrap>
-                {{ item?.file?.size / 1024  | number:'.4' }} KB
-              </td>
-              <td class="text-center" *ngIf="uploader.options.isHTML5">
-                <div class="progress" role="progressbar" tabindex="0" aria-valuemin="10" aria-valuemax="100">
-                  <div class="progress-meter" [ngStyle]="{ 'width': item.progress + '%' }">
-                    <div *ngIf="item.progress > 5" class="progress-meter-text">{{item.progress + '%' }}</div>
-                  </div>
-                </div>
-              </td>
-              <td class="text-center">
-                <span *ngIf="item.isSuccess"><i class="icon icon-common icon-check-circle is-success"></i></span>
-                <span *ngIf="item.isCancel"><i class="icon icon-common icon-ban is-cancel"></i></span>
-                <span *ngIf="item.isError"><i class="icon icon-common icon-times-circle is-error"></i></span>
-              </td>
-              <td class="text-center" nowrap>
-                <button type="button" class="button" (click)="item.upload()"
-                        [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                  <i class="icon icon-common icon-upload"></i> Upload
+            <div class="button-group float-right">
+                <button class="button" type="button" matStepperPrevious (click)="resetSecondStep()">Previous Step
                 </button>
-                <button type="button" class="button" (click)="item.cancel()" [disabled]="!item.isUploading">
-                  <i class="icon icon-common icon-ban"></i> Cancel
+                <button class="button" type="button" matStepperNext [disabled]="!dataReceived"
+                        (click)="collectNextPagesInteractors()">
+                    <i class="icon icon-common icon-cogs"></i> Search
                 </button>
-                <button type="button" class="button" (click)="item.remove()">
-                  <i class="icon icon-common icon-trash-alt"></i> Remove
-                </button>
-              </td>
-              <td class="text-center">
-                <span *ngIf="item.isSuccess">
-                    <button id="batch-search-button" type="button" class="button" name="submit" value="1"
-                            (click)="setQuery(response)" awNextStep>
-                      <i class="icon icon-common icon-cogs"></i> Next Step</button>
-                </span>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+            </div>
         </div>
-      </li>
-    </ul>
-  </aw-wizard-step>
 
-  <aw-wizard-step [stepTitle]="'Resolve terms'"
-                  [navigationSymbol]="{ symbol: '&#xf085;', fontFamily: 'EBI-Common'}">
-    <div class="margin-top-xlarge margin-bottom-xlarge">
-      <div *ngIf="dataReceived; else loadingSpinner">
-        <h5 class="margin-bottom-medium">Resolved Identifiers</h5>
-        <div class="terms-resolution-container">
-          <table [ngClass]="{'margin-bottom-none': !hasNotFoundEntries, 'dataTable': true, 'stripe': true}">
-            <thead>
-            <tr>
-              <th>Input Term</th>
-              <th>Include</th>
-              <th>Preview</th>
-              <th>ID</th>
-              <th>Description</th>
-              <th>Species</th>
-              <th>Type</th>
-              <th>IntAct Ac</th>
-              <th>Interaction Count</th>
-            </tr>
-            </thead>
-            <tbody *ngFor="let entry of foundEntries; let j = index;">
-            <tr *ngFor="let interactor of entry.content; let i = index;"
-                [ngClass]="{'odd': i % 2 !== 0, 'even': i % 2 ===0}" style="position: relative">
-              <td [rowSpan]="entry.totalElements <= 50 ? entry.totalElements : 51" *ngIf="i === 0" class="sticky-cell">
-                <div>
-                  <div class="select-buttons">
-                    <span>{{entry.term}}</span>
-                    <button class="button outlined tight-focus" (click)="selectAll(entry.term)">Select all</button>
-                    <button class="button outlined tight-focus" (click)="unselectAll(entry.term)">Unselect all</button>
-                  </div>
+    </mat-step>
+
+    <mat-step [label]="stepsLabel[2]" state="search">
+        @if (entriesToComplete.size > 0) {
+            <div class="small-5 small-centered columns">
+                <mat-progress-spinner color="primary" mode="determinate" [value]="acCollectionProgress"
+                                      style="margin:0 auto;">
+                </mat-progress-spinner>
+                <div style="text-align: center">
+                    <h5>Gathering missing interactors</h5>
+                    <p>{{ interactorsQueried }} / {{ totalInteractorsToQuery }}</p>
                 </div>
-              </td>
-              <td>
-                <div>
-                  <input type="checkbox" checked name="interactor" [attr.group]="entry.term"
-                         [value]="interactor.interactorAc" (change)="onInteractorSelection($event)">
-                </div>
-              </td>
-              <td>
-                <ip-node-diagram [color]="interactor.interactorColor" [shape]="nodeShape[interactor.interactorShape]"
-                                 [label]="interactor.interactorName" [height]="'35pt'"></ip-node-diagram>
-              </td>
-              <td>{{ interactor.interactorPreferredIdentifier }}</td>
-              <td>{{ interactor.interactorDescription }}</td>
-              <td>{{ interactor.interactorSpecies}}</td>
-              <td>{{ interactor.interactorType }}</td>
-              <td>{{ interactor.interactorAc }}</td>
-              <td>{{ interactor.interactionCount }}</td>
-            </tr>
-            <tr *ngIf="!entry.last" class="other-interactors">
-              <td>
-                <div>
-                  <input type="checkbox" checked name="completion" [attr.group]="entry.term"
-                         [value]="entry.term" (change)="onCompletionSelection($event)">
-                </div>
-              </td>
-              <td colspan="7">
-                {{entry.totalElements - 50}} other interactors
-              </td>
-            </tr>
-            <tr class="separator" *ngIf="j < foundEntries.length - 1">
-              <td colspan="9">
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <mat-expansion-panel *ngIf="hasNotFoundEntries">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <h5>Terms not found</h5>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>{{notFoundEntries}}</p>
-          </mat-expansion-panel>
+            </div>
+        }
+
+        <div class="button-group float-right">
+            <button class="button" type="button" (click)="resetThirdStep()" matStepperPrevious>Previous Step</button>
         </div>
-      </div>
-      <ng-template #loadingSpinner>
-        <mat-spinner class="float-center"></mat-spinner>
-      </ng-template>
-    </div>
+    </mat-step>
 
-    <div class="button-bar">
-      <div class="button-group">
-        <button class="button" type="button" (click)="selectAll()">Select all</button>
-        <button class="button" type="button" (click)="unselectAll()">Unselect all</button>
-      </div>
 
-      <div class="button-group float-right">
-        <button class="button" type="button" awPreviousStep (click)="resetSecondStep()">Previous Step</button>
-        <button class="button" type="button" awNextStep [disabled]="!dataReceived"
-                (click)="collectNextPagesInteractors()">
-          <i class="icon icon-common icon-cogs"></i> Search
-        </button>
-      </div>
-    </div>
-
-  </aw-wizard-step>
-  <aw-wizard-step stepTitle="Collect interactors" [navigationSymbol]="{ symbol: '&#xf002;', fontFamily: 'EBI-Common'}">
-    <div class="small-5 small-centered columns" *ngIf="entriesToComplete.size > 0">
-      <mat-progress-spinner color="primary" mode="determinate" [value]="acCollectionProgress" style="margin:0 auto;">
-      </mat-progress-spinner>
-      <div style="text-align: center">
-        <h5>Gathering missing interactors</h5>
-        <p>{{interactorsQueried}} / {{totalInteractorsToQuery}}</p>
-      </div>
-    </div>
-
-    <div class="button-group float-right">
-      <button class="button" type="button" (click)="resetThirdStep()" awPreviousStep>Previous Step</button>
-    </div>
-  </aw-wizard-step>
-</aw-wizard>
+    <ng-template matStepperIcon="upload">
+        <mat-icon>upload</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="cogs">
+        <mat-icon>list</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="search">
+        <mat-icon>search</mat-icon>
+    </ng-template>
+</mat-stepper>

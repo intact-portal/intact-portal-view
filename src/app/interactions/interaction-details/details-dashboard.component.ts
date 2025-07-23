@@ -1,26 +1,29 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, input, model} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import {ProgressBarComponent} from '../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {viewer} from './details-viewer/details-viewer.component';
 import {FoundationUtils} from '../../shared/utils/foundation-utils';
 import {Format} from '../shared/model/download/format.model';
 import {environment} from '../../../environments/environment';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 const baseURL = environment.intact_portal_graph_ws;
 
+@UntilDestroy()
 @Component({
-  selector: 'ip-details-dashboard',
-  templateUrl: './details-dashboard.component.html',
-  styleUrls: ['./details-dashboard.component.css']
+    selector: 'ip-details-dashboard',
+    templateUrl: './details-dashboard.component.html',
+    styleUrls: ['./details-dashboard.component.css'],
+    standalone: false
 })
 export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   private _interactionAc: string;
-  @Input() featureSelected: string;
+  readonly featureSelected = model<string>(undefined);
   private _error: HttpErrorResponse;
   viewer = viewer;
-  formatTypes = Format.instances;
+  formatTypes = Format.singleInteractionFormats;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute) {
@@ -32,10 +35,11 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.route.params
-      .subscribe(params => {
+      .pipe(untilDestroyed(this))
+      .subscribe((params) => {
         this.interactionAc = params['id'];
         this.titleService.setTitle('Interaction - ' + this.interactionAc);
-      })
+      });
   }
 
   ngAfterViewInit(): void {
@@ -57,7 +61,7 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
   }
 
   public onFeatureSelectedChanged(featureAc: string): void {
-    this.featureSelected = featureAc;
+    this.featureSelected.set(featureAc);
   }
 
   get error(): HttpErrorResponse {
@@ -94,8 +98,9 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
         // fixes unicode bug
         for (let i = 0; i < binary.length; i++) {
           let charcode = binary.charCodeAt(i);
-          if (charcode < 0x80) array.push(charcode);
-          else if (charcode < 0x800) {
+          if (charcode < 0x80) {
+            array.push(charcode);
+          } else if (charcode < 0x800) {
             array.push(0xc0 | (charcode >> 6),
               0x80 | (charcode & 0x3f));
           } else if (charcode < 0xd800 || charcode >= 0xe000) {
@@ -124,7 +129,9 @@ export class DetailsDashboardComponent implements OnInit, AfterViewInit {
 
     let blob = dataURItoBlob(content);
 
+    // @ts-ignore
     if (navigator.msSaveOrOpenBlob) {
+      // @ts-ignore
       navigator.msSaveOrOpenBlob(blob, fileName);
     } else {
       const a = document.createElement('a');

@@ -1,11 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DatasetArchiveComponent} from './dataset-archive.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {FeatureDatasetService} from "../service/feature-dataset.service";
-import {HttpClientTestingModule, HttpTestingController, TestRequest} from "@angular/common/http/testing";
-import {Angulartics2GoogleAnalytics} from "angulartics2/ga";
-import {GoogleAnalyticsService} from "../../../shared/service/google-analytics/google-analytics.service";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {FeatureDatasetService} from '../service/feature-dataset.service';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DatasetArchiveComponent', () => {
   let component: DatasetArchiveComponent;
@@ -15,7 +15,7 @@ describe('DatasetArchiveComponent', () => {
   let httpMock: HttpTestingController;
   const reporter = jasmine.createSpy('reporter');
 
-  let subset =
+  const subset =
     '<datasets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
     '          xsi:noNamespaceSchemaLocation="http://www.ebi.ac.uk/~intact/site/dotm/dotm-1_1.xsd">' +
     '  <dataset month="September" year="2020" title="Interactome Mapping Provides a Network of Neurodegenerative Disease Proteins and Uncovers Widespread Protein Aggregation in Affected Brains.">' +
@@ -29,22 +29,24 @@ describe('DatasetArchiveComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DatasetArchiveComponent],
-      providers: [
+    declarations: [DatasetArchiveComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
         FeatureDatasetService,
-        {provide: GoogleAnalyticsService, useValue: reporter}
-      ],
-      imports: [HttpClientTestingModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+        { provide: GoogleAnalyticsService, useValue: reporter },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     fixture = TestBed.createComponent(DatasetArchiveComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    httpMock = TestBed.get(HttpTestingController);
-    featuredDatasetService = TestBed.get(FeatureDatasetService);
+    httpMock = TestBed.inject(HttpTestingController);
+    featuredDatasetService = TestBed.inject(FeatureDatasetService);
     req = httpMock.expectOne(featuredDatasetService.API_URL);
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe('GET');
     req.flush(subset);
   }));
 

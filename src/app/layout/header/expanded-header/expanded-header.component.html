@@ -1,40 +1,46 @@
 <header id="masthead" class="masthead">
-  <div class="masthead-inner row expanded"> <!-- expanded -->
-    <!-- local-title -->
-    <div class="columns">
-      <a routerLink="/home" title="Back to Intact homepage">
-        <div class="media-object" id="local-title">
-          <div class="media-object-section" >
-            <img src="assets/images/logo/intact_logo.svg" alt="IntAct logo" class="padding-left-large" style="height:5em; width:21em;">
-          </div>
+    <div class="masthead-inner row expanded"> <!-- expanded -->
+        <div class="columns" [class.medium-9]="isHome$ | async">
+            <div class="row">
+
+                <!-- local-title -->
+                <div>
+                    <a routerLink="/home" title="Back to Intact homepage">
+                        <div class="media-object" id="local-title">
+                            <div class="media-object-section">
+                                <img src="assets/images/logo/intact_logo.svg" alt="IntAct logo"
+                                     class="padding-left-large" style="height:5em; width:21em;">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /local-title -->
+
+                <!-- local-nav -->
+                <div class="row expanded no-padding">
+                    <nav class="bar column medium-6 small-12 no-padding" [class.medium-12]="isHome$ |async">
+                        <ul id="local-nav" class="dropdown menu" data-dropdown-menu="true"
+                            data-description="navigational">
+                            <li routerLinkActive="active"><a routerLink="/home" routerLinkActive="active">Home</a></li>
+                            <li routerLinkActive="active"><a routerLink="/download"
+                                                             routerLinkActive="active">Download</a></li>
+                            <li routerLinkActive="active"><a routerLink="/about" routerLinkActive="active">About</a>
+                            </li>
+                            <li routerLinkActive="active"><a routerLink="/documentation" routerLinkActive="active">Documentation</a>
+                            </li>
+                            <li routerLinkActive="active"><a style="background: crimson"
+                                                             href="//www.ebi.ac.uk/support/intact">Feedback <i
+                                    class="icon icon-generic" data-icon="x"></i></a></li>
+                        </ul>
+                    </nav>
+
+                    @if (!(isHome$ | async)) {
+                        <ip-local-search class="column medium-5 small-12 no-padding"></ip-local-search>
+                    }
+                </div>
+                <!-- /local-nav -->
+
+            </div>
         </div>
-      </a>
     </div>
-    <!-- /local-title -->
-
-    <!-- local-nav -->
-    <div class="row expanded no-padding">
-      <nav class="bar column medium-6 small-12 no-padding">
-        <ul id="local-nav" class="dropdown menu" data-dropdown-menu="true" data-description="navigational">
-          <li routerLinkActive="active"><a routerLink="/home" routerLinkActive="active">Home</a></li>
-          <li routerLinkActive="active"><a routerLink="/download" routerLinkActive="active">Download</a></li>
-          <li routerLinkActive="active"><a routerLink="/faq" routerLinkActive="active">FAQ</a></li>
-          <li routerLinkActive="active"><a routerLink="/about" routerLinkActive="active">About</a></li>
-          <li class="extra-items-menu is-dropdown-submenu-parent opens-right">
-            <a routerLinkActive="active" routerLink="/documentation">Documentation</a>
-            <ul class="menu submenu is-dropdown-submenu first-sub verztical" role="menu" >
-              <li class="no-border-submenu" routerLinkActive="active"><a routerLink="/documentation/user-guide">User guide</a></li>
-              <li class="no-border-submenu" routerLinkActive="active"><a routerLink="/documentation/docs">Docs</a></li>
-              <li routerLinkActive="active"><a routerLink="/documentation/technical_corner">Technical corner</a></li>
-            </ul>
-          </li>
-          <li routerLinkActive="active"><a style="background: crimson" href="//www.ebi.ac.uk/support/intact">Feedback <i class="icon icon-generic" data-icon="x"></i></a></li>
-        </ul>
-      </nav>
-
-      <ip-local-search class="column medium-5 small-12 no-padding"></ip-local-search>
-    </div>
-
-    <!-- /local-nav -->
-  </div>
 </header>

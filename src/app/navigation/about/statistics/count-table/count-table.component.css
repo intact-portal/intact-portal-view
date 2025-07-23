@@ -1,0 +1,15 @@
+table {
+    width: 33% !important;
+}
+
+.firstColumn {
+    text-align: left;
+}
+
+.secondColum{
+    text-align: right;
+}
+
+table tr, table th {
+    font-size: 20px !important;
+}

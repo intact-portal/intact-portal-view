@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import * as $ from 'jquery';
 import {CvTerm} from '../model/interaction-details/cv-term.model';
 import {Annotation} from '../model/interaction-details/annotation.model';
 import {Organism} from '../model/interaction-details/organism.model';
@@ -7,7 +6,6 @@ import {Alias} from '../model/interaction-details/alias.model';
 import {environment} from '../../../../environments/environment';
 import {groupBy} from '../../../shared/utils/array-utils';
 import ClickEvent = JQuery.ClickEvent;
-
 
 const ebiURL = environment.ebi_url;
 
@@ -17,13 +15,16 @@ export class TableFactoryService {
   private static databaseToAccess: Map<string, DatabaseAccess> = new Map<string, DatabaseAccess>([
     ['uniprotkb', {
       fancyName: 'UniProt',
-      getURL: id => `https://www.uniprot.org/uniprot/${id}`,
+      getURL: id => {
+        const match = /^([OPQ]\d[A-Z\d]{3}\d|[A-NR-Z]\d(?:[A-Z][A-Z\d]{2}\d){1,2})-(PRO_\d+)$/.exec(id); // extract (ac) and (pro id)
+        return match != null ? `https://www.uniprot.org/uniprotkb/${match[1]}/entry#${match[2]}` : `https://www.uniprot.org/uniprotkb/${id}/entry`;
+      },
       color: 'rgba(0,111,155,1.0)',
       backColor: 'rgba(143,195,195,0.1)'
     }],
     ['intact', {
       fancyName: 'IntAct',
-      getURL: id => null,
+      getURL: id => `./details/interaction/${id}`,
       color: 'rgba(104,41,124,1.0)'
     }],
     ['chebi', {
@@ -109,8 +110,7 @@ export class TableFactoryService {
     if (miId === undefined) {
       return null;
     }
-    const id = miId.replace(':', '_');
-    return `https://www.ebi.ac.uk/ols/ontologies/mi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F${id}&viewMode=All&siblings=false`;
+    return `https://www.ebi.ac.uk/ols4/ontologies/mi/classes?obo_id=${miId}`;
   }
 
   private static processDatabase(database: string | any): { tag: string, access: DatabaseAccess } {
@@ -167,24 +167,39 @@ export class TableFactoryService {
     }
   }
 
-  enlistWithButtons = (renderer: (data: any, i?: number) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
+  enlistWithButtons = (renderer: (data: any, type, row, meta, i?) => (string), containerClass = 'aliasesList', alignTop = true) => (data: any[], type, row, meta) => {
     if (data == null || type !== 'display') {
       return data;
     }
     let html = '<div class="show-more-content">'
     let displayed = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (i === 2) {
-        html += '<div class="to-hide" style="display: none">';
+    if (data instanceof Array) {
+      for (let i = 0; i < data.length; i++) {
+        if (displayed === 2) {
+          html += '<div class="to-hide" style="display: none">';
+        }
+        const render = renderer(data[i], type, row, meta, i);
+        if (render) {
+          html += render;
+          displayed++;
+        } else if (render !== null) {
+          console.error(`${data} is not handled correctly by its renderer`);
+        }
       }
-      const render = renderer(data[i], i);
+    } else {
+      const render = renderer(data, type, row, meta);
       if (render) {
         html += render;
         displayed++;
+      } else if (render !== null) {
+        console.error(`${data} is not handled correctly by its renderer`);
       }
     }
+
     if (displayed > 2) {
-      html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${data.length - 2})</button>`;
+      html += `</div></div><button type="button" data-col="${meta.col}" class="showMore">Show more (${displayed - 2})</button>`;
+    } else if (displayed === 2) {
+      html += '</div></div>';
     } else {
       html += '</div>';
     }
@@ -192,18 +207,18 @@ export class TableFactoryService {
   }
 
   groupBy<T, K>(grouper: (data: T) => K,
-                groupRenderer: (data: T[], type?, row?, meta?) => string,
+                groupRenderer: (data: T[], type?, row?, meta?, i?) => string,
                 headerRenderer: (K) => string = group => ' ' + group) {
     return (data: T[], type, row, meta) => {
       if (data == null) {
-        return;
+        return '';
       }
       let html = '<div class="table-list">';
       const groups = groupBy(data, grouper);
-      groups.forEach(group => {
+      groups.forEach((group, i) => {
         html += `<span class="collapse-header collapsed">${headerRenderer(group.group)}<span class="collapsable-counter">${group.elements.length}</span></span>`;
         html += '<div class="collapse-panel">';
-        html += groupRenderer(group.elements, type, row, meta);
+        html += groupRenderer(group.elements, type, row, meta, i);
         html += '</div>';
       })
       return html + '</div>';
@@ -222,7 +237,7 @@ export class TableFactoryService {
 
   speciesRenderStructured = (species: Organism) => {
     if (species == null) {
-      return;
+      return '';
     }
     if (species.taxId != null && species.taxId > 0) {
       const url = `https://www.uniprot.org/taxonomy/${species.taxId}`;
@@ -232,8 +247,11 @@ export class TableFactoryService {
     }
   }
 
-  cvRender = (identifierColumn: string) => (data, type, row) => {
-    const miId = row[identifierColumn];
+  cvRender = (identifierColumn: string) => (data: any, type: any, row: any, meta: any, i?: number) => {
+    let miId = row[identifierColumn];
+    if (i !== undefined) {
+      miId = miId[i];
+    }
     if (miId) {
       return `<a href="${TableFactoryService.getCvURL(miId)}" class="cv-term" target="_blank">${data}</a>`
     } else {
@@ -242,8 +260,8 @@ export class TableFactoryService {
   }
 
   cvRenderStructured = (data: CvTerm, type?) => {
-    if (type !== undefined && type !== 'display') {
-      return;
+    if ((type !== undefined && type !== 'display') || data == null) {
+      return '';
     }
     if (data.identifier) {
       return `<a href="${TableFactoryService.getCvURL(data.identifier)}" class="cv-term" target="_blank">${data.shortName}</a>`
@@ -276,19 +294,19 @@ export class TableFactoryService {
 
   aliasRender = (alias: Alias, type?) => {
     if (type !== undefined && type !== 'display') {
-      return;
+      return '';
     }
     return `<div class="aliasesCell tag-cell-container">
               <a class="detailsAliasesCell tag-cell" target="_blank"
-                 href="${ebiURL}/ols/ontologies/mi/terms?obo_id=${alias.type.identifier}">
+                 href="${ebiURL}/ols4/ontologies/mi/classes?obo_id=${alias.type.identifier}">
                 ${alias.type.shortName}</a>
               <span class="detailsCell">${alias.name}</span>
             </div>`;
   }
 
   identifierRender(id: { identifier: string, database: string | any, qualifier?: any }): string {
-    if (id === null) {
-      return;
+    if (!id) {
+      return '';
     }
     const db = TableFactoryService.processDatabase(id.database);
     const url = db.access ? db.access.getURL(id.identifier) : null;
@@ -309,7 +327,7 @@ export class TableFactoryService {
 
   identifierLink(id: { identifier: string, database: string | any, qualifier?: any }) {
     if (id === null) {
-      return;
+      return '';
     }
     const db = TableFactoryService.processDatabase(id.database);
     const url = db.access ? db.access.getURL(id.identifier) : null;
@@ -349,13 +367,19 @@ export class TableFactoryService {
   }
 
   makeTableHeaderSticky() {
+    $(window).resize(Foundation.util.throttle(this.updateTableHeader.bind(this), 300));
     $('div.dataTables_scrollBody').css('position', 'static');
-    const filterBar = $('#filters-bar');
     $('div.dataTables_scrollHead')
       .css('position', 'sticky')
-      .css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.outerHeight(true) - 1 + 'px' : '0')
       .css('box-shadow', '0 6px 7px -2px #0000005c')
       .css('z-index', '2');
+    setTimeout(() => this.updateTableHeader(), 0);
+  }
+
+
+  async updateTableHeader() {
+    const filterBar = $('#filters-bar');
+    $('div.dataTables_scrollHead').css('top', this.isScreenSize('large') && filterBar.length === 1 ? filterBar.outerHeight(false) + 'px' : '0');
   }
 
   isScreenSize(size: 'small' | 'medium' | 'large'): boolean {

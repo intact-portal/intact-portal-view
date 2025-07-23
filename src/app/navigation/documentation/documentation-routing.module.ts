@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DocumentationComponent} from './documentation.component';
 import {TechnicalCornerComponent} from './technical-corner/technical-corner.component';
-import {DocsComponent} from './docs/docs.component';
 import {DataSubmissionComponent} from './data-submission/data-submission.component';
 import {DatasetsComponent} from './datasets/datasets.component';
 import {UserGuideComponent} from './user-guide/user-guide.component';
@@ -11,11 +10,6 @@ const documentationRoutes: Routes = [
   {
     path: 'documentation',
     component: DocumentationComponent,
-    data: {showCompactHeader: false, showFooter: true}
-  },
-  {
-    path: 'documentation/docs',
-    component: DocsComponent,
     data: {showCompactHeader: false, showFooter: true}
   },
   {

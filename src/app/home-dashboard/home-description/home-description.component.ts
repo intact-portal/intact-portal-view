@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {environment} from '../../../environments/environment';
+
 
 @Component({
-  selector: 'ip-home-description',
-  templateUrl: './home-description.component.html',
-  styleUrls: ['./home-description.component.css']
+    selector: 'ip-home-description',
+    templateUrl: './home-description.component.html',
+    styleUrls: ['./home-description.component.css'],
+    standalone: false
 })
-export class HomeDescriptionComponent implements OnInit {
+export class HomeDescriptionComponent {
 
-  constructor() { }
+  readonly formerURL = environment.former_intact_url;
 
-  ngOnInit() {
+  constructor() {
   }
 
 }

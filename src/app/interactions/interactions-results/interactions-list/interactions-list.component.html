@@ -1,32 +1,23 @@
 <div class="row expanded margin-top-large margin-bottom-large">
+    <ul class="tabs" data-tabs data-deep-link="true" data-deep-link-smudge="false" data-update-history="false"
+        id="search-results-tabs">
+        <li class="tabs-title is-active">
+            <a [href]="href +'#interactions'">Interactions</a>
+        </li>
+        <li class="tabs-title">
+            <a [href]="href + '#interactors'">Interactors</a>
+        </li>
 
-  <!--  TODO make this bookmarkable like the documentation, it needs to take into account the url params -->
-  <ul class="tabs" data-tabs id="search-results-tabs">
-    <li class="tabs-title is-active">
-      <a href="#interactions" aria-selected="true" (click)="interactionsTabSelected()">Interactions</a>
-    </li>
-    <li class="tabs-title"><a href="#interactor" (click)="interactorsTabSelected()">Interactors</a></li>
+        <ip-column-toggle [table]="table"></ip-column-toggle>
+    </ul>
 
-    <ip-column-toggle *ngIf="isInteractionTableShown"
-                      [columns]="interactionsTable.columns"
-                      [dataTable]="interactionsTable.dataTable"
-                      [columnView]="interactionsTable.columnView"
-                      [isTabActive]="isTabInteractionActive" class="float-right"></ip-column-toggle>
+    <div class="tabs-content" data-tabs-content="search-results-tabs" data-deep-link-smudge="false">
+        <div class="tabs-panel table-tab is-active" id="interactions">
+            <ip-interactions-table [interactionTab]="isTabInteractionActive"></ip-interactions-table>
+        </div>
 
-    <ip-column-toggle *ngIf="!isInteractionTableShown"
-                      [columns]="interactorsTable.columns"
-                      [dataTable]="interactorsTable.dataTable"
-                      [columnView]="interactorsTable.columnView"
-                      [isTabActive]="isTabInteractorActive" class="float-right"></ip-column-toggle>
-  </ul>
-
-  <div class="tabs-content" data-tabs-content="search-results-tabs" data-deep-link="true" data-update-history="false">
-    <div class="tabs-panel table-tab is-active" id="interactions">
-      <ip-interactions-table [interactionTab]="isTabInteractionActive"></ip-interactions-table>
+        <div class="tabs-panel table-tab" id="interactors">
+            <ip-interactors-table [interactorTab]="isTabInteractorActive"></ip-interactors-table>
+        </div>
     </div>
-
-    <div class="tabs-panel table-tab" id="interactor">
-      <ip-interactors-table [interactorTab]="isTabInteractorActive"></ip-interactors-table>
-    </div>
-  </div>
 </div>

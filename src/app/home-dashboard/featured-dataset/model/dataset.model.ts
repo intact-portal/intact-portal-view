@@ -5,7 +5,8 @@ export class Dataset {
     public readonly title: string,
     public readonly month: string,
     public readonly year: string,
-    public readonly pubmeds: PubmedDataset[]
+    public readonly pubmeds: PubmedDataset[],
+    public readonly image: string
   ) {
   }
 }

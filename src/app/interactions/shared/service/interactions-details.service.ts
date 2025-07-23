@@ -1,10 +1,11 @@
+import {Observable, throwError as observableThrowError} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {InteractionDetails} from '../model/interaction-details/interaction-details.model';
 import {environment} from '../../../../environments/environment';
-import {GoogleAnalyticsService} from '../../../shared/service/google-analytics/google-analytics.service';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {catchError} from 'rxjs/operators';
+import {GoogleAnalyticsService} from 'ngx-google-analytics';
+import {MIJson} from 'complexviewer';
 
 const baseURL = environment.intact_portal_graph_ws;
 
@@ -14,22 +15,25 @@ export class InteractionsDetailsService {
   public readonly interactionViewerURL = `${baseURL}/graph/export/interaction/`;
 
 
-  constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) { }
+  constructor(private http: HttpClient, private reporter: GoogleAnalyticsService) {
+  }
 
   getInteractionDetails(interactionAc: string): Observable<InteractionDetails> {
     return this.http.get<InteractionDetails>(`${this.interactionDetailsURL}${interactionAc}`)
-      .catch(this.handleError);
+      .pipe(
+        catchError(this.handleError),
+      );
   }
 
-  getInteractionViewer(interactionAc: string): Observable<any> {
-    return this.http.get(`${this.interactionViewerURL}${interactionAc}`, {params: {format: 'miJSON'}})
-      .catch(this.handleError);
+  getInteractionViewer(interactionAc: string): Observable<MIJson> {
+    return this.http.get<MIJson>(`${this.interactionViewerURL}${interactionAc}`, {params: {format: 'miJSON'}})
+      .pipe(catchError(this.handleError));
   }
 
-  private handleError(err: HttpErrorResponse | any): ErrorObservable {
-    this.reporter.reportError(err);
+  private handleError(err: HttpErrorResponse | any): Observable<any> {
+    this.reporter.exception(err);
     if (err.error instanceof Error) {
-      return Observable.throw(err);
+      return observableThrowError(err);
     } else {
       console.error(err.message ? err.message : err.toString());
     }

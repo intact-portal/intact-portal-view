@@ -1,28 +1,26 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, input} from '@angular/core';
 import {Dataset} from '../../model/dataset.model';
 import {environment} from '../../../../../environments/environment';
 import {PubmedDataset} from '../../model/pubmed-dataset.model';
-
-
-const intactFTP_URL = environment.intact_psi25_url;
-const intactFTPMiTab_URL = environment.intact_psimitab_url;
+import {SearchService} from '../../../search/service/search.service';
 
 @Component({
-  selector: 'ip-dataset-by-year',
-  templateUrl: './dataset-by-year.component.html',
-  styleUrls: ['./dataset-by-year.component.css']
+    selector: 'ip-dataset-by-year',
+    templateUrl: './dataset-by-year.component.html',
+    styleUrls: ['./dataset-by-year.component.css'],
+    standalone: false
 })
 export class DatasetByYearComponent implements AfterViewInit {
 
-  @Input() year: string;
+  readonly year = input<string>(undefined);
 
-  @Input() datasets: Dataset[]
+  readonly datasets = input<Dataset[]>(undefined);
 
-  constructor() {
+  constructor(private search: SearchService) {
   }
 
   ngAfterViewInit(): void {
-    $(`#accordion-${this.year}`).foundation();
+    $(`#accordion-${this.year()}`).foundation();
     $('.accordion-title').on('mouseup', function () {
       const $accordionItem = $(this).parent(),
         // is the section hidden? if the section is not yet visible, the click is to open it
@@ -50,13 +48,20 @@ export class DatasetByYearComponent implements AfterViewInit {
     });
   }
 
-
-  goPSIMI25FTP(pubmedYear: string, pubmedId: string) {
-    window.open(intactFTP_URL + `/pmid/${pubmedYear}/${pubmedId}.zip`);
+  searchIntAct(pubmed: PubmedDataset) {
+    this.search.search(PubmedDataset.searchQuery(pubmed), PubmedDataset.searchTitle(pubmed));
   }
 
-  goPSIMITABFTP(pubmedYear: string, pubmedId: string) {
-    window.open(intactFTPMiTab_URL + `/${pubmedYear}/${pubmedId}.txt`);
+  goPSIMI25FTP(pubmed: PubmedDataset) {
+    return PubmedDataset.ftpFilePath(environment.intact_psi25_url, pubmed, 'zip');
+  }
+
+  goPSIMI30FTP(pubmed: PubmedDataset) {
+    return PubmedDataset.ftpFilePath(environment.intact_psi30_url, pubmed, 'zip');
+  }
+
+  goPSIMITABFTP(pubmed: PubmedDataset) {
+    return PubmedDataset.ftpFilePath(environment.intact_psimitab_url, pubmed, 'txt');
   }
 
   hasPubMedId(pubMed: PubmedDataset): boolean {

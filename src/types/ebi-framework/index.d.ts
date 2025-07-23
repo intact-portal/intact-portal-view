@@ -283,16 +283,13 @@ declare namespace Foundation {
     global: {
       namespace: string;
     };
-    init(scope: JQuery): JQuery;
-    init(scope: JQuery, libraries: Options): JQuery;
-    init(scope: JQuery, libraries: string, method: Options): JQuery;
-    init(scope: JQuery, libraries: string, method: string, options: Object): JQuery;
+    init(scope: JQuery, libraries?: string, method?: string, options?: Object): JQuery;
     init_lib(lib: any, args: any): (...args: any[]) => any;
     patch(lib: any): void;
     inherit(scope: JQuery, methods: string): void;
     set_namespace(): void;
     libs: any;
-    utils: {
+    util: {
       S(selector: any, context: any): JQuery;
       throttle(func: (...args: any[]) => any, delay: number): (...args: any[]) => any;
       debounce(func: (...args: any[]) => any, delay: number, immediate: boolean): (...args: any[]) => any;
@@ -316,10 +313,7 @@ declare namespace Foundation {
 }
 
 interface JQuery {
-  foundation(): JQuery;
-  foundation(libraries?: Foundation.Options | string): JQuery;
-  foundation(libraries: string, method: Foundation.Options | string): JQuery;
-  foundation(libraries: string, method: string, options: Object): JQuery;
+  foundation(libraries?: string, method?: string, options?: Foundation.Options): JQuery;
   foundation(method: string, element: JQuery): JQuery;
   /**
    * Initialize EMBL-EBI foundation extension

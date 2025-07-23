@@ -4,16 +4,14 @@ import {Title} from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'ip-datasets',
-  templateUrl: './datasets.component.html',
-  styleUrls: ['./datasets.component.css']
+    selector: 'ip-datasets',
+    templateUrl: './datasets.component.html',
+    styleUrls: ['./datasets.component.css'],
+    standalone: false
 })
 export class DatasetsComponent implements OnInit {
 
-  curated = environment.intact_portal_documentation_url + 'dataset-descriptions/curated-datasets.md';
-  computationally = environment.intact_portal_documentation_url + 'dataset-descriptions/computational-datasets.md';
-  species = environment.intact_portal_documentation_url + 'dataset-descriptions/species-based-datasets.md';
-  mutations = environment.intact_portal_documentation_url + 'dataset-descriptions/mutations.md';
+  dataset = environment.intact_portal_documentation_url + 'documentation/datasets.md';
 
   constructor(private titleService: Title) { }
 

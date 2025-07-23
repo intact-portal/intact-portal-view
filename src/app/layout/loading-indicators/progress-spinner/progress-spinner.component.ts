@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'ip-progress-spinner',
-  templateUrl: './progress-spinner.component.html',
-  styleUrls: ['./progress-spinner.component.css']
+    selector: 'ip-progress-spinner',
+    templateUrl: './progress-spinner.component.html',
+    styleUrls: ['./progress-spinner.component.css'],
+    standalone: false
 })
 export class ProgressSpinnerComponent implements OnInit {
   private static show: boolean;
-  private _color = 'primary';
-  private _mode = 'indeterminate';
-  private _query: string;
-  private _takesLonger: boolean;
+  color = 'primary';
+  mode = 'indeterminate';
+  query = input<string>();
+  takesLonger: boolean;
 
   public static display(): void {
     ProgressSpinnerComponent.show = true;
@@ -29,41 +30,11 @@ export class ProgressSpinnerComponent implements OnInit {
   ngOnInit() {
     const context = this;
     setTimeout(function () {
-      context._takesLonger = true;
+      context.takesLonger = true;
     }, 5000);
   }
 
   get isDisplayed(): boolean {
     return ProgressSpinnerComponent.show;
-  }
-
-  get color(): string {
-    return this._color;
-  }
-
-  set color(value: string) {
-    this._color = value;
-  }
-
-  get mode(): string {
-    return this._mode;
-  }
-
-  set mode(value: string) {
-    this._mode = value;
-  }
-
-
-  get query(): string {
-    return this._query;
-  }
-
-  @Input()
-  set query(value: string) {
-    this._query = value;
-  }
-
-  get takesLonger(): boolean {
-    return this._takesLonger;
   }
 }

@@ -9,32 +9,31 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": [
               "d3",
+              "moment",
+              "point2d",
               "jquery",
               "intersectionjs",
               "markdown-it",
               "@iktakahiro/markdown-it-katex"
             ],
-            "outputPath": "dist/intact-portal-view",
+            "outputPath": {
+              "base": "dist/intact-portal-view"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "assets": [
               "src/assets",
               "src/favicon.ico"
             ],
             "styles": [
-              "node_modules/angular-archwizard/styles/archwizard.css",
-              "src/styles.scss",
-              {
-                "input": "node_modules/complexviewer/src/css/xinet.css",
-                "inject": false,
-                "bundleName": "complex-viewer"
-              }
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -47,17 +46,17 @@
               "node_modules/complexviewer/dist/complexviewer.js"
             ],
             "aot": false,
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts"
           },
           "configurations": {
             "dev": {
               "baseHref": "/intact/dev/",
               "outputHashing": "none",
+              "optimization": false,
               "extractLicenses": true,
               "fileReplacements": [
                 {
@@ -73,9 +72,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": true
             },
             "test": {
               "baseHref": "/intact/beta/",
@@ -85,8 +82,6 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -102,8 +97,6 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -126,27 +119,27 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "intact-portal:build"
+            "buildTarget": "intact-portal:build"
           },
           "configurations": {
             "test": {
-              "browserTarget": "intact-portal:build:test"
+              "buildTarget": "intact-portal:build:test"
             },
             "production": {
-              "browserTarget": "intact-portal:build:production"
+              "buildTarget": "intact-portal:build:production"
             },
             "local": {
-              "browserTarget": "intact-portal:build:local"
+              "buildTarget": "intact-portal:build:local"
             },
             "dev": {
-              "browserTarget": "intact-portal:build:dev"
+              "buildTarget": "intact-portal:build:dev"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "intact-portal:build"
+            "buildTarget": "intact-portal:build"
           }
         },
         "test": {
@@ -167,7 +160,6 @@
               "node_modules/complexviewer/dist/complexviewer.js"
             ],
             "styles": [
-              "node_modules/angular-archwizard/archwizard.css",
               "src/styles.scss"
             ],
             "assets": [

@@ -1,9 +1,9 @@
-<div class="dropdown-container" [attr.disabled]="disabled">
-    <button class="button lighter" type="button" [disabled]="disabled">{{title}}</button>
+<div class="dropdown-container" [attr.disabled]="disabled()">
+    <button class="button lighter" type="button" [disabled]="disabled()">{{title()}}</button>
     <div class="place-holder">
-        <ng-container *ngTemplateOutlet="template"></ng-container>
+        <ng-container *ngTemplateOutlet="template()"></ng-container>
     </div>
     <div class="dropdown-panel" (click)="looseFocus($event)">
-        <ng-container *ngTemplateOutlet="template"></ng-container>
+        <ng-container *ngTemplateOutlet="template()"></ng-container>
     </div>
 </div>

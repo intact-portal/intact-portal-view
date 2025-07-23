@@ -1,20 +1,21 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, input, output} from '@angular/core';
 import {Observable} from 'rxjs/internal/Observable';
 import {ResultTable} from '../../../interactions/shared/model/interactions-results/result-table-interface';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-column-toggle',
-  templateUrl: './column-toggle.component.html',
-  styleUrls: ['./column-toggle.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'ip-column-toggle',
+    templateUrl: './column-toggle.component.html',
+    styleUrls: ['./column-toggle.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ColumnToggleComponent implements OnInit {
 
-  @Input() table: Observable<ResultTable>;
+  readonly table = input<Observable<ResultTable>>(undefined);
   public table$: ResultTable;
-  @Output() columnSelectionChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
+  readonly columnSelectionChanged = output<string[]>();
   active: boolean;
   private columnsSelected: string[];
   private tableInit: Map<ResultTable, string[]> = new Map();
@@ -23,7 +24,7 @@ export class ColumnToggleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.table
+    this.table()
       .pipe(untilDestroyed(this))
       .subscribe(table => {
         this.table$ = table;

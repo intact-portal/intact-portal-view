@@ -3,7 +3,7 @@ import {throwError as observableThrowError, Observable, of, from} from 'rxjs';
 
 import {catchError, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import {Dataset} from '../model/dataset.model';
 import {GoogleAnalyticsService} from 'ngx-google-analytics';

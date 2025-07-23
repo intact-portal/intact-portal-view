@@ -1,6 +1,6 @@
 import {Observable, throwError as observableThrowError} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {NetworkLegend} from '../model/interaction-legend/network-legend';
 import {FilterService} from './filter.service';

@@ -5,9 +5,10 @@ import {zip} from 'rxjs';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-redirect',
-  templateUrl: './redirect.component.html',
-  styleUrls: ['./redirect.component.css']
+    selector: 'ip-redirect',
+    templateUrl: './redirect.component.html',
+    styleUrls: ['./redirect.component.css'],
+    standalone: false
 })
 export class RedirectComponent implements OnInit {
 

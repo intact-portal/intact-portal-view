@@ -1,13 +1,13 @@
 <svg [attr.viewBox]="viewBox" class="complete-legend-line">
-  <polygon [attr.points]="connectionPoints" [attr.fill]="color" opacity="0.5"></polygon>
-  <rect [attr.height]="minThickness" [attr.y]="(height - minThickness)/2"
+  <polygon [attr.points]="connectionPoints" [attr.fill]="color()" opacity="0.5"></polygon>
+  <rect [attr.height]="minThickness()" [attr.y]="(height - minThickness())/2"
         [attr.width]="edgeWidth" [attr.x]="0"
-        [attr.fill]="color"></rect>
-  <rect [attr.height]="maxThickness" [attr.y]="0"
+        [attr.fill]="color()"></rect>
+  <rect [attr.height]="maxThickness()" [attr.y]="0"
         [attr.width]="edgeWidth" [attr.x]="width - edgeWidth"
-        [attr.fill]="color"></rect>
-  <text [attr.x]="edgeWidth" [attr.y]="(height + minThickness) / 2 + fontSize"
-        [attr.fill]="color" [attr.font-size]="fontSize" text-anchor="middle">{{minValue}}</text>
+        [attr.fill]="color()"></rect>
+  <text [attr.x]="edgeWidth" [attr.y]="(height + minThickness()) / 2 + fontSize"
+        [attr.fill]="color()" [attr.font-size]="fontSize" text-anchor="middle">{{minValue()}}</text>
   <text [attr.x]="width - edgeWidth" [attr.y]="totalHeight"
-        [attr.fill]="color" [attr.font-size]="fontSize" text-anchor="middle">{{maxValue}}</text>
+        [attr.fill]="color()" [attr.font-size]="fontSize" text-anchor="middle">{{maxValue()}}</text>
 </svg>

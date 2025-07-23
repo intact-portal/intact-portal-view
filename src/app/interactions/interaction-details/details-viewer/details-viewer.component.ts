@@ -1,27 +1,27 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
+import {AfterViewInit, Component, ViewEncapsulation, input, output} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import {InteractionsDetailsService} from '../../shared/service/interactions-details.service';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {InteractionParticipantsService, Status} from '../shared/service/interaction-participants.service';
-import * as complexviewer from 'complexviewer';
-import {MIJson, Participant} from 'complexviewer';
+import {App, Participant, MIJson} from 'complexviewer';
 import {NodeShape} from '../../shared/model/network-shapes/node-shape';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
-export let viewer: complexviewer.App;
+export let viewer: App;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-details-viewer',
-  templateUrl: './details-viewer.component.html',
-  styleUrls: ['./details-viewer.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-details-viewer',
+    templateUrl: './details-viewer.component.html',
+    styleUrls: ['./details-viewer.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DetailsViewerComponent implements AfterViewInit {
-  @Input() interactionAc: string;
+  readonly interactionAc = input<string>(undefined);
 
-  @Input() featureAc: string;
-  @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
+  readonly featureAc = input<string>(undefined);
+  readonly error = output<HttpErrorResponse>();
   private interactionData: MIJson;
 
   annotations = {
@@ -63,7 +63,7 @@ export class DetailsViewerComponent implements AfterViewInit {
           viewer.expandAndCollapseSelection(update.expanded.map(protein => protein.identifier.id));
         }
       });
-    this.interactionsDetailsService.getInteractionViewer(this.interactionAc)
+    this.interactionsDetailsService.getInteractionViewer(this.interactionAc())
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (data) => {
@@ -71,7 +71,7 @@ export class DetailsViewerComponent implements AfterViewInit {
           ProgressBarComponent.hide();
 
           if (this.interactionData !== undefined) {
-            viewer = new complexviewer.App(document.getElementById('interaction-viewer-container'));
+            viewer = new App(document.getElementById('interaction-viewer-container'));
             viewer.readMIJSON(this.interactionData, true);
             viewer.collapseAll();
             this.participantsService.initParticipants(this.interactionData.data, Status.COLLAPSED);

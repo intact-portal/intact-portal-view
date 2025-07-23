@@ -25,6 +25,9 @@ import {NegativeFilterComponent} from './interactions-filters/negative-filter/ne
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {DensitySliderComponent} from './interactions-filters/density-slider/density-slider.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {CytoscapeDialogComponent} from './interactions-viewer/cytoscape-dialog.component/cytoscape-dialog.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -40,7 +43,9 @@ import { RedirectComponent } from './redirect/redirect.component';
     MatExpansionModule,
     ComponentsModule,
     FormsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
   ],
   declarations: [
     InteractionsFiltersComponent,
@@ -54,6 +59,7 @@ import { RedirectComponent } from './redirect/redirect.component';
     NegativeFilterComponent,
     DensitySliderComponent,
     RedirectComponent,
+    CytoscapeDialogComponent
   ],
   providers: [
     TableFactoryService,

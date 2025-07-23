@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, input} from '@angular/core';
 
 import {environment} from '../../../../../../environments/environment';
 import {Column} from '../../../../shared/model/tables/column.model';
@@ -12,14 +12,15 @@ const baseURL = environment.intact_portal_graph_ws;
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-participant-table',
-  templateUrl: './participant-table.component.html',
-  styleUrls: ['./participant-table.component.css']
+    selector: 'ip-participant-table',
+    templateUrl: './participant-table.component.html',
+    styleUrls: ['./participant-table.component.css'],
+    standalone: false
 })
 export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewInit, ResultTable {
 
-  @Input() interactionAc: string;
-  @Input() participantTab: boolean;
+  readonly interactionAc = input<string>(undefined);
+  readonly participantTab = input<boolean>(undefined);
 
   dataTable: DataTables.Api;
   columnView = 'participants_columnView';
@@ -67,7 +68,7 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
       dom: '<"top"li>rt<"bottom"p><"clear">',
       scrollX: true,
       ajax: {
-        url: `${baseURL}/graph/participants/datatables/` + this.interactionAc,
+        url: `${baseURL}/graph/participants/datatables/` + this.interactionAc(),
         type: 'POST',
         //   error: function(xhr, error, code) { console.log(error); },
         //   success: function(result) {console.log(JSON.stringify(result))},
@@ -240,6 +241,6 @@ export class ParticipantTableComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   get isActive(): boolean {
-    return this.participantTab;
+    return this.participantTab();
   }
 }

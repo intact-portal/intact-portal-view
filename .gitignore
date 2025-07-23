@@ -10,6 +10,8 @@
 
 # IDEs and editors
 /.idea
+/.yalc
+yalc.lock
 .project
 .classpath
 .c9/

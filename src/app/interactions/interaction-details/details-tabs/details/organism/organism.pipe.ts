@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Organism} from "../../../../shared/model/interaction-details/organism.model";
 
 @Pipe({
-  name: 'organism'
+    name: 'organism',
+    standalone: false
 })
 export class OrganismPipe implements PipeTransform {
 

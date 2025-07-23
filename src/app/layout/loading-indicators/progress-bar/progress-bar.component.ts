@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
 
 @Component({
-  selector: 'ip-progress-bar',
-  templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.css']
+    selector: 'ip-progress-bar',
+    templateUrl: './progress-bar.component.html',
+    styleUrls: ['./progress-bar.component.css'],
+    standalone: false
 })
 export class ProgressBarComponent implements OnInit {
   private static show: boolean;

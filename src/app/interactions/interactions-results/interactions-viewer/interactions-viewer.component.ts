@@ -1,18 +1,22 @@
 import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
 import {NetworkSearchService} from '../../shared/service/network-search.service';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ProgressBarComponent} from '../../../layout/loading-indicators/progress-bar/progress-bar.component';
 import {NetworkViewService} from '../../shared/service/network-view.service';
 import {NetworkLegend} from '../../shared/model/interaction-legend/network-legend';
 import {GraphPort} from 'intact-network-viewer';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {CytoscapeDesktopService} from '../../shared/service/cytoscape-desktop.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CytoscapeDialogComponent} from './cytoscape-dialog.component/cytoscape-dialog.component';
 
 @UntilDestroy()
 @Component({
-  selector: 'ip-interactions-viewer',
-  templateUrl: './interactions-viewer.component.html',
-  styleUrls: ['./interactions-viewer.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'ip-interactions-viewer',
+    templateUrl: './interactions-viewer.component.html',
+    styleUrls: ['./interactions-viewer.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class InteractionsViewerComponent implements AfterViewInit {
   private _hasMutation: boolean = false;
@@ -20,9 +24,10 @@ export class InteractionsViewerComponent implements AfterViewInit {
   legend: NetworkLegend = undefined;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
               private networkSearchService: NetworkSearchService,
-              public view: NetworkViewService) {
+              public view: NetworkViewService,
+              public cytoscape: CytoscapeDesktopService,
+              private dialog: MatDialog) {
   }
 
   ngAfterViewInit(): void {
@@ -39,6 +44,12 @@ export class InteractionsViewerComponent implements AfterViewInit {
           this.view.mustQuery = true;
         });
     });
+  }
+
+  startCytoscapeCheck(): void {
+    this.cytoscape.startCheck();
+    const dialogRef = this.dialog.open(CytoscapeDialogComponent);
+    dialogRef.afterClosed().subscribe(_ => this.cytoscape.stopCheck());
   }
 
   private requestIntactNetworkDetails() {

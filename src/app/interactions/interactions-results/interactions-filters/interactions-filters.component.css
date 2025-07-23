@@ -142,3 +142,7 @@ input.vertically-centered {
 .dropdown-container > *:first-child {
   /*width: 90px;*/
 }
+
+.mat-mdc-slide-toggle {
+  margin-left: 4px;
+}

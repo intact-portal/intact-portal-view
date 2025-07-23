@@ -1,0 +1,64 @@
+<h3 mat-dialog-title>Load in Cytoscape</h3>
+<mat-dialog-content>
+    <div>
+        <p class="info">
+            Load current search in IntAct app in Cytoscape.
+        </p>
+        <p class="note">
+            Not all filters will be automatically exported into Cytoscape.
+        </p>
+    </div>
+
+    @if (!cytoscape.allRequirementsPassed) {
+        <div class="callout">
+            @if (!cytoscape.check$) {
+                <span class="checker">
+                    <div>
+                        <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
+                        <span>Checking Cytoscape requirements</span>
+                    </div>
+                </span>
+            } @else if (!!cytoscape.check$) {
+                <p>
+                    @if (cytoscape.check$ | async; as currentCheck) {
+                        <span class="checker">
+                      @if (currentCheck.loading) {
+                          <div>
+                          <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"></mat-progress-spinner>
+                          <span [innerHTML]="currentCheck.name"></span>
+                        </div>
+                      } @else {
+                          @if (currentCheck.passing) {
+                              ✅ <span [innerHTML]="currentCheck.name"></span>
+                          } @else {
+                              Requires to
+                              <span [innerHTML]="currentCheck.action"></span>
+                          }
+                          <ng-template>
+                          Requires to
+                          <span [innerHTML]="currentCheck.action"></span>
+                        </ng-template>
+                      }
+                    </span>
+                    }
+                </p>
+            }
+        </div>
+    }
+    @if (cytoscape.cytoscapeLoading || cytoscape.cytoscapeLoaded) {
+        <div class="callout">
+      <span class="no-margin">
+        @if (cytoscape.cytoscapeLoading) {
+            <div class="flex">
+            <mat-progress-spinner [diameter]="20" [mode]="'indeterminate'"
+                                  color="primary"></mat-progress-spinner>
+            Submitting to Cytoscape
+          </div>
+        }
+          @if (cytoscape.cytoscapeLoaded) {
+              <div class="flex">Loading in Cytoscape</div>
+          }
+      </span>
+        </div>
+    }
+</mat-dialog-content>

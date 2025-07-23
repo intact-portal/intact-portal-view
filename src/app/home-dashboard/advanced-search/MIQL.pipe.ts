@@ -1,9 +1,10 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Rule, RuleSet} from 'angular2-query-builder';
+import {Rule, RuleSet} from '@eliot-ragueneau/ngx-query-builder';
 
 @Pipe({
-  name: 'MIQL',
-  pure: false
+    name: 'MIQL',
+    pure: false,
+    standalone: false
 })
 export class MIQLPipe implements PipeTransform {
 

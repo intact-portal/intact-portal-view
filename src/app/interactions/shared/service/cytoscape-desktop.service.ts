@@ -61,7 +61,7 @@ export class CytoscapeRequirement<T extends any = any> {
 export class CytoscapeDesktopService {
   refreshRate = 2_000;
 
-  minVersion: [number, number, number] = [1, 0, 1]
+  minVersion: [number, number, number] = [1, 1, 0]
 
   requirements: CytoscapeRequirement[] = [
     new CytoscapeRequirement<{ apiVersion: string, cytoscapeVersion: string }>(

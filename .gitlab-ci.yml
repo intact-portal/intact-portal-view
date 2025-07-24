@@ -14,10 +14,11 @@ default:
     key: ${CI_COMMIT_SHA}
     paths:
       - node_modules
+      - src/types
     policy: pull
   before_script:
     - "[ -d node_modules ] || node --max_old_space_size=8000 $(which npm) install"
-    - "[ -d src/types/typeahead.js ] || node --max_old_space_size=8000 $(which npm) run update-types"
+    - "[ ! -d src/types/typeahead.js ] || [ ! -d src/types/datatables.net-fixedheader  ] &&  node --max_old_space_size=8000 $(which npm) run update-types"
 
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
@@ -30,13 +31,13 @@ init:
   image: trion/ng-cli:${CLI_VERSION}
   script:
     - "[ -d node_modules ] || node --max_old_space_size=8000 $(which npm) install"
-    - "[ -d src/types/typeahead.js ] || node --max_old_space_size=8000 $(which npm) run update-types"
+    - "[ ! -d src/types/typeahead.js ] || [ ! -d src/types/datatables.net-fixedheader  ] && node --max_old_space_size=8000 $(which npm) run update-types"
   cache:
     policy: push
     key: ${CI_COMMIT_SHA}
     paths:
       - node_modules
-      - src/types/typeahead.js
+      - src/types/
   tags:
     - docker
 

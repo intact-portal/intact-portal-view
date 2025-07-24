@@ -16,8 +16,8 @@ default:
       - node_modules
     policy: pull
   before_script:
-    - "[ -d node_modules ] || npm install"
-    - "[ -d src/types/typeahead.js ] || npm run update-types"
+    - "[ -d node_modules ] || node --max_old_space_size=8000 $(which npm) npm install"
+    - "[ -d src/types/typeahead.js ] || node --max_old_space_size=8000 $(which npm) run update-types"
 
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
@@ -28,12 +28,15 @@ variables:
 init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
-  script: [ '' ]
+  script:
+    - "[ -d node_modules ] || node --max_old_space_size=8000 $(which npm) npm install"
+    - "[ -d src/types/typeahead.js ] || node --max_old_space_size=8000 $(which npm) run update-types"
   cache:
     policy: push
     key: ${CI_COMMIT_SHA}
     paths:
       - node_modules
+      - src/types/typeahead.js
   tags:
     - docker
 

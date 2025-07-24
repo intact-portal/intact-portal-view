@@ -1,16 +1,14 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {SearchService} from '../../../home-dashboard/search/service/search.service';
 import {FilterService} from './filter.service';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs/internal/Observable';
 import {catchError, concatMap, map, startWith, switchMap, takeWhile, tap, toArray} from 'rxjs/operators';
-import {of} from 'rxjs/internal/observable/of';
-import {fromArray} from 'rxjs/internal/observable/fromArray';
-import {interval} from 'rxjs/internal/observable/interval';
+
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Subject} from 'rxjs/internal/Subject';
-import {ReplaySubject} from 'rxjs/internal/ReplaySubject';
+
+import {from, interval, of, ReplaySubject, Subject} from 'rxjs';
 import {NetworkViewService} from './network-view.service';
 
 const host = environment.cytoscape_host
@@ -103,7 +101,7 @@ export class CytoscapeDesktopService {
 
     this.start$.pipe(
         tap(() => console.log('Starting checks', this.allRequirementsPassed)),
-        switchMap(() => fromArray(this.requirements).pipe(
+        switchMap(() => from(this.requirements).pipe(
             concatMap(requirement =>
                     interval(this.refreshRate).pipe(
                         tap(() => console.log(requirement.name)),

@@ -171,7 +171,17 @@ export class FilterService {
     this._intraSpecies = params.get('intraSpeciesFilter') === 'true';
   }
 
-  public toParams(params: any = {}, arrayTransformer: (array: string[]) => any = (a) => a.join(',')): any {
+  public toURLParams(params: any = {}): any {
+    const arrayTransformer: (array: string[]) => string = (a: string[]) => a.join(',');
+    return this.toParamsInternal(params, arrayTransformer);
+  }
+
+  public toParams(params: any = {}): any {
+    const arrayTransformer: (array: string[]) => string[] = (a: string[]) => a;
+    return this.toParamsInternal(params, arrayTransformer);
+  }
+
+  private toParamsInternal(params: any = {}, arrayTransformer: (array: string[]) => any): any {
     if (this.interactorSpecies !== undefined && this.interactorSpecies.length !== 0) {
       params.interactorSpeciesFilter = arrayTransformer(this.interactorSpecies);
     }
@@ -192,8 +202,7 @@ export class FilterService {
       params.interactionHostOrganismsFilter = arrayTransformer(this.interactionHostOrganisms);
     }
 
-    if (this._negative !== NegativeFilterStatus.POSITIVE_ONLY) {
-      // TODO revert to params.negativeFilter = this.negative when backend is ready
+    if (this._negative) {
       params.negativeFilter = this._negative;
     }
 

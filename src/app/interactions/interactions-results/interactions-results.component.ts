@@ -73,7 +73,7 @@ export class InteractionsResultsComponent implements OnInit {
   private updateURLParams(): void {
     this.router.navigate([], {
       queryParams: {
-        ...this.search.toURLParams(), ...this.filters.toParams(), ...this.view.toParams()
+        ...this.search.toURLParams(), ...this.filters.toURLParams(), ...this.view.toParams()
       }, fragment: this.fragment.value
     });
   }

@@ -4,7 +4,7 @@ import {catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {ParamMap, Router} from '@angular/router';
 import {environment} from '../../../../environments/environment';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Pagination} from '../../shared/pagination.model';
 import {Interactor} from '../../../interactions/shared/model/interactions-results/interactor/interactor.model';
 import {Interactome} from '../../../interactomes/interactome.model';
@@ -76,12 +76,9 @@ export class SearchService {
   resolveSearch(query: string, page = 0, pageSize = 50): Observable<{ [term: string]: Pagination<Interactor[]> }> {
     this._query = query.trim();
 
-    const params = new HttpParams()
-      .append('query', query)
-      .append('page', page.toString())
-      .append('pageSize', pageSize.toString());
+    const body = { query, page, pageSize };
 
-    return this.http.post<{ [term: string]: Pagination<Interactor[]> }>(`${baseURL}/interactor/list/resolve`, params).pipe(
+    return this.http.post<{ [term: string]: Pagination<Interactor[]> }>(`${baseURL}/interactor/list/resolve/body`, body).pipe(
       catchError(this.handleError));
   }
 
@@ -181,14 +178,16 @@ export class SearchService {
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: `${baseURL}/interactor/findInteractor/%QUERY?page=0&pageSize=10`,
+        url: `${baseURL}/interactor/findInteractor/body`,
         prepare: (query, settings) => {
           if (!ignoreChange) {
             suggestionQuery = query;
-            settings.url = settings.url.replace('%QUERY', query);
-            settings.url = settings.url.replace('page=0', `page=${currentPage}`)
+            settings.data = {
+              query,
+              pageSize: 10,
+              page: currentPage
+            };
           }
-          console.log(settings.url)
           return settings;
         },
         transform: (response: any) => {

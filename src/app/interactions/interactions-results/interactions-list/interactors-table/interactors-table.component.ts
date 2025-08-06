@@ -140,14 +140,16 @@ export class InteractorsTableComponent implements OnInit, OnChanges, AfterViewIn
       scrollX: true,
       fixedHeader: false,
       ajax: {
-        url: `${baseURL}/interaction/interactors/list/`,
+        url: `${baseURL}/interaction/interactors/list/body/`,
         type: 'POST',
+        contentType: 'application/json',
         data: (d: any) => {
           d.page = d.start / d.length;
           d.pageSize = d.length;
           this.search.toParams(d);
           this.networkSelection.toParams(d);
           this.filters.toParams(d);
+          return JSON.stringify(d);
         }
       },
       columns: [

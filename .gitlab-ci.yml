@@ -14,26 +14,29 @@ default:
     key: ${CI_COMMIT_SHA}
     paths:
       - node_modules
+      - src/types
     policy: pull
   before_script:
-    - "[ -d node_modules ] || npm install"
-    - "[ -d src/types/typeahead.js ] || npm run update-types"
+    - "[ -d node_modules ] || node --max_old_space_size=8000 $(which npm) install"
+    - "([ -d src/types/typeahead.js ] && [ -d src/types/datatables.net-fixedheader ]) || node --max_old_space_size=8000 $(which npm) run update-types"
 
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
   DOCKER_TLS_CERTDIR: ""
   DIST_DIR: dist/intact-portal-view
-  CLI_VERSION: 14.2.6
+  CLI_VERSION: 19.2.13
 
 init:
   stage: init
   image: trion/ng-cli:${CLI_VERSION}
-  script: [ '' ]
+  script:
+    - ''
   cache:
     policy: push
     key: ${CI_COMMIT_SHA}
     paths:
       - node_modules
+      - src/types/
   tags:
     - docker
 

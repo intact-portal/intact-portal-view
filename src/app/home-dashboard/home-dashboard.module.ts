@@ -34,7 +34,7 @@ import {DateRangeComponent} from './advanced-search/date-range/date-range.compon
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {BooleanInputComponent} from './advanced-search/boolean-input/boolean-input.component';
 import {MatStepperModule} from '@angular/material/stepper';
-import {MatIcon} from '@angular/material/icon';
+import {MatIconModule} from '@angular/material/icon';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {QueryBuilderModule} from '@eliot-ragueneau/ngx-query-builder';
 
@@ -59,7 +59,8 @@ import {QueryBuilderModule} from '@eliot-ragueneau/ngx-query-builder';
     MatMomentDateModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatIcon,
+    MatIconModule,
+    TwitterDisplayComponent
   ],
   exports: [
     KeyvaluemapPipe
@@ -70,7 +71,6 @@ import {QueryBuilderModule} from '@eliot-ragueneau/ngx-query-builder';
     SearchComponent,
     TileMenuComponent,
     NewsletterSubscriptionComponent,
-    TwitterDisplayComponent,
     FeaturedDatasetComponent,
     NewsComponent,
     DatasetArchiveComponent,

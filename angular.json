@@ -18,7 +18,9 @@
               "jquery",
               "intersectionjs",
               "markdown-it",
-              "@iktakahiro/markdown-it-katex"
+              "@iktakahiro/markdown-it-katex",
+              "bsky-embed/dist/bsky-embed.es.js",
+              "rgb-color"
             ],
             "outputPath": {
               "base": "dist/intact-portal-view"
@@ -33,7 +35,9 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/css/intact-theme.css",
+              "src/assets/css/custom_typeahead.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

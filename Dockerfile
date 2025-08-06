@@ -11,6 +11,6 @@ FROM nginx:latest
 #FROM trion/nginx-angular
 #Copy ci-dashboard-dist
 #COPY --from=build-stage /app/dist/out/ /usr/share/nginx/html
-COPY dist/intact-portal-view /usr/share/nginx/html/
+COPY dist/intact-portal-view/browser /usr/share/nginx/html/
 #Copy default nginx configuration
 COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
